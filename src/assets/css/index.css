@@ -1,5 +1,7 @@
 :root {
-  --background-color: #ffffff;
+  --background-color: #3e3636;
+  --primary-color: #2e808a;
+  --secondary-color: #c1654d;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

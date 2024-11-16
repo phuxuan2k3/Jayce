@@ -1,0 +1,41 @@
+.btn-main {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}
+
+.btn-main:hover {
+  background-color: white !important;
+  color: var(--primary-color) !important;
+  border: 1px solid var(--primary-color) !important;
+}
+
+.btn-minor {
+  border: 1px solid var(--primary-color) !important;
+  color: var(--primary-color) !important;
+}
+
+.btn-minor:hover {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}
+
+.btn-gradient {
+  background: linear-gradient(#ffffff 0 0) padding-box,
+    linear-gradient(to right, var(--primary-color), var(--secondary-color))
+      border-box;
+  color: #000000;
+  padding: 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  display: inline-block;
+  margin: 75px 0;
+}
+
+.btn-gradient:hover {
+  background: linear-gradient(
+    to right,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  color: white;
+}

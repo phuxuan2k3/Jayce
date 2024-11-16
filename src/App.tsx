@@ -1,11 +1,11 @@
 import "./assets/css/App.css";
-import Login from "./pages/Login";
+import Login from "./pages/Login/Login.tsx";
 
 function App() {
   return (
-    <>
-      <Login></Login>
-    </>
+    <div className="App vh-100 bg-white">
+      <Login></Login>;
+    </div>
   );
 }
 
