@@ -1,6 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Image from "react-bootstrap/Image";
+import { Nav, NavDropdown } from "react-bootstrap";
 
 function CollapsibleExample() {
   return (
@@ -10,7 +11,7 @@ function CollapsibleExample() {
           <Image width={30} height={30} fluid src="/logo.png" /> SkillSharp
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        {/* <Navbar.Collapse id="responsive-navbar-nav">
+        <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto ms-auto">
             <Nav.Link href="#features">Features</Nav.Link>
             <Nav.Link href="#pricing">Pricing</Nav.Link>
@@ -32,7 +33,7 @@ function CollapsibleExample() {
               Dank memes
             </Nav.Link>
           </Nav>
-        </Navbar.Collapse> */}
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   );

@@ -9,7 +9,7 @@ function IndividualIntervalsExample() {
     "Tính gàn dở của các nhà triết gia mọi thời đại là phủ nhận điều tồn tại và giải thích điều không tồn tại.",
   ];
   return (
-    <Carousel className="h-100">
+    <Carousel className="h-100 mb-5">
       {text.map((item, index) => (
         <Carousel.Item key={index} interval={intervalTime}>
           <Card className="">

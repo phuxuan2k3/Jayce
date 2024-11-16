@@ -1,7 +1,7 @@
-import Slide from "./components/carousel";
+import Slide from "./components/Slide";
 import Navbar from "../../components/Navbar";
 import { Col, Container, Row } from "react-bootstrap";
-import Form from "./components/form";
+import Form from "./components/LoginForm";
 
 export default function Login() {
   return (
@@ -9,10 +9,10 @@ export default function Login() {
       <Navbar></Navbar>
       <Container fluid className="m-0 p-0" style={{ height: "80%" }}>
         <Row className="h-100">
-          <Col md={5} className="h-100">
+          <Col md={5} className="h-100 mb-5">
             <Slide></Slide>
           </Col>
-          <Col md={7} className="h-100">
+          <Col md={7} className="h-100 mt-4">
             <Form></Form>
           </Col>
         </Row>

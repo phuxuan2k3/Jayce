@@ -5,8 +5,9 @@ import "../../../assets/css/input.css";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
-export default function LoginForm() {
+export default function RegisterForm() {
   return (
     <Container fluid className="h-100 text-center bg-white">
       <Row className="align-items-center h-100">
@@ -15,12 +16,14 @@ export default function LoginForm() {
         </Row>
         <Row className="justify-content-center">
           <Col md={4}>
-            <Button variant="main" className=" w-100 m-1">
-              Login
-            </Button>{" "}
+            <Link to="/login">
+              <Button variant="minor" className=" w-100 m-1">
+                Login
+              </Button>{" "}
+            </Link>
           </Col>{" "}
           <Col md={4}>
-            <Button variant="minor" className="w-100 m-1">
+            <Button variant="main" className="w-100 m-1 disabled">
               Register
             </Button>{" "}
           </Col>
@@ -28,7 +31,7 @@ export default function LoginForm() {
         <Row className="justify-content-center">
           <Col md={8}>
             <Button variant="gradient" className="w-100 m-1">
-              <FontAwesomeIcon icon={faGoogle} color="red" /> Sign in with
+              <FontAwesomeIcon icon={faGoogle} color="red" /> Sign up with
               Google
             </Button>{" "}
           </Col>{" "}
@@ -36,7 +39,7 @@ export default function LoginForm() {
         <Row className="justify-content-center">
           <Col md={8}>
             <Button variant="gradient" className="w-100 m-1">
-              Sign in with University
+              Sign up with University
             </Button>{" "}
           </Col>{" "}
         </Row>
@@ -65,17 +68,17 @@ export default function LoginForm() {
             </Form>
           </Col>
         </Row>
-
-        <span>
-          Forgot your password? <a href="#reset">Reset it here.</a>
-        </span>
         <Row className="justify-content-center">
           <Col md={8}>
             <Button variant="main" className="w-100 m-1">
-              Login <FontAwesomeIcon icon={faArrowRight} />
+              Sign up <FontAwesomeIcon icon={faArrowRight} />
             </Button>{" "}
           </Col>{" "}
         </Row>
+        <span>
+          By creating an account, you agree to our{" "}
+          <a href="#">terms of service and privacy policy.</a>
+        </span>
       </Row>
     </Container>
   );

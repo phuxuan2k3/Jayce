@@ -37,5 +37,5 @@
     var(--primary-color),
     var(--secondary-color)
   );
-  color: white;
+  color: white !important;
 }

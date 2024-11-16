@@ -5,6 +5,7 @@ import "../../../assets/css/input.css";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 export default function LoginForm() {
   return (
@@ -15,14 +16,16 @@ export default function LoginForm() {
         </Row>
         <Row className="justify-content-center">
           <Col md={4}>
-            <Button variant="main" className=" w-100 m-1">
+            <Button variant="main" className=" w-100 m-1 disabled">
               Login
             </Button>{" "}
           </Col>{" "}
           <Col md={4}>
-            <Button variant="minor" className="w-100 m-1">
-              Register
-            </Button>{" "}
+            <Link to="/register">
+              <Button variant="minor" className="w-100 m-1">
+                Register
+              </Button>{" "}
+            </Link>
           </Col>
         </Row>
         <Row className="justify-content-center">

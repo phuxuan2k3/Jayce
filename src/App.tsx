@@ -1,12 +1,11 @@
 import "./assets/css/App.css";
-import Login from "./pages/Login/Login.tsx";
+import Router from "./router/router.tsx";
 
 function App() {
   return (
     <div className="App vh-100 bg-white">
-      <Login></Login>;
+      <Router></Router>
     </div>
   );
 }
-
 export default App;
