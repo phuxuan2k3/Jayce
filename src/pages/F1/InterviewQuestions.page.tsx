@@ -50,11 +50,15 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
 	);
 };
 
-const InterviewQuestionsPage: React.FC = () => {
+type InterviewQuestionsPageProps = {
+	questions: QuestionCardProps[]; // Array of question data
+};
+
+const InterviewQuestionsPage: React.FC<InterviewQuestionsPageProps> = ({ questions }) => {
 	return (
 		<div className="p-6 max-w-7xl mx-auto">
 			<header className="flex justify-between items-center mb-8">
-				<h1 className="text-2xl font-bold">Interview Question</h1>
+				<h1 className="text-2xl font-bold">Interview Questions</h1>
 				<input
 					type="text"
 					placeholder="Search for questions, companies"
@@ -72,24 +76,9 @@ const InterviewQuestionsPage: React.FC = () => {
 							<option>Select your level</option>
 						</select>
 					</div>
-					<QuestionCard
-						company="Meta (Facebook)"
-						timeAgo="2 days ago"
-						question="Design a product that helps people find contract"
-						tags={["Product Manager", "Designer", "+1 more"]}
-						answersCount={6}
-						timeToAnswer="45 minutes"
-						clarifyingQuestion="What type of contract you are considering?"
-					/>
-					<QuestionCard
-						company="Amazon"
-						timeAgo="Now"
-						question="What key metrics would you use to measure the success of Zoom?"
-						tags={["Product Manager", "Designer", "+1 more"]}
-						answersCount={6}
-						timeToAnswer="30 minutes"
-						clarifyingQuestion="An online Food Ordering and Food Delivery Company"
-					/>
+					{questions.map((question, index) => (
+						<QuestionCard key={index} {...question} />
+					))}
 				</div>
 
 				{/* Right column */}
@@ -128,3 +117,4 @@ const InterviewQuestionsPage: React.FC = () => {
 };
 
 export default InterviewQuestionsPage;
+export type { InterviewQuestionsPageProps, QuestionCardProps };
