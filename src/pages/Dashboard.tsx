@@ -25,7 +25,7 @@ const Dashboard = () => {
       <h1 className="text-4xl font-bold mb-4">
         Everything you need  
         <p>
-          to <span className="text-gradient">sharpen</span> your interview <span className="text-gradient">skills</span>
+          to <span className="text-gradient">sharpen</span> your <span className="text-gradient">interview skills</span>
         </p>
       </h1>
       <p className="text-lg text-gray-600 max-w-2xl mx-auto">

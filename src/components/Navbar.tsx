@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import User from "../interfaces/user.interface";
@@ -43,8 +44,12 @@ const NavBar = ({ User, showNav = true , showLoginSignup = true }: { User?: User
             {!User && showLoginSignup && <div>
               <FontAwesomeIcon className="block lg:hidden  text-[var(--primary-color)] text-xl" icon={faRightToBracket}></FontAwesomeIcon>
               <div className="hidden lg:block">
-                <button className="px-3 mr-3 rounded-lg font-bold text-xl py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2">Log In</button>
-                <button className="px-3 rounded-lg font-bold text-xl py-2  text-white bg-[var(--primary-color)]">Sign Up</button>
+                <Link to="/login">
+                  <button className="px-3 mr-3 rounded-lg font-bold text-xl py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2">Log In</button>
+                </Link> 
+                <Link to="/register">
+                  <button className="px-3 rounded-lg font-bold text-xl py-2  text-white bg-[var(--primary-color)]">Sign Up</button>
+                </Link>
               </div></div>}
             {User && <div>
               <button type="button" className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
