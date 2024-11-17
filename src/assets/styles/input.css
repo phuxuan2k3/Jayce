@@ -1,0 +1,13 @@
+/* custom.css */
+.border-gradient {
+  border: 2px solid;
+  border-image-slice: 1;
+  border-width: 2px;
+  border-image-source: linear-gradient(to right, #ff5733, #e04e2a);
+  border-radius: 10px; /* Adjust the radius as needed */
+  padding: 10px; /* Optional: Adjust padding as needed */
+}
+
+input.gradient-border:focus {
+  border-image-source: linear-gradient(45deg, #42e695, #3bb2b8);
+}
