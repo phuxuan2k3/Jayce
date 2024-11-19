@@ -23,7 +23,13 @@ export default {
     },
   },
   plugins: [
-    
+    function ({ addUtilities }) {
+      addUtilities({
+        '.accent-primary': {
+          accentColor: '#2E808A',
+        },
+      });
+    },
   ],
 }
 
