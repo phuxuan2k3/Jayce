@@ -2,9 +2,41 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./assets/styles/index.css";
 import App from "./App.tsx";
+import { createTheme, CssBaseline, StyledEngineProvider, ThemeProvider } from "@mui/material";
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
+const rootElement = document.getElementById("root");
+const theme = createTheme({
+	components: {
+		MuiPopover: {
+			defaultProps: {
+				container: rootElement,
+			},
+		},
+		MuiPopper: {
+			defaultProps: {
+				container: rootElement,
+			},
+		},
+		MuiDialog: {
+			defaultProps: {
+				container: rootElement,
+			},
+		},
+		MuiModal: {
+			defaultProps: {
+				container: rootElement,
+			},
+		},
+	},
+});
+
+createRoot(rootElement!).render(
+	<StrictMode>
+		<StyledEngineProvider injectFirst>
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
+				<App />
+			</ThemeProvider>
+		</StyledEngineProvider>;
+	</StrictMode>
 );

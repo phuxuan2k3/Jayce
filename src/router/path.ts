@@ -1,5 +1,9 @@
 export const paths = {
 	REGISTER: '/register',
 	LOGIN: '/login',
-	TESTSCREEN: '/testscreen',
+	TEST: {
+		ROOT: '/test',
+		DO: '/test/do',
+		LIST: '/test/list',
+	},
 }

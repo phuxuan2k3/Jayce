@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import User from "../interfaces/user.interface";
+import logo from "/svg/logo.svg";
+import skillsharp from "/svg/skillsharp.svg";
 
 
 const NavBar = ({ User, showNav = true, showLoginSignup = true }: { User?: User | null; showNav?: boolean; showLoginSignup?: boolean }) => {
@@ -27,8 +29,8 @@ const NavBar = ({ User, showNav = true, showLoginSignup = true }: { User?: User 
 				</div>}
 				<div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 					<div className="flex shrink-0   items-center">
-						<img src="./svg/logo.svg" alt="logo" />
-						<img className="ml-3 hidden lg:block" src="./svg/skillsharp.svg" alt="project name" />
+						<img src={logo} alt="logo" />
+						<img className="ml-3 hidden lg:block" src={skillsharp} alt="project name" />
 					</div>
 					{showNav && <div className="hidden w-full sm:block">
 						<div className="flex space-x-5 justify-center items-center">

@@ -1,6 +1,6 @@
-import InterviewQuestionsPage, { QuestionCardProps } from "../../pages/F1/InterviewQuestions.page";
+import { QuestionCardProps } from "../../pages/Test/TestList";
 
-const exampleQuestions: QuestionCardProps[] = [
+const testListMock: QuestionCardProps[] = [
 	{
 		company: "Meta (Facebook)",
 		timeAgo: "2 days ago",
@@ -21,6 +21,4 @@ const exampleQuestions: QuestionCardProps[] = [
 	},
 ];
 
-export default function Page() {
-	return <InterviewQuestionsPage questions={exampleQuestions} />
-}
+export default testListMock;
