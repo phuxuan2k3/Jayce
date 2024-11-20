@@ -1,24 +1,26 @@
 :root {
-  --background-color: #3e3636;
-  --primary-color: #2e808a;
-  --secondary-color: #c1654d;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	--background-color: #3e3636;
+	--primary-color: #2e808a;
+	--secondary-color: #c1654d;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
+
 .text-gradient {
-  background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-  -webkit-background-clip: text;
-  color: transparent;
+	background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+	-webkit-background-clip: text;
+	color: transparent;
 }
 
 body {
-  margin: 0;
+	margin: 0;
 }
+
 .arya-font {
-  font-family: 'Arya', sans-serif;
-  font-weight: 900; 
+	font-family: 'Arya', sans-serif;
+	font-weight: 900;
 }
 
 @tailwind base;
