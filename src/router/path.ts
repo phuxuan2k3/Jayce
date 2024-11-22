@@ -5,5 +5,7 @@ export const paths = {
 		ROOT: '/test',
 		DO: '/test/do',
 		LIST: '/test/list',
+		DETAIL: '/test/detail',
+		VIEWANSWER: '/test/viewanswer',
 	},
 }

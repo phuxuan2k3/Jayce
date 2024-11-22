@@ -7,6 +7,8 @@ import Register from "../pages/Authen/Register";
 import TestList from "../pages/Test/TestList";
 import testListMock from "../mocks/data/testlist.mock";
 import Layout from "../pages/Test/components/Layout";
+import TestDetail from "../pages/Test/TestDetail";
+import TestViewAnswer from "../pages/Test/TestViewAnswer";
 
 export default function AppRouter() {
 	return (
@@ -18,6 +20,8 @@ export default function AppRouter() {
 				<Route path={paths.TEST.ROOT} element={<Layout />}>
 					<Route path={paths.TEST.DO} element={<TestScreen />} />
 					<Route path={paths.TEST.LIST} element={<TestList questions={testListMock} />} />
+					<Route path={paths.TEST.DETAIL} element={<TestDetail />} />
+					<Route path={paths.TEST.VIEWANSWER} element={<TestViewAnswer />} />
 				</Route>
 			</Routes>
 		</Router>

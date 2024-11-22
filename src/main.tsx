@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./assets/styles/index.css";
 import App from "./App.tsx";
-import { createTheme, CssBaseline, StyledEngineProvider, ThemeProvider } from "@mui/material";
+import { createTheme, StyledEngineProvider, ThemeProvider } from "@mui/material";
 
 const rootElement = document.getElementById("root");
 const theme = createTheme({
@@ -34,7 +34,6 @@ createRoot(rootElement!).render(
 	<StrictMode>
 		<StyledEngineProvider injectFirst>
 			<ThemeProvider theme={theme}>
-				<CssBaseline />
 				<App />
 			</ThemeProvider>
 		</StyledEngineProvider>;

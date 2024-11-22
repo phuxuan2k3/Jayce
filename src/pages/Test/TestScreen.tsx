@@ -78,13 +78,13 @@ const TestScreen = () => {
 					{/* Sidebar */}
 					<div className="w-64 ml-4">
 						<div className="text-4xl text-center font-bold text-primary mb-6">37:39</div>
-						<div className="bg-white rounded-lg shadow-md p-6 border-r border-b border-primary">
+						<div className="bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
 							<div className="mb-4 font-semibold">Quiz navigation</div>
 							<div className="grid grid-cols-5 gap-2">
 								{[...Array(maxQuestions)].map((_, index) => (
 									<button
 										key={index}
-										className={`w-10 h-10 rounded-full text-sm font-bold text-primary border border-primary ${getButtonStyle(index)}`}
+										className={`w-10 h-10 rounded-full text-sm font-bold text-primary border border-primary cursor-pointer ${getButtonStyle(index)}`}
 										onClick={() => setQuestionNumber(index + 1)}
 									>
 										{index + 1}

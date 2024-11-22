@@ -20,8 +20,8 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({ questionNumber, q
     };
 
     return (
-        <div className="flex-1 flex flex-row bg-white rounded-lg shadow-md p-6 space-x-4 border-r border-b border-primary">
-            <div className="w-1/5 mb-4 bg-white rounded-lg shadow-md p-6 h-fit border-r border-b border-primary">
+        <div className="flex-1 flex flex-row bg-white rounded-lg shadow-primary p-6 space-x-4 border-r border-b border-primary">
+            <div className="w-1/5 mb-4 bg-white rounded-lg shadow-primary p-6 h-fit border-r border-b border-primary">
                 <div className="text-lg font-semibold mb-2">Question {questionNumber}</div>
                 <p className="text-[#39A0AD]">{selectedOption === null ? "Not yet answered" : "Already answered"}</p>
                 <p className="text-[#39A0AD]">Marked out of 1.00</p>
