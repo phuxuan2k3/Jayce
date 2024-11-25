@@ -9,6 +9,8 @@ import testListMock from "../mocks/data/testlist.mock";
 import Layout from "../pages/Test/components/Layout";
 import TestDetail from "../pages/Test/TestDetail";
 import TestViewAnswer from "../pages/Test/TestViewAnswer";
+import TestSubmissionListView from "../pages/Test/TestSubmissionListView";
+import TestSubmissionDetail from "../pages/Test/TestSubmissionDetail";
 
 export default function AppRouter() {
 	return (
@@ -23,6 +25,8 @@ export default function AppRouter() {
 					<Route path={paths.TEST.DETAIL} element={<TestDetail />} />
 					<Route path={paths.TEST.VIEWANSWER} element={<TestViewAnswer />} />
 				</Route>
+				<Route path={paths.TEST.SUBMISSION.LIST} element={<TestSubmissionListView />} />
+				<Route path={paths.TEST.SUBMISSION.DETAIL} element={<TestSubmissionDetail />} />
 			</Routes>
 		</Router>
 	);

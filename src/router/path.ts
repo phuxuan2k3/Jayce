@@ -7,5 +7,9 @@ export const paths = {
 		LIST: '/test/list',
 		DETAIL: '/test/detail',
 		VIEWANSWER: '/test/viewanswer',
+		SUBMISSION: {
+			LIST: '/test/submission/list',
+			DETAIL: '/test/submission/detail',
+		}
 	},
 }
