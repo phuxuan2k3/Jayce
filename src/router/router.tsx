@@ -9,6 +9,8 @@ import testListMock from "../mocks/data/testlist.mock";
 import Layout from "../pages/Test/components/Layout";
 import TestDetail from "../pages/Test/TestDetail";
 import TestViewAnswer from "../pages/Test/TestViewAnswer";
+import TestEvaluate from "../pages/Test/TestEvaluate";
+import TestSchedule from "../pages/Test/TestSchedule";
 
 export default function AppRouter() {
 	return (
@@ -22,6 +24,9 @@ export default function AppRouter() {
 					<Route path={paths.TEST.LIST} element={<TestList questions={testListMock} />} />
 					<Route path={paths.TEST.DETAIL} element={<TestDetail />} />
 					<Route path={paths.TEST.VIEWANSWER} element={<TestViewAnswer />} />
+					<Route path={paths.TEST.EVALUATE} element={<TestEvaluate />} />
+					<Route path={paths.TEST.SCHEDULE} element={<TestSchedule />} />
+
 				</Route>
 			</Routes>
 		</Router>
