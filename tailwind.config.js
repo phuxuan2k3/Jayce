@@ -35,6 +35,9 @@ export default {
 				'primary': '2px 2px 4px 1px var(--primary-color)',
 				'secondary': '2px 2px 4px 1px var(--secondary-color)',
 			},
+			rotate: {
+				'270': '270deg',
+			},
 		},
 	},
 	plugins: [

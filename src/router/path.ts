@@ -8,6 +8,10 @@ export const paths = {
 		DETAIL: '/test/detail',
 		VIEWANSWER: '/test/viewanswer',
 		EVALUATE: '/test/evaluate',
-		SCHEDULE:'test/schedule'
+		SCHEDULE:'test/schedule',
+		SUBMISSION: {
+			LIST: '/test/submission/list',
+			DETAIL: '/test/submission/detail',
+		}
 	},
 }

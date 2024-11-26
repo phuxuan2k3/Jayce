@@ -11,6 +11,8 @@ import TestDetail from "../pages/Test/TestDetail";
 import TestViewAnswer from "../pages/Test/TestViewAnswer";
 import TestEvaluate from "../pages/Test/TestEvaluate";
 import TestSchedule from "../pages/Test/TestSchedule";
+import TestSubmissionListView from "../pages/Test/TestSubmissionListView";
+import TestSubmissionDetail from "../pages/Test/TestSubmissionDetail";
 
 export default function AppRouter() {
 	return (
@@ -28,6 +30,8 @@ export default function AppRouter() {
 					<Route path={paths.TEST.SCHEDULE} element={<TestSchedule />} />
 
 				</Route>
+				<Route path={paths.TEST.SUBMISSION.LIST} element={<TestSubmissionListView />} />
+				<Route path={paths.TEST.SUBMISSION.DETAIL} element={<TestSubmissionDetail />} />
 			</Routes>
 		</Router>
 	);
