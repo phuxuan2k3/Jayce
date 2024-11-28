@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import QuestionComponent from './components/QuestionComponent';
+import QuestionComponent from './QuestionComponent';
 
 const TestScreen = () => {
 	const [questionNumber, setQuestionNumber] = useState(1);

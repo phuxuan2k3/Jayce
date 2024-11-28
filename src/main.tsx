@@ -4,6 +4,7 @@ import "./assets/styles/index.css";
 import App from "./App.tsx";
 import { createTheme, StyledEngineProvider, ThemeProvider } from "@mui/material";
 
+
 const rootElement = document.getElementById("root");
 const theme = createTheme({
 	components: {
@@ -36,6 +37,6 @@ createRoot(rootElement!).render(
 			<ThemeProvider theme={theme}>
 				<App />
 			</ThemeProvider>
-		</StyledEngineProvider>;
+		</StyledEngineProvider>
 	</StrictMode>
 );

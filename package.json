@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "mock": "json-server --watch src/mock/db.json --port 5000",
+    "dev:mock": "concurrently \"npm run dev\" \"json-server --watch src/mock/db.json --port 5000\""
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
@@ -34,15 +36,18 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
+    "@faker-js/faker": "^9.2.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/react-slick": "^0.23.13",
     "@vitejs/plugin-react": "^4.3.3",
     "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.0",
     "eslint": "^9.13.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.14",
     "globals": "^15.11.0",
+    "json-server": "^1.0.0-beta.3",
     "postcss": "^8.4.49",
     "sass-embedded": "^1.81.0",
     "tailwindcss": "^3.4.15",

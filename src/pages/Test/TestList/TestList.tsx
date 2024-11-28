@@ -6,9 +6,10 @@ import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SearchIcon from '@mui/icons-material/Search';
-import GradientBorderGood from "../../components/GradientBorder.good";
+import GradientBorderGood from "../../../components/GradientBorder.good";
+import { useLoaderData } from "react-router-dom";
 
-type QuestionCardProps = {
+export type QuestionCardProps = {
 	company: string;
 	companyAvatar: string | null;
 	timeAgo: string;
@@ -77,11 +78,8 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
 	);
 };
 
-type InterviewQuestionsPageProps = {
-	questions: QuestionCardProps[]; // Array of question data
-};
-
-const TestList: React.FC<InterviewQuestionsPageProps> = ({ questions }) => {
+const TestList: React.FC = () => {
+	const questions = useLoaderData() as QuestionCardProps[];
 	const [time, setTime] = useState<number | null>(null);
 	const [difficulty, setDifficulty] = useState<number | null>(null);
 
@@ -190,4 +188,3 @@ const TestList: React.FC<InterviewQuestionsPageProps> = ({ questions }) => {
 };
 
 export default TestList;
-export type { QuestionCardProps };

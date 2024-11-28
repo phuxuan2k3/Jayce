@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSliders, faMagnifyingGlass, faSquarePollHorizontal, faCalendarMinus, faListCheck } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
-import Navbar from "../../components/Navbar";
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -11,6 +10,7 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from "react-router-dom";
+import Navbar from "../../../../components/Navbar";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {

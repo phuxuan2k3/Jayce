@@ -1,38 +1,85 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Login from "../pages/Authen/Login";
 import Dashboard from "../pages/Dashboard";
-import TestScreen from "../pages/Test/TestScreen";
+import TestScreen from "../pages/Test/TestScreen/TestScreen";
 import { paths } from "./path"
 import Register from "../pages/Authen/Register";
-import TestList from "../pages/Test/TestList";
-import testListMock from "../mocks/data/testlist.mock";
+import TestList from "../pages/Test/TestList/TestList";
 import Layout from "../pages/Test/components/Layout";
-import TestDetail from "../pages/Test/TestDetail";
-import TestViewAnswer from "../pages/Test/TestViewAnswer";
-import TestEvaluate from "../pages/Test/TestEvaluate";
-import TestSchedule from "../pages/Test/TestSchedule";
-import TestSubmissionListView from "../pages/Test/TestSubmissionListView";
-import TestSubmissionDetail from "../pages/Test/TestSubmissionDetail";
+import TestDetail from "../pages/Test/TestDetail/TestDetail";
+import TestEvaluate from "../pages/Test/TestEvaluate/TestEvaluate";
+import { TestListLoader } from "../pages/Test/TestList/TestList.loader";
+import ErrorPage from "../components/ErrorPage";
+import TestSchedule from "../pages/Test/TestSchedule/TestSchedule";
+import TestSubmissionListView from "../pages/Test/Submission/ListView/TestSubmissionListView";
+import TestSubmissionDetail from "../pages/Test/Submission/Detail/TestSubmissionDetail";
+import TestViewAnswer from "../pages/Test/TestViewAnswer/TestViewAnswer";
 
-export default function AppRouter() {
-	return (
-		<Router>
-			<Routes>
-				<Route path="/" element={<Dashboard />} />
-				<Route path={paths.LOGIN} element={<Login />} />
-				<Route path={paths.REGISTER} element={<Register />} />
-				<Route path={paths.TEST.ROOT} element={<Layout />}>
-					<Route path={paths.TEST.DO} element={<TestScreen />} />
-					<Route path={paths.TEST.LIST} element={<TestList questions={testListMock} />} />
-					<Route path={paths.TEST.DETAIL} element={<TestDetail />} />
-					<Route path={paths.TEST.VIEWANSWER} element={<TestViewAnswer />} />
-					<Route path={paths.TEST.EVALUATE} element={<TestEvaluate />} />
-					<Route path={paths.TEST.SCHEDULE} element={<TestSchedule />} />
 
-				</Route>
-				<Route path={paths.TEST.SUBMISSION.LIST} element={<TestSubmissionListView />} />
-				<Route path={paths.TEST.SUBMISSION.DETAIL} element={<TestSubmissionDetail />} />
-			</Routes>
-		</Router>
-	);
-}
+const router = createBrowserRouter([
+	{
+		errorElement: <ErrorPage />,
+		children: [
+			{
+				path: paths.REGISTER,
+				element: <Register />,
+			},
+			{
+				path: paths.LOGIN,
+				element: <Login />
+			},
+			{
+				path: "/",
+				element: <Dashboard />
+			},
+			{
+				path: paths.TEST.ROOT,
+				element: <Layout />,
+				children: [
+					{
+						path: paths.TEST.DO,
+						element: <TestScreen />
+					},
+					{
+						path: paths.TEST.LIST,
+						element: <TestList />,
+						loader: TestListLoader
+					},
+					{
+						path: paths.TEST.DETAIL,
+						element: <TestDetail />
+					},
+					{
+						path: paths.TEST.VIEWANSWER,
+						element: <TestViewAnswer />
+					},
+					{
+						path: paths.TEST.EVALUATE,
+						element: <TestEvaluate />
+					},
+					{
+						path: paths.TEST.SCHEDULE,
+						element: <TestSchedule />
+					},
+					{
+						path: paths.TEST.SUBMISSION.ROOT,
+						children: [
+							{
+								path: paths.TEST.SUBMISSION.LIST,
+								element: <TestSubmissionListView />
+							},
+							{
+								path: paths.TEST.SUBMISSION.DETAIL,
+								element: <TestSubmissionDetail />
+							}
+						]
+					}
+				],
+			}
+		]
+	}
+], {
+	basename: '/'
+});
+
+export default router;
