@@ -14,4 +14,5 @@ export const paths = {
 			DETAIL: '/test/submission/detail',
 		}
 	},
+	CREATETEST: '/createtest',
 }
