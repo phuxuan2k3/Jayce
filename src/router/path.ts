@@ -12,6 +12,10 @@ export const paths = {
 		SUBMISSION: {
 			LIST: '/test/submission/list',
 			DETAIL: '/test/submission/detail',
+		},
+		EDIT: {
+			DETAIL: '/test/edit/detail',
+			QUESTION: '/test/edit/question',
 		}
 	},
 	CREATETEST: '/createtest',
