@@ -9,12 +9,7 @@ const TestViewAnswer = () => {
     const answerList = [
         {
             question: "What is the first step in the design process?",
-            options: [
-                "Research",
-                "Design",
-                "Develop",
-                "Test",
-            ],
+            options: ["Research", "Design", "Develop", "Test"],
             chosenAnswer: 0,
             correctAnswer: 0,
             point: 10,
@@ -39,7 +34,7 @@ const TestViewAnswer = () => {
         <div className="w-full flex-grow flex flex-col items-center px-4">
             <div className="w-full max-w-7xl py-6">
                 <h1 className="text-2xl font-bold mb-6">{testInfo.title}</h1>
-    
+
                 <div className="flex flex-col items-center">
                     <div className="w-4/6 flex flex-row justify-between font-semibold text-[var(--primary-color)] mb-4">
                         <span>Answer List ({answerList.length})</span>
@@ -52,7 +47,7 @@ const TestViewAnswer = () => {
                             <span className="font-bold mb-2 opacity-50">
                                 Question {index + 1}
                             </span>
-    
+
                             {/* Question and Options */}
                             <div className="w-3/5 flex flex-col">
                                 {/* Question */}
@@ -61,7 +56,7 @@ const TestViewAnswer = () => {
                                         {answer.question}
                                     </GradientBorderNotGood>
                                 </div>
-    
+
                                 {/* Options */}
                                 {answer.options.map((option, optIndex) => (
                                     <div key={optIndex} className="w-full flex flex-row mt-2" >
@@ -84,7 +79,7 @@ const TestViewAnswer = () => {
                                     </div>
                                 ))}
                             </div>
-    
+
                             {/* Points */}
                             <GradientBorderNotGood className="font-bold h-fit">
                                 {answer.chosenAnswer === answer.correctAnswer ? answer.point : 0}
