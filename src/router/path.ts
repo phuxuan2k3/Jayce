@@ -15,4 +15,5 @@ export const paths = {
 		}
 	},
 	CREATETEST: '/createtest',
+	TESTLISTVIEW:'/testlistview',
 }

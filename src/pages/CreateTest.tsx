@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const TestSubmissionListView = () => {
+const TestListView = () => {
     const [open, setOpen] = React.useState(false);
     const navigate = useNavigate();
 
@@ -46,87 +46,74 @@ const TestSubmissionListView = () => {
     return (
         <>
             <Navbar />
-            <div className="w-full flex-grow flex flex-col items-center px-4">
-                <div className="w-full flex-1 flex-col mt-6 ml-16">
-                    <div className="w-full text-4xl font-bold">Welcome to your Test Manager</div>
-                    <div className="w-full text-xl font-semibold">You can manage all your test here!</div>
+            <div className="w-full flex-grow flex flex-col items-center px-4 ">
+                <div className="w-full flex-1 flex-col mt-6 ml-16 text-center">
+                    <div className="w-full text-4xl font-bold">Create new test</div>
+                    <div className="w-full text-xl font-semibold pb-10">Fill some information for your test</div>
                 </div>
 
-                <div className="w-full max-w-7xl py-6">
-                    <div className="flex flex-col items-center">
-                        <div className="w-4/6 flex flex-row justify-between font-semibold text-[var(--primary-color)] mb-4">
-                            <span>Your test ({YourTest.length})</span>
-                            <div className="h-full w-fit flex items-center">
-                                <div className="h-7 w-7 bg-[#EAF6F8] flex items-center justify-center rounded-lg cursor-pointer" onClick={handleClickOpen}>
-                                    <FontAwesomeIcon icon={faPlus} rotation={90} />
-                                </div>
-
-                                Add new test
-                            </div>
+                <div className="w-full max-w-7xl py-6 pt-10 space-y-6">
+                    <div className="flex items-center space-x-4">
+                        <label className="font-medium text-[var(--primary-color)] text-xl w-1/4">
+                        Test Name
+                        </label>
+                        <input
+                        type="text"
+                        placeholder="Enter test name"
+                        className="w-2/4 px-4 py-2 border border-[var(--primary-color)] rounded-md focus:outline-none focus:ring focus:ring-teal-300"
+                        />
+                    </div>
+                    <div className="flex  space-x-4">
+                        <label className="font-medium text-[var(--primary-color)] text-xl w-1/4">
+                        Test Description
+                        </label>
+                        <div className="relative w-2/4">
+                            <input
+                                type="text"
+                                className="w-full h-[250px] px-4 py-2 border border-[var(--primary-color)] rounded-md focus:outline-none focus:ring focus:ring-teal-300"
+                            />
+                            <span className="absolute top-2 left-4 text-gray-400 pointer-events-none">
+                                Enter test description
+                            </span>
                         </div>
-
-                        {/* Test List */}
-                        {YourTest.map((test, index) => (
-                            <div key={index} className="w-4/6 flex-1 flex flex-col bg-white rounded-lg shadow-primary p-6 border-r border-b border-solid border-primary items-between mb-4">
-                                <div className="flex-1 flex justify-between mb-4">
-                                    <span className="font-bold mb-2 opacity-50">
-                                        {test.count} Questions
-                                    </span>
-                                    <div className="flex items-center space-x-4">
-                                    
-                                        <div  onClick={handleGoToSubmissionDetail}>
-                                            <FontAwesomeIcon className="h-5 w-5" icon={faPen} />
-                                        </div>
-                                        <div onClick={handleGoToSubmissionDetail}>
-                                            <FontAwesomeIcon className="h-5 w-5" icon={faTrash} />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="font-medium mb-8 text-xl">
-                                    Test <span>{test.nameTest}</span>
-                                </div>
-                                <div className="mb-8">
-                                    Description of <span>{test.nameTest}</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <div className="flex items-center">
-                                        <div className="flex items-center">
-                                            <FontAwesomeIcon className="h-4 w-4 ml-4" icon={faClock} />
-                                            <span className="ml-2 text-gray-600 text-sm font-medium">{test.time} minutes</span>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <FontAwesomeIcon className="h-4 w-4 ml-4" icon={faQuestion} />
-                                            <span className="ml-2 text-gray-600 text-sm font-medium">{test.type}</span>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        {test.view === null ? (
-                                            <span className="text-red-600 font-semibold">Not graded</span>
-                                        ) : (
-                                            <span className="text-primary font-semibold">
-                                               View submission ({test.view})
-                                            </span>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
                     </div>
-
-                    <div className="flex flex-row justify-center items-center space-x-2 mt-4">
-                        <button className="w-10 h-10 bg-[#EAF6F8] rounded-full text-md font-bold text-primary border border-primary cursor-pointer rotate-270">
-                            ^
-                        </button>
-
-                        <button className="w-10 h-10 bg-primary rounded-full text-md font-bold text-white border border-primary cursor-pointer">
-                            1
-                        </button>
-
-                        <button className="w-10 h-10 bg-[#EAF6F8] rounded-full text-md font-bold text-primary border border-primary cursor-pointer rotate-90">
-                            ^
-                        </button>
+                    <div className="flex items-center space-x-4">
+                        <label className="font-medium text-[var(--primary-color)] text-xl w-1/4">
+                        Test Duration
+                        </label>
+                        <input
+                        type="text"
+                        placeholder="Enter test duration"
+                        className="w-2/4 px-4 py-2 border border-[var(--primary-color)] rounded-md focus:outline-none focus:ring focus:ring-teal-300"
+                        />
                     </div>
+                    <div className="flex items-center space-x-4">
+                        <label className="font-medium text-[var(--primary-color)] text-xl w-1/4">Test Type</label>
+                        <div className="flex items-center space-x-4 w-3/4">
+                            <label className="flex items-center ">
+                                <input
+                                type="checkbox"
+                                className="form-checkbox h-5 w-5 text-[var(--primary-color)]"
+                                />
+                                <span className="ml-2 text-[var(--primary-color)]">Multiple choice</span>
+                            </label>
+                            <label className="flex items-center">
+                                <input
+                                type="checkbox"
+                                className="form-checkbox h-5 w-5 text-[var(--primary-color)]"
+                                />
+                                <span className="ml-2 text-[var(--primary-color)]">Essay question</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div className="flex flex-row justify-center">
+                    <button className="mt-4 w-fit px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer">
+                        Cancel
+                    </button>
+                    <button className="mt-4 w-fit px-5 font-semibold mr-3 rounded-lg py-2 bg-[var(--primary-color)] border-[var(--primary-color)] text-white border-2 cursor-pointer">
+                        Next
+                    </button>
                 </div>
             </div>
             
@@ -134,4 +121,4 @@ const TestSubmissionListView = () => {
     );
 }
 
-export default TestSubmissionListView
+export default TestListView
