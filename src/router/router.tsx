@@ -6,7 +6,7 @@ import { paths } from "./path"
 import Register from "../pages/Authen/Register";
 import TestList from "../pages/Test/TestList/TestList";
 import Layout from "../pages/Test/components/Layout";
-import TestDetail from "../pages/Test/TestDetail/TestDetail";
+import TestDetail from "../pages/Test/TestAttempts/TestAttempts";
 import TestEvaluate from "../pages/Test/TestEvaluate/TestEvaluate";
 import ErrorPage from "../components/ErrorPage";
 import TestSchedule from "../pages/Test/TestSchedule/TestSchedule";
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
 						element: <TestList />,
 					},
 					{
-						path: paths.TEST.DETAIL,
+						path: paths.TEST.ATTEMPTS,
 						element: <TestDetail />
 					},
 					{

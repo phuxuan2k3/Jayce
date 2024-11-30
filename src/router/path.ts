@@ -7,7 +7,7 @@ export const paths = {
 		// Candidate
 		DO: '/test/do',
 		LIST: '/test/list',
-		DETAIL: '/test/detail',
+		ATTEMPTS: '/test/:testId/attempts',
 		VIEWANSWER: '/test/viewanswer',
 		EVALUATE: '/test/evaluate',
 		SCHEDULE: '/test/schedule',

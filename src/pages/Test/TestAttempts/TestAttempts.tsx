@@ -2,29 +2,25 @@ import { format, formatDistanceToNow } from "date-fns";
 import GradientBorderGood from "../../../components/GradientBorder.good";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { toCompanyImagesDir } from "../../../helpers/images";
+import { useGetAttemptsQuery } from "./attempt.test-api";
+import { useParams } from "react-router-dom";
+import Loading from "../../../components/Loading";
 
 const TestDetail = () => {
-    const testInfo = {
-        avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9p_svIjwA810BURgFBTU0V6fNjiU9MRbUXQ&s",
-        createdAt: "2024-11-20T18:23:00Z",
-        title: "Design a product that helps people find contract",
-        askedAt: "Meta (Facebook)",
-        tags: ["Product Manager", "Designer", "Developer"],
+    const { testId } = useParams<{ testId: string }>();
+    if (!testId) throw new Error("Test ID is undefined");
+    const { data: testAttemps, isLoading, error } = useGetAttemptsQuery(testId);
+    if (error) throw error;
+    if (isLoading) {
+        return <Loading />;
     }
-    const attempHistory = [
-        {
-            status: "Finished",
-            grade: 10,
-            submittedAt: "2024-11-21T18:23:00Z",
-        },
-        {
-            status: "In Progress",
-            grade: null,
-            submittedAt: null,
-        }
-    ];
+    if (!testAttemps) {
+        return null;
+    }
 
-    const highestScore = attempHistory.reduce(
+    const companyAvatar = toCompanyImagesDir(testAttemps.company);
+    const highestScore = testAttemps.attempts.reduce(
         (max, attempt) => (attempt.grade !== null && attempt.grade > max ? attempt.grade : max),
         0
     );
@@ -33,26 +29,26 @@ const TestDetail = () => {
         <div className="w-full flex-grow flex flex-col items-center px-4">
             <div className="w-full max-w-7xl py-6">
                 <h1 className="text-2xl font-bold mb-6">
-                    {testInfo.title}
+                    {testAttemps.question}
                 </h1>
                 <div className="flex">
                     {/* AttempHistory */}
                     <div className="flex-1 flex-column bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
-                        {attempHistory.map((attempt, index) => (
+                        {testAttemps.attempts.map((attempt, index) => (
                             <div key={index} className="bg-[#EAF6F8] p-4 mb-4 rounded-lg shadow-md">
                                 <div className="flex flex-row border-b border-primary pb-4 items-center gap-3 mb-3 h-fit">
-                                    <img className="w-12 h-12 rounded-full" src={testInfo.avatar} alt={testInfo.title} />
+                                    <img className="w-12 h-12 rounded-full" src={companyAvatar} alt={testAttemps.company} />
                                     <div className="flex flex-col h-fit">
                                         <div className="flex items-center text-sm text-blue-chill-500 mb-0">
-                                            <span className="font-semibold">Asked at {testInfo.askedAt}</span>
+                                            <span className="font-semibold">Asked at {testAttemps.company}</span>
                                             <span className="mx-2">&#8226;</span>
-                                            <span className="">{formatDistanceToNow(new Date(testInfo.createdAt))} ago</span>
+                                            <span className="">{formatDistanceToNow(new Date(testAttemps.createdAt))} ago</span>
                                         </div>
-                                        <h3 className="text-lg font-semibold text-gray-800 my-0">{testInfo.title}</h3>
+                                        <h3 className="text-lg font-semibold text-gray-800 my-0">{testAttemps.question}</h3>
                                     </div>
                                 </div>
                                 <div className="flex flex-wrap gap-2 mb-4">
-                                    {testInfo.tags.map((tag, index: number) => (
+                                    {testAttemps.tags.map((tag, index: number) => (
                                         <GradientBorderGood key={index}>
                                             {tag}
                                         </GradientBorderGood>
@@ -63,7 +59,7 @@ const TestDetail = () => {
                                         {attempt.grade === null ? null : "Your grade for this quiz is: "}
                                     </span>
                                     <span className="text-[#2E808A]">
-                                        {attempt.grade === null ? null : `${attempt.grade.toFixed(2)}`}
+                                        {attempt.grade === null ? null : `${attempt.grade}`}
                                     </span>
                                 </div>
                                 <div className="flex flex-row font-semibold mb-2 text-[#39A0AD] items-center">
@@ -71,7 +67,7 @@ const TestDetail = () => {
                                         {attempt.status === null ? null : `${attempt.status}`}
                                     </div>
                                     <div className="ml-20">
-                                        {attempt.status === "Finished" ? `Submitted at ${format(new Date(testInfo.createdAt), "PPPP")}` : null}
+                                        {attempt.status === "Finished" ? `Submitted at ${format(new Date(testAttemps.createdAt), "PPPP")}` : null}
                                     </div>
                                 </div>
                                 <div className="mt-6 flex flex-row items-start bg-gray-50 rounded-xl px-6 py-4 justify-between font-sans">
@@ -86,7 +82,7 @@ const TestDetail = () => {
                             </div>
                         ))}
                         <div className="w-full text-2xl text-center font-bold text-primary mt-10 mb-6">
-                            <span>Highest score: {highestScore.toFixed(2)}</span>
+                            <span>Highest score: {highestScore}</span>
                         </div>
                     </div>
                     {/* Sidebar */}

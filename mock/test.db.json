@@ -3,7 +3,7 @@
         {
             "id": 1,
             "company": "Meta (Facebook)",
-            "createdAt": "29/11/2022",
+            "createdAt": "2022-11-29T00:00:00.000Z",
             "question": "What is the difference between a class and an object?",
             "questionDescription": "Explain the difference between a class and an object in object-oriented programming.",
             "minutesToAnswer": "30",
@@ -12,12 +12,29 @@
                 "class",
                 "object"
             ],
-            "answersCount": "10"
+            "answersCount": "10",
+            "attempts": [
+                {
+                    "grade": "10",
+                    "status": "Finished",
+                    "submittedAt": "2022-12-01T00:00:00.000Z"
+                },
+                {
+                    "grade": "8",
+                    "status": "Finished",
+                    "submittedAt": "2022-12-01T00:00:00.000Z"
+                },
+                {
+                    "grade": "",
+                    "status": "In Progress",
+                    "submittedAt": "2022-12-01T00:00:00.000Z"
+                }
+            ]
         },
         {
             "id": 2,
             "company": "Google",
-            "createdAt": "01/12/2022",
+            "createdAt": "2022-12-01T00:00:00.000Z",
             "question": "What is a closure in JavaScript?",
             "questionDescription": "Describe what a closure is in JavaScript and provide an example.",
             "minutesToAnswer": "20",
@@ -26,12 +43,29 @@
                 "closure",
                 "functions"
             ],
-            "answersCount": "15"
+            "answersCount": "15",
+            "attempts": [
+                {
+                    "grade": "10",
+                    "status": "Finished",
+                    "submittedAt": "2022-12-01T00:00:00.000Z"
+                },
+                {
+                    "grade": "8",
+                    "status": "Finished",
+                    "submittedAt": "2022-12-01T00:00:00.000Z"
+                },
+                {
+                    "grade": "",
+                    "status": "In Progress",
+                    "submittedAt": "2022-12-01T00:00:00.000Z"
+                }
+            ]
         },
         {
             "id": 3,
             "company": "Amazon",
-            "createdAt": "05/12/2022",
+            "createdAt": "2022-12-01T00:00:00.000Z",
             "question": "Explain the concept of microservices.",
             "questionDescription": "What are microservices and how do they differ from monolithic architecture?",
             "minutesToAnswer": "25",
@@ -40,12 +74,29 @@
                 "architecture",
                 "monolithic"
             ],
-            "answersCount": "8"
+            "answersCount": "8",
+            "attempts": [
+                {
+                    "grade": "10",
+                    "status": "Finished",
+                    "submittedAt": "2022-12-01T00:00:00.000Z"
+                },
+                {
+                    "grade": "8",
+                    "status": "Finished",
+                    "submittedAt": "2022-12-01T00:00:00.000Z"
+                },
+                {
+                    "grade": "",
+                    "status": "In Progress",
+                    "submittedAt": "2022-12-01T00:00:00.000Z"
+                }
+            ]
         },
         {
             "id": 4,
             "company": "Microsoft",
-            "createdAt": "10/12/2022",
+            "createdAt": "2022-12-01T00:00:00.000Z",
             "question": "What is the purpose of the SOLID principles?",
             "questionDescription": "Explain the SOLID principles in software development and why they are important.",
             "minutesToAnswer": "35",
@@ -54,35 +105,24 @@
                 "software development",
                 "principles"
             ],
-            "answersCount": "12"
-        },
-        {
-            "id": 5,
-            "company": "Apple",
-            "createdAt": "15/12/2022",
-            "question": "What is the difference between REST and GraphQL?",
-            "questionDescription": "Compare and contrast REST and GraphQL APIs.",
-            "minutesToAnswer": "30",
-            "tags": [
-                "REST",
-                "GraphQL",
-                "APIs"
-            ],
-            "answersCount": "20"
-        },
-        {
-            "id": 6,
-            "company": "Netflix",
-            "createdAt": "20/12/2022",
-            "question": "What is the CAP theorem?",
-            "questionDescription": "Explain the CAP theorem and its implications in distributed systems.",
-            "minutesToAnswer": "40",
-            "tags": [
-                "CAP theorem",
-                "distributed systems",
-                "consistency"
-            ],
-            "answersCount": "5"
+            "answersCount": "12",
+            "attempts": [
+                {
+                    "grade": "10",
+                    "status": "Finished",
+                    "submittedAt": "2022-12-01T00:00:00.000Z"
+                },
+                {
+                    "grade": "8",
+                    "status": "Finished",
+                    "submittedAt": "2022-12-01T00:00:00.000Z"
+                },
+                {
+                    "grade": "",
+                    "status": "In Progress",
+                    "submittedAt": "2022-12-01T00:00:00.000Z"
+                }
+            ]
         }
     ]
 }

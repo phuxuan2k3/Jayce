@@ -2,7 +2,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import authReducer from '../global/authSlice';
 import authApi from '../features/Auth/authApi';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import testApi from '../features/Test/testApi';
+import testApi from '../features/Test/test.api';
 
 
 // Create the root reducer so it can be used in configureStore

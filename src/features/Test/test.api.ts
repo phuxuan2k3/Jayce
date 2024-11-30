@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { backendURL } from "../../app/env"
-import { TestDisplay } from '../../pages/Test/TestList/types';
 
 const testBackendURL = backendURL + '/test';
 
@@ -16,15 +15,7 @@ const baseQuery = fetchBaseQuery({
 export const testApi = createApi({
     reducerPath: 'testApi',
     baseQuery: baseQuery,
-    endpoints: (builder) => ({
-        getTestList: builder.query<TestDisplay[], void>({
-            query: () => '/list',
-        }),
-    }),
+    endpoints: () => ({}),
 });
-
-export const {
-    useGetTestListQuery,
-} = testApi;
 
 export default testApi;

@@ -2,12 +2,14 @@ import { FormControl, InputAdornment, InputLabel, MenuItem, Select, SelectChange
 import React, { useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import GradientBorderGood from "../../../components/GradientBorder.good";
-import { useGetTestListQuery } from "../../../features/Test/testApi";
 import TestCard from "./TestCard";
+import { useGetAllQuery } from "./info.test-api";
+import Loading from "../../../components/Loading";
 
 const TestList: React.FC = () => {
-	const { data } = useGetTestListQuery();
-	const questions = data || [];
+	const { data: questions, isLoading, error } = useGetAllQuery();
+	if (error) throw error;
+
 	const [time, setTime] = useState<number | null>(null);
 	const [difficulty, setDifficulty] = useState<number | null>(null);
 
@@ -19,6 +21,12 @@ const TestList: React.FC = () => {
 		setDifficulty(Number(event.target.value));
 	};
 
+	if (isLoading) {
+		return <Loading />;
+	}
+	if (questions == null) {
+		return null;
+	}
 	return (
 		<div className="p-6 max-w-7xl mx-auto">
 			<header className="flex flex-col mb-8">
