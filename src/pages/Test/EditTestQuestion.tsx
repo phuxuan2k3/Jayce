@@ -8,11 +8,16 @@ import GradientBorderNotGood from "../../components/GradientBorder.notgood";
 const EditTestQuestion = () => {
     const navigate = useNavigate();
 
-    const handleGoToTestEditDetail = () => {
+    // Uncomment these lines to get the test details from the previous page
+    // const location = useLocation();
+    // const testDetails = location.state?.testDetails || {};
+
+    const handleBack = () => {
         navigate("/test/edit/detail");
     };
 
-    const handleGoToTestListView = () => {
+    const handleSave = () => {
+        // Save the changes
         navigate("/test/list");
     };
 
@@ -164,10 +169,10 @@ const EditTestQuestion = () => {
                 </div>
 
                 <div className="flex flex-row justify-center space-x-10">
-                    <button className="w-fit px-3 font-semibold rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={() => handleGoToTestEditDetail}>
+                    <button className="w-fit px-3 font-semibold rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={() => handleBack}>
                         Back
                     </button>
-                    <button className="w-fit px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={() => handleGoToTestListView}>
+                    <button className="w-fit px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={() => handleSave}>
                         Save
                     </button>
                 </div>
