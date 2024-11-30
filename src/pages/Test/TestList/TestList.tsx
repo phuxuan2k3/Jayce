@@ -1,91 +1,20 @@
-import { Avatar, FormControl, InputAdornment, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { FormControl, InputAdornment, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React, { useState } from "react";
-import avatar from "/png/avatar.png";
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SearchIcon from '@mui/icons-material/Search';
 import GradientBorderGood from "../../../components/GradientBorder.good";
-import { useLoaderData } from "react-router-dom";
-
-export type QuestionCardProps = {
-	company: string;
-	companyAvatar: string | null;
-	timeAgo: string;
-	question: string;
-	tags: string[];
-	answersCount: number;
-	timeToAnswer: string;
-	clarifyingQuestion: string;
-};
-
-const QuestionCard: React.FC<QuestionCardProps> = ({
-	company,
-	companyAvatar,
-	timeAgo,
-	question,
-	tags,
-	answersCount,
-	timeToAnswer,
-	clarifyingQuestion,
-}) => {
-	return (
-		<div className="bg-blue-chill-100 border border-solid border-blue-chill-400 p-4 rounded-2xl shadow-sm mb-4">
-			<div className="flex flex-row items-center gap-3 mb-3 h-fit">
-				<Avatar className="" src={companyAvatar || avatar} alt={company} />
-				<div className="flex flex-col h-fit">
-					<div className="flex items-center text-sm text-blue-chill-500 mb-0">
-						<span className="font-semibold">Asked at {company}</span>
-						<span className="mx-2">&#8226;</span>
-						<span className="">{timeAgo}</span>
-					</div>
-					<h3 className="text-lg font-semibold text-gray-800 my-0">{question}</h3>
-				</div>
-			</div>
-			<hr className="my-4 border-blue-chill-200" />
-			<div className="flex flex-wrap gap-2 mb-4">
-				{tags.map((tag, index: number) => (
-					<GradientBorderGood key={index}>
-						{tag}
-					</GradientBorderGood>
-				))}
-			</div>
-			<div className="flex items-center justify-between text-sm text-gray-700 px-8">
-				<div className="flex flex-row items-center text-blue-chill-600 font-medium">
-					<BookmarkIcon className="mr-1" />
-					<span className="text-md">Save</span>
-				</div>
-				<div className="flex flex-row items-center text-blue-chill-600 font-medium">
-					<QuestionAnswerIcon className="mr-1" />
-					<span className="text-md">{answersCount} answers</span>
-				</div>
-				<div className="flex flex-row items-center text-blue-chill-600 font-medium">
-					<AccessTimeIcon className="mr-1" />
-					<span className="text-md">{timeToAnswer}</span>
-				</div>
-			</div>
-			<div className="mt-6 flex flex-row items-start bg-gray-50 rounded-xl px-6 py-4 justify-between font-sans">
-				<span className=" text-blue-chill-600 italic font-medium">
-					Clarifying questions: {clarifyingQuestion}
-				</span>
-				<div className="font-semibold flex items-center min-w-fit cursor-pointer">
-					<span>View answer</span>
-					<ArrowDropDownIcon />
-				</div>
-			</div>
-		</div>
-	);
-};
+import { useGetTestListQuery } from "../../../features/Test/testApi";
+import TestCard from "./TestCard";
 
 const TestList: React.FC = () => {
-	const questions = useLoaderData() as QuestionCardProps[];
+	const { data } = useGetTestListQuery();
+	const questions = data || [];
 	const [time, setTime] = useState<number | null>(null);
 	const [difficulty, setDifficulty] = useState<number | null>(null);
 
 	const handleSelectTimeChange = (event: SelectChangeEvent<string>) => {
 		setTime(Number(event.target.value));
 	};
+
 	const handleSelectDifficultyChange = (event: SelectChangeEvent<string>) => {
 		setDifficulty(Number(event.target.value));
 	};
@@ -149,8 +78,8 @@ const TestList: React.FC = () => {
 
 					{/* List of questions */}
 					<div className="shadow-primary px-6 py-8 rounded-xl">
-						{questions.map((question, index) => (
-							<QuestionCard key={index} {...question} />
+						{questions.map((question) => (
+							<TestCard key={question.id} {...question} />
 						))}
 					</div>
 				</div>

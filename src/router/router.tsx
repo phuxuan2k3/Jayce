@@ -8,7 +8,6 @@ import TestList from "../pages/Test/TestList/TestList";
 import Layout from "../pages/Test/components/Layout";
 import TestDetail from "../pages/Test/TestDetail/TestDetail";
 import TestEvaluate from "../pages/Test/TestEvaluate/TestEvaluate";
-import { TestListLoader } from "../pages/Test/TestList/TestList.loader";
 import ErrorPage from "../components/ErrorPage";
 import TestSchedule from "../pages/Test/TestSchedule/TestSchedule";
 import TestSubmissionListView from "../pages/Test/Submission/ListView/TestSubmissionListView";
@@ -43,7 +42,6 @@ const router = createBrowserRouter([
 					{
 						path: paths.TEST.LIST,
 						element: <TestList />,
-						loader: TestListLoader
 					},
 					{
 						path: paths.TEST.DETAIL,

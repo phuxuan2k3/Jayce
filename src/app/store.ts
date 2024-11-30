@@ -2,12 +2,14 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import authReducer from '../global/authSlice';
 import authApi from '../features/Auth/authApi';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import testApi from '../features/Test/testApi';
 
 
 // Create the root reducer so it can be used in configureStore
 const rootReducer = combineReducers({
 	auth: authReducer,
 	authApi: authApi.reducer,
+	testApi: testApi.reducer,
 });
 
 const store = configureStore({
@@ -18,6 +20,7 @@ const store = configureStore({
 				serializableCheck: false,
 			})
 				.concat(authApi.middleware)
+				.concat(testApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
