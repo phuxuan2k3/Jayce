@@ -1,4 +1,5 @@
 {
     "/test/list": "/testlist",
-    "/test/:id/attempts": "/testlist/:id"
+    "/test/:id/attempts": "/testlist/:id",
+    "/test/:id/do": "/testlist/:id"
 }

@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Login from "../pages/Authen/Login";
 import Dashboard from "../pages/Dashboard";
-import TestScreen from "../pages/Test/TestScreen/TestScreen";
+import TestDo from "../pages/Test/TestDo/TestDo";
 import { paths } from "./path"
 import Register from "../pages/Authen/Register";
 import TestList from "../pages/Test/TestList/TestList";
@@ -36,12 +36,12 @@ const router = createBrowserRouter([
 				element: <Layout />,
 				children: [
 					{
-						path: paths.TEST.DO,
-						element: <TestScreen />
-					},
-					{
 						path: paths.TEST.LIST,
 						element: <TestList />,
+					},
+					{
+						path: paths.TEST.DO,
+						element: <TestDo />
 					},
 					{
 						path: paths.TEST.ATTEMPTS,

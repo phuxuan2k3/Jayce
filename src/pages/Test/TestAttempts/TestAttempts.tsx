@@ -4,10 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { toCompanyImagesDir } from "../../../helpers/images";
 import { useGetAttemptsQuery } from "./attempt.test-api";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../../../components/Loading";
+import { paths } from "../../../router/path";
 
 const TestDetail = () => {
+    const navigate = useNavigate();
     const { testId } = useParams<{ testId: string }>();
     if (!testId) throw new Error("Test ID is undefined");
     const { data: testAttemps, isLoading, error } = useGetAttemptsQuery(testId);
@@ -25,11 +27,19 @@ const TestDetail = () => {
         0
     );
 
+    const handleStartNewQuiz = () => {
+        navigate(paths.TEST.do(testId));
+    };
+
+    const handleBackToQuestions = () => {
+        navigate(paths.TEST.LIST);
+    };
+
     return (
         <div className="w-full flex-grow flex flex-col items-center px-4">
             <div className="w-full max-w-7xl py-6">
                 <h1 className="text-2xl font-bold mb-6">
-                    {testAttemps.question}
+                    {testAttemps.title}
                 </h1>
                 <div className="flex">
                     {/* AttempHistory */}
@@ -44,7 +54,7 @@ const TestDetail = () => {
                                             <span className="mx-2">&#8226;</span>
                                             <span className="">{formatDistanceToNow(new Date(testAttemps.createdAt))} ago</span>
                                         </div>
-                                        <h3 className="text-lg font-semibold text-gray-800 my-0">{testAttemps.question}</h3>
+                                        <h3 className="text-lg font-semibold text-gray-800 my-0">{testAttemps.title}</h3>
                                     </div>
                                 </div>
                                 <div className="flex flex-wrap gap-2 mb-4">
@@ -87,10 +97,10 @@ const TestDetail = () => {
                     </div>
                     {/* Sidebar */}
                     <div className="w-64 ml-4">
-                        <button className="w-full px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer">
+                        <button className="w-full px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={handleStartNewQuiz}>
                             Start a new quiz
                         </button>
-                        <button className="mt-4 w-full px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer">
+                        <button className="mt-4 w-full px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleBackToQuestions}>
                             Back to Questions
                         </button>
                         <div className="mt-4 bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">

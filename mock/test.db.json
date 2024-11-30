@@ -29,6 +29,71 @@
                     "status": "In Progress",
                     "submittedAt": "2022-12-01T00:00:00.000Z"
                 }
+            ],
+            "questions": [
+                {
+                    "questionText": "What is the difference between a class and an object?",
+                    "choices": [
+                        {
+                            "id": "A",
+                            "choiceText": "A class is a blueprint for objects, and an object is an instance of a class."
+                        },
+                        {
+                            "id": "B",
+                            "choiceText": "A class is an instance of an object, and an object is a blueprint for classes."
+                        },
+                        {
+                            "id": "C",
+                            "choiceText": "A class is a function, and an object is a variable."
+                        },
+                        {
+                            "id": "D",
+                            "choiceText": "A class is a variable, and an object is a function."
+                        }
+                    ]
+                },
+                {
+                    "questionText": "What is encapsulation in object-oriented programming?",
+                    "choices": [
+                        {
+                            "id": "A",
+                            "choiceText": "Encapsulation is the concept of wrapping data and methods that operate on the data within a single unit."
+                        },
+                        {
+                            "id": "B",
+                            "choiceText": "Encapsulation is the ability of a class to inherit properties and methods from another class."
+                        },
+                        {
+                            "id": "C",
+                            "choiceText": "Encapsulation is the process of creating a new class from existing classes."
+                        },
+                        {
+                            "id": "D",
+                            "choiceText": "Encapsulation is the concept of defining multiple methods with the same name but different parameters."
+                        }
+                    ]
+                },
+                {
+                    "questionText": "What is inheritance in object-oriented programming?",
+                    "choices": [
+                        {
+                            "id": "A",
+                            "choiceText": "Inheritance is the concept of creating a new class from an existing class."
+                        },
+                        {
+                            "id": "B",
+                            "choiceText": "Inheritance is the ability of a class to inherit properties and methods from another class."
+                        },
+                        {
+                            "id": "C",
+                            "choiceText": "Inheritance is the process of wrapping data and methods within a single unit."
+                        },
+                        {
+                            "id": "D",
+                            "choiceText": "Inheritance is the concept of defining multiple methods with the same name but different parameters."
+                        }
+                    ]
+                }
             ]
         },
         {
@@ -59,6 +124,71 @@
                     "grade": "",
                     "status": "In Progress",
                     "submittedAt": "2022-12-01T00:00:00.000Z"
+                }
+            ],
+            "questions": [
+                {
+                    "questionText": "What is the difference between a class and an object?",
+                    "choices": [
+                        {
+                            "id": "A",
+                            "choiceText": "A class is a blueprint for objects, and an object is an instance of a class."
+                        },
+                        {
+                            "id": "B",
+                            "choiceText": "A class is an instance of an object, and an object is a blueprint for classes."
+                        },
+                        {
+                            "id": "C",
+                            "choiceText": "A class is a function, and an object is a variable."
+                        },
+                        {
+                            "id": "D",
+                            "choiceText": "A class is a variable, and an object is a function."
+                        }
+                    ]
+                },
+                {
+                    "questionText": "What is encapsulation in object-oriented programming?",
+                    "choices": [
+                        {
+                            "id": "A",
+                            "choiceText": "Encapsulation is the concept of wrapping data and methods that operate on the data within a single unit."
+                        },
+                        {
+                            "id": "B",
+                            "choiceText": "Encapsulation is the ability of a class to inherit properties and methods from another class."
+                        },
+                        {
+                            "id": "C",
+                            "choiceText": "Encapsulation is the process of creating a new class from existing classes."
+                        },
+                        {
+                            "id": "D",
+                            "choiceText": "Encapsulation is the concept of defining multiple methods with the same name but different parameters."
+                        }
+                    ]
+                },
+                {
+                    "questionText": "What is inheritance in object-oriented programming?",
+                    "choices": [
+                        {
+                            "id": "A",
+                            "choiceText": "Inheritance is the concept of creating a new class from an existing class."
+                        },
+                        {
+                            "id": "B",
+                            "choiceText": "Inheritance is the ability of a class to inherit properties and methods from another class."
+                        },
+                        {
+                            "id": "C",
+                            "choiceText": "Inheritance is the process of wrapping data and methods within a single unit."
+                        },
+                        {
+                            "id": "D",
+                            "choiceText": "Inheritance is the concept of defining multiple methods with the same name but different parameters."
+                        }
+                    ]
                 }
             ]
         },
@@ -91,36 +221,70 @@
                     "status": "In Progress",
                     "submittedAt": "2022-12-01T00:00:00.000Z"
                 }
-            ]
-        },
-        {
-            "id": 4,
-            "company": "Microsoft",
-            "createdAt": "2022-12-01T00:00:00.000Z",
-            "question": "What is the purpose of the SOLID principles?",
-            "questionDescription": "Explain the SOLID principles in software development and why they are important.",
-            "minutesToAnswer": "35",
-            "tags": [
-                "SOLID",
-                "software development",
-                "principles"
             ],
-            "answersCount": "12",
-            "attempts": [
+            "questions": [
                 {
-                    "grade": "10",
-                    "status": "Finished",
-                    "submittedAt": "2022-12-01T00:00:00.000Z"
+                    "questionText": "What is the difference between a class and an object?",
+                    "choices": [
+                        {
+                            "id": "A",
+                            "choiceText": "A class is a blueprint for objects, and an object is an instance of a class."
+                        },
+                        {
+                            "id": "B",
+                            "choiceText": "A class is an instance of an object, and an object is a blueprint for classes."
+                        },
+                        {
+                            "id": "C",
+                            "choiceText": "A class is a function, and an object is a variable."
+                        },
+                        {
+                            "id": "D",
+                            "choiceText": "A class is a variable, and an object is a function."
+                        }
+                    ]
                 },
                 {
-                    "grade": "8",
-                    "status": "Finished",
-                    "submittedAt": "2022-12-01T00:00:00.000Z"
+                    "questionText": "What is encapsulation in object-oriented programming?",
+                    "choices": [
+                        {
+                            "id": "A",
+                            "choiceText": "Encapsulation is the concept of wrapping data and methods that operate on the data within a single unit."
+                        },
+                        {
+                            "id": "B",
+                            "choiceText": "Encapsulation is the ability of a class to inherit properties and methods from another class."
+                        },
+                        {
+                            "id": "C",
+                            "choiceText": "Encapsulation is the process of creating a new class from existing classes."
+                        },
+                        {
+                            "id": "D",
+                            "choiceText": "Encapsulation is the concept of defining multiple methods with the same name but different parameters."
+                        }
+                    ]
                 },
                 {
-                    "grade": "",
-                    "status": "In Progress",
-                    "submittedAt": "2022-12-01T00:00:00.000Z"
+                    "questionText": "What is inheritance in object-oriented programming?",
+                    "choices": [
+                        {
+                            "id": "A",
+                            "choiceText": "Inheritance is the concept of creating a new class from an existing class."
+                        },
+                        {
+                            "id": "B",
+                            "choiceText": "Inheritance is the ability of a class to inherit properties and methods from another class."
+                        },
+                        {
+                            "id": "C",
+                            "choiceText": "Inheritance is the process of wrapping data and methods within a single unit."
+                        },
+                        {
+                            "id": "D",
+                            "choiceText": "Inheritance is the concept of defining multiple methods with the same name but different parameters."
+                        }
+                    ]
                 }
             ]
         }
