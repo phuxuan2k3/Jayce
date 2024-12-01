@@ -1,10 +1,15 @@
 import testApi from "../../../features/Test/test.api";
 import { ReviewSubmission } from "./types";
 
+type GetEvaluateParams = {
+    testId: string,
+    attemptId: string,
+}
+
 export const evaluateApi = testApi.injectEndpoints({
     endpoints: (build) => ({
-        getEvaluate: build.query<ReviewSubmission, string>({
-            query: (testId) => `tests/${testId}/evaluate`,
+        getEvaluate: build.query<ReviewSubmission, GetEvaluateParams>({
+            query: ({ testId, attemptId }) => `${testId}/evaluate/${attemptId}`,
         }),
     }),
 });

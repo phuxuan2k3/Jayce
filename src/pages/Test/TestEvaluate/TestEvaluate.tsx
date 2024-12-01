@@ -3,53 +3,58 @@ import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
 import { useGetEvaluateQuery } from "./evaluate.test-api";
 import { useParams } from "react-router-dom";
 import Loading from "../../../components/Loading";
+import { ReviewSubmission } from "./types";
+import { urlMode } from "../../../app/env";
 
 ChartJS.register(ArcElement, Tooltip);
 
 const Evaluate = () => {
-	const { testId } = useParams<{ testId: string }>();
-	if (!testId) throw new Error("Test ID is required to evaluate the test");
-	const { data: evaluate, isLoading, error } = useGetEvaluateQuery(testId);
-	if (error) throw error;
-	if (isLoading) return <Loading />;
-	if (!evaluate) return null;
+	const { testId, attemptId } = useParams<{ testId: string, attemptId: string }>();
+	if (!testId || !attemptId) throw new Error("Test ID is required to evaluate the test");
 
-	// const title = "Design a product that helps people find contracts";
-	// const reviewComment = `
-	//     After completing the programming skills assessment, I can see that you demonstrated 
-	//     a solid understanding of key programming concepts, especially in terms of problem-solving 
-	//     and code optimization. Your solutions were mostly efficient and well-structured, with 
-	//     some innovative approaches. One area for improvement would be enhancing code readability 
-	//     by including more meaningful comments and better variable naming conventions. Additionally, 
-	//     focusing on more robust error handling would further strengthen your coding skills. 
-	//     Overall, your performance indicates strong potential, and with a few refinements, 
-	//     you could advance even further in this area.
-	// `;
-	// const skills = [
-	// 	{ title: "Design Frontend", stars: 4.7 },
-	// 	{ title: "Design Database", stars: 4.5 },
-	// 	{ title: "UI Animation", stars: 2.4 },
-	// ];
+	// Todo
+	let evaluate: ReviewSubmission = {
+		title: "Test Evaluation",
+		comment: "Great job! You have shown excellent understanding of the concepts. Keep up the good work and continue to build on your strengths. There are a few areas that need improvement, but overall, you did very well.",
+		skills: [
+			{ name: "JavaScript", rating: 4.5 },
+			{ name: "React", rating: 4.0 },
+			{ name: "CSS", rating: 3.5 },
+		],
+		completionOverview: {
+			excellentCompletion: 50,
+			satifactoyCompletion: 30,
+			needsImprovement: 20,
+		},
+	};
+	const { data, isLoading, error } = useGetEvaluateQuery({ testId, attemptId });
+	if (urlMode !== "MOCK") {
+		if (error) throw error;
+		if (isLoading) return <Loading />;
+		if (!data) return null;
+		evaluate = data;
+		console.log(testId, attemptId);
+	}
+
 	const completionOverview = {
 		legend: [
 			{
 				color: "#2b6cb0",
 				text: "Excellent Completion",
-				percentage: evaluate.completionOverviews.excellentCompletion
+				percentage: evaluate.completionOverview.excellentCompletion
 			},
 			{
 				color: "#38b2ac",
 				text: "Satisfactory Completion",
-				percentage: evaluate.completionOverviews.satifactoyCompletion
+				percentage: evaluate.completionOverview.satifactoyCompletion
 			},
 			{
 				color: "#81e6d9",
 				text: "Needs Improvement",
-				percentage: evaluate.completionOverviews.needsImprovement
+				percentage: evaluate.completionOverview.needsImprovement
 			},
 		],
 	};
-
 
 	return (
 		<div className="min-h-screen p-6 ">

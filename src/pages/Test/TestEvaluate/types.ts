@@ -7,7 +7,7 @@ export type ReviewSubmission = {
     title: string;
     comment: string;
     skills: SkillAssessment[];
-    completionOverviews: {
+    completionOverview: {
         excellentCompletion: number;
         satifactoyCompletion: number;
         needsImprovement: number;
