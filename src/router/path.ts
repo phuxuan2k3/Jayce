@@ -19,11 +19,14 @@ export const paths = {
 			return `/test/${testId}/attempts`;
 		},
 
-		VIEWANSWER: '/test/viewanswer',
+		VIEWANSWER: '/test/:testId/viewanswer/:attemptId',
+		viewAnswer(testId: string, attemptId: string): string {
+			return `/test/${testId}/viewanswer/${attemptId}`;
+		},
 
-		EVALUATE: '/test/:testId/evaluate/:attemptId',
-		evaluate(testId: string, attemptId: string): string {
-			return `/test/${testId}/evaluate/${attemptId}`;
+		EVALUATE: '/test/:testId/evaluate',
+		evaluate(testId: string): string {
+			return `/test/${testId}/evaluate`;
 		},
 
 		SCHEDULE: '/test/schedule',
@@ -41,5 +44,5 @@ export const paths = {
 		}
 	},
 	CREATETEST: '/createtest',
-	TESTLISTVIEW:'/testlistview',
+	TESTLISTVIEW: '/testlistview',
 }

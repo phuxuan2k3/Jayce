@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
-import ReactDOM from 'react-dom'
-import Navbar from "../../components/Navbar";
-
+import { useState } from 'react'
 import Scheduler from "react-mui-scheduler"
-const Evaluate = () => {
+
+const TestSchedule = () => {
     const title = "Design a product that helps people find contracts";
     const events = [
         {
@@ -115,8 +113,6 @@ const Evaluate = () => {
     });
     return (
         <>
-
-            <Navbar />
             <div className="min-h-screen p-6 ">
                 <h1 className="text-2xl font-bold mb-6">{title}</h1>
                 <div className="flex space-x-6">
@@ -133,9 +129,7 @@ const Evaluate = () => {
                                 />
                             </div>
                         </div>
-
                     </div>
-
                     <div className="space-y-6">
                         <div className="bg-white shadow-md rounded-md p-6 space-y-6">
                             <div className="space-y-4">
@@ -161,17 +155,9 @@ const Evaluate = () => {
 
                     </div>
                 </div>
-
-
             </div>
         </>
     );
 };
 
-
-
-
-
-
-
-export default Evaluate;
+export default TestSchedule;

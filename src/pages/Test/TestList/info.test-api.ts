@@ -1,9 +1,9 @@
 import testApi from "../../../features/Test/test.api";
-import { TestDisplay } from "./types";
+import { TestDisplayProps } from "./types";
 
 const infoApi = testApi.injectEndpoints({
     endpoints: (builder) => ({
-        getAll: builder.query<TestDisplay[], void>({
+        getAll: builder.query<TestDisplayProps[], void>({
             query: () => `/list`
         }),
     }),

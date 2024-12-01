@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import GradientBorderGood from "../../../components/GradientBorder.good";
 import TestCard from "./TestCard";
-import { useGetAllQuery } from "./info.test-api";
-import Loading from "../../../components/Loading";
+import { mockData } from "./types";
+
 
 const TestList: React.FC = () => {
-	const { data: questions, isLoading, error } = useGetAllQuery();
-	if (error) throw error;
+	// todo
+	const questions = mockData;
 
 	const [time, setTime] = useState<number | null>(null);
 	const [difficulty, setDifficulty] = useState<number | null>(null);
@@ -21,12 +21,6 @@ const TestList: React.FC = () => {
 		setDifficulty(Number(event.target.value));
 	};
 
-	if (isLoading) {
-		return <Loading />;
-	}
-	if (questions == null) {
-		return null;
-	}
 	return (
 		<div className="p-6 max-w-7xl mx-auto">
 			<header className="flex flex-col mb-8">

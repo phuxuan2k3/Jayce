@@ -1,9 +1,9 @@
 import testApi from "../../../features/Test/test.api";
-import { TestAttempts } from "./types";
+import { TestAttemptsProps } from "./types";
 
 const attemptApi = testApi.injectEndpoints({
     endpoints: (builder) => ({
-        getAttempts: builder.query<TestAttempts, string>({
+        getAttempts: builder.query<TestAttemptsProps, string>({
             query: (id) => `/${id}/attempts`
         }),
     }),

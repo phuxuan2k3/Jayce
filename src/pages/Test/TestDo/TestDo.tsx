@@ -1,24 +1,19 @@
 import { useState } from 'react';
 import QuestionComponent from './QuestionComponent';
-import { useDoTestQuery } from './do.test-api';
-import Loading from '../../../components/Loading';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { mockData } from './types';
+import { paths } from '../../../router/path';
 
 const TestDo = () => {
+	const navigate = useNavigate();
 	const [questionNumber, setQuestionNumber] = useState(1);
 	const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string | null }>({});
 	const [flaggedQuestions, setFlaggedQuestions] = useState<Set<number>>(new Set());
 
 	const { testId } = useParams<{ testId: string }>();
 	if (!testId) throw new Error("Test ID or Question ID is undefined");
-	const { data: testQuestions, isLoading, error } = useDoTestQuery(testId);
-	if (error) throw error;
-	if (isLoading) {
-		return <Loading />;
-	}
-	if (!testQuestions) {
-		return null;
-	}
+	// todo
+	const testQuestions = mockData;
 
 	const questionLength = testQuestions.questions.length;
 	const goToNextQuestion = () => {
@@ -57,8 +52,13 @@ const TestDo = () => {
 		return "bg-white";
 	};
 
+	const handleCancelTest = () => {
+		navigate(paths.TEST.attempts(testId));
+	}
+
 	const handleSubmitClick = () => {
 		// todo: submit answers
+		navigate(paths.TEST.attempts(testId));
 	}
 
 	return (
@@ -99,6 +99,9 @@ const TestDo = () => {
 						</div>
 						<button className="mt-4 w-full bg-gradient-text text-md font-bold text-white px-6 py-3 rounded-lg" onClick={handleSubmitClick}>
 							Submit
+						</button>
+						<button className="mt-4 w-full px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleCancelTest}>
+							Cancel Test
 						</button>
 					</div>
 				</div>

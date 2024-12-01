@@ -1,9 +1,9 @@
 import testApi from "../../../features/Test/test.api";
-import { TestQuestions } from "./types";
+import { TestDoProps } from "./types";
 
 const doApi = testApi.injectEndpoints({
     endpoints: (builder) => ({
-        doTest: builder.query<TestQuestions, string>({
+        doTest: builder.query<TestDoProps, string>({
             query: (testId) => `/${testId}/do`
         }),
         submitTest: builder.mutation<void, { testId: string, answers: string[] }>({

@@ -1,40 +1,18 @@
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
-import { useGetEvaluateQuery } from "./evaluate.test-api";
-import { useParams } from "react-router-dom";
-import Loading from "../../../components/Loading";
-import { ReviewSubmission } from "./types";
-import { urlMode } from "../../../app/env";
+import { useNavigate, useParams } from "react-router-dom";
+import { mockData } from "./types";
+import { paths } from "../../../router/path";
 
 ChartJS.register(ArcElement, Tooltip);
 
-const Evaluate = () => {
-	const { testId, attemptId } = useParams<{ testId: string, attemptId: string }>();
-	if (!testId || !attemptId) throw new Error("Test ID is required to evaluate the test");
+const TestEvaluate = () => {
+	const navigate = useNavigate();
+	const { testId } = useParams<{ testId: string }>();
+	if (!testId) throw new Error("Test ID is required to evaluate the test");
 
 	// Todo
-	let evaluate: ReviewSubmission = {
-		title: "Test Evaluation",
-		comment: "Great job! You have shown excellent understanding of the concepts. Keep up the good work and continue to build on your strengths. There are a few areas that need improvement, but overall, you did very well.",
-		skills: [
-			{ name: "JavaScript", rating: 4.5 },
-			{ name: "React", rating: 4.0 },
-			{ name: "CSS", rating: 3.5 },
-		],
-		completionOverview: {
-			excellentCompletion: 50,
-			satifactoyCompletion: 30,
-			needsImprovement: 20,
-		},
-	};
-	const { data, isLoading, error } = useGetEvaluateQuery({ testId, attemptId });
-	if (urlMode !== "MOCK") {
-		if (error) throw error;
-		if (isLoading) return <Loading />;
-		if (!data) return null;
-		evaluate = data;
-		console.log(testId, attemptId);
-	}
+	const evaluate = mockData;
 
 	const completionOverview = {
 		legend: [
@@ -56,6 +34,10 @@ const Evaluate = () => {
 		],
 	};
 
+	const handleCoursesForYou = () => {
+		navigate(paths.TEST.SCHEDULE);
+	}
+
 	return (
 		<div className="min-h-screen p-6 ">
 			<h1 className="text-2xl font-bold mb-6">{evaluate.title}</h1>
@@ -70,8 +52,8 @@ const Evaluate = () => {
 					</div>
 					{/* Courses Button */}
 					<div className="flex justify-end">
-						<button className="mt-4 bg-gradient-text text-md font-bold text-white px-6 py-3 rounded-lg">
-							Course for you
+						<button className="mt-4 bg-gradient-text text-md font-bold text-white px-6 py-3 rounded-lg" onClick={handleCoursesForYou}>
+							Courses for you
 						</button>
 					</div>
 				</div>
@@ -105,7 +87,6 @@ const Evaluate = () => {
 										</li>
 									))}
 								</ul>
-
 							</div>
 						</div>
 					</div>
@@ -195,4 +176,4 @@ const PieChart = ({ legend }: { legend: { color: string; text: string; percentag
 		</div>
 	);
 };
-export default Evaluate;
+export default TestEvaluate;

@@ -10,10 +10,9 @@ import TestDetail from "../pages/Test/TestAttempts/TestAttempts";
 import TestEvaluate from "../pages/Test/TestEvaluate/TestEvaluate";
 import ErrorPage from "../components/ErrorPage";
 import TestSchedule from "../pages/Test/TestSchedule/TestSchedule";
-import TestSubmissionListView from "../pages/Test/Submission/ListView/TestSubmissionListView";
-import TestSubmissionDetail from "../pages/Test/Submission/Detail/TestSubmissionDetail";
 import TestViewAnswer from "../pages/Test/TestViewAnswer/TestViewAnswer";
-
+import TestSubmissionListView from "../pages/Test/BusinessManager/ListView/TestSubmissionListView";
+import TestSubmissionDetail from "../pages/Test/BusinessManager/Detail/TestSubmissionDetail";
 
 const router = createBrowserRouter([
 	{

@@ -3,23 +3,17 @@ import GradientBorderGood from "../../../components/GradientBorder.good";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { toCompanyImagesDir } from "../../../helpers/images";
-import { useGetAttemptsQuery } from "./attempt.test-api";
 import { useNavigate, useParams } from "react-router-dom";
-import Loading from "../../../components/Loading";
 import { paths } from "../../../router/path";
+import { mockData } from "./types";
 
 const TestDetail = () => {
     const navigate = useNavigate();
     const { testId } = useParams<{ testId: string }>();
     if (!testId) throw new Error("Test ID is undefined");
-    const { data: testAttemps, isLoading, error } = useGetAttemptsQuery(testId);
-    if (error) throw error;
-    if (isLoading) {
-        return <Loading />;
-    }
-    if (!testAttemps) {
-        return null;
-    }
+
+    // todo
+    const testAttemps = mockData;
 
     const companyAvatar = toCompanyImagesDir(testAttemps.company);
     const highestScore = testAttemps.attempts.reduce(
@@ -35,6 +29,14 @@ const TestDetail = () => {
         navigate(paths.TEST.LIST);
     };
 
+    const handleOnAttemptClick = (attemptId: string) => {
+        navigate(paths.TEST.viewAnswer(testId, attemptId));
+    };
+
+    const handleViewEvaluated = () => {
+        navigate(paths.TEST.evaluate(testId));
+    }
+
     return (
         <div className="w-full flex-grow flex flex-col items-center px-4">
             <div className="w-full max-w-7xl py-6">
@@ -44,8 +46,8 @@ const TestDetail = () => {
                 <div className="flex">
                     {/* AttempHistory */}
                     <div className="flex-1 flex-column bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
-                        {testAttemps.attempts.map((attempt, index) => (
-                            <div key={index} className="bg-[#EAF6F8] p-4 mb-4 rounded-lg shadow-md">
+                        {testAttemps.attempts.map((attempt) => (
+                            <div key={attempt.id} className="bg-[#EAF6F8] p-4 mb-4 rounded-lg shadow-md cursor-pointer" onClick={() => handleOnAttemptClick(attempt.id)}>
                                 <div className="flex flex-row border-b border-primary pb-4 items-center gap-3 mb-3 h-fit">
                                     <img className="w-12 h-12 rounded-full" src={companyAvatar} alt={testAttemps.company} />
                                     <div className="flex flex-col h-fit">
@@ -82,7 +84,7 @@ const TestDetail = () => {
                                 </div>
                                 <div className="mt-6 flex flex-row items-start bg-gray-50 rounded-xl px-6 py-4 justify-between font-sans">
                                     <span className=" text-blue-chill-600 italic font-medium">
-                                        Answer: {attempt.grade === null ? null : "Hehehehehe"}
+                                        Answer: {attempt.grade ?? "Not yet graded"}
                                     </span>
                                     <div className="font-semibold flex items-center min-w-fit cursor-pointer">
                                         <span className="whitespace-pre">{attempt.status === "Finished" ? "Review" : "Continue"} </span>
@@ -111,7 +113,7 @@ const TestDetail = () => {
                                 accuracy rather than speed. Good luck!
                             </p>
                         </div>
-                        <button className="mt-4 w-full border bg-gradient-text text-md font-bold text-white px-6 py-3 rounded-lg cursor-pointer">
+                        <button className="mt-4 w-full border bg-gradient-text text-md font-bold text-white px-6 py-3 rounded-lg cursor-pointer" onClick={handleViewEvaluated}>
                             View Evaluated
                         </button>
                     </div>
