@@ -2,7 +2,7 @@ import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
 import { useNavigate, useParams } from "react-router-dom";
 import { mockData } from "./types";
-import { paths } from "../../../router/path";
+import { paths } from "../../../../router/path";
 
 ChartJS.register(ArcElement, Tooltip);
 

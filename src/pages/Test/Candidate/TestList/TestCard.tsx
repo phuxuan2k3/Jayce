@@ -4,9 +4,9 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import GradientBorderGood from "../../../components/GradientBorder.good";
+import GradientBorderGood from "../../../../components/GradientBorder.good";
 import { TestDisplayProps } from "./types";
-import { toCompanyImagesDir } from "../../../helpers/images";
+import { toCompanyImagesDir } from "../../../../helpers/images";
 import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
 

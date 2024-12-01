@@ -2,7 +2,7 @@ import { useState } from 'react';
 import QuestionComponent from './QuestionComponent';
 import { useNavigate, useParams } from 'react-router-dom';
 import { mockData } from './types';
-import { paths } from '../../../router/path';
+import { paths } from '../../../../router/path';
 
 const TestDo = () => {
 	const navigate = useNavigate();

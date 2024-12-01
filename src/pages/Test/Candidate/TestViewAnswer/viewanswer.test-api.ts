@@ -1,4 +1,4 @@
-import testApi from "../../../features/Test/test.api";
+import testApi from "../../../../features/Test/test.api";
 import { TestViewAnswerProps } from "./types";
 
 type GetTestAnswerParams = {

@@ -1,4 +1,4 @@
-import testApi from "../../../features/Test/test.api";
+import testApi from "../../../../features/Test/test.api";
 import { TestEvaluateProps } from "./types";
 
 type GetEvaluateParams = {

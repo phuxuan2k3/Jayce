@@ -1,10 +1,10 @@
 import { format, formatDistanceToNow } from "date-fns";
-import GradientBorderGood from "../../../components/GradientBorder.good";
+import GradientBorderGood from "../../../../components/GradientBorder.good";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { toCompanyImagesDir } from "../../../helpers/images";
+import { toCompanyImagesDir } from "../../../../helpers/images";
 import { useNavigate, useParams } from "react-router-dom";
-import { paths } from "../../../router/path";
+import { paths } from "../../../../router/path";
 import { mockData } from "./types";
 
 const TestDetail = () => {

@@ -1,4 +1,4 @@
-import testApi from "../../../features/Test/test.api";
+import testApi from "../../../../features/Test/test.api";
 import { TestDisplayProps } from "./types";
 
 const infoApi = testApi.injectEndpoints({

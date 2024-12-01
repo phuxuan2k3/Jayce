@@ -1,7 +1,7 @@
 import { FormControl, InputAdornment, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React, { useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
-import GradientBorderGood from "../../../components/GradientBorder.good";
+import GradientBorderGood from "../../../../components/GradientBorder.good";
 import TestCard from "./TestCard";
 import { mockData } from "./types";
 

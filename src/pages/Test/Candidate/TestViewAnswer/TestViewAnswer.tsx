@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
-import GradientBorderNotGood from "../../../components/GradientBorder.notgood";
+import GradientBorderNotGood from "../../../../components/GradientBorder.notgood";
 import { useNavigate, useParams } from "react-router-dom";
 import { mockData } from "./types";
-import { paths } from "../../../router/path";
+import { paths } from "../../../../router/path";
 
 const TestViewAnswer = () => {
     const navigate = useNavigate();
