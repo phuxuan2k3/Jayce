@@ -1,118 +1,177 @@
-import { format, formatDistanceToNow } from "date-fns";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import GradientBorderGood from "../../../components/GradientBorder.good";
+import React, { useState } from 'react'
+import ReactDOM from 'react-dom'
+import Navbar from "../../components/Navbar";
 
-const TestSchedule = () => {
-    const testInfo = {
-        avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9p_svIjwA810BURgFBTU0V6fNjiU9MRbUXQ&s",
-        createdAt: "2024-11-20T18:23:00Z",
-        title: "Design a product that helps people find contract",
-        askedAt: "Meta (Facebook)",
-        tags: ["Product Manager", "Designer", "Developer"],
-    }
-    const attempHistory = [
+import Scheduler from "react-mui-scheduler"
+const Evaluate = () => {
+    const title = "Design a product that helps people find contracts";
+    const events = [
         {
-            status: "Finished",
-            grade: 10,
-            submittedAt: "2024-11-21T18:23:00Z",
+            id: "event-1",
+            label: "Medical consultation",
+            groupLabel: "Dr Shaun Murphy",
+            user: "Dr Shaun Murphy",
+            color: "#f28f6a",
+            startHour: "04:00 AM",
+            endHour: "05:00 AM",
+            date: "2024-11-26",
+            createdAt: new Date(),
+            createdBy: "Kristina Mayer",
+            image: "https://t3.ftcdn.net/jpg/03/54/17/86/360_F_354178616_uSdqA6i1A1vkkskFPKOoxQOED0ZMIcn3.jpg"
         },
         {
-            status: "In Progress",
-            grade: null,
-            submittedAt: null,
+            id: "event-2",
+            label: "Medical consultation",
+            groupLabel: "Dr Claire Brown",
+            user: "Dr Claire Brown",
+            color: "#099ce5",
+            startHour: "09:00 AM",
+            endHour: "10:00 AM",
+            date: "2024-11-09",
+            createdAt: new Date(),
+            createdBy: "Kristina Mayer",
+            image: "https://tenten.vn/tin-tuc/wp-content/uploads/2022/05/web-design-4.jpg"
+        },
+        {
+            id: "event-3",
+            label: "Medical consultation",
+            groupLabel: "Dr Menlendez Hary",
+            user: "Dr Menlendez Hary",
+            color: "#263686",
+            startHour: "13:00",
+            endHour: "14:00",
+            date: "2024-11-10",
+            createdAt: new Date(),
+            createdBy: "Kristina Mayer",
+            image: "https://tenten.vn/tin-tuc/wp-content/uploads/2022/05/web-design-4.jpg"
+        },
+        {
+            id: "event-4",
+            label: "Consultation prénatale",
+            groupLabel: "Dr Shaun Murphy",
+            user: "Dr Shaun Murphy",
+            color: "#f28f6a",
+            startHour: "08:00 AM",
+            endHour: "09:00 AM",
+            date: "2024-11-11",
+            createdAt: new Date(),
+            createdBy: "Kristina Mayer",
+            image: "https://tenten.vn/tin-tuc/wp-content/uploads/2022/05/web-design-4.jpg"
+        },
+        // Dữ liệu khóa học A
+        {
+            id: "event-5",
+            label: "Khóa học A",
+            groupLabel: "Instructor A",
+            user: "Instructor A",
+            color: "#8e44ad",
+            startHour: "10:00 AM",
+            endHour: "12:00 PM",
+            date: "2024-11-26", // Ngày khóa học
+            createdAt: new Date(),
+            createdBy: "Admin",
+            image: "https://tenten.vn/tin-tuc/wp-content/uploads/2022/05/web-design-4.jpg"
+        },
+        {
+            id: "event-6",
+            label: "Khóa học A",
+            groupLabel: "Instructor A",
+            user: "Instructor A",
+            color: "#8e44ad",
+            startHour: "10:00 AM",
+            endHour: "12:00 PM",
+            date: "2024-11-27", // Ngày khóa học
+            createdAt: new Date(),
+            createdBy: "Admin",
+            image: "https://tenten.vn/tin-tuc/wp-content/uploads/2022/05/web-design-4.jpg"
         }
     ];
+    const [state] = useState({
+        options: {
+            transitionMode: "zoom",
+            startWeekOn: "mon",
+            defaultMode: "month",
+            minWidth: 540,
+            maxWidth: 540,
+            minHeight: 540,
+            maxHeight: 540
+        },
 
-    const highestScore = attempHistory.reduce(
-        (max, attempt) => (attempt.grade !== null && attempt.grade > max ? attempt.grade : max),
-        0
-    );
-
+        toolbarProps: {
+            showSearchBar: true,
+            showSwitchModeButtons: false,
+            showDatePicker: true
+        }
+    })
+    const uniqueEvents = [];
+    const uniqueLabels = new Set();
+    const filteredEvents = events.filter(event => {
+        if (!uniqueLabels.has(event.label)) {
+            uniqueLabels.add(event.label);
+            uniqueEvents.push(event);
+            return true;
+        }
+        return false;
+    });
     return (
-        <div className="w-full flex-grow flex flex-col items-center px-4">
-            <div className="w-full max-w-7xl py-6">
-                <h1 className="text-2xl font-bold mb-6">
-                    {testInfo.title}
-                </h1>
-                <div className="flex">
-                    {/* AttempHistory */}
-                    <div className="flex-1 flex-column bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
-                        {attempHistory.map((attempt, index) => (
-                            <div key={index} className="bg-[#EAF6F8] p-4 mb-4 rounded-lg shadow-md">
-                                <div className="flex flex-row border-b border-primary pb-4 items-center gap-3 mb-3 h-fit">
-                                    <img className="w-12 h-12 rounded-full" src={testInfo.avatar} alt={testInfo.title} />
-                                    <div className="flex flex-col h-fit">
-                                        <div className="flex items-center text-sm text-blue-chill-500 mb-0">
-                                            <span className="font-semibold">Asked at {testInfo.askedAt}</span>
-                                            <span className="mx-2">&#8226;</span>
-                                            <span className="">{formatDistanceToNow(new Date(testInfo.createdAt))} ago</span>
+        <>
+
+            <Navbar />
+            <div className="min-h-screen p-6 ">
+                <h1 className="text-2xl font-bold mb-6">{title}</h1>
+                <div className="flex space-x-6">
+                    <div className="bg-blue-50 shadow-md rounded-md p-6 space-y-6 w-5/6">
+                        {/* Review Comment */}
+                        <div className="space-y-4">
+                            <div className="bg-white p-4 rounded-md text-gray-700">
+                                <Scheduler
+                                    locale="en"
+                                    events={events}
+                                    legacyStyle={false}
+                                    options={state?.options}
+                                    toolbarProps={state?.toolbarProps}
+                                />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div className="space-y-6">
+                        <div className="bg-white shadow-md rounded-md p-6 space-y-6">
+                            <div className="space-y-4">
+                                <h2 className="font-semibold text-lg">Your course</h2>
+                                <div className="space-y-2">
+                                    {filteredEvents.map((event) => (
+                                        <div key={`${event.id}-${event.label}`} className="flex flex-col items-center bg-gray-100 rounded-md shadow-md">
+                                            {/* Image */}
+                                            <img
+                                                src={event.image}
+                                                alt={event.label}
+                                                className="w-full h-40 object-cover rounded-md mb-4"
+                                            />
+                                            {/* Event Information */}
+                                            <p className="text-sm text-gray-500 text-center">{event.createdBy}</p>
+                                            <h3 className="text-xl font-semibold text-center mb-4">{event.label}</h3>
                                         </div>
-                                        <h3 className="text-lg font-semibold text-gray-800 my-0">{testInfo.title}</h3>
-                                    </div>
-                                </div>
-                                <div className="flex flex-wrap gap-2 mb-4">
-                                    {testInfo.tags.map((tag, index: number) => (
-                                        <GradientBorderGood key={index}>
-                                            {tag}
-                                        </GradientBorderGood>
                                     ))}
-                                </div>
-                                <div className="flex flex-row text-xl font-bold mb-2">
-                                    <span className="text-[#39A0AD] whitespace-pre">
-                                        {attempt.grade === null ? null : "Your grade for this quiz is: "}
-                                    </span>
-                                    <span className="text-[#2E808A]">
-                                        {attempt.grade === null ? null : `${attempt.grade.toFixed(2)}`}
-                                    </span>
-                                </div>
-                                <div className="flex flex-row font-semibold mb-2 text-[#39A0AD] items-center">
-                                    <div className="text-lg">
-                                        {attempt.status === null ? null : `${attempt.status}`}
-                                    </div>
-                                    <div className="ml-20">
-                                        {attempt.status === "Finished" ? `Submitted at ${format(new Date(testInfo.createdAt), "PPPP")}` : null}
-                                    </div>
-                                </div>
-                                <div className="mt-6 flex flex-row items-start bg-gray-50 rounded-xl px-6 py-4 justify-between font-sans">
-                                    <span className=" text-blue-chill-600 italic font-medium">
-                                        Answer: {attempt.grade === null ? null : "Hehehehehe"}
-                                    </span>
-                                    <div className="font-semibold flex items-center min-w-fit cursor-pointer">
-                                        <span className="whitespace-pre">{attempt.status === "Finished" ? "Review" : "Continue"} </span>
-                                        <FontAwesomeIcon icon={faCaretDown} />
-                                    </div>
+
                                 </div>
                             </div>
-                        ))}
-                        <div className="w-full text-2xl text-center font-bold text-primary mt-10 mb-6">
-                            <span>Highest score: {highestScore.toFixed(2)}</span>
                         </div>
-                    </div>
-                    {/* Sidebar */}
-                    <div className="w-64 ml-4">
-                        <button className="w-full px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer">
-                            Start a new quiz
-                        </button>
-                        <button className="mt-4 w-full px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer">
-                            Back to Questions
-                        </button>
-                        <div className="mt-4 bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
-                            <h3 className="text-lg font-bold">Notes</h3>
-                            <p className="text-sm text-[#39A0AD] mt-2">
-                                Please read each question carefully and double-check your
-                                answers. Manage your time wisely, stay calm, and focus on
-                                accuracy rather than speed. Good luck!
-                            </p>
-                        </div>
-                        <button className="mt-4 w-full border bg-gradient-text text-md font-bold text-white px-6 py-3 rounded-lg cursor-pointer">
-                            View Evaluated
-                        </button>
+
                     </div>
                 </div>
-            </div>
-        </div>
-    );
-}
 
-export default TestSchedule
+
+            </div>
+        </>
+    );
+};
+
+
+
+
+
+
+
+export default Evaluate;

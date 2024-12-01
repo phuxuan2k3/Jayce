@@ -9,12 +9,7 @@ const TestViewAnswer = () => {
     const answerList = [
         {
             question: "What is the first step in the design process?",
-            options: [
-                "Research",
-                "Design",
-                "Develop",
-                "Test",
-            ],
+            options: ["Research", "Design", "Develop", "Test"],
             chosenAnswer: 0,
             correctAnswer: 0,
             point: 10,
