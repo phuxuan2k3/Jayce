@@ -65,7 +65,7 @@ const TestViewAnswer = () => {
                                 {/* Question */}
                                 <div className="w-11/12 mb-4">
                                     <GradientBorderNotGood className="w-full h-fit font-semibold">
-                                        {question.questionText}
+                                        {question.text}
                                     </GradientBorderNotGood>
                                 </div>
 
@@ -73,7 +73,7 @@ const TestViewAnswer = () => {
                                 {question.choices.map((choice) => (
                                     <div key={choice.id} className="w-full flex flex-row mt-2" >
                                         <GradientBorderNotGood className="w-11/12 h-fit">
-                                            {choice.id}. {choice.choiceText}
+                                            {choice.id}. {choice.text}
                                         </GradientBorderNotGood>
                                         <div className="w-1/12 flex items-center justify-center">
                                             {renderChoiceIcon(choice)}

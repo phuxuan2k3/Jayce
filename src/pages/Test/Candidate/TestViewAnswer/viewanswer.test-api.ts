@@ -9,7 +9,7 @@ type GetTestAnswerParams = {
 const viewAnswerApi = testApi.injectEndpoints({
     endpoints: (build) => ({
         getTestAnswers: build.query<TestViewAnswerProps, GetTestAnswerParams>({
-            query: ({ testId, attemptId }) => `/${testId}/answer/${attemptId}`,
+            query: ({ testId, attemptId }) => `/${testId}/answers/${attemptId}`,
         }),
     }),
 });

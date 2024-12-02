@@ -1,20 +1,20 @@
-type QuestionChoice = {
+type TestQuestionChoiceAnswer = {
     id: string;
-    choiceText: string;
+    text: string;
     isChoosen: boolean;
     isCorrect: boolean;
 }
 
-type MultipleChoiceQuestionAnswer = {
+type TestQuestionAnswer = {
     id: string;
-    questionText: string;
-    choices: QuestionChoice[];
+    text: string;
+    choices: TestQuestionChoiceAnswer[];
     point: number,
 }
 
 export type TestViewAnswerProps = {
     title: string;
-    questions: MultipleChoiceQuestionAnswer[];
+    questions: TestQuestionAnswer[];
 }
 
 export const mockData: TestViewAnswerProps = {
@@ -22,29 +22,29 @@ export const mockData: TestViewAnswerProps = {
     questions: [
         {
             id: "1",
-            questionText: "What is the first step in the design process?",
+            text: "What is the first step in the design process?",
             choices: [
                 {
                     id: "A",
-                    choiceText: "Research",
+                    text: "Research",
                     isChoosen: true,
                     isCorrect: true,
                 },
                 {
                     id: "B",
-                    choiceText: "Design",
+                    text: "Design",
                     isChoosen: false,
                     isCorrect: false,
                 },
                 {
                     id: "C",
-                    choiceText: "Develop",
+                    text: "Develop",
                     isChoosen: false,
                     isCorrect: false,
                 },
                 {
                     id: "D",
-                    choiceText: "Test",
+                    text: "Test",
                     isChoosen: false,
                     isCorrect: false,
                 },
@@ -53,29 +53,29 @@ export const mockData: TestViewAnswerProps = {
         },
         {
             id: "2",
-            questionText: "What is the main purpose of user research?",
+            text: "What is the main purpose of user research?",
             choices: [
                 {
                     id: "A",
-                    choiceText: "Identify needs",
+                    text: "Identify needs",
                     isChoosen: false,
                     isCorrect: true,
                 },
                 {
                     id: "B",
-                    choiceText: "Develop code",
+                    text: "Develop code",
                     isChoosen: false,
                     isCorrect: false,
                 },
                 {
                     id: "C",
-                    choiceText: "Write tests",
+                    text: "Write tests",
                     isChoosen: true,
                     isCorrect: false,
                 },
                 {
                     id: "D",
-                    choiceText: "Launch product",
+                    text: "Launch product",
                     isChoosen: false,
                     isCorrect: false,
                 },
@@ -84,23 +84,23 @@ export const mockData: TestViewAnswerProps = {
         },
         {
             id: "3",
-            questionText: "Which of the following is a low-fidelity prototype?",
+            text: "Which of the following is a low-fidelity prototype?",
             choices: [
                 {
                     id: "A",
-                    choiceText: "Wireframe",
+                    text: "Wireframe",
                     isChoosen: true,
                     isCorrect: true,
                 },
                 {
                     id: "B",
-                    choiceText: "High-fidelity mockup",
+                    text: "High-fidelity mockup",
                     isChoosen: false,
                     isCorrect: false,
                 },
                 {
                     id: "C",
-                    choiceText: "Interactive prototype",
+                    text: "Interactive prototype",
                     isChoosen: false,
                     isCorrect: false,
                 },

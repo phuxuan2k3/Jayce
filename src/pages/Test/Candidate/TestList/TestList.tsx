@@ -95,7 +95,7 @@ const TestList: React.FC = () => {
 								"Product Manager",
 								"Software Engineer",
 								"Engineering Manager",
-								"Data scientist",
+								"Data Scientist",
 								"Solution Architect",
 								"Data Engineer",
 							].map((role, index) => (

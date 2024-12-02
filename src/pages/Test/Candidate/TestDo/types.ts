@@ -1,17 +1,17 @@
-type QuestionChoice = {
+type TestQuestionChoice = {
     id: string;
-    choiceText: string;
+    text: string;
 }
 
-type MultipleChoiceQuestion = {
+type TestQuestion = {
     id: string;
-    questionText: string;
-    choices: QuestionChoice[];
+    text: string;
+    choices: TestQuestionChoice[];
 }
 
 export type TestDoProps = {
     title: string;
-    questions: MultipleChoiceQuestion[];
+    questions: TestQuestion[];
 }
 
 export const mockData: TestDoProps = {
@@ -19,22 +19,22 @@ export const mockData: TestDoProps = {
     questions: [
         {
             id: "q1",
-            questionText: "What is the capital of France?",
+            text: "What is the capital of France?",
             choices: [
-                { id: "c1", choiceText: "Paris" },
-                { id: "c2", choiceText: "London" },
-                { id: "c3", choiceText: "Berlin" },
-                { id: "c4", choiceText: "Madrid" }
+                { id: "c1", text: "Paris" },
+                { id: "c2", text: "London" },
+                { id: "c3", text: "Berlin" },
+                { id: "c4", text: "Madrid" }
             ]
         },
         {
             id: "q2",
-            questionText: "What is 2 + 2?",
+            text: "What is 2 + 2?",
             choices: [
-                { id: "c1", choiceText: "3" },
-                { id: "c2", choiceText: "4" },
-                { id: "c3", choiceText: "5" },
-                { id: "c4", choiceText: "6" }
+                { id: "c1", text: "3" },
+                { id: "c2", text: "4" },
+                { id: "c3", text: "5" },
+                { id: "c4", text: "6" }
             ]
         }
     ]

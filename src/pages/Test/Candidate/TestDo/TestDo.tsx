@@ -71,8 +71,8 @@ const TestDo = () => {
 					{/* QuestionComponent */}
 					<QuestionComponent
 						questionNumber={questionNumber}
-						question={testQuestions.questions[questionNumber - 1].questionText}
-						options={testQuestions.questions[questionNumber - 1].choices.map((choice) => choice.choiceText)}
+						question={testQuestions.questions[questionNumber - 1].text}
+						options={testQuestions.questions[questionNumber - 1].choices.map((choice) => choice.text)}
 						selectedOption={selectedOptions[questionNumber] || null}
 						onOptionChange={handleOptionChange}
 						goToNextQuestion={goToNextQuestion}
