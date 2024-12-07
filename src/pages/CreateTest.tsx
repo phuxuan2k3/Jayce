@@ -1,51 +1,20 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faMagnifyingGlass, faPen,faTrash, faClock, faQuestion } from "@fortawesome/free-solid-svg-icons";
-import { format } from "date-fns";
-import Navbar from "../components/Navbar";
-import * as React from 'react';
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faPlus, faMagnifyingGlass, faPen,faTrash, faClock, faQuestion } from "@fortawesome/free-solid-svg-icons";
+// import { format } from "date-fns";
+// import * as React from 'react';
 import { useNavigate } from "react-router-dom";
 
 
 
 const TestListView = () => {
-    const [open, setOpen] = React.useState(false);
+    // const [open, setOpen] = React.useState(false);
     const navigate = useNavigate();
 
-    const handleGoToSubmissionDetail = () => {
-        navigate("/test/submission/detail");
+    const handleCreateNewTest = () => {
+        navigate("/test/createnew");
     };
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const submissionOverview = {
-        testName: "Test",
-        totalPoints: 30
-    }
-    const YourTest = [
-        {
-            count:1,
-            nameTest: "Design pattern",
-            time:60,
-            type: "Multiple choice",
-            view: 30,
-        },
-        {
-            count:10,
-            nameTest: "Big Data",
-            time: 45,
-            type: "Multiple choice & Essay question",
-            view: 20,
-        },
-    ];
-
     return (
         <>
-            <Navbar />
             <div className="w-full flex-grow flex flex-col items-center px-4 ">
                 <div className="w-full flex-1 flex-col mt-6 ml-16 text-center">
                     <div className="w-full text-4xl font-bold">Create new test</div>
@@ -109,9 +78,9 @@ const TestListView = () => {
                 </div>
                 <div className="flex flex-row justify-center">
                     <button className="mt-4 w-fit px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer">
-                        Cancel
+                       Cancel
                     </button>
-                    <button className="mt-4 w-fit px-5 font-semibold mr-3 rounded-lg py-2 bg-[var(--primary-color)] border-[var(--primary-color)] text-white border-2 cursor-pointer">
+                    <button onClick={handleCreateNewTest} className="mt-4 w-fit px-5 font-semibold mr-3 rounded-lg py-2 bg-[var(--primary-color)] border-[var(--primary-color)] text-white border-2 cursor-pointer">
                         Next
                     </button>
                 </div>

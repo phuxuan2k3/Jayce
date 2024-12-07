@@ -39,9 +39,11 @@ export const paths = {
 			DETAIL: '/test/submission/detail',
 		},
 		EDIT: {
+			ROOT:'/test/edit',
 			DETAIL: '/test/edit/detail',
 			QUESTION: '/test/edit/question',
-		}
+		},
+		CREATENEWTEST:'/test/createnew',
 	},
 	CREATETEST: '/createtest',
 	TESTLISTVIEW: '/testlistview',

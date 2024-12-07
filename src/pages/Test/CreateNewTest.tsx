@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useNavigate } from "react-router-dom";
 import GradientBorderNotGood from "../../components/GradientBorder.notgood";
 
-const EditTestQuestion = () => {
+const CreateNewTest = () => {
     const navigate = useNavigate();
 
     // Uncomment these lines to get the test details from the previous page
@@ -12,12 +12,11 @@ const EditTestQuestion = () => {
     // const testDetails = location.state?.testDetails || {};
 
     const handleBack = () => {
-        navigate("/test/edit/detail");
+        navigate("/createtest");
     };
 
     const handleSave = () => {
-        // Save the changes
-        navigate("/test/list");
+        navigate("/testlistview");
     };
 
     const [questionList, setQuestionList] = React.useState([
@@ -87,8 +86,8 @@ const EditTestQuestion = () => {
         <>
             <div className="w-full flex-grow flex flex-col items-center px-4">
                 <div className="w-full flex-1 flex-col mt-6 text-center">
-                    <div className="w-full text-4xl font-bold">Edit your test</div>
-                    <div className="w-full text-xl font-semibold">Edit some information for your test</div>
+                    <div className="w-full text-4xl font-bold">Create your test</div>
+                    <div className="w-full text-xl font-semibold">Fill some information for your test</div>
                 </div>
 
                 <div className="w-full max-w-7xl py-6">
@@ -167,10 +166,10 @@ const EditTestQuestion = () => {
                 </div>
 
                 <div className="flex flex-row justify-center space-x-10">
-                    <button className="w-fit px-3 font-semibold rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={() => handleBack}>
+                    <button className="w-fit px-3 font-semibold rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleBack}>
                         Back
                     </button>
-                    <button className="w-fit px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={() => handleSave}>
+                    <button className="w-fit px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={handleSave}>
                         Save
                     </button>
                 </div>
@@ -179,4 +178,4 @@ const EditTestQuestion = () => {
     );
 }
 
-export default EditTestQuestion
+export default CreateNewTest

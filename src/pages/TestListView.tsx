@@ -1,25 +1,25 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faPen,faTrash, faClock, faQuestion } from "@fortawesome/free-solid-svg-icons";
-import Navbar from "../components/Navbar";
-import * as React from 'react';
+// import * as React from 'react';
 import { useNavigate } from "react-router-dom";
+import NavBar from "../components/Navbar";
 
 
 
 const TestListView = () => {
-    const [open, setOpen] = React.useState(false);
+    // const [open, setOpen] = React.useState(false);
     const navigate = useNavigate();
 
-    const handleGoToSubmissionDetail = () => {
-        navigate("/test/submission/detail");
+    const handleEditTest = () => {
+        navigate("/test/edit/detail");
     };
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const handleClickAdd=()=>{
+        navigate("/createtest")
+    }
+    const handleTestSubmissionListView=()=>{
+        navigate("/test/submission/list")
+    }
+    
 
    
     const YourTest = [
@@ -41,7 +41,7 @@ const TestListView = () => {
 
     return (
         <>
-            <Navbar />
+        <NavBar/>
             <div className="w-full flex-grow flex flex-col items-center px-4">
                 <div className="w-full flex-1 flex-col mt-6 ml-16">
                     <div className="w-full text-4xl font-bold">Welcome to your Test Manager</div>
@@ -52,8 +52,8 @@ const TestListView = () => {
                     <div className="flex flex-col items-center">
                         <div className="w-4/6 flex flex-row justify-between font-semibold text-[var(--primary-color)] mb-4">
                             <span>Your test ({YourTest.length})</span>
-                            <div className="h-full w-fit flex items-center">
-                                <div className="h-7 w-7 bg-[#EAF6F8] flex items-center justify-center rounded-lg cursor-pointer" onClick={handleClickOpen}>
+                            <div className="h-full w-fit flex items-center" onClick={handleClickAdd}>
+                                <div className="h-7 w-7 bg-[#EAF6F8] flex items-center justify-center rounded-lg cursor-pointer">
                                     <FontAwesomeIcon icon={faPlus} rotation={90} />
                                 </div>
 
@@ -70,10 +70,10 @@ const TestListView = () => {
                                     </span>
                                     <div className="flex items-center space-x-4">
                                     
-                                        <div  onClick={handleGoToSubmissionDetail}>
+                                        <div  onClick={handleEditTest}>
                                             <FontAwesomeIcon className="h-5 w-5" icon={faPen} />
                                         </div>
-                                        <div onClick={handleGoToSubmissionDetail}>
+                                        <div >
                                             <FontAwesomeIcon className="h-5 w-5" icon={faTrash} />
                                         </div>
                                     </div>
@@ -100,7 +100,7 @@ const TestListView = () => {
                                         {test.view === null ? (
                                             <span className="text-red-600 font-semibold">Not graded</span>
                                         ) : (
-                                            <span className="text-primary font-semibold">
+                                            <span className="text-primary font-semibold" onClick={handleTestSubmissionListView}>
                                                View submission ({test.view})
                                             </span>
                                         )}

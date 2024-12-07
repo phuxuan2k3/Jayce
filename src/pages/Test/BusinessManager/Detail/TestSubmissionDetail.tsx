@@ -47,7 +47,7 @@ const TestSubmissionDetail = () => {
 
     return (
         <>
-            <Navbar />
+           
             <div className="w-full flex-grow flex flex-col items-center px-4">
                 <div className="w-full max-w-7xl py-6">
                     <div className="flex-col text-center">

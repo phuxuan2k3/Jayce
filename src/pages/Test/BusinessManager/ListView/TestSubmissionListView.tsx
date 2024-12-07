@@ -57,7 +57,6 @@ const TestSubmissionListView = () => {
 
     return (
         <>
-            <Navbar />
             <div className="w-full flex-grow flex flex-col items-center px-4">
                 <div className="w-full flex-1 flex-col mt-6 pl-16">
                     <div className="w-full text-4xl font-bold">Welcome to your Test Submission Overview</div>
