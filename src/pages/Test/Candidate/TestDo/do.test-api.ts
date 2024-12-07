@@ -1,16 +1,17 @@
 import testApi from "../../../../features/Test/test.api";
-import { TestDoProps } from "./types";
+import { TestDoProps, TestSubmissionParams } from "./types";
 
 const doApi = testApi.injectEndpoints({
     endpoints: (builder) => ({
-        doTest: builder.query<TestDoProps, string>({
-            query: (testId) => `/${testId}/do`
+        getTestDoProps: builder.query<TestDoProps, string>({
+            query: (testId) => `/${testId}/do/page`
         }),
-        submitTest: builder.mutation<void, { testId: string, answers: string[] }>({
+
+        submitTest: builder.mutation<void, TestSubmissionParams>({
             query: ({ testId, answers }) => ({
-                url: `/${testId}/do`,
+                url: `/${testId}/do/submit`,
                 method: "POST",
-                body: { answers }
+                body: answers,
             })
         })
     }),
@@ -18,6 +19,6 @@ const doApi = testApi.injectEndpoints({
 });
 
 export const {
-    useDoTestQuery,
+    useGetTestDoPropsQuery,
     useSubmitTestMutation
 } = doApi;

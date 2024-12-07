@@ -6,12 +6,12 @@ const infoApi = testApi.injectEndpoints({
     endpoints: (builder) => ({
         getTestListPageData: builder.query<TestListProps, void>({
             query: () => ({
-                url: `/list/load`,
+                url: `/list/page`,
             })
         }),
         getFiltered: builder.query<Paged<TestDisplayProps>, FilterParams>({
             query: (filter) => ({
-                url: `/list`,
+                url: `/list/data`,
                 params: filter,
             })
         }),

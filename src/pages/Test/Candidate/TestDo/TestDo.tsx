@@ -2,8 +2,9 @@ import { useState } from 'react';
 import QuestionComponent from './QuestionComponent';
 import { useNavigate, useParams } from 'react-router-dom';
 import { paths } from '../../../../router/path';
-import { useDoTestQuery } from './do.test-api';
-import useFetchWithState from '../../components/useFetchWithState';
+import { useGetTestDoPropsQuery, useSubmitTestMutation } from './do.test-api';
+import { TestDoProps, TestSubmissionParams } from './types';
+import FetchStateContent from '../../components/FetchStateContent';
 
 const TestDo = () => {
 	const navigate = useNavigate();
@@ -14,13 +15,20 @@ const TestDo = () => {
 	const { testId } = useParams<{ testId: string }>();
 	if (!testId) throw new Error("Test ID or Question ID is undefined");
 
-	const { fetchStateContent: content, data } = useFetchWithState(useDoTestQuery, testId);
-	if (content || !data) return <>{content}</>;
-	const testQuestions = data;
+	const {
+		data: data_testDoProps,
+		isLoading: isLoading_testDoProps,
+		error: error_testDoProps,
+	} = useGetTestDoPropsQuery(testId);
+	const testQuestions: TestDoProps = data_testDoProps ?? {
+		title: "",
+		questions: [],
+	};
 
-	const questionLength = testQuestions.questions.length;
+	const [submitTest] = useSubmitTestMutation();
+
 	const goToNextQuestion = () => {
-		if (questionNumber < questionLength) {
+		if (questionNumber < testQuestions.questions.length) {
 			setQuestionNumber(questionNumber + 1);
 		}
 	};
@@ -44,6 +52,24 @@ const TestDo = () => {
 		});
 	};
 
+	const handleCancelTest = () => {
+		navigate(paths.TEST.attempts(testId));
+	}
+
+	const handleSubmitClick = () => {
+		// todo: submit answers
+		const answers = Object.entries(selectedOptions).map(([questionId, choiceId]) => ({
+			questionId,
+			choiceId,
+		}));
+		const submit: TestSubmissionParams = {
+			testId,
+			answers,
+		}
+		submitTest(submit);
+		navigate(paths.TEST.attempts(testId));
+	}
+
 	const getButtonStyle = (index: number) => {
 		if (questionNumber === index + 1) {
 			return "bg-[#C0E5EA]";
@@ -55,21 +81,14 @@ const TestDo = () => {
 		return "bg-white";
 	};
 
-	const handleCancelTest = () => {
-		navigate(paths.TEST.attempts(testId));
-	}
-
-	const handleSubmitClick = () => {
-		// todo: submit answers
-		navigate(paths.TEST.attempts(testId));
-	}
-
 	return (
 		<div className="w-full flex-grow flex flex-col items-center px-4">
 			<div className="w-full max-w-7xl py-6">
-				<h1 className="text-2xl font-bold mb-6">
-					{testQuestions.title}
-				</h1>
+				<FetchStateContent isLoading={isLoading_testDoProps} error={error_testDoProps} >
+					<h1 className="text-2xl font-bold mb-6">
+						{testQuestions.title}
+					</h1>
+				</FetchStateContent>
 				<div className="flex">
 					{/* QuestionComponent */}
 					<QuestionComponent
@@ -79,7 +98,7 @@ const TestDo = () => {
 						selectedOption={selectedOptions[questionNumber] || null}
 						onOptionChange={handleOptionChange}
 						goToNextQuestion={goToNextQuestion}
-						isLastQuestion={questionNumber === questionLength}
+						isLastQuestion={questionNumber === testQuestions.questions.length}
 						toggleFlag={toggleFlag}
 						isFlagged={flaggedQuestions.has(questionNumber)}
 					/>
@@ -89,7 +108,7 @@ const TestDo = () => {
 						<div className="bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
 							<div className="mb-4 font-semibold">Quiz navigation</div>
 							<div className="grid grid-cols-5 gap-2">
-								{[...Array(questionLength)].map((_, index) => (
+								{[...Array(testQuestions.questions.length)].map((_, index) => (
 									<button
 										key={index}
 										className={`w-10 h-10 rounded-full text-sm font-bold text-primary border border-primary cursor-pointer ${getButtonStyle(index)}`}
