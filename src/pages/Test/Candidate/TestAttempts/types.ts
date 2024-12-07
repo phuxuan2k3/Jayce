@@ -3,7 +3,6 @@ import { TestDisplayProps } from "../TestList/types"
 export enum TestStatus {
     Finished = "Finished",
     InProgress = "In Progress",
-    NotStarted = "Not Started"
 }
 
 type Attempt = {
@@ -16,6 +15,18 @@ type Attempt = {
 export type TestAttemptsProps = TestDisplayProps & {
     attempts: Attempt[];
 }
+
+export const bufferData: TestAttemptsProps = {
+    id: '',
+    company: '',
+    createdAt: '',
+    title: '',
+    description: '',
+    minutesToAnswer: 0,
+    tags: [],
+    answersCount: 0,
+    attempts: []
+};
 
 export const mockData: TestAttemptsProps = {
     id: '1',

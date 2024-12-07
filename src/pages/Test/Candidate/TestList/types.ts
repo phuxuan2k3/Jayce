@@ -1,3 +1,13 @@
+export type DifficultyLevel = "EASY" | "MEDIUM" | "HARD" | "ALL";
+
+export type FilterProps = {
+    minMinute: number;
+    maxMinute: number;
+    difficulty: DifficultyLevel;
+    tags: string[];
+    searchName: string;
+};
+
 export type TestDisplayProps = {
     id: string;
     company: string;

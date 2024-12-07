@@ -2,18 +2,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import GradientBorderNotGood from "../../../../components/GradientBorder.notgood";
 import { useNavigate, useParams } from "react-router-dom";
-import { mockData } from "./types";
 import { paths } from "../../../../router/path";
+import useFetchWithState from "../../components/useFetchWithState";
+import { useGetTestAnswersQuery } from "./viewanswer.test-api";
 
 const TestViewAnswer = () => {
     const navigate = useNavigate();
+
     const { testId, attemptId } = useParams<{ testId: string; attemptId: string }>();
     if (!testId || !attemptId) {
         throw new Error("Missing testId or attemptId");
     }
 
-    // todo
-    const testViewAnswer = mockData;
+    const { fetchStateContent: content, data } = useFetchWithState(useGetTestAnswersQuery, { testId, attemptId });
+    if (content || !data) return <>{content}</>;
+    const testViewAnswer = data;
 
     const totalPoints = testViewAnswer.questions.reduce(
         (total, question) => {

@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import QuestionComponent from './QuestionComponent';
 import { useNavigate, useParams } from 'react-router-dom';
-import { mockData } from './types';
 import { paths } from '../../../../router/path';
+import { useDoTestQuery } from './do.test-api';
+import useFetchWithState from '../../components/useFetchWithState';
 
 const TestDo = () => {
 	const navigate = useNavigate();
@@ -12,8 +13,10 @@ const TestDo = () => {
 
 	const { testId } = useParams<{ testId: string }>();
 	if (!testId) throw new Error("Test ID or Question ID is undefined");
-	// todo
-	const testQuestions = mockData;
+
+	const { fetchStateContent: content, data } = useFetchWithState(useDoTestQuery, testId);
+	if (content || !data) return <>{content}</>;
+	const testQuestions = data;
 
 	const questionLength = testQuestions.questions.length;
 	const goToNextQuestion = () => {

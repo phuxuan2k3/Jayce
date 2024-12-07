@@ -1,13 +1,23 @@
 import testApi from "../../../../features/Test/test.api";
-import { TestDisplayProps } from "./types";
+import { FilterProps, TestDisplayProps } from "./types";
+
 
 const infoApi = testApi.injectEndpoints({
     endpoints: (builder) => ({
-        getAll: builder.query<TestDisplayProps[], void>({
-            query: () => `/list`
+        getSuggestedTags: builder.query<string[], void>({
+            query: () => `/list/suggested-tags`,
+        }),
+        getFiltered: builder.query<TestDisplayProps[], FilterProps>({
+            query: (filter) => ({
+                url: `/list`,
+                params: filter,
+            })
         }),
     }),
     overrideExisting: false,
 });
 
-export const { useGetAllQuery } = infoApi;
+export const {
+    useGetSuggestedTagsQuery,
+    useLazyGetFilteredQuery,
+} = infoApi;
