@@ -1,13 +1,15 @@
 import testApi from "../../../../features/Test/test.api";
-import { FilterProps, TestDisplayProps } from "./types";
-
+import { Paged } from "../../../../interfaces/paged.type";
+import { FilterParams, TestDisplayProps, TestListProps } from "./types";
 
 const infoApi = testApi.injectEndpoints({
     endpoints: (builder) => ({
-        getSuggestedTags: builder.query<string[], void>({
-            query: () => `/list/suggested-tags`,
+        getTestListPageData: builder.query<TestListProps, void>({
+            query: () => ({
+                url: `/list/load`,
+            })
         }),
-        getFiltered: builder.query<TestDisplayProps[], FilterProps>({
+        getFiltered: builder.query<Paged<TestDisplayProps>, FilterParams>({
             query: (filter) => ({
                 url: `/list`,
                 params: filter,
@@ -18,6 +20,6 @@ const infoApi = testApi.injectEndpoints({
 });
 
 export const {
-    useGetSuggestedTagsQuery,
+    useGetTestListPageDataQuery,
     useLazyGetFilteredQuery,
 } = infoApi;

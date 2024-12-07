@@ -4,24 +4,38 @@ import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import GradientBorderGood from "../../../../components/GradientBorder.good";
 import TestCard from "./TestCard";
-import { useGetSuggestedTagsQuery, useLazyGetFilteredQuery } from "./info.test-api";
+import { useGetTestListPageDataQuery, useLazyGetFilteredQuery } from "./info.test-api";
 import FilterModal from "./FilterModal";
-import { DifficultyLevel, FilterProps } from "./types";
+import { DifficultyLevel, FilterParams } from "./types";
 import FetchStateContent from "../../components/FetchStateContent";
+import MyPagination from "../../components/MyPagination";
+
+const perPage = 5;
 
 const TestList: React.FC = () => {
-	const [filters, setFilters] = useState<FilterProps>({
+	const [filters, setFilters] = useState<FilterParams>({
 		minMinute: 30,
 		maxMinute: 90,
 		difficulty: "EASY",
 		tags: [],
 		searchName: "",
+		page: 1,
+		perPage: perPage,
 	});
 	const [isFilterModalOpen, setFilterModalOpen] = useState(false);
 	const [selectedTagsIndex, setSelectedTagsIndex] = useState<number[]>([]);
 
-	const { data: suggestedTags, isLoading: isLoading_tags, error: error_tags } = useGetSuggestedTagsQuery();
+	const { data: pageData, isLoading: isLoading_tags, error: error_tags } = useGetTestListPageDataQuery();
 	const [getTests, { data: tests, isLoading: isLoading_tests, error: error_tests }] = useLazyGetFilteredQuery();
+
+	let totalPage = 0;
+	let suggestedTags: string[] = [];
+	if (pageData) {
+		suggestedTags = pageData.suggestedTags;
+	}
+	if (tests) {
+		totalPage = tests.totalPage;
+	}
 
 	const handleApplyFilters = (appliedFilters: {
 		minMinute: number;
@@ -51,8 +65,19 @@ const TestList: React.FC = () => {
 		});
 		setFilters((prev) => ({ ...prev, tags }));
 	}
-	const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-		setFilters((prev) => ({ ...prev, searchName: e.target.value }));
+
+	const handleApplySearchInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+		setFilters((prev) => ({
+			...prev,
+			searchName: e.target.value
+		}));
+	};
+
+	const handleApplyPageChange = (page: number) => {
+		setFilters((prev) => ({
+			...prev,
+			page
+		}));
 	};
 
 	useEffect(() => {
@@ -79,12 +104,12 @@ const TestList: React.FC = () => {
 									),
 								},
 							}}
-							onChange={handleSearchInputChange}
+							onChange={handleApplySearchInput}
 						/>
 					</div>
 				</div>
 				<span className="text-sm text-blue-chill-500">
-					Review this list of {tests?.length ?? 0} interview questions and answers verified by hiring managers and candidates.
+					Review this list of {tests?.data.length ?? 0} interview questions and answers verified by hiring managers and candidates.
 				</span>
 			</header>
 			<main className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -111,11 +136,14 @@ const TestList: React.FC = () => {
 						isLoading={isLoading_tests}
 						error={error_tests}>
 						<div className="shadow-primary px-6 py-8 rounded-xl">
-							{tests?.map((question) => (
+							{tests?.data.map((question) => (
 								<TestCard key={question.id} {...question} />
 							))}
 						</div>
 					</FetchStateContent>
+					<div className="flex flex-row justify-center w-full pt-10">
+						<MyPagination totalPage={totalPage} onPageChange={handleApplyPageChange} />
+					</div>
 				</div>
 
 				{/* Right column */}
@@ -128,7 +156,7 @@ const TestList: React.FC = () => {
 							isLoading={isLoading_tags}
 							error={error_tags}>
 							<div className="flex flex-wrap gap-2">
-								{suggestedTags?.map((role, index) => (
+								{suggestedTags.map((role, index) => (
 									<GradientBorderGood
 										className={`cursor-pointer select-none ${selectedTagsIndex.includes(index) ? "text-white" : "text-black"}`}
 										onClick={() => handleApplyTags(index)}

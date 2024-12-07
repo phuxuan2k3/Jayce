@@ -5,23 +5,31 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { toCompanyImagesDir } from "../../../../helpers/images";
 import { useNavigate, useParams } from "react-router-dom";
 import { paths } from "../../../../router/path";
-import { useGetAttemptsQuery } from "./attempt.test-api";
-import { bufferData, TestStatus } from "./types";
+import { useGetTestDisplayQuery, useLazyGetAttemptsQuery } from "./attempt.test-api";
+import { bufferAttemptsData, bufferTestDisplayData, FilterParams, TestStatus } from "./types";
 import FetchStateContent from "../../components/FetchStateContent";
+import MyPagination from "../../components/MyPagination";
+import { useEffect, useState } from "react";
 
-const TestDetail = () => {
+const perPage = 5;
+
+const TestDetail: React.FC = () => {
     const navigate = useNavigate();
     const { testId } = useParams<{ testId: string }>();
     if (!testId) throw new Error("Test ID is undefined");
+    const [filter, setFilter] = useState<FilterParams>({
+        testId,
+        page: 1,
+        perPage,
+    });
 
-    const { data, isLoading, error } = useGetAttemptsQuery(testId);
-    const testAttemps = data ?? bufferData;
+    const { data: data_TestDisplay, isLoading: isLoading_TestDisplay, error: error_TestDisplay } = useGetTestDisplayQuery(testId);
+    const testAttemptsProps = data_TestDisplay ?? bufferTestDisplayData;
 
-    const companyAvatar = toCompanyImagesDir(testAttemps.company);
-    const highestScore = testAttemps?.attempts.reduce(
-        (max, attempt) => (attempt.grade !== null && attempt.grade > max ? attempt.grade : max),
-        0
-    );
+    const [getAttempts, { data: data_PagedAttemps, isLoading: isLoading_PagedAttempts, error: error_PagedAttempts }] = useLazyGetAttemptsQuery();
+    const pagedAttempts = data_PagedAttemps ?? bufferAttemptsData;
+
+    const companyAvatar = toCompanyImagesDir(testAttemptsProps.company);
 
     const handleStartNewQuiz = () => {
         navigate(paths.TEST.do(testId));
@@ -43,34 +51,44 @@ const TestDetail = () => {
         navigate(paths.TEST.evaluate(testId));
     }
 
+    const handlePaging = (page: number) => {
+        setFilter({ ...filter, page });
+    }
+
+    useEffect(() => {
+        getAttempts(filter);
+    }, [filter, getAttempts]);
+
+    console.log(testAttemptsProps.createdAt);
+
     return (
         <div className="w-full flex-grow flex flex-col items-center px-4">
             <div className="w-full max-w-7xl py-6">
                 <h1 className="text-2xl font-bold mb-6">
-                    <FetchStateContent isLoading={isLoading} error={error}>
-                        {testAttemps.title}
+                    <FetchStateContent isLoading={isLoading_TestDisplay} error={error_TestDisplay}>
+                        {testAttemptsProps.title}
                     </FetchStateContent>
                 </h1>
                 <div className="flex">
+
                     {/* AttempHistory */}
                     <div className="flex-1 flex-column bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
-                        <FetchStateContent isLoading={isLoading} error={error}>
-
-                            {testAttemps.attempts.map((attempt) => (
+                        <FetchStateContent isLoading={isLoading_PagedAttempts} error={error_PagedAttempts}>
+                            {pagedAttempts.data.map((attempt) => (
                                 <div key={attempt.id} className="bg-[#EAF6F8] p-4 mb-4 rounded-lg shadow-md cursor-pointer" onClick={() => handleOnAttemptClick(attempt.id, attempt.status)}>
                                     <div className="flex flex-row border-b border-primary pb-4 items-center gap-3 mb-3 h-fit">
-                                        <img className="w-12 h-12 rounded-full" src={companyAvatar} alt={testAttemps.company} />
+                                        <img className="w-12 h-12 rounded-full" src={companyAvatar} alt={testAttemptsProps.company} />
                                         <div className="flex flex-col h-fit">
                                             <div className="flex items-center text-sm text-blue-chill-500 mb-0">
-                                                <span className="font-semibold">Asked at {testAttemps.company}</span>
+                                                <span className="font-semibold">Asked at {testAttemptsProps.company}</span>
                                                 <span className="mx-2">&#8226;</span>
-                                                <span className="">{formatDistanceToNow(new Date(testAttemps.createdAt))} ago</span>
+                                                <span className="">{formatDistanceToNow(new Date(testAttemptsProps.createdAt))} ago</span>
                                             </div>
-                                            <h3 className="text-lg font-semibold text-gray-800 my-0">{testAttemps.title}</h3>
+                                            <h3 className="text-lg font-semibold text-gray-800 my-0">{testAttemptsProps.title}</h3>
                                         </div>
                                     </div>
                                     <div className="flex flex-wrap gap-2 mb-4">
-                                        {testAttemps.tags.map((tag, index: number) => (
+                                        {testAttemptsProps.tags.map((tag, index: number) => (
                                             <GradientBorderGood key={index}>
                                                 {tag}
                                             </GradientBorderGood>
@@ -89,7 +107,7 @@ const TestDetail = () => {
                                             {attempt.status === null ? null : `${attempt.status}`}
                                         </div>
                                         <div className="ml-20">
-                                            {attempt.status === "Finished" ? `Submitted at ${format(new Date(testAttemps.createdAt), "PPPP")}` : null}
+                                            {attempt.status === "Finished" ? `Submitted at ${format(new Date(testAttemptsProps.createdAt), "PPPP")}` : null}
                                         </div>
                                     </div>
                                     <div className="mt-6 flex flex-row items-start bg-gray-50 rounded-xl px-6 py-4 justify-between font-sans">
@@ -104,10 +122,15 @@ const TestDetail = () => {
                                 </div>
                             ))}
                             <div className="w-full text-2xl text-center font-bold text-primary mt-10 mb-6">
-                                <span>Highest score: {highestScore}</span>
+                                <span>Highest score: {testAttemptsProps.highestScore}</span>
                             </div>
                         </FetchStateContent>
+
+                        <div className="flex justify-center pt-5">
+                            <MyPagination totalPage={pagedAttempts.totalPage} onPageChange={handlePaging} />
+                        </div>
                     </div>
+
                     {/* Sidebar */}
                     <div className="w-64 ml-4">
                         <button className="w-full px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={handleStartNewQuiz}>
