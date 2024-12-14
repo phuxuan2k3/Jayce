@@ -41,6 +41,18 @@ const EditTestQuestion = () => {
         setQuestionList(updatedQuestions);
     };
 
+    const handleQuestionChange = (index: number, newValue: string) => {
+        const updatedQuestions = [...questionList];
+        updatedQuestions[index].question = newValue;
+        setQuestionList(updatedQuestions);
+    };
+
+    const handleOptionChange = (questionIndex: number, optionIndex: number, newValue: string) => {
+        const updatedQuestions = [...questionList];
+        updatedQuestions[questionIndex].options[optionIndex] = newValue;
+        setQuestionList(updatedQuestions);
+    };
+
     const handleAnswerSelect = (questionIndex: number, optionIndex: number) => {
         const updatedQuestions = [...questionList];
         updatedQuestions[questionIndex].correctAnswer = optionIndex;
@@ -109,7 +121,12 @@ const EditTestQuestion = () => {
                                     {/* Question */}
                                     <div className="w-11/12 mb-4">
                                         <GradientBorderNotGood className="w-full h-fit font-semibold">
-                                            {question.question}
+                                            <input
+                                                type="text"
+                                                value={question.question}
+                                                onChange={(e) => handleQuestionChange(index, e.target.value)}
+                                                className="w-full bg-transparent border-none outline-none"
+                                            />
                                         </GradientBorderNotGood>
                                     </div>
 
@@ -118,7 +135,13 @@ const EditTestQuestion = () => {
                                         <div key={optIndex} className="w-full flex flex-row mt-2" >
                                             <GradientBorderNotGood className="w-11/12 h-fit">
                                                 <div className="flex items-center justify-between">
-                                                    {String.fromCharCode(97 + optIndex)}. {option}
+                                                    <span className="mr-2">{String.fromCharCode(97 + optIndex)}.</span>
+                                                    <input
+                                                        type="text"
+                                                        value={option}
+                                                        onChange={(e) => handleOptionChange(index, optIndex, e.target.value)}
+                                                        className="flex-grow bg-transparent border-none outline-none"
+                                                    />
                                                     <FontAwesomeIcon
                                                         icon={faXmark}
                                                         className="w-fit text-gray-500 cursor-pointer ml-2"
