@@ -10,7 +10,7 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../../../components/Navbar";
+import NavBar from "../../../../components/Navbar";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -42,12 +42,14 @@ const TestSubmissionListView = () => {
     }
     const submissionList = [
         {
+            submitterId:"1",
             submitter: "Nguyen Van A",
             date: "2024-11-21T18:23:00Z",
             completeness: 100,
             graded: 30,
         },
         {
+            submitterId:"2",
             submitter: "Nguyen Van B",
             date: "2024-11-22T18:23:00Z",
             completeness: 67,
@@ -57,6 +59,7 @@ const TestSubmissionListView = () => {
 
     return (
         <>
+            <NavBar/>
             <div className="w-full flex-grow flex flex-col items-center px-4">
                 <div className="w-full flex-1 flex-col mt-6 pl-16">
                     <div className="w-full text-4xl font-bold">Welcome to your Test Submission Overview</div>

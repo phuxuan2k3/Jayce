@@ -1,4 +1,3 @@
-import Navbar from "../../components/Navbar";
 import * as React from 'react';
 import { useNavigate } from "react-router-dom";
 
@@ -37,7 +36,6 @@ const EditTestDetail = () => {
 
     return (
         <>
-         
             <div className="w-full flex-grow flex flex-col items-center px-4 ">
                 <div className="w-full flex-1 flex-col mt-6 ml-16 text-center">
                     <div className="w-full text-4xl font-bold">Edit your test</div>

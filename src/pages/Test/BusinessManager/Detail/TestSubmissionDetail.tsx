@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../../../components/Navbar";
 import GradientBorderNotGood from "../../../../components/GradientBorder.notgood";
 
 const TestSubmissionDetail = () => {

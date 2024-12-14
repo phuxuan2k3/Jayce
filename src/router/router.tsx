@@ -13,11 +13,11 @@ import TestSchedule from "../pages/Test/Candidate/TestSchedule/TestSchedule";
 import TestViewAnswer from "../pages/Test/Candidate/TestViewAnswer/TestViewAnswer";
 import TestSubmissionListView from "../pages/Test/BusinessManager/ListView/TestSubmissionListView";
 import TestSubmissionDetail from "../pages/Test/BusinessManager/Detail/TestSubmissionDetail";
-import TestListView from "../pages/TestListView";
-import CreateTest from "../pages/CreateTest";
-import EditTestDetail from "../pages/Test/EditTestDetail";
-import EditTestQuestion from "../pages/Test/EditTestQuestion";
-import CreateNewTest from "../pages/Test/CreateNewTest";
+import TestListView from "../pages/TestListView/TestListView";
+import CreateTest from "../pages/TestCreate/CreateTest";
+import EditTestDetail from "../pages/Test/EditTestDetail/EditTestDetail";
+import EditTestQuestion from "../pages/Test/EditTestQuestion/EditTestQuestion";
+import CreateNewTest from "../pages/Test/CreateNewTest/CreateNewTest";
 const router = createBrowserRouter([
 	{
 		errorElement: <ErrorPage />,
