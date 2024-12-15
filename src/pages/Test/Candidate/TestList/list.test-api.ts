@@ -1,6 +1,20 @@
 import testApi from "../../../../features/Test/test.api";
 import { Paged } from "../../../../interfaces/paged.type";
-import { FilterParams, TestDisplayProps, TestListProps } from "./types";
+import { TestDisplayProps, TestListProps } from "./props";
+
+export type DifficultyLevel = "EASY" | "MEDIUM" | "HARD" | "ALL";
+
+export type FilterParams = {
+    minMinute: number;
+    maxMinute: number;
+    difficulty: DifficultyLevel;
+    tags: string[];
+    searchName: string;
+    page: number;
+    perPage: number;
+};
+
+export type TestWithNoCompany = Omit<TestDisplayProps, "company"> & { companyId: string };
 
 const infoApi = testApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -9,7 +23,7 @@ const infoApi = testApi.injectEndpoints({
                 url: `/list/page`,
             })
         }),
-        getFiltered: builder.query<Paged<TestDisplayProps>, FilterParams>({
+        getFiltered: builder.query<Paged<TestWithNoCompany>, FilterParams>({
             query: (filter) => ({
                 url: `/list/data`,
                 params: filter,

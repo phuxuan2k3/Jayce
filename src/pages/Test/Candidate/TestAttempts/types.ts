@@ -1,5 +1,5 @@
 import { Paged } from "../../../../interfaces/paged.type";
-import { TestDisplayProps } from "../TestList/types"
+import { TestDisplayProps } from "../TestList/props"
 
 export type FilterParams = {
     testId: string;
