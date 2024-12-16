@@ -2,16 +2,42 @@ import { format, formatDistanceToNow } from "date-fns";
 import GradientBorderGood from "../../../../components/GradientBorder.good";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { toCompanyImagesDir } from "../../../../helpers/images";
 import { useNavigate, useParams } from "react-router-dom";
 import { paths } from "../../../../router/path";
-import { useGetTestDisplayQuery, useLazyGetAttemptsQuery } from "./attempt.test-api";
-import { bufferAttemptsData, bufferTestDisplayData, FilterParams, TestStatus } from "./types";
+import { TestAttemptsResponse, useGetTestDisplayQuery, useLazyGetAttemptsQuery } from "./attempt.test-api";
+import { Attempt, FilterParams, TestAttemptsProps, TestStatus } from "./types";
 import FetchStateContent from "../../components/FetchStateContent";
 import MyPagination from "../../components/MyPagination";
 import { useEffect, useState } from "react";
+import { useGetCompaniesQuery } from "../../../../features/Account/account.api";
+import { Paged } from "../../../../interfaces/paged.type";
 
 const perPage = 5;
+const bufferTestResponseData: TestAttemptsResponse = {
+    id: '',
+    companyId: '',
+    createdAt: Date().toString(),
+    title: '',
+    description: '',
+    minutesToAnswer: 0,
+    tags: [],
+    answersCount: 0,
+    highestScore: 0,
+};
+
+const bufferCompanyData = {
+    id: '',
+    name: '',
+    imageUrl: '',
+};
+
+const bufferAttemptsData: Paged<Attempt> = {
+    page: 0,
+    perPage: 0,
+    totalPage: 0,
+    data: [],
+};
+
 
 const TestDetail: React.FC = () => {
     const navigate = useNavigate();
@@ -24,12 +50,20 @@ const TestDetail: React.FC = () => {
     });
 
     const { data: data_TestDisplay, isLoading: isLoading_TestDisplay, error: error_TestDisplay } = useGetTestDisplayQuery(testId);
-    const testAttemptsProps = data_TestDisplay ?? bufferTestDisplayData;
+    const testAttemptsResponse = data_TestDisplay ?? bufferTestResponseData;
+
+    const { data: data_companies, isLoading: isLoading_companies, error: error_companies } = useGetCompaniesQuery([testAttemptsResponse.companyId]);
+    const companyProps = data_companies?.[0] ?? bufferCompanyData;
+
+    const testAttemptsProps: TestAttemptsProps = {
+        ...testAttemptsResponse,
+        company: companyProps.name,
+    }
+    const isLoadingProps = isLoading_TestDisplay || isLoading_companies;
+    const errorProps = error_TestDisplay || error_companies;
 
     const [getAttempts, { data: data_PagedAttemps, isLoading: isLoading_PagedAttempts, error: error_PagedAttempts }] = useLazyGetAttemptsQuery();
     const pagedAttempts = data_PagedAttemps ?? bufferAttemptsData;
-
-    const companyAvatar = toCompanyImagesDir(testAttemptsProps.company);
 
     const handleStartNewQuiz = () => {
         navigate(paths.TEST.do(testId));
@@ -59,13 +93,11 @@ const TestDetail: React.FC = () => {
         getAttempts(filter);
     }, [filter, getAttempts]);
 
-    console.log(testAttemptsProps.createdAt);
-
     return (
         <div className="w-full flex-grow flex flex-col items-center px-4">
             <div className="w-full max-w-7xl py-6">
                 <h1 className="text-2xl font-bold mb-6">
-                    <FetchStateContent isLoading={isLoading_TestDisplay} error={error_TestDisplay}>
+                    <FetchStateContent isLoading={isLoadingProps} error={errorProps}>
                         {testAttemptsProps.title}
                     </FetchStateContent>
                 </h1>
@@ -77,10 +109,10 @@ const TestDetail: React.FC = () => {
                             {pagedAttempts.data.map((attempt) => (
                                 <div key={attempt.id} className="bg-[#EAF6F8] p-4 mb-4 rounded-lg shadow-md cursor-pointer" onClick={() => handleOnAttemptClick(attempt.id, attempt.status)}>
                                     <div className="flex flex-row border-b border-primary pb-4 items-center gap-3 mb-3 h-fit">
-                                        <img className="w-12 h-12 rounded-full" src={companyAvatar} alt={testAttemptsProps.company} />
+                                        <img className="w-12 h-12 rounded-full" src={companyProps.imageUrl} alt={companyProps.name} />
                                         <div className="flex flex-col h-fit">
                                             <div className="flex items-center text-sm text-blue-chill-500 mb-0">
-                                                <span className="font-semibold">Asked at {testAttemptsProps.company}</span>
+                                                <span className="font-semibold">Asked at {companyProps.name}</span>
                                                 <span className="mx-2">&#8226;</span>
                                                 <span className="">{formatDistanceToNow(new Date(testAttemptsProps.createdAt))} ago</span>
                                             </div>
