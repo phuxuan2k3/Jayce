@@ -4,11 +4,11 @@ import {SubmissionItem,SubmissionOverView } from "./types";
 
 const submissionlistAPI = testApi.injectEndpoints({
     endpoints: (builder) => ({
-        getSubmissionList: builder.query<SubmissionItem, string>({
-            query: () => `/submission/list`
-        }),
-        getSubmissionOverView: builder.query<Paged<SubmissionOverView>,string>({
+        getSubmissionList: builder.query<Paged<SubmissionItem>, string>({
             query: () => `/submission/page`
+        }),
+        getSubmissionOverView: builder.query<SubmissionOverView,string>({
+            query: () => `/submission/overview`
         }),
     }),
     overrideExisting: false,

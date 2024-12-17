@@ -6,6 +6,5 @@ export type TestDetails = {
     type: {
         multipleChoice: boolean; 
         essay: boolean; 
-    
     };
 };

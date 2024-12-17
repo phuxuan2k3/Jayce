@@ -5,7 +5,7 @@ const createnewAPI = testApi.injectEndpoints({
     endpoints: (builder) => ({
         createnewtest: builder.mutation<void, TestSubmissionParams>({
             query: ({ testId, questionList }) => ({
-                url: `/${testId}/test/createnew`,
+                url: `/${testId}/createnew`,
                 method: "POST",
                 body: {
                     testId, 
