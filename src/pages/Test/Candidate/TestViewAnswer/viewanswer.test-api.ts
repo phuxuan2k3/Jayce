@@ -7,12 +7,12 @@ const viewAnswerApi = testApi.injectEndpoints({
         getTestViewAnswersPageData: build.query<TestViewAnswerProps, GetTestAnswerParams>({
             query: ({ testId, attemptId }) => `/${testId}/answers/${attemptId}/page`,
         }),
-        getTestQuestionAnswers: build.query<Paged<TestQuestionAnswer>, FilterQuestionAnswerParams>({
-            query: ({ testId, attemptId, page, perPage }) => ({
-                url: `/${testId}/answers/${attemptId}/data`,
+        getAnswers: build.query<Paged<TestQuestionAnswer>, FilterQuestionAnswerParams>({
+            query: (filter) => ({
+                url: `/${filter.testId}/answers/${filter.attemptId}/data`,
                 params: {
-                    page: page,
-                    perPage: perPage,
+                    page: filter.page,
+                    perPage: filter.perPage,
                 },
             }),
         }),
@@ -22,5 +22,5 @@ const viewAnswerApi = testApi.injectEndpoints({
 
 export const {
     useGetTestViewAnswersPageDataQuery,
-    useLazyGetTestQuestionAnswersQuery
+    useLazyGetAnswersQuery,
 } = viewAnswerApi;

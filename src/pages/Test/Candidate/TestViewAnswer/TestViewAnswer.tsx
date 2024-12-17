@@ -3,7 +3,7 @@ import { faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons"
 import GradientBorderNotGood from "../../../../components/GradientBorder.notgood";
 import { useNavigate, useParams } from "react-router-dom";
 import { paths } from "../../../../router/path";
-import { useGetTestViewAnswersPageDataQuery, useLazyGetTestQuestionAnswersQuery } from "./viewanswer.test-api";
+import { useGetTestViewAnswersPageDataQuery, useLazyGetAnswersQuery } from "./viewanswer.test-api";
 import { bufferTestViewAnswerData, FilterQuestionAnswerParams } from "./types";
 import FetchStateContent from "../../components/FetchStateContent";
 import { useEffect, useState } from "react";
@@ -19,8 +19,8 @@ const TestViewAnswer = () => {
         throw new Error("Missing testId or attemptId");
     }
     const [filter, setFilter] = useState<FilterQuestionAnswerParams>({
-        testId: "",
-        attemptId: "",
+        testId: testId,
+        attemptId: attemptId,
         page: 1,
         perPage,
     });
@@ -32,11 +32,11 @@ const TestViewAnswer = () => {
     } = useGetTestViewAnswersPageDataQuery({ testId, attemptId });
     const testViewAnswer = data_TestAnswers ?? bufferTestViewAnswerData;
 
-    const [getQuestionAnswers, {
+    const [getAnswers, {
         data: data_QuestionAnswers,
         isLoading: isLoading_QuestionAnswers,
         error: error_QuestionAnswers
-    }] = useLazyGetTestQuestionAnswersQuery();
+    }] = useLazyGetAnswersQuery();
     const questionAnswers = data_QuestionAnswers ?? {
         data: [],
         page: 0,
@@ -45,8 +45,8 @@ const TestViewAnswer = () => {
     };
 
     useEffect(() => {
-        getQuestionAnswers(filter);
-    }, [filter, getQuestionAnswers]);
+        getAnswers(filter);
+    }, [filter, getAnswers]);
 
     function renderChoiceIcon(choice: { isChoosen: boolean; isCorrect: boolean }) {
         if (!choice.isChoosen) return null;
