@@ -4,11 +4,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import GradientBorderGood from "../../../../components/GradientBorder.good";
 import TestCard from "./TestCard";
-import { useGetTestListPageDataQuery, useLazyGetFilteredQuery } from "./info.test-api";
+import { DifficultyLevel, FilterParams, useGetTestListPageDataQuery, useLazyGetFilteredQuery } from "./list.test-api";
 import FilterModal from "./FilterModal";
-import { DifficultyLevel, FilterParams } from "./types";
 import FetchStateContent from "../../components/FetchStateContent";
 import MyPagination from "../../components/MyPagination";
+import { useLazyGetCompaniesQuery } from "../../../../features/Account/account.api";
 
 const perPage = 5;
 
@@ -27,6 +27,7 @@ const TestList: React.FC = () => {
 
 	const { data: pageData, isLoading: isLoading_tags, error: error_tags } = useGetTestListPageDataQuery();
 	const [getTests, { data: tests, isLoading: isLoading_tests, error: error_tests }] = useLazyGetFilteredQuery();
+	const [getCompany, { data: companies, isLoading: isLoading_companies, error: error_companies }] = useLazyGetCompaniesQuery();
 
 	let totalPage = 0;
 	let suggestedTags: string[] = [];
@@ -84,6 +85,11 @@ const TestList: React.FC = () => {
 		getTests(filters);
 	}, [filters, getTests]);
 
+	useEffect(() => {
+		const companyIds = tests?.data.map((test) => test.companyId) ?? [];
+		getCompany(companyIds);
+	}, [tests, getCompany]);
+
 	return (
 		<div className="p-6 max-w-7xl mx-auto">
 			<header className="flex flex-col mb-8">
@@ -133,11 +139,11 @@ const TestList: React.FC = () => {
 
 					{/* List of questions */}
 					<FetchStateContent
-						isLoading={isLoading_tests}
-						error={error_tests}>
+						isLoading={isLoading_tests || isLoading_companies}
+						error={error_tests || error_companies}>
 						<div className="shadow-primary px-6 py-8 rounded-xl">
 							{tests?.data.map((question) => (
-								<TestCard key={question.id} {...question} />
+								<TestCard company={companies?.find(x => x.id)?.name ?? ""} key={question.id} {...question} />
 							))}
 						</div>
 					</FetchStateContent>
