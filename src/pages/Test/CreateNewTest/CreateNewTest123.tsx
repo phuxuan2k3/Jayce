@@ -2,39 +2,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
 import { useNavigate } from "react-router-dom";
-import GradientBorderNotGood from "../../components/GradientBorder.notgood";
-import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
-import AddIcon from '@mui/icons-material/Add';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import CloseIcon from "@mui/icons-material/Close";
-import CircularProgress from '@mui/material/CircularProgress';
-
-const generatedQuestions = [
-    {
-        content: "This is the first question",
-        type: "Multiple choice",
-        description: "This is a description",
-    },
-    {
-        content: "This is the second question",
-        type: "Multiple choice",
-        description: "This is also a description",
-    },
-];
+import GradientBorderNotGood from "../../../components/GradientBorder.notgood";
 
 const CreateNewTest = () => {
-    const [open, setOpen] = React.useState(false);
-    const [isLoading, setLoading] = React.useState(false);
-
-    const toggleDrawer = (newOpen: boolean) => () => {
-        setOpen(newOpen);
-    };
-
     const navigate = useNavigate();
+
+    // Uncomment these lines to get the test details from the previous page
+    // const location = useLocation();
+    // const testDetails = location.state?.testDetails || {};
 
     const handleBack = () => {
         navigate("/createtest");
@@ -62,18 +37,6 @@ const CreateNewTest = () => {
     const handlePointChange = (index: number, value: number) => {
         const updatedQuestions = [...questionList];
         updatedQuestions[index].point = value;
-        setQuestionList(updatedQuestions);
-    };
-
-    const handleQuestionChange = (index: number, newValue: string) => {
-        const updatedQuestions = [...questionList];
-        updatedQuestions[index].question = newValue;
-        setQuestionList(updatedQuestions);
-    };
-
-    const handleOptionChange = (questionIndex: number, optionIndex: number, newValue: string) => {
-        const updatedQuestions = [...questionList];
-        updatedQuestions[questionIndex].options[optionIndex] = newValue;
         setQuestionList(updatedQuestions);
     };
 
@@ -114,32 +77,9 @@ const CreateNewTest = () => {
         ]);
     };
 
-    const handleAddGeneratedQuestion = (index: number) => {
-        const questionToAdd = generatedQuestions[index];
-        setQuestionList([
-            ...questionList,
-            {
-                question: questionToAdd.content,
-                options: ["Option 1"],
-                correctAnswer: 0,
-                point: 10,
-            },
-        ]);
-    };
-
     const handleDeleteQuestion = (index: number) => {
         const updatedQuestions = questionList.filter((_, i) => i !== index);
         setQuestionList(updatedQuestions);
-    };
-
-    const handleGenerateClick = (): void => {
-        alert("?")
-    }
-
-    const handleGenerateKeyDown = (event: any) => {
-        if (event.key === 'Enter') {
-            handleGenerateClick();
-        }
     };
 
     return (
@@ -168,12 +108,7 @@ const CreateNewTest = () => {
                                     {/* Question */}
                                     <div className="w-11/12 mb-4">
                                         <GradientBorderNotGood className="w-full h-fit font-semibold">
-                                            <input
-                                                type="text"
-                                                value={question.question}
-                                                onChange={(e) => handleQuestionChange(index, e.target.value)}
-                                                className="w-full bg-transparent border-none outline-none"
-                                            />
+                                            {question.question}
                                         </GradientBorderNotGood>
                                     </div>
 
@@ -182,13 +117,7 @@ const CreateNewTest = () => {
                                         <div key={optIndex} className="w-full flex flex-row mt-2" >
                                             <GradientBorderNotGood className="w-11/12 h-fit">
                                                 <div className="flex items-center justify-between">
-                                                    <span className="mr-2">{String.fromCharCode(97 + optIndex)}.</span>
-                                                    <input
-                                                        type="text"
-                                                        value={option}
-                                                        onChange={(e) => handleOptionChange(index, optIndex, e.target.value)}
-                                                        className="flex-grow bg-transparent border-none outline-none"
-                                                    />
+                                                    {String.fromCharCode(97 + optIndex)}. {option}
                                                     <FontAwesomeIcon
                                                         icon={faXmark}
                                                         className="w-fit text-gray-500 cursor-pointer ml-2"
@@ -245,81 +174,6 @@ const CreateNewTest = () => {
                     </button>
                 </div>
             </div>
-            <Button onClick={toggleDrawer(true)} className="fixed bottom-4 w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center shadow-lg">
-                <TipsAndUpdatesIcon />
-            </Button>
-            <Drawer open={open} onClose={toggleDrawer(false)}>
-                <Box sx={{ width: 750, position: "relative" }} role="presentation">
-                    {/* Header */}
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "16px",
-                            borderBottom: "1px solid #ddd",
-                        }}
-                    >
-                        <Typography variant="h6" component="div" fontWeight="bold">
-                            Question Generator
-                        </Typography>
-                        <IconButton onClick={toggleDrawer(false)} size="small">
-                            <CloseIcon />
-                        </IconButton>
-                    </Box>
-
-                    {/* Content */}
-                    <Box sx={{ padding: "16px" }}>
-                        <GradientBorderNotGood className="w-full h-fit">
-                            <textarea
-                                className="w-full flex-grow bg-transparent border-none outline-none"
-                                placeholder="Type your prompt here..."
-                                onKeyDown={() => handleGenerateKeyDown}
-                            />
-                        </GradientBorderNotGood>
-
-                        <div className="flex justify-end mt-4">
-                            <button className="w-2/5 bg-gradient-text from-blue-500 to-green-500 text-md font-bold text-white px-6 py-3 rounded-lg" onClick={handleGenerateClick}>
-                                Generate
-                            </button>
-                        </div>
-
-                        <div className="mt-4 flex flex-col items-center justify-center">
-                            {isLoading ? (
-                                <CircularProgress />
-                            ) : (
-                                <>
-                                    {generatedQuestions.map((question, index) => (
-                                        <div key={index} className="w-full max-w-4xl mb-4 flex flex-col bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary space-y-4">
-                                            <div className="flex justify-between items-center">
-                                                <Typography variant="h6" fontWeight="bold">
-                                                    Question {index + 1}
-                                                </Typography>
-                                                <button className="flex items-center rounded-lg px-4 py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={() => handleAddGeneratedQuestion(index)}>
-                                                    <AddIcon className="mr-2" /> Add
-                                                </button>
-                                            </div>
-
-                                            <div className="italic">
-                                                {question.content}
-                                            </div>
-
-                                            <div className="space-y-2">
-                                                <Typography variant="body2" className="text-gray-700">
-                                                    - Type: <span className="font-medium">{question.type}</span>
-                                                </Typography>
-                                                <Typography variant="body2" className="text-gray-700">
-                                                    - Description: <span className="font-medium">{question.description}</span>
-                                                </Typography>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </>
-                            )}
-                        </div>
-                    </Box>
-                </Box>
-            </Drawer>
         </>
     );
 }

@@ -8,22 +8,11 @@ const EditTestDetail = () => {
         name: "",
         description: "",
         duration: "",
-        type: {
-            multipleChoice: false,
-            essay: false,
-        },
     });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setTestDetails((prev) => ({ ...prev, [name]: value }));
-    };
-
-    const handleCheckboxChange = (type: "multipleChoice" | "essay") => {
-        setTestDetails((prev) => ({
-            ...prev,
-            type: { ...prev.type, [type]: !prev.type[type] },
-        }));
     };
 
     const handleNext = () => {
@@ -83,29 +72,6 @@ const EditTestDetail = () => {
                             onChange={handleInputChange}
                             className="w-2/4 px-4 py-2 border border-[var(--primary-color)] rounded-md focus:outline-none focus:ring focus:ring-teal-300"
                         />
-                    </div>
-                    <div className="flex items-center space-x-4">
-                        <label className="font-medium text-[var(--primary-color)] text-xl w-1/4">Test Type</label>
-                        <div className="flex items-center space-x-4 w-3/4">
-                            <label className="flex items-center ">
-                                <input
-                                    type="checkbox"
-                                    checked={testDetails.type.multipleChoice}
-                                    onChange={() => handleCheckboxChange("multipleChoice")}
-                                    className="form-checkbox h-5 w-5 text-[var(--primary-color)]"
-                                />
-                                <span className="ml-2 text-[var(--primary-color)]">Multiple choice</span>
-                            </label>
-                            <label className="flex items-center">
-                                <input
-                                    type="checkbox"
-                                    checked={testDetails.type.essay}
-                                    onChange={() => handleCheckboxChange("essay")}
-                                    className="form-checkbox h-5 w-5 text-[var(--primary-color)]"
-                                />
-                                <span className="ml-2 text-[var(--primary-color)]">Essay question</span>
-                            </label>
-                        </div>
                     </div>
                 </div>
                 <div className="flex flex-row justify-center">
