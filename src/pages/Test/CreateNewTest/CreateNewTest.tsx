@@ -13,21 +13,6 @@ import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from '@mui/material/CircularProgress';
 
-// const generatedQuestions = [
-//     {
-//         content: "This is the first question",
-//         description: "This is a description",
-//         level: "Level 1",
-//         reason: "This is the reason",
-//     },
-//     {
-//         content: "This is the second question",
-//         description: "This is also a description",
-//         level: "Level 2",
-//         reason: "This is the reason",
-//     },
-// ];
-
 const CreateNewTest = () => {
     const [open, setOpen] = React.useState(false);
     const [question, setQuestion] = React.useState("");
@@ -160,7 +145,7 @@ const CreateNewTest = () => {
         setError(null);
         try {
             const prompt = (document.querySelector("#prompt") as HTMLTextAreaElement).value;
-            const response = await fetch("https://2e628c22ad2c58.lhr.life/questionai/question", {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL_AI}/question`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
