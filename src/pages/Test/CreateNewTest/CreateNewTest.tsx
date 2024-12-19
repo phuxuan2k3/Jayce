@@ -13,24 +13,25 @@ import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from '@mui/material/CircularProgress';
 
-const generatedQuestions = [
-    {
-        content: "This is the first question",
-        description: "This is a description",
-        level: "Level 1",
-        reason: "This is the reason",
-    },
-    {
-        content: "This is the second question",
-        description: "This is also a description",
-        level: "Level 2",
-        reason: "This is the reason",
-    },
-];
+// const generatedQuestions = [
+//     {
+//         content: "This is the first question",
+//         description: "This is a description",
+//         level: "Level 1",
+//         reason: "This is the reason",
+//     },
+//     {
+//         content: "This is the second question",
+//         description: "This is also a description",
+//         level: "Level 2",
+//         reason: "This is the reason",
+//     },
+// ];
 
 const CreateNewTest = () => {
     const [open, setOpen] = React.useState(false);
-    // const [generatedQuestions, setGeneratedQuestions] = React.useState<{ content: string; description: string; level: string; reason: string }[]>([]);
+    const [question, setQuestion] = React.useState("");
+    const [generatedQuestions, setGeneratedQuestions] = React.useState<{ content: string; description: string; level: string; reason: string }[]>([]);
     const [error, setError] = React.useState<string | null>(null);
     const [cooldowns, setCooldowns] = React.useState<number[]>([]);
     const [isLoading, setLoading] = React.useState(false);
@@ -159,15 +160,17 @@ const CreateNewTest = () => {
         setError(null);
         try {
             const prompt = (document.querySelector("#prompt") as HTMLTextAreaElement).value;
-            const response = await fetch("https://3421d26422c70e.lhr.life/question", {
+            const response = await fetch("https://2e628c22ad2c58.lhr.life/questionai/question", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    prompt: prompt,
+                    question: prompt,
                 }),
             });
+
+            console.log(response)
 
             if (!response.ok) {
                 throw new Error("Failed to fetch questions");
@@ -212,7 +215,7 @@ const CreateNewTest = () => {
                 questions.push(currentQuestion);
             }
 
-            // setGeneratedQuestions(questions);
+            setGeneratedQuestions(questions);
             setCooldowns(new Array(questions.length).fill(0));
         } catch (error) {
             console.error("Error generating questions:", error);
@@ -361,6 +364,8 @@ const CreateNewTest = () => {
                                 id="prompt"
                                 className="w-full flex-grow bg-transparent border-none outline-none"
                                 placeholder="Type your prompt here..."
+                                value={question}
+                                onChange={(e) => setQuestion(e.target.value)}
                                 onKeyDown={() => handleGenerateKeyDown}
                             />
                         </GradientBorderNotGood>
