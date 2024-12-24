@@ -4,7 +4,7 @@ import "./assets/styles/index.css";
 import App from "./App.tsx";
 import { createTheme, StyledEngineProvider, ThemeProvider } from "@mui/material";
 
-// Test
+// Test again
 
 const rootElement = document.getElementById("root");
 const theme = createTheme({
