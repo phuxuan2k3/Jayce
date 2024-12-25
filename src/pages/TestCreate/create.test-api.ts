@@ -3,15 +3,15 @@ import { TestDetails } from "./types";
 
 const createtestAPI = testApi.injectEndpoints({
     endpoints: (builder) => ({
-        createtest: builder.mutation<void, TestDetails>({
-            query: ({ name, description, duration, type }) => ({
+        createtest: builder.mutation<{ testID: string }, TestDetails>({
+            query: ({ name, description, duration }) => ({
                 url: `/test/create`,
                 method: "POST",
                 body: {
                     name, 
                     description, 
                     duration, 
-                    type, 
+                    
                 },
             }),
         }),

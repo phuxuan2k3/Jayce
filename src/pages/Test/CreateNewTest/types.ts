@@ -5,6 +5,6 @@ export type Question = {
     point: number;
 }
 export type TestSubmissionParams={
-    testId: string;
+    testId:string;
     questionList: Question[];
 }

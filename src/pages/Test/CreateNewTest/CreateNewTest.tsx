@@ -12,6 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from '@mui/material/CircularProgress';
+import { useCreatenewtestMutation } from "./createnew.test-api";
 
 const CreateNewTest = () => {
     const [open, setOpen] = React.useState(false);
@@ -20,6 +21,8 @@ const CreateNewTest = () => {
     const [error, setError] = React.useState<string | null>(null);
     const [cooldowns, setCooldowns] = React.useState<number[]>([]);
     const [isLoading, setLoading] = React.useState(false);
+    const [isCreating, setIsCreating] = React.useState(false);
+    const [submitError, setSubmmitError] = React.useState<string | null>(null);
 
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
@@ -31,8 +34,22 @@ const CreateNewTest = () => {
         navigate("/createtest");
     };
 
-    const handleSave = () => {
-        navigate("/testlistview");
+    const [createnewtest] = useCreatenewtestMutation();
+    const handleSave = async () => {
+        setSubmmitError(null);
+        setIsCreating(true);
+        try {
+            await createnewtest({
+                testId: "your-test-id",
+                questionList: questionList,
+            }).unwrap();
+            navigate("/testlistview");
+        } catch (error) {
+            setSubmmitError("An error occurred while creating the test. Please try again later.");
+            console.error("Lỗi khi tạo bài kiểm tra:", error);
+        } finally {
+            setIsCreating(false);
+        }
     };
 
     const [questionList, setQuestionList] = React.useState([
@@ -168,12 +185,12 @@ const CreateNewTest = () => {
 
             const questions = [];
             const lines = answer.split("\n");
-    
+
             let currentQuestion = null;
-    
+
             for (const line of lines) {
                 const trimmedLine = line.trim();
-    
+
                 if (trimmedLine.startsWith("- Question:")) {
                     if (currentQuestion) {
                         questions.push(currentQuestion);
@@ -195,7 +212,7 @@ const CreateNewTest = () => {
                     currentQuestion = null;
                 }
             }
-    
+
             if (currentQuestion) {
                 questions.push(currentQuestion);
             }
@@ -310,13 +327,16 @@ const CreateNewTest = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-row justify-center space-x-10">
-                    <button className="w-fit px-3 font-semibold rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleBack}>
-                        Back
-                    </button>
-                    <button className="w-fit px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={handleSave}>
-                        Save
-                    </button>
+                <div className="flex flex-col">
+                    {submitError && <div className="text-center text-red-500 mb-8">{submitError}</div>}
+                    <div className="flex flex-row justify-center space-x-10">
+                        <button className="w-fit px-3 font-semibold rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleBack} disabled={isCreating}>
+                            Back
+                        </button>
+                        <button className="w-fit px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={handleSave} disabled={isCreating}>
+                            {isCreating ? "Creating..." : "Save"}
+                        </button>
+                    </div>
                 </div>
             </div>
             <Button onClick={toggleDrawer(true)} className="fixed bottom-4 w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center shadow-lg">

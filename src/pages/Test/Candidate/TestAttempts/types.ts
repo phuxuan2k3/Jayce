@@ -13,9 +13,9 @@ export enum TestStatus {
 
 export type Attempt = {
     id: string;
-    grade: number | null;
+    score: number | null;
     status: TestStatus;
-    submittedAt: string;
+    createdAt: string;
 }
 
 export type TestAttemptsProps = TestDisplayProps & {

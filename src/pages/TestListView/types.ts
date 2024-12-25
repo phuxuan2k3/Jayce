@@ -1,9 +1,10 @@
-export type YourTestItem = {
-    count: number;
-    nameTest: string;
-    time: number;
-    type: string;
-    view: number;
-};
+// export type YourTestItem = {
+//     count: number;
+//     nameTest: string;
+//     time: number;
+//     type: string;
+//     view: number;
+// };
 
-export type YourTest = YourTestItem[];
+// export type YourTest = YourTestItem[];
+// thay bằng api filter

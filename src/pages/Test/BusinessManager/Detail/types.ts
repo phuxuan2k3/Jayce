@@ -1,14 +1,23 @@
-export type Answer ={
+export type Answer = {
+    id: number;           
     question: string;      
-    options: string[];      
-    chosenAnswer: number;  
+    options: string[];     
+    chosenAnswer: number;   
     correctAnswer: number; 
-    point: number;         
-}
+    score: number;
+};
 
-export type Submission={
-    testNumber: number;    
-    submitter: string;     
-    testName: string;   
-    answer:Answer[];
-}   
+export type Attempt = {
+    ID: number;            
+    score: number;          
+    status: string;         
+    answer: Answer[];       
+    createdAt: string;      
+};
+
+export type Submission = {
+    testId: number;        
+    title: string;          
+    description: string;   
+    attempts: Attempt[];    
+};
