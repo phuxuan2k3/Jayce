@@ -162,7 +162,7 @@ const CreateNewTest = () => {
         setError(null);
         try {
             const prompt = (document.querySelector("#prompt") as HTMLTextAreaElement).value;
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL_AI}/question`, {
+            const response = await fetch(`/api/question`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
