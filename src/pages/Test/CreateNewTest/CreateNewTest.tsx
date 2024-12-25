@@ -12,6 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from '@mui/material/CircularProgress';
+import { useCreatenewtestMutation } from "./createnew.test-api";
 
 const CreateNewTest = () => {
     const [open, setOpen] = React.useState(false);
@@ -31,10 +32,6 @@ const CreateNewTest = () => {
         navigate("/createtest");
     };
 
-    const handleSave = () => {
-        navigate("/testlistview");
-    };
-
     const [questionList, setQuestionList] = React.useState([
         {
             question: "What is the first step in the design process?",
@@ -49,7 +46,18 @@ const CreateNewTest = () => {
             point: 10,
         },
     ]);
-
+    const [createnewtest] = useCreatenewtestMutation();
+    const handleSave = async () => {
+        try {
+            await createnewtest({
+                testId: "your-test-id",
+                questionList: questionList, 
+            }).unwrap();
+            navigate("/testlistview");
+        } catch (error) {
+            console.error("Lỗi khi tạo bài kiểm tra:", error);
+        }
+    };
     const handlePointChange = (index: number, value: number) => {
         const updatedQuestions = [...questionList];
         updatedQuestions[index].point = value;

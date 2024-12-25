@@ -30,7 +30,6 @@ const TestSubmissionDetail = () => {
                 testName: data.title,
             });
 
-            // Lấy câu trả lời của lần thử đầu tiên trong `attempts`
             if (data.attempts && data.attempts[0]?.answer) {
                 setAnswerList(data.attempts[0].answer);
             }
