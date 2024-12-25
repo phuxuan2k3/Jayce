@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { backendURL } from '../../app/env';
+import { backendEndpoint } from '../../app/env';
 import { RootState } from '../../app/store';
 import ClientError from '../../error/client.error';
 
@@ -28,7 +28,7 @@ interface AuthResponse {
 }
 
 const authApiReducerPath = 'authApi';
-const backendFetchQuery = fetchBaseQuery({ baseUrl: backendURL });
+const backendFetchQuery = fetchBaseQuery({ baseUrl: backendEndpoint });
 
 // Define a service using a base URL and expected endpoints
 const authApi = createApi({

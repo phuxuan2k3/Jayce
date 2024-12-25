@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { backendURL } from "../../app/env"
+import { backendEndpoint } from "../../app/env"
 
-const accountBackendURL = backendURL + '/account';
+const accountBackendURL = backendEndpoint + '/account';
 
 const baseQuery = fetchBaseQuery({
     baseUrl: accountBackendURL,
