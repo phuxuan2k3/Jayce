@@ -128,10 +128,10 @@ const TestDetail: React.FC = () => {
                                     </div>
                                     <div className="flex flex-row text-xl font-bold mb-2">
                                         <span className="text-[#39A0AD] whitespace-pre">
-                                            {attempt.grade === null ? null : "Your grade for this quiz is: "}
+                                            {attempt.score === null ? null : "Your grade for this quiz is: "}
                                         </span>
                                         <span className="text-[#2E808A]">
-                                            {attempt.grade === null ? null : `${attempt.grade}`}
+                                            {attempt.score === null ? null : `${attempt.score}`}
                                         </span>
                                     </div>
                                     <div className="flex flex-row font-semibold mb-2 text-[#39A0AD] items-center">
@@ -139,12 +139,12 @@ const TestDetail: React.FC = () => {
                                             {attempt.status === null ? null : `${attempt.status}`}
                                         </div>
                                         <div className="ml-20">
-                                            {attempt.status === "Finished" ? `Submitted at ${format(new Date(testAttemptsProps.createdAt), "PPPP")}` : null}
+                                            {attempt.status === "Finished" ? `Submitted at ${format(new Date(attempt.createdAt), "PPPP")}` : null}
                                         </div>
                                     </div>
                                     <div className="mt-6 flex flex-row items-start bg-gray-50 rounded-xl px-6 py-4 justify-between font-sans">
                                         <span className=" text-blue-chill-600 italic font-medium">
-                                            Answer: {attempt.grade ?? "Not yet graded"}
+                                            Answer: {attempt.score ?? "Not yet graded"}
                                         </span>
                                         <div className="font-semibold flex items-center min-w-fit cursor-pointer">
                                             <span className="whitespace-pre">{attempt.status === "Finished" ? "Review" : "Continue"} </span>
