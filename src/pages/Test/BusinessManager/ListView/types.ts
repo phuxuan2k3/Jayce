@@ -1,11 +1,13 @@
-export type SubmissionOverView={
-    testName: string; 
+export interface SubmissionItem {
+    candidateId: string;
+    createAt: string;
+    completeness: number;
+    score: number ;
+  }
+  
+  export interface SubmissionOverView {
+    testName: string;
     totalPoints: number;
-}
-export type SubmissionItem ={
-    submitterId: string;
-    submitter: string;
-    date: string; 
-    completeness: number; 
-    graded: number; 
-}
+    difficulty:string;
+    minutesToAnswer:number;
+  }

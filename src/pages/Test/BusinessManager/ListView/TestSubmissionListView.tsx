@@ -10,7 +10,9 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from "react-router-dom";
-import NavBar from "../../../../components/Navbar";
+import { useGetSubmissionListQuery, useGetSubmissionOverViewQuery } from "./submissionlist.test-api";
+import { useEffect, useState } from "react";
+import { SubmissionItem, SubmissionOverView } from "./types";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -35,31 +37,27 @@ const TestSubmissionListView = () => {
     const handleClose = () => {
         setOpen(false);
     };
+    const [submissionList, setSubmissionList] =useState<SubmissionItem[]>([]);
+    const { data: submissionListData } = useGetSubmissionListQuery("1");
+    useEffect(() => {
+        if (submissionListData) {
+            console.log("submissionOverviewData:", submissionListData);
+            setSubmissionList(submissionListData);
+        }
+    }, [submissionListData]);
 
-    const submissionOverview = {
-        testName: "Test",
-        totalPoints: 30
-    }
-    const submissionList = [
-        {
-            submitterId:"1",
-            submitter: "Nguyen Van A",
-            date: "2024-11-21T18:23:00Z",
-            completeness: 100,
-            graded: 30,
-        },
-        {
-            submitterId:"2",
-            submitter: "Nguyen Van B",
-            date: "2024-11-22T18:23:00Z",
-            completeness: 67,
-            graded: 20,
-        },
-    ];
+    const [submissionOverview, setsubmissionOverview] = useState<SubmissionOverView>();
+    const { data: submissionOverviewData } = useGetSubmissionOverViewQuery("1");
+    useEffect(() => {
+        if (submissionOverviewData) {
+            console.log("submissionOverviewData:", submissionOverviewData);
+            setsubmissionOverview(submissionOverviewData);
+
+        }
+    }, [submissionOverviewData]);
 
     return (
         <>
-            <NavBar/>
             <div className="w-full flex-grow flex flex-col items-center px-4">
                 <div className="w-full flex-1 flex-col mt-6 pl-16">
                     <div className="w-full text-4xl font-bold">Welcome to your Test Submission Overview</div>
@@ -71,7 +69,7 @@ const TestSubmissionListView = () => {
                 </div>
 
                 <div className="w-full max-w-7xl py-6">
-                    <h1 className="text-2xl text-center text-[var(--primary-color)] font-bold mb-6">Test {submissionOverview.testName}</h1>
+                    <h1 className="text-2xl text-center text-[var(--primary-color)] font-bold mb-6">Test {submissionOverview?.testName}</h1>
 
                     <div className="flex flex-col items-center">
                         <div className="w-4/6 flex flex-row justify-between font-semibold text-[var(--primary-color)] mb-4">
@@ -104,14 +102,14 @@ const TestSubmissionListView = () => {
                                 </div>
 
                                 <div className="font-medium mb-8">
-                                    Submitter: <span className="text-[#39A0AD] underline">{submission.submitter}</span>
+                                    Submitter: <span className="text-[#39A0AD] underline">{submission.candidateId}</span>
                                 </div>
 
                                 <div className="flex justify-between">
                                     <div className="flex items-center">
                                         <div className="flex items-center">
                                             <FontAwesomeIcon className="h-4 w-4" icon={faCalendarMinus} />
-                                            <span className="ml-2 text-gray-600 text-sm font-medium">{format(new Date(submission.date), "dd-MM-yyyy HH:mm:ss")}</span>
+                                            <span className="ml-2 text-gray-600 text-sm font-medium">{format(new Date(submission.createAt), "dd-MM-yyyy HH:mm:ss")}</span>
                                         </div>
                                         <div className="flex items-center">
                                             <FontAwesomeIcon className="h-4 w-4 ml-4" icon={faListCheck} />
@@ -119,11 +117,11 @@ const TestSubmissionListView = () => {
                                         </div>
                                     </div>
                                     <div>
-                                        {submission.graded === null ? (
+                                        {submission.score === null ? (
                                             <span className="text-red-600 font-semibold">Not graded</span>
                                         ) : (
                                             <span className="text-primary font-semibold">
-                                                Graded: {submission.graded}/{submissionOverview.totalPoints}
+                                                Graded: {submission.score}/{submissionOverview?.totalPoints}
                                             </span>
                                         )}
                                     </div>

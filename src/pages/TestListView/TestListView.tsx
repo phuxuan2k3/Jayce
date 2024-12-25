@@ -3,6 +3,8 @@ import { faPlus, faPen,faTrash, faClock, faQuestion } from "@fortawesome/free-so
 // import * as React from 'react';
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/Navbar";
+import { TestWithNoCompany, useLazyGetFilteredQuery } from "../Test/Candidate/TestList/list.test-api";
+import { useEffect, useState } from "react";
 
 
 
@@ -19,25 +21,33 @@ const TestListView = () => {
     const handleTestSubmissionListView=()=>{
         navigate("/test/submission/list")
     }
+    const [testData, setTestData] =  useState<TestWithNoCompany[]>([]);
+    const [getFilteredTests, { data, isLoading, error }] = useLazyGetFilteredQuery();
+    const fetchData = () => {
+        getFilteredTests({
+            minMinute: 30,
+            maxMinute: 90,
+            difficulty: "EASY",
+            tags: [],
+            searchName: "",
+            page: 1,
+            perPage: 10,
+        });
+    };
+    useEffect(() => {
+        fetchData();  
+    }, []);
+    useEffect(() => {
+        if (isLoading) {
+            console.log("Dữ liệu đang được tải...");
+        } else if (error) {
+            console.error("Có lỗi khi tải dữ liệu:", error);
+        } else if (data) {
+            setTestData(data.data);
+            console.log("Dữ liệu nhận được:", data.data);
+        }
+    }, [isLoading, error, data]);
     
-
-   
-    const YourTest = [
-        {
-            count:1,
-            nameTest: "Design pattern",
-            time:60,
-            type: "Multiple choice",
-            view: 30,
-        },
-        {
-            count:10,
-            nameTest: "Big Data",
-            time: 45,
-            type: "Multiple choice & Essay question",
-            view: 20,
-        },
-    ];
 
     return (
         <>
@@ -51,7 +61,7 @@ const TestListView = () => {
                 <div className="w-full max-w-7xl py-6">
                     <div className="flex flex-col items-center">
                         <div className="w-4/6 flex flex-row justify-between font-semibold text-[var(--primary-color)] mb-4">
-                            <span>Your test ({YourTest.length})</span>
+                            <span>Your test ({testData.length})</span>
                             <div className="h-full w-fit flex items-center" onClick={handleClickAdd}>
                                 <div className="h-7 w-7 bg-[#EAF6F8] flex items-center justify-center rounded-lg cursor-pointer">
                                     <FontAwesomeIcon icon={faPlus} rotation={90} />
@@ -62,11 +72,11 @@ const TestListView = () => {
                         </div>
 
                         {/* Test List */}
-                        {YourTest.map((test, index) => (
+                        {testData.map((test, index) => (
                             <div key={index} className="w-4/6 flex-1 flex flex-col bg-white rounded-lg shadow-primary p-6 border-r border-b border-solid border-primary items-between mb-4">
                                 <div className="flex-1 flex justify-between mb-4">
                                     <span className="font-bold mb-2 opacity-50">
-                                        {test.count} Questions
+                                        {test.answersCount} Questions
                                     </span>
                                     <div className="flex items-center space-x-4">
                                     
@@ -80,28 +90,28 @@ const TestListView = () => {
                                 </div>
 
                                 <div className="font-medium mb-8 text-xl">
-                                    Test <span>{test.nameTest}</span>
+                                    Test <span>{test.title}</span>
                                 </div>
                                 <div className="mb-8">
-                                    Description of <span>{test.nameTest}</span>
+                                    Description of <span>{test.title}</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <div className="flex items-center">
                                         <div className="flex items-center">
                                             <FontAwesomeIcon className="h-4 w-4 ml-4" icon={faClock} />
-                                            <span className="ml-2 text-gray-600 text-sm font-medium">{test.time} minutes</span>
+                                            <span className="ml-2 text-gray-600 text-sm font-medium">{test.minutesToAnswer} minutes</span>
                                         </div>
                                         <div className="flex items-center">
                                             <FontAwesomeIcon className="h-4 w-4 ml-4" icon={faQuestion} />
-                                            <span className="ml-2 text-gray-600 text-sm font-medium">{test.type}</span>
+                                            {/* <span className="ml-2 text-gray-600 text-sm font-medium">{test.type}</span> */}
                                         </div>
                                     </div>
                                     <div>
-                                        {test.view === null ? (
+                                        {test.answersCount === null ? (
                                             <span className="text-red-600 font-semibold">Not graded</span>
                                         ) : (
                                             <span className="text-primary font-semibold" onClick={handleTestSubmissionListView}>
-                                               View submission ({test.view})
+                                               View submission ({test.answersCount})
                                             </span>
                                         )}
                                     </div>

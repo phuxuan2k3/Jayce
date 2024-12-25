@@ -2,48 +2,49 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import GradientBorderNotGood from "../../../../components/GradientBorder.notgood";
+import { useGetInQuery } from "./testsubmissiondetail-api";
+import { useEffect, useState } from "react";
+import { Answer } from "./types";
 
 const TestSubmissionDetail = () => {
     const navigate = useNavigate();
-
+    const candidateId="1";
+    const { data } = useGetInQuery( candidateId );
+    console.log(data);
     const handleGoToSubmissionListView = () => {
         navigate("/test/submission/list");
     };
+    const [testInfo, setTestInfo] = useState({
+        testNumber: 0,
+        submitter: "", 
+        testName: "",
+    });
+    const [answerList, setAnswerList] = useState<Answer[]>([]);
 
-    const testInfo = {
-        testNumber: 1,
-        submitter: "Nguyen Van A",
-        testName: "Test",
-    }
-    const answerList = [
-        {
-            question: "What is the first step in the design process?",
-            options: [
-                "Research",
-                "Design",
-                "Develop",
-                "Test",
-            ],
-            chosenAnswer: 0,
-            correctAnswer: 0,
-            point: 10,
-        },
-        {
-            question: "What is the main purpose of user research?",
-            options: ["Identify needs", "Develop code", "Write tests", "Launch product"],
-            chosenAnswer: 0,
-            correctAnswer: 0,
-            point: 20,
-        },
-    ];
+    useEffect(() => {
+        if (data) {
+            // Cập nhật thông tin bài kiểm tra và danh sách câu trả lời
+            setTestInfo({
+                testNumber: data.testId,
+                submitter: "Nguyen Van A", // Giả sử là thông tin mặc định
+                testName: data.title,
+            });
 
+            // Lấy câu trả lời của lần thử đầu tiên trong `attempts`
+            if (data.attempts && data.attempts[0]?.answer) {
+                setAnswerList(data.attempts[0].answer);
+            }
+        }
+    }, [data]);
     const totalPoints = answerList.reduce(
-        (total, item) => (item.chosenAnswer === item.correctAnswer ? total + item.point : total),
+        (total, item) => (item.chosenAnswer === item.correctAnswer ? total + item.score : total),
         0
     );
 
-    const maxPoints = answerList.reduce((total, item) => total + item.point, 0);
+    const maxPoints = answerList.reduce((total, item) => total + item.score, 0);
+   
 
+   
     return (
         <>
            
@@ -105,7 +106,7 @@ const TestSubmissionDetail = () => {
 
                                 {/* Points */}
                                 <GradientBorderNotGood className="font-bold h-fit">
-                                    {answer.chosenAnswer === answer.correctAnswer ? answer.point : 0}
+                                    {answer.chosenAnswer === answer.correctAnswer ? answer.score : 0}
                                 </GradientBorderNotGood>
                             </div>
                         ))}
