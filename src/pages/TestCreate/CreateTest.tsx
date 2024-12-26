@@ -2,7 +2,10 @@
 // import { faPlus, faMagnifyingGlass, faPen,faTrash, faClock, faQuestion } from "@fortawesome/free-solid-svg-icons";
 // import { format } from "date-fns";
 // import * as React from 'react';
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCreatetestMutation } from "./create.test-api";
+import { TestDetails } from "./types";
 
 
 
@@ -10,9 +13,33 @@ const TestListView = () => {
     // const [open, setOpen] = React.useState(false);
     const navigate = useNavigate();
 
-    const handleCreateNewTest = () => {
-        navigate("/test/createnew");
+    // const handleCreateNewTest = () => {
+    //     navigate("/test/createnew");
+    // };
+    const [testName, setTestName] = useState('');
+    const [testDescription, setTestDescription] = useState('');
+    const [testDuration, setTestDuration] = useState('');
+    const handleInputChange = (setter: React.Dispatch<React.SetStateAction<any>>) => (event: React.ChangeEvent<HTMLInputElement>) => {
+        setter(event.target.value);
     };
+    const [createTest, { isSuccess }] = useCreatetestMutation();
+    const handleCreateNewTest = async () => {
+        const testDetails: TestDetails = {
+            name: testName,
+            description: testDescription,
+            duration: testDuration,
+        };
+
+        try {
+            await createTest(testDetails).unwrap(); // This triggers the API call
+            if (isSuccess) {
+                navigate('/test/createnew'); // Redirect after successful test creation
+            }
+        } catch (err) {
+            console.error('Failed to create test:', err);
+        }
+    };
+
     return (
         <>
             <div className="w-full flex-grow flex flex-col items-center px-4 ">
@@ -30,7 +57,8 @@ const TestListView = () => {
                         type="text"
                         placeholder="Enter test name"
                         className="w-2/4 px-4 py-2 border border-[var(--primary-color)] rounded-md focus:outline-none focus:ring focus:ring-teal-300"
-                        />
+                        value={testName}
+                        onChange={handleInputChange(setTestName)}/>
                     </div>
                     <div className="flex  space-x-4">
                         <label className="font-medium text-[var(--primary-color)] text-xl w-1/4">
@@ -40,6 +68,8 @@ const TestListView = () => {
                             <input
                                 type="text"
                                 className="w-full h-[250px] px-4 py-2 border border-[var(--primary-color)] rounded-md focus:outline-none focus:ring focus:ring-teal-300"
+                                value={testDescription}
+                                onChange={handleInputChange(setTestDescription)}
                             />
                             <span className="absolute top-2 left-4 text-gray-400 pointer-events-none">
                                 Enter test description
@@ -54,6 +84,8 @@ const TestListView = () => {
                         type="text"
                         placeholder="Enter test duration"
                         className="w-2/4 px-4 py-2 border border-[var(--primary-color)] rounded-md focus:outline-none focus:ring focus:ring-teal-300"
+                        value={testDuration}
+                        onChange={handleInputChange(setTestDuration)}
                         />
                     </div>
                     <div className="flex items-center space-x-4">
