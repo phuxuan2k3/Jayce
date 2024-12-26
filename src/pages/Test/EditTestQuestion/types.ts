@@ -1,9 +1,9 @@
 export type Question = {
-    questionId:string;
-    question: string;
+    ID: number;
+    text: string;
     options: string[];
     correctAnswer: number;
-    score: number;
+    points: number;
 };
 
 export type QuestionParams = {

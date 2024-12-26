@@ -3,9 +3,12 @@ import { faPlus, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
 import { useNavigate } from "react-router-dom";
 import GradientBorderNotGood from "../../../components/GradientBorder.notgood";
+import { useEditQuestionMutation } from "./editquestion.test-api";
 
 const EditTestQuestion = () => {
     const navigate = useNavigate();
+    const [isUpdating, setIsUpdating] = React.useState(false);
+    const [submitError, setSubmmitError] = React.useState<string | null>(null);
 
     // Uncomment these lines to get the test details from the previous page
     // const location = useLocation();
@@ -15,29 +18,62 @@ const EditTestQuestion = () => {
         navigate("/test/edit/detail");
     };
 
-    const handleSave = () => {
-        // Save the changes
-        navigate("/test/list");
+    const [editQuestion] = useEditQuestionMutation();
+    const testID = "your-test-id"; // TODO: Replace with the actual test ID (from testDetails page)
+    const handleSave = async () => {
+        setIsUpdating(true);
+        setSubmmitError(null);
+        try {
+            // TODO: Call the api to update the details here
+
+            await editQuestion({
+                testID,
+                questionList,
+            }).unwrap();
+
+            console.log("Questions updated successfully");
+            navigate("/test/list");
+        } catch (error) {
+            setSubmmitError("Error updating questions. Please try again later.");
+            console.error("Error updating questions:", error);
+        } finally { 
+            setIsUpdating(false);
+        }
     };
 
+    // TODO: Replace with actual question list from the previous page
     const [questionList, setQuestionList] = React.useState([
         {
-            question: "What is the first step in the design process?",
+            ID: 9,
+            text: "What is the first step in the design process?",
             options: ["Research", "Design", "Develop", "Test"],
             correctAnswer: 0,
-            point: 10,
+            points: 10,
         },
         {
-            question: "What is the main purpose of user research?",
+            ID: 10,
+            text: "What is the main purpose of user research?",
             options: ["Identify needs", "Develop code", "Write tests", "Launch product"],
             correctAnswer: 0,
-            point: 10,
+            points: 10,
         },
     ]);
 
     const handlePointChange = (index: number, value: number) => {
         const updatedQuestions = [...questionList];
-        updatedQuestions[index].point = value;
+        updatedQuestions[index].points = value;
+        setQuestionList(updatedQuestions);
+    };
+
+    const handleQuestionChange = (index: number, newValue: string) => {
+        const updatedQuestions = [...questionList];
+        updatedQuestions[index].text = newValue;
+        setQuestionList(updatedQuestions);
+    };
+
+    const handleOptionChange = (questionIndex: number, optionIndex: number, newValue: string) => {
+        const updatedQuestions = [...questionList];
+        updatedQuestions[questionIndex].options[optionIndex] = newValue;
         setQuestionList(updatedQuestions);
     };
 
@@ -66,16 +102,17 @@ const EditTestQuestion = () => {
         setQuestionList(updatedQuestions);
     };
 
+    // Temporary disable adding new question
     const handleAddQuestion = () => {
-        setQuestionList([
-            ...questionList,
-            {
-                question: "New question",
-                options: ["Option 1"],
-                correctAnswer: 0,
-                point: 0,
-            },
-        ]);
+        // setQuestionList([
+        //     ...questionList,
+        //     {
+        //         question: "New question",
+        //         options: ["Option 1"],
+        //         correctAnswer: 0,
+        //         point: 0,
+        //     },
+        // ]);
     };
 
     const handleDeleteQuestion = (index: number) => {
@@ -109,16 +146,27 @@ const EditTestQuestion = () => {
                                     {/* Question */}
                                     <div className="w-11/12 mb-4">
                                         <GradientBorderNotGood className="w-full h-fit font-semibold">
-                                            {question.question}
+                                            <input
+                                                type="text"
+                                                value={question.text}
+                                                onChange={(e) => handleQuestionChange(index, e.target.value)}
+                                                className="w-full bg-transparent border-none outline-none"
+                                            />
                                         </GradientBorderNotGood>
                                     </div>
 
                                     {/* Options */}
                                     {question.options.map((option, optIndex) => (
                                         <div key={optIndex} className="w-full flex flex-row mt-2" >
-                                            <GradientBorderNotGood className="w-11/12 h-fit">
+                                                                                        <GradientBorderNotGood className="w-11/12 h-fit">
                                                 <div className="flex items-center justify-between">
-                                                    {String.fromCharCode(97 + optIndex)}. {option}
+                                                    <span className="mr-2">{String.fromCharCode(97 + optIndex)}.</span>
+                                                    <input
+                                                        type="text"
+                                                        value={option}
+                                                        onChange={(e) => handleOptionChange(index, optIndex, e.target.value)}
+                                                        className="flex-grow bg-transparent border-none outline-none"
+                                                    />
                                                     <FontAwesomeIcon
                                                         icon={faXmark}
                                                         className="w-fit text-gray-500 cursor-pointer ml-2"
@@ -149,7 +197,7 @@ const EditTestQuestion = () => {
                                         <input
                                             className="w-full"
                                             type="number"
-                                            value={question.point}
+                                            value={question.points}
                                             onChange={(e) => handlePointChange(index, parseInt(e.target.value) || 0)}
                                             min="0"
                                             step="1"
@@ -166,13 +214,16 @@ const EditTestQuestion = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-row justify-center space-x-10">
-                    <button className="w-fit px-3 font-semibold rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={() => handleBack}>
-                        Back
-                    </button>
-                    <button className="w-fit px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={() => handleSave}>
-                        Save
-                    </button>
+                <div className="flex flex-col">
+                    {submitError && <div className="text-center text-red-500 mb-8">{submitError}</div>}
+                    <div className="flex flex-row justify-center space-x-10">
+                        <button className="w-fit px-3 font-semibold rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleBack} disabled={isUpdating}>
+                            Back
+                        </button>
+                        <button className="w-fit px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={handleSave} disabled={isUpdating}>
+                            {isUpdating ? "Creating..." : "Save"}
+                        </button>
+                    </div>
                 </div>
             </div>
         </>
