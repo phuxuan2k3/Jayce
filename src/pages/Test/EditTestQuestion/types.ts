@@ -10,3 +10,7 @@ export type QuestionParams = {
     testID: string;
     questionList: Question[];
 };
+export type QuestionReturn = {
+    title: string;
+    questionList: Question[];
+};
