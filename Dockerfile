@@ -11,4 +11,10 @@ RUN npm i -g serve
 COPY . .
 
 
-CMD [ "npm", "run", "dev" ]
+# CMD [ "npm", "run", "dev" ]
+
+
+RUN npm run build
+
+
+CMD [ "serve", "-s", "dist" ]
