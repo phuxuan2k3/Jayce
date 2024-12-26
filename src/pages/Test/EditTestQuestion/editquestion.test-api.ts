@@ -1,5 +1,5 @@
 import testApi from "../../../features/Test/test.api";
-import { QuestionParams,Question } from "./types";
+import { QuestionParams,QuestionReturn } from "./types";
 
 const editQuestionAPI = testApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -10,7 +10,7 @@ const editQuestionAPI = testApi.injectEndpoints({
                 body: questionList, 
             }),
         }),
-        getQuestion: builder.query<Question[], string>({
+        getQuestion: builder.query<QuestionReturn, string>({
             query: (testId) => `/${testId}/question`
         }),
     }),
