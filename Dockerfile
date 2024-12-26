@@ -6,6 +6,8 @@ COPY package.json .
 
 RUN npm install
 
+RUN npm i  @types/node
+
 RUN npm i -g serve
 
 COPY . .
