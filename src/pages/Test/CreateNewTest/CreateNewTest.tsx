@@ -162,7 +162,7 @@ const CreateNewTest = () => {
         setError(null);
         try {
             const prompt = (document.querySelector("#prompt") as HTMLTextAreaElement).value;
-            const response = await fetch(`/api/question`, {
+            const response = await fetch(`/api/questionai/question`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
