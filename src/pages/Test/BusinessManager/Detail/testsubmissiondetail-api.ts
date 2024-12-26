@@ -1,16 +1,16 @@
 import testApi from "../../../../features/Test/test.api";
 import {Submission} from "./types";
 type TestSubmissionParams={
-    testId:string;
+    attemptId:string;
     candidateId:string;
 }
 const submissiondetailAPI = testApi.injectEndpoints({
     endpoints: (builder) => ({
         getTestInfo: builder.query<Submission, TestSubmissionParams>({
-            query: ({testId,candidateId}) => `/${testId}/submission/${candidateId}/detail`
+            query: ({candidateId}) => `/submission/${candidateId}/detail`
         }),
-        getIn: builder.query<Submission, string>({
-            query: (candidateId) => `/${candidateId}/submission/detail`
+        getIn: builder.query<Submission, TestSubmissionParams>({
+            query: ({attemptId,candidateId}) => `/${candidateId}/submission/${attemptId}/detail`
         }),
        
     }),

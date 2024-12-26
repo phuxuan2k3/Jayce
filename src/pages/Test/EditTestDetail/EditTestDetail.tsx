@@ -1,22 +1,38 @@
 import * as React from 'react';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEditdetailMutation } from './editdetail.test-api';
 
 const EditTestDetail = () => {
     const navigate = useNavigate();
-
+    const location = useLocation();
+    const { id, title, duration, description } = location.state || {};
     const [testDetails, setTestDetails] = React.useState({
-        name: "",
-        description: "",
-        duration: "",
+        title: title,
+        description:description,
+        duration: duration,
+        testId:id,
     });
+    const [editDetail] = useEditdetailMutation();
 
+    
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setTestDetails((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleNext = () => {
-        navigate("/test/edit/question", { state: { testDetails } });
+    const handleNext = async () => {
+        try {
+            await editDetail({
+                testId: id,
+                name: testDetails.title,
+                description: testDetails.description,
+                duration: testDetails.duration,
+            }).unwrap();
+            // Navigate sau khi thành công
+            navigate("/test/edit/question", { state: { testDetails } });
+        } catch (err) {
+            console.error("Failed to edit test detail:", err);
+        }
     };
 
     const handleCancel = () => {
@@ -41,7 +57,7 @@ const EditTestDetail = () => {
                             name="name"
                             type="text"
                             placeholder="Enter test name"
-                            value={testDetails.name}
+                            value={testDetails.title}
                             onChange={handleInputChange}
                             className="w-2/4 px-4 py-2 border border-[var(--primary-color)] rounded-md focus:outline-none focus:ring focus:ring-teal-300"
                         />

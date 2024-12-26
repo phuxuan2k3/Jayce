@@ -1,36 +1,34 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import GradientBorderNotGood from "../../../components/GradientBorder.notgood";
 import { useEditQuestionMutation } from "./editquestion.test-api";
 
 const EditTestQuestion = () => {
     const navigate = useNavigate();
+
     const [isUpdating, setIsUpdating] = React.useState(false);
     const [submitError, setSubmmitError] = React.useState<string | null>(null);
 
     // Uncomment these lines to get the test details from the previous page
-    // const location = useLocation();
-    // const testDetails = location.state?.testDetails || {};
+    const location = useLocation();
+    const testDetails = location.state?.testDetails || {};
 
     const handleBack = () => {
         navigate("/test/edit/detail");
     };
 
     const [editQuestion] = useEditQuestionMutation();
-    const testID = "your-test-id"; // TODO: Replace with the actual test ID (from testDetails page)
+    const testID = testDetails.testId; // TODO: Replace with the actual test ID (from testDetails page)
     const handleSave = async () => {
         setIsUpdating(true);
         setSubmmitError(null);
         try {
-            // TODO: Call the api to update the details here
-
             await editQuestion({
                 testID,
                 questionList,
             }).unwrap();
-
             console.log("Questions updated successfully");
             navigate("/test/list");
         } catch (error) {

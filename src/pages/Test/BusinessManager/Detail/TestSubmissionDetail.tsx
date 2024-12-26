@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import GradientBorderNotGood from "../../../../components/GradientBorder.notgood";
 import { useGetInQuery } from "./testsubmissiondetail-api";
 import { useEffect, useState } from "react";
@@ -8,8 +8,10 @@ import { Answer } from "./types";
 
 const TestSubmissionDetail = () => {
     const navigate = useNavigate();
-    const candidateId="1";
-    const { data } = useGetInQuery( candidateId );
+    const location = useLocation();
+    const { submission } = location.state || {};
+    const { attemptId, candidateId } = submission || {};
+    const { data } = useGetInQuery( { attemptId, candidateId } );
     console.log(data);
     const handleGoToSubmissionListView = () => {
         navigate("/test/submission/list");

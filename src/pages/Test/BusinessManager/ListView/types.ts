@@ -3,6 +3,7 @@ export interface SubmissionItem {
     createAt: string;
     completeness: number;
     score: number ;
+    attemptID: string;
   }
   
   export interface SubmissionOverView {

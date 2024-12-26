@@ -9,7 +9,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useGetSubmissionListQuery, useGetSubmissionOverViewQuery } from "./submissionlist.test-api";
 import { useEffect, useState } from "react";
 import { SubmissionItem, SubmissionOverView } from "./types";
@@ -26,9 +26,10 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 const TestSubmissionListView = () => {
     const [open, setOpen] = React.useState(false);
     const navigate = useNavigate();
-
-    const handleGoToSubmissionDetail = () => {
-        navigate("/test/submission/detail");
+    const location = useLocation();
+    const { testID } = location.state || {};
+    const handleGoToSubmissionDetail = (submission: SubmissionItem) => {
+        navigate("/test/submission/detail", { state: { submission } });
     };
 
     const handleClickOpen = () => {
@@ -38,7 +39,7 @@ const TestSubmissionListView = () => {
         setOpen(false);
     };
     const [submissionList, setSubmissionList] =useState<SubmissionItem[]>([]);
-    const { data: submissionListData } = useGetSubmissionListQuery("1");
+    const { data: submissionListData } = useGetSubmissionListQuery(testID);
     useEffect(() => {
         if (submissionListData) {
             console.log("submissionOverviewData:", submissionListData);
@@ -47,7 +48,7 @@ const TestSubmissionListView = () => {
     }, [submissionListData]);
 
     const [submissionOverview, setsubmissionOverview] = useState<SubmissionOverView>();
-    const { data: submissionOverviewData } = useGetSubmissionOverViewQuery("1");
+    const { data: submissionOverviewData } = useGetSubmissionOverViewQuery(testID);
     useEffect(() => {
         if (submissionOverviewData) {
             console.log("submissionOverviewData:", submissionOverviewData);
@@ -96,7 +97,7 @@ const TestSubmissionListView = () => {
                                         #{index + 1}
                                     </span>
 
-                                    <div className="cursor-pointer" onClick={handleGoToSubmissionDetail}>
+                                    <div className="cursor-pointer"  onClick={() => handleGoToSubmissionDetail(submission)}>
                                         <FontAwesomeIcon className="h-6 w-6" icon={faSquarePollHorizontal} />
                                     </div>
                                 </div>

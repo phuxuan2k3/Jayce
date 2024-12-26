@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import GradientBorderNotGood from "../../../components/GradientBorder.notgood";
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import AddIcon from '@mui/icons-material/Add';
@@ -15,6 +15,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useCreatenewtestMutation } from "./createnew.test-api";
 
 const CreateNewTest = () => {
+    const location = useLocation();
+    const { testID } = location.state || {};
     const [open, setOpen] = React.useState(false);
     const [question, setQuestion] = React.useState("");
     const [generatedQuestions, setGeneratedQuestions] = React.useState<{ content: string; description: string; level: string; reason: string }[]>([]);
@@ -40,7 +42,7 @@ const CreateNewTest = () => {
         setIsCreating(true);
         try {
             await createnewtest({
-                testId: "your-test-id",
+                testId: testID,
                 questionList: questionList,
             }).unwrap();
             navigate("/testlistview");

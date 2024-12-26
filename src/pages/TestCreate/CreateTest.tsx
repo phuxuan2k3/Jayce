@@ -31,9 +31,9 @@ const TestListView = () => {
         };
 
         try {
-            await createTest(testDetails).unwrap(); // This triggers the API call
+            const response = await createTest(testDetails).unwrap(); // This triggers the API call
             if (isSuccess) {
-                navigate('/test/createnew'); // Redirect after successful test creation
+                navigate('/test/createnew', { state: { testID: response.testID } }); // Redirect after successful test creation
             }
         } catch (err) {
             console.error('Failed to create test:', err);

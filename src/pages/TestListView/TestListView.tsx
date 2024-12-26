@@ -12,14 +12,21 @@ const TestListView = () => {
     // const [open, setOpen] = React.useState(false);
     const navigate = useNavigate();
 
-    const handleEditTest = () => {
-        navigate("/test/edit/detail");
+    const handleEditTest = (test:TestWithNoCompany) => {
+        navigate("/test/edit/detail", {
+            state: {
+                id: test.id,
+                title: test.title,
+                duration: test.minutesToAnswer,
+                description: test.description,
+            },
+        });
     };
     const handleClickAdd=()=>{
         navigate("/createtest")
     }
-    const handleTestSubmissionListView=()=>{
-        navigate("/test/submission/list")
+    const handleTestSubmissionListView=(test: TestWithNoCompany)=>{
+        navigate("/test/submission/list", { state: { testID: test.id }  })
     }
     const [testData, setTestData] =  useState<TestWithNoCompany[]>([]);
     const [getFilteredTests, { data, isLoading, error }] = useLazyGetFilteredQuery();
@@ -80,7 +87,7 @@ const TestListView = () => {
                                     </span>
                                     <div className="flex items-center space-x-4">
                                     
-                                        <div  onClick={handleEditTest}>
+                                        <div   onClick={() => handleEditTest(test)}>
                                             <FontAwesomeIcon className="h-5 w-5" icon={faPen} />
                                         </div>
                                         <div >
@@ -110,7 +117,7 @@ const TestListView = () => {
                                         {test.answersCount === null ? (
                                             <span className="text-red-600 font-semibold">Not graded</span>
                                         ) : (
-                                            <span className="text-primary font-semibold" onClick={handleTestSubmissionListView}>
+                                            <span className="text-primary font-semibold" onClick={() =>handleTestSubmissionListView(test)}>
                                                View submission ({test.answersCount})
                                             </span>
                                         )}

@@ -4,7 +4,7 @@ import { TestDetails } from "./types";
 const editdetailAPI = testApi.injectEndpoints({
     endpoints: (builder) => ({
         editdetail: builder.mutation<void, TestDetails>({
-            query: ({  testId, name, description, duration, type }) => ({
+            query: ({  testId, name, description, duration}) => ({
                 url: `/${testId}/edit/detail`,
                 method: "POST",
                 body: {
@@ -12,7 +12,6 @@ const editdetailAPI = testApi.injectEndpoints({
                     name, 
                     description, 
                     duration, 
-                    type, 
                 },
             }),
         }),
