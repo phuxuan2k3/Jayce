@@ -143,7 +143,7 @@ const TestList: React.FC = () => {
 						error={error_tests || error_companies}>
 						<div className="shadow-primary px-6 py-8 rounded-xl">
 							{tests?.data.map((question) => (
-								<TestCard company={companies?.find(x => x.id)?.name ?? ""} key={question.id} {...question} />
+								<TestCard company={companies?.find(x => x.ID)?.name ?? ""} key={question.ID} {...question} />
 							))}
 						</div>
 					</FetchStateContent>

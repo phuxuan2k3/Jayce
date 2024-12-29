@@ -3,7 +3,7 @@ export type TestListProps = {
 }
 
 export type TestDisplayProps = {
-    id: string;
+    ID: string;
     company: string;
     createdAt: string;
     title: string;

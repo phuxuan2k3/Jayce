@@ -11,7 +11,7 @@ import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
 const TestCard: React.FC<TestDisplayProps> = ({
-    id,
+    ID: id,
     company,
     createdAt,
     title: question,

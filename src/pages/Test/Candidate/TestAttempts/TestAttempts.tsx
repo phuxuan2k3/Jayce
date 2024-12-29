@@ -14,7 +14,7 @@ import { Paged } from "../../../../interfaces/paged.type";
 
 const perPage = 5;
 const bufferTestResponseData: TestAttemptsResponse = {
-    id: '',
+    ID: '',
     companyId: '',
     createdAt: Date().toString(),
     title: '',
@@ -49,7 +49,11 @@ const TestDetail: React.FC = () => {
         perPage,
     });
 
-    const { data: data_TestDisplay, isLoading: isLoading_TestDisplay, error: error_TestDisplay } = useGetTestDisplayQuery(testId);
+    const {
+        data: data_TestDisplay,
+        isLoading: isLoading_TestDisplay,
+        error: error_TestDisplay
+    } = useGetTestDisplayQuery(testId);
     const testAttemptsResponse = data_TestDisplay ?? bufferTestResponseData;
 
     const { data: data_companies, isLoading: isLoading_companies, error: error_companies } = useGetCompaniesQuery([testAttemptsResponse.companyId]);
@@ -74,7 +78,7 @@ const TestDetail: React.FC = () => {
     };
 
     const handleOnAttemptClick = (attemptId: string, attemptStatus: TestStatus) => {
-        if (attemptStatus === TestStatus.Finished) {
+        if (attemptStatus !== TestStatus.InProgress) {
             navigate(paths.TEST.viewAnswer(testId, attemptId));
         } else {
             navigate(paths.TEST.do(testId));
@@ -107,7 +111,7 @@ const TestDetail: React.FC = () => {
                     <div className="flex-1 flex-column bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
                         <FetchStateContent isLoading={isLoading_PagedAttempts} error={error_PagedAttempts}>
                             {pagedAttempts.data.map((attempt) => (
-                                <div key={attempt.id} className="bg-[#EAF6F8] p-4 mb-4 rounded-lg shadow-md cursor-pointer" onClick={() => handleOnAttemptClick(attempt.id, attempt.status)}>
+                                <div key={attempt.ID} className="bg-[#EAF6F8] p-4 mb-4 rounded-lg shadow-md cursor-pointer" onClick={() => handleOnAttemptClick(attempt.ID, attempt.status)}>
                                     <div className="flex flex-row border-b border-primary pb-4 items-center gap-3 mb-3 h-fit">
                                         <img className="w-12 h-12 rounded-full" src={companyProps.imageUrl} alt={companyProps.name} />
                                         <div className="flex flex-col h-fit">

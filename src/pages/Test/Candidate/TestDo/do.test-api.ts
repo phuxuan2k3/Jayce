@@ -3,7 +3,7 @@ import { TestDoProps, TestSubmissionParams } from "./types";
 
 const doApi = testApi.injectEndpoints({
     endpoints: (builder) => ({
-        getTestDoProps: builder.query<TestDoProps, string>({
+        getTestDoPage: builder.query<TestDoProps, string>({
             query: (testId) => `/${testId}/do/page`
         }),
 
@@ -19,6 +19,6 @@ const doApi = testApi.injectEndpoints({
 });
 
 export const {
-    useGetTestDoPropsQuery,
+    useGetTestDoPageQuery,
     useSubmitTestMutation
 } = doApi;

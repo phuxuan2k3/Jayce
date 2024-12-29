@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faPen,faTrash, faClock, faQuestion } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faPen, faTrash, faClock, faQuestion } from "@fortawesome/free-solid-svg-icons";
 // import * as React from 'react';
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/Navbar";
@@ -12,23 +12,23 @@ const TestListView = () => {
     // const [open, setOpen] = React.useState(false);
     const navigate = useNavigate();
 
-    const handleEditTest = (test:TestWithNoCompany) => {
+    const handleEditTest = (test: TestWithNoCompany) => {
         navigate("/test/edit/detail", {
             state: {
-                id: test.id,
+                id: test.ID,
                 title: test.title,
                 duration: test.minutesToAnswer,
                 description: test.description,
             },
         });
     };
-    const handleClickAdd=()=>{
+    const handleClickAdd = () => {
         navigate("/createtest")
     }
-    const handleTestSubmissionListView=(test: TestWithNoCompany)=>{
-        navigate("/test/submission/list", { state: { testID: test.id }  })
+    const handleTestSubmissionListView = (test: TestWithNoCompany) => {
+        navigate("/test/submission/list", { state: { testID: test.ID } })
     }
-    const [testData, setTestData] =  useState<TestWithNoCompany[]>([]);
+    const [testData, setTestData] = useState<TestWithNoCompany[]>([]);
     const [getFilteredTests, { data, isLoading, error }] = useLazyGetFilteredQuery();
     const fetchData = () => {
         getFilteredTests({
@@ -42,7 +42,7 @@ const TestListView = () => {
         });
     };
     useEffect(() => {
-        fetchData();  
+        fetchData();
     }, []);
     useEffect(() => {
         if (isLoading) {
@@ -54,11 +54,11 @@ const TestListView = () => {
             console.log("Dữ liệu nhận được:", data.data);
         }
     }, [isLoading, error, data]);
-    
+
 
     return (
         <>
-        <NavBar/>
+            <NavBar />
             <div className="w-full flex-grow flex flex-col items-center px-4">
                 <div className="w-full flex-1 flex-col mt-6 ml-16">
                     <div className="w-full text-4xl font-bold">Welcome to your Test Manager</div>
@@ -86,8 +86,8 @@ const TestListView = () => {
                                         {test.answersCount} Questions
                                     </span>
                                     <div className="flex items-center space-x-4">
-                                    
-                                        <div   onClick={() => handleEditTest(test)}>
+
+                                        <div onClick={() => handleEditTest(test)}>
                                             <FontAwesomeIcon className="h-5 w-5" icon={faPen} />
                                         </div>
                                         <div >
@@ -117,8 +117,8 @@ const TestListView = () => {
                                         {test.answersCount === null ? (
                                             <span className="text-red-600 font-semibold">Not graded</span>
                                         ) : (
-                                            <span className="text-primary font-semibold" onClick={() =>handleTestSubmissionListView(test)}>
-                                               View submission ({test.answersCount})
+                                            <span className="text-primary font-semibold" onClick={() => handleTestSubmissionListView(test)}>
+                                                View submission ({test.answersCount})
                                             </span>
                                         )}
                                     </div>
@@ -142,7 +142,7 @@ const TestListView = () => {
                     </div>
                 </div>
             </div>
-            
+
         </>
     );
 }

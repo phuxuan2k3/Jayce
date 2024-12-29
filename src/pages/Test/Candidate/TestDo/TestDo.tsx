@@ -2,7 +2,7 @@ import { useState } from 'react';
 import QuestionComponent from './QuestionComponent';
 import { useNavigate, useParams } from 'react-router-dom';
 import { paths } from '../../../../router/path';
-import { useGetTestDoPropsQuery, useSubmitTestMutation } from './do.test-api';
+import { useGetTestDoPageQuery, useSubmitTestMutation } from './do.test-api';
 import { TestDoProps, TestSubmissionParams } from './types';
 import FetchStateContent from '../../components/FetchStateContent';
 
@@ -19,11 +19,16 @@ const TestDo = () => {
 		data: data_testDoProps,
 		isLoading: isLoading_testDoProps,
 		error: error_testDoProps,
-	} = useGetTestDoPropsQuery(testId);
+	} = useGetTestDoPageQuery(testId);
+
 	const testQuestions: TestDoProps = data_testDoProps ?? {
 		title: "",
 		questions: [],
 	};
+
+	console.log(testId);
+	console.log(isLoading_testDoProps);
+	console.log(testQuestions);
 
 	const [submitTest] = useSubmitTestMutation();
 
@@ -89,35 +94,43 @@ const TestDo = () => {
 						{testQuestions.title}
 					</h1>
 				</FetchStateContent>
-				<div className="flex">
-					{/* QuestionComponent */}
-					<QuestionComponent
-						questionNumber={questionNumber}
-						question={testQuestions.questions[questionNumber - 1].text}
-						options={testQuestions.questions[questionNumber - 1].choices.map((choice) => choice.text)}
-						selectedOption={selectedOptions[questionNumber] || null}
-						onOptionChange={handleOptionChange}
-						goToNextQuestion={goToNextQuestion}
-						isLastQuestion={questionNumber === testQuestions.questions.length}
-						toggleFlag={toggleFlag}
-						isFlagged={flaggedQuestions.has(questionNumber)}
-					/>
+				<div className="flex flex-row w-full justify-between">
+					<FetchStateContent isLoading={isLoading_testDoProps} error={error_testDoProps} >
+						{/* QuestionComponent */}
+						{testQuestions.questions[questionNumber - 1] == null ? (
+							<div>No questions found</div>
+						) : (
+							<QuestionComponent
+								questionNumber={questionNumber}
+								question={testQuestions.questions[questionNumber - 1].text}
+								options={testQuestions.questions[questionNumber - 1].choices.map((choice) => choice.text)}
+								selectedOption={selectedOptions[questionNumber] || null}
+								onOptionChange={handleOptionChange}
+								goToNextQuestion={goToNextQuestion}
+								isLastQuestion={questionNumber === testQuestions.questions.length}
+								toggleFlag={toggleFlag}
+								isFlagged={flaggedQuestions.has(questionNumber)}
+							/>
+						)}
+					</FetchStateContent>
 					{/* Sidebar */}
 					<div className="w-64 ml-4">
 						<div className="text-4xl text-center font-bold text-primary mb-6">37:39</div>
 						<div className="bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
 							<div className="mb-4 font-semibold">Quiz navigation</div>
-							<div className="grid grid-cols-5 gap-2">
-								{[...Array(testQuestions.questions.length)].map((_, index) => (
-									<button
-										key={index}
-										className={`w-10 h-10 rounded-full text-sm font-bold text-primary border border-primary cursor-pointer ${getButtonStyle(index)}`}
-										onClick={() => setQuestionNumber(index + 1)}
-									>
-										{index + 1}
-									</button>
-								))}
-							</div>
+							<FetchStateContent isLoading={isLoading_testDoProps} error={error_testDoProps} >
+								<div className="grid grid-cols-5 gap-2">
+									{[...Array(testQuestions.questions.length)].map((_, index) => (
+										<button
+											key={index}
+											className={`w-10 h-10 rounded-full text-sm font-bold text-primary border border-primary cursor-pointer ${getButtonStyle(index)}`}
+											onClick={() => setQuestionNumber(index + 1)}
+										>
+											{index + 1}
+										</button>
+									))}
+								</div>
+							</FetchStateContent>
 						</div>
 						<button className="mt-4 w-full bg-gradient-text text-md font-bold text-white px-6 py-3 rounded-lg" onClick={handleSubmitClick}>
 							Submit

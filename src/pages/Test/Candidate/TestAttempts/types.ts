@@ -12,7 +12,7 @@ export enum TestStatus {
 }
 
 export type Attempt = {
-    id: string;
+    ID: string;
     score: number | null;
     status: TestStatus;
     createdAt: string;

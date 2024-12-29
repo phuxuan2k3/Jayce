@@ -13,7 +13,7 @@ const baseQuery = fetchBaseQuery({
 });
 
 export type CompanyResponse = {
-    id: string;
+    ID: string;
     name: string;
     imageUrl: string;
 }

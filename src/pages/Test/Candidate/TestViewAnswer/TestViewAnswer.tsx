@@ -79,7 +79,7 @@ const TestViewAnswer = () => {
                 <div className="flex flex-col items-center">
                     {!isLoading_TestAnswers && (
                         <div className="w-4/6 flex flex-row justify-between font-semibold text-[var(--primary-color)] mb-4">
-                            <span>Answer List ({testViewAnswer.totalQuestions})</span>
+                            <span>Number of Questions: {testViewAnswer.totalQuestions}</span>
                             <span>Total Score: {testViewAnswer.score}/{testViewAnswer.totalScore}</span>
                         </div>
                     )}
@@ -102,9 +102,9 @@ const TestViewAnswer = () => {
 
                                     {/* Options */}
                                     {question.choices.map((choice) => (
-                                        <div key={choice.id} className="w-full flex flex-row mt-2" >
+                                        <div key={choice.ID} className="w-full flex flex-row mt-2" >
                                             <GradientBorderNotGood className="w-11/12 h-fit">
-                                                {choice.id}. {choice.text}
+                                                {choice.ID}. {choice.text}
                                             </GradientBorderNotGood>
                                             <div className="w-1/12 flex items-center justify-center">
                                                 {renderChoiceIcon(choice)}
