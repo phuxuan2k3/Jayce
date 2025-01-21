@@ -25,6 +25,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 const TestSubmissionListView = () => {
     const [open, setOpen] = React.useState(false);
+    const [selectedVersion, setSelectedVersion] = useState<string | "all">("all");
+    const [availableVersions, setAvailableVersions] = useState<string[]>([]);
     const navigate = useNavigate();
     const location = useLocation();
     const { testID } = location.state || {};
@@ -38,7 +40,7 @@ const TestSubmissionListView = () => {
     const handleClose = () => {
         setOpen(false);
     };
-    const [submissionList, setSubmissionList] =useState<SubmissionItem[]>([]);
+    const [submissionList, setSubmissionList] = useState<SubmissionItem[]>([]);
     const { data: submissionListData } = useGetSubmissionListQuery(testID);
     useEffect(() => {
         if (submissionListData) {
@@ -94,10 +96,10 @@ const TestSubmissionListView = () => {
                             <div key={index} className="w-4/6 flex-1 flex flex-col bg-white rounded-lg shadow-primary p-6 border-r border-b border-solid border-primary items-between mb-4">
                                 <div className="flex-1 flex justify-between mb-4">
                                     <span className="font-bold mb-2 opacity-50">
-                                        #{index + 1}
+                                        #Version number
                                     </span>
 
-                                    <div className="cursor-pointer"  onClick={() => handleGoToSubmissionDetail(submission)}>
+                                    <div className="cursor-pointer" onClick={() => handleGoToSubmissionDetail(submission)}>
                                         <FontAwesomeIcon className="h-6 w-6" icon={faSquarePollHorizontal} />
                                     </div>
                                 </div>
@@ -181,6 +183,17 @@ const TestSubmissionListView = () => {
                                 <input type="date" className="border border-black rounded-lg text-sm p-1"
                                 />
                             </div>
+                        </div>
+                        <div className="flex justify-between mt-2">
+                            <label className="font-semibold">Version</label>
+                            <select className="border border-black rounded-lg text-sm p-1 w-fit" value={selectedVersion}>
+                                <option value="all">All</option>
+                                {availableVersions.map(version => (
+                                    <option key={version} value={version}>
+                                        {version}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                     </DialogContent>
                     <DialogActions>
