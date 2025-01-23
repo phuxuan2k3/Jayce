@@ -35,6 +35,9 @@ export function toErrorMessage(error: unknown): string | null {
 			else if (error.status === "TIMEOUT_ERROR") {
 				return 'The request timed out. Please try again later.';
 			}
+			else if (error.status === 401) {
+				return 'Unauthorized';
+			}
 			return 'error' in error ? error.error : JSON.stringify(error.data)
 		} else if (isErrorWithMessage(error)) {
 			return error.message

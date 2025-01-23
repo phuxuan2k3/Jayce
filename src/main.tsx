@@ -3,6 +3,8 @@ import { createRoot } from "react-dom/client";
 import "./assets/styles/index.css";
 import App from "./App.tsx";
 import { createTheme, StyledEngineProvider, ThemeProvider } from "@mui/material";
+import { Provider } from "react-redux";
+import store from "./app/store.ts";
 
 // Test again
 
@@ -36,7 +38,9 @@ createRoot(rootElement!).render(
 	<StrictMode>
 		<StyledEngineProvider injectFirst>
 			<ThemeProvider theme={theme}>
-				<App />
+				<Provider store={store}>
+					<App />
+				</Provider>
 			</ThemeProvider>
 		</StyledEngineProvider>
 	</StrictMode>

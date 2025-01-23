@@ -12,6 +12,17 @@ class LocalStorageService {
 		return localStorage.getItem(this.REFRESH_TOKEN_KEY);
 	}
 
+	static getTokens(): Token | null {
+		const accessToken = localStorage.getItem(this.ACCESS_TOKEN_KEY);
+		const refreshToken = localStorage.getItem(this.REFRESH_TOKEN_KEY);
+		if (accessToken == null || refreshToken == null) {
+			return null;
+		}
+		return {
+			accessToken, refreshToken
+		};
+	}
+
 	static setTokens(token: Token): void {
 		localStorage.setItem(this.ACCESS_TOKEN_KEY, token.accessToken);
 		localStorage.setItem(this.REFRESH_TOKEN_KEY, token.refreshToken);

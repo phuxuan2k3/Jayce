@@ -1,7 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { BaseQueryApi, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { backendEndpoint } from '../../app/env';
 import { RootState } from '../../app/store';
-import ClientError from '../../error/client.error';
 
 interface LoginRequest {
 	email: string;
@@ -28,12 +27,48 @@ interface AuthResponse {
 }
 
 const authApiReducerPath = 'authApi';
-const backendFetchQuery = fetchBaseQuery({ baseUrl: backendEndpoint });
 
-// Define a service using a base URL and expected endpoints
+const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions: {}): Promise<{ data: any } | { error: FetchBaseQueryError }> => {
+	const { url, method } = args;
+
+	await new Promise(resolve => setTimeout(resolve, 5000));
+
+	// Todo: Remove mock data
+	if ((url === 'auth/login' || url === 'auth/register') && method === 'POST') {
+		// Test error effect
+		const email = args.body.email as string;
+		console.log('==> email: ', email);
+		console.log('==> email: ', email === '');
+		if (email === '') {
+			return {
+				error: {
+					status: 'FETCH_ERROR',
+					error: 'Invalid credentials',
+				},
+			}
+		}
+		return {
+			data: {
+				user: {
+					email: email,
+					firstName: 'John',
+					lastName: 'Doe',
+				},
+				token: {
+					accessToken: 'mockAccessToken',
+					refreshToken: 'mockRefreshToken',
+				},
+			},
+		};
+	}
+
+	const backendFetchQuery = fetchBaseQuery({ baseUrl: backendEndpoint });
+	return backendFetchQuery(args, api, extraOptions);
+};
+
 const authApi = createApi({
 	reducerPath: authApiReducerPath,
-	baseQuery: backendFetchQuery,
+	baseQuery: customFetchQuery,
 	endpoints: (builder) => ({
 		login: builder.mutation<AuthResponse, LoginRequest>({
 			query: (creadentials) => ({
@@ -62,16 +97,16 @@ const authApi = createApi({
 		logout: builder.mutation<void, void>({
 			queryFn: async (_, api, __, baseQuery) => {
 				try {
-					const token = (api.getState() as RootState).auth.token;
+					const token = (api.getState() as RootState).auth.tokens;
 					if (token == null) {
-						throw new ClientError('Unauthorized');
+						return { data: void 0 };
 					}
 					const response = await baseQuery({
 						url: 'auth/logout',
 						method: 'POST',
 						headers: { Authorization: `Bearer ${token.accessToken}` },
 					});
-					if (response.error) {
+					if ('error' in response) {
 						return { error: response.error };
 					}
 					return { data: void 0 };
@@ -87,7 +122,7 @@ const authApi = createApi({
 export const {
 	useLoginMutation,
 	useRegisterMutation,
-	useRefreshMutation
+	useRefreshMutation,
 } = authApi;
 
 export type { AuthResponse, Token };

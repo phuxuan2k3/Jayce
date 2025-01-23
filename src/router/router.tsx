@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import Login from "../pages/Authen/Login";
+import Login from "../pages/Authen/login/Login";
 import Dashboard from "../pages/Dashboard";
 import TestDo from "../pages/Test/Candidate/TestDo/TestDo";
 import { paths } from "./path"
-import Register from "../pages/Authen/Register";
+import Register from "../pages/Authen/register/Register";
 import TestList from "../pages/Test/Candidate/TestList/TestList";
 import Layout from "../pages/Test/components/Layout";
 import TestDetail from "../pages/Test/Candidate/TestAttempts/TestAttempts";
@@ -102,7 +102,7 @@ const router = createBrowserRouter([
 				path: paths.CREATETEST,
 				element: <CreateTest />,
 			},
-			
+
 		]
 	}
 ], {
