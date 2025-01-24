@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Login from "../pages/Authen/login/Login";
 import Dashboard from "../pages/Dashboard";
 import TestDo from "../pages/Test/Candidate/TestDo/TestDo";
@@ -11,13 +11,21 @@ import TestEvaluate from "../pages/Test/Candidate/TestEvaluate/TestEvaluate";
 import ErrorPage from "../components/ErrorPage";
 import TestSchedule from "../pages/Test/Candidate/TestSchedule/TestSchedule";
 import TestViewAnswer from "../pages/Test/Candidate/TestViewAnswer/TestViewAnswer";
-import TestSubmissionListView from "../pages/Test/BusinessManager/ListView/TestSubmissionListView";
-import TestSubmissionDetail from "../pages/Test/BusinessManager/Detail/TestSubmissionDetail";
-import TestListView from "../pages/TestListView/TestListView";
-import CreateTest from "../pages/TestCreate/CreateTest";
-import EditTestDetail from "../pages/Test/EditTestDetail/EditTestDetail";
-import EditTestQuestion from "../pages/Test/EditTestQuestion/EditTestQuestion";
-import CreateNewTest from "../pages/Test/CreateNewTest/CreateNewTest";
+import TestSubmissionListView from "../pages/Test/BusinessManager/TestSubmissionListView/TestSubmissionListView";
+import TestSubmissionDetail from "../pages/Test/BusinessManager/TestSubmissionDetail/TestSubmissionDetail";
+import TestListView from "../pages/Test/BusinessManager/TestListView/TestListView";
+import CreateTest from "../pages/Test/BusinessManager/TestCreateDetail/TestCreateDetail";
+import EditTestDetail from "../pages/Test/BusinessManager/TestEditDetail/TestEditDetail";
+import EditTestQuestion from "../pages/Test/BusinessManager/TestEditQuestion/EditTestQuestion";
+import CreateNewTest from "../pages/Test/BusinessManager/TestCreateQuestion/TestCreateQuestion";
+import ScenarioListView from "../pages/Scenario/BusinessManager/ScenarioListView/ScenarioListView";
+import ScenarioLayout from "../pages/Scenario/components/ScenarioLayout";
+import ScenarioSubmissionListView from "../pages/Scenario/BusinessManager/ScenarioSubmissionListView/ScenarioSubmissionListView";
+import ScenarioSubmissionDetail from "../pages/Scenario/BusinessManager/ScenarioSubmissionDetail/ScenarioSubmissionDetail";
+import ScenarioCreateDetail from "../pages/Scenario/BusinessManager/ScenarioCreateDetail/ScenarioCreateDetail";
+import ScenarioCreateQuestion from "../pages/Scenario/BusinessManager/ScenarioCreateQuestion/ScenarioCreateQuestion";
+import ScenarioEditDetail from "../pages/Scenario/BusinessManager/ScenarioEditDetail/ScenarioEditDetail";
+import ScenarioEditQuestion from "../pages/Scenario/BusinessManager/ScenarioEditQuestion/ScenarioEditQuestion";
 const router = createBrowserRouter([
 	{
 		errorElement: <ErrorPage />,
@@ -92,17 +100,62 @@ const router = createBrowserRouter([
 						path: paths.TEST.CREATENEWTEST,
 						element: <CreateNewTest />
 					},
+					{
+						path: paths.TEST.CREATETEST,
+						element: <CreateTest />,
+					},
+					{
+						path: paths.TEST.TESTLISTVIEW,
+						element: <TestListView />,
+					},
 				],
 			},
 			{
-				path: paths.TESTLISTVIEW,
-				element: <TestListView />,
+				path: paths.SCENARIO.ROOT,
+				element: <ScenarioLayout />,
+				children: [
+					{
+						path: '',
+						element: <Navigate to={paths.SCENARIO.LIST} />, // Redirect to paths.SCENARIO.LIST
+					},
+					{
+						path: paths.SCENARIO.LIST,
+						element: <ScenarioListView />,
+					},
+					{
+						path: paths.SCENARIO.SUBMISSION.ROOT,
+						element: <ScenarioSubmissionListView />,
+					},
+					{
+						path: paths.SCENARIO.SUBMISSION.DETAIL,
+						element: <ScenarioSubmissionDetail />
+					},
+					{
+						path: paths.SCENARIO.CREATE.ROOT,
+						element: <Navigate to={paths.SCENARIO.LIST} />,
+					},
+					{
+						path: paths.SCENARIO.CREATE.DETAIL,
+						element: <ScenarioCreateDetail />
+					},
+					{
+						path: paths.SCENARIO.CREATE.QUESTION,
+						element: <ScenarioCreateQuestion />
+					},
+					{
+						path: paths.SCENARIO.EDIT.ROOT,
+						element: <Navigate to={paths.SCENARIO.LIST} />,
+					},
+					{
+						path: paths.SCENARIO.EDIT.DETAIL,
+						element: <ScenarioEditDetail />,
+					},
+					{
+						path: paths.SCENARIO.EDIT.QUESTION,
+						element: <ScenarioEditQuestion />,
+					},
+				],
 			},
-			{
-				path: paths.CREATETEST,
-				element: <CreateTest />,
-			},
-
 		]
 	}
 ], {
