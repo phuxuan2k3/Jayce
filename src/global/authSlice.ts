@@ -1,17 +1,29 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../app/store.ts';
-import authApi, { AuthResponse, Token } from '../features/Auth/authApi.ts';
 import LocalStorageService from '../services/localstorage.service.ts';
+import authApi from '../features/Auth/authApi.ts';
 
-interface AuthState {
-	user: {
-		email: string;
-		firstName: string;
-		lastName: string;
-		avatarPath?: string;
-	} | null,
+export type UserInfo = {
+	email: string;
+	firstName: string;
+	lastName: string;
+	avatarPath: string;
+}
+
+export type Token = {
+	accessToken: string;
+	refreshToken: string;
+}
+
+export interface AuthState {
+	user: UserInfo | null,
 	tokens: Token | null,
 };
+
+export interface AuthStateResponse {
+	user: UserInfo,
+	tokens: Token,
+}
 
 const initialState: AuthState = ((): AuthState => {
 	return {
@@ -20,27 +32,24 @@ const initialState: AuthState = ((): AuthState => {
 	}
 })();
 
-function _setAuthState(state: AuthState, action: PayloadAction<AuthResponse>) {
-	state.user = {
-		email: action.payload.email,
-		firstName: action.payload.firstName,
-		lastName: action.payload.lastName,
-	};
-	state.tokens = action.payload.token;
-	LocalStorageService.setTokens(action.payload.token);
+function _setAuthState(state: AuthState, action: PayloadAction<AuthStateResponse>) {
+	state.tokens = action.payload.tokens;
+	state.user = action.payload.user;
+	LocalStorageService.setAuthState(state);
 }
 
 function _clearAuthState(state: AuthState) {
 	state.user = null;
 	state.tokens = null;
-	LocalStorageService.clearTokens();
+	LocalStorageService.clearAuthState();
 }
 
 const authSlice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
-		clearAuthState: _clearAuthState
+		clearAuthState: _clearAuthState,
+		setAuthState: _setAuthState,
 	},
 	extraReducers: (builder) => {
 		builder
@@ -77,7 +86,8 @@ const authSlice = createSlice({
 					authApi.endpoints.logout.matchFulfilled(action) ||
 					authApi.endpoints.logout.matchRejected(action),
 				(state) => {
-					_clearAuthState(state);
+					_clearAuthState(state); // Todo: clear again needed?
+					console.log('Logout completed');
 				})
 
 	},
@@ -87,7 +97,9 @@ const authSlice = createSlice({
  * Since the app startup, the tokens are loaded from the local storage and being verified with auth/refresh endpoint and being reduced to the authSlice (if valid) or set null in the authSlice. Therefore, tokens in authSlice are 100% valid, NOT the ones in localStorage.
  */
 export const selectIsAuthenticated = (state: RootState) => state.auth.tokens != null && state.auth.user != null;
+export const selectUserInfo = (state: RootState) => state.auth.user;
+export const selectTokens = (state: RootState) => state.auth.tokens;
 
-export const { clearAuthState } = authSlice.actions;
+export const { clearAuthState, setAuthState } = authSlice.actions;
 
 export default authSlice.reducer;

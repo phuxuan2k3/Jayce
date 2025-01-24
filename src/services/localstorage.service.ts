@@ -1,36 +1,22 @@
-import { Token } from "../features/Auth/authApi";
+import { AuthState } from "../global/authSlice";
 
 class LocalStorageService {
-	private static ACCESS_TOKEN_KEY = 'access_token';
-	private static REFRESH_TOKEN_KEY = 'refresh_token';
+	private static readonly authStateKey: string = 'authState';
 
-	static getAccessToken(): string | null {
-		return localStorage.getItem(this.ACCESS_TOKEN_KEY);
-	}
-
-	static getRefreshToken(): string | null {
-		return localStorage.getItem(this.REFRESH_TOKEN_KEY);
-	}
-
-	static getTokens(): Token | null {
-		const accessToken = localStorage.getItem(this.ACCESS_TOKEN_KEY);
-		const refreshToken = localStorage.getItem(this.REFRESH_TOKEN_KEY);
-		if (accessToken == null || refreshToken == null) {
-			return null;
+	static getAuthState(): AuthState | null {
+		const authState = localStorage.getItem(this.authStateKey);
+		if (authState) {
+			return JSON.parse(authState) as AuthState;
 		}
-		return {
-			accessToken, refreshToken
-		};
+		return null;
 	}
 
-	static setTokens(token: Token): void {
-		localStorage.setItem(this.ACCESS_TOKEN_KEY, token.accessToken);
-		localStorage.setItem(this.REFRESH_TOKEN_KEY, token.refreshToken);
+	static setAuthState(authState: AuthState) {
+		localStorage.setItem(this.authStateKey, JSON.stringify(authState));
 	}
 
-	static clearTokens(): void {
-		localStorage.removeItem(this.ACCESS_TOKEN_KEY);
-		localStorage.removeItem(this.REFRESH_TOKEN_KEY);
+	static clearAuthState() {
+		localStorage.removeItem(this.authStateKey);
 	}
 }
 

@@ -20,14 +20,14 @@ const LoginForm = () => {
 		if (isAuthenticated) {
 			navigate('/')
 		}
-	}, [])
+	}, [isAuthenticated])
 
-	const handleFormSubmit = (e: React.FormEvent) => {
+	const handleFormSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		const formData = new FormData(e.target as HTMLFormElement);
 		const email = formData.get('email') as string;
 		const password = formData.get('password') as string;
-		login({ email, password });
+		await login({ email, password });
 	}
 
 	const toSignUp = () => {

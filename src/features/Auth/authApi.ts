@@ -1,6 +1,8 @@
 import { BaseQueryApi, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { backendEndpoint } from '../../app/env';
 import { RootState } from '../../app/store';
+import { AuthStateResponse, clearAuthState, selectTokens } from '../../global/authSlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
 interface LoginRequest {
 	email: string;
@@ -14,32 +16,19 @@ interface RegisterRequest {
 	lastName: string;
 }
 
-interface Token {
-	accessToken: string;
-	refreshToken: string;
-}
-
-interface AuthResponse {
-	email: string;
-	firstName: string;
-	lastName: string;
-	token: Token;
-}
-
 const authApiReducerPath = 'authApi';
 
 const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions: {}): Promise<{ data: any } | { error: FetchBaseQueryError }> => {
 	const { url, method } = args;
 
-	await new Promise(resolve => setTimeout(resolve, 5000));
+	// Todo: Remove mock timeout for loading effect
+	await new Promise(resolve => setTimeout(resolve, 2000));
 
 	// Todo: Remove mock data
-	if ((url === 'auth/login' || url === 'auth/register') && method === 'POST') {
+	if ((url === 'auth/login' || url === 'auth/register' || url === 'auth/refresh') && method === 'POST') {
 		// Test error effect
 		const email = args.body.email as string;
-		console.log('==> email: ', email);
-		console.log('==> email: ', email === '');
-		if (email === '') {
+		if (email != null && email === '') {
 			return {
 				error: {
 					status: 'FETCH_ERROR',
@@ -47,14 +36,27 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 				},
 			}
 		}
+		if (args.body.refreshToken) {
+			const refreshToken = args.body.refreshToken.refreshToken as string;
+			if (refreshToken != null && refreshToken === '') {
+				console.log('Invalid refresh token');
+				return {
+					error: {
+						status: 'FETCH_ERROR',
+						error: 'Invalid refresh token',
+					},
+				}
+			}
+		}
 		return {
 			data: {
 				user: {
-					email: email,
+					email: 'test@gmail.com',
 					firstName: 'John',
 					lastName: 'Doe',
+					avatarPath: 'https://upload.wikimedia.org/wikipedia/commons/0/04/Xi_Jinping_%28November_2024%29_02.jpg',
 				},
-				token: {
+				tokens: {
 					accessToken: 'mockAccessToken',
 					refreshToken: 'mockRefreshToken',
 				},
@@ -70,7 +72,7 @@ const authApi = createApi({
 	reducerPath: authApiReducerPath,
 	baseQuery: customFetchQuery,
 	endpoints: (builder) => ({
-		login: builder.mutation<AuthResponse, LoginRequest>({
+		login: builder.mutation<AuthStateResponse, LoginRequest>({
 			query: (creadentials) => ({
 				url: 'auth/login',
 				method: 'POST',
@@ -78,7 +80,7 @@ const authApi = createApi({
 			}),
 		}),
 
-		register: builder.mutation<AuthResponse, RegisterRequest>({
+		register: builder.mutation<AuthStateResponse, RegisterRequest>({
 			query: (createNew) => ({
 				url: 'auth/register',
 				method: 'POST',
@@ -86,7 +88,7 @@ const authApi = createApi({
 			}),
 		}),
 
-		refresh: builder.mutation<AuthResponse, { refreshToken: string }>({
+		refresh: builder.mutation<AuthStateResponse, { refreshToken: string }>({
 			query: (refreshToken) => ({
 				url: 'auth/refresh',
 				method: 'POST',
@@ -94,26 +96,25 @@ const authApi = createApi({
 			}),
 		}),
 
+		// Special case for logout: The token is removed from the state before the query is executed, so we need to add the token manually.
+		// The queryFn is called with the baseQuery and body (with refreshToken retrived from the store), not the args (so its void).
 		logout: builder.mutation<void, void>({
-			queryFn: async (_, api, __, baseQuery) => {
-				try {
-					const token = (api.getState() as RootState).auth.tokens;
-					if (token == null) {
-						return { data: void 0 };
-					}
-					const response = await baseQuery({
+			// Must omit the args from the queryFn, because the queryFn is called with the baseQuery and body, not the args (it will cause conflict).
+			queryFn: async (_, __, ___, baseQuery) => {
+				const tokens = useAppSelector(selectTokens);
+				const dispatch = useAppDispatch();
+				dispatch(clearAuthState());
+				if (tokens != null) {
+					const result = await baseQuery({
 						url: 'auth/logout',
 						method: 'POST',
-						headers: { Authorization: `Bearer ${token.accessToken}` },
+						body: { refreshToken: tokens.refreshToken },
 					});
-					if ('error' in response) {
-						return { error: response.error };
+					if ('error' in result) {
+						return result;
 					}
-					return { data: void 0 };
 				}
-				catch (error) {
-					return { error: { status: 'FETCH_ERROR', error: String(error) } };
-				}
+				return { data: void 0 };
 			},
 		}),
 	})
@@ -123,7 +124,7 @@ export const {
 	useLoginMutation,
 	useRegisterMutation,
 	useRefreshMutation,
+	useLogoutMutation
 } = authApi;
 
-export type { AuthResponse, Token };
 export default authApi;

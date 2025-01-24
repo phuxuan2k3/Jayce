@@ -1,17 +1,36 @@
 import { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faRightToBracket } from "@fortawesome/free-solid-svg-icons";
-import User from "../interfaces/user.interface";
 import logo from "/svg/logo.svg";
 import skillsharp from "/svg/skillsharp.svg";
+import { useAppSelector } from "../app/hooks";
+import { selectIsAuthenticated, selectUserInfo } from "../global/authSlice";
+import { useLogoutMutation } from "../features/Auth/authApi";
 
 
-const NavBar = ({ User, showNav = true, showLoginSignup = true }: { User?: User | null; showNav?: boolean; showLoginSignup?: boolean }) => {
+const NavBar = ({ showNav = true }: { showNav?: boolean; }) => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const isAuth = useAppSelector(selectIsAuthenticated);
+	const authState = useAppSelector(selectUserInfo);
+	const [logout] = useLogoutMutation();
+	const navigate = useNavigate();
+
 	const toggleMobileMenu = () => {
 		setIsMobileMenuOpen((prev) => !prev);
 	};
+
+	const toggleProfileMenu = () => {
+		setIsMenuOpen(!isMenuOpen);
+	};
+
+	const handleLogout = async () => {
+		await logout();
+		navigate('/login');
+	};
+
+
 	return <nav className="bg-white drop-shadow-lg">
 		<div className=" lg:mx-12 px-6   ">
 			<div className="relative h-[100px] flex items-center justify-between">
@@ -43,21 +62,40 @@ const NavBar = ({ User, showNav = true, showLoginSignup = true }: { User?: User 
 				</div>
 				<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 					<div className="relative ml-3">
-						{!User && showLoginSignup && <div>
+						<div>
 							<FontAwesomeIcon className="block lg:hidden  text-[var(--primary-color)] text-xl" icon={faRightToBracket}></FontAwesomeIcon>
-							<div className="hidden lg:block">
-								<Link to="/login">
-									<button className="px-3 mr-3 rounded-lg font-bold text-xl py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2">Log In</button>
-								</Link>
-								<Link to="/register">
-									<button className="px-3 rounded-lg font-bold text-xl py-2  text-white bg-[var(--primary-color)]">Sign Up</button>
-								</Link>
-							</div></div>}
-						{User && <div>
-							<button type="button" className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-								<img className="size-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-							</button>
-						</div>}
+							{isAuth ? (
+								<div className="hidden lg:block relative">
+									<img
+										className="size-8 rounded-full cursor-pointer"
+										src={authState?.avatarPath}
+										alt="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s"
+										onClick={toggleProfileMenu}
+									/>
+									{isMenuOpen && (
+										<div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
+											<a href="/profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Profile</a>
+											<a href="/settings" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Settings</a>
+											<button
+												onClick={handleLogout}
+												className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"
+											>
+												Logout
+											</button>
+										</div>
+									)}
+								</div>
+							) : (
+								<div className="hidden lg:block">
+									<Link to="/login">
+										<button className="px-3 mr-3 rounded-lg font-bold text-xl py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2">Log In</button>
+									</Link>
+									<Link to="/register">
+										<button className="px-3 rounded-lg font-bold text-xl py-2  text-white bg-[var(--primary-color)]">Sign Up</button>
+									</Link>
+								</div>
+							)}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -75,5 +113,5 @@ const NavBar = ({ User, showNav = true, showLoginSignup = true }: { User?: User 
 	</nav>
 }
 
-export default NavBar
+export default NavBar;
 
