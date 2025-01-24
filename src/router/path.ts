@@ -44,7 +44,29 @@ export const paths = {
 			QUESTION: '/test/edit/question',
 		},
 		CREATENEWTEST:'/test/createnew',
+		CREATETEST: '/test/createtest',
+		TESTLISTVIEW: '/test/testlistview',
 	},
-	CREATETEST: '/createtest',
-	TESTLISTVIEW: '/testlistview',
+	SCENARIO: {
+		ROOT: '/scenario',
+
+		LIST: '/scenario/list',
+
+		CREATE: {
+			ROOT:'/scenario/create',
+			DETAIL: '/scenario/create/detail',
+			QUESTION: '/scenario/create/question',
+		},
+
+		EDIT: {
+			ROOT:'/scenario/edit',
+			DETAIL: '/scenario/edit/detail',
+			QUESTION: '/scenario/edit/question',
+		},
+
+		SUBMISSION: {
+			ROOT: '/scenario/submission',
+			DETAIL: '/scenario/submission/detail',
+		}
+	},
 }

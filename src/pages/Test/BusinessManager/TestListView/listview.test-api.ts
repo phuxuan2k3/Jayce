@@ -1,4 +1,4 @@
-import testApi from "../../features/Test/test.api";
+import testApi from "../../../../features/Test/test.api";
 // import { YourTest } from "./types";
 // import { Paged } from "../../interfaces/paged.type";
 

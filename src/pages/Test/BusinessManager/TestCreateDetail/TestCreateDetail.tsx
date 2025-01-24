@@ -4,7 +4,7 @@
 // import * as React from 'react';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCreatetestMutation } from "./create.test-api";
+import { useCreatetestMutation } from "./createdetail.test-api";
 import { TestDetails } from "./types";
 
 
@@ -23,6 +23,11 @@ const TestListView = () => {
         setter(event.target.value);
     };
     const [createTest, { isSuccess }] = useCreatetestMutation();
+
+    const handleCancel = () => {
+        navigate("/test/testlistview");
+    };
+
     const handleCreateNewTest = async () => {
         const testDetails: TestDetails = {
             name: testName,
@@ -109,7 +114,7 @@ const TestListView = () => {
                     </div>
                 </div>
                 <div className="flex flex-row justify-center">
-                    <button className="mt-4 w-fit px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer">
+                    <button onClick={handleCancel} className="mt-4 w-fit px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer">
                        Cancel
                     </button>
                     <button onClick={handleCreateNewTest} className="mt-4 w-fit px-5 font-semibold mr-3 rounded-lg py-2 bg-[var(--primary-color)] border-[var(--primary-color)] text-white border-2 cursor-pointer">

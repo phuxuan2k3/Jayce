@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
-import GradientBorderNotGood from "../../../components/GradientBorder.notgood";
+import GradientBorderNotGood from "../../../../components/GradientBorder.notgood";
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
@@ -12,7 +12,8 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from '@mui/material/CircularProgress';
-import { useCreatenewtestMutation } from "./createnew.test-api";
+import { useCreatenewtestMutation } from "./createquestion.test-api";
+import { useFetchquestionMutation } from "./questionai.test-api";
 
 const CreateNewTest = () => {
     const location = useLocation();
@@ -164,7 +165,7 @@ const CreateNewTest = () => {
         setError(null);
         try {
             const prompt = (document.querySelector("#prompt") as HTMLTextAreaElement).value;
-            const response = await fetch(`/api/question`, {
+            const response = await fetch(`/api/questionai/question`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -174,11 +175,14 @@ const CreateNewTest = () => {
                 }),
             });
 
-            console.log(response)
+            // const [fetchquestion] = useFetchquestionMutation();
+            // const response = await fetchquestion({ question: prompt }).unwrap();
 
-            if (!response.ok) {
-                throw new Error("Failed to fetch questions");
-            }
+            // console.log(response)
+
+            // const { answer, conversation_id, question } = response;
+
+            // console.log(answer);
 
             const responseData = await response.json();
             const answer = responseData.answer;

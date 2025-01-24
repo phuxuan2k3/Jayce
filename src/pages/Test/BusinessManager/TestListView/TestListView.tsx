@@ -2,8 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faPen, faTrash, faClock, faQuestion } from "@fortawesome/free-solid-svg-icons";
 // import * as React from 'react';
 import { useNavigate } from "react-router-dom";
-import NavBar from "../../components/Navbar";
-import { TestWithNoCompany, useLazyGetFilteredQuery } from "../Test/Candidate/TestList/list.test-api";
+import NavBar from "../../../../components/Navbar";
+import { TestWithNoCompany, useLazyGetFilteredQuery } from "../../Candidate/TestList/list.test-api";
 import { useEffect, useState } from "react";
 
 
@@ -23,7 +23,7 @@ const TestListView = () => {
         });
     };
     const handleClickAdd = () => {
-        navigate("/createtest")
+        navigate("/test/createtest")
     }
     const handleTestSubmissionListView = (test: TestWithNoCompany) => {
         navigate("/test/submission/list", { state: { testID: test.ID } })
@@ -58,7 +58,6 @@ const TestListView = () => {
 
     return (
         <>
-            <NavBar />
             <div className="w-full flex-grow flex flex-col items-center px-4">
                 <div className="w-full flex-1 flex-col mt-6 ml-16">
                     <div className="w-full text-4xl font-bold">Welcome to your Test Manager</div>

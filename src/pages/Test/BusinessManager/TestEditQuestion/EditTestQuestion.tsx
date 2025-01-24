@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
-import GradientBorderNotGood from "../../../components/GradientBorder.notgood";
+import GradientBorderNotGood from "../../../../components/GradientBorder.notgood";
 import { useEditQuestionMutation } from "./editquestion.test-api";
 
 const EditTestQuestion = () => {
