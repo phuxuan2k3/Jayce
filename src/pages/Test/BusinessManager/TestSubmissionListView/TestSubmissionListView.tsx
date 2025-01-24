@@ -25,8 +25,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 const TestSubmissionListView = () => {
     const [open, setOpen] = React.useState(false);
-    const [selectedVersion, setSelectedVersion] = useState<string | "all">("all");
-    const [availableVersions, setAvailableVersions] = useState<string[]>([]);
+    const [selectedVersion, _setSelectedVersion] = useState<string | "all">("all");
+    const [availableVersions, _setAvailableVersions] = useState<string[]>([]);
     const navigate = useNavigate();
     const location = useLocation();
     const { testID } = location.state || {};

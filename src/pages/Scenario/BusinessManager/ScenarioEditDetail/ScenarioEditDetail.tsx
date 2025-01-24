@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const scenarioData = {
     title: "SQL Query For Beginners",
@@ -9,7 +9,7 @@ const scenarioData = {
 const ScenarioEditDetail = () => {
     const [scenarioDetails, setScenarioDetails] = React.useState(scenarioData);
     const navigate = useNavigate();
-    const location = useLocation();
+    // const location = useLocation();
     
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;

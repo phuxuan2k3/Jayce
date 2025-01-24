@@ -1,6 +1,6 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import GradientBorderNotGood from "../../../../components/GradientBorder.notgood";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const scenarioData = {
     scenarioNumber: 1,
@@ -30,10 +30,9 @@ const answerData = [
 ];
 
 const ScenarioSubmissionDetail = () => {
-    const [submissionOverview, setSubmissionOverview] = useState(scenarioData);
-    const [answerList, setAnswerList] = useState(answerData);
+    const [submissionOverview, _setSubmissionOverview] = useState(scenarioData);
+    const [answerList, _setAnswerList] = useState(answerData);
     const navigate = useNavigate();
-    const location = useLocation();
 
     const handleGoToSubmissionListView = () => {
         navigate("/scenario/submission");

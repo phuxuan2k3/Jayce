@@ -7,8 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { useCreatetestMutation } from "./createdetail.test-api";
 import { TestDetails } from "./types";
 
-
-
 const TestListView = () => {
     // const [open, setOpen] = React.useState(false);
     const navigate = useNavigate();

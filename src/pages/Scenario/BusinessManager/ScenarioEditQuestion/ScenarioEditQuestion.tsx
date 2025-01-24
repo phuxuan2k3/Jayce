@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import GradientBorderNotGood from "../../../../components/GradientBorder.notgood";
 // import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 // import AddIcon from '@mui/icons-material/Add';
@@ -27,10 +27,10 @@ const questionData = [
 ];
 
 const ScenarioEditQuestion = () => {
-    const location = useLocation();
+    // const location = useLocation();
     const [questionList, setQuestionList] = React.useState(questionData);
-    const [open, setOpen] = React.useState(false);
-    const [question, setQuestion] = React.useState("");
+    // const [open, setOpen] = React.useState(false);
+    // const [question, setQuestion] = React.useState("");
     // const [generatedQuestions, setGeneratedQuestions] = React.useState<{ content: string; description: string; level: string; reason: string }[]>([]);
     // const [error, setError] = React.useState<string | null>(null);
     // const [cooldowns, setCooldowns] = React.useState<number[]>([]);

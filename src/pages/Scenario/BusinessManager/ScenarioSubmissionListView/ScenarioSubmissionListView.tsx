@@ -9,8 +9,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -43,12 +43,11 @@ const submissionData = [
 
 const ScenarioSubmissionListView = () => {
     const [open, setOpen] = React.useState(false);
-    const [submissionList, setSubmissionList] = React.useState(submissionData);
-    const [submissionOverview, setSubmissionOverview] = React.useState(scenarioData);
-    const [selectedVersion, setSelectedVersion] = useState<string | "all">("all");
-    const [availableVersions, setAvailableVersions] = useState<string[]>([]);
+    const [submissionList, _setSubmissionList] = React.useState(submissionData);
+    const [submissionOverview, _setSubmissionOverview] = React.useState(scenarioData);
+    const [selectedVersion, _setSelectedVersion] = useState<string | "all">("all");
+    const [availableVersions, _setAvailableVersions] = useState<string[]>([]);
     const navigate = useNavigate();
-    const location = useLocation();
 
     const handleClickOpen = () => {
         setOpen(true);

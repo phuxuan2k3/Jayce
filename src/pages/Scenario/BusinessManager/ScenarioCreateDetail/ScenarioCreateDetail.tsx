@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ScenarioCreateDetail = () => {
     const navigate = useNavigate();
-    const location = useLocation();
+    // const location = useLocation();
     const [scenarioDetails, setScenarioDetails] = React.useState({
         title: "",
         description: "",

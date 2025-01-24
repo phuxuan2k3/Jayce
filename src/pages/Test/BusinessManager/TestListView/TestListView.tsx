@@ -2,11 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faPen, faTrash, faClock, faQuestion } from "@fortawesome/free-solid-svg-icons";
 // import * as React from 'react';
 import { useNavigate } from "react-router-dom";
-import NavBar from "../../../../components/Navbar";
 import { TestWithNoCompany, useLazyGetFilteredQuery } from "../../Candidate/TestList/list.test-api";
 import { useEffect, useState } from "react";
-
-
 
 const TestListView = () => {
     // const [open, setOpen] = React.useState(false);
