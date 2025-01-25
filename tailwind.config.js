@@ -39,8 +39,8 @@ export default {
 				'270': '270deg',
 			},
 			fontFamily: {
-				arya: ['Arya', 'sans-serif'],
-				asap: ['Asap', 'serif'],
+				arya: ['Arya'],
+				asap: ['Asap'],
 			},
 		},
 	},

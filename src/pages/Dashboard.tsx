@@ -22,7 +22,7 @@ const Dashboard = () => {
 	return <div>
 		<Navbar />
 		<section className="text-center py-16 px-4">
-			<h1 className="text-4xl font-bold mb-4">
+			<h1 className="text-4xl mb-4">
 				Everything you need
 				<p>
 					to <span className="text-gradient">sharpen</span> your <span className="text-gradient">interview skills</span>
