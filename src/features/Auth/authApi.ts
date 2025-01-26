@@ -1,8 +1,9 @@
 import { BaseQueryApi, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { backendEndpoint } from '../../app/env';
-import { RootState } from '../../app/store';
+// import { RootState } from '../../app/store';
 import { AuthStateResponse, clearAuthState, selectTokens } from '../../global/authSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { grpcSignUp, grpcSignIn, grpcRefreshToken, grpcSignInGoogle } from './grpcClient';
 
 interface LoginRequest {
 	email: string;
@@ -25,7 +26,7 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 	await new Promise(resolve => setTimeout(resolve, 2000));
 
 	// Todo: Remove mock data
-	if ((url === 'auth/login' || url === 'auth/register' || url === 'auth/refresh') && method === 'POST') {
+	if ((url === 'auth/login' || url === 'auth/register' || url === 'auth/refresh' || url === 'auth/google') && method === 'POST') {
 		// Test error effect
 		const email = args.body.email as string;
 		if (email != null && email === '') {
@@ -36,32 +37,73 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 				},
 			}
 		}
-		if (args.body.refreshToken) {
-			const refreshToken = args.body.refreshToken.refreshToken as string;
-			if (refreshToken != null && refreshToken === '') {
-				console.log('Invalid refresh token');
-				return {
-					error: {
-						status: 'FETCH_ERROR',
-						error: 'Invalid refresh token',
-					},
-				}
+
+		// if (args.body.refreshToken) {
+		// 	const refreshToken = args.body.refreshToken.refreshToken as string;
+		// 	if (refreshToken != null && refreshToken === '') {
+		// 		console.log('Invalid refresh token');
+		// 		return {
+		// 			error: {
+		// 				status: 'FETCH_ERROR',
+		// 				error: 'Invalid refresh token',
+		// 			},
+		// 		}
+		// 	}
+		// }
+
+		if (url === 'auth/login') {
+			const email = args.body.email as string;
+			const password = args.body.password as string;
+			const response = await grpcSignIn(email, password);
+			return {
+				data: response
 			}
 		}
+
+		if (url === 'auth/google') {
+			const credential = args.body.credential as string;
+			const response = await grpcSignInGoogle(credential);
+			return {
+				data: response
+			}
+		}
+
+		if (url === 'auth/register') {
+			const email = args.body.email as string;
+			const password = args.body.password as string;
+			const response = await grpcSignUp(email, password, password);
+			return {
+				data: response
+			}
+		}
+
+		if (url === 'auth/refresh') {
+			// const response = await grpcRefreshToken();
+			// return {
+			// 	data: response
+			// }
+		}
+
+		// return {
+		// 	data: {
+		// 		user: {
+		// 			email: 'test@gmail.com',
+		// 			firstName: 'John',
+		// 			lastName: 'Doe',
+		// 			avatarPath: 'https://upload.wikimedia.org/wikipedia/commons/0/04/Xi_Jinping_%28November_2024%29_02.jpg',
+		// 		},
+		// 		tokens: {
+		// 			accessToken: 'mockAccessToken',
+		// 			refreshToken: 'mockRefreshToken',
+		// 		},
+		// 	},
+		// };
 		return {
-			data: {
-				user: {
-					email: 'test@gmail.com',
-					firstName: 'John',
-					lastName: 'Doe',
-					avatarPath: 'https://upload.wikimedia.org/wikipedia/commons/0/04/Xi_Jinping_%28November_2024%29_02.jpg',
-				},
-				tokens: {
-					accessToken: 'mockAccessToken',
-					refreshToken: 'mockRefreshToken',
-				},
+			error: {
+				status: 'FETCH_ERROR',
+				error: 'oh no',
 			},
-		};
+		}
 	}
 
 	const backendFetchQuery = fetchBaseQuery({ baseUrl: backendEndpoint });
@@ -73,10 +115,18 @@ const authApi = createApi({
 	baseQuery: customFetchQuery,
 	endpoints: (builder) => ({
 		login: builder.mutation<AuthStateResponse, LoginRequest>({
-			query: (creadentials) => ({
+			query: (credentials) => ({
 				url: 'auth/login',
 				method: 'POST',
-				body: creadentials,
+				body: credentials,
+			}),
+		}),
+
+		google: builder.mutation<AuthStateResponse, { credential: string }>({
+			query: (credentials) => ({
+				url: 'auth/google',
+				method: 'POST',
+				body: credentials,
 			}),
 		}),
 
@@ -122,6 +172,7 @@ const authApi = createApi({
 
 export const {
 	useLoginMutation,
+	useGoogleMutation,
 	useRegisterMutation,
 	useRefreshMutation,
 	useLogoutMutation
