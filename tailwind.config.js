@@ -38,6 +38,10 @@ export default {
 			rotate: {
 				'270': '270deg',
 			},
+			fontFamily: {
+				arya: ['Arya'],
+				asap: ['Asap'],
+			},
 		},
 	},
 	plugins: [

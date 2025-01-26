@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
 	--background-color: #3e3636;
 	--primary-color: #2e808a;
@@ -16,13 +20,36 @@
 
 body {
 	margin: 0;
+	@apply font-asap;
 }
 
-.arya-font {
-	font-family: 'Arya', sans-serif;
-	font-weight: 900;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	@apply font-arya font-bold;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities
+@font-face {
+	font-family: 'Arya';
+	src: url('./../fonts/Arya/Arya-Regular.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Arya';
+	src: url('./../fonts/Arya/Arya-Bold.ttf') format('truetype');
+	font-weight: bold;
+}
+
+@font-face {
+	font-family: 'Asap';
+	src: url('./../fonts/Asap/Asap-Regular.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Asap';
+	src: url('./../fonts/Asap/Asap-Bold.ttf') format('truetype');
+	font-weight: bold;
+}
