@@ -73,7 +73,7 @@ const TestViewAnswer = () => {
     return (
         <div className="w-full flex-grow flex flex-col items-center px-4">
             <div className="w-full max-w-7xl py-6">
-                <FetchStateContent isLoading={isLoading_TestAnswers} error={error_TestAnswers} >
+                <FetchStateContent isLoading={isLoading_TestAnswers} error={error_TestAnswers} skeletonHeight={20}>
                     <h1 className="text-2xl font-bold mb-6">{testViewAnswer.title}</h1>
                 </FetchStateContent>
                 <div className="flex flex-col items-center">
@@ -83,7 +83,7 @@ const TestViewAnswer = () => {
                             <span>Total Score: {testViewAnswer.score}/{testViewAnswer.totalScore}</span>
                         </div>
                     )}
-                    <FetchStateContent isLoading={isLoading_QuestionAnswers} error={error_QuestionAnswers} >
+                    <FetchStateContent isLoading={isLoading_QuestionAnswers} error={error_QuestionAnswers} skeletonHeight={240} skeletonAmount={2}>
                         {/* Questions List */}
                         {questionAnswers.data.map((question, index) => (
                             <div key={index} className="w-4/6 flex-1 flex flex-row bg-white rounded-lg shadow-primary p-6 space-x-4 border-r border-b border-solid border-primary justify-between mb-4">

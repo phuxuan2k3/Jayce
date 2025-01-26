@@ -1,10 +1,13 @@
 import React from 'react';
 import { toErrorMessage } from '../../../error/fetchBaseQuery.error';
+import Skeleton from '@mui/material/Skeleton';
+import Alert from '@mui/material/Alert';
 
 interface UseQueryHookResult<T> {
     data?: T;
     error?: unknown;
     isLoading: boolean;
+    skeletonHeight?: number;
 }
 
 interface FetchWithStateResult<T> {
@@ -14,18 +17,18 @@ interface FetchWithStateResult<T> {
 
 // Define the custom hook
 export default function useFetchWithState<T, U>(queryHook: (args: U) => UseQueryHookResult<T>, args: U): FetchWithStateResult<T> {
-    const { data, error, isLoading } = queryHook(args);
+    const { data, error, isLoading, skeletonHeight } = queryHook(args);
 
     if (isLoading) {
         return {
-            fetchStateContent: <div>Loading...</div>,
+            fetchStateContent: <Skeleton variant="rounded" height={skeletonHeight || 120}/>,
             data: null
         };
     }
 
     if (error) {
         return {
-            fetchStateContent: <div>Error: {toErrorMessage(error)}</div>,
+            fetchStateContent: <Alert severity="error">{toErrorMessage(error)}</Alert>,
             data: null
         };
     }

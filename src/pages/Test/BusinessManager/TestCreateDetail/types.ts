@@ -1,6 +1,6 @@
 export type TestDetails = {
-    name: string; 
+    title: string; 
     description: string; 
-    duration: string; 
-    // type: string;
+    minutesToAnswer: number; 
+    difficulty: string;
 };

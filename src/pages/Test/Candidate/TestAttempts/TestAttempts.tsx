@@ -101,7 +101,7 @@ const TestDetail: React.FC = () => {
         <div className="w-full flex-grow flex flex-col items-center px-4">
             <div className="w-full max-w-7xl py-6">
                 <h1 className="text-2xl font-bold mb-6">
-                    <FetchStateContent isLoading={isLoadingProps} error={errorProps}>
+                    <FetchStateContent isLoading={isLoadingProps} error={errorProps} skeletonHeight={20}>
                         {testAttemptsProps.title}
                     </FetchStateContent>
                 </h1>
@@ -109,7 +109,7 @@ const TestDetail: React.FC = () => {
 
                     {/* AttempHistory */}
                     <div className="flex-1 flex-column bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
-                        <FetchStateContent isLoading={isLoading_PagedAttempts} error={error_PagedAttempts}>
+                        <FetchStateContent isLoading={isLoading_PagedAttempts} error={error_PagedAttempts} skeletonAmount={2}>
                             {pagedAttempts.data.map((attempt) => (
                                 <div key={attempt.ID} className="bg-[#EAF6F8] p-4 mb-4 rounded-lg shadow-md cursor-pointer" onClick={() => handleOnAttemptClick(attempt.ID, attempt.status)}>
                                     <div className="flex flex-row border-b border-primary pb-4 items-center gap-3 mb-3 h-fit">

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import QuestionComponent from './QuestionComponent';
 import { useNavigate, useParams } from 'react-router-dom';
 import { paths } from '../../../../router/path';
@@ -23,7 +23,24 @@ const TestDo = () => {
 
 	const testQuestions: TestDoProps = data_testDoProps ?? {
 		title: "",
+		minutesToAnswer: 60,
 		questions: [],
+	};
+
+	const [timeLeft, setTimeLeft] = useState(testQuestions.minutesToAnswer * 60);
+
+	useEffect(() => {
+		const timer = setInterval(() => {
+			setTimeLeft((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
+		}, 1000);
+
+		return () => clearInterval(timer);
+	}, []);
+
+	const formatTime = (seconds: number) => {
+		const minutes = Math.floor(seconds / 60);
+		const remainingSeconds = seconds % 60;
+		return `${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
 	};
 
 	console.log(testId);
@@ -89,13 +106,13 @@ const TestDo = () => {
 	return (
 		<div className="w-full flex-grow flex flex-col items-center px-4">
 			<div className="w-full max-w-7xl py-6">
-				<FetchStateContent isLoading={isLoading_testDoProps} error={error_testDoProps} >
+				<FetchStateContent isLoading={isLoading_testDoProps} error={error_testDoProps} skeletonHeight={20}>
 					<h1 className="text-2xl font-bold mb-6">
 						{testQuestions.title}
 					</h1>
 				</FetchStateContent>
 				<div className="flex flex-row w-full justify-between">
-					<FetchStateContent isLoading={isLoading_testDoProps} error={error_testDoProps} >
+					<FetchStateContent isLoading={isLoading_testDoProps} error={error_testDoProps} skeletonHeight={240} skeletonAmount={4}>
 						{/* QuestionComponent */}
 						{testQuestions.questions[questionNumber - 1] == null ? (
 							<div>No questions found</div>
@@ -115,10 +132,10 @@ const TestDo = () => {
 					</FetchStateContent>
 					{/* Sidebar */}
 					<div className="w-64 ml-4">
-						<div className="text-4xl text-center font-bold text-primary mb-6">37:39</div>
+						<div className="text-4xl text-center font-bold text-primary mb-6">{formatTime(timeLeft)}</div>
 						<div className="bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
 							<div className="mb-4 font-semibold">Quiz navigation</div>
-							<FetchStateContent isLoading={isLoading_testDoProps} error={error_testDoProps} >
+							<FetchStateContent isLoading={isLoading_testDoProps} error={error_testDoProps} skeletonHeight={60}>
 								<div className="grid grid-cols-5 gap-2">
 									{[...Array(testQuestions.questions.length)].map((_, index) => (
 										<button

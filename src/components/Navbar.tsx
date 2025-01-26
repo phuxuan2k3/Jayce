@@ -16,6 +16,12 @@ const NavBar = ({ showNav = true }: { showNav?: boolean; }) => {
 	const [logout] = useLogoutMutation();
 	const navigate = useNavigate();
 
+	const [showCoursesMenu, setShowCoursesMenu] = useState(false);
+	const [showQuestionsMenu, setShowQuestionsMenu] = useState(false);
+
+	const toggleCoursesMenu = () => setShowCoursesMenu((prev) => !prev);
+	const toggleQuestionsMenu = () => setShowQuestionsMenu((prev) => !prev);
+
 	const toggleMobileMenu = () => {
 		setIsMobileMenuOpen((prev) => !prev);
 	};
@@ -50,14 +56,59 @@ const NavBar = ({ showNav = true }: { showNav?: boolean; }) => {
 						<img src={logo} alt="logo" />
 						<img className="ml-3 hidden lg:block" src={skillsharp} alt="project name" />
 					</div>
-					{showNav && <div className="hidden w-full sm:block">
+					{showNav && (
+						<div className="hidden w-full sm:block">
+							<div className="flex flex-col pt-20 sm:flex-row space-y-3 sm:space-y-0 sm:space-x-5 justify-center items-start">
+								<div className="w-full sm:w-auto">
+									<button onClick={toggleCoursesMenu} className="w-full sm:w-auto text-left sm:text-center text-nowrap rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white flex items-center">
+										Scenario <FontAwesomeIcon icon={faChevronDown} className="ml-2" />
+									</button>
+									<div className={`transition-opacity duration-200 ${showCoursesMenu ? "opacity-100 visible" : "opacity-0 invisible"}`}>
+										<div className="space-y-2">
+											<a href="/scenario" className="block px-4 py-2 text-sm text-black bg-gray-100 rounded-md hover:bg-gray-200">
+												Candidate
+											</a>
+											<a href="/scenario/list" className="block px-4 py-2 text-sm text-black bg-gray-100 rounded-md hover:bg-gray-200">
+												BM
+											</a>
+										</div>
+									</div>
+								</div>
+
+								<div className="w-full sm:w-auto">
+									<button onClick={toggleQuestionsMenu} className="w-full sm:w-auto text-left sm:text-center text-nowrap rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white flex items-center">
+										Questions <FontAwesomeIcon icon={faChevronDown} className="ml-2" />
+									</button>
+									<div className={`transition-opacity duration-200 ${showQuestionsMenu ? "opacity-100 visible" : "opacity-0 invisible"}`}>
+										<div className="space-y-2">
+											<a href="/test/list" className="block px-4 py-2 text-sm text-black bg-gray-100 rounded-md hover:bg-gray-200">
+												Candidate
+											</a>
+											<a href="/test/testlistview" className="block px-4 py-2 text-sm text-black bg-gray-100 rounded-md hover:bg-gray-200">
+												BM
+											</a>
+										</div>
+									</div>
+								</div>
+
+								<a href="#" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
+									Mock
+								</a>
+
+								<a href="#" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
+									Pricing
+								</a>
+							</div>
+						</div>
+					)}
+					{/* {showNav && <div className="hidden w-full sm:block">
 						<div className="flex space-x-5 justify-center items-center">
 							<a href="#" className="text-nowrap rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white" aria-current="page">Courses <FontAwesomeIcon icon={faChevronDown} /></a>
 							<a href="#" className="text-nowrap rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">Questions <FontAwesomeIcon icon={faChevronDown} /> </a>
 							<a href="#" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">Mock</a>
 							<a href="#" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">Pricing</a>
 						</div>
-					</div>}
+					</div>} */}
 				</div>
 				<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 					<div className="relative ml-3">
@@ -102,8 +153,8 @@ const NavBar = ({ showNav = true }: { showNav?: boolean; }) => {
 
 		{isMobileMenuOpen && <div className="sm:hidden" id="mobile-menu">
 			<div className="space-y-1 px-2 pb-3 pt-2">
-				<a href="#" className="block rounded-m  px-3 py-2 text-base font-medium text-[var(--primary-color)] hover:bg-[var(--primary-color)] hover:text-white" aria-current="page">Courses</a>
-				<a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-[var(--primary-color)] hover:bg-[var(--primary-color)] hover:text-white">Questions</a>
+				<a href="#" className="block rounded-m  px-3 py-2 text-base font-medium text-[var(--primary-color)] hover:bg-[var(--primary-color)] hover:text-white" aria-current="page">Scenario</a>
+				<a href="/test/list" className="block rounded-md px-3 py-2 text-base font-medium text-[var(--primary-color)] hover:bg-[var(--primary-color)] hover:text-white">Questions</a>
 				<a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-[var(--primary-color)] hover:bg-[var(--primary-color)] hover:text-white">Mock</a>
 				<a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-[var(--primary-color)] hover:bg-[var(--primary-color)] hover:text-white">Pricing</a>
 			</div>

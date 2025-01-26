@@ -4,8 +4,17 @@ import { faPlus, faPen, faTrash, faClock, faQuestion } from "@fortawesome/free-s
 import { useNavigate } from "react-router-dom";
 import { TestWithNoCompany, useLazyGetFilteredQuery } from "../../Candidate/TestList/list.test-api";
 import { useEffect, useState } from "react";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const TestListView = () => {
+    const [snackbar, setSnackbar] = useState<{ snackOpen: boolean; snackMessage: string; snackSeverity: 'error' | 'info' | 'success' | 'warning' }>({ snackOpen: false, snackMessage: '', snackSeverity: 'info' });
+    const { snackOpen, snackMessage, snackSeverity } = snackbar;
+
+    const handleCloseSnackbar = () => {
+        setSnackbar({ ...snackbar, snackOpen: false });
+    };
+
     // const [open, setOpen] = React.useState(false);
     const navigate = useNavigate();
 
@@ -46,6 +55,11 @@ const TestListView = () => {
             console.log("Dữ liệu đang được tải...");
         } else if (error) {
             console.error("Có lỗi khi tải dữ liệu:", error);
+            setSnackbar({
+                snackOpen: true,
+                snackMessage: 'Failed to load data.',
+                snackSeverity: 'error',
+            });
         } else if (data) {
             setTestData(data.data);
             console.log("Dữ liệu nhận được:", data.data);
@@ -66,7 +80,7 @@ const TestListView = () => {
                         <div className="w-4/6 flex flex-row justify-between font-semibold text-[var(--primary-color)] mb-4">
                             <span>Your test ({testData.length})</span>
                             <div className="h-full w-fit flex items-center" onClick={handleClickAdd}>
-                                <div className="h-7 w-7 bg-[#EAF6F8] flex items-center justify-center rounded-lg cursor-pointer">
+                                <div className="h-7 w-7 flex items-center justify-center rounded-lg cursor-pointer">
                                     <FontAwesomeIcon icon={faPlus} rotation={90} />
                                 </div>
 
@@ -138,7 +152,15 @@ const TestListView = () => {
                     </div>
                 </div>
             </div>
-
+            <Snackbar
+                open={snackOpen}
+                autoHideDuration={6000}
+                onClose={handleCloseSnackbar}
+            >
+                <Alert onClose={handleCloseSnackbar} severity={snackSeverity}>
+                    {snackMessage}
+                </Alert>
+            </Snackbar>
         </>
     );
 }
