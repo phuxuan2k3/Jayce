@@ -11,8 +11,8 @@ interface QuestionComponentProps {
 }
 
 const QuestionComponent: React.FC<QuestionComponentProps> = ({ questionNumber, question, options, selectedOption, onOptionChange, goToNextQuestion, isLastQuestion, toggleFlag, isFlagged }) => {
-    const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        onOptionChange(questionNumber, event.target.value);
+    const handleOptionChange = (choiceId: string) => {
+        onOptionChange(questionNumber, choiceId);
     };
 
     const clearSelection = () => {
@@ -46,8 +46,8 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({ questionNumber, q
                                         type="radio"
                                         name="question"
                                         value={option}
-                                        checked={selectedOption === option}
-                                        onChange={handleOptionChange}
+                                        checked={Number(selectedOption) === index}
+                                        onChange={() => handleOptionChange(index.toString())}
                                         className="h-4 w-4 border-primary focus:ring-primary accent-primary cursor-pointer"
                                     />
                                     <span>{label}. {option}</span>

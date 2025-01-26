@@ -104,7 +104,7 @@ const TestViewAnswer = () => {
                                     {question.choices.map((choice) => (
                                         <div key={choice.ID} className="w-full flex flex-row mt-2" >
                                             <GradientBorderNotGood className="w-11/12 h-fit">
-                                                {choice.ID}. {choice.text}
+                                                {String.fromCharCode(97 + Number(choice.ID))}. {choice.text}
                                             </GradientBorderNotGood>
                                             <div className="w-1/12 flex items-center justify-center">
                                                 {renderChoiceIcon(choice)}
