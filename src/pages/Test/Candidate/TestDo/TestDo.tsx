@@ -43,10 +43,6 @@ const TestDo = () => {
 		return `${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
 	};
 
-	console.log(testId);
-	console.log(isLoading_testDoProps);
-	console.log(testQuestions);
-
 	const [submitTest] = useSubmitTestMutation();
 
 	const goToNextQuestion = () => {
@@ -79,7 +75,6 @@ const TestDo = () => {
 	}
 
 	const handleSubmitClick = () => {
-		// todo: submit answers
 		const answers = Object.entries(selectedOptions).map(([questionId, choiceId]) => ({
 			questionId,
 			choiceId,
@@ -88,6 +83,7 @@ const TestDo = () => {
 			testId,
 			answers,
 		}
+		console.log(submit);
 		submitTest(submit);
 		navigate(paths.TEST.attempts(testId));
 	}

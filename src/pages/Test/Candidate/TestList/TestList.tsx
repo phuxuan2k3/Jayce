@@ -14,9 +14,9 @@ const perPage = 5;
 
 const TestList: React.FC = () => {
 	const [filters, setFilters] = useState<FilterParams>({
-		minMinute: 30,
-		maxMinute: 90,
-		difficulty: "EASY",
+		minMinute: 0,
+		maxMinute: 150,
+		difficulty: "",
 		tags: [],
 		searchName: "",
 		page: 1,

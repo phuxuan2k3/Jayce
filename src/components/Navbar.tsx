@@ -35,6 +35,9 @@ const NavBar = ({ showNav = true }: { showNav?: boolean; }) => {
 		navigate('/login');
 	};
 
+	const handleLogoClick = () => {
+		navigate('/');
+	};
 
 	return <nav className="bg-white drop-shadow-lg">
 		<div className=" lg:mx-12 px-6   ">
@@ -52,7 +55,7 @@ const NavBar = ({ showNav = true }: { showNav?: boolean; }) => {
 					</button>
 				</div>}
 				<div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-					<div className="flex shrink-0   items-center">
+					<div onClick={handleLogoClick} className="flex shrink-0   items-center cursor-pointer">
 						<img src={logo} alt="logo" />
 						<img className="ml-3 hidden lg:block" src={skillsharp} alt="project name" />
 					</div>
