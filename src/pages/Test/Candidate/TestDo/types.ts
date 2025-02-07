@@ -12,6 +12,7 @@ export type TestQuestion = {
 
 export type TestDoProps = {
     title: string;
+    minutesToAnswer: number;
     questions: TestQuestion[];
 }
 

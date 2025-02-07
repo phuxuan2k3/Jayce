@@ -1,4 +1,4 @@
-const backendEndpoint: string = import.meta.env.VITE_BACKEND_ENDPOINT as string;
+const backendEndpoint: string = import.meta.env.VITE_BACKEND_URL as string;
 const noAuth = import.meta.env.VITE_NO_AUTH as boolean;
 
 if (

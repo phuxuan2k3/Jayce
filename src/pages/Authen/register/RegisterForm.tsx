@@ -3,17 +3,19 @@ import GradientBorder from "../../../components/GradientBorder"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../../../features/Auth/authApi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../app/hooks";
 import { selectIsAuthenticated } from "../../../global/authSlice";
 import { toErrorMessage } from "../../../error/fetchBaseQuery.error";
 import LocalError from "../../../components/LocalError";
 import LocalLoading from "../../../components/LocalLoading";
+import LocalSuccess from "../../../components/LocalSuccess";
 
 const RegisterForm = () => {
 	const navigate = useNavigate();
 	const [register, { isLoading, error }] = useRegisterMutation();
 	const errorMessage = toErrorMessage(error);
+	const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 	useEffect(() => {
@@ -22,14 +24,21 @@ const RegisterForm = () => {
 		}
 	}, [isAuthenticated])
 
-	const handleFormSubmit = async (e: React.FormEvent) => {
+	const handleFormSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void> = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		setSuccessMessage(null);
 		const formData = new FormData(e.target as HTMLFormElement);
 		const email = formData.get('email') as string;
 		const password = formData.get('password') as string;
-		const firstName = formData.get('firstName') as string;
-		const lastName = formData.get('lastName') as string;
-		await register({ email, password, firstName, lastName });
+		const username = formData.get('username') as string;
+
+		try {
+			await register({ username, email, password, confirm_password: password });
+
+			navigate('/')
+		} catch (error) {
+			console.log("Register failed:", error);
+		}
 	}
 
 	const toLogin = () => {
@@ -67,19 +76,17 @@ const RegisterForm = () => {
 
 		{isLoading && <LocalLoading />}
 		{errorMessage && <LocalError errorMessage={errorMessage} />}
+		{successMessage && <LocalSuccess successMessage={successMessage} />}
 
 		<form onSubmit={handleFormSubmit} className="flex-col ">
+			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">
+				<input className="w-full p-4 rounded-lg" name="username" id="username" placeholder="Username" />
+			</GradientBorder>
 			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">
 				<input className="w-full p-4 rounded-lg" name="email" id="email" placeholder="Email Address" />
 			</GradientBorder>
 			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">
 				<input className="w-full p-4 rounded-lg" type="password" name="password" id="password" placeholder="Password" />
-			</GradientBorder>
-			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">
-				<input className="w-full p-4 rounded-lg" name="firstName" id="firstName" placeholder="First Name" />
-			</GradientBorder>
-			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">
-				<input className="w-full p-4 rounded-lg" name="lastName" id="lastName" placeholder="Last Name" />
 			</GradientBorder>
 			<button type="submit" className="mt-20 w-full bg-[var(--primary-color)] text-lg font-bold text-white p-4 rounded-lg ">
 				Sign Up <FontAwesomeIcon icon={faArrowRight} />
@@ -88,7 +95,6 @@ const RegisterForm = () => {
 				By creating an account, you agree to our <a className="text-[var(--primary-color)]" href="#reset">terms of service and privacy policy</a>.
 			</div>
 		</form>
-
 	</div>
 }
 

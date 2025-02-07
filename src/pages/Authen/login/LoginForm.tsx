@@ -27,10 +27,16 @@ const LoginForm = () => {
 	const handleFormSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		const formData = new FormData(e.target as HTMLFormElement);
-		const email = formData.get('email') as string;
+		const username = formData.get('username') as string;
 		const password = formData.get('password') as string;
-		const response = await login({ email, password });
-		console.log(response);
+
+		try {
+			await login({ username, password });
+
+			navigate('/')
+		} catch (error) {
+			console.log("Login failed:", error);
+		}
 	}
 
 	const toSignUp = () => {
@@ -51,7 +57,6 @@ const LoginForm = () => {
 			console.log(response);
 		} catch (error: any) {
 			console.log("Google login failed:", error);
-
 		}
 	};
 
@@ -99,7 +104,7 @@ const LoginForm = () => {
 
 		<form onSubmit={handleFormSubmit} className="flex-col ">
 			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">
-				<input className="w-full p-4 rounded-lg" name="email" id="email" placeholder="Email Address" />
+				<input className="w-full p-4 rounded-lg" name="username" id="username" placeholder="Username" />
 			</GradientBorder>
 			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">
 				<input className="w-full p-4 rounded-lg" type="password" name="password" id="password" placeholder="Password" />

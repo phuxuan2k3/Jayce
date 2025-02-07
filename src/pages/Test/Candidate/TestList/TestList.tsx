@@ -1,4 +1,4 @@
-import { Button, InputAdornment, TextField } from "@mui/material";
+import { InputAdornment, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
@@ -14,9 +14,9 @@ const perPage = 5;
 
 const TestList: React.FC = () => {
 	const [filters, setFilters] = useState<FilterParams>({
-		minMinute: 30,
-		maxMinute: 90,
-		difficulty: "EASY",
+		minMinute: 0,
+		maxMinute: 150,
+		difficulty: "",
 		tags: [],
 		searchName: "",
 		page: 1,
@@ -128,19 +128,17 @@ const TestList: React.FC = () => {
 							meta={filters}
 							onApplyFilters={handleApplyFilters}
 						/>
-						<Button
-							variant="contained"
-							onClick={() => setFilterModalOpen(true)}
-							startIcon={<FilterListIcon />}
-						>
-							Filters
-						</Button>
+						<div className="h-fit w-fit bg-primary flex items-center justify-center rounded-md cursor-pointer p-2" onClick={() => setFilterModalOpen(true)}>
+							<FilterListIcon /> <span className="ml-2">Filters</span>
+						</div>
 					</div>
 
 					{/* List of questions */}
 					<FetchStateContent
 						isLoading={isLoading_tests || isLoading_companies}
-						error={error_tests || error_companies}>
+						error={error_tests || error_companies}
+						skeletonHeight={240}
+						skeletonAmount={2}>
 						<div className="shadow-primary px-6 py-8 rounded-xl">
 							{tests?.data.map((question) => (
 								<TestCard company={companies?.find(x => x.ID)?.name ?? ""} key={question.ID} {...question} />
@@ -160,7 +158,8 @@ const TestList: React.FC = () => {
 						{/* List of tags */}
 						<FetchStateContent
 							isLoading={isLoading_tags}
-							error={error_tags}>
+							error={error_tags}
+							skeletonHeight={60}>
 							<div className="flex flex-wrap gap-2">
 								{suggestedTags.map((role, index) => (
 									<GradientBorderGood

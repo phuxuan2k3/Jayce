@@ -1,20 +1,28 @@
 import * as React from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEditdetailMutation } from './editdetail.test-api';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const EditTestDetail = () => {
+    const [snackbar, setSnackbar] = React.useState<{ snackOpen: boolean; snackMessage: string; snackSeverity: 'error' | 'info' | 'success' | 'warning' }>({ snackOpen: false, snackMessage: '', snackSeverity: 'info' });
+    const { snackOpen, snackMessage, snackSeverity } = snackbar;
+
+    const handleCloseSnackbar = () => {
+        setSnackbar({ ...snackbar, snackOpen: false });
+    };
+
     const navigate = useNavigate();
     const location = useLocation();
     const { id, title, duration, description } = location.state || {};
     const [testDetails, setTestDetails] = React.useState({
         title: title,
-        description:description,
+        description: description,
         duration: duration,
-        testId:id,
+        testId: id,
     });
     const [editDetail] = useEditdetailMutation();
 
-    
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setTestDetails((prev) => ({ ...prev, [name]: value }));
@@ -32,6 +40,11 @@ const EditTestDetail = () => {
             navigate("/test/edit/question", { state: { testDetails } });
         } catch (err) {
             console.error("Failed to edit test detail:", err);
+            setSnackbar({
+                snackOpen: true,
+                snackMessage: 'Failed to edit test.',
+                snackSeverity: 'error',
+            });
         }
     };
 
@@ -105,7 +118,15 @@ const EditTestDetail = () => {
                     </button>
                 </div>
             </div>
-
+            <Snackbar
+                open={snackOpen}
+                autoHideDuration={6000}
+                onClose={handleCloseSnackbar}
+            >
+                <Alert onClose={handleCloseSnackbar} severity={snackSeverity}>
+                    {snackMessage}
+                </Alert>
+            </Snackbar>
         </>
     );
 }

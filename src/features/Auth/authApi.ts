@@ -4,17 +4,18 @@ import { backendEndpoint } from '../../app/env';
 import { AuthStateResponse, clearAuthState, selectTokens } from '../../global/authSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { grpcSignUp, grpcSignIn, grpcRefreshToken, grpcSignInGoogle } from './grpcClient';
+import { bulbasaur } from './protos/bulbasaur';
 
 interface LoginRequest {
-	email: string;
+	username: string;
 	password: string;
 }
 
 interface RegisterRequest {
+	username: string;
 	email: string;
 	password: string;
-	firstName: string;
-	lastName: string;
+	confirm_password: string;
 }
 
 const authApiReducerPath = 'authApi';
@@ -28,15 +29,15 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 	// Todo: Remove mock data
 	if ((url === 'auth/login' || url === 'auth/register' || url === 'auth/refresh' || url === 'auth/google') && method === 'POST') {
 		// Test error effect
-		const email = args.body.email as string;
-		if (email != null && email === '') {
-			return {
-				error: {
-					status: 'FETCH_ERROR',
-					error: 'Invalid credentials',
-				},
-			}
-		}
+		// const email = args.body.email as string;
+		// if (email != null && email === '') {
+		// 	return {
+		// 		error: {
+		// 			status: 'FETCH_ERROR',
+		// 			error: 'Invalid credentials',
+		// 		},
+		// 	}
+		// }
 
 		// if (args.body.refreshToken) {
 		// 	const refreshToken = args.body.refreshToken.refreshToken as string;
@@ -52,11 +53,24 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 		// }
 
 		if (url === 'auth/login') {
-			const email = args.body.email as string;
+			const username = args.body.username as string;
 			const password = args.body.password as string;
-			const response = await grpcSignIn(email, password);
+			const response = await grpcSignIn(username, password);
+
 			return {
-				data: response
+				data: {
+					user: {
+						email: username,
+						username: username,
+						avatarPath: 'https://upload.wikimedia.org/wikipedia/commons/0/04/Xi_Jinping_%28November_2024%29_02.jpg',
+					},
+					tokens: {
+						access_token: response.token_info.access_token,
+						refresh_token: response.token_info.refresh_token,
+						role: response.token_info.role,
+						safe_id: response.token_info.safe_id,
+					}
+				}
 			}
 		}
 
@@ -69,35 +83,32 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 		}
 
 		if (url === 'auth/register') {
+			const username = args.body.username as string;
 			const email = args.body.email as string;
 			const password = args.body.password as string;
-			const response = await grpcSignUp(email, password, password);
+			const response = await grpcSignUp(username, email, password, password);
+
 			return {
-				data: response
+				data: {
+					user: {
+						email: email,
+						username: username,
+						avatarPath: 'https://upload.wikimedia.org/wikipedia/commons/0/04/Xi_Jinping_%28November_2024%29_02.jpg',
+					},
+					tokens: {
+						access_token: response.token_info.access_token,
+						refresh_token: response.token_info.refresh_token,
+						role: response.token_info.role,
+						safe_id: response.token_info.safe_id,
+					}
+				}
 			}
 		}
 
 		if (url === 'auth/refresh') {
-			// const response = await grpcRefreshToken();
-			// return {
-			// 	data: response
-			// }
+			// implement refresh token here
 		}
 
-		// return {
-		// 	data: {
-		// 		user: {
-		// 			email: 'test@gmail.com',
-		// 			firstName: 'John',
-		// 			lastName: 'Doe',
-		// 			avatarPath: 'https://upload.wikimedia.org/wikipedia/commons/0/04/Xi_Jinping_%28November_2024%29_02.jpg',
-		// 		},
-		// 		tokens: {
-		// 			accessToken: 'mockAccessToken',
-		// 			refreshToken: 'mockRefreshToken',
-		// 		},
-		// 	},
-		// };
 		return {
 			error: {
 				status: 'FETCH_ERROR',
@@ -138,11 +149,11 @@ const authApi = createApi({
 			}),
 		}),
 
-		refresh: builder.mutation<AuthStateResponse, { refreshToken: string }>({
-			query: (refreshToken) => ({
+		refresh: builder.mutation<AuthStateResponse, { token: { safe_id?: string | undefined, refresh_token?: string | undefined, access_token?: string | undefined, role?: bulbasaur.Role | undefined } }>({
+			query: (token) => ({
 				url: 'auth/refresh',
 				method: 'POST',
-				body: { refreshToken },
+				body: { token },
 			}),
 		}),
 
