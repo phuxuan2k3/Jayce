@@ -54,7 +54,7 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 					email: 'test@gmail.com',
 					firstName: 'John',
 					lastName: 'Doe',
-					avatarPath: 'https://upload.wikimedia.org/wikipedia/commons/0/04/Xi_Jinping_%28November_2024%29_02.jpg',
+					avatarPath: 'https://cdn.tuoitre.vn/zoom/700_700/2019/5/8/avatar-publicitystill-h2019-1557284559744252594756-crop-15572850428231644565436.jpg',
 				},
 				tokens: {
 					accessToken: 'mockAccessToken',

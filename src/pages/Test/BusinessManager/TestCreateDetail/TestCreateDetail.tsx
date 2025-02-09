@@ -2,12 +2,14 @@
 // import { faPlus, faMagnifyingGlass, faPen,faTrash, faClock, faQuestion } from "@fortawesome/free-solid-svg-icons";
 // import { format } from "date-fns";
 // import * as React from 'react';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCreatetestMutation } from "./createdetail.test-api";
 import { TestDetails } from "./types";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import { toErrorMessage } from "../../../../error/fetchBaseQuery.error";
+import { paths } from "../../../../router/path";
 
 const TestListView = () => {
 	const navigate = useNavigate();
@@ -29,36 +31,41 @@ const TestListView = () => {
 	const handleInputChange = (setter: React.Dispatch<React.SetStateAction<any>>) => (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
 		setter(event.target.value);
 	};
-	const [createTest, { isSuccess }] = useCreatetestMutation();
+	const [createTest, { isSuccess, data, error }] = useCreatetestMutation();
+	const errorMessage = toErrorMessage(error);
 
 	const handleCancel = () => {
 		navigate("/test/testlistview");
 	};
 
 	const handleCreateNewTest = async () => {
-		console.log('Creating new test:', testName, testDescription, testDuration, testDifficulty);
-
 		const testDetails: TestDetails = {
 			title: testName,
 			description: testDescription,
 			minutesToAnswer: testDuration,
 			difficulty: testDifficulty ? testDifficulty : 'Easy',
 		};
+		createTest(testDetails);
+	};
 
-		try {
-			const response = await createTest(testDetails).unwrap(); // This triggers the API call
-			if (isSuccess) {
-				navigate('/test/createnew', { state: { testID: response.testID } }); // Redirect after successful test creation
-			}
-		} catch (err) {
-			console.error('Failed to create test:', err);
+	useEffect(() => {
+		if (errorMessage != null) {
 			setSnackbar({
 				snackOpen: true,
 				snackMessage: 'Failed to create test.',
 				snackSeverity: 'error',
 			});
 		}
-	};
+		else if (isSuccess && data) {
+			setSnackbar({
+				snackOpen: true,
+				snackMessage: 'Test created successfully.',
+				snackSeverity: 'success',
+			});
+			navigate(paths.TEST.CREATENEWTEST, { state: { testID: data.testID } });
+		}
+
+	}, [isSuccess, data, errorMessage]);
 
 	return (
 		<>

@@ -4,6 +4,7 @@ import authApi from '../features/Auth/authApi';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import testApi from '../features/Test/test.api';
 import accountApi from '../features/Account/account.api';
+import aiAPI from '../features/Test/AI.api';
 
 
 // Create the root reducer so it can be used in configureStore
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
 	auth: authReducer,
 	authApi: authApi.reducer,
 	testApi: testApi.reducer,
+	aiApi: aiAPI.reducer,
 	accountApi: accountApi.reducer,
 });
 
@@ -23,7 +25,9 @@ const store = configureStore({
 			})
 				.concat(authApi.middleware)
 				.concat(testApi.middleware)
+				.concat(aiAPI.middleware)
 				.concat(accountApi.middleware),
+
 });
 
 export type RootState = ReturnType<typeof store.getState>;

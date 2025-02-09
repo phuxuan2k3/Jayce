@@ -43,7 +43,7 @@ const TestDo = () => {
 		return `${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
 	};
 
-	const [submitTest] = useSubmitTestMutation();
+	const [submitTest, { isSuccess: isSubmissionSuccess }] = useSubmitTestMutation();
 
 	const goToNextQuestion = () => {
 		if (questionNumber < testQuestions.questions.length) {
@@ -83,9 +83,7 @@ const TestDo = () => {
 			testId,
 			answers,
 		}
-		console.log(submit);
 		submitTest(submit);
-		navigate(paths.TEST.attempts(testId));
 	}
 
 	const getButtonStyle = (index: number) => {
@@ -98,6 +96,12 @@ const TestDo = () => {
 		}
 		return "bg-white";
 	};
+
+	useEffect(() => {
+		if (isSubmissionSuccess) {
+			navigate(paths.TEST.attempts(testId));
+		}
+	}, [isSubmissionSuccess]);
 
 	return (
 		<div className="w-full flex-grow flex flex-col items-center px-4">

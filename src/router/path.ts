@@ -39,11 +39,11 @@ export const paths = {
 			DETAIL: '/test/submission/detail',
 		},
 		EDIT: {
-			ROOT:'/test/edit',
+			ROOT: '/test/edit',
 			DETAIL: '/test/edit/detail',
 			QUESTION: '/test/edit/question',
 		},
-		CREATENEWTEST:'/test/createnew',
+		CREATENEWTEST: '/test/createnew',
 		CREATETEST: '/test/createtest',
 		TESTLISTVIEW: '/test/testlistview',
 	},
@@ -53,13 +53,13 @@ export const paths = {
 		LIST: '/scenario/list',
 
 		CREATE: {
-			ROOT:'/scenario/create',
+			ROOT: '/scenario/create',
 			DETAIL: '/scenario/create/detail',
 			QUESTION: '/scenario/create/question',
 		},
 
 		EDIT: {
-			ROOT:'/scenario/edit',
+			ROOT: '/scenario/edit',
 			DETAIL: '/scenario/edit/detail',
 			QUESTION: '/scenario/edit/question',
 		},

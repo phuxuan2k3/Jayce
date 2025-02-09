@@ -1,18 +1,21 @@
 export type Question = {
-    question: string; 
-    options: string[]; 
-    correctAnswer: number; 
-    point: number;
+	text: string;
+	options: string[];
+	correctAnswer: number;
+	points: number;
 }
-export type TestSubmissionParams={
-    testId:string;
-    questionList: Question[];
+
+export type TestSubmissionParams = {
+	testId: string;
+	questions: Question[];
 }
+
 export type Prompt = {
-    question: string;
+	question: string;
 }
+
 export type QuestionResponse = {
-    answer: string;
-    conversation_id: string;
-    question: string;
+	answer: string;
+	conversation_id: string;
+	question: string;
 }

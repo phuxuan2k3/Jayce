@@ -1,3 +1,4 @@
+import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 
 /**
@@ -24,7 +25,7 @@ function isErrorWithMessage(
 	)
 }
 
-export function toErrorMessage(error: unknown): string | null {
+export function toErrorMessage(error: FetchBaseQueryError | SerializedError | undefined): string | null {
 	if (error) {
 		if (isFetchBaseQueryError(error)) {
 			// The request couldn't reach the server (e.g., the server is down, DNS issues, etc.). 
