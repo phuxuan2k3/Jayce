@@ -10,12 +10,14 @@ import { useEffect } from "react";
 import { useAppSelector } from "../../../app/hooks";
 import { selectIsAuthenticated } from "../../../global/authSlice";
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { SerializedError } from "@reduxjs/toolkit";
 
 const LoginForm = () => {
 	const navigate = useNavigate();
 	const [login, { isLoading, error }] = useLoginMutation();
 	const [google, { }] = useGoogleMutation();
-	const errorMessage = toErrorMessage(error);
+	const errorMessage = toErrorMessage(error as FetchBaseQueryError | SerializedError | undefined);
 
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 	useEffect(() => {

@@ -10,11 +10,13 @@ import { toErrorMessage } from "../../../error/fetchBaseQuery.error";
 import LocalError from "../../../components/LocalError";
 import LocalLoading from "../../../components/LocalLoading";
 import LocalSuccess from "../../../components/LocalSuccess";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { SerializedError } from "@reduxjs/toolkit";
 
 const RegisterForm = () => {
 	const navigate = useNavigate();
 	const [register, { isLoading, error }] = useRegisterMutation();
-	const errorMessage = toErrorMessage(error);
+	const errorMessage = toErrorMessage(error as FetchBaseQueryError | SerializedError | undefined);
 	const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
