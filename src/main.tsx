@@ -13,26 +13,10 @@ const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 const rootElement = document.getElementById("root");
 const theme = createTheme({
 	components: {
-		MuiPopover: {
-			defaultProps: {
-				container: rootElement,
-			},
-		},
-		MuiPopper: {
-			defaultProps: {
-				container: rootElement,
-			},
-		},
-		MuiDialog: {
-			defaultProps: {
-				container: rootElement,
-			},
-		},
-		MuiModal: {
-			defaultProps: {
-				container: rootElement,
-			},
-		},
+		MuiPopover: { defaultProps: { container: rootElement } },
+		MuiPopper: { defaultProps: { container: rootElement } },
+		MuiDialog: { defaultProps: { container: rootElement } },
+		MuiModal: { defaultProps: { container: rootElement } },
 	},
 });
 

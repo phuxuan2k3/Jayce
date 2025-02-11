@@ -11,8 +11,8 @@ const baseQuery = fetchBaseQuery({
     baseUrl: testBackendURL,
     prepareHeaders: (headers, { getState }) => {
         const tokens = selectTokens(getState() as RootState);
-        if (tokens) {
-            headers.set('Authorization', `Bearer ${tokens.accessToken}`);
+        if (tokens?.access_token) {
+            headers.set('Authorization', `Bearer ${tokens.access_token}`);
         }
         headers.set('Content-Type', 'application/json');
         return headers;
@@ -26,19 +26,19 @@ const baseQueryWithReauth: BaseQueryFn<any, any, FetchBaseQueryError> = async (a
         const user = selectUserInfo(api.getState() as RootState);
         const tokens = selectTokens(api.getState() as RootState);
         
-        if (tokens?.refreshToken) {
+        if (tokens?.refresh_token) {
             try {
                 const refreshResult = await grpcRefreshToken({
                     safe_id: tokens.safe_id,
-                    refresh_token: tokens.refreshToken,
-                    access_token: tokens.accessToken,
+                    refresh_token: tokens.refresh_token,
+                    access_token: tokens.access_token,
                     role: tokens.role,
                 });
 
                 if (refreshResult?.token_info) {
                     const newTokens = {
-                        accessToken: refreshResult.token_info.access_token,
-                        refreshToken: refreshResult.token_info.refresh_token,
+                        access_token: refreshResult.token_info.access_token,
+                        refresh_token: refreshResult.token_info.refresh_token,
                         role: refreshResult.token_info.role,
                         safe_id: refreshResult.token_info.safe_id,
                     };

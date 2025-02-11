@@ -35,7 +35,9 @@ const RegisterForm = () => {
 		try {
 			await register({ username, email, password, confirm_password: password });
 
-			navigate('/')
+			if (error === null) {
+				navigate('/')
+			}
 		} catch (error) {
 			console.log("Register failed:", error);
 		}

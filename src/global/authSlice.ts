@@ -11,8 +11,8 @@ export type UserInfo = {
 }
 
 export type Token = {
-	accessToken: string;
-	refreshToken: string;
+	access_token: string;
+	refresh_token: string;
 	role: bulbasaur.Role;
 	safe_id: string;
 }
@@ -91,7 +91,6 @@ const authSlice = createSlice({
 					_clearAuthState(state); // Todo: clear again needed?
 					console.log('Logout completed');
 				})
-
 	},
 });
 

@@ -40,7 +40,7 @@ const TestListView = () => {
 		getFilteredTests({
 			minMinute: 30,
 			maxMinute: 90,
-			difficulty: "EASY",
+			difficulty: "Easy",
 			tags: [],
 			searchName: "",
 			page: 1,
