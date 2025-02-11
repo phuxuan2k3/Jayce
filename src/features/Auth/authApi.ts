@@ -3,17 +3,19 @@ import { backendEndpoint } from '../../app/env';
 // import { RootState } from '../../app/store';
 import { AuthStateResponse, clearAuthState, selectTokens } from '../../global/authSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { grpcSignUp, grpcSignIn, grpcSignInGoogle, grpcMe, grpcRefreshToken } from './grpcClient';
+import { bulbasaur } from './protos/bulbasaur';
 
 interface LoginRequest {
-	email: string;
+	username: string;
 	password: string;
 }
 
 interface RegisterRequest {
+	username: string;
 	email: string;
 	password: string;
-	firstName: string;
-	lastName: string;
+	confirm_password: string;
 }
 
 const authApiReducerPath = 'authApi';
@@ -22,46 +24,107 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 	const { url, method } = args;
 
 	// Todo: Remove mock timeout for loading effect
-	await new Promise(resolve => setTimeout(resolve, 2000));
+	// await new Promise(resolve => setTimeout(resolve, 2000));
 
 	// Todo: Remove mock data
-	if ((url === 'auth/login' || url === 'auth/register' || url === 'auth/refresh') && method === 'POST') {
+	if ((url === 'auth/login' || url === 'auth/register' || url === 'auth/refresh' || url === 'auth/google' || url === 'auth/profile') && method === 'POST') {
 		// Test error effect
-		const email = args.body.email as string;
-		if (email != null && email === '') {
+		// const email = args.body.email as string;
+		// if (email != null && email === '') {
+		// 	return {
+		// 		error: {
+		// 			status: 'FETCH_ERROR',
+		// 			error: 'Invalid credentials',
+		// 		},
+		// 	}
+		// }
+
+		if (url === 'auth/login') {
+			const username = args.body.username as string;
+			const password = args.body.password as string;
+			const response = await grpcSignIn(username, password);
+
+			const meResponse = await grpcMe(response.token_info.access_token);
+
 			return {
-				error: {
-					status: 'FETCH_ERROR',
-					error: 'Invalid credentials',
-				},
-			}
-		}
-		if (args.body.refreshToken) {
-			const refreshToken = args.body.refreshToken.refreshToken as string;
-			if (refreshToken != null && refreshToken === '') {
-				console.log('Invalid refresh token');
-				return {
-					error: {
-						status: 'FETCH_ERROR',
-						error: 'Invalid refresh token',
+				data: {
+					user: {
+						email: meResponse.user.email,
+						username: meResponse.user.username,
+						avatarPath: 'https://cdn.tuoitre.vn/zoom/700_700/2019/5/8/avatar-publicitystill-h2019-1557284559744252594756-crop-15572850428231644565436.jpg',
 					},
+					tokens: {
+						access_token: response.token_info.access_token,
+						refresh_token: response.token_info.refresh_token,
+						role: response.token_info.role,
+						safe_id: response.token_info.safe_id,
+					}
 				}
+			};
+		}
+
+		if (url === 'auth/google') {
+			const credential = args.body.credential as string;
+			const response = await grpcSignInGoogle(credential);
+			return {
+				data: response
 			}
 		}
+
+		if (url === 'auth/register') {
+			const username = args.body.username as string;
+			const email = args.body.email as string;
+			const password = args.body.password as string;
+			const response = await grpcSignUp(username, email, password, password);
+
+			const meResponse = await grpcMe(response.token_info.access_token);
+
+			return {
+				data: {
+					user: {
+						email: meResponse.user.email,
+						username: meResponse.user.username,
+						avatarPath: 'https://cdn.tuoitre.vn/zoom/700_700/2019/5/8/avatar-publicitystill-h2019-1557284559744252594756-crop-15572850428231644565436.jpg',
+					},
+					tokens: {
+						access_token: response.token_info.access_token,
+						refresh_token: response.token_info.refresh_token,
+						role: response.token_info.role,
+						safe_id: response.token_info.safe_id,
+					}
+				}
+			};
+		}
+
+		if (url === 'auth/refresh') {
+			const token = args.body.token as { safe_id?: string | undefined, refresh_token?: string, access_token?: string, role?: bulbasaur.Role | undefined };
+			const response = await grpcRefreshToken({ safe_id: token.safe_id, refresh_token: token.refresh_token, access_token: token.access_token, role: token.role });
+
+			const meResponse = await grpcMe(response.token_info.access_token);
+
+			return {
+				data: {
+					user: {
+						email: meResponse.user.email,
+						username: meResponse.user.username,
+						avatarPath: 'https://cdn.tuoitre.vn/zoom/700_700/2019/5/8/avatar-publicitystill-h2019-1557284559744252594756-crop-15572850428231644565436.jpg',
+					},
+					tokens: {
+						access_token: response.token_info.access_token,
+						refresh_token: response.token_info.refresh_token,
+						role: response.token_info.role,
+						safe_id: response.token_info.safe_id,
+					}
+				}
+			};
+		}
+
 		return {
-			data: {
-				user: {
-					email: 'test@gmail.com',
-					firstName: 'John',
-					lastName: 'Doe',
-					avatarPath: 'https://cdn.tuoitre.vn/zoom/700_700/2019/5/8/avatar-publicitystill-h2019-1557284559744252594756-crop-15572850428231644565436.jpg',
-				},
-				tokens: {
-					accessToken: 'mockAccessToken',
-					refreshToken: 'mockRefreshToken',
-				},
+			error: {
+				status: 'FETCH_ERROR',
+				error: 'oh no',
 			},
-		};
+		}
 	}
 
 	const backendFetchQuery = fetchBaseQuery({ baseUrl: backendEndpoint });
@@ -73,10 +136,18 @@ const authApi = createApi({
 	baseQuery: customFetchQuery,
 	endpoints: (builder) => ({
 		login: builder.mutation<AuthStateResponse, LoginRequest>({
-			query: (creadentials) => ({
+			query: (credentials) => ({
 				url: 'auth/login',
 				method: 'POST',
-				body: creadentials,
+				body: credentials,
+			}),
+		}),
+
+		google: builder.mutation<AuthStateResponse, { credential: string }>({
+			query: (credentials) => ({
+				url: 'auth/google',
+				method: 'POST',
+				body: credentials,
 			}),
 		}),
 
@@ -88,11 +159,11 @@ const authApi = createApi({
 			}),
 		}),
 
-		refresh: builder.mutation<AuthStateResponse, { refreshToken: string }>({
-			query: (refreshToken) => ({
+		refresh: builder.mutation<AuthStateResponse, { token: { safe_id?: string | undefined, refresh_token?: string | undefined, access_token?: string | undefined, role?: bulbasaur.Role | undefined } }>({
+			query: (token) => ({
 				url: 'auth/refresh',
 				method: 'POST',
-				body: { refreshToken },
+				body: token,
 			}),
 		}),
 
@@ -108,7 +179,7 @@ const authApi = createApi({
 					const result = await baseQuery({
 						url: 'auth/logout',
 						method: 'POST',
-						body: { refreshToken: tokens.refreshToken },
+						body: { refreshToken: tokens.refresh_token },
 					});
 					if ('error' in result) {
 						return result;
@@ -122,9 +193,10 @@ const authApi = createApi({
 
 export const {
 	useLoginMutation,
+	useGoogleMutation,
 	useRegisterMutation,
 	useRefreshMutation,
-	useLogoutMutation
+	useLogoutMutation,
 } = authApi;
 
 export default authApi;
