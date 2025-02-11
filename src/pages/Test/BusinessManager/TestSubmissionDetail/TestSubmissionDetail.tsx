@@ -44,8 +44,6 @@ const TestSubmissionDetail = () => {
 
     const maxPoints = answerList.reduce((total, item) => total + item.score, 0);
    
-
-   
     return (
         <>
            
