@@ -26,6 +26,12 @@ import ScenarioCreateDetail from "../pages/Scenario/BusinessManager/ScenarioCrea
 import ScenarioCreateQuestion from "../pages/Scenario/BusinessManager/ScenarioCreateQuestion/ScenarioCreateQuestion";
 import ScenarioEditDetail from "../pages/Scenario/BusinessManager/ScenarioEditDetail/ScenarioEditDetail";
 import ScenarioEditQuestion from "../pages/Scenario/BusinessManager/ScenarioEditQuestion/ScenarioEditQuestion";
+import PickAField from "../pages/InterviewPractice/Candidate/PickAField/PickAField";
+import LayoutInterviewPractice from "../pages/InterviewPractice/component/InterviewLayout";
+import ChooseScenario from "../pages/InterviewPractice/Candidate/ChooseScenario/ChooseScenario";
+import ScenarioDetail from "../pages/InterviewPractice/Candidate/Detail/Detail";
+import AnswerQuestion from "../pages/InterviewPractice/Candidate/AnswerQuestion/AnswerQuestion";
+import Review from "../pages/InterviewPractice/Candidate/Review/Review";
 const router = createBrowserRouter([
 	{
 		errorElement: <ErrorPage />,
@@ -156,6 +162,31 @@ const router = createBrowserRouter([
 					},
 				],
 			},
+			{
+				path: paths.INTERVIEWPRACTICE.ROOT,
+				element: <LayoutInterviewPractice />,
+				children: [
+					{
+						path: paths.INTERVIEWPRACTICE.PICK,
+						element: <PickAField />,
+					},
+					{
+						path: paths.INTERVIEWPRACTICE.CHOOSE,
+						element: <ChooseScenario />,
+					},
+					{
+						path: paths.INTERVIEWPRACTICE.DETAIL,
+						element: <ScenarioDetail />,
+					},
+					{
+						path: paths.INTERVIEWPRACTICE.ANSWER,
+						element: <AnswerQuestion />,
+					},
+					{
+						path: paths.INTERVIEWPRACTICE.REVIEW,
+						element: <Review />,
+					}]
+			}
 		]
 	}
 ], {

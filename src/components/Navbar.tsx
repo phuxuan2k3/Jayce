@@ -68,7 +68,7 @@ const NavBar = ({ showNav = true }: { showNav?: boolean; }) => {
 									</button>
 									<div className={`transition-opacity duration-200 ${showCoursesMenu ? "opacity-100 visible" : "opacity-0 invisible"}`}>
 										<div className="space-y-2">
-											<a href="/scenario" className="block px-4 py-2 text-sm text-black bg-gray-100 rounded-md hover:bg-gray-200">
+											<a href="/ipractice/pick" className="block px-4 py-2 text-sm text-black bg-gray-100 rounded-md hover:bg-gray-200">
 												Candidate
 											</a>
 											<a href="/scenario/list" className="block px-4 py-2 text-sm text-black bg-gray-100 rounded-md hover:bg-gray-200">
