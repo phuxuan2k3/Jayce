@@ -34,7 +34,7 @@ const AnswerQuestion = () => {
     return (
         <>
 
-            <div className="flex gap-4 mt-10">
+            <div className="flex gap-4 mt-10 font-arya">
                 <div className="w-[65%]  mx-12">
                     <div className="flex justify-between">
                         <div className="flex items-center gap-10">
@@ -46,7 +46,10 @@ const AnswerQuestion = () => {
                         {field}
                     </div>
                     <hr className=" border-gray-400 mb-4 mt-2" />
-                    <div className="max-h-96 overflow-y-auto">
+                    <div className="max-h-96 overflow-y-auto" style={{
+                        scrollbarWidth: "thin", 
+                        scrollbarColor: "var(--primary-color)", 
+                    }}>
                         <span className="text-2xl font-bold text-[var(--primary-color)] flex gap-2 items-center">
                             Question {selectedQuestion ? questions.findIndex(q => q === selectedQuestion) + 1 : ""} <FaVolumeUp />
                         </span>

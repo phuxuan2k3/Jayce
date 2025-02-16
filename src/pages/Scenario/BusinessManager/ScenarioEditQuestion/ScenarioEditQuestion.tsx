@@ -206,7 +206,7 @@ const ScenarioEditQuestion = () => {
 
     return (
         <>
-            <div className="w-full flex-grow flex flex-col items-center px-4">
+            <div className="w-full flex-grow flex flex-col items-center px-4 font-arya">
                 <div className="w-full flex-1 flex-col mt-6 text-center">
                     <div className="w-full text-4xl font-bold">Edit Scenario</div>
                     <div className="w-full text-xl font-semibold">Edit information for your scenario</div>

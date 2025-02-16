@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { FaArrowRight, FaCalendarAlt, FaChevronRight, FaHeart, FaStar, FaUser } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Rating } from "@mui/material";
 const ScenarioDetail = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const scenario = location.state?.scenario;
     const field = location.state?.field;
     const [selectedTab, setSelectedTab] = useState<"questions" | "history">("questions");
+    const [userRating, setUserRating] = useState<number | null>(null);
     const content = "SQL query interview scenarios can vary widely in complexity, but here are some common types you might encounter Basic SQL Queries   Simple Data RetrievalWrite a query to retrieve specific columns from a table. Find the number of rows in a table. Retrieve unique values from a column. Data Filtering: Select rows based on specific conditions(e.g., age > 30, salary < 50000). Sort data in ascending or descending order. Limit the number of rows returned. Data Aggregation: Calculate the sum, average, minimum, or maximum of a column. Count the number of rows that meet a certain criteria. Group data by a specific column and perform calculations on each group.";
     const questions = [
         {
@@ -23,15 +25,15 @@ const ScenarioDetail = () => {
             question: "What is SQL and what is it used for?",
             content: "SQL (Structured Query Language) is used for managing databases.",
             hint: "Think about relational databases."
-        },{
+        }, {
             question: "What is SQL and what is it used for?",
             content: "SQL (Structured Query Language) is used for managing databases.",
             hint: "Think about relational databases."
-        },{
+        }, {
             question: "What is SQL and what is it used for?",
             content: "SQL (Structured Query Language) is used for managing databases.",
             hint: "Think about relational databases."
-        },{
+        }, {
             question: "What is SQL and what is it used for?",
             content: "SQL (Structured Query Language) is used for managing databases.",
             hint: "Think about relational databases."
@@ -67,7 +69,7 @@ const ScenarioDetail = () => {
     return (
         <>
 
-            <div className="flex gap-4 mt-10">
+            <div className="flex gap-4 mt-10 font-arya">
                 <div className="w-[65%]  mx-12">
                     <div className="flex justify-between">
                         <div className="flex items-center gap-10">
@@ -82,7 +84,10 @@ const ScenarioDetail = () => {
                         {field}
                     </div>
                     <hr className=" border-gray-400 mb-4 mt-2" />
-                    <div className="max-h-96 overflow-y-auto">
+                    <div className="max-h-96 overflow-y-auto " style={{
+                        scrollbarWidth: "thin",
+                        scrollbarColor: "var(--primary-color)",
+                    }}>
                         {content}
                     </div>
                     <hr className=" border-gray-400 my-4" />
@@ -91,8 +96,13 @@ const ScenarioDetail = () => {
                     <span className="flex items-center gap-2"> Date created: {new Date(scenario.date).toLocaleDateString()}{" "}  <FaCalendarAlt /></span>
                     <hr className=" border-gray-400 my-4" />
                     <div className="flex justify-between">
-                        <div>
+                        <div className="flex gap-2 ">
                             Your rating:
+                            <Rating
+                                name="user-rating"
+                                value={userRating}
+                                onChange={(_, newValue) => setUserRating(newValue)}
+                            />
                         </div>
                         <div className={`px-3 py-1 rounded-lg font-bold text-[var(--primary-color)] border border-gray-500 flex gap-4 items-center`}>
                             Add to Favourite <FaHeart />

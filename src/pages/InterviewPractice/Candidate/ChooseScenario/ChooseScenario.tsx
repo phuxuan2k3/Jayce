@@ -44,7 +44,7 @@ const ChooseScenario = () => {
 
     return (
         <>
-            <div className="mx-12">
+            <div className="mx-12 font-arya">
                 <div className="text-3xl font-extrabold"> {field} Scenario</div>
                 <div className="mt-2 text-[var(--primary-color)]">You can practice interview skills with multiple situations</div>
                 <div className=" flex justify-between">
@@ -56,7 +56,7 @@ const ChooseScenario = () => {
                     </div>
                     <div className="flex gap-6">
                         <label className="inline-flex items-center">
-                            <input type="checkbox" className="form-checkbox h-6 w-6 border-2 border-gray-400 checked:bg-green-500 focus:ring-2 focus:ring-green-300 peer" />
+                            <input type="checkbox" className="h-6 w-6 border-2 border-gray-400 checked:bg-green-500 checked:border-green-500" />
                             <span className="ml-2">Finished</span>
                         </label>
                         <label className="inline-flex items-center">
@@ -89,9 +89,9 @@ const ChooseScenario = () => {
 
 
             {isFilterOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 font-arya">
                     <div className="bg-gray-100 p-6 rounded-lg w-100 shadow">
-                        <h2 className="text-xl font-bold mb-4">Filter</h2>
+                        <h2 className="text-2xl text-center font-bold mb-4">Filter</h2>
                         <div className="flex flex-col gap-4 w-full">
                             <label className="grid grid-cols-3 items-center justify-between gap-2">
                                 <span>Participants</span>

@@ -47,7 +47,7 @@ const Review = () => {
     return (
         <>
 
-            <div className="flex gap-4 mt-10">
+            <div className="flex gap-4 mt-10 font-arya">
                 <div className="w-[65%]  mx-12">
                     <div className="flex justify-between mb-8">
                         <div className="flex items-center gap-10">

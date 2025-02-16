@@ -206,7 +206,7 @@ const ScenarioCreateQuestion = () => {
 
     return (
         <>
-            <div className="w-full flex-grow flex flex-col items-center px-4">
+            <div className="w-full flex-grow flex flex-col items-center px-4 font-arya">
                 <div className="w-full flex-1 flex-col mt-6 text-center">
                     <div className="w-full text-4xl font-bold">Create a new Scenario</div>
                     <div className="w-full text-xl font-semibold">Fill some information for your scenario</div>
@@ -220,7 +220,7 @@ const ScenarioCreateQuestion = () => {
 
                         {/* Question List */}
                         {questionList.map((question, index) => (
-                            <div key={index} className="w-4/6 flex-1 flex flex-row bg-white rounded-lg shadow-primary p-6 space-x-4 border-r border-b border-solid border-primary justify-between mb-4">
+                            <div key={index} className="w-4/6 flex-1 flex flex-row bg-white rounded-lg shadow-xl p-6 space-x-4  border-primary border  justify-between mb-4">
                                 <span className="w-1/5 font-bold mb-2 opacity-50">
                                     Question {index + 1}
                                 </span>
@@ -274,19 +274,19 @@ const ScenarioCreateQuestion = () => {
                             </div>
                         ))}
 
-                        <div className="w-4/6 flex-1 flex flex-row bg-white rounded-lg shadow-primary p-6 space-x-4 border-r border-b border-solid border-primary justify-center mb-4 cursor-pointer" onClick={handleAddQuestion}>
-                            <FontAwesomeIcon className="w-16 h-16" icon={faPlus} />
+                        <div className="w-4/6 flex-1 flex flex-row bg-white rounded-lg shadow-xl p-6 space-x-4 border border-primary justify-center mb-4 cursor-pointer" onClick={handleAddQuestion}>
+                            <FontAwesomeIcon className="w-8 h-8" icon={faPlus} />
                         </div>
                     </div>
                 </div>
 
-                <div className="flex flex-col">
+                <div className="flex flex-col w-full">
                     {submitError && <div className="text-center text-red-500 mb-8">{submitError}</div>}
-                    <div className="flex flex-row justify-center space-x-10">
-                        <button className="w-fit px-3 font-semibold rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleBack} disabled={isCreating}>
+                    <div className="flex justify-center flex-row space-x-10">
+                        <button className="w-fit px-12 font-semibold rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleBack} disabled={isCreating}>
                             Back
                         </button>
-                        <button className="w-fit px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={handleSave} disabled={isCreating}>
+                        <button className="w-fit px-12 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={handleSave} disabled={isCreating}>
                             {isCreating ? "Creating..." : "Save"}
                         </button>
                     </div>

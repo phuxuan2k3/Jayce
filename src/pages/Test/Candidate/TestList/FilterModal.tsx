@@ -96,8 +96,8 @@ const FilterModal: React.FC<FilterModalProps> = ({ meta, open, onClose, onApplyF
 					<Grid size={4} >
 						<Typography>Select difficulty:</Typography>
 					</Grid>
-					<Grid size={8} sx={{ paddingY: 2 }}>
-						<FormControl fullWidth size="small" variant="outlined" >
+					<Grid size={8} sx={{ justifyContent: "center", paddingY: 2 }}>
+						<FormControl fullWidth size="small" variant="outlined">
 							<InputLabel id="difficulty-select-label"> Difficulty</InputLabel>
 							<Select
 								labelId="difficulty-select-label"

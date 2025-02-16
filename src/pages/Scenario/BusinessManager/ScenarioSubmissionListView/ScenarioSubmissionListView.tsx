@@ -62,9 +62,9 @@ const ScenarioSubmissionListView = () => {
 
     return (
         <>
-            <div className="w-full flex-grow flex flex-col items-center px-4">
+            <div className="w-full flex-grow flex flex-col items-center px-4 font-arya">
                 <div className="w-full max-w-7xl py-6">
-                    <h1 className="text-2xl text-center text-[var(--primary-color)] font-bold mb-6">{submissionOverview.testName}</h1>
+                    <h1 className="text-3xl text-center text-[var(--primary-color)] font-bold mb-6">{submissionOverview.testName}</h1>
 
                     <div className="flex flex-col items-center">
                         <div className="w-4/6 flex flex-row justify-between font-semibold text-[var(--primary-color)] mb-4">
@@ -96,8 +96,8 @@ const ScenarioSubmissionListView = () => {
                                     </div>
                                 </div>
 
-                                <div className="font-medium mb-8">
-                                    Submitter: <span className="text-[#39A0AD] underline">{submission.submitter}</span>
+                                <div className="font-bold mb-8">
+                                    Submitter: <span className=" font-bold text-[#39A0AD] underline">{submission.submitter}</span>
                                 </div>
 
                                 <div className="flex justify-between">
@@ -151,7 +151,7 @@ const ScenarioSubmissionListView = () => {
                         },
                     }}
                 >
-                    <DialogTitle className="text-center font-bold" sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                    <DialogTitle className="text-center font-bold font-arya" sx={{ m: 0, p: 2 }} id="customized-dialog-title">
                         Filter
                     </DialogTitle>
                     <IconButton
@@ -167,7 +167,7 @@ const ScenarioSubmissionListView = () => {
                         <CloseIcon />
                     </IconButton>
                     <DialogContent dividers>
-                        <div className="flex flex-row justify-center">
+                        <div className="flex flex-row justify-center font-arya">
                             <span className="font-semibold">Date</span>
                             <div className="flex flex-row gap-2 ml-16">
                                 <input type="date" className="border border-black rounded-lg text-sm p-1"
@@ -176,7 +176,7 @@ const ScenarioSubmissionListView = () => {
                                 />
                             </div>
                         </div>
-                        <div className="flex justify-between mt-2">
+                        <div className="flex justify-between mt-2 font-arya">
                             <label className="font-semibold">Version</label>
                             <select className="border border-black rounded-lg text-sm p-1 w-fit" value={selectedVersion}>
                                 <option value="all">All</option>
@@ -189,10 +189,10 @@ const ScenarioSubmissionListView = () => {
                         </div>
                     </DialogContent>
                     <DialogActions>
-                        <button className="w-fit px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleClose}>
+                        <button className=" font-arya w-fit px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleClose}>
                             Reset
                         </button>
-                        <button className="w-fit px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={handleClose}>
+                        <button className="font-arya w-fit px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={handleClose}>
                             Apply
                         </button>
                     </DialogActions>

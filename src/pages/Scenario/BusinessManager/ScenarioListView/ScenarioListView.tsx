@@ -76,7 +76,7 @@ const ScenarioListView = () => {
 
     return (
         <>
-            <div className="w-full flex-grow flex flex-col items-center px-4">
+            <div className="w-full flex-grow flex flex-col items-center px-4 font-arya">
                 <div className="w-full flex-1 flex-col mt-6 ml-16">
                     <div className="w-full text-4xl font-bold">Manage your Scenarios</div>
                     <div className="w-full text-xl font-semibold">You can manage all your scenarios here!</div>
@@ -98,7 +98,7 @@ const ScenarioListView = () => {
                         {/* Scenario List */}
                         {scenarios.map((scenario, index) => (
                             <div key={index} className="w-4/6 flex-1 flex flex-col bg-white rounded-lg shadow-primary p-6 border-r border-b border-solid border-primary items-between mb-4">
-                                <div className="font-medium mb-8 text-xl">
+                                <div className="font-bold mb-8 text-xl">
                                     <span>{scenario.title}</span>
                                 </div>
                                 <div className="mb-8">

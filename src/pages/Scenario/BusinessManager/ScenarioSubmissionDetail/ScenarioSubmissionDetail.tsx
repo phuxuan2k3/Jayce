@@ -41,7 +41,7 @@ const ScenarioSubmissionDetail = () => {
     return (
         <>
 
-            <div className="w-full flex-grow flex flex-col items-center px-4">
+            <div className="w-full flex-grow flex flex-col items-center px-4 font-arya">
                 <div className="w-full max-w-7xl py-6">
                     <div className="flex-col text-center">
                         <h1 className="text-2xl font-bold mb-6">Scenario Detail: #{submissionOverview.scenarioNumber}</h1>

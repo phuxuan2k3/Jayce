@@ -128,8 +128,8 @@ const TestList: React.FC = () => {
 							meta={filters}
 							onApplyFilters={handleApplyFilters}
 						/>
-						<div className="h-fit w-fit bg-primary flex items-center justify-center rounded-md cursor-pointer p-2" onClick={() => setFilterModalOpen(true)}>
-							<FilterListIcon /> <span className="ml-2">Filters</span>
+						<div className="h-fit text-white w-fit bg-primary flex items-center justify-center rounded-md cursor-pointer p-2" onClick={() => setFilterModalOpen(true)}>
+							<FilterListIcon /> <span className="ml-2 ">Filters</span>
 						</div>
 					</div>
 
