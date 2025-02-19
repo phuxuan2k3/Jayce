@@ -5,7 +5,14 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import testApi from '../features/Test/test.api';
 import accountApi from '../features/Account/account.api';
 import aiAPI from '../features/Test/AI.api';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
+const persistConfig = {
+	key: 'root',
+	storage,
+	whitelist: ['auth'],
+};
 
 // Create the root reducer so it can be used in configureStore
 const rootReducer = combineReducers({
@@ -16,8 +23,10 @@ const rootReducer = combineReducers({
 	accountApi: accountApi.reducer,
 });
 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const store = configureStore({
-	reducer: rootReducer,
+	reducer: persistedReducer,
 	middleware:
 		(getDefaultMiddleware) =>
 			getDefaultMiddleware({
@@ -27,8 +36,9 @@ const store = configureStore({
 				.concat(testApi.middleware)
 				.concat(aiAPI.middleware)
 				.concat(accountApi.middleware),
-
 });
+
+export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

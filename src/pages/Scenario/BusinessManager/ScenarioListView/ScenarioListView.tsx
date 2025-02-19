@@ -86,8 +86,8 @@ const ScenarioListView = () => {
                     <div className="flex flex-col items-center">
                         <div className="w-4/6 flex flex-row justify-between font-semibold text-[var(--primary-color)] mb-4">
                             <span>Your scenarios ({scenarios.length})</span>
-                            <div className="h-full w-fit flex items-center cursor-pointer">
-                                <div className="h-7 w-7 flex items-center justify-center rounded-lg" onClick={() => handleGoToCreateScenario()}>
+                            <div className="h-full w-fit flex items-center cursor-pointer" onClick={() => handleGoToCreateScenario()}>
+                                <div className="h-7 w-7 flex items-center justify-center rounded-lg">
                                     <FontAwesomeIcon icon={faPlus} rotation={90} />
                                 </div>
 

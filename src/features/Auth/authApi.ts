@@ -46,6 +46,20 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 
 			const meResponse = await grpcMe(response.token_info.access_token);
 
+			console.log("token_info:", response.token_info);
+
+			// await new Promise(resolve => setTimeout(resolve, 2000));
+
+			// const testResponse = await grpcRefreshToken({ safe_id: response.token_info.safe_id, refresh_token: response.token_info.refresh_token, access_token: response.token_info.access_token, role: response.token_info.role });
+
+			// console.log('testResponse:', testResponse.token_info);
+
+			// await new Promise(resolve => setTimeout(resolve, 2000));
+
+			// const testResponse2 = await grpcRefreshToken({ safe_id: testResponse.token_info.safe_id, refresh_token: testResponse.token_info.refresh_token, access_token: testResponse.token_info.access_token, role: testResponse.token_info.role });
+
+			// console.log('testResponse:', testResponse2.token_info);
+
 			return {
 				data: {
 					user: {

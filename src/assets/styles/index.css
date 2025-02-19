@@ -53,3 +53,10 @@ h6 {
 	src: url('./../fonts/Asap/Asap-Bold.ttf') format('truetype');
 	font-weight: bold;
 }
+
+@font-face {
+	font-family: 'Asap';
+	src: url('./../fonts/Asap-Italic.ttf') format('truetype');
+	font-style: italic;
+	font-weight: normal;
+  }

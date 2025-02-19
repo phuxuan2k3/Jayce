@@ -1,13 +1,20 @@
 import aiAPI from "../../../../features/Test/AI.api";
-import { QuestionResponse, Prompt } from "./types";
+import { CriteriaRequest, CriteriaResponse, GeneratedQuestionFormat } from "./types";
 
 const questionaiAPI = aiAPI.injectEndpoints({
 	endpoints: (builder) => ({
-		fetchquestion: builder.mutation<QuestionResponse, Prompt>({
-			query: (prompt) => ({
-				url: `/question`,
+		criteria: builder.mutation<{ criteriaList: CriteriaResponse[] }, CriteriaRequest>({
+			query: (CriteriaRequest) => ({
+				url: `/v1/suggest_criteria`,
 				method: "POST",
-				body: prompt
+				body: CriteriaRequest
+			}),
+		}),
+		generate: builder.mutation<{ questionList: GeneratedQuestionFormat[] }, CriteriaRequest>({
+			query: (CriteriaRequest) => ({
+				url: `/v1/suggest_questions`,
+				method: "POST",
+				body: CriteriaRequest
 			}),
 		}),
 	}),
@@ -15,5 +22,6 @@ const questionaiAPI = aiAPI.injectEndpoints({
 });
 
 export const {
-	useFetchquestionMutation,
+	useCriteriaMutation,
+	useGenerateMutation
 } = questionaiAPI;

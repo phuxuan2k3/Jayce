@@ -5,31 +5,165 @@ import { useLocation, useNavigate } from "react-router-dom";
 import GradientBorderNotGood from "../../../../components/GradientBorder.notgood";
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import AddIcon from '@mui/icons-material/Add';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
-import CircularProgress from '@mui/material/CircularProgress';
+// import CircularProgress from '@mui/material/CircularProgress';
 import { useCreatenewtestMutation } from "./createquestion.test-api";
-import { useFetchquestionMutation } from "./questionai.test-api";
+import { useCriteriaMutation, useGenerateMutation } from "./questionai.test-api";
 import { Question } from "./types";
 import { paths } from "../../../../router/path";
-// import { useFetchquestionMutation } from "./questionai.test-api";
+
+// const initGeneralInfo = {
+// 	title: "Computer Network Test",
+// 	description: "This test is designed to assess candidates's knowledge of computer networks.",
+// 	duration: "60 minutes",
+// 	difficulty: "Easy",
+// 	maxNumberOfQuestions: 10,
+// }
+
+const anotherInitCriteriaList = [
+	{
+		"criteria": "Fields",
+		"optionList": [
+			"Networking Basics",
+			"Network Security",
+			"Wireless Networks",
+			"IP Addressing",
+			"Routing & Switching"
+		]
+	},
+	{
+		"criteria": "Target Skills",
+		"optionList": [
+			"Network Configuration",
+			"Troubleshooting",
+			"Firewall Management",
+			"Bandwidth Optimization",
+			"VPN Setup"
+		]
+	},
+	{
+		"criteria": "Key Knowledge Areas",
+		"optionList": [
+			"OSI Model",
+			"TCP/IP Protocol Suite",
+			"Network Topologies",
+			"Subnetting",
+			"Network Protocols"
+		]
+	},
+	{
+		"criteria": "Seniority",
+		"optionList": [
+			"Entry-Level",
+			"Intermediate",
+			"Advanced",
+			"Expert"
+		]
+	}
+]
+
+const initCriteriaList = [
+	{ criteria: "Criteria 1 Criteria 1 Criteria 1 Criteria 1 Criteria 1 Criteria 1", optionList: ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"], customOption: "" },
+	{ criteria: "Criteria 2 Criteria 2 Criteria 2 Criteria 2 Criteria 2 Criteria 2", optionList: ["Option 1", "Option 2", "Option 3", "Option 4"], customOption: "" },
+	{ criteria: "Criteria 3 Criteria 3 Criteria 3 Criteria 3 Criteria 3 Criteria 3", optionList: ["Option 1", "Option 2", "Option 3", "Option 4"], customOption: "" },
+	{ criteria: "Criteria 4 Criteria 4 Criteria 4 Criteria 4 Criteria 4 Criteria 4", optionList: ["Option 1", "Option 2", "Option 3", "Option 4"], customOption: "" },
+]
+
+const initSuggestedCriteria = [
+	{ criteria: "Criteria 5 Criteria 5 Criteria 5 Criteria 5 Criteria 5 Criteria 5", optionList: ["Option 1", "Option 2", "Option 3", "Option 4"] },
+	{ criteria: "Criteria 6 Criteria 6 Criteria 6 Criteria 6 Criteria 6 Criteria 6", optionList: ["Option 1", "Option 2", "Option 3", "Option 4"] },
+	{ criteria: "Criteria 7 Criteria 7 Criteria 7 Criteria 7 Criteria 7 Criteria 7", optionList: ["Option 1", "Option 2", "Option 3", "Option 4"] },
+	{ criteria: "Criteria 8 Criteria 8 Criteria 8 Criteria 8 Criteria 8 Criteria 8", optionList: ["Option 1", "Option 2", "Option 3", "Option 4"] },
+]
+
+const initGeneratedQuestions = [
+	{
+		questionContent: "What is the first step in the design process?",
+		optionList: [
+			{ optionContent: "Research", isCorrect: true },
+			{ optionContent: "Design", isCorrect: false },
+			{ optionContent: "Develop", isCorrect: false },
+			{ optionContent: "Test", isCorrect: false },
+		],
+	},
+	{
+		questionContent: "What is the main purpose of user research?",
+		optionList: [
+			{ optionContent: "Identify needs", isCorrect: true },
+			{ optionContent: "Develop code", isCorrect: false },
+			{ optionContent: "Write tests", isCorrect: false },
+			{ optionContent: "Launch product", isCorrect: false },
+		],
+	},
+]
+
+const globalCooldownValue = 2;
 
 const CreateNewTest = () => {
 	const location = useLocation();
-	const { testID } = location.state || { testID: null };
+	const { testID, testTitle, testDescription, testDifficulty, testDuration } = location.state || { testID: null, testTitle: "", testDescription: "", testDifficulty: "", testDuration: 0 };
 	const [open, setOpen] = React.useState(false);
-	const [question, setQuestion] = React.useState("");
-	const [generatedQuestions, setGeneratedQuestions] = React.useState<{ content: string; description: string; level: string; reason: string }[]>([]);
+	const [criteriaList, setCriteriaList] = React.useState<{ criteria: string, optionList: string[], customOption: string }[]>([]);
+	const [chosenCriteria, setChosenCriteria] = React.useState<{ criteria: string, chosenOption: string }[]>([]);
+	const [suggestedCriteria, setSuggestedCriteria] = React.useState<{ criteria: string, optionList: string[] }[]>([]);
+	const [customCriteria, setCustomCriteria] = React.useState<string>("");
+	const [maxNumberOfQuestions, setMaxNumberOfQuestions] = React.useState<number>(5);
+	const [generatedQuestions, setGeneratedQuestions] = React.useState<{ questionContent: string; optionList: { optionContent: string, isCorrect: boolean }[] }[]>([]);
 	const [error, setError] = React.useState<string | null>(null);
 	const [cooldowns, setCooldowns] = React.useState<number[]>([]);
+	const [addAllCooldown, setAddAllCooldown] = React.useState<number>(0);
 	const [isLoading, setLoading] = React.useState(false);
+	const [isGettingMoreCriteria, setIsGettingMoreCriteria] = React.useState(false);
 	const [isCreating, setIsCreating] = React.useState(false);
 	const [submitError, setSubmmitError] = React.useState<string | null>(null);
-	const [fetchquestion] = useFetchquestionMutation();
+	const [criteria] = useCriteriaMutation();
+	const [generate] = useGenerateMutation();
+
+	React.useEffect(() => {
+		const fetchCriteria = async () => {
+			try {
+				const generalInfo = {
+					title: testTitle,
+					description: testDescription,
+					duration: testDuration + " minutes",
+					difficulty: testDifficulty,
+					maxNumberOfQuestions,
+				}
+
+				const input = {
+					generalInfo,
+					criteriaList: [],
+				}
+
+				// const newCriteria = anotherInitCriteriaList.map((c) => ({ ...c, customOption: "" }));
+				// setCriteriaList(newCriteria);
+
+				const { data, error } = await criteria(input);
+
+				if (error) {
+					console.log("Error getting criteria:", error);
+					setError("An error occurred while getting the criteria. Please try again later.");
+				}
+
+				if (data) {
+					const newCriteria = data.criteriaList.map((c) => ({ ...c, customOption: "" }));
+					setCriteriaList(newCriteria);
+				}
+			} catch (error) {
+				console.log("Error getting criteria:", error);
+				setError("An error occurred while getting the criteria. Please try again later.");
+			}
+		};
+
+		fetchCriteria();
+	}, []);
 
 	const toggleDrawer = (newOpen: boolean) => () => {
 		setOpen(newOpen);
@@ -131,24 +265,182 @@ const CreateNewTest = () => {
 		]);
 	};
 
+	const handleDeleteQuestion = (index: number) => {
+		const updatedQuestions = questionList.filter((_, i) => i !== index);
+		setQuestionList(updatedQuestions);
+	};
+
+	const [isCriteriaExpanded, setIsCriteriaExpanded] = React.useState(true);
+	const [isGeneratedQuestionExpanded, setIsGeneratedQuestionExpanded] = React.useState(true);
+
+	const toggleCriteriaExpand = () => {
+		setIsCriteriaExpanded((prev) => !prev);
+	};
+
+	const toggleGeneratedQuestionExpand = () => {
+		setIsGeneratedQuestionExpanded((prev) => !prev);
+	};
+
+	const handleCriteriaChange = (criteria: string, option: string, isChecked: boolean) => {
+		setChosenCriteria((prev) => {
+			let updatedCriteria = prev.filter((c) => c.criteria !== criteria);
+
+			const existing = prev.find((c) => c.criteria === criteria);
+			let updatedOptions = existing ? existing.chosenOption.split(", ").filter(opt => opt) : [];
+
+			if (isChecked) {
+				if (option.trim() !== "" && !updatedOptions.includes(option)) {
+					updatedOptions.push(option);
+				}
+			} else {
+				updatedOptions = updatedOptions.filter(opt => opt !== option);
+			}
+
+			if (updatedOptions.length > 0) {
+				updatedCriteria.push({ criteria, chosenOption: updatedOptions.join(", ") });
+			}
+
+			return updatedCriteria;
+		});
+	};
+
+
+	const handleCustomOptionChange = (criteria: string, value: string) => {
+		setCriteriaList((prev) =>
+			prev.map((c) => (c.criteria === criteria ? { ...c, customOption: value } : c))
+		);
+
+		setChosenCriteria((prev) => {
+			let updatedCriteria = prev.filter((c) => c.criteria !== criteria);
+
+			const existingCriteria = criteriaList.find((c) => c.criteria === criteria);
+			let updatedOptions: string[] = [];
+
+			if (existingCriteria) {
+				const existingChosen = prev.find((c) => c.criteria === criteria);
+				updatedOptions = existingChosen ? existingChosen.chosenOption.split(", ").filter(opt => opt) : [];
+
+				if (existingCriteria.customOption) {
+					updatedOptions = updatedOptions.filter(opt => opt !== existingCriteria.customOption);
+				}
+
+				if (value.trim() !== "" && existingChosen?.chosenOption.includes(existingCriteria.customOption || "")) {
+					updatedOptions.push(value);
+				}
+			}
+
+			if (updatedOptions.length > 0) {
+				updatedCriteria.push({ criteria, chosenOption: updatedOptions.join(", ") });
+			}
+
+			return updatedCriteria;
+		});
+	};
+
+	const handleAddCriteria = (index: number) => {
+		const criteriaToAdd = suggestedCriteria[index];
+
+		if (chosenCriteria.some((c) => c.criteria === criteriaToAdd.criteria)) {
+			setSuggestedCriteria((prev) => prev.filter((_, i) => i !== index));
+			return;
+		}
+
+		setCriteriaList((prev) => [
+			...prev,
+			{
+				criteria: criteriaToAdd.criteria,
+				optionList: criteriaToAdd.optionList,
+				customOption: "",
+			},
+		]);
+
+		setSuggestedCriteria((prev) => prev.filter((_, i) => i !== index));
+	}
+
+	const handleRemoveCriteria = (criteria: string) => {
+		setChosenCriteria((prev) => prev.filter((c) => c.criteria !== criteria));
+	}
+
+	const handleGetMoreCriteria = async () => {
+		setError(null);
+		setIsGettingMoreCriteria(true);
+		try {
+			const generalInfo = {
+				title: testTitle,
+				description: testDescription,
+				duration: testDuration + " minutes",
+				difficulty: testDifficulty,
+				maxNumberOfQuestions,
+			}
+
+			const input = {
+				generalInfo,
+				criteriaList: chosenCriteria,
+			}
+
+			const { data, error } = await criteria(input);
+
+			if (error) {
+				console.log("Error getting more criteria:", error);
+				setError("An error occurred while getting more criteria. Please try again later.");
+			}
+
+			if (data) {
+				const newCriteria = data.criteriaList.filter((c) => !criteriaList.some((cl) => cl.criteria === c.criteria));
+				setSuggestedCriteria((prev) => [...prev, ...newCriteria]);
+			}
+		} catch (error) {
+			console.log("Error getting more criteria:", error);
+			setError("An error occurred while getting more criteria. Please try again later.");
+		} finally {
+			setIsGettingMoreCriteria(false);
+		}
+	};
+
+	const handleAddCustomCriteria = async () => {
+		if (criteriaList.some((c) => c.criteria === customCriteria)) {
+			setCustomCriteria("");
+			return;
+		}
+
+		setCriteriaList((prev) => [...prev, { criteria: customCriteria, optionList: [], customOption: "" }]);
+		setCustomCriteria("");
+	};
+
 	const handleAddGeneratedQuestion = (index: number) => {
 		const questionToAdd = generatedQuestions[index];
 
 		setQuestionList([
 			...questionList,
 			{
-				text: questionToAdd.content,
-				options: ["Option 1"],
-				correctAnswer: 0,
+				text: questionToAdd.questionContent,
+				options: questionToAdd.optionList.map((option) => option.optionContent),
+				correctAnswer: questionToAdd.optionList.findIndex((option) => option.isCorrect),
 				points: 10,
 			},
 		]);
 
 		setCooldowns((prev) => {
 			const updatedCooldowns = [...prev];
-			updatedCooldowns[index] = 2;
+			updatedCooldowns[index] = globalCooldownValue;
 			return updatedCooldowns;
 		});
+	};
+
+	const handleAddAllGeneratedQuestions = () => {
+		setQuestionList((prev) => [
+			...prev,
+			...generatedQuestions.map((question) => ({
+				text: question.questionContent,
+				options: question.optionList.map((option) => option.optionContent),
+				correctAnswer: question.optionList.findIndex((option) => option.isCorrect),
+				points: 10,
+			})),
+		]);
+
+		setAddAllCooldown(globalCooldownValue);
+
+		setIsGeneratedQuestionExpanded(true);
 	};
 
 	React.useEffect(() => {
@@ -156,72 +448,56 @@ const CreateNewTest = () => {
 			setCooldowns((prevCooldowns) =>
 				prevCooldowns.map((time) => (time > 0 ? time - 1 : 0))
 			);
+
+			setAddAllCooldown((prev) => (prev > 0 ? prev - 1 : 0));
 		}, 1000);
 
 		return () => clearInterval(interval);
 	}, []);
 
-	const handleDeleteQuestion = (index: number) => {
-		const updatedQuestions = questionList.filter((_, i) => i !== index);
-		setQuestionList(updatedQuestions);
+	const handleMaxNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const maxLimit = 20;
+		const value = parseInt(e.target.value) || 0;
+		setMaxNumberOfQuestions(value > maxLimit ? maxLimit : value);
 	};
 
 	const handleGenerateClick = async (): Promise<void> => {
 		setLoading(true);
 		setError(null);
 		try {
-			const prompt = (document.querySelector("#prompt") as HTMLTextAreaElement).value;
-
-			const response = await fetchquestion({ question: prompt }).unwrap();
-			const { answer } = response;
-
-			const questions = [];
-			const lines = answer.split("\n");
-
-			let currentQuestion = null;
-
-			for (const line of lines) {
-				const trimmedLine = line.trim();
-
-				if (trimmedLine.startsWith("- Question:")) {
-					if (currentQuestion) {
-						questions.push(currentQuestion);
-					}
-					currentQuestion = {
-						content: trimmedLine.replace("- Question:", "").trim(),
-						description: "",
-						level: "",
-						reason: "",
-					};
-				} else if (trimmedLine.startsWith("+ Description:") && currentQuestion) {
-					currentQuestion.description = trimmedLine.replace("+ Description:", "").trim();
-				} else if (trimmedLine.startsWith("+ Level:") && currentQuestion) {
-					currentQuestion.level = trimmedLine.replace("+ Level:", "").trim();
-				} else if (trimmedLine.startsWith("+ Reason:") && currentQuestion) {
-					currentQuestion.reason = trimmedLine.replace("+ Reason:", "").trim();
-				} else if (trimmedLine === "" && currentQuestion) {
-					questions.push(currentQuestion);
-					currentQuestion = null;
-				}
+			const generalInfo = {
+				title: testTitle,
+				description: testDescription,
+				duration: testDuration + " minutes",
+				difficulty: testDifficulty,
+				maxNumberOfQuestions,
 			}
 
-			if (currentQuestion) {
-				questions.push(currentQuestion);
+			const input = {
+				generalInfo,
+				criteriaList: chosenCriteria,
 			}
 
-			setGeneratedQuestions(questions);
-			setCooldowns(new Array(questions.length).fill(0));
+			console.log("Input:", input);
+
+			const { data, error } = await generate(input);
+
+			console.log("Output:", data);
+
+			if (error) {
+				console.error("Error generating questions:", error);
+				setError("An error occurred while generating questions. Please try again later.");
+			}
+
+			if (data) {
+				setGeneratedQuestions(data.questionList);
+				setCooldowns(new Array(data.questionList.length).fill(0));
+			}
 		} catch (error) {
 			console.error("Error generating questions:", error);
 			setError("An error occurred while generating questions. Please try again later.");
 		} finally {
 			setLoading(false);
-		}
-	};
-
-	const handleGenerateKeyDown = (event: any) => {
-		if (event.key === 'Enter') {
-			handleGenerateClick();
 		}
 	};
 
@@ -295,7 +571,6 @@ const CreateNewTest = () => {
 									</div>
 								</div>
 
-
 								{/* Points */}
 								<div className="w-2/5 h-fit flex justify-end items-center">
 									<GradientBorderNotGood className="font-bold w-1/4 mr-2">
@@ -339,6 +614,10 @@ const CreateNewTest = () => {
 					{/* Header */}
 					<Box
 						sx={{
+							position: "sticky",
+							top: 0,
+							backgroundColor: "white",
+							zIndex: 10,
 							display: "flex",
 							justifyContent: "space-between",
 							alignItems: "center",
@@ -349,75 +628,179 @@ const CreateNewTest = () => {
 						<Typography variant="h6" component="div" fontWeight="bold">
 							Question Generator
 						</Typography>
-						<IconButton onClick={toggleDrawer(false)} size="small">
-							<CloseIcon />
-						</IconButton>
+						<div className="flex justify-end">
+							<div className="w-full flex items-center justify-end">
+								<div className="w-full flex items-center justify-end">
+									<span className="font-bold mr-1">Max:</span>
+									<GradientBorderNotGood className="font-bold w-1/4 h-fit mr-2">
+										<input
+											className="w-full h-fit"
+											type="number"
+											value={maxNumberOfQuestions}
+											onChange={handleMaxNumberChange}
+											min="1"
+											step="1"
+										/>
+									</GradientBorderNotGood>
+								</div>
+								<button className="bg-gradient-text from-blue-500 to-green-500 text-md font-bold text-white px-6 py-3 rounded-lg mr-5" onClick={handleGenerateClick} disabled={isLoading}>
+									{isLoading ? "Generating..." : "Generate"}
+								</button>
+							</div>
+
+							<IconButton onClick={toggleDrawer(false)} size="small">
+								<CloseIcon />
+							</IconButton>
+						</div>
 					</Box>
 
 					{/* Content */}
 					<Box sx={{ padding: "16px" }}>
-						<GradientBorderNotGood className="w-full h-fit">
-							<textarea
-								id="prompt"
-								className="w-full flex-grow bg-transparent border-none outline-none"
-								placeholder="Type your prompt here..."
-								value={question}
-								onChange={(e) => setQuestion(e.target.value)}
-								onKeyDown={() => handleGenerateKeyDown}
-							/>
-						</GradientBorderNotGood>
-
-						<div className="flex justify-end mt-4">
-							<button className="w-2/5 bg-gradient-text from-blue-500 to-green-500 text-md font-bold text-white px-6 py-3 rounded-lg" onClick={handleGenerateClick}>
-								Generate
-							</button>
-						</div>
-
-						<div className="mt-4 flex flex-col items-center justify-center">
-							{isLoading ? (
-								<CircularProgress />
-							) : (
-								<>
-									{error ? (
-										<div className="text-center text-red-500">{error}</div>
-									) : (
-										generatedQuestions.map((question, index) => (
-											<div
-												key={index}
-												className="w-full max-w-4xl mb-4 flex flex-col bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary space-y-4"
-											>
-												<div className="flex justify-between items-center">
-													<Typography variant="h6" fontWeight="bold">
-														Question {index + 1}
-													</Typography>
+						{error && <div className="text-center text-red-500 mt-2 mb-2">{error}</div>}
+						<Typography component="div" fontWeight="bold" className="flex items-center cursor-pointer mb-2" onClick={toggleCriteriaExpand}>
+							<span>Generation Criteria</span>
+							<ArrowForwardIosIcon sx={{ transform: isCriteriaExpanded ? 'rotate(90deg)' : 'none', fontSize: 15, marginLeft: 1 }} />
+						</Typography>
+						{isCriteriaExpanded && (
+							<div className="bg-white rounded-lg shadow-primary p-2 border-r border-b border-solid border-primary">
+								{criteriaList.length > 0 ? (
+									<>
+										{criteriaList.map((criteriaItem, index) => (
+											<div key={index} className="flex flex-col mb-4">
+												<GradientBorderNotGood className="w-full h-fit mb-2">
+													<div className="flex items-center justify-between">
+														<Typography variant="body1">{criteriaItem.criteria}</Typography>
+														<AutorenewIcon sx={{ fontSize: 20, cursor: 'pointer' }} onClick={() => handleRemoveCriteria(criteriaItem.criteria)} />
+													</div>
+												</GradientBorderNotGood>
+												<div className="grid grid-cols-4 gap-4">
+													{criteriaItem.optionList.map((option, optIndex) => (
+														<label key={optIndex} className="flex items-center rounded-lg hover:bg-gray-100 cursor-pointer">
+															<input
+																type="checkbox"
+																name={criteriaItem.criteria}
+																checked={chosenCriteria.some((c) => c.criteria === criteriaItem.criteria && c.chosenOption.split(", ").includes(option))}
+																onChange={(e) => handleCriteriaChange(criteriaItem.criteria, option, e.target.checked)}
+																className="h-4 w-4 border-primary focus:ring-primary accent-primary cursor-pointer"
+															/>
+															<Typography variant="body2" className="ml-2">{option}</Typography>
+														</label>
+													))}
+													<label className="flex items-center rounded-lg hover:bg-gray-100 cursor-pointer">
+														<input
+															type="checkbox"
+															name={criteriaItem.criteria}
+															checked={chosenCriteria.some((c) => c.criteria === criteriaItem.criteria && c.chosenOption.split(", ").includes(criteriaItem.customOption || ""))}
+															onChange={(e) => handleCriteriaChange(criteriaItem.criteria, criteriaItem.customOption || "", e.target.checked)}
+															className="h-4 w-4 border-primary focus:ring-primary accent-primary cursor-pointer"
+														/>
+														<input
+															type="text"
+															placeholder="Other"
+															className="ml-2 w-5/6 border p-1 rounded-md focus:outline-none"
+															value={criteriaItem.customOption || ""}
+															onChange={(e) => handleCustomOptionChange(criteriaItem.criteria, e.target.value)}
+														/>
+													</label>
+												</div>
+											</div>
+										))}
+										{suggestedCriteria.length > 0 ? (
+											<div className="flex flex-col items-start justify-center">
+												{suggestedCriteria.map((criteriaItem, index) => (
+													<span key={index} className="text-sm text-blue-700 cursor-pointer" onClick={() => handleAddCriteria(index)}>{criteriaItem.criteria}</span>
+												))}
+												<div className="flex items-center mt-2">
+													<span className="text-sm text-blue-700 mr-2">Other:</span>
+													<GradientBorderNotGood className="w-full h-fit">
+														<input
+															type="text"
+															value={customCriteria}
+															onChange={(e) => setCustomCriteria(e.target.value)}
+															className="w-full bg-transparent border-none outline-none"
+															placeholder="Enter custom criteria"
+														/>
+													</GradientBorderNotGood>
 													<button
-														className={`flex items-center rounded-lg px-4 py-2 text-white cursor-pointer ${cooldowns[index] > 0 ? "bg-gray-500" : "bg-[var(--primary-color)]"}`}
-														onClick={() => handleAddGeneratedQuestion(index)}
-														disabled={cooldowns[index] > 0}
+														className={`ml-2 flex items-center rounded-lg px-2 py-1 text-white cursor-pointer ${customCriteria ? "bg-[var(--primary-color)]" : "bg-gray-500"}`}
+														onClick={() => handleAddCustomCriteria()}
+														disabled={!customCriteria}
 													>
-														<AddIcon className="mr-2" /> Add
+														Add
 													</button>
 												</div>
-
-												<div className="italic text-black">{question.content}</div>
-
-												<Typography variant="body2" className="text-gray-500">
-													<span className="text-black">Description:</span> {question.description}
-												</Typography>
-
-												<Typography variant="body2" className="text-gray-500">
-													<span className="text-black">Level:</span> {question.level}
-												</Typography>
-
-												<Typography variant="body2" className="text-gray-500">
-													<span className="text-black">Reason:</span> {question.reason}
-												</Typography>
 											</div>
-										))
-									)}
-								</>
+										) : (
+											<div className="flex flex-col items-start justify-center">
+												<span className="text-sm text-blue-700 cursor-pointer" onClick={() => handleGetMoreCriteria()}>{isGettingMoreCriteria ? "Showing more..." : "I need more criteria"}</span>
+											</div>
+										)}
+									</>
+								) : (
+									<div className="text-center text-gray-500">
+										No criteria available for this test.
+									</div>
+								)}
+							</div>
+						)}
+						<Typography component="div" fontWeight="bold" className="flex justify-between items-center mt-4 mb-2">
+							<div className="cursor-pointer" onClick={toggleGeneratedQuestionExpand}>
+								<span>Generated Questions</span>
+								<ArrowForwardIosIcon sx={{ transform: isGeneratedQuestionExpanded ? 'rotate(90deg)' : 'none', fontSize: 15, marginLeft: 1 }} />
+							</div>
+							{generatedQuestions.length > 0 && (
+								<div className="flex justify-end font-normal">
+									<button
+										className={`flex items-center rounded-lg px-2 py-1 text-white cursor-pointer ${addAllCooldown > 0 ? "bg-gray-500" : "bg-[var(--primary-color)]"}`}
+										onClick={handleAddAllGeneratedQuestions}
+										disabled={addAllCooldown > 0}
+									>
+										<AddIcon className="mr-2" /> Add All
+									</button>
+								</div>
 							)}
-						</div>
+						</Typography>
+						{isGeneratedQuestionExpanded && (
+							<>
+								{generatedQuestions.length > 0 ? (
+									generatedQuestions.map((question, index) => (
+										<div key={index} className="bg-white rounded-lg shadow-primary p-2 border-r border-b border-solid border-primary mb-2">
+											<div className="flex flex-col mb-4">
+												<GradientBorderNotGood className="w-full h-fit mb-2">
+													<div className="flex items-center justify-between">
+														<Typography variant="body1">{question.questionContent}</Typography>
+														<IconButton disabled={cooldowns[index] > 0} onClick={() => handleAddGeneratedQuestion(index)}>
+															<AddIcon
+																sx={{ fontSize: 20, cursor: 'pointer' }}
+															/>
+															<Typography variant="body1">Add</Typography>
+														</IconButton>
+													</div>
+												</GradientBorderNotGood>
+												<div className="grid grid-cols-2 gap-4">
+													{question.optionList.map((option, optIndex) => (
+														<div key={optIndex} className="flex items-center rounded-lg">
+															<input
+																type="radio"
+																name={question.questionContent}
+																checked={option.isCorrect}
+																onChange={() => { }}
+																className="h-4 w-4 border-primary accent-primary"
+															/>
+															<Typography variant="body2" className="ml-2">{option.optionContent}</Typography>
+														</div>
+													))}
+												</div>
+											</div>
+										</div>
+									))
+								) : (
+									<div className="text-center text-gray-500">
+										No questions generated yet. Try adjusting your criteria and generating questions.
+									</div>
+								)}
+							</>
+						)}
 					</Box>
 				</Box>
 			</Drawer>

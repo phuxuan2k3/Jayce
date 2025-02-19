@@ -10,12 +10,41 @@ export type TestSubmissionParams = {
 	questions: Question[];
 }
 
-export type Prompt = {
-	question: string;
+export type GeneralInfo = {
+	title: string;
+	description: string;
+	duration: string;
+	difficulty: string;
+	maxNumberOfQuestions: number;
 }
 
-export type QuestionResponse = {
-	answer: string;
-	conversation_id: string;
-	question: string;
+export type CriteriaRequestFormat = {
+	criteria: string;
+	chosenOption: string;
+}
+
+export type CriteriaRequest = {
+	generalInfo: GeneralInfo;
+	criteriaList: CriteriaRequestFormat[];
+}
+
+export type CriteriaResponse = {
+	criteria: string;
+	optionList: string[];
+}
+
+export type OptionsRequest = {
+	generalInfo: GeneralInfo;
+	criteriaList: CriteriaRequestFormat[];
+	newCriteria: string;
+}
+
+export type OptionListResponseFormat = {
+	optionContent: string;
+	isCorrect: boolean;
+}
+
+export type GeneratedQuestionFormat = {
+	questionContent: string;
+	optionList: OptionListResponseFormat[];
 }

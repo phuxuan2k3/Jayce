@@ -55,6 +55,8 @@ export const grpcRefreshToken = (token: { safe_id?: string | undefined, refresh_
         const refreshTokenRequest = new bulbasaur.RefreshTokenRequest();
         const tokenInfo = new bulbasaur.TokenInfo({ safe_id: token.safe_id, refresh_token: token.refresh_token, access_token: token.access_token, role: token.role });
 
+        console.log('tokenInfo:', tokenInfo);
+
         refreshTokenRequest.token_info = tokenInfo;
 
         client.RefreshToken(refreshTokenRequest, null, (err: Error | null, response: bulbasaur.RefreshTokenResponse) => {

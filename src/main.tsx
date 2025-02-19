@@ -4,7 +4,8 @@ import "./assets/styles/index.css";
 import App from "./App.tsx";
 import { createTheme, StyledEngineProvider, ThemeProvider } from "@mui/material";
 import { Provider } from "react-redux";
-import store from "./app/store.ts";
+import store, { persistor } from "./app/store.ts";
+import { PersistGate } from 'redux-persist/integration/react';
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
@@ -21,15 +22,17 @@ const theme = createTheme({
 });
 
 createRoot(rootElement!).render(
-	<StrictMode>
+	// <StrictMode>
 		<GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
 			<StyledEngineProvider injectFirst>
 				<ThemeProvider theme={theme}>
 					<Provider store={store}>
-						<App />
+						<PersistGate loading={null} persistor={persistor}>
+							<App />
+						</PersistGate>
 					</Provider>
 				</ThemeProvider>
 			</StyledEngineProvider>
 		</GoogleOAuthProvider>
-	</StrictMode>
+	// </StrictMode>
 );

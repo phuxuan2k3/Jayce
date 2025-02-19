@@ -79,8 +79,8 @@ const TestListView = () => {
 					<div className="flex flex-col items-center">
 						<div className="w-4/6 flex flex-row justify-between font-semibold text-[var(--primary-color)] mb-4">
 							<span>Your test ({testData.length})</span>
-							<div className="h-full w-fit flex items-center" onClick={handleClickAdd}>
-								<div className="h-7 w-7 flex items-center justify-center rounded-lg cursor-pointer">
+							<div className="h-full w-fit flex items-center cursor-pointer" onClick={handleClickAdd}>
+								<div className="h-7 w-7 flex items-center justify-center rounded-lg">
 									<FontAwesomeIcon icon={faPlus} rotation={90} />
 								</div>
 

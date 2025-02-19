@@ -9,9 +9,11 @@ console.log('testBackendURL:', testBackendURL);
 
 const baseQuery = fetchBaseQuery({
     baseUrl: testBackendURL,
-    prepareHeaders: (headers, { getState }) => {
+    prepareHeaders: async (headers, { getState }) => {
         const tokens = selectTokens(getState() as RootState);
+        console.log("tokens in baseQuery: ", tokens)
         if (tokens?.access_token) {
+            console.log("token in baseQuery: ", tokens.access_token)
             headers.set('Authorization', `Bearer ${tokens.access_token}`);
         }
         headers.set('Content-Type', 'application/json');
@@ -45,6 +47,7 @@ const baseQueryWithReauth: BaseQueryFn<any, any, FetchBaseQueryError> = async (a
 
                     api.dispatch(setAuthState({ user: user, tokens: newTokens }));
                     
+                    console.log("Retrying request after token refresh");
                     result = await baseQuery(args, api, extraOptions); // Retry
                 } else {
                     api.dispatch(setAuthState({ user: null, tokens: null }));

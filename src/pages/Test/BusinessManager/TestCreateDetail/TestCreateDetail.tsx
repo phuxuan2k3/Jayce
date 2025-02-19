@@ -62,7 +62,7 @@ const TestListView = () => {
 				snackMessage: 'Test created successfully.',
 				snackSeverity: 'success',
 			});
-			navigate(paths.TEST.CREATENEWTEST, { state: { testID: data.testID } });
+			navigate(paths.TEST.CREATENEWTEST, { state: { testID: data.testID, testTitle: testName, testDescription: testDescription, testDifficulty: testDifficulty, testDuration: testDuration } });
 		}
 
 	}, [isSuccess, data, errorMessage]);
