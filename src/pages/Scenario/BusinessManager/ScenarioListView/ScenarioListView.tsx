@@ -11,6 +11,7 @@ import DialogActions from '@mui/material/DialogActions';
 // import IconButton from '@mui/material/IconButton';
 // import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from "react-router-dom";
+import { grpcListScenario } from "../../../../features/grpcScenario/grpcScenario";
 // import { useEffect, useState } from "react";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -42,7 +43,7 @@ const scenarioData = [
 const ScenarioListView = () => {
     const [open, setOpen] = React.useState(false);
     const [selectedScenario, setSelectedScenario] = React.useState<typeof scenarioData[0] | null>(null);
-    const [scenarios, setScenarios] = React.useState(scenarioData);
+    const [scenarios, setScenarios] = React.useState<any[]>([]);
     const navigate = useNavigate();
 
     const handleGoToCreateScenario = () => {
@@ -73,7 +74,19 @@ const ScenarioListView = () => {
         }
         handleCloseDialog();
     };
-
+    React.useEffect(() => {
+        async function fetchData() {
+          try {
+            // Giả sử BM có ID là 123 (thay đổi theo dữ liệu thực tế)
+            const response = await grpcListScenario([1], 0, 10);
+            const data = response.toObject();
+            setScenarios(data.scenario || []);
+          } catch (err) {
+            console.error("Error fetching scenarios:", err);
+          }
+        }
+        fetchData();
+      }, []);
     return (
         <>
             <div className="w-full flex-grow flex flex-col items-center px-4 font-arya">
@@ -169,3 +182,6 @@ const ScenarioListView = () => {
 }
 
 export default ScenarioListView
+
+
+

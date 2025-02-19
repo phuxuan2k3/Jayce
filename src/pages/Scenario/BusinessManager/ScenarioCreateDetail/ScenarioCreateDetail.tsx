@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useNavigate } from "react-router-dom";
+import { grpcCreateScenario } from '../../../../features/grpcScenario/grpcScenario';
 
 const ScenarioCreateDetail = () => {
     const navigate = useNavigate();
@@ -16,9 +17,16 @@ const ScenarioCreateDetail = () => {
 
     const handleNext = async () => {
         try {
-            navigate("/scenario/create/question", { state: { testDetails: scenarioDetails } });
-        } catch (err) {
-            console.error("Failed to create test detail:", err);
+            const response = await grpcCreateScenario(
+                scenarioDetails.title,
+                scenarioDetails.description,
+                [], 
+                []  
+            );
+            const data = response.toObject();
+            navigate("/scenario/create/question", { state: { testDetails: scenarioDetails, scenarioId: data.scenario?.id } });
+        } catch (err: any) {
+            console.error("Failed to create scenario:", err);
         }
     };
 

@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import GradientBorderNotGood from "../../../../components/GradientBorder.notgood";
+import { grpcUpdateScenario } from "../../../../features/grpcScenario/grpcScenario";
 // import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 // import AddIcon from '@mui/icons-material/Add';
 // import Box from '@mui/material/Box';
@@ -28,7 +29,14 @@ const questionData = [
 
 const ScenarioCreateQuestion = () => {
     // const location = useLocation();
-    const [questionList, setQuestionList] = React.useState(questionData);
+    const [questionList, setQuestionList] = React.useState<any[]>([]);
+    const location = useLocation();
+    // Giả sử location.state chứa scenarioDetails
+    const scenarioDetails: any = location.state?.scenarioDetails || {
+      id: 0,
+      title: "",
+      description: "",
+    };
     // const [open, setOpen] = React.useState(false);
     // const [question, setQuestion] = React.useState("");
     // const [generatedQuestions, setGeneratedQuestions] = React.useState<{ content: string; description: string; level: string; reason: string }[]>([]);
@@ -53,12 +61,22 @@ const ScenarioCreateQuestion = () => {
         setSubmmitError(null);
         setIsCreating(true);
         try {
-            // await createnewtest({
-            //     testId: testID,
-            //     questionList: questionList,
-            // }).unwrap();
+            // Map questionList thành mảng ScenarioQuestion theo định dạng của file proto
+            // Giả sử ScenarioQuestion có 3 trường: criteria, hint, content
+           
+            
+            // Gọi API cập nhật scenario; giả sử field_ids là mảng rỗng nếu không có thông tin
+            await grpcUpdateScenario(
+              scenarioDetails.id,
+              scenarioDetails.title,
+              scenarioDetails.description,
+              [],
+              questionList
+            );
+            
+            // Sau khi update thành công, chuyển hướng đến trang danh sách scenario
             navigate("/scenario/list");
-        } catch (error) {
+          }catch (error) {
             setSubmmitError("An error occurred while creating the scenario. Please try again later.");
             console.error("Lỗi khi tạo bộ câu hỏi tình huống:", error);
         } finally {
