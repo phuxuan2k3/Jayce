@@ -4,7 +4,7 @@ import { backendEndpoint } from '../../app/env';
 import { AuthStateResponse, clearAuthState, selectTokens } from '../../global/authSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { grpcSignUp, grpcSignIn, grpcSignInGoogle, grpcMe, grpcRefreshToken } from './grpcClient';
-import { bulbasaur } from './protos/bulbasaur';
+import { bulbasaur } from './api/bulbasaur';
 
 interface LoginRequest {
 	username: string;
@@ -72,6 +72,7 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 						refresh_token: response.token_info.refresh_token,
 						role: response.token_info.role,
 						safe_id: response.token_info.safe_id,
+						user_id: response.token_info.user_id,
 					}
 				}
 			};
@@ -105,14 +106,15 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 						refresh_token: response.token_info.refresh_token,
 						role: response.token_info.role,
 						safe_id: response.token_info.safe_id,
+						user_id: response.token_info.user_id,
 					}
 				}
 			};
 		}
 
 		if (url === 'auth/refresh') {
-			const token = args.body.token as { safe_id?: string | undefined, refresh_token?: string, access_token?: string, role?: bulbasaur.Role | undefined };
-			const response = await grpcRefreshToken({ safe_id: token.safe_id, refresh_token: token.refresh_token, access_token: token.access_token, role: token.role });
+			const token = args.body.token as { safe_id?: string | undefined, refresh_token?: string, access_token?: string, role?: bulbasaur.Role | undefined, user_id?: number | undefined };
+			const response = await grpcRefreshToken({ safe_id: token.safe_id, refresh_token: token.refresh_token, access_token: token.access_token, role: token.role, user_id: token.user_id });
 
 			const meResponse = await grpcMe(response.token_info.access_token);
 
@@ -128,6 +130,7 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 						refresh_token: response.token_info.refresh_token,
 						role: response.token_info.role,
 						safe_id: response.token_info.safe_id,
+						user_id: response.token_info.user_id,
 					}
 				}
 			};
@@ -173,7 +176,7 @@ const authApi = createApi({
 			}),
 		}),
 
-		refresh: builder.mutation<AuthStateResponse, { token: { safe_id?: string | undefined, refresh_token?: string | undefined, access_token?: string | undefined, role?: bulbasaur.Role | undefined } }>({
+		refresh: builder.mutation<AuthStateResponse, { token: { safe_id?: string | undefined, refresh_token?: string | undefined, access_token?: string | undefined, role?: bulbasaur.Role | undefined, user_id?: number | undefined } }>({
 			query: (token) => ({
 				url: 'auth/refresh',
 				method: 'POST',

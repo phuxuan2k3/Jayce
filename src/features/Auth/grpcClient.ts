@@ -1,4 +1,4 @@
-import { bulbasaur } from './protos/bulbasaur';
+import { bulbasaur } from './api/bulbasaur';
 import * as empty from './google/protobuf/empty';
 import { Metadata } from 'grpc-web';
 import { backendEndpoint } from "../../app/env"
@@ -50,10 +50,10 @@ export const grpcSignIn = (username: string, password: string): Promise<bulbasau
     });
 };
 
-export const grpcRefreshToken = (token: { safe_id?: string | undefined, refresh_token?: string | undefined, access_token?: string | undefined, role?: bulbasaur.Role | undefined }): Promise<bulbasaur.RefreshTokenResponse> => {
+export const grpcRefreshToken = (token: { safe_id?: string | undefined, refresh_token?: string | undefined, access_token?: string | undefined, role?: bulbasaur.Role | undefined, user_id?: number | undefined }): Promise<bulbasaur.RefreshTokenResponse> => {
     return new Promise((resolve, reject) => {
         const refreshTokenRequest = new bulbasaur.RefreshTokenRequest();
-        const tokenInfo = new bulbasaur.TokenInfo({ safe_id: token.safe_id, refresh_token: token.refresh_token, access_token: token.access_token, role: token.role });
+        const tokenInfo = new bulbasaur.TokenInfo({ safe_id: token.safe_id, refresh_token: token.refresh_token, access_token: token.access_token, role: token.role, user_id: token.user_id });
 
         console.log('tokenInfo:', tokenInfo);
 

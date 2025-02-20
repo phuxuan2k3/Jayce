@@ -35,6 +35,7 @@ const baseQueryWithReauth: BaseQueryFn<any, any, FetchBaseQueryError> = async (a
                     refresh_token: tokens.refresh_token,
                     access_token: tokens.access_token,
                     role: tokens.role,
+                    user_id: tokens.user_id,
                 });
 
                 if (refreshResult?.token_info) {
@@ -43,6 +44,7 @@ const baseQueryWithReauth: BaseQueryFn<any, any, FetchBaseQueryError> = async (a
                         refresh_token: refreshResult.token_info.refresh_token,
                         role: refreshResult.token_info.role,
                         safe_id: refreshResult.token_info.safe_id,
+                        user_id: refreshResult.token_info.user_id,
                     };
 
                     api.dispatch(setAuthState({ user: user, tokens: newTokens }));
