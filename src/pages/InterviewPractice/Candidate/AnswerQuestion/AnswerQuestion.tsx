@@ -86,15 +86,15 @@ const AnswerQuestion = () => {
         setIsListening(false);
         SpeechRecognition.stopListening();
         if (selectedQuestion) {
-          setAnswers((prev) => ({
-            ...prev,
-            [selectedQuestion.id]: (prev[selectedQuestion.id] || "") + " " + transcript,
-          }));
+            setAnswers((prev) => ({
+                ...prev,
+                [selectedQuestion.id]: (prev[selectedQuestion.id] || "") + " " + transcript,
+            }));
         }
         setIsProcessing(false);
-      };
-    
-    
+    };
+
+
     // const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
 
     // if (!SpeechRecognition) {
@@ -136,7 +136,7 @@ const AnswerQuestion = () => {
     // };
     const handleAnswerChange = (questionId: number, value: string) => {
         setAnswers((prev) => ({ ...prev, [questionId]: value }));
-      };
+    };
 
     return (
         <>
@@ -192,15 +192,15 @@ const AnswerQuestion = () => {
                     <span className="text-xl font-bold">Transcribe</span>
 
                     <div>
-                    <textarea
-              className="w-full h-40 p-2 border-2 border-gray-400 rounded-lg mt-4"
-              placeholder="Your answer for the selected question..."
-              value={selectedQuestion ? (answers[selectedQuestion.id] || "") : ""}
-              onChange={(e) =>
-                selectedQuestion && handleAnswerChange(selectedQuestion.id, e.target.value)
-              }
-              disabled={isListening}
-            ></textarea>
+                        <textarea
+                            className="w-full h-40 p-2 border-2 border-gray-400 rounded-lg mt-4"
+                            placeholder="Your answer for the selected question..."
+                            value={selectedQuestion ? (answers[selectedQuestion.id] || "") : ""}
+                            onChange={(e) =>
+                                selectedQuestion && handleAnswerChange(selectedQuestion.id, e.target.value)
+                            }
+                            disabled={isListening}
+                        ></textarea>
                     </div>
 
                     <div className="flex justify-between mt-12">

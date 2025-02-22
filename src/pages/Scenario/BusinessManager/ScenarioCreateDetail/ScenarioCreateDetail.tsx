@@ -27,7 +27,7 @@ const ScenarioCreateDetail = () => {
             navigate("/scenario/create/question", { state: { testDetails: scenarioDetails, scenarioId: data.scenario?.id } });
         } catch (err: any) {
             console.error("Failed to create scenario:", err);
-        }
+        }   
     };
 
     const handleCancel = () => {

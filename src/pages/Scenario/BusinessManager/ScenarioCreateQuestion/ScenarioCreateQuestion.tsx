@@ -14,18 +14,18 @@ import { grpcUpdateScenario } from "../../../../features/grpcScenario/grpcScenar
 // import CloseIcon from "@mui/icons-material/Close";
 // import CircularProgress from '@mui/material/CircularProgress';
 
-const questionData = [
-    {
-        question: "What is the first step in the design process?",
-        hints: "Think about the problem you are trying to solve",
-        criteria: "Identify the problem",
-    },
-    {
-        question: "What is the first step in the design process?",
-        hints: "Think about the problem you are trying to solve",
-        criteria: "Identify the problem",
-    },
-];
+// const questionData = [
+//     {
+//         question: "What is the first step in the design process?",
+//         hints: "Think about the problem you are trying to solve",
+//         criteria: "Identify the problem",
+//     },
+//     {
+//         question: "What is the first step in the design process?",
+//         hints: "Think about the problem you are trying to solve",
+//         criteria: "Identify the problem",
+//     },
+// ];
 
 const ScenarioCreateQuestion = () => {
     // const location = useLocation();

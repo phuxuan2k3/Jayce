@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useNavigate } from "react-router-dom";
+import { grpcUpdateScenario } from '../../../../features/grpcScenario/grpcScenario';
 
 const scenarioData = {
     title: "SQL Query For Beginners",
@@ -18,8 +19,15 @@ const ScenarioEditDetail = () => {
 
     const handleNext = async () => {
         try {
+            await grpcUpdateScenario(
+              scenarioDetails.id,
+              scenarioDetails.title,
+              scenarioDetails.description,
+              [],
+              []
+            );
             navigate("/scenario/edit/question", { state: { testDetails: scenarioDetails } });
-        } catch (err) {
+          } catch (err) {
             console.error("Failed to edit test detail:", err);
         }
     };
