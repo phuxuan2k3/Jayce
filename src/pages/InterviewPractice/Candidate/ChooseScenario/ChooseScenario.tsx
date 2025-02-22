@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaFilter, FaStar, FaUser, FaCalendarAlt, FaArrowRight } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { grpcChronoListScenario } from "../../../../features/grpcScenario/grpcScenario";
 
 const ChooseScenario = () => {
     const navigate = useNavigate();
@@ -9,9 +10,9 @@ const ChooseScenario = () => {
     const [ratings, setRatings] = useState({ from: "0", to: "5" });
     const [dates, setDates] = useState({ from: "", to: new Date().toISOString().split("T")[0] })
     const location = useLocation();
-    const field = location.state?.field;
-
-    const scenarios = [
+    // const field = location.state?.field ;
+    const field="Test"
+    const scenarioData = [
         {
             name: "SQL Query",
             content: "A SQL Query interview is a technical assessment designed to evaluate a candidate's knowledge and skills in Structured Query Language (SQL). This language is used to interact with relational databases, allowing users to retrieve, manipulate, and manage data efficiently.",
@@ -37,11 +38,23 @@ const ChooseScenario = () => {
             finished: true
         }
     ];
-
+    const [scenarios,setScenarios]= useState<any[]>(scenarioData);
     const handlePractice = (scenario: any) => {
         navigate("/ipractice/detail", { state: { scenario, field} });
     };
-
+    useEffect(() => {
+        async function fetchScenarios() {
+          try {
+            const response = await grpcChronoListScenario([123], 0, 10, undefined, undefined, undefined, undefined);
+            const data = response.toObject();
+            setScenarios(data.scenario || []);
+          } catch (err) {
+            console.error("Error fetching scenarios:", err);
+          } 
+        }
+        fetchScenarios();
+      },[]);
+    
     return (
         <>
             <div className="mx-12 font-arya">

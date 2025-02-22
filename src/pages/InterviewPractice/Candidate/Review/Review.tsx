@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaArrowRight, FaChevronRight, FaPaperPlane, FaRegUser } from "react-icons/fa";
 import { Sparkles } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { grpcGetAttempt } from "../../../../features/grpcScenario/grpcScenario";
 const Review = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -10,24 +11,11 @@ const Review = () => {
     const attempt = location.state?.attempt;
     const [selectedTab, setSelectedTab] = useState<"questions" | "history">("questions");
     const content = "SQL query interview scenarios can vary widely in complexity, but here are some common types you might encounter Basic SQL Queries   Simple Data RetrievalWrite a query to retrieve specific columns from a table. Find the number of rows in a table. Retrieve unique values from a column. Data Filtering: Select rows based on specific conditions(e.g., age > 30, salary < 50000). Sort data in ascending or descending order. Limit the number of rows returned. Data Aggregation: Calculate the sum, average, minimum, or maximum of a column. Count the number of rows that meet a certain criteria. Group data by a specific column and perform calculations on each group.";
-    const questions = [
-        {
-            question: "What is SQL and what is it used for?",
-            content: "SQL (Structured Query Language) is used for managing databases.",
-            hint: "Think about relational databases."
-        },
-        {
-            question: "What are the basic SQL commands?",
-            content: "SELECT, INSERT, UPDATE, DELETE are common SQL commands.",
-            hint: "CRUD operations are involved."
-        },
-        {
-            question: "What is the difference between a primary key and a foreign key?",
-            content: "Primary key uniquely identifies a record, foreign key references a primary key.",
-            hint: "Consider relationships between tables."
-        }
-    ];
-
+    const questions = location.state?.questions;
+    const [selectedQuestion, setSelectedQuestion] = useState<any>();
+    const [showHint, setShowHint] = useState(false);
+    const attemptId = location.state?.attempt;
+    const [attemptDetails, setAttemptDetails] = useState<any>(null);
     const history =
     {
         attempt: 1,
@@ -44,6 +32,24 @@ const Review = () => {
     const handleAnswer = () => {
         navigate("/ipractice/answer", { state: { scenario, field, questions } });
     };
+    const handleQuestionClick = (question: any) => {
+        setSelectedQuestion(question);
+        setShowHint(false);
+    };
+    useEffect(() => {
+        async function fetchAttempt() {
+            if (attemptId) {
+                try {
+                    const response = await grpcGetAttempt(attemptId);
+                    const data = response.toObject();
+                    setAttemptDetails(data.attempt);
+                } catch (err) {
+                    console.error("Error fetching attempt details:", err);
+                }
+            }
+        }
+        fetchAttempt();
+    }, []);
     return (
         <>
 
@@ -64,8 +70,23 @@ const Review = () => {
                     </div>
                     <hr className=" border-gray-400 mb-4 mt-2" />
                     <div className="max-h-96 overflow-y-auto">
-                        {content}
+                        <span className="text-2xl font-bold text-[var(--primary-color)] flex gap-2 items-center">
+                            Question {selectedQuestion ? questions.findIndex(q => q === selectedQuestion) + 1 : ""}
+                        </span>
+                        <div>{selectedQuestion ? selectedQuestion.content : content}</div>
                     </div>
+                    <hr className=" border-gray-400 my-4" />
+                    <span className="cursor-pointer text-[var(--primary-color)]" onClick={() => setShowHint(!showHint)}>Hint</span>
+                    {showHint && <p className="mt-2">{selectedQuestion ? selectedQuestion.hint : "There is no hint."}</p>}
+                    <hr className=" border-gray-400 my-4" />
+                    <div className="max-h-96 overflow-y-auto">
+                        <span className="text-2xl font-bold text-[var(--primary-color)] flex gap-2 items-center">
+                            Your answer
+                        </span>
+                        <div>{selectedQuestion ? selectedQuestion.content : content}</div>
+                    </div>
+
+
                     <hr className=" border-gray-400 my-4" />
                     <span className="text-2xl font-bold text-[var(--primary-color)] flex gap-3">
                         <Sparkles />  Overall assessment
@@ -129,7 +150,7 @@ const Review = () => {
                             <ul className="w-full">
                                 {questions.map((item, index) => (
                                     <div key="index">
-                                        <li key={index} className="flex justify-between items-center py-3  text-[var(--primary-color)] hover:text-red-600  cursor-pointer">
+                                        <li key={index} onClick={() => handleQuestionClick(item)} className="flex justify-between items-center py-3  text-[var(--primary-color)] hover:text-red-600  cursor-pointer">
                                             <span className="font-semibold truncate">{index + 1}. <span className="font-bold">{item.content}</span></span>
                                             <FaChevronRight />
                                         </li>

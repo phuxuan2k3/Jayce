@@ -12,6 +12,8 @@ import DialogActions from '@mui/material/DialogActions';
 // import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from "react-router-dom";
 import { grpcListScenario } from "../../../../features/grpcScenario/grpcScenario";
+import { useAppSelector } from "../../../../app/hooks";
+import { selectUserInfo } from "../../../../global/authSlice";
 // import { useEffect, useState } from "react";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -76,8 +78,7 @@ const ScenarioListView = () => {
     };
     React.useEffect(() => {
         async function fetchData() {
-          try {
-            // Giả sử BM có ID là 123 (thay đổi theo dữ liệu thực tế)
+          try { 
             const response = await grpcListScenario([1], 0, 10);
             const data = response.toObject();
             setScenarios(data.scenario || []);

@@ -12,33 +12,40 @@ const ScenarioDetail = () => {
     const content = "SQL query interview scenarios can vary widely in complexity, but here are some common types you might encounter Basic SQL Queries   Simple Data RetrievalWrite a query to retrieve specific columns from a table. Find the number of rows in a table. Retrieve unique values from a column. Data Filtering: Select rows based on specific conditions(e.g., age > 30, salary < 50000). Sort data in ascending or descending order. Limit the number of rows returned. Data Aggregation: Calculate the sum, average, minimum, or maximum of a column. Count the number of rows that meet a certain criteria. Group data by a specific column and perform calculations on each group.";
     const questions = [
         {
+            id:1,
             question: "What is SQL and what is it used for?",
             content: "SQL (Structured Query Language) is used for managing databases.",
             hint: "Think about relational databases."
         },
         {
+            id:2,
             question: "What are the basic SQL commands?",
             content: "What are the basic SQL commands?",
             hint: "CRUD operations are involved."
         },
         {
+            id:3,
             question: "What is SQL and what is it used for?",
             content: "SQL (Structured Query Language) is used for managing databases.",
             hint: "Think about relational databases."
         }, {
+            id:4,
             question: "What is SQL and what is it used for?",
             content: "SQL (Structured Query Language) is used for managing databases.",
             hint: "Think about relational databases."
         }, {
+            id:5,
             question: "What is SQL and what is it used for?",
             content: "SQL (Structured Query Language) is used for managing databases.",
             hint: "Think about relational databases."
         }, {
+            id:6,
             question: "What is SQL and what is it used for?",
             content: "SQL (Structured Query Language) is used for managing databases.",
             hint: "Think about relational databases."
         },
         {
+            id:7,
             question: "What is the difference between a primary key and a foreign key?",
             content: "Primary key uniquely identifies a record, foreign key references a primary key.",
             hint: "Consider relationships between tables."

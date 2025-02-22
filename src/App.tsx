@@ -19,7 +19,7 @@ function App() {
 	// 		}));
 	// 		console.log('authState:', authState.tokens);
 
-	// 		refresh({ token: { safe_id: authState.tokens.safe_id, refresh_token: authState.tokens.refresh_token, access_token: authState.tokens.access_token, role: authState.tokens.role, user_id: authState.tokens.user_id } });
+	// 		refresh({ token: { safe_id: authState.tokens.safe_id, refresh_token: authState.tokens.refresh_token, access_token: authState.tokens.access_token, role: authState.tokens.role } });
 	// 	}
 	// 	else {
 	// 		dispatch(clearAuthState());

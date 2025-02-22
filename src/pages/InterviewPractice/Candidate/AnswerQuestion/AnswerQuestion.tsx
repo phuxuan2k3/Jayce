@@ -2,8 +2,10 @@ import { useState } from "react";
 import { FaChevronRight, FaKeyboard, FaMicrophone, FaTrash, FaVolumeUp, FaStopCircle } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
+import { grpcSubmitAnswer } from "../../../../features/grpcScenario/grpcScenario";
 // import { SpeechRecognitionEvent, SpeechRecognitionErrorEvent } from "./interfaces";
 type Question = {
+    id: number;
     content: string;
     hint: string;
     question: string;
@@ -22,18 +24,31 @@ const AnswerQuestion = () => {
         setShowConfirmDialog(true);
     };
 
-    const confirmSubmit = () => {
+    const confirmSubmit = async () => {
         setShowConfirmDialog(false);
-        alert("Bài làm đã được nộp!");
-        navigate("/ipractice/review", { state: { scenario, field, attempt } });
+        // Chuyển đổi answers thành mảng các đối tượng { question_id, answer }
+        const answerArray = Object.keys(answers).map((key) => ({
+            question_id: Number(key),
+            answer: answers[Number(key)]
+        }));
+        try {
+            await grpcSubmitAnswer(scenario.id, answerArray);
+            alert("Your answers have been submitted!");
+            navigate("/ipractice/review", { state: { scenario, field, answers, questions } });
+        } catch (err) {
+            console.error("Error submitting answers:", err);
+            alert("Error submitting your answers. Please try again.");
+        }
     };
 
     const handleQuestionClick = (question: Question) => {
         setSelectedQuestion(question);
         setShowHint(false);
+
+
     };
 
-    const [answer, setAnswer] = useState<string>("");
+    const [answers, setAnswers] = useState<string[]>(questions.map(() => ""));
     const [isSpeechSupported, setIsSpeechSupported] = useState<boolean>(true);
     const [isListening, setIsListening] = useState<boolean>(false);
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
@@ -51,20 +66,35 @@ const AnswerQuestion = () => {
         SpeechRecognition.startListening({ continuous: true, language: "en-US" });
     };
 
+
+    // VinhHung
+    // const stopListening = () => {
+    //     // setIsProcessing(true);
+    //     // setTimeout(() => {
+    //     //     setIsListening(false);
+    //     //     SpeechRecognition.stopListening();
+    //     //     setAnswer((prevAnswer) => prevAnswer + " " + transcript);
+    //     //     setIsProcessing(false);
+    //     // }, 4000);
+    //     setIsListening(false);
+    //     SpeechRecognition.stopListening();
+    //     setAnswers((prevAnswer) => prevAnswer + " " + transcript);
+    //     setIsProcessing(false);
+    // };
+
     const stopListening = () => {
-        // setIsProcessing(true);
-        // setTimeout(() => {
-        //     setIsListening(false);
-        //     SpeechRecognition.stopListening();
-        //     setAnswer((prevAnswer) => prevAnswer + " " + transcript);
-        //     setIsProcessing(false);
-        // }, 4000);
         setIsListening(false);
         SpeechRecognition.stopListening();
-        setAnswer((prevAnswer) => prevAnswer + " " + transcript);
+        if (selectedQuestion) {
+          setAnswers((prev) => ({
+            ...prev,
+            [selectedQuestion.id]: (prev[selectedQuestion.id] || "") + " " + transcript,
+          }));
+        }
         setIsProcessing(false);
-    };
-
+      };
+    
+    
     // const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
 
     // if (!SpeechRecognition) {
@@ -101,9 +131,12 @@ const AnswerQuestion = () => {
     //     setIsListening(false);
     // };
 
-    const handleAnswerChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setAnswer(event.target.value);
-    };
+    // const handleAnswerChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    //     setAnswer(event.target.value);
+    // };
+    const handleAnswerChange = (questionId: number, value: string) => {
+        setAnswers((prev) => ({ ...prev, [questionId]: value }));
+      };
 
     return (
         <>
@@ -159,7 +192,15 @@ const AnswerQuestion = () => {
                     <span className="text-xl font-bold">Transcribe</span>
 
                     <div>
-                        <textarea className="w-full h-40 p-2 border-2 border-gray-400 rounded-lg mt-4" placeholder="Your answer" value={answer} onChange={handleAnswerChange} disabled={isListening}></textarea>
+                    <textarea
+              className="w-full h-40 p-2 border-2 border-gray-400 rounded-lg mt-4"
+              placeholder="Your answer for the selected question..."
+              value={selectedQuestion ? (answers[selectedQuestion.id] || "") : ""}
+              onChange={(e) =>
+                selectedQuestion && handleAnswerChange(selectedQuestion.id, e.target.value)
+              }
+              disabled={isListening}
+            ></textarea>
                     </div>
 
                     <div className="flex justify-between mt-12">
