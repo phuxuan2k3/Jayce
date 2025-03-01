@@ -18,7 +18,7 @@ import { useCreatenewtestMutation } from "./createquestion.test-api";
 import { useCriteriaMutation, useGenerateMutation } from "./questionai.test-api";
 import { Question } from "./types";
 import { paths } from "../../../../router/path";
-
+import { GenerateQuestion } from "./component/generateQuestion";
 // const initGeneralInfo = {
 // 	title: "Computer Network Test",
 // 	description: "This test is designed to assess candidates's knowledge of computer networks.",
@@ -503,6 +503,7 @@ const CreateNewTest = () => {
 
 	return (
 		<>
+			<GenerateQuestion />
 			<div className="w-full flex-grow flex flex-col items-center px-4">
 				<div className="w-full flex-1 flex-col mt-6 text-center">
 					<div className="w-full text-4xl font-bold">Create your test</div>
@@ -609,10 +610,10 @@ const CreateNewTest = () => {
 			<Button onClick={toggleDrawer(true)} className="fixed bottom-4 w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center shadow-lg">
 				<TipsAndUpdatesIcon />
 			</Button>
-			<Drawer open={open} onClose={toggleDrawer(false)}>
+			<Drawer open={open} onClose={toggleDrawer(false)}  >
 				<Box sx={{ width: 750, position: "relative" }} role="presentation">
 					{/* Header */}
-					<Box
+					{/* <Box
 						sx={{
 							position: "sticky",
 							top: 0,
@@ -652,10 +653,11 @@ const CreateNewTest = () => {
 								<CloseIcon />
 							</IconButton>
 						</div>
-					</Box>
+					</Box> */}
+
 
 					{/* Content */}
-					<Box sx={{ padding: "16px" }}>
+					{/* <Box sx={{ padding: "16px" }}>
 						{error && <div className="text-center text-red-500 mt-2 mb-2">{error}</div>}
 						<Typography component="div" fontWeight="bold" className="flex items-center cursor-pointer mb-2" onClick={toggleCriteriaExpand}>
 							<span>Generation Criteria</span>
@@ -801,7 +803,7 @@ const CreateNewTest = () => {
 								)}
 							</>
 						)}
-					</Box>
+					</Box> */}
 				</Box>
 			</Drawer>
 		</>

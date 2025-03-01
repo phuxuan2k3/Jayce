@@ -123,7 +123,7 @@ const ScenarioListView = () => {
                                             {scenario.rating} <FontAwesomeIcon icon={faStar} />
                                         </span>
                                         <span>
-                                            {scenario.totalAttemps.toLocaleString('de-DE')} <FontAwesomeIcon icon={faUser} />
+                                            {/* {scenario.totalAttemps.toLocaleString('de-DE')} <FontAwesomeIcon icon={faUser} /> */}
                                         </span>
                                         <span>
                                             {scenario.createdAt} <FontAwesomeIcon icon={faCalendarDays} />

@@ -49,7 +49,13 @@ export const grpcCreateScenario = (
     request.description = description;
     request.field_ids = field_ids;
     request.questions = questions;
-    client.CreateScenario(request, null, (err: Error | null, response: ekko.CreateScenarioResponse) => {
+    const state = store.getState();
+    const token = state.auth.tokens;
+    // request.bm_ids = [token?.user_id||0];
+
+    const metadata: Metadata =  { Authorization: `Bearer ${token?.access_token}` } ;
+    console.log('create scenario',token)
+    client.CreateScenario(request, metadata, (err: Error | null, response: ekko.CreateScenarioResponse) => {
       if (err) {
         reject(err);
       } else {
