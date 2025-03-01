@@ -76,5 +76,11 @@
 			DETAIL:'/ipractice/detail',
 			ANSWER: '/ipractice/answer',
 			REVIEW: '/ipractice/review',
+		},
+		PROFILE: {
+			ROOT: '/profile',
+		},
+		PRICING: {
+			ROOT: '/pricing',
 		}
 	}

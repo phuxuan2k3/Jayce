@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { grpcUpdateScenario } from '../../../../features/grpcScenario/grpcScenario';
 
 const scenarioData = {
+    id: 1,
     title: "SQL Query For Beginners",
     description: "This a super good question set for the people who start to learn programming and database.",
 };

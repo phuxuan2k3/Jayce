@@ -12,8 +12,6 @@ import DialogActions from '@mui/material/DialogActions';
 // import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from "react-router-dom";
 import { grpcListScenario } from "../../../../features/grpcScenario/grpcScenario";
-import { useAppSelector } from "../../../../app/hooks";
-import { selectUserInfo } from "../../../../global/authSlice";
 // import { useEffect, useState } from "react";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({

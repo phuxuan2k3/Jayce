@@ -52,6 +52,70 @@ export default {
 				},
 			});
 		},
+		function ({ addComponents }) {
+			addComponents({
+				'.border-gradient': {
+					position: 'relative',
+					'&::after': {
+						content: '""',
+						position: 'absolute',
+						inset: 0,
+						border: '1px solid transparent',
+						borderImage: 'linear-gradient(to right, var(--primary-color), var(--secondary-color)) 1',
+						maskImage: 'linear-gradient(to right, #000 100%, transparent)',
+						WebkitMaskImage: 'linear-gradient(to right, #000 100%, transparent)',
+					},
+				},
+				'.border-t-gradient': {
+					position: 'relative',
+					'&::after': {
+						content: '""',
+						position: 'absolute',
+						top: 0,
+						left: 0,
+						right: 0,
+						height: '1px',
+						backgroundImage: 'linear-gradient(to right, var(--primary-color), var(--secondary-color))',
+					},
+				},
+				'.border-b-gradient': {
+					position: 'relative',
+					'&::after': {
+						content: '""',
+						position: 'absolute',
+						bottom: 0,
+						left: 0,
+						right: 0,
+						height: '1px',
+						backgroundImage: 'linear-gradient(to right, var(--primary-color), var(--secondary-color))',
+					},
+				},
+				'.border-l-gradient': {
+					position: 'relative',
+					'&::after': {
+						content: '""',
+						position: 'absolute',
+						top: 0,
+						bottom: 0,
+						left: 0,
+						width: '1px',
+						backgroundImage: 'linear-gradient(to bottom, var(--primary-color), var(--secondary-color))',
+					},
+				},
+				'.border-r-gradient': {
+					position: 'relative',
+					'&::after': {
+						content: '""',
+						position: 'absolute',
+						top: 0,
+						bottom: 0,
+						right: 0,
+						width: '1px',
+						backgroundImage: 'linear-gradient(to bottom, var(--primary-color), var(--secondary-color))',
+					},
+				},
+			});
+		},
 	],
 	important: true,
 	corePlugins: {

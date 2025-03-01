@@ -32,6 +32,9 @@ import ChooseScenario from "../pages/InterviewPractice/Candidate/ChooseScenario/
 import ScenarioDetail from "../pages/InterviewPractice/Candidate/Detail/Detail";
 import AnswerQuestion from "../pages/InterviewPractice/Candidate/AnswerQuestion/AnswerQuestion";
 import Review from "../pages/InterviewPractice/Candidate/Review/Review";
+import ProfileDashboard from "../pages/Profile/Candidate/ProfileDashboard";
+import ProfileLayout from "../pages/Profile/components/Layout";
+import PricingPage from "../pages/Profile/Candidate/PricingPage";
 const router = createBrowserRouter([
 	{
 		errorElement: <ErrorPage />,
@@ -185,8 +188,29 @@ const router = createBrowserRouter([
 					{
 						path: paths.INTERVIEWPRACTICE.REVIEW,
 						element: <Review />,
-					}]
-			}
+					}
+				]
+			},
+			{
+				path: paths.PROFILE.ROOT,
+				element: <ProfileLayout />,
+				children: [
+					{
+						path: '',
+						element: <ProfileDashboard />,
+					},
+				],
+			},
+			{
+				path: paths.PRICING.ROOT,
+				element: <ProfileLayout />,
+				children: [
+					{
+						path: '',
+						element: <PricingPage />,
+					},
+				],
+			},
 		]
 	}
 ], {
