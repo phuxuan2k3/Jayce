@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Login from "../pages/Authen/login/Login";
-import Dashboard from "../pages/Dashboard";
+import Dashboard from "../page/common/Dashboard/Dashboard";
 import TestDo from "../pages/Test/Candidate/TestDo/TestDo";
 import { paths } from "./path"
 import Register from "../pages/Authen/register/Register";

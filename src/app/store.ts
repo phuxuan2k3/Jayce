@@ -2,9 +2,9 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import authReducer from '../global/authSlice';
 import authApi from '../features/Auth/authApi';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import testApi from '../features/Test/test.api';
+import testApi from '../features/Test/api/test.api';
 import accountApi from '../features/Account/account.api';
-import aiAPI from '../features/Test/AI.api';
+import aiAPI from '../features/Test/api/AI.api';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 

@@ -1,19 +1,19 @@
-import testApi from "../../../../features/Test/test.api";
-import {SubmissionItem,SubmissionOverView } from "./types";
+import testApi from "../../../../features/Test/api/test.api";
+import { SubmissionItem, SubmissionOverView } from "./types";
 
 const submissionlistAPI = testApi.injectEndpoints({
-    endpoints: (builder) => ({
-        getSubmissionList: builder.query<SubmissionItem[], string>({
-            query: (testId) => `/${testId}/submission/page`
-        }),
-        getSubmissionOverView: builder.query<SubmissionOverView,string>({
-            query: (testId) => `/${testId}/submission/overview`
-        }),
-    }),
-    overrideExisting: false,
+	endpoints: (builder) => ({
+		getSubmissionList: builder.query<SubmissionItem[], string>({
+			query: (testId) => `/${testId}/submission/page`
+		}),
+		getSubmissionOverView: builder.query<SubmissionOverView, string>({
+			query: (testId) => `/${testId}/submission/overview`
+		}),
+	}),
+	overrideExisting: false,
 });
 
 export const {
-    useGetSubmissionListQuery,
-    useGetSubmissionOverViewQuery,
+	useGetSubmissionListQuery,
+	useGetSubmissionOverViewQuery,
 } = submissionlistAPI;
