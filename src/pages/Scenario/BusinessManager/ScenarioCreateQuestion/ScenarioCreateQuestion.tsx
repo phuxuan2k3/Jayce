@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
-import GradientBorderNotGood from "../../../../components/GradientBorder.notgood";
+import GradientBorderNotGood from "../../../../components/ui/border/GradientBorder.notgood";
 import { grpcUpdateScenario } from "../../../../features/grpcScenario/grpcScenario";
 // import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 // import AddIcon from '@mui/icons-material/Add';
@@ -28,289 +28,289 @@ import { grpcUpdateScenario } from "../../../../features/grpcScenario/grpcScenar
 // ];
 
 const ScenarioCreateQuestion = () => {
-    // const location = useLocation();
-    const [questionList, setQuestionList] = React.useState<any[]>([]);
-    const location = useLocation();
-    // Giả sử location.state chứa scenarioDetails
-    const scenarioDetails: any = location.state?.scenarioDetails || {
-      id: 0,
-      title: "",
-      description: "",
-    };
-    // const [open, setOpen] = React.useState(false);
-    // const [question, setQuestion] = React.useState("");
-    // const [generatedQuestions, setGeneratedQuestions] = React.useState<{ content: string; description: string; level: string; reason: string }[]>([]);
-    // const [error, setError] = React.useState<string | null>(null);
-    // const [cooldowns, setCooldowns] = React.useState<number[]>([]);
-    // const [isLoading, setLoading] = React.useState(false);
-    const [isCreating, setIsCreating] = React.useState(false);
-    const [submitError, setSubmmitError] = React.useState<string | null>(null);
+	// const location = useLocation();
+	const [questionList, setQuestionList] = React.useState<any[]>([]);
+	const location = useLocation();
+	// Giả sử location.state chứa scenarioDetails
+	const scenarioDetails: any = location.state?.scenarioDetails || {
+		id: 0,
+		title: "",
+		description: "",
+	};
+	// const [open, setOpen] = React.useState(false);
+	// const [question, setQuestion] = React.useState("");
+	// const [generatedQuestions, setGeneratedQuestions] = React.useState<{ content: string; description: string; level: string; reason: string }[]>([]);
+	// const [error, setError] = React.useState<string | null>(null);
+	// const [cooldowns, setCooldowns] = React.useState<number[]>([]);
+	// const [isLoading, setLoading] = React.useState(false);
+	const [isCreating, setIsCreating] = React.useState(false);
+	const [submitError, setSubmmitError] = React.useState<string | null>(null);
 
-    // const toggleDrawer = (newOpen: boolean) => () => {
-    //     setOpen(newOpen);
-    // };
+	// const toggleDrawer = (newOpen: boolean) => () => {
+	//     setOpen(newOpen);
+	// };
 
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 
-    const handleBack = () => {
-        navigate("/scenario/create/detail");
-    };
+	const handleBack = () => {
+		navigate("/scenario/create/detail");
+	};
 
-    // const [createnewtest] = useCreatenewtestMutation();
-    const handleSave = async () => {
-        setSubmmitError(null);
-        setIsCreating(true);
-        try {
-            // Map questionList thành mảng ScenarioQuestion theo định dạng của file proto
-            // Giả sử ScenarioQuestion có 3 trường: criteria, hint, content
-           
-            
-            // Gọi API cập nhật scenario; giả sử field_ids là mảng rỗng nếu không có thông tin
-            await grpcUpdateScenario(
-              scenarioDetails.id,
-              scenarioDetails.title,
-              scenarioDetails.description,
-              [],
-              questionList
-            );
-            
-            // Sau khi update thành công, chuyển hướng đến trang danh sách scenario
-            navigate("/scenario/list");
-          }catch (error) {
-            setSubmmitError("An error occurred while creating the scenario. Please try again later.");
-            console.error("Lỗi khi tạo bộ câu hỏi tình huống:", error);
-        } finally {
-            setIsCreating(false);
-        }
-    };
+	// const [createnewtest] = useCreatenewtestMutation();
+	const handleSave = async () => {
+		setSubmmitError(null);
+		setIsCreating(true);
+		try {
+			// Map questionList thành mảng ScenarioQuestion theo định dạng của file proto
+			// Giả sử ScenarioQuestion có 3 trường: criteria, hint, content
 
-    const handleQuestionChange = (index: number, newValue: string) => {
-        const updatedQuestions = [...questionList];
-        updatedQuestions[index].question = newValue;
-        setQuestionList(updatedQuestions);
-    };
 
-    const handleHintsChange = (questionIndex: number, newValue: string) => {
-        const updatedQuestions = [...questionList];
-        updatedQuestions[questionIndex].hints = newValue;
-        setQuestionList(updatedQuestions);
-    };
+			// Gọi API cập nhật scenario; giả sử field_ids là mảng rỗng nếu không có thông tin
+			await grpcUpdateScenario(
+				scenarioDetails.id,
+				scenarioDetails.title,
+				scenarioDetails.description,
+				[],
+				questionList
+			);
 
-    const handleCriteriaChange = (questionIndex: number, newValue: string) => {
-        const updatedQuestions = [...questionList];
-        updatedQuestions[questionIndex].criteria = newValue;
-        setQuestionList(updatedQuestions);
-    };
+			// Sau khi update thành công, chuyển hướng đến trang danh sách scenario
+			navigate("/scenario/list");
+		} catch (error) {
+			setSubmmitError("An error occurred while creating the scenario. Please try again later.");
+			console.error("Lỗi khi tạo bộ câu hỏi tình huống:", error);
+		} finally {
+			setIsCreating(false);
+		}
+	};
 
-    const handleAddQuestion = () => {
-        setQuestionList([
-            ...questionList,
-            {
-                question: "",
-                hints: "",
-                criteria: "",
-            },
-        ]);
-    };
+	const handleQuestionChange = (index: number, newValue: string) => {
+		const updatedQuestions = [...questionList];
+		updatedQuestions[index].question = newValue;
+		setQuestionList(updatedQuestions);
+	};
 
-    const handleDeleteQuestion = (index: number) => {
-        const updatedQuestions = questionList.filter((_, i) => i !== index);
-        setQuestionList(updatedQuestions);
-    };
+	const handleHintsChange = (questionIndex: number, newValue: string) => {
+		const updatedQuestions = [...questionList];
+		updatedQuestions[questionIndex].hints = newValue;
+		setQuestionList(updatedQuestions);
+	};
 
-    // const handleAddGeneratedQuestion = (index: number) => {
-    //     const questionToAdd = generatedQuestions[index];
+	const handleCriteriaChange = (questionIndex: number, newValue: string) => {
+		const updatedQuestions = [...questionList];
+		updatedQuestions[questionIndex].criteria = newValue;
+		setQuestionList(updatedQuestions);
+	};
 
-    //     setQuestionList([
-    //         ...questionList,
-    //         {
-    //             question: questionToAdd.content,
-    //             options: ["Option 1"],
-    //             correctAnswer: 0,
-    //             point: 10,
-    //         },
-    //     ]);
+	const handleAddQuestion = () => {
+		setQuestionList([
+			...questionList,
+			{
+				question: "",
+				hints: "",
+				criteria: "",
+			},
+		]);
+	};
 
-    //     setCooldowns((prev) => {
-    //         const updatedCooldowns = [...prev];
-    //         updatedCooldowns[index] = 2;
-    //         return updatedCooldowns;
-    //     });
-    // };
+	const handleDeleteQuestion = (index: number) => {
+		const updatedQuestions = questionList.filter((_, i) => i !== index);
+		setQuestionList(updatedQuestions);
+	};
 
-    // React.useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         setCooldowns((prevCooldowns) =>
-    //             prevCooldowns.map((time) => (time > 0 ? time - 1 : 0))
-    //         );
-    //     }, 1000);
+	// const handleAddGeneratedQuestion = (index: number) => {
+	//     const questionToAdd = generatedQuestions[index];
 
-    //     return () => clearInterval(interval);
-    // }, []);
+	//     setQuestionList([
+	//         ...questionList,
+	//         {
+	//             question: questionToAdd.content,
+	//             options: ["Option 1"],
+	//             correctAnswer: 0,
+	//             point: 10,
+	//         },
+	//     ]);
 
-    // const handleGenerateClick = async (): Promise<void> => {
-    //     setLoading(true);
-    //     setError(null);
-    //     try {
-    //         const prompt = (document.querySelector("#prompt") as HTMLTextAreaElement).value;
-    //         // const response = await fetch(`/api/questionai/question`, {
-    //         //     method: "POST",
-    //         //     headers: {
-    //         //         "Content-Type": "application/json",
-    //         //     },
-    //         //     body: JSON.stringify({
-    //         //         question: prompt,
-    //         //     }),
-    //         // });
+	//     setCooldowns((prev) => {
+	//         const updatedCooldowns = [...prev];
+	//         updatedCooldowns[index] = 2;
+	//         return updatedCooldowns;
+	//     });
+	// };
 
-    //         const [fetchquestion] = useFetchquestionMutation();
-    //         const response = await fetchquestion({ question: prompt }).unwrap();
+	// React.useEffect(() => {
+	//     const interval = setInterval(() => {
+	//         setCooldowns((prevCooldowns) =>
+	//             prevCooldowns.map((time) => (time > 0 ? time - 1 : 0))
+	//         );
+	//     }, 1000);
 
-    //         console.log(response)
+	//     return () => clearInterval(interval);
+	// }, []);
 
-    //         const { answer, conversation_id, question } = response;
+	// const handleGenerateClick = async (): Promise<void> => {
+	//     setLoading(true);
+	//     setError(null);
+	//     try {
+	//         const prompt = (document.querySelector("#prompt") as HTMLTextAreaElement).value;
+	//         // const response = await fetch(`/api/questionai/question`, {
+	//         //     method: "POST",
+	//         //     headers: {
+	//         //         "Content-Type": "application/json",
+	//         //     },
+	//         //     body: JSON.stringify({
+	//         //         question: prompt,
+	//         //     }),
+	//         // });
 
-    //         console.log(answer);
+	//         const [fetchquestion] = useFetchquestionMutation();
+	//         const response = await fetchquestion({ question: prompt }).unwrap();
 
-    //         const questions = [];
-    //         const lines = answer.split("\n");
+	//         console.log(response)
 
-    //         let currentQuestion = null;
+	//         const { answer, conversation_id, question } = response;
 
-    //         for (const line of lines) {
-    //             const trimmedLine = line.trim();
+	//         console.log(answer);
 
-    //             if (trimmedLine.startsWith("- Question:")) {
-    //                 if (currentQuestion) {
-    //                     questions.push(currentQuestion);
-    //                 }
-    //                 currentQuestion = {
-    //                     content: trimmedLine.replace("- Question:", "").trim(),
-    //                     description: "",
-    //                     level: "",
-    //                     reason: "",
-    //                 };
-    //             } else if (trimmedLine.startsWith("+ Description:") && currentQuestion) {
-    //                 currentQuestion.description = trimmedLine.replace("+ Description:", "").trim();
-    //             } else if (trimmedLine.startsWith("+ Level:") && currentQuestion) {
-    //                 currentQuestion.level = trimmedLine.replace("+ Level:", "").trim();
-    //             } else if (trimmedLine.startsWith("+ Reason:") && currentQuestion) {
-    //                 currentQuestion.reason = trimmedLine.replace("+ Reason:", "").trim();
-    //             } else if (trimmedLine === "" && currentQuestion) {
-    //                 questions.push(currentQuestion);
-    //                 currentQuestion = null;
-    //             }
-    //         }
+	//         const questions = [];
+	//         const lines = answer.split("\n");
 
-    //         if (currentQuestion) {
-    //             questions.push(currentQuestion);
-    //         }
+	//         let currentQuestion = null;
 
-    //         setGeneratedQuestions(questions);
-    //         setCooldowns(new Array(questions.length).fill(0));
-    //     } catch (error) {
-    //         console.error("Error generating questions:", error);
-    //         setError("An error occurred while generating questions. Please try again later.");
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
+	//         for (const line of lines) {
+	//             const trimmedLine = line.trim();
 
-    // const handleGenerateKeyDown = (event: any) => {
-    //     if (event.key === 'Enter') {
-    //         handleGenerateClick();
-    //     }
-    // };
+	//             if (trimmedLine.startsWith("- Question:")) {
+	//                 if (currentQuestion) {
+	//                     questions.push(currentQuestion);
+	//                 }
+	//                 currentQuestion = {
+	//                     content: trimmedLine.replace("- Question:", "").trim(),
+	//                     description: "",
+	//                     level: "",
+	//                     reason: "",
+	//                 };
+	//             } else if (trimmedLine.startsWith("+ Description:") && currentQuestion) {
+	//                 currentQuestion.description = trimmedLine.replace("+ Description:", "").trim();
+	//             } else if (trimmedLine.startsWith("+ Level:") && currentQuestion) {
+	//                 currentQuestion.level = trimmedLine.replace("+ Level:", "").trim();
+	//             } else if (trimmedLine.startsWith("+ Reason:") && currentQuestion) {
+	//                 currentQuestion.reason = trimmedLine.replace("+ Reason:", "").trim();
+	//             } else if (trimmedLine === "" && currentQuestion) {
+	//                 questions.push(currentQuestion);
+	//                 currentQuestion = null;
+	//             }
+	//         }
 
-    return (
-        <>
-            <div className="w-full flex-grow flex flex-col items-center px-4 font-arya">
-                <div className="w-full flex-1 flex-col mt-6 text-center">
-                    <div className="w-full text-4xl font-bold">Create a new Scenario</div>
-                    <div className="w-full text-xl font-semibold">Fill some information for your scenario</div>
-                </div>
+	//         if (currentQuestion) {
+	//             questions.push(currentQuestion);
+	//         }
 
-                <div className="w-full max-w-7xl py-6">
-                    <div className="flex flex-col items-center">
-                        <div className="w-4/6 flex flex-row justify-between font-semibold text-[var(--primary-color)] mb-4">
-                            <span>Question List ({questionList.length})</span>
-                        </div>
+	//         setGeneratedQuestions(questions);
+	//         setCooldowns(new Array(questions.length).fill(0));
+	//     } catch (error) {
+	//         console.error("Error generating questions:", error);
+	//         setError("An error occurred while generating questions. Please try again later.");
+	//     } finally {
+	//         setLoading(false);
+	//     }
+	// };
 
-                        {/* Question List */}
-                        {questionList.map((question, index) => (
-                            <div key={index} className="w-4/6 flex-1 flex flex-row bg-white rounded-lg shadow-xl p-6 space-x-4  border-primary border  justify-between mb-4">
-                                <span className="w-1/5 font-bold mb-2 opacity-50">
-                                    Question {index + 1}
-                                </span>
+	// const handleGenerateKeyDown = (event: any) => {
+	//     if (event.key === 'Enter') {
+	//         handleGenerateClick();
+	//     }
+	// };
 
-                                {/* Question and Options */}
-                                <div className="w-4/5 flex flex-col">
-                                    {/* Question */}
-                                    <div className="w-11/12 mb-4">
-                                        <GradientBorderNotGood className="w-full h-fit font-semibold">
-                                            <textarea
-                                                value={question.question}
-                                                placeholder="Enter your question here..."
-                                                onChange={(e) => handleQuestionChange(index, e.target.value)}
-                                                className="w-full bg-transparent border-none outline-none"
-                                                title="This is where you enter the question."
-                                            />
-                                        </GradientBorderNotGood>
-                                    </div>
+	return (
+		<>
+			<div className="w-full flex-grow flex flex-col items-center px-4 font-arya">
+				<div className="w-full flex-1 flex-col mt-6 text-center">
+					<div className="w-full text-4xl font-bold">Create a new Scenario</div>
+					<div className="w-full text-xl font-semibold">Fill some information for your scenario</div>
+				</div>
 
-                                    {/* Hint */}
-                                    <div className="w-11/12 mb-4">
-                                        <GradientBorderNotGood className="w-full h-fit font-normal">
-                                            <textarea
-                                                value={question.hints}
-                                                placeholder="Enter hints here..."
-                                                onChange={(e) => handleHintsChange(index, e.target.value)}
-                                                className="w-full bg-transparent border-none outline-none italic"
-                                                title="This is where you enter hints for the question."
-                                            />
-                                        </GradientBorderNotGood>
-                                    </div>
+				<div className="w-full max-w-7xl py-6">
+					<div className="flex flex-col items-center">
+						<div className="w-4/6 flex flex-row justify-between font-semibold text-[var(--primary-color)] mb-4">
+							<span>Question List ({questionList.length})</span>
+						</div>
 
-                                    {/* Criteria */}
-                                    <div className="w-11/12 mb-4">
-                                        <GradientBorderNotGood className="w-full h-fit font-normal">
-                                            <textarea
-                                                value={question.criteria}
-                                                placeholder="Enter criteria here..."
-                                                onChange={(e) => handleCriteriaChange(index, e.target.value)}
-                                                className="w-full bg-transparent border-none outline-none"
-                                                title="This is where you enter the criteria for the question."
-                                            />
-                                        </GradientBorderNotGood>
-                                    </div>
-                                </div>
+						{/* Question List */}
+						{questionList.map((question, index) => (
+							<div key={index} className="w-4/6 flex-1 flex flex-row bg-white rounded-lg shadow-xl p-6 space-x-4  border-primary border  justify-between mb-4">
+								<span className="w-1/5 font-bold mb-2 opacity-50">
+									Question {index + 1}
+								</span>
 
-                                {/* Delete Question */}
-                                <div className="w-2/5 h-fit flex justify-end items-center">
-                                    <FontAwesomeIcon className="w-5 h-5 cursor-pointer" icon={faTrashCan} onClick={() => handleDeleteQuestion(index)} />
-                                </div>
-                            </div>
-                        ))}
+								{/* Question and Options */}
+								<div className="w-4/5 flex flex-col">
+									{/* Question */}
+									<div className="w-11/12 mb-4">
+										<GradientBorderNotGood className="w-full h-fit font-semibold">
+											<textarea
+												value={question.question}
+												placeholder="Enter your question here..."
+												onChange={(e) => handleQuestionChange(index, e.target.value)}
+												className="w-full bg-transparent border-none outline-none"
+												title="This is where you enter the question."
+											/>
+										</GradientBorderNotGood>
+									</div>
 
-                        <div className="w-4/6 flex-1 flex flex-row bg-white rounded-lg shadow-xl p-6 space-x-4 border border-primary justify-center mb-4 cursor-pointer" onClick={handleAddQuestion}>
-                            <FontAwesomeIcon className="w-8 h-8" icon={faPlus} />
-                        </div>
-                    </div>
-                </div>
+									{/* Hint */}
+									<div className="w-11/12 mb-4">
+										<GradientBorderNotGood className="w-full h-fit font-normal">
+											<textarea
+												value={question.hints}
+												placeholder="Enter hints here..."
+												onChange={(e) => handleHintsChange(index, e.target.value)}
+												className="w-full bg-transparent border-none outline-none italic"
+												title="This is where you enter hints for the question."
+											/>
+										</GradientBorderNotGood>
+									</div>
 
-                <div className="flex flex-col w-full">
-                    {submitError && <div className="text-center text-red-500 mb-8">{submitError}</div>}
-                    <div className="flex justify-center flex-row space-x-10">
-                        <button className="w-fit px-12 font-semibold rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleBack} disabled={isCreating}>
-                            Back
-                        </button>
-                        <button className="w-fit px-12 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={handleSave} disabled={isCreating}>
-                            {isCreating ? "Creating..." : "Save"}
-                        </button>
-                    </div>
-                </div>
-            </div>
-            {/* <Button onClick={toggleDrawer(true)} className="fixed bottom-4 w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center shadow-lg">
+									{/* Criteria */}
+									<div className="w-11/12 mb-4">
+										<GradientBorderNotGood className="w-full h-fit font-normal">
+											<textarea
+												value={question.criteria}
+												placeholder="Enter criteria here..."
+												onChange={(e) => handleCriteriaChange(index, e.target.value)}
+												className="w-full bg-transparent border-none outline-none"
+												title="This is where you enter the criteria for the question."
+											/>
+										</GradientBorderNotGood>
+									</div>
+								</div>
+
+								{/* Delete Question */}
+								<div className="w-2/5 h-fit flex justify-end items-center">
+									<FontAwesomeIcon className="w-5 h-5 cursor-pointer" icon={faTrashCan} onClick={() => handleDeleteQuestion(index)} />
+								</div>
+							</div>
+						))}
+
+						<div className="w-4/6 flex-1 flex flex-row bg-white rounded-lg shadow-xl p-6 space-x-4 border border-primary justify-center mb-4 cursor-pointer" onClick={handleAddQuestion}>
+							<FontAwesomeIcon className="w-8 h-8" icon={faPlus} />
+						</div>
+					</div>
+				</div>
+
+				<div className="flex flex-col w-full">
+					{submitError && <div className="text-center text-red-500 mb-8">{submitError}</div>}
+					<div className="flex justify-center flex-row space-x-10">
+						<button className="w-fit px-12 font-semibold rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleBack} disabled={isCreating}>
+							Back
+						</button>
+						<button className="w-fit px-12 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={handleSave} disabled={isCreating}>
+							{isCreating ? "Creating..." : "Save"}
+						</button>
+					</div>
+				</div>
+			</div>
+			{/* <Button onClick={toggleDrawer(true)} className="fixed bottom-4 w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center shadow-lg">
                 <TipsAndUpdatesIcon />
             </Button>
             <Drawer open={open} onClose={toggleDrawer(false)}>
@@ -398,8 +398,8 @@ const ScenarioCreateQuestion = () => {
                     </Box>
                 </Box>
             </Drawer> */}
-        </>
-    );
+		</>
+	);
 }
 
 export default ScenarioCreateQuestion

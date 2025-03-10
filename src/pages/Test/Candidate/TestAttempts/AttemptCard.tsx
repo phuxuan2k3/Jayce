@@ -1,6 +1,6 @@
 import React from 'react';
 import { format, formatDistanceToNow } from 'date-fns';
-import GradientBorderGood from '../../../../components/GradientBorder.good';
+import GradientBorderGood from '../../../../components/ui/border/GradientBorder.good';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { Attempt, TestAttemptsProps, TestStatus } from './types';

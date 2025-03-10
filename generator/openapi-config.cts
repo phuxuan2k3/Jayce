@@ -1,13 +1,19 @@
 import type { ConfigFile } from '@rtk-query/codegen-openapi'
 
-// Tests APIs
-const config: ConfigFile = {
-	schemaFile: './test/openapi.json',
-	apiFile: '../../src/features/Test/test.api.ts',
-	apiImport: 'testApi',
-	outputFile: './test/test-v2.api.ts',
-	exportName: 'testApiV2',
-	hooks: true,
+const testApiDirString = __dirname + "/../src/features/Test/api";
+
+const testApi: ConfigFile = {
+	schemaFile: `${testApiDirString}/swagger.json`,
+	apiFile: `${testApiDirString}/test.api.ts`,
+	apiImport: "testApi",
+	outputFile: `${testApiDirString}/test.api-gen.ts`,
+	exportName: "testApiGen",
+	hooks: {
+		queries: true,
+		mutations: true,
+		lazyQueries: true,
+	}
 }
 
-export default config;
+// Export what API we want to generate
+export default testApi;

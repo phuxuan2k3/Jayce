@@ -1,5 +1,4 @@
 import { isRouteErrorResponse, useRouteError } from "react-router-dom";
-import ClientError from "../error/client.error";
 
 export default function ErrorPage() {
 	const error = useRouteError();
@@ -20,8 +19,6 @@ export default function ErrorPage() {
 		} else {
 			errorMessage = "Something went wrong";
 		}
-	} else if (error instanceof ClientError) {
-		errorMessage = error.displayMessage;
 	} else if (error instanceof Error) {
 		console.error(error);
 		errorMessage = error.message;

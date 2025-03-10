@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
-import GradientBorderNotGood from "../../../../components/GradientBorder.notgood";
+import GradientBorderNotGood from "../../../../components/ui/border/GradientBorder.notgood";
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import AddIcon from '@mui/icons-material/Add';
 import AutorenewIcon from '@mui/icons-material/Autorenew';

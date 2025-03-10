@@ -8,7 +8,7 @@ import { useCreatetestMutation } from "./createdetail.test-api";
 import { TestDetails } from "./types";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
-import { toErrorMessage } from "../../../../error/fetchBaseQuery.error";
+import { toErrorMessage } from "../../../../helpers/fetchBaseQuery.error";
 import { paths } from "../../../../router/path";
 
 const TestListView = () => {

@@ -7,7 +7,7 @@ import TestList from "../pages/Test/Candidate/TestList/TestList.page";
 import Layout from "../pages/Test/components/Layout";
 import TestDetail from "../pages/Test/Candidate/TestAttempts/TestAttempts";
 import TestEvaluate from "../pages/Test/Candidate/TestEvaluate/TestEvaluate";
-import ErrorPage from "../components/ErrorPage";
+import ErrorPage from "../components/pages/ErrorPage";
 import TestSchedule from "../pages/Test/Candidate/TestSchedule/TestSchedule";
 import TestViewAnswer from "../pages/Test/Candidate/TestViewAnswer/TestViewAnswer";
 import TestSubmissionListView from "../pages/Test/BusinessManager/TestSubmissionListView/TestSubmissionListView";
@@ -35,11 +35,44 @@ import ProfileDashboard from "../pages/Profile/Candidate/ProfileDashboard";
 import ProfileLayout from "../pages/Profile/components/Layout";
 import PricingPage from "../pages/Profile/Candidate/PricingPage";
 import Dashboard from "../features/common/Dashboard/Dashboard";
+import paths2 from "./path-2";
+import TestsPage from "../features/Test/pages/Tests/page";
 
 const router = createBrowserRouter([
 	{
 		errorElement: <ErrorPage />,
 		children: [
+			{
+				path: paths2.auth.ROOT,
+				children: [
+					{
+						path: paths2.auth.LOGIN,
+						element: <Login />
+					},
+					{
+						path: paths2.auth.REGISTER,
+						element: <Register />
+					}
+				],
+			},
+			{
+				path: paths2.candidate.ROOT,
+				children: [
+					{
+						path: paths2.candidate.tests.ROOT,
+						element: <TestsPage />
+					},
+				]
+			},
+			{
+				index: true,
+				element: <Dashboard />
+			},
+
+
+
+			// Old paths
+
 			{
 				path: paths.REGISTER,
 				element: <Register />,

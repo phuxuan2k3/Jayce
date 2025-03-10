@@ -1,15 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import GradientBorder from "../../../components/GradientBorder"
+import GradientBorder from "../../../components/ui/border/GradientBorder"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../../../features/Auth/authApi";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../app/redux/hooks";
 import { selectIsAuthenticated } from "../../../app/redux/authSlice";
-import { toErrorMessage } from "../../../error/fetchBaseQuery.error";
-import LocalError from "../../../components/LocalError";
-import LocalLoading from "../../../components/LocalLoading";
-import LocalSuccess from "../../../components/LocalSuccess";
+import { toErrorMessage } from "../../../helpers/fetchBaseQuery.error";
+import LocalError from "../../../components/ui/error/LocalError";
+import LocalLoading from "../../../trash/LocalLoading";
+import LocalSuccess from "../../../trash/LocalSuccess";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
 
