@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import logo from "/svg/logo.svg";
 import skillsharp from "/svg/skillsharp.svg";
-import { useAppSelector } from "../app/hooks";
-import { selectIsAuthenticated, selectUserInfo } from "../global/authSlice";
+import { useAppSelector } from "../app/redux/hooks";
+import { selectIsAuthenticated, selectUserInfo } from "../app/redux/authSlice";
 import { useLogoutMutation } from "../features/Auth/authApi";
 
 const NavBar = ({ showNav = true }: { showNav?: boolean; }) => {

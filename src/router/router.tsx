@@ -1,10 +1,9 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Login from "../pages/Authen/login/Login";
-import Dashboard from "../page/common/Dashboard/Dashboard";
 import TestDo from "../pages/Test/Candidate/TestDo/TestDo";
 import { paths } from "./path"
 import Register from "../pages/Authen/register/Register";
-import TestList from "../pages/Test/Candidate/TestList/TestList";
+import TestList from "../pages/Test/Candidate/TestList/TestList.page";
 import Layout from "../pages/Test/components/Layout";
 import TestDetail from "../pages/Test/Candidate/TestAttempts/TestAttempts";
 import TestEvaluate from "../pages/Test/Candidate/TestEvaluate/TestEvaluate";
@@ -35,6 +34,8 @@ import Review from "../pages/InterviewPractice/Candidate/Review/Review";
 import ProfileDashboard from "../pages/Profile/Candidate/ProfileDashboard";
 import ProfileLayout from "../pages/Profile/components/Layout";
 import PricingPage from "../pages/Profile/Candidate/PricingPage";
+import Dashboard from "../features/common/Dashboard/Dashboard";
+
 const router = createBrowserRouter([
 	{
 		errorElement: <ErrorPage />,

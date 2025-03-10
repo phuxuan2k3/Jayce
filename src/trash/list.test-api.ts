@@ -1,6 +1,6 @@
-import testApi from "../features/Test/api/test.api";
-import { Paged } from "../interfaces/paged.type";
-import { TestDisplayProps, TestListProps } from "../features/Test/types/props";
+import testApi from "../../../../features/Test/api/test.api";
+import { Paged } from "../../../../interfaces/paged.type";
+import { TestDisplayProps, TestListProps } from "./props";
 
 export type DifficultyLevel = "Easy" | "Medium" | "Hard" | "";
 

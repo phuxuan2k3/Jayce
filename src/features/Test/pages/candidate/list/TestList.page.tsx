@@ -2,13 +2,13 @@ import { InputAdornment, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import GradientBorderGood from "../../../../components/GradientBorder.good";
+import GradientBorderGood from "../../../../../components/GradientBorder.good";
 import TestCard from "./TestCard";
-import { DifficultyLevel, FilterParams, useGetTestListPageDataQuery, useLazyGetFilteredQuery } from "../../../../trash/list.test-api";
+import { DifficultyLevel, FilterParams, useGetTestListPageDataQuery, useLazyGetFilteredQuery } from "./list.test-api";
 import FilterModal from "./FilterModal";
-import { useLazyGetCompaniesQuery } from "../../../../features/Account/account.api";
-import FetchStateContent from "../../../../pages/Test/components/FetchStateContent";
-import MyPagination from "../../../../pages/Test/components/MyPagination";
+import FetchStateContent from "../../components/FetchStateContent";
+import MyPagination from "../../components/MyPagination";
+import { useLazyGetCompaniesQuery } from "../../../../Account/account.api";
 
 const perPage = 5;
 

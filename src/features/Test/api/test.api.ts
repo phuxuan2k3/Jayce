@@ -1,7 +1,7 @@
 import { BaseQueryFn, createApi, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { backendEndpoint } from "../../../app/env"
-import { RootState } from "../../../app/store";
-import { setAuthState, selectTokens, selectUserInfo } from "../../../global/authSlice";
+import { RootState } from "../../../app/redux/store";
+import { setAuthState, selectTokens, selectUserInfo } from "../../../app/redux/authSlice";
 import { grpcRefreshToken } from '../../Auth/grpcClient';
 
 const testBackendURL = backendEndpoint + '/thresh/api/test';

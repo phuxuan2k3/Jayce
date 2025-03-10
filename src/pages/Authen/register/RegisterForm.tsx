@@ -4,8 +4,8 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../../../features/Auth/authApi";
 import { useEffect, useState } from "react";
-import { useAppSelector } from "../../../app/hooks";
-import { selectIsAuthenticated } from "../../../global/authSlice";
+import { useAppSelector } from "../../../app/redux/hooks";
+import { selectIsAuthenticated } from "../../../app/redux/authSlice";
 import { toErrorMessage } from "../../../error/fetchBaseQuery.error";
 import LocalError from "../../../components/LocalError";
 import LocalLoading from "../../../components/LocalLoading";

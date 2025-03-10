@@ -14,7 +14,7 @@ import {
 	DialogContent,
 	DialogActions,
 } from "@mui/material";
-import { DifficultyLevel } from "../../../../trash/list.test-api";
+import { DifficultyLevel } from "./list.test-api";
 
 interface FilterModalProps {
 	meta: {

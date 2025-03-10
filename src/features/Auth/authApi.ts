@@ -1,8 +1,8 @@
 import { BaseQueryApi, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { backendEndpoint } from '../../app/env';
 // import { RootState } from '../../app/store';
-import { AuthStateResponse, clearAuthState, selectTokens } from '../../global/authSlice';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { AuthStateResponse, clearAuthState, selectTokens } from '../../app/redux/authSlice';
+import { useAppDispatch, useAppSelector } from '../../app/redux/hooks';
 import { grpcSignUp, grpcSignIn, grpcSignInGoogle, grpcMe, grpcRefreshToken } from './grpcClient';
 import { bulbasaur } from './api/bulbasaur';
 
