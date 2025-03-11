@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { FaFilePdf, FaLink, FaRegFileAlt, FaRegImage } from "react-icons/fa";
-import { QuestionModal } from "./Modal";
+import { FaChevronDown, FaFilePdf, FaLink, FaRegFileAlt, FaRegImage } from "react-icons/fa";
+import {Loading} from "./loading"
 interface Step1Props {
     onNext: () => void;
 }
@@ -15,8 +15,26 @@ export const Step2: React.FC<Step1Props> = ({ onNext }) => {
     ];
     const [text, setText] = useState("");
     const [active, setActive] = useState("text");
+    const [numQuestions, setNumQuestions] = useState(3);
+    const [answers, setAnswers] = useState(4);
+    const [language, setLanguage] = useState("Auto");
+    const [seniority, setSeniority] = useState("Intern");
+    const [isLoadingPage, setIsLoadingPage] = useState(false);
+    const handleSave = () => {
+        setIsLoadingPage(true);
+        setTimeout(() => {
+            onNext();
+        }, 3000);
+    };
+
+
+    if (isLoadingPage) {
+        return (
+            <Loading/>
+        );
+    }
     return (
-        <div className="bg-gray-100 ">
+        <div className="relative">
             <div className="font-arya  pt-12 flex gap-2 items-center  justify-center">
                 <div className="flex items-center gap-2 text-[24px]">
                     <div className="bg-[var(--primary-color)] rounded-3xl h-10 w-10  text-white font-bold text-center">
@@ -90,6 +108,65 @@ export const Step2: React.FC<Step1Props> = ({ onNext }) => {
                     Generate
                 </button>
             </div>
-            <QuestionModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onNextStep={onNext} />
+            {/* <QuestionModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onNextStep={onNext} /> */}
+            {
+                isModalOpen&&(<div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-white w-96 p-6 rounded-lg shadow-lg">
+                        <h2 className="text-2xl font-semibold mb-4">Question type <span className="text-blue-500 text-sm border border-blue-300 rounded-lg px-2">Pro</span></h2>
+                        <div className="my-3 flex justify-between">
+                            <label className="block text-lg font-semibold w-1/2">Language</label>
+                            <div className="relative w-fit pe-8">
+                                <select
+                                    value={language}
+                                    onChange={(e) => setLanguage(e.target.value)}
+                                    className="w-full border p-2 rounded-md appearance-none"
+                                >
+                                    <option>Auto</option>
+                                    <option>VietNamese</option>
+                                    <option>English</option>
+                                </select>
+                                <FaChevronDown className="absolute top-3 right-3 text-gray-400" />
+                            </div>
+                        </div>
+                        <div className="my-3 h-10 flex justify-between">
+                            <label className="block text-lg font-semibold w-1/2">Options</label>
+                            <div className="relative w-fit">
+                                <input type="number" className="w-12" value={answers} onChange={(e) => setAnswers(Number(e.target.value))} />
+                            </div>
+                        </div>
+                        <div className="my-3  h-10  flex justify-between">
+                            <label className="block text-lg font-semibold w-1/2">Number of question</label>
+                            <div className="relative w-fit ">
+                                <input type="number" className="w-12" value={numQuestions} onChange={(e) => setNumQuestions(Number(e.target.value))} />
+                            </div>
+                        </div>
+                        <div className="my-3 flex justify-between">
+                            <label className="block text-lg font-semibold w-1/2">Candidate seniority</label>
+                            <div className="relative w-fit pe-8 ">
+                                <select
+                                    value={seniority}
+                                    onChange={(e) => setSeniority(e.target.value)}
+                                    className="w-full border p-2 rounded-md appearance-none"
+                                >
+                                    <option>Intern</option>
+                                    <option>Junior</option>
+                                    <option>Mid</option>
+                                    <option>Senior</option>
+                                </select>
+                                <FaChevronDown className="absolute top-3 right-3 text-gray-400" />
+                            </div>
+                        </div>
+        
+                        <div className="flex  gap-1 mt-4">
+                            <button  className="w-1/2 px-4 py-2 bg-gray-200 rounded-md">Cancel</button>
+                            <button
+                                onClick={()=>handleSave()}
+                                className=" text-center w-1/2 px-4 py-2 bg-[var(--primary-color)] text-white rounded-md "> Save </button>
+                        </div>
+                    </div>
+                </div>)
+            }
+            <div className="absolute top-10 right-10"><img className="w-4" src="https://cdn-icons-png.flaticon.com/512/566/566013.png" alt="" /></div>
+                
         </div>)
 };

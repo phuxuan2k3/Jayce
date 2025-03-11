@@ -165,7 +165,7 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
 
 
     return (
-        <div className="bg-gray-100 ">
+        <div className="relative">
             <div className="font-arya  pt-12 flex gap-2 items-center  justify-center">
                 <div className="flex items-center gap-2 text-[24px]">
                     <div className="bg-[var(--primary-color)] rounded-3xl h-10 w-10  text-white font-bold text-center">
@@ -361,6 +361,7 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
                     Publish test
                 </button>
             </div>
+            <div className="absolute top-10 right-10"><img className="w-4" src="https://cdn-icons-png.flaticon.com/512/566/566013.png" alt="" /></div>
 
         </div>
     )

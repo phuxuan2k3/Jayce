@@ -35,6 +35,11 @@ import Review from "../pages/InterviewPractice/Candidate/Review/Review";
 import ProfileDashboard from "../pages/Profile/Candidate/ProfileDashboard";
 import ProfileLayout from "../pages/Profile/components/Layout";
 import PricingPage from "../pages/Profile/Candidate/PricingPage";
+import Suggestion from "../pages/Authen/suggestion/suggestion";
+import Role from "../pages/Authen/role/role";
+import Company from "../pages/Authen/company/company";
+import ResetPassword from "../pages/Authen/resetpass/resetpass";
+import NewPassword from "../pages/Authen/newpass/newpass";
 const router = createBrowserRouter([
 	{
 		errorElement: <ErrorPage />,
@@ -50,6 +55,26 @@ const router = createBrowserRouter([
 			{
 				path: "/",
 				element: <Dashboard />
+			},
+			{
+				path:paths.SUGGESTION,
+				element:<Suggestion/>
+			},
+			{
+				path:paths.ROLE,
+				element:<Role/>
+			},
+			{
+				path:paths.COMPANY,
+				element:<Company/>
+			},
+			{
+				path:paths.RESET,
+				element:<ResetPassword/>
+			},
+			{
+				path:paths.NEWPASS,
+				element:<NewPassword/>
 			},
 			{
 				path: paths.TEST.ROOT,
