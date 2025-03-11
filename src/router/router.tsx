@@ -3,9 +3,8 @@ import Login from "../pages/Authen/login/Login";
 import TestDo from "../pages/Test/Candidate/TestDo/TestDo";
 import { paths } from "./path"
 import Register from "../pages/Authen/register/Register";
-import TestList from "../pages/Test/Candidate/TestList/TestList.page";
 import Layout from "../pages/Test/components/Layout";
-import TestDetail from "../pages/Test/Candidate/TestAttempts/TestAttempts";
+import TestDetail from "../trash/TestAttempts/TestAttempts";
 import TestEvaluate from "../pages/Test/Candidate/TestEvaluate/TestEvaluate";
 import ErrorPage from "../components/pages/ErrorPage";
 import TestSchedule from "../pages/Test/Candidate/TestSchedule/TestSchedule";
@@ -34,12 +33,13 @@ import Review from "../pages/InterviewPractice/Candidate/Review/Review";
 import ProfileDashboard from "../pages/Profile/Candidate/ProfileDashboard";
 import ProfileLayout from "../pages/Profile/components/Layout";
 import PricingPage from "../pages/Profile/Candidate/PricingPage";
-import Dashboard from "../features/common/Dashboard/Dashboard";
 import paths2 from "./path-2";
-import TestsPage from "../features/Test/pages/Tests/page";
 import AuthLayout from "../components/layouts/AuthLayout";
 import UnauthLayout from "../components/layouts/UnauthLayout";
 import CandidateLayout from "../components/layouts/CandidateLayout";
+import Dashboard from "../pages/common/Dashboard";
+import TestsPage from "../pages/Test/Candidate/Tests/page";
+import TestList from "../trash/TestList/TestList.page";
 
 const router = createBrowserRouter([
 	{
@@ -67,6 +67,10 @@ const router = createBrowserRouter([
 						path: paths2.candidate.tests.ROOT,
 						element: <TestsPage />
 					},
+					{
+						path: paths2.candidate.tests.in(":id").DO,
+						element: <TestDo />
+					}
 				]
 			},
 			{

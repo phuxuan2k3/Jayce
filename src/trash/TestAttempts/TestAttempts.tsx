@@ -1,13 +1,13 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { paths } from '../../../../router/path';
+import { paths } from '../../router/path';
 import { TestAttemptsResponse, useGetTestDisplayQuery, useLazyGetAttemptsQuery } from './attempt.test-api';
 import { Attempt, FilterParams, TestAttemptsProps, TestStatus } from './types';
-import FetchStateContent from '../../components/FetchStateContent';
-import MyPagination from '../../components/MyPagination';
+import FetchStateContent from '../../pages/Test/components/FetchStateContent';
+import MyPagination from '../../pages/Test/components/MyPagination';
 import { useEffect, useState } from 'react';
-import { useGetCompaniesQuery } from '../../../../features/Account/account.api';
-import { Paged } from '../../../../interfaces/paged.type';
+import { useGetCompaniesQuery } from '../../features/Account/account.api';
+import { Paged } from '../../interfaces/paged.type';
 import AttemptCard from './AttemptCard';
 
 const perPage = 5;

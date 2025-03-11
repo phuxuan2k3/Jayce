@@ -15,7 +15,7 @@ const UnauthNavbar = () => {
 	};
 
 	const handleLogoClick = () => {
-		navigate('/');
+		navigate(paths2.ROOT);
 	};
 
 	return <nav className="bg-white drop-shadow-lg">

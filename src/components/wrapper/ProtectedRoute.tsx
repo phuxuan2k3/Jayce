@@ -1,10 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { noAuth } from '../../app/env';
-import { selectRole } from '../../app/redux/authSlice';
 import { Role } from '../../app/enum';
 import paths2 from '../../router/path-2';
+import { useRole } from '../../app/redux/hooks';
 
 type RoleAlternativeUrl = {
 	role: Role;
@@ -27,7 +26,7 @@ const RoleGuard: React.FC<Props> = ({
 	if (noAuth) {
 		return children;
 	}
-	const role = useSelector(selectRole);
+	const role = useRole();
 	const _alternativeUrl = typeof alternativeUrl === 'string'
 		? alternativeUrl
 		: (alternativeUrl as RoleAlternativeUrl[]).find(a => a.role === role)?.alternativeUrl || paths2.auth.LOGIN;

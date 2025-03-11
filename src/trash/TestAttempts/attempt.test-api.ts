@@ -1,5 +1,5 @@
-import testApi from "../../../../features/Test/api/test.api";
-import { Paged } from "../../../../interfaces/paged.type";
+import testApi from "../../features/Test/api/test.api";
+import { Paged } from "../../interfaces/paged.type";
 import { Attempt, FilterParams, TestAttemptsProps } from "./types";
 
 export type TestAttemptsResponse = Omit<TestAttemptsProps, "company"> & { companyId: string };
