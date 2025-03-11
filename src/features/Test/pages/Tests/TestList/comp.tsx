@@ -1,4 +1,4 @@
-import FetchState from "../../../../../components/layouts/FetchState";
+import FetchState from "../../../../../components/wrapper/FetchState";
 import Pagination from "../../../../../components/ui/common/Pagination";
 import SkeletonLoading from "../../../../../components/ui/loading/SkeletonLoading";
 import { GetTestsApiArg, useGetTestsQuery } from "../../../api/test.api-gen";

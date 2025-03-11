@@ -1,14 +1,12 @@
 import { BaseQueryFn, createApi, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
-import { backendEndpoint } from "../../../app/env"
 import { RootState } from "../../../app/redux/store";
 import { setAuthState, selectTokens, selectUserInfo } from "../../../app/redux/authSlice";
 import { grpcRefreshToken } from '../../Auth/grpcClient';
+import { url } from '../../../app/env';
 
-const testBackendURL = backendEndpoint + '/thresh/api/test';
-console.log('testBackendURL:', testBackendURL);
 
 const baseQuery = fetchBaseQuery({
-	baseUrl: testBackendURL,
+	baseUrl: url.thresh.base,
 	prepareHeaders: async (headers, { getState }) => {
 		const tokens = selectTokens(getState() as RootState);
 		console.log("tokens in baseQuery: ", tokens)

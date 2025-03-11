@@ -3,6 +3,7 @@ import { RootState } from './store.ts';
 import LocalStorageService from '../../services/localstorage.service.ts';
 import authApi from '../../features/Auth/authApi.ts';
 import { bulbasaur } from '../../features/Auth/api/bulbasaur.ts';
+import { Role } from '../enum.ts';
 
 export type UserInfo = {
 	//name: string;
@@ -102,8 +103,31 @@ const authSlice = createSlice({
  * Since the app startup, the tokens are loaded from the local storage and being verified with auth/refresh endpoint and being reduced to the authSlice (if valid) or set null in the authSlice. Therefore, tokens in authSlice are 100% valid, NOT the ones in localStorage.
  */
 export const selectIsAuthenticated = (state: RootState) => state.auth.tokens != null && state.auth.user != null;
-export const selectUserInfo = (state: RootState) => state.auth.user;
+
+export const selectUserInfo = (state: RootState) => {
+	const user = state.auth.user;
+	if (user == null) {
+		throw new Error("User is null");
+	}
+	return user;
+}
+
 export const selectTokens = (state: RootState) => state.auth.tokens;
+
+export const selectRole = (state: RootState): Role => {
+	const _role = state.auth.tokens?.role;
+	if (_role == null) {
+		return Role.None;
+	}
+	switch (_role) {
+		case bulbasaur.Role.ROLE_CANDIDATE:
+			return Role.Candidate;
+		case bulbasaur.Role.ROLE_BUSINESS_MANAGER:
+			return Role.Manager;
+		case bulbasaur.Role.ROLE_UNKNOWN:
+			return Role.None;
+	}
+}
 
 export const { clearAuthState, setAuthState } = authSlice.actions;
 

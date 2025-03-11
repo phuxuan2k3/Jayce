@@ -1,9 +1,3 @@
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-// import GradientBorder from "../components/GradientBorder"
-// import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
-// import { useNavigate } from "react-router-dom";
-import Navbar from "../../../components/ui/common/Navbar";
-
 const Dashboard = () => {
 	const features = [
 		{
@@ -20,7 +14,6 @@ const Dashboard = () => {
 		},
 	];
 	return <div>
-		<Navbar />
 		<section className="text-center py-16 px-4">
 			<h1 className="text-4xl mb-4">
 				Everything you need
@@ -71,4 +64,4 @@ const Dashboard = () => {
 	</div>
 }
 
-export default Dashboard
+export default Dashboard;

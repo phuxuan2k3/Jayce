@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import logo from "/svg/logo.svg";
 import skillsharp from "/svg/skillsharp.svg";
-import { useAppSelector } from "../../../app/redux/hooks";
-import { selectIsAuthenticated, selectUserInfo } from "../../../app/redux/authSlice";
-import { useLogoutMutation } from "../../../features/Auth/authApi";
+import { useAppSelector } from "../app/redux/hooks";
+import { selectIsAuthenticated, selectUserInfo } from "../app/redux/authSlice";
+import { useLogoutMutation } from "../features/Auth/authApi";
 
 const NavBar = ({ showNav = true }: { showNav?: boolean; }) => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -84,6 +84,9 @@ const NavBar = ({ showNav = true }: { showNav?: boolean; }) => {
 									</button>
 									<div className={`transition-opacity duration-200 ${showQuestionsMenu ? "opacity-100 visible" : "opacity-0 invisible"}`}>
 										<div className="space-y-2">
+											<Link to="/test/list" className="block px-4 py-2 text-sm text-black bg-gray-100 rounded-md hover:bg-gray-200">
+												Candidate
+											</Link>
 											<a href="/test/list" className="block px-4 py-2 text-sm text-black bg-gray-100 rounded-md hover:bg-gray-200">
 												Candidate
 											</a>

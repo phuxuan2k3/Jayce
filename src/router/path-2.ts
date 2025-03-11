@@ -29,6 +29,9 @@ const paths2 = {
 			}
 		},
 	},
+	manager: {
+		ROOT: '/manager',
+	},
 }
 
 export default paths2;

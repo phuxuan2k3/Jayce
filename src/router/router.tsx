@@ -37,6 +37,9 @@ import PricingPage from "../pages/Profile/Candidate/PricingPage";
 import Dashboard from "../features/common/Dashboard/Dashboard";
 import paths2 from "./path-2";
 import TestsPage from "../features/Test/pages/Tests/page";
+import AuthLayout from "../components/layouts/AuthLayout";
+import UnauthLayout from "../components/layouts/UnauthLayout";
+import CandidateLayout from "../components/layouts/CandidateLayout";
 
 const router = createBrowserRouter([
 	{
@@ -44,6 +47,7 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: paths2.auth.ROOT,
+				element: <AuthLayout />,
 				children: [
 					{
 						path: paths2.auth.LOGIN,
@@ -57,6 +61,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: paths2.candidate.ROOT,
+				element: <CandidateLayout />,
 				children: [
 					{
 						path: paths2.candidate.tests.ROOT,
@@ -65,8 +70,14 @@ const router = createBrowserRouter([
 				]
 			},
 			{
-				index: true,
-				element: <Dashboard />
+				element: <UnauthLayout />,
+				children: [
+					{
+						path: paths2.ROOT,
+						element: <Dashboard />,
+						index: true
+					}
+				]
 			},
 
 

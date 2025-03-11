@@ -1,4 +1,4 @@
-import Navbar from "../../../components/ui/common/Navbar";
+import Navbar from "../../../trash/Navbar";
 import Carousel from "../components/Carousel";
 import RegisterForm from "./RegisterForm";
 

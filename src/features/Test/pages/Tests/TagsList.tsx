@@ -1,4 +1,4 @@
-import FetchState from "../../../../components/layouts/FetchState";
+import FetchState from "../../../../components/wrapper/FetchState";
 import GradientBorderGood from "../../../../components/ui/border/GradientBorder.good";
 import { GetTestsApiArg, useGetTagsQuery } from "../../api/test.api-gen";
 
