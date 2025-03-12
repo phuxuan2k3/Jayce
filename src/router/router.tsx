@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Login from "../pages/Authen/Login";
+import Interview from "../pages/Interview/Interview";
 import Dashboard from "../pages/Dashboard";
 import TestDo from "../pages/Test/Candidate/TestDo/TestDo";
 import { paths } from "./path"
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/",
-				element: <Dashboard />
+				element: <Interview />
 			},
 			{
 				path: paths.TEST.ROOT,
