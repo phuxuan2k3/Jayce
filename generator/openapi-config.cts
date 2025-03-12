@@ -3,7 +3,7 @@ import type { ConfigFile } from '@rtk-query/codegen-openapi'
 const testApiDirString = __dirname + "/../src/features/Test/api";
 
 const testApi: ConfigFile = {
-	schemaFile: `${testApiDirString}/swagger.json`,
+	schemaFile: `${testApiDirString}/openapi.json`,
 	apiFile: `${testApiDirString}/test.api.ts`,
 	apiImport: "testApi",
 	outputFile: `${testApiDirString}/test.api-gen.ts`,

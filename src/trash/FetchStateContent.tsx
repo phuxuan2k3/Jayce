@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { toErrorMessage } from "../../../helpers/fetchBaseQuery.error";
+import { toErrorMessage } from "../helpers/fetchBaseQuery.error";
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Alert from '@mui/material/Alert';

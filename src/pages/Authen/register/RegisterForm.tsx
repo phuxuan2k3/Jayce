@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../app/redux/hooks";
 import { selectIsAuthenticated } from "../../../app/redux/authSlice";
 import { toErrorMessage } from "../../../helpers/fetchBaseQuery.error";
-import LocalError from "../../../components/ui/error/LocalError";
+import AlertError from "../../../components/ui/error/AlertError";
 import LocalLoading from "../../../trash/LocalLoading";
 import LocalSuccess from "../../../trash/LocalSuccess";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
@@ -79,7 +79,7 @@ const RegisterForm = () => {
 		</div>
 
 		{isLoading && <LocalLoading />}
-		{errorMessage && <LocalError errorMessage={errorMessage} />}
+		{errorMessage && <AlertError errorMessage={errorMessage} />}
 		{successMessage && <LocalSuccess successMessage={successMessage} />}
 
 		<form onSubmit={handleFormSubmit} className="flex-col ">

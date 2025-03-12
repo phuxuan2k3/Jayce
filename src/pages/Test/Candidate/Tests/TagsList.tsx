@@ -1,6 +1,6 @@
 import FetchState from "../../../../components/wrapper/FetchState";
 import GradientBorderGood from "../../../../components/ui/border/GradientBorder.good";
-import { GetTestsApiArg, useGetTagsQuery } from "../../api/test.api-gen";
+import { GetTestsApiArg, useGetTagsQuery } from "../../../../features/Test/api/test.api-gen";
 
 type Props = {
 	filter: GetTestsApiArg;
@@ -31,7 +31,6 @@ export default function TagsList({ filter, setFilters }: Props) {
 			<FetchState
 				isLoading={isLoading}
 				error={error}
-				data={tags}
 			>
 				<div className="flex flex-wrap gap-2">
 					{tags?.map((tag) => {

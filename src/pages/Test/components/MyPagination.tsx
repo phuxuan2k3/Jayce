@@ -4,57 +4,58 @@ import { useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
 
 declare module '@mui/material/styles' {
-    interface Palette {
-        bluechill: Palette['primary'];
-    }
+	interface Palette {
+		bluechill: Palette['primary'];
+	}
 
-    interface PaletteOptions {
-        bluechill?: PaletteOptions['primary'];
-    }
+	interface PaletteOptions {
+		bluechill?: PaletteOptions['primary'];
+	}
 }
 
 declare module "@mui/material/Pagination" {
-    interface PaginationPropsColorOverrides {
-        bluechill: true;
-    }
+	interface PaginationPropsColorOverrides {
+		bluechill: true;
+	}
 }
 
 let theme = createTheme({});
 theme = createTheme({
-    palette: {
-        bluechill: theme.palette.augmentColor({
-            color: {
-                main: '#0C8990'
-            },
-            name: 'bluechill'
-        }),
-    }
+	palette: {
+		bluechill: theme.palette.augmentColor({
+			color: {
+				main: '#0C8990'
+			},
+			name: 'bluechill'
+		}),
+	}
 });
 
 type MyPaginationProps = {
-    totalPage: number;
-    initialPage?: number;
-    onPageChange?: (page: number) => void;
+	totalPage: number;
+	initialPage?: number;
+	onPageChange?: (page: number) => void;
 };
 
 const MyPagination: React.FC<MyPaginationProps> = ({ totalPage, initialPage, onPageChange }) => {
-    const [page, setPage] = useState(initialPage ?? 1);
-    const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
-        setPage(value);
-        if (onPageChange != null) {
-            onPageChange(value);
-        }
-    };
-    return (
-        <ThemeProvider theme={theme}>
-            <Pagination
-                count={totalPage}
-                page={page}
-                variant='outlined'
-                color="bluechill"
-                onChange={handleChange} />
-        </ThemeProvider>
-    );
+	const [page, setPage] = useState(initialPage ?? 1);
+	const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
+		setPage(value);
+		if (onPageChange != null) {
+			onPageChange(value);
+		}
+	};
+	return (
+		<ThemeProvider theme={theme}>
+			<Pagination
+				disabled={totalPage === 0}
+				count={totalPage}
+				page={page}
+				variant='outlined'
+				color="bluechill"
+				onChange={handleChange} />
+		</ThemeProvider>
+	);
 }
 
 

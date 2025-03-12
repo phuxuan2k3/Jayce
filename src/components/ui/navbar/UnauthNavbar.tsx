@@ -39,7 +39,7 @@ const UnauthNavbar = () => {
 						<img className="ml-3 hidden lg:block" src={skillsharp} alt="project name" />
 					</div>
 					<div className="hidden w-full sm:block">
-						<div className="flex flex-col mt-12 pt-20 sm:flex-row space-y-3 sm:space-y-0 sm:space-x-5 justify-center items-start">
+						<div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-5 justify-center items-start">
 							<Link to="#" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
 								Mock
 							</Link>

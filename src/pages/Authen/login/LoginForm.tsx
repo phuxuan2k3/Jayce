@@ -5,10 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useLoginMutation, useGoogleMutation } from "../../../features/Auth/authApi";
 import { toErrorMessage } from "../../../helpers/fetchBaseQuery.error";
 import LocalLoading from "../../../trash/LocalLoading";
-import LocalError from "../../../components/ui/error/LocalError";
-import { useEffect } from "react";
-import { useAppSelector } from "../../../app/redux/hooks";
-import { selectIsAuthenticated } from "../../../app/redux/authSlice";
+import AlertError from "../../../components/ui/error/AlertError";
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
@@ -18,13 +15,6 @@ const LoginForm = () => {
 	const [login, { isLoading, error }] = useLoginMutation();
 	const [google, { }] = useGoogleMutation();
 	const errorMessage = toErrorMessage(error as FetchBaseQueryError | SerializedError | undefined);
-
-	const isAuthenticated = useAppSelector(selectIsAuthenticated);
-	useEffect(() => {
-		if (isAuthenticated) {
-			navigate('/')
-		}
-	}, [isAuthenticated])
 
 	const handleFormSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -104,7 +94,7 @@ const LoginForm = () => {
 		</div>
 
 		{isLoading && <LocalLoading />}
-		{errorMessage && <LocalError errorMessage={errorMessage} />}
+		{errorMessage && <AlertError errorMessage={errorMessage} />}
 
 		<form onSubmit={handleFormSubmit} className="flex-col ">
 			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">

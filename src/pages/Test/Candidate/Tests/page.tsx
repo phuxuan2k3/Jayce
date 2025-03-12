@@ -4,7 +4,7 @@ import FilterModal from "./FilterModal";
 import TestList from "./TestList/comp";
 import TagsList from "./TagsList";
 import Header from "./Header";
-import { GetTestsApiArg } from "../../api/test.api-gen";
+import { GetTestsApiArg } from "../../../../features/Test/api/test.api-gen";
 
 const TestsPage: React.FC = () => {
 	const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);

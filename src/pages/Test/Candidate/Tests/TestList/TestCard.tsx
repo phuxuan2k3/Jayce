@@ -7,9 +7,9 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { toCompanyImagesDir } from "../../../../../helpers/images";
 import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { GetTestsApiResponse } from "../../../api/test.api-gen";
 import paths2 from "../../../../../router/path-2";
 import GradientBorderGood from "../../../../../components/ui/border/GradientBorder.good";
+import { GetTestsApiResponse } from "../../../../../features/Test/api/test.api-gen";
 
 type Props = GetTestsApiResponse['data'][0] & {
 	company: string;

@@ -8,8 +8,8 @@ import {
 	Checkbox,
 	Slider,
 } from "@mui/material";
-import { GetTestsApiArg } from "../../api/test.api-gen";
 import Modal from "../../../../components/ui/common/Modal";
+import { GetTestsApiArg } from "../../../../features/Test/api/test.api-gen";
 
 interface Props {
 	open: boolean;

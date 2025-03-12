@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { paths } from "../../../../router/path";
 import { useGetTestViewAnswersPageDataQuery, useLazyGetAnswersQuery } from "./viewanswer.test-api";
 import { bufferTestViewAnswerData, FilterQuestionAnswerParams } from "./types";
-import FetchStateContent from "../../components/FetchStateContent";
+import FetchStateContent from "../../../../trash/FetchStateContent";
 import { useEffect, useState } from "react";
 import MyPagination from "../../components/MyPagination";
 

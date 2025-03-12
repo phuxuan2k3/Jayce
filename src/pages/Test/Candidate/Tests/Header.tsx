@@ -1,6 +1,6 @@
 import { TextField, InputAdornment } from "@mui/material";
 import { SearchIcon } from "lucide-react";
-import { GetTestsApiArg } from "../../api/test.api-gen";
+import { GetTestsApiArg } from "../../../../features/Test/api/test.api-gen";
 
 type Props = {
 	setFilters: React.Dispatch<React.SetStateAction<GetTestsApiArg>>;

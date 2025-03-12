@@ -1,7 +1,7 @@
 import { Alert } from '@mui/material';
 import React from 'react';
 
-const LocalError: React.FC<{ errorMessage: string }> = ({ errorMessage }: { errorMessage: string }) => {
+const AlertError: React.FC<{ errorMessage: string }> = ({ errorMessage }: { errorMessage: string }) => {
 	return (
 		<Alert
 			sx={{
@@ -14,4 +14,4 @@ const LocalError: React.FC<{ errorMessage: string }> = ({ errorMessage }: { erro
 	);
 };
 
-export default LocalError;
+export default AlertError;
