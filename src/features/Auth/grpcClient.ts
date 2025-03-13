@@ -91,7 +91,7 @@ export const grpcSignInGoogle = (credential: string): Promise<bulbasaur.SignInRe
 export const grpcMe = (access_token: string): Promise<bulbasaur.MeResponse> => {
     return new Promise((resolve, reject) => {
         const request = new Empty();
-
+        console.log("test grpc:",access_token);
         const metadata: Metadata = {
             Authorization: `Bearer ${access_token}`,
         };
