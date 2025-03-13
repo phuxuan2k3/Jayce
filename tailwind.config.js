@@ -76,7 +76,7 @@ export default {
 	},
 	plugins: [
 		require("daisyui"),
-		
+
 		function ({ addUtilities }) {
 			addUtilities({
 				'.accent-primary': {
@@ -149,8 +149,9 @@ export default {
 			});
 		},
 	],
-	daisyui:{
-		themes:["light"],
+	daisyui: {
+		themes: ["light", "dark"],
+		defaultTheme: "light",
 	},
 	important: true,
 	corePlugins: {
