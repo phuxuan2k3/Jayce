@@ -21,7 +21,7 @@ const paths2 = {
 				}
 			},
 			attempts: {
-				ROOT: '/candidate/attempts',
+				// ROOT: '/candidate/attempts', // todo: add this page
 				in(id: number | string = ":attemptId") {
 					return {
 						ROOT: `/candidate/attempts/${id}`,
