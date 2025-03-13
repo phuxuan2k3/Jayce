@@ -32,7 +32,7 @@ theme = createTheme({
 });
 
 type MyPaginationProps = {
-	totalPage: number;
+	totalPage?: number;
 	initialPage?: number;
 	onPageChange?: (page: number) => void;
 };
@@ -48,8 +48,8 @@ const MyPagination: React.FC<MyPaginationProps> = ({ totalPage, initialPage, onP
 	return (
 		<ThemeProvider theme={theme}>
 			<Pagination
-				disabled={totalPage === 0}
-				count={totalPage}
+				disabled={!totalPage || totalPage === 0}
+				count={totalPage ?? 0}
 				page={page}
 				variant='outlined'
 				color="bluechill"

@@ -9,7 +9,6 @@ import paths2 from '../../../../router/path-2';
 import { AttemptAnswer } from '../../../../features/Test/types/current';
 import FetchState from '../../../../components/wrapper/FetchState';
 
-
 const TestDoPage = () => {
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 	const [answers, setAnswers] = useState<AttemptAnswer[]>([]);

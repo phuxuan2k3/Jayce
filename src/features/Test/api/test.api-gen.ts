@@ -172,8 +172,6 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/attempts/${queryArg.attemptId}/answers`,
         params: {
-          sortByStartDate: queryArg.sortByStartDate,
-          sortByScore: queryArg.sortByScore,
           page: queryArg.page,
           perPage: queryArg.perPage,
         },
@@ -424,6 +422,7 @@ export type GetTestsByTestIdAttemptsApiResponse = /** status 200 Success */ {
     startDate: string;
     timeSpent: number;
     score: number;
+    totalScore: number;
   }[];
 };
 export type GetTestsByTestIdAttemptsApiArg = {
@@ -446,6 +445,7 @@ export type GetAttemptsByAttemptIdApiResponse = /** status 200 Success */ {
   startDate: string;
   timeSpent: number;
   score: number;
+  totalScore: number;
   totalCorrectAnswers: number;
   totalWrongAnswers: number;
   totalQuestions: number;
@@ -467,13 +467,11 @@ export type GetAttemptsByAttemptIdAnswersApiResponse =
         points: number;
         correctOption: number;
       };
-      chosenOption: number;
+      chosenOption: number | null;
     }[];
   };
 export type GetAttemptsByAttemptIdAnswersApiArg = {
   attemptId?: number | null;
-  sortByStartDate?: "asc" | "desc";
-  sortByScore?: "asc" | "desc";
   page: number;
   perPage?: number;
 };
@@ -495,6 +493,7 @@ export type GetCandidateAttemptsApiResponse = /** status 200 Success */ {
     startDate: string;
     timeSpent: number;
     score: number;
+    totalScore: number;
   }[];
 };
 export type GetCandidateAttemptsApiArg = {
@@ -522,6 +521,7 @@ export type GetCandidateTestsByTestIdAttemptsApiResponse =
       startDate: string;
       timeSpent: number;
       score: number;
+      totalScore: number;
     }[];
   };
 export type GetCandidateTestsByTestIdAttemptsApiArg = {

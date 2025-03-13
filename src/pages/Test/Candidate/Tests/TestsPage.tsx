@@ -14,9 +14,7 @@ const TestsPage: React.FC = () => {
 
 	return (
 		<div className="p-6 max-w-7xl mx-auto">
-
 			<Header setFilters={setFilters} />
-
 			<main className="grid grid-cols-1 md:grid-cols-3 gap-6">
 				{/* Left column */}
 				<div className="col-span-2">

@@ -6,7 +6,7 @@ import Layout from "../pages/Test/components/Layout";
 import TestEvaluate from "../pages/Test/Candidate/TestEvaluate/TestEvaluate";
 import ErrorPage from "../components/pages/ErrorPage";
 import TestSchedule from "../pages/Test/Candidate/TestSchedule/TestSchedule";
-import TestViewAnswer from "../pages/Test/Candidate/TestViewAnswer/TestViewAnswer";
+import AttemptDetailPage from "../pages/Test/Candidate/AttemptDetail/AttemptDetailPage";
 import TestSubmissionListView from "../pages/Test/BusinessManager/TestSubmissionListView/TestSubmissionListView";
 import TestSubmissionDetail from "../pages/Test/BusinessManager/TestSubmissionDetail/TestSubmissionDetail";
 import TestListView from "../pages/Test/BusinessManager/TestListView/TestListView";
@@ -41,10 +41,10 @@ import AuthLayout from "../components/layouts/AuthLayout";
 import UnauthLayout from "../components/layouts/UnauthLayout";
 import CandidateLayout from "../components/layouts/CandidateLayout";
 import DashboardPage from "../pages/common/DashboardPage";
-import TestsPage from "../pages/Test/Candidate/Tests/page";
+import TestsPage from "../pages/Test/Candidate/Tests/TestsPage";
 import CurrentTestLayout from "../features/Test/layouts/current-test-layout";
-import TestDoPage from "../pages/Test/Candidate/TestDo/page";
-import TestAttemtpsPage from "../pages/Test/Candidate/TestAttempts/page";
+import TestDoPage from "../pages/Test/Candidate/TestDo/TestDoPage";
+import TestAttemtpsPage from "../pages/Test/Candidate/TestAttempts/TestAttemptsPage";
 import React from "react";
 
 
@@ -95,7 +95,7 @@ const router = createBrowserRouter([{
 		},
 		{
 			path: paths2.candidate.tests.attempts.in(":attemptId").ROOT,
-			element: <TestViewAnswer />
+			element: <AttemptDetailPage />
 		}]
 	},
 	{
@@ -137,7 +137,7 @@ const router = createBrowserRouter([{
 		children: [
 			{
 				path: paths.TEST.VIEWANSWER,
-				element: <TestViewAnswer />
+				element: <AttemptDetailPage />
 			},
 			{
 				path: paths.TEST.SUBMISSION.ROOT,
