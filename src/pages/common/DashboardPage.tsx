@@ -1,4 +1,4 @@
-const Dashboard = () => {
+const DashboardPage = () => {
 	const features = [
 		{
 			title: "Courses that you need to get the job",
@@ -64,4 +64,4 @@ const Dashboard = () => {
 	</div>
 }
 
-export default Dashboard;
+export default DashboardPage;

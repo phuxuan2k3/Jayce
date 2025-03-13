@@ -54,22 +54,16 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean; }) => {
 						<img className="ml-3 hidden lg:block" src={skillsharp} alt="project name" />
 					</div>
 					{showNav && (
-						<div className="hidden w-full sm:block">
-							<div className="flex flex-col pt-20 sm:flex-row space-y-3 sm:space-y-0 sm:space-x-5 justify-center items-start">
-								<Link to="/ipractice/pick" className="w-full sm:w-auto space-y-2 block px-4 py-2 text-sm text-black bg-gray-100 rounded-md hover:bg-gray-200">
-									Scenario
-								</Link>
-							</div>
-							<div className="w-full sm:w-auto space-y-2">
-								<Link to="/test/list" className="block px-4 py-2 text-sm text-black bg-gray-100 rounded-md hover:bg-gray-200">
-									Tests
-								</Link>
-							</div>
-
+						<div className="hidden w-full sm:flex sm:ml-10 sm:space-x-6 items-center justify-start">
+							<Link to="/ipractice/pick" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
+								Scenario
+							</Link>
+							<Link to={paths2.candidate.tests.ROOT} className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
+								Tests
+							</Link>
 							<Link to="/mock" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
 								Mock
 							</Link>
-
 							<Link to="/pricing" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
 								Pricing
 							</Link>
@@ -88,10 +82,11 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean; }) => {
 									onClick={toggleProfileMenu}
 								/>
 								{isMenuOpen && (
-									<div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
+									<div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-50">
 										<Link to="/profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Profile</Link>
 										<Link to="/settings" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Settings</Link>
 										<button
+											type="button"
 											onClick={handleLogout}
 											className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"
 										>

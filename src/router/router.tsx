@@ -35,7 +35,7 @@ import paths2 from "./path-2";
 import AuthLayout from "../components/layouts/AuthLayout";
 import UnauthLayout from "../components/layouts/UnauthLayout";
 import CandidateLayout from "../components/layouts/CandidateLayout";
-import Dashboard from "../pages/common/Dashboard";
+import DashboardPage from "../pages/common/DashboardPage";
 import TestsPage from "../pages/Test/Candidate/Tests/page";
 import CurrentTestLayout from "../features/Test/layouts/current-test-layout";
 import TestDoPage from "../pages/Test/Candidate/TestDo/page";
@@ -59,6 +59,10 @@ const router = createBrowserRouter([{
 		path: paths2.candidate.ROOT,
 		element: <CandidateLayout />,
 		children: [{
+			path: paths2.candidate.ROOT,
+			element: <DashboardPage />
+		},
+		{
 			path: paths2.candidate.tests.ROOT,
 			element: <TestsPage />
 		},
@@ -73,6 +77,9 @@ const router = createBrowserRouter([{
 				path: paths2.candidate.tests.in(":id").ATTEMPTS,
 				element: <TestAttemtpsPage />
 			}]
+		},
+		{
+			path: paths2.candidate.tests.in(":id").RECOMMENDATION,
 		}]
 	},
 	{
@@ -81,7 +88,7 @@ const router = createBrowserRouter([{
 		children: [
 			{
 				path: paths2.ROOT,
-				element: <Dashboard />,
+				element: <DashboardPage />,
 				index: true
 			}
 		]
@@ -90,18 +97,7 @@ const router = createBrowserRouter([{
 
 	// Old paths
 
-	{
-		path: paths.REGISTER,
-		element: <Register />,
-	},
-	{
-		path: paths.LOGIN,
-		element: <Login />
-	},
-	{
-		path: "/",
-		element: <Dashboard />
-	},
+
 	{
 		path: paths.TEST.ROOT,
 		element: <Layout />,
