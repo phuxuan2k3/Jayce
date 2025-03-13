@@ -1,6 +1,11 @@
 	export const paths = {
 		REGISTER: '/register',
 		LOGIN: '/login',
+		SUGGESTION: '/suggestion',
+		ROLE: '/role',
+		COMPANY: '/company',
+		RESET: '/reset',
+		NEWPASS: '/newpass',
 		HOME: '/',
 		TEST: {
 			ROOT: '/test',

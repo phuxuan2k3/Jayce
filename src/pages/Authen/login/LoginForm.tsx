@@ -104,7 +104,7 @@ const LoginForm = () => {
 				<input className="w-full p-4 rounded-lg" type="password" name="password" id="password" placeholder="Password" />
 			</GradientBorder>
 			<div className="w-full p-2 mt-14 text-center">
-				Forgot your password? <a className="text-[var(--primary-color)]" href="#reset">Reset it here.</a>
+				Forgot your password? <a className="text-[var(--primary-color)]" href="/reset">Reset it here.</a>
 			</div>
 			<button type="submit" className="w-full bg-[var(--primary-color)] text-lg font-bold text-white p-4 rounded-lg m-1">
 				Login <FontAwesomeIcon icon={faArrowRight} />

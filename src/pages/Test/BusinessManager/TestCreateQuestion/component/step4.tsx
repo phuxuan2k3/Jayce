@@ -30,6 +30,8 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
 	const [tempTestField, setTempTestField] = useState('');
 	const [tempTestDuration, setTempTestDuration] = useState('');
 	const [tempTestDifficulty, setTempTestDifficulty] = useState('');
+	const [edit, setEdit] = useState(false);
+	const [isEditing, setIsEditing] = useState<number>(-1);
 	useEffect(() => {
 		const savedData = localStorage.getItem('testInfo');
 		if (savedData) {
@@ -142,11 +144,11 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
 
 
 
-	const handleDeleteQuestion = (index: number) => {
-		const updatedQuestions = questionList.filter((_, i) => i !== index);
-		setQuestionList(updatedQuestions);
-	};
-	const [edit, setEdit] = useState(false);
+	// const handleDeleteQuestion = (index: number) => {
+	//     const updatedQuestions = questionList.filter((_, i) => i !== index);
+	//     setQuestionList(updatedQuestions);
+	// };
+	// const [edit, setEdit] = useState(false);
 
 
 
@@ -165,7 +167,7 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
 
 
 	return (
-		<div className="bg-gray-100 ">
+		<div className="relative">
 			<div className="font-arya  pt-12 flex gap-2 items-center  justify-center">
 				<div className="flex items-center gap-2 text-[24px]">
 					<div className="bg-[var(--primary-color)] rounded-3xl h-10 w-10  text-white font-bold text-center">
@@ -215,7 +217,7 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
 									Tilte
 								</span>
 								{!edit ? (<span className="w-96 ">{testName}</span>)
-									: (<input className="w-96 p-1 rounded-md px-2" type="text " value={tempTestName} onChange={(e) => setTempTestName(e.target.value)} />)}
+									: (<input className="border w-96 p-1 rounded-md px-2" type="text " value={tempTestName} onChange={(e) => setTempTestName(e.target.value)} />)}
 								{!edit ? (<FontAwesomeIcon className="ms-3 w-5 h-5 cursor-pointer" icon={faEdit} onClick={() => setEdit(true)} />)
 									: (<div>
 										<FontAwesomeIcon className="ms-3 w-5 h-5 cursor-pointer" icon={faCheck}
@@ -232,7 +234,7 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
 									Description
 								</span>
 								{!edit ? (<span className="w-96 ">{testDescription}</span>)
-									: (<input className="w-96  p-1 rounded-md px-2" type="text " value={tempTestDescription} onChange={(e) => setTempTestDescription(e.target.value)} />)}
+									: (<input className="border w-96  p-1 rounded-md px-2" type="text " value={tempTestDescription} onChange={(e) => setTempTestDescription(e.target.value)} />)}
 
 							</div>
 							<div className="flex">
@@ -240,7 +242,7 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
 									Fields
 								</span>
 								{!edit ? (<span className="w-96 ">{testField}</span>)
-									: (<input className="w-96  p-1 rounded-md px-2" type="text " value={tempTestField} onChange={(e) => setTempTestField(e.target.value)} />)}
+									: (<input className="border w-96  p-1 rounded-md px-2" type="text " value={tempTestField} onChange={(e) => setTempTestField(e.target.value)} />)}
 
 
 							</div>
@@ -249,7 +251,7 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
 									Duration
 								</span>
 								{!edit ? (<span className="w-96 ">{testDuration}</span>)
-									: (<input className="w-96  p-1 rounded-md px-2" type="text " value={tempTestDuration} onChange={(e) => setTempTestDuration(e.target.value)} />)}
+									: (<input className="border w-96  p-1 rounded-md px-2" type="text " value={tempTestDuration} onChange={(e) => setTempTestDuration(e.target.value)} />)}
 
 
 							</div>
@@ -258,7 +260,7 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
 									Difficulty
 								</span>
 								{!edit ? (<span className="w-96 ">{testDifficulty}</span>)
-									: (<input className="w-96  p-1 rounded-md px-2" type="text " value={tempTestDifficulty} onChange={(e) => setTempTestDifficulty(e.target.value)} />)}
+									: (<input className="border w-96  p-1 rounded-md px-2" type="text " value={tempTestDifficulty} onChange={(e) => setTempTestDifficulty(e.target.value)} />)}
 
 
 							</div>
@@ -280,7 +282,7 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
 									<div className="w-11/12 mb-4">
 										<GradientBorderNotGood className="w-full h-fit font-semibold">
 											<input
-												type="text"
+												type="text" disabled={index !== isEditing}
 												value={question.text}
 												onChange={(e) => handleQuestionChange(index, e.target.value)}
 												className="w-full bg-transparent border-none outline-none"
@@ -295,21 +297,22 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
 												<div className="flex items-center justify-between">
 													<span className="mr-2">{String.fromCharCode(97 + optIndex)}.</span>
 													<input
-														type="text"
+														type="text" disabled={index !== isEditing}
 														value={option}
 														onChange={(e) => handleOptionChange(index, optIndex, e.target.value)}
 														className="flex-grow bg-transparent border-none outline-none"
 													/>
 													<FontAwesomeIcon
 														icon={faXmark}
-														className="w-fit text-gray-500 cursor-pointer ml-2"
+														className={`w-fit text-gray-500 cursor-pointer ml-2 ${index !== isEditing ? "pointer-events-none opacity-50" : ""
+															}`}
 														onClick={() => handleDeleteOption(index, optIndex)}
 													/>
 												</div>
 											</GradientBorderNotGood>
 											<div className="w-1/12 flex items-center justify-center">
 												<input
-													type="radio"
+													type="radio" disabled={index !== isEditing}
 													name={`question-${index}`}
 													checked={question.correctAnswer === optIndex}
 													onChange={() => handleAnswerSelect(index, optIndex)}
@@ -318,9 +321,9 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
 											</div>
 										</div>
 									))}
-									<div className="text-sm text-gray-500 mt-4 cursor-pointer" onClick={() => handleAddOption(index)}>
-										<span className="font-semibold text-[var(--primary-color)] underline">+ Add option</span>
-									</div>
+									{/* <div className="text-sm text-gray-500 mt-4 cursor-pointer" onClick={() => handleAddOption(index)}>
+                                        <span className="font-semibold text-[var(--primary-color)] underline">+ Add option</span>
+                                    </div> */}
 								</div>
 
 								{/* Points */}
@@ -333,34 +336,22 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
 											onChange={(e) => handlePointChange(index, parseInt(e.target.value) || 0)}
 											min="0"
 											step="1"
+											disabled={index !== isEditing}
 										/>
 									</GradientBorderNotGood>
-									<FontAwesomeIcon className="w-5 h-5 cursor-pointer" icon={faEdit} onClick={() => handleDeleteQuestion(index)} />
+									<FontAwesomeIcon className={`"w-5 h-5 cursor-pointer" ${isEditing === index ? "bg-[var(--primary-color)] p-1 rounded-lg" : ""}`} icon={faEdit} onClick={() => setIsEditing(index)} />
 								</div>
 							</div>
 						))}
-
-
 					</div>
 				</div>
-
-				{/* <div className="flex flex-col">
-                    {submitError && <div className="text-center text-red-500 mb-8">{submitError}</div>}
-                    <div className="flex flex-row justify-center space-x-10">
-                        <button className="w-fit px-3 font-semibold rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleBack} disabled={isCreating}>
-                            Back
-                        </button>
-                        <button className="w-fit px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={()=>{handleSave(),onNext()}} disabled={isCreating}>
-                            {isCreating ? "Creating..." : "Save"}
-                        </button>
-                    </div>
-                </div> */}
 			</div>
 			<div className="pb-12 flex justify-center ">
 				<button className="bg-[var(--primary-color)] text-white rounded-md py-1 px-10 " onClick={onNext}>
 					Publish test
 				</button>
 			</div>
+			<div className="absolute top-10 right-10"><img className="w-4" src="https://cdn-icons-png.flaticon.com/512/566/566013.png" alt="" /></div>
 
 		</div>
 	)
