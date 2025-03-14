@@ -39,6 +39,12 @@ export function toErrorMessage(error: FetchBaseQueryError | SerializedError | un
 			else if (error.status === 401) {
 				return 'Unauthorized';
 			}
+			else if (error.status === 500) {
+				return 'Internal Server Error';
+			}
+			else if (error.status === 400) {
+				return 'Bad Request: ' + (error.data as any).message || 'An error occurred';
+			}
 			return 'error' in error ? error.error : JSON.stringify(error.data)
 		} else if (isErrorWithMessage(error)) {
 			return error.message
