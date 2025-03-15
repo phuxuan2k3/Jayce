@@ -1,4 +1,4 @@
-import loginAPI from "../../../features/Test/AI.api";
+import loginAPI from "../../../features/Test/login.api";
 const resetAPI = loginAPI.injectEndpoints({
 	endpoints: (builder) => ({
 		

@@ -12,31 +12,40 @@ import LocalLoading from "../../../components/LocalLoading";
 import LocalSuccess from "../../../components/LocalSuccess";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
+import { useVerificationEmailMutation } from "./register.api";
 
 const RegisterForm = () => {
 	const navigate = useNavigate();
 	const [register, { isLoading, error }] = useRegisterMutation();
 	const errorMessage = toErrorMessage(error as FetchBaseQueryError | SerializedError | undefined);
 	const [successMessage, setSuccessMessage] = useState<string | null>(null);
-
+	const [isOpenModal, setIsOpenModal] = useState(false);
+	const [verificationEmail] = useVerificationEmailMutation();
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
+	const [otp, setOtp] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [username, setUsername] = useState("");
 	useEffect(() => {
 		if (isAuthenticated) {
 			navigate('/')
 		}
 	}, [isAuthenticated])
 
-	const handleFormSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void> = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		setSuccessMessage(null);
-		const formData = new FormData(e.target as HTMLFormElement);
-		const email = formData.get('email') as string;
-		const password = formData.get('password') as string;
-		const username = formData.get('username') as string;
-
+	const handleFormSubmit=async() => {
 		try {
-			await register({ username, email, password, confirm_password: password });
-
+			alert(password);
+			await register({
+				local: {
+					username,
+					email,
+					password:password,
+					confirm_password: password,
+					otp, 
+				},
+				metadata: "", 
+				role: 1
+			});
 			if (error === null) {
 				navigate('/')
 			}
@@ -44,7 +53,22 @@ const RegisterForm = () => {
 			console.log("Register failed:", error);
 		}
 	}
-
+	const handleVerifyEmail = async () => {
+		console.log('1');
+		if (!email) {
+			console.log('2');
+			alert("Please enter your email.");
+			return;
+		}
+		try {
+		console.log('3');
+			await verificationEmail({ email }).unwrap();
+			alert("Verification email sent successfully!");
+			setIsOpenModal(true);
+		} catch (error) {
+			console.error("Verification failed:", error);
+		}
+	};
 	const toLogin = () => {
 		navigate('/login')
 	}
@@ -82,23 +106,37 @@ const RegisterForm = () => {
 		{errorMessage && <LocalError errorMessage={errorMessage} />}
 		{successMessage && <LocalSuccess successMessage={successMessage} />}
 
-		<form onSubmit={handleFormSubmit} className="flex-col ">
+		<div className="flex-col ">
+			{username} - {email} - {password}
 			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">
-				<input className="w-full p-4 rounded-lg" name="username" id="username" placeholder="Username" />
+				<input className="w-full p-4 rounded-lg" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
 			</GradientBorder>
 			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">
-				<input className="w-full p-4 rounded-lg" name="email" id="email" placeholder="Email Address" />
+				<input className="w-full p-4 rounded-lg" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} />
 			</GradientBorder>
 			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">
-				<input className="w-full p-4 rounded-lg" type="password" name="password" id="password" placeholder="Password" />
+				<input className="w-full p-4 rounded-lg" type="password" placeholder="Password" value={password}  onChange={(e) => setPassword(e.target.value)} />
 			</GradientBorder>
-			<button type="submit" className="mt-20 w-full bg-[var(--primary-color)] text-lg font-bold text-white p-4 rounded-lg ">
+			<button onClick={() => { handleVerifyEmail() }} className="mt-20 w-full bg-[var(--primary-color)] text-lg font-bold text-white p-4 rounded-lg ">
 				Sign Up <FontAwesomeIcon icon={faArrowRight} />
 			</button>
 			<div className="w-full p-4 text-center">
 				By creating an account, you agree to our <a className="text-[var(--primary-color)]" href="#reset">terms of service and privacy policy</a>.
 			</div>
-		</form>
+		</div>
+		{isOpenModal &&
+			(<div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+				<div className="bg-white w-96 p-6 rounded-lg shadow-lg">
+					<span>OTP</span><input type="text" className="w-full border" value={otp} onChange={(e)=>setOtp(e.target.value)} />
+					<div className="flex  gap-1 mt-4">
+						<button onClick={() => setIsOpenModal(false)} className="w-1/2 px-4 py-2 bg-gray-200 rounded-md">Cancel</button>
+						<button onClick={()=>handleFormSubmit()} className=" text-center w-1/2 px-4 py-2 bg-[var(--primary-color)] text-white rounded-md ">Submit</button>
+					</div>
+				</div>
+
+			</div>)
+		}
+
 	</div>
 }
 

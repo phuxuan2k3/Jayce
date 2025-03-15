@@ -158,7 +158,7 @@ export const Step2: React.FC<Step1Props> = ({ onNext }) => {
                         </div>
         
                         <div className="flex  gap-1 mt-4">
-                            <button  className="w-1/2 px-4 py-2 bg-gray-200 rounded-md">Cancel</button>
+                            <button onClick={()=>setIsModalOpen(false)} className="w-1/2 px-4 py-2 bg-gray-200 rounded-md">Cancel</button>
                             <button
                                 onClick={()=>handleSave()}
                                 className=" text-center w-1/2 px-4 py-2 bg-[var(--primary-color)] text-white rounded-md "> Save </button>

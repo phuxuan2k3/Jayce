@@ -14,7 +14,15 @@ const baseQuery = fetchBaseQuery({
 export const loginAPI = createApi({
     reducerPath: 'loginAPI',
     baseQuery: baseQuery,
-    endpoints: () => ({}),
+    endpoints: (builder) => ({
+		verificationEmail: builder.mutation<void, { email: string }>({
+			query: ({ email }) => ({
+				url: `/account/verify/email`,
+				method: "POST",
+				body: {email },
+			})
+		})
+	}),
 });
 
 export default loginAPI;
