@@ -5,7 +5,7 @@
 		ROLE: '/role',
 		COMPANY: '/company',
 		RESET: '/reset',
-		NEWPASS: '/newpass',
+		NEWPASS: '/resetpassword',
 		HOME: '/',
 		TEST: {
 			ROOT: '/test',

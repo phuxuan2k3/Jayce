@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import Navbar from "../../../components/Navbar";
 import logo from "/svg/logo.svg";
 import { useSearchParams } from "react-router-dom";
-import { useResetPasswordMutation, useVerifyResetCodeMutation } from "./newpass.api";
+import { useResetPasswordMutation, useVerifyResetCodeMutation } from "../register/register.api";
 export default function NewPassword() {
     const [email, setEmail] = useState("");
     const [searchParams] = useSearchParams();
-    const resetCodeFromURL = searchParams.get("resetcode") || "";
+    const resetCodeFromURL = searchParams.get("key") || "";
     const [resetCode, setResetCode] = useState(resetCodeFromURL);
     const [newPassword, setNewPassword] = useState("");
     const [verifyResetCode] = useVerifyResetCodeMutation();
@@ -14,6 +14,7 @@ export default function NewPassword() {
 
     const handleVerifyResetCode = async (code: string) => {
         try {
+            alert(resetCode);
             const response = await verifyResetCode({ resetCode: code }).unwrap();
             setEmail(response.email);
         } catch (error) {

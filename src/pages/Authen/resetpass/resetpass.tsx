@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Navbar from "../../../components/Navbar";
 import logo from "/svg/logo.svg";
-import { useResetPasswordMutation } from "./resetpass-api";
+import { useReqResetPasswordMutation } from "../register/register.api";
 export default function ResetPassword() {
     const [submitted, setSubmitted] = useState(false);
     const [email, setEmail] = useState("");
-    const [resetPassword] = useResetPasswordMutation();
+    const [resetPassword] = useReqResetPasswordMutation();
     const handleResetPassword = async () => {
         try {
           await resetPassword({ email }).unwrap();
