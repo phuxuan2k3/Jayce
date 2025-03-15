@@ -20,7 +20,16 @@ export const grpcSignUp = (local:any,metadata:any,role:number): Promise<bulbasau
         localCredentials.otp = local.otp;
         signUpRequest.local = localCredentials;
         signUpRequest.role =role;
-        signUpRequest.metadata = metadata;
+        console.log('request1',signUpRequest.local);
+        const metadata1= new bulbasaur.metadata();
+        metadata1.fullname=metadata.fullname;
+        metadata1.company=metadata.company;
+        metadata1.country=metadata.country;
+        metadata1.avatarPath=metadata.avatarPath;
+        metadata1.jobTitle=metadata.jobTitle;
+
+        signUpRequest.metadata = metadata1;
+        console.log('request',signUpRequest.local);
 
         client.SignUp(signUpRequest, null, (err: Error | null, response: bulbasaur.SignUpResponse) => {
             if (err) {

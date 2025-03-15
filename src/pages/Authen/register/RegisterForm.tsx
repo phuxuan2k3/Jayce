@@ -32,18 +32,24 @@ const RegisterForm = () => {
 		}
 	}, [isAuthenticated])
 
-	const handleFormSubmit=async() => {
+	const handleFormSubmit = async () => {
 		try {
 			alert(password);
 			await register({
 				local: {
 					username,
 					email,
-					password:password,
+					password: password,
 					confirm_password: password,
-					otp, 
+					otp,
 				},
-				metadata: "", 
+				metadata: {
+					fullname: "I Am Miboy",
+					company: "Cty",
+					country: "Viet Nam",
+					jobTitle: "CEO",
+					avatarPath: "https://thumbs.dreamstime.com/b/female-avatar-icon-women-clipart-png-vector-girl-avatar-women-clipart-bor-bisiness-icon-png-vector-233362315.jpg"
+				},
 				role: 1
 			});
 			if (error === null) {
@@ -61,7 +67,7 @@ const RegisterForm = () => {
 			return;
 		}
 		try {
-		console.log('3');
+			console.log('3');
 			await verificationEmail({ email }).unwrap();
 			alert("Verification email sent successfully!");
 			setIsOpenModal(true);
@@ -109,13 +115,13 @@ const RegisterForm = () => {
 		<div className="flex-col ">
 			{username} - {email} - {password}
 			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">
-				<input className="w-full p-4 rounded-lg" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+				<input className="w-full p-4 rounded-lg" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
 			</GradientBorder>
 			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">
 				<input className="w-full p-4 rounded-lg" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} />
 			</GradientBorder>
 			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">
-				<input className="w-full p-4 rounded-lg" type="password" placeholder="Password" value={password}  onChange={(e) => setPassword(e.target.value)} />
+				<input className="w-full p-4 rounded-lg" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
 			</GradientBorder>
 			<button onClick={() => { handleVerifyEmail() }} className="mt-20 w-full bg-[var(--primary-color)] text-lg font-bold text-white p-4 rounded-lg ">
 				Sign Up <FontAwesomeIcon icon={faArrowRight} />
@@ -127,10 +133,10 @@ const RegisterForm = () => {
 		{isOpenModal &&
 			(<div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
 				<div className="bg-white w-96 p-6 rounded-lg shadow-lg">
-					<span>OTP</span><input type="text" className="w-full border" value={otp} onChange={(e)=>setOtp(e.target.value)} />
+					<span>OTP</span><input type="text" className="w-full border" value={otp} onChange={(e) => setOtp(e.target.value)} />
 					<div className="flex  gap-1 mt-4">
 						<button onClick={() => setIsOpenModal(false)} className="w-1/2 px-4 py-2 bg-gray-200 rounded-md">Cancel</button>
-						<button onClick={()=>handleFormSubmit()} className=" text-center w-1/2 px-4 py-2 bg-[var(--primary-color)] text-white rounded-md ">Submit</button>
+						<button onClick={() => handleFormSubmit()} className=" text-center w-1/2 px-4 py-2 bg-[var(--primary-color)] text-white rounded-md ">Submit</button>
 					</div>
 				</div>
 
