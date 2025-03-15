@@ -2,19 +2,22 @@ import { useState } from "react";
 import Navbar from "../../../components/Navbar";
 import logo from "/svg/logo.svg";
 import { useReqResetPasswordMutation } from "../register/register.api";
+import GradientBorder from "../../../components/GradientBorder";
+import { useNavigate } from "react-router-dom";
 export default function ResetPassword() {
     const [submitted, setSubmitted] = useState(false);
     const [email, setEmail] = useState("");
     const [resetPassword] = useReqResetPasswordMutation();
+    const navigate=useNavigate();
     const handleResetPassword = async () => {
         try {
-          await resetPassword({ email }).unwrap();
-          alert("Password reset email sent! Please check your inbox.");
+            await resetPassword({ email }).unwrap();
+            alert("Password reset email sent! Please check your inbox.");
         } catch (error) {
-          console.error("Reset password failed:", error);
-          alert("Failed to send reset password email. Try again.");
+            console.error("Reset password failed:", error);
+            alert("Failed to send reset password email. Try again.");
         }
-      };
+    };
     return (
         <div className="min-h-screen flex flex-col">
             <Navbar />
@@ -24,12 +27,20 @@ export default function ResetPassword() {
                 </div>
                 {!submitted ?
                     (<div>
-                        <div>
-                            <input type="text" placeholder="Email" className="p-2 px-3 border rounded-lg w-full mt-8" 
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}/>
-                        </div>
-                        <div onClick={() =>{ setSubmitted(true);handleResetPassword()}} className="bg-[var(--primary-color)] text-white text-[20px] rounded-lg font-bold mt-8 p-2">
+                        <GradientBorder className="relative mt-8 w-full p-[1px] rounded-lg">
+                            <input
+                                type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder=" "
+                                className="peer block w-full rounded-lg border border-gray-300  px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
+                            />
+                            <label
+                                className={`bg-white absolute left-2 transform text-sm text-gray-500 transition-all
+							${email !== "" ? "top-2 -translate-y-4 scale-75" : ""}
+							${email.trim() === "" ? "top-1/2 -translate-y-1/2 scale-100 peer-placeholder-shown:top-1/2 peer-placeholder-shown:scale-100" : ""}
+							peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-blue-600`}>
+                                Username
+                            </label>
+                        </GradientBorder>
+                        <div onClick={() => { setSubmitted(true); handleResetPassword() }} className="bg-[var(--primary-color)] text-white text-[20px] rounded-lg font-bold mt-8 p-2">
                             Submit
                         </div>
 
@@ -37,7 +48,7 @@ export default function ResetPassword() {
                     )
                     : (<div className="text-center text-[20px] mt-8">Thanks! Check your email for a reset link!</div>)
                 }
-                <div className="underline text-[var(--primary-color)] mt-2">
+                <div onClick={()=>navigate('/')} className="underline text-[var(--primary-color)] mt-2">
                     Or go back
                 </div>
             </div>

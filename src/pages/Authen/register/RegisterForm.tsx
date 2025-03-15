@@ -26,12 +26,56 @@ const RegisterForm = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [username, setUsername] = useState("");
+	const [errors, setErrors] = useState({ username: "", email: "", password: "" });
 	useEffect(() => {
 		if (isAuthenticated) {
 			navigate('/')
 		}
 	}, [isAuthenticated])
+	const validateForm = () => {
+		let newErrors = { username: "", email: "", password: "" };
+		let isValid = true;
 
+		if (!username.trim()) {
+			newErrors.username = "Username is required.";
+			isValid = false;
+		} else if (username.length < 3) {
+			newErrors.username = "Username must be at least 3 characters long.";
+			isValid = false;
+		}
+
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!email.trim()) {
+			newErrors.email = "Email is required.";
+			isValid = false;
+		} else if (!emailRegex.test(email)) {
+			newErrors.email = "Invalid email format.";
+			isValid = false;
+		}
+
+		if (!password.trim()) {
+			newErrors.password = "Password is required.";
+			isValid = false;
+		} else if (password.length < 6) {
+			newErrors.password = "Password must be at least 6 characters long.";
+			isValid = false;
+		} else if (!/[A-Z]/.test(password)) {
+			newErrors.password = "Password must contain at least one uppercase letter.";
+			isValid = false;
+		} else if (!/[a-z]/.test(password)) {
+			newErrors.password = "Password must contain at least one lowercase letter.";
+			isValid = false;
+		} else if (!/[0-9]/.test(password)) {
+			newErrors.password = "Password must contain at least one number.";
+			isValid = false;
+		} else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+			newErrors.password = "Password must contain at least one special character.";
+			isValid = false;
+		}
+
+		setErrors(newErrors);
+		return isValid;
+	};
 	const handleFormSubmit = async () => {
 		try {
 			alert(password);
@@ -60,6 +104,7 @@ const RegisterForm = () => {
 		}
 	}
 	const handleVerifyEmail = async () => {
+		if (!validateForm()) return;
 		console.log('1');
 		if (!email) {
 			console.log('2');
@@ -113,16 +158,48 @@ const RegisterForm = () => {
 		{successMessage && <LocalSuccess successMessage={successMessage} />}
 
 		<div className="flex-col ">
-			{username} - {email} - {password}
-			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">
-				<input className="w-full p-4 rounded-lg" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+			<GradientBorder className="relative mt-8 w-full p-[1px] rounded-lg">
+				<input
+					type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder=" "
+					className="peer block w-full rounded-lg border border-gray-300  px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
+				/>
+				<label
+					className={`bg-white absolute left-2 transform text-sm text-gray-500 transition-all
+							${username !== "" ? "top-2 -translate-y-4 scale-75" : ""}
+							${username.trim() === "" ? "top-1/2 -translate-y-1/2 scale-100 peer-placeholder-shown:top-1/2 peer-placeholder-shown:scale-100" : ""}
+							peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-blue-600`}>
+					Username
+				</label>
 			</GradientBorder>
-			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">
-				<input className="w-full p-4 rounded-lg" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} />
+			{errors.username && <span className="text-red-400 text-sm">{errors.username}</span>}
+			<GradientBorder className="relative mt-8 w-full p-[1px] rounded-lg">
+				<input
+					type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder=" "
+					className="peer block w-full rounded-lg border border-gray-300  px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
+				/>
+				<label
+					className={`bg-white absolute left-2 transform text-sm text-gray-500 transition-all
+							${email !== "" ? "top-2 -translate-y-4 scale-75" : ""}
+							${email.trim() === "" ? "top-1/2 -translate-y-1/2 scale-100 peer-placeholder-shown:top-1/2 peer-placeholder-shown:scale-100" : ""}
+							peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-blue-600`}>
+					Email
+				</label>
 			</GradientBorder>
-			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">
-				<input className="w-full p-4 rounded-lg" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+			{errors.email && <span className="text-red-400 text-sm">{errors.email}</span>}
+			<GradientBorder className="relative mt-8 w-full p-[1px] rounded-lg">
+				<input
+					type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder=" "
+					className="peer block w-full rounded-lg border border-gray-300  px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
+				/>
+				<label
+					className={`bg-white absolute left-2 transform text-sm text-gray-500 transition-all
+							${password !== "" ? "top-2 -translate-y-4 scale-75" : ""}
+							${password.trim() === "" ? "top-1/2 -translate-y-1/2 scale-100 peer-placeholder-shown:top-1/2 peer-placeholder-shown:scale-100" : ""}
+							peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-blue-600`}>
+					Password
+				</label>
 			</GradientBorder>
+			{errors.password && <span className="text-red-400 text-sm">{errors.password}</span>}
 			<button onClick={() => { handleVerifyEmail() }} className="mt-20 w-full bg-[var(--primary-color)] text-lg font-bold text-white p-4 rounded-lg ">
 				Sign Up <FontAwesomeIcon icon={faArrowRight} />
 			</button>
@@ -131,12 +208,33 @@ const RegisterForm = () => {
 			</div>
 		</div>
 		{isOpenModal &&
-			(<div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-				<div className="bg-white w-96 p-6 rounded-lg shadow-lg">
-					<span>OTP</span><input type="text" className="w-full border" value={otp} onChange={(e) => setOtp(e.target.value)} />
-					<div className="flex  gap-1 mt-4">
-						<button onClick={() => setIsOpenModal(false)} className="w-1/2 px-4 py-2 bg-gray-200 rounded-md">Cancel</button>
-						<button onClick={() => handleFormSubmit()} className=" text-center w-1/2 px-4 py-2 bg-[var(--primary-color)] text-white rounded-md ">Submit</button>
+			(<div className="fixed  inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+				<div className="bg-white w-96 p-6 rounded-lg shadow-lg relative text-center space-y-2">
+					<img src="https://cdn-icons-png.flaticon.com/512/3841/3841620.png" className="w-9 mx-auto" alt="" />
+					<div className="text-3xl font-bold">Check your email</div>
+					<div className="text-gray-400">Enter the verification code sent to</div>
+					<div className="pb-10">{email}</div>
+					<div onClick={() => setIsOpenModal(false)} ><img src="https://cdn-icons-png.flaticon.com/512/1828/1828774.png" className="w-4 absolute top-4 right-4" /></div>
+					{/* <span>OTP</span><input type="text" className="w-full border" value={otp} onChange={(e) => setOtp(e.target.value)} /> */}
+					<div className="relative ">
+						<input
+							type="text" value={otp} onChange={(e) => setOtp(e.target.value)} placeholder=" "
+							className="peer block w-full rounded-lg border border-gray-300 bg-transparent px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
+						/>
+						<label
+							className={`bg-white absolute left-2 transform text-sm text-gray-500 transition-all
+							${otp !== "" ? "top-2 -translate-y-4 scale-75" : ""}
+							${otp.trim() === "" ? "top-1/2 -translate-y-1/2 scale-100 peer-placeholder-shown:top-1/2 peer-placeholder-shown:scale-100" : ""}
+							peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-blue-600`}>
+							Nhập OTP
+						</label>
+					</div>
+					
+					<div className="flex  gap-1 pt-8 ">
+						<button onClick={() => handleFormSubmit()} className=" text-center w-full px-4 py-2 bg-[var(--primary-color)] text-white rounded-md ">Verify email</button>
+					</div>
+					<div className="p-[6px]">
+						<span>Didn't get a code?</span> <span onClick={() => handleVerifyEmail()} className="underline text-[var(--primary-color)]">Resend </span>
 					</div>
 				</div>
 
