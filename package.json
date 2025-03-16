@@ -27,6 +27,7 @@
     "@rollup/rollup-darwin-x64": "^4.34.9",
     "@tanstack/react-query": "^5.61.0",
     "@tanstack/react-query-devtools": "^5.61.0",
+    "axios": "^1.8.3",
     "chart.js": "^4.4.6",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",

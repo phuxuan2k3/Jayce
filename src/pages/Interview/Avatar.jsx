@@ -7,12 +7,12 @@ import React from 'react'
 import { useGraph, useLoader, useFrame } from '@react-three/fiber'
 import { SkeletonUtils } from 'three-stdlib'
 import { useControls } from 'leva'
-import { useMemo, useEffect,useState } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 import * as THREE from 'three'
 import { useFBX, useAnimations, useGLTF } from '@react-three/drei'
 import { useRef } from 'react'
 
-const corresponding ={
+const corresponding = {
   A: "viseme_PP",
   B: "viseme_kk",
   C: "viseme_I",
@@ -24,63 +24,49 @@ const corresponding ={
   X: "viseme_PP",
 }
 export function Avatar(props) {
+  // const audioRef = useRef(props.audio);
+  // const libsyncRef = useRef(props.libsync);
 
   const { nodes, materials } = useGLTF('/models/67bb1886de5d7f6fc12ed3fd.glb')
-  const {animations: danceAnimation} = useFBX("/animations/Dance.fbx");
-  const {animations: idleAnimation} = useFBX("/animations/Idle.fbx");
-  const {animations: greetingAnimation } = useFBX("/animations/Greeting.fbx");
+  const { animations: danceAnimation } = useFBX("/animations/Dance.fbx");
+  const { animations: idleAnimation } = useFBX("/animations/Idle.fbx");
+  const { animations: greetingAnimation } = useFBX("/animations/Greeting.fbx");
+
+
   danceAnimation[0].name = "Dance";
   idleAnimation[0].name = "Idle";
   greetingAnimation[0].name = "Greeting";
 
   const [animation, setAnimation] = useState("Dance");
-  setTimeout(()=>{
+  setTimeout(() => {
     setAnimation("Idle");
   }
-  , 10000);
+    , 10000);
   const group = useRef();
-  const  {actions} = useAnimations([danceAnimation[0], idleAnimation[0], greetingAnimation[0]], group);
-  useEffect(()=>{
+  const { actions } = useAnimations([danceAnimation[0], idleAnimation[0], greetingAnimation[0]], group);
+  useEffect(() => {
     if (actions && actions[animation]) {
       actions[animation].reset().fadeIn(0.5).play();
     }
   }, [animation, actions]);
 
-  // const {playAudio, script} = useControls({
-  //   playAudio: false, 
-  //   script: {
-  //     value: "hochiminh",
-  //     options: [
-  //       "hochiminh", "hcm",
-  //     ],
-  //   },
-  // })
-  // const audio = useMemo(()=> new Audio(`/audios/${script}.mp3`), [script])
-  const playAudio = props.play;
-  const script = "hochiminh";
-  const audio = useMemo(()=> new Audio(`/audios/${script}.mp3`), [script])
+  // useEffect(() => {
+  //   if (props.audio) {
+  //     audioRef.current = props.audio;
+  //   }
+  // }, [props.audio]);
 
-  // const audio = useMemo(()=> new Audio(`/audios/hochiminh.mp3`), [ {
-  //     value: "hochiminh",
-  //     options: [
-  //       "hochiminh",
-  //     ],
-  //   },])
-  
-  useEffect(()=>{
-    if (playAudio) {
-      audio.play()
-    } else {
-      audio.pause()
-    }
-  }, [playAudio, audio])
+  // useEffect(() => {
+  //   if (props.libsync) {
+  //     libsyncRef.current = props.libsync;
+  //   }
+  // }, [props.libsync]);
 
-  const jsonFile = useLoader(THREE.FileLoader, `/audios/${script}.json`);
-  const lipsync = JSON.parse(jsonFile);
+  useFrame(() => {
+    if (!props.audioRef.current || !props.libsyncRef.current) return;
 
-  useFrame(()=>{
-    const currentAudioTime = audio.currentTime;
-    Object.values(corresponding).forEach((value)=>{
+    const currentAudioTime = props.audioRef.current.currentTime;
+    Object.values(corresponding).forEach((value) => {
       nodes.Wolf3D_Head.morphTargetInfluences[
         nodes.Wolf3D_Head.morphTargetDictionary[value]
       ] = 0;
@@ -88,19 +74,21 @@ export function Avatar(props) {
         nodes.Wolf3D_Teeth.morphTargetDictionary[value]
       ] = 0;
     });
-    for (let i =0;i<lipsync.mouthCues.length;i++){
-      const mouthCue = lipsync.mouthCues[i];
+    for (let i = 0; i < props.libsyncRef.current.mouthCues.length; i++) {
+      const mouthCue = props.libsyncRef.current.mouthCues[i];
       if (
         currentAudioTime >= mouthCue.start &&
         currentAudioTime <= mouthCue.end
-      ){
+      ) {
         nodes.Wolf3D_Head.morphTargetInfluences[
           nodes.Wolf3D_Head.morphTargetDictionary[corresponding[mouthCue.value]]
         ] = 1;
         nodes.Wolf3D_Teeth.morphTargetInfluences[
           nodes.Wolf3D_Teeth.morphTargetDictionary[corresponding[mouthCue.value]]
-        ] = 1;    
-        }}});
+        ] = 1;
+      }
+    }
+  });
 
 
   return (
