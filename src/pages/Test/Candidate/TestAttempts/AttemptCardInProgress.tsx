@@ -7,8 +7,9 @@ import { useGetTestsByTestIdCurrentQuery } from '../../../../features/Test/api/t
 import FetchState from '../../../../components/wrapper/FetchState';
 import paths2 from '../../../../router/path-2';
 import GradientBorderGood from '../../../../components/ui/border/GradientBorder.good';
-import { useCurrentTestContext } from '../../../../features/Test/context/current-test-context';
 import TestTimer from '../../../../features/Test/partials/TestTimer';
+import { useAppSelector } from '../../../../app/redux/hooks';
+import { testSliceSelects } from '../../../../features/Test/slice/testSlice';
 
 type Props = {
 	company: {
@@ -28,12 +29,17 @@ const AttemptCardInProgress: React.FC<Props> = ({
 	test,
 }) => {
 	const navigate = useNavigate();
-	const context = useCurrentTestContext();
+	const secondsLeft = useAppSelector(testSliceSelects.selectSecondsLeft);
+	const isOngoing = useAppSelector(testSliceSelects.selectIsOngoing);
 	const { data: currentAttempt, isLoading, error } = useGetTestsByTestIdCurrentQuery({ testId: test.id });
 
 	const handleOnAttemptClick = () => {
 		navigate(paths2.candidate.tests.in(test.id).ATTEMPTS);
 	};
+
+	if (currentAttempt == null) {
+		return null;
+	}
 
 	return (
 		<FetchState
@@ -60,12 +66,15 @@ const AttemptCardInProgress: React.FC<Props> = ({
 						))}
 					</div>
 					<div className="flex flex-row text-xl font-bold mb-2 text-primary">
-						<TestTimer timeLeft={context.timeLeft} isEnded={context.isEnded} />
+						<TestTimer
+							timeLeft={secondsLeft}
+							isEnded={isOngoing == false}
+						/>
 					</div>
 					<div className="flex flex-row font-semibold mb-2 text-[#39A0AD] items-center">
 						<div className="text-lg">In Progress</div>
 						<div className="ml-20">
-							{`Submitted at ${format(new Date(currentAttempt?.startedAt || ""), "PPPP")}`}
+							{`Submitted at: ${currentAttempt ? format(new Date(currentAttempt.startedAt), "PPPP") : "Not yet submitted"}`}
 						</div>
 					</div>
 					<div className="mt-6 flex flex-row items-start bg-gray-50 rounded-xl px-6 py-4 justify-between font-sans">

@@ -52,7 +52,7 @@ const TestAttemtpsPage: React.FC = () => {
 							isLoading={testQuery.isLoading}
 							error={testQuery.error}
 						>
-							{testQuery.data && <AttemptCardInProgress
+							{testQuery.data != null && <AttemptCardInProgress
 								company={mockCompany}
 								test={testQuery.data}
 							/>}

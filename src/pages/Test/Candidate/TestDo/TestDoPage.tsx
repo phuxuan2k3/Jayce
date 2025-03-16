@@ -1,35 +1,42 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import QuestionComponent from './Question';
 import Sidebar from './Sidebar';
 import useGetTestIdParams from '../../../../features/Test/hooks/useGetTestIdParams';
-import { useCurrentTestContext } from '../../../../features/Test/context/current-test-context';
 import { useGetTestsByTestIdCurrentDoQuery } from '../../../../features/Test/api/test.api-gen';
 import paths2 from '../../../../router/path-2';
-import { AttemptAnswer } from '../../../../features/Test/types/current';
 import FetchState from '../../../../components/wrapper/FetchState';
+import { useAppDispatch, useAppSelector } from '../../../../app/redux/hooks';
+import { testSliceActions, testSliceSelects } from '../../../../features/Test/slice/testSlice';
 
 const TestDoPage = () => {
-	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-	const [answers, setAnswers] = useState<AttemptAnswer[]>([]);
 	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 	const testId = useGetTestIdParams();
-	const { isEnded, answers: syncAnswers } = useCurrentTestContext();
-
-	const [flaggedQuestions, setFlaggedQuestions] = useState<Set<number>>(new Set());
 	const { data, isLoading, error } = useGetTestsByTestIdCurrentDoQuery({ testId });
+	if (!data) return null;
 
+	const isOnGoing = useAppSelector(testSliceSelects.selectIsOngoing);
+	const currentIndex = useAppSelector(testSliceSelects.selectCurrentIndex);
+	const isFlagged = useAppSelector(testSliceSelects.selectIsIndexFlagged);
+	const currentQuestion = data.questions[currentIndex];
+	if (currentQuestion == null) throw new Error("Index is not valid");
+	const currentChosenOption = useAppSelector(testSliceSelects.selectCurrentAnswer)(currentQuestion.id);
+
+	// Sync answers from the server to the redux store
+	// TODO: Use RTK Query combined with Socket.io instead of API call like this, it only sync all when we navigate to the page. We want it to be synced from the server command, not from client fetching
 	useEffect(() => {
-		if (isEnded && data) {
+		if (data != null) {
+			dispatch(testSliceActions.syncTest({ attemptAnswers: data.answers, totalQuestions: data.questions.length }));
+		}
+	}, [data]);
+
+	// Todo: Add notification upon test ends.
+	useEffect(() => {
+		if (isOnGoing == false && data != null) {
 			navigate(paths2.candidate.tests.attempts.in(data.id).ROOT);
 		}
-	}, [isEnded]);
-
-	useEffect(() => {
-		if (syncAnswers) {
-			setAnswers(syncAnswers);
-		}
-	}, [syncAnswers]);
+	}, [isOnGoing]);
 
 	return (
 		<div className="w-full flex-grow flex flex-col items-center px-4">
@@ -51,25 +58,21 @@ const TestDoPage = () => {
 							<div>No questions found</div>
 						) : (
 							<>
-								{data && <QuestionComponent
-									currentQuestion={data.questions[currentQuestionIndex]}
-									totalQuestion={data.questions.length}
-									currentQuestionIndex={currentQuestionIndex}
-									setCurrentQuestionIndex={setCurrentQuestionIndex}
-									answers={answers}
-									setAnswers={setAnswers}
-									flaggedQuestions={flaggedQuestions}
-									setFlaggedQuestions={setFlaggedQuestions}
-								/>}
+								{data &&
+									<QuestionComponent
+										currentQuestion={{
+											...currentQuestion,
+											chosenOption: currentChosenOption,
+											isFlagged
+										}}
+									/>
+								}
 							</>
 						)}
 					</FetchState>
 
 					<Sidebar
-						answers={answers}
-						flaggedQuestions={flaggedQuestions}
-						currentQuestionIndex={currentQuestionIndex}
-						setCurrentQuestionIndex={setCurrentQuestionIndex}
+						questionIds={data.questions.map((question) => question.id) ?? []}
 					/>
 				</div>
 			</div>

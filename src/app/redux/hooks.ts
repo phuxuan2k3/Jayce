@@ -20,9 +20,9 @@ export const useRole = () => {
 			tokens: {
 				"access_token": "string",
 				"refresh_token": "string",
-				"role": 1, // Role
+				"role": 1,
 				"safe_id": "string",
-				"user_id": 0
+				"user_id": 1
 			}
 		}));
 	}

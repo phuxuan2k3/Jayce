@@ -4,7 +4,6 @@ import { setAuthState, selectTokens, selectUserInfo } from "../../../app/redux/a
 import { grpcRefreshToken } from '../../Auth/grpcClient';
 import { url } from '../../../app/env';
 
-
 const baseQuery = fetchBaseQuery({
 	baseUrl: url.thresh.base,
 	prepareHeaders: async (headers, { getState }) => {

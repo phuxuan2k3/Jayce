@@ -1,72 +1,50 @@
-import { useParams } from "react-router-dom";
-import { AttemptAnswer, AttemptQuestion } from "../../../../features/Test/types/current";
+import { CurrentAttemptQuestion } from "../../../../features/Test/types/current";
+import { useAppDispatch, useAppSelector } from "../../../../app/redux/hooks";
+import { testSliceActions, testSliceSelects } from "../../../../features/Test/slice/testSlice";
 
 interface QuestionComponentProps {
-	currentQuestion: AttemptQuestion;
-	totalQuestion: number;
-	currentQuestionIndex: number;
-	setCurrentQuestionIndex: (index: number) => void;
-	answers: AttemptAnswer[];
-	setAnswers: (answers: AttemptAnswer[]) => void;
-	flaggedQuestions: Set<number>;
-	setFlaggedQuestions: (flaggedQuestions: Set<number>) => void;
+	currentQuestion: CurrentAttemptQuestion;
 }
 
 const QuestionComponent: React.FC<QuestionComponentProps> = ({
 	currentQuestion,
-	totalQuestion,
-	currentQuestionIndex,
-	setCurrentQuestionIndex,
-	answers,
-	flaggedQuestions,
-	setAnswers,
-	setFlaggedQuestions
 }) => {
-	const { testId } = useParams<{ testId: string }>();
-	if (!testId) throw new Error("Test ID is undefined");
-	if (!currentQuestion) return null;
-	const currentAnswer = answers[currentQuestionIndex];
-	const isFlagged = flaggedQuestions.has(currentQuestionIndex);
+	const currentQuestionIndex = useAppSelector(testSliceSelects.selectCurrentIndex);
+	const totalQuestion = useAppSelector(testSliceSelects.selectTotalQuestions);
+	const dispatch = useAppDispatch();
+
 	const isFirstQuestion = currentQuestionIndex === 0;
 	const isLastQuestion = currentQuestionIndex === totalQuestion - 1;
 
 	const handleNextQuestion = () => {
 		if (currentQuestionIndex < totalQuestion) {
-			setCurrentQuestionIndex(currentQuestionIndex + 1);
+			dispatch(testSliceActions.setCurrentQuestionIndex(currentQuestionIndex + 1));
 		}
 	};
 
 	const handlePreviousQuestion = () => {
 		if (currentQuestionIndex >= 1) {
-			setCurrentQuestionIndex(currentQuestionIndex - 1);
+			dispatch(testSliceActions.setCurrentQuestionIndex(currentQuestionIndex - 1));
 		}
 	}
 
 	const handleAnswerQuestion = (newOptionId: number) => {
-		const newAnswers = [...answers];
-		newAnswers[currentQuestionIndex] = { questionId: currentQuestionIndex, optionId: newOptionId };
-		setAnswers(newAnswers);
+		dispatch(testSliceActions.answerQuestion({ questionId: currentQuestion.id, chosenOption: newOptionId }));
 	}
 
 	const handleFlagQuestionToggle = () => {
-		const updatedFlags = new Set(flaggedQuestions);
-		if (updatedFlags.has(currentQuestion.id)) {
-			updatedFlags.delete(currentQuestion.id);
-		} else {
-			updatedFlags.add(currentQuestion.id);
-		}
-		setFlaggedQuestions(updatedFlags);
+		dispatch(testSliceActions.toggleFlagCurrentQuestion());
 	}
 
 	return (
 		<div className="flex-1 flex flex-row bg-white rounded-lg shadow-primary p-6 space-x-4 border-r border-b border-primary">
 			<div className="w-1/5 mb-4 bg-white rounded-lg shadow-primary p-6 h-fit border-r border-b border-primary">
 				<div className="text-lg font-semibold mb-2">Question {currentQuestionIndex + 1}</div>
-				<p className="text-[#39A0AD]">{currentAnswer.optionId === -1 ? "Not yet answered" : "Already answered"}</p>
+				<p className="text-[#39A0AD]">{currentQuestion.chosenOption == null ? "Not yet answered" : "Already answered"}</p>
 				<p className="text-[#39A0AD]">Points: {currentQuestion.points}</p>
 				<div className="flex justify-end">
 					<p className="text-[#A04D38] mt-4 hover:underline cursor-pointer" onClick={handleFlagQuestionToggle}>
-						{isFlagged ? "🏴 Flagged" : "Flag question"}
+						{currentQuestion.isFlagged ? "🏴 Flagged" : "Flag question"}
 					</p>
 				</div>
 			</div>
@@ -83,7 +61,7 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
 								>
 									<input
 										type="radio"
-										checked={currentAnswer.optionId === option.id}
+										checked={currentQuestion.chosenOption === option.id}
 										onChange={() => handleAnswerQuestion(option.id)}
 										className="h-4 w-4 border-primary focus:ring-primary accent-primary cursor-pointer"
 									/>

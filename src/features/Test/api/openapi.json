@@ -206,6 +206,19 @@
 						"required": false,
 						"name": "testId",
 						"in": "path"
+					},
+					{
+						"schema": {
+							"type": [
+								"string",
+								"null"
+							],
+							"description": "The user ID",
+							"example": "1"
+						},
+						"required": false,
+						"name": "x-user-id",
+						"in": "header"
 					}
 				],
 				"responses": {
@@ -214,7 +227,10 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "object",
+									"type": [
+										"object",
+										"null"
+									],
 									"properties": {
 										"id": {
 											"type": "number"
@@ -254,6 +270,19 @@
 						"required": false,
 						"name": "testId",
 						"in": "path"
+					},
+					{
+						"schema": {
+							"type": [
+								"string",
+								"null"
+							],
+							"description": "The user ID",
+							"example": "1"
+						},
+						"required": false,
+						"name": "x-user-id",
+						"in": "header"
 					}
 				],
 				"responses": {
@@ -280,6 +309,19 @@
 						"required": false,
 						"name": "testId",
 						"in": "path"
+					},
+					{
+						"schema": {
+							"type": [
+								"string",
+								"null"
+							],
+							"description": "The user ID",
+							"example": "1"
+						},
+						"required": false,
+						"name": "x-user-id",
+						"in": "header"
 					}
 				],
 				"responses": {
@@ -363,16 +405,30 @@
 													},
 													"points": {
 														"type": "number"
-													},
-													"chosenOption": {
-														"type": "number"
 													}
 												},
 												"required": [
 													"id",
 													"text",
 													"options",
-													"points",
+													"points"
+												]
+											}
+										},
+										"answers": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"questionId": {
+														"type": "number"
+													},
+													"chosenOption": {
+														"type": "number"
+													}
+												},
+												"required": [
+													"questionId",
 													"chosenOption"
 												]
 											}
@@ -388,6 +444,7 @@
 										"id",
 										"test",
 										"questions",
+										"answers",
 										"startedAt",
 										"endedAt"
 									]
@@ -414,6 +471,19 @@
 						"required": false,
 						"name": "testId",
 						"in": "path"
+					},
+					{
+						"schema": {
+							"type": [
+								"string",
+								"null"
+							],
+							"description": "The user ID",
+							"example": "1"
+						},
+						"required": false,
+						"name": "x-user-id",
+						"in": "header"
 					}
 				],
 				"requestBody": {
@@ -467,6 +537,19 @@
 						"required": false,
 						"name": "testId",
 						"in": "path"
+					},
+					{
+						"schema": {
+							"type": [
+								"string",
+								"null"
+							],
+							"description": "The user ID",
+							"example": "1"
+						},
+						"required": false,
+						"name": "x-user-id",
+						"in": "header"
 					}
 				],
 				"responses": {
@@ -537,13 +620,20 @@
 					},
 					{
 						"schema": {
-							"type": "array",
-							"items": {
-								"type": [
-									"number",
-									"null"
-								]
-							}
+							"anyOf": [
+								{
+									"type": "array",
+									"items": {
+										"type": [
+											"number",
+											"null"
+										]
+									}
+								},
+								{
+									"type": "string"
+								}
+							]
 						},
 						"required": false,
 						"name": "tags",
@@ -1031,13 +1121,20 @@
 					},
 					{
 						"schema": {
-							"type": "array",
-							"items": {
-								"type": [
-									"number",
-									"null"
-								]
-							}
+							"anyOf": [
+								{
+									"type": "array",
+									"items": {
+										"type": [
+											"number",
+											"null"
+										]
+									}
+								},
+								{
+									"type": "string"
+								}
+							]
 						},
 						"required": false,
 						"name": "tags",
@@ -1275,7 +1372,7 @@
 													"startDate": {
 														"type": "string"
 													},
-													"timeSpent": {
+													"secondsSpent": {
 														"type": "number"
 													},
 													"score": {
@@ -1290,7 +1387,7 @@
 													"test",
 													"candidateId",
 													"startDate",
-													"timeSpent",
+													"secondsSpent",
 													"score",
 													"totalScore"
 												]
@@ -1376,7 +1473,7 @@
 										"startDate": {
 											"type": "string"
 										},
-										"timeSpent": {
+										"secondsSpent": {
 											"type": "number"
 										},
 										"score": {
@@ -1400,7 +1497,7 @@
 										"test",
 										"candidateId",
 										"startDate",
-										"timeSpent",
+										"secondsSpent",
 										"score",
 										"totalScore",
 										"totalCorrectAnswers",
@@ -1648,7 +1745,7 @@
 													"startDate": {
 														"type": "string"
 													},
-													"timeSpent": {
+													"secondsSpent": {
 														"type": "number"
 													},
 													"score": {
@@ -1663,7 +1760,7 @@
 													"test",
 													"candidateId",
 													"startDate",
-													"timeSpent",
+													"secondsSpent",
 													"score",
 													"totalScore"
 												]
@@ -1809,7 +1906,7 @@
 													"startDate": {
 														"type": "string"
 													},
-													"timeSpent": {
+													"secondsSpent": {
 														"type": "number"
 													},
 													"score": {
@@ -1824,7 +1921,7 @@
 													"test",
 													"candidateId",
 													"startDate",
-													"timeSpent",
+													"secondsSpent",
 													"score",
 													"totalScore"
 												]

@@ -20,7 +20,7 @@ type Props = {
 	attempt: {
 		id: number;
 		score: number;
-		timeSpent: number;
+		secondsSpent: number;
 		startDate: string;
 	}
 }
@@ -62,7 +62,7 @@ const AttemptCardFinished: React.FC<Props> = ({ company, test, attempt }) => {
 			</div>
 			<div className="flex flex-row font-semibold mb-2 text-[#39A0AD] items-center">
 				<div className="text-lg">
-					{`Time spent: ${Math.floor(attempt.timeSpent / 60)}m ${attempt.timeSpent % 60}s`}
+					{`Time spent: ${Math.floor(attempt.secondsSpent / 60)}m ${attempt.secondsSpent % 60}s`}
 				</div>
 				<div className="ml-20">
 					{`Started at: ${format(new Date(attempt.startDate), "PPPP")}`}
