@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 interface TestTimerProps {
 	timeLeft: number | null;
-	isEnded: boolean;
 	className?: string;
 }
 
 const TestTimer: React.FC<TestTimerProps> = ({
 	className,
 	timeLeft,
-	isEnded
 }) => {
 	const [displayTime, setDisplayTime] = useState<string>("--:--");
 	const [isTimeUp, setIsTimeUp] = useState<boolean>(false);
@@ -27,7 +25,7 @@ const TestTimer: React.FC<TestTimerProps> = ({
 	}, [timeLeft]);
 
 	useEffect(() => {
-		if (timeLeft === null || timeLeft <= 0 || isEnded) {
+		if (timeLeft === null || timeLeft <= 0) {
 			setIsTimeUp(true);
 			setDisplayTime("00:00");
 			return;
@@ -59,7 +57,7 @@ const TestTimer: React.FC<TestTimerProps> = ({
 		}, 1000);
 
 		return () => clearInterval(timer);
-	}, [timeLeft, isEnded]);
+	}, [timeLeft]);
 
 	return (
 		<div className={`test-timer ${className || ''} ${isTimeUp ? 'time-up' : ''}`}>

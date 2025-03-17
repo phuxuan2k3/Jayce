@@ -42,7 +42,6 @@ import UnauthLayout from "../components/layouts/UnauthLayout";
 import CandidateLayout from "../components/layouts/CandidateLayout";
 import DashboardPage from "../pages/common/DashboardPage";
 import TestsPage from "../pages/Test/Candidate/Tests/TestsPage";
-import CurrentTestLayout from "../features/Test/layouts/current-test-layout";
 import TestDoPage from "../pages/Test/Candidate/TestDo/TestDoPage";
 import TestAttemtpsPage from "../pages/Test/Candidate/TestAttempts/TestAttemptsPage";
 
@@ -72,16 +71,12 @@ const router = createBrowserRouter([{
 			element: <TestsPage />
 		},
 		{
-			path: paths2.candidate.tests.in()._layout,
-			element: <CurrentTestLayout />,
-			children: [{
-				path: paths2.candidate.tests.in().DO,
-				element: <TestDoPage />
-			},
-			{
-				path: paths2.candidate.tests.in().ATTEMPTS,
-				element: <TestAttemtpsPage />
-			}]
+			path: paths2.candidate.tests.in().DO,
+			element: <TestDoPage />
+		},
+		{
+			path: paths2.candidate.tests.in().ATTEMPTS,
+			element: <TestAttemtpsPage />
 		},
 		{
 			path: paths2.candidate.tests.in().RECOMMENDATION,

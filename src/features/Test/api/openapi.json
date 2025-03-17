@@ -235,17 +235,40 @@
 										"id": {
 											"type": "number"
 										},
-										"startedAt": {
+										"secondsLeft": {
+											"type": "number"
+										},
+										"createdAt": {
 											"type": "string"
 										},
 										"endedAt": {
 											"type": "string"
+										},
+										"answers": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"questionId": {
+														"type": "number"
+													},
+													"chosenOption": {
+														"type": "number"
+													}
+												},
+												"required": [
+													"questionId",
+													"chosenOption"
+												]
+											}
 										}
 									},
 									"required": [
 										"id",
-										"startedAt",
-										"endedAt"
+										"secondsLeft",
+										"createdAt",
+										"endedAt",
+										"answers"
 									]
 								}
 							}
@@ -414,109 +437,16 @@
 													"points"
 												]
 											}
-										},
-										"answers": {
-											"type": "array",
-											"items": {
-												"type": "object",
-												"properties": {
-													"questionId": {
-														"type": "number"
-													},
-													"chosenOption": {
-														"type": "number"
-													}
-												},
-												"required": [
-													"questionId",
-													"chosenOption"
-												]
-											}
-										},
-										"startedAt": {
-											"type": "string"
-										},
-										"endedAt": {
-											"type": "string"
 										}
 									},
 									"required": [
 										"id",
 										"test",
-										"questions",
-										"answers",
-										"startedAt",
-										"endedAt"
+										"questions"
 									]
 								}
 							}
 						}
-					}
-				}
-			}
-		},
-		"/tests/{testId}/current/answer": {
-			"patch": {
-				"tags": [
-					"Current"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": [
-								"number",
-								"null"
-							]
-						},
-						"required": false,
-						"name": "testId",
-						"in": "path"
-					},
-					{
-						"schema": {
-							"type": [
-								"string",
-								"null"
-							],
-							"description": "The user ID",
-							"example": "1"
-						},
-						"required": false,
-						"name": "x-user-id",
-						"in": "header"
-					}
-				],
-				"requestBody": {
-					"description": "Request body",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"questionId": {
-										"type": [
-											"number",
-											"null"
-										]
-									},
-									"optionId": {
-										"type": [
-											"number",
-											"null"
-										]
-									}
-								},
-								"required": [
-									"questionId"
-								]
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Success"
 					}
 				}
 			}

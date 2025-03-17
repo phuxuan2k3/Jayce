@@ -7,8 +7,7 @@ import accountApi from '../../features/Account/account.api';
 import aiAPI from '../../features/Test/api/AI.api';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import testReducer from '../../features/Test/slice/testSlice';
-import { currentSocketMiddleware } from '../../features/Test/slice/current-socket.mdw';
+import testClientReducer from '../../features/Test/slice/testClientSlice';
 
 const persistConfig = {
 	key: 'root',
@@ -23,9 +22,7 @@ const rootReducer = combineReducers({
 	testApi: testApi.reducer,
 	aiApi: aiAPI.reducer,
 	accountApi: accountApi.reducer,
-
-	// Custom reducers
-	test: testReducer,
+	testClient: testClientReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -41,9 +38,6 @@ const store = configureStore({
 				.concat(testApi.middleware)
 				.concat(aiAPI.middleware)
 				.concat(accountApi.middleware)
-
-				// Custom middlewares
-				.concat(currentSocketMiddleware)
 });
 
 export const persistor = persistStore(store);

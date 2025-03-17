@@ -70,19 +70,6 @@ const injectedRtkApi = api.injectEndpoints({
 				},
 			}),
 		}),
-		patchTestsByTestIdCurrentAnswer: build.mutation<
-			PatchTestsByTestIdCurrentAnswerApiResponse,
-			PatchTestsByTestIdCurrentAnswerApiArg
-		>({
-			query: (queryArg) => ({
-				url: `/tests/${queryArg.testId}/current/answer`,
-				method: "PATCH",
-				body: queryArg.body,
-				headers: {
-					"x-user-id": queryArg["x-user-id"],
-				},
-			}),
-		}),
 		postTestsByTestIdCurrentSubmit: build.mutation<
 			PostTestsByTestIdCurrentSubmitApiResponse,
 			PostTestsByTestIdCurrentSubmitApiArg
@@ -261,8 +248,13 @@ export type DeleteTagsByTagIdApiArg = {
 };
 export type GetTestsByTestIdCurrentApiResponse = /** status 200 Success */ {
 	id: number;
-	startedAt: string;
+	secondsLeft: number;
+	createdAt: string;
 	endedAt: string;
+	answers: {
+		questionId: number;
+		chosenOption: number;
+	}[];
 } | null;
 export type GetTestsByTestIdCurrentApiArg = {
 	testId?: number | null;
@@ -294,26 +286,10 @@ export type GetTestsByTestIdCurrentDoApiResponse = /** status 200 Success */ {
 		}[];
 		points: number;
 	}[];
-	answers: {
-		questionId: number;
-		chosenOption: number;
-	}[];
-	startedAt: string;
-	endedAt: string;
 };
 export type GetTestsByTestIdCurrentDoApiArg = {
 	testId?: number | null;
 	"x-user-id"?: string | null;
-};
-export type PatchTestsByTestIdCurrentAnswerApiResponse = unknown;
-export type PatchTestsByTestIdCurrentAnswerApiArg = {
-	testId?: number | null;
-	"x-user-id"?: string | null;
-	/** Request body */
-	body: {
-		questionId: number | null;
-		optionId?: number | null;
-	};
 };
 export type PostTestsByTestIdCurrentSubmitApiResponse = unknown;
 export type PostTestsByTestIdCurrentSubmitApiArg = {
@@ -571,7 +547,6 @@ export const {
 	usePostTestsByTestIdCurrentNewMutation,
 	useGetTestsByTestIdCurrentDoQuery,
 	useLazyGetTestsByTestIdCurrentDoQuery,
-	usePatchTestsByTestIdCurrentAnswerMutation,
 	usePostTestsByTestIdCurrentSubmitMutation,
 	useGetTestsQuery,
 	useLazyGetTestsQuery,

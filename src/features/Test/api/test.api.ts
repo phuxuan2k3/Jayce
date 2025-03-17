@@ -2,18 +2,24 @@ import { BaseQueryFn, createApi, fetchBaseQuery, FetchBaseQueryError } from '@re
 import { RootState } from "../../../app/redux/store";
 import { setAuthState, selectTokens, selectUserInfo } from "../../../app/redux/authSlice";
 import { grpcRefreshToken } from '../../Auth/grpcClient';
-import { url } from '../../../app/env';
+import { noAuth, url } from '../../../app/env';
 
 const baseQuery = fetchBaseQuery({
 	baseUrl: url.thresh.base,
 	prepareHeaders: async (headers, { getState }) => {
+		headers.set('Content-Type', 'application/json');
+		// Skip token verification and decode to role, user_id
+		if (noAuth == true) {
+			headers.set('x-role-id', '1');
+			headers.set('x-user-id', '1');
+			return headers;
+		}
 		const tokens = selectTokens(getState() as RootState);
 		console.log("tokens in baseQuery: ", tokens)
 		if (tokens?.access_token) {
 			console.log("token in baseQuery: ", tokens.access_token)
 			headers.set('Authorization', `Bearer ${tokens.access_token}`);
 		}
-		headers.set('Content-Type', 'application/json');
 		return headers;
 	},
 });

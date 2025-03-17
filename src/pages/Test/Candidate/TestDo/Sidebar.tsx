@@ -1,28 +1,30 @@
 import { useNavigate } from "react-router-dom";
-import { AttemptAnswer } from "../../../../features/Test/types/current";
-import { usePostTestsByTestIdCurrentSubmitMutation } from "../../../../features/Test/api/test.api-gen";
+import { GetTestsByTestIdCurrentApiResponse, usePostTestsByTestIdCurrentSubmitMutation } from "../../../../features/Test/api/test.api-gen";
 import paths2 from "../../../../router/path-2";
 import useGetTestIdParams from "../../../../features/Test/hooks/useGetTestIdParams";
 import { useEffect } from "react";
 import TestTimer from "../../../../features/Test/partials/TestTimer";
 import { useAppDispatch, useAppSelector } from "../../../../app/redux/hooks";
-import { testSliceActions, testSliceSelects } from "../../../../features/Test/slice/testSlice";
+import { testClientSliceActions, testClientSliceSelects } from "../../../../features/Test/slice/testClientSlice";
 
 interface SidebarProps {
+	currentAttempt: NonNullable<GetTestsByTestIdCurrentApiResponse>;
 	questionIds: number[];
 }
 
-export default function Sidebar({ questionIds }: SidebarProps) {
+export default function Sidebar({
+	currentAttempt,
+	questionIds
+}: SidebarProps) {
 	const testId = useGetTestIdParams();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const secondsLeft = useAppSelector(testSliceSelects.selectSecondsLeft);
-	const isOngoing = useAppSelector(testSliceSelects.selectIsOngoing);
-	const answers = useAppSelector(testSliceSelects.selectAnswers);
-	const flaggedQuestions = useAppSelector(testSliceSelects.selectFlaggedQuestions);
-	const currentQuestionIndex = useAppSelector(testSliceSelects.selectCurrentIndex);
+	const testClientState = useAppSelector(testClientSliceSelects.selectClientState);
 
 	const [submitTest, { isSuccess, isLoading, isError }] = usePostTestsByTestIdCurrentSubmitMutation();
+
+	const { secondsLeft, answers } = currentAttempt;
+	const { currentQuestionIndex, flaggedQuestionIndexes, } = testClientState;
 
 	const handleCancelTest = () => {
 		navigate(paths2.candidate.tests.in(testId).ATTEMPTS);
@@ -35,7 +37,7 @@ export default function Sidebar({ questionIds }: SidebarProps) {
 	}, [isSuccess]);
 
 	const handleSubmitClick = () => {
-		dispatch(testSliceActions.endTest());
+		dispatch(testClientSliceActions.setHasOnGoingTest(false));
 		submitTest({ testId });
 	}
 
@@ -43,8 +45,8 @@ export default function Sidebar({ questionIds }: SidebarProps) {
 		<div className="flex flex-col w-64 ml-4">
 			<div className="font-bold text-xl flex justify-center mb-4" >
 				<TestTimer
-					isEnded={isOngoing == false}
-					timeLeft={secondsLeft} />
+					timeLeft={secondsLeft}
+				/>
 			</div>
 			<div className="bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
 				<div className="mb-4 font-semibold">Quiz navigation</div>
@@ -54,13 +56,13 @@ export default function Sidebar({ questionIds }: SidebarProps) {
 							key={index}
 							className={`w-10 h-10 rounded-full text-sm font-bold text-primary border border-primary cursor-pointer ${currentQuestionIndex === index
 								? "bg-primary-toned-600 text-white"
-								: flaggedQuestions.has(index)
+								: flaggedQuestionIndexes.has(index)
 									? "bg-secondary-toned-200"
 									: answers.find(answer => answer.questionId === id)?.chosenOption != null
 										? "bg-primary-toned-200"
 										: "bg-white"
 								}`}
-							onClick={() => dispatch(testSliceActions.setCurrentQuestionIndex(index))}
+							onClick={() => dispatch(testClientSliceActions.setCurrentQuestionIndex(index))}
 						>
 							{index + 1}
 						</button>
@@ -69,7 +71,7 @@ export default function Sidebar({ questionIds }: SidebarProps) {
 			</div>
 			<div>
 				<button
-					disabled={isOngoing || isLoading}
+					disabled={isLoading}
 					className="mt-4 w-full bg-gradient-text text-md font-bold text-white px-6 py-3 rounded-lg"
 					onClick={handleSubmitClick}>
 					Submit

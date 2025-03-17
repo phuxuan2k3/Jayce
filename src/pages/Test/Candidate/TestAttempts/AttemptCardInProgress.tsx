@@ -8,8 +8,6 @@ import FetchState from '../../../../components/wrapper/FetchState';
 import paths2 from '../../../../router/path-2';
 import GradientBorderGood from '../../../../components/ui/border/GradientBorder.good';
 import TestTimer from '../../../../features/Test/partials/TestTimer';
-import { useAppSelector } from '../../../../app/redux/hooks';
-import { testSliceSelects } from '../../../../features/Test/slice/testSlice';
 
 type Props = {
 	company: {
@@ -29,24 +27,20 @@ const AttemptCardInProgress: React.FC<Props> = ({
 	test,
 }) => {
 	const navigate = useNavigate();
-	const secondsLeft = useAppSelector(testSliceSelects.selectSecondsLeft);
-	const isOngoing = useAppSelector(testSliceSelects.selectIsOngoing);
 	const { data: currentAttempt, isLoading, error } = useGetTestsByTestIdCurrentQuery({ testId: test.id });
 
-	const handleOnAttemptClick = () => {
-		navigate(paths2.candidate.tests.in(test.id).ATTEMPTS);
+	const handleOnInProgressAttemptClick = () => {
+		navigate(paths2.candidate.tests.in(test.id).DO);
 	};
 
-	if (currentAttempt == null) {
-		return null;
-	}
+	if (currentAttempt == null) return null;
 
 	return (
 		<FetchState
 			isLoading={isLoading}
 			error={error}>
 			<div className="bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
-				<div className="bg-secondary-toned-50 p-4 mb-4 rounded-lg shadow-md cursor-pointer" onClick={() => handleOnAttemptClick()}>
+				<div className="bg-secondary-toned-50 p-4 mb-4 rounded-lg shadow-md cursor-pointer" onClick={() => handleOnInProgressAttemptClick()}>
 					<div className="flex flex-row border-b border-secondary pb-4 items-center gap-3 mb-3 h-fit">
 						<img className="w-12 h-12 rounded-full" src={company.imageUrl} alt={company.name} />
 						<div className="flex flex-col h-fit">
@@ -67,14 +61,13 @@ const AttemptCardInProgress: React.FC<Props> = ({
 					</div>
 					<div className="flex flex-row text-xl font-bold mb-2 text-primary">
 						<TestTimer
-							timeLeft={secondsLeft}
-							isEnded={isOngoing == false}
+							timeLeft={currentAttempt.secondsLeft}
 						/>
 					</div>
 					<div className="flex flex-row font-semibold mb-2 text-[#39A0AD] items-center">
 						<div className="text-lg">In Progress</div>
 						<div className="ml-20">
-							{`Submitted at: ${currentAttempt ? format(new Date(currentAttempt.startedAt), "PPPP") : "Not yet submitted"}`}
+							{`Submitted at: ${currentAttempt ? format(new Date(currentAttempt.createdAt), "PPPP") : "Not yet submitted"}`}
 						</div>
 					</div>
 					<div className="mt-6 flex flex-row items-start bg-gray-50 rounded-xl px-6 py-4 justify-between font-sans">
