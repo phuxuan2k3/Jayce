@@ -1,15 +1,17 @@
 import { useNavigate } from "react-router-dom"
 import { paths } from "../../../../router/path";
 import useGetTestIdParams from "../../../../features/Test/hooks/useGetTestIdParams";
-import { usePostTestsByTestIdCurrentNewMutation } from "../../../../features/Test/api/test.api-gen";
 import paths2 from "../../../../router/path-2";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import ModalBase from "../../../../components/ui/modal/Modal.base";
+import { usePostCurrentAttemptNewMutation } from "../../../../features/Test/api/test.api-gen";
 
 export default function Sidebar() {
 	const testId = useGetTestIdParams();
 	const navigate = useNavigate();
+	const [openNewAttemptModal, setOpenNewAttemptModal] = useState(false);
 
-	const [postNewAttempt, { isLoading, isSuccess, error }] = usePostTestsByTestIdCurrentNewMutation();
+	const [postNewAttempt, { isLoading, isSuccess, error }] = usePostCurrentAttemptNewMutation();
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -17,8 +19,9 @@ export default function Sidebar() {
 		}
 	}, [isSuccess]);
 
-	const handleStartNewQuiz = async () => {
-		postNewAttempt({ testId });
+	const handleNewAttemptAccept = () => {
+		setOpenNewAttemptModal(false);
+		postNewAttempt({ body: { testId } });
 	};
 
 	const handleBackToQuestions = () => {
@@ -31,11 +34,38 @@ export default function Sidebar() {
 
 	return (
 		<>
+			<ModalBase
+				isOpen={openNewAttemptModal}
+				onClose={() => setOpenNewAttemptModal(false)}
+			>
+				<div>
+					<h3 className="text-lg font-bold">Start a new quiz</h3>
+					<p className="text-sm text-[#39A0AD] mt-2">
+						Are you sure you want to start a new quiz? Your current quiz
+						progress will be lost.
+					</p>
+					<div className="mt-4 flex justify-end">
+						<button
+							className="px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer"
+							onClick={handleNewAttemptAccept}
+							disabled={isLoading}
+						>
+							Yes
+						</button>
+						<button
+							className="ml-2 px-3 font-semibold rounded-lg py-2 text-white bg-[#FF5C5C] cursor-pointer"
+							onClick={() => setOpenNewAttemptModal(false)}
+						>
+							No
+						</button>
+					</div>
+				</div>
+			</ModalBase>
 			<div className="w-64 ml-4">
 				<div>
 					<button
 						className="w-full px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer"
-						onClick={handleStartNewQuiz}
+						onClick={() => setOpenNewAttemptModal(true)}
 						disabled={isLoading}
 					>
 						Start a new quiz

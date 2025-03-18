@@ -3,11 +3,11 @@ import { format, formatDistanceToNow } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import { useGetTestsByTestIdCurrentQuery } from '../../../../features/Test/api/test.api-gen';
 import FetchState from '../../../../components/wrapper/FetchState';
 import paths2 from '../../../../router/path-2';
 import GradientBorderGood from '../../../../components/ui/border/GradientBorder.good';
 import TestTimer from '../../../../features/Test/partials/TestTimer';
+import { useGetCurrentAttemptStateQuery } from '../../../../features/Test/api/test.api-gen';
 
 type Props = {
 	company: {
@@ -27,7 +27,7 @@ const AttemptCardInProgress: React.FC<Props> = ({
 	test,
 }) => {
 	const navigate = useNavigate();
-	const { data, isLoading, error } = useGetTestsByTestIdCurrentQuery({ testId: test.id });
+	const { data, isLoading, error } = useGetCurrentAttemptStateQuery({});
 
 	const handleOnInProgressAttemptClick = () => {
 		navigate(paths2.candidate.tests.in(test.id).DO);

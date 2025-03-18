@@ -11,4 +11,4 @@ interface EmitEvents {
 	ANSWERED: (data: { questionId: number; optionId?: number; }) => void;
 }
 
-export type CurrentTestSocket = Socket<EmitEvents, ListenEvents>;
+export type CurrentAttemptSocket = Socket<EmitEvents, ListenEvents>;

@@ -1,25 +1,28 @@
-import { useEffect } from "react";
-import { useAppSelector } from "../../../app/redux/hooks";
-import { useLazyGetTestsByTestIdCurrentQuery } from "../api/test.api-gen";
-import { curerntAttemptSelects } from "../reducers/currentAttemtpSlice";
 import TestTimer from "./TestTimer";
+import { useNavigate } from "react-router-dom";
+import paths2 from "../../../router/path-2";
+import { useGetCurrentAttemptStateQuery } from "../api/test.api-gen";
 
-export default function CurrentTestStatus() {
-	const currentAttempt = useAppSelector(curerntAttemptSelects.selectCurrentAttempt);
-	const [currentAttetmptFetch, { data, isLoading }] = useLazyGetTestsByTestIdCurrentQuery();
-	const testId = currentAttempt.attemptInfo?.testId;
-	useEffect(() => {
-		if (testId == null) return;
-		currentAttetmptFetch({ testId });
-	}, [testId]);
+export default function CurrentAttemptStatus() {
+	const navigate = useNavigate();
+	const { data: currentAttemptData } = useGetCurrentAttemptStateQuery({});
+	if (currentAttemptData == null) return <>Loading...</>;
+	if (currentAttemptData.currentAttempt == null) return <>No Tests is going</>;
 
-	if (currentAttempt.attemptInfo == null) return <>No Tests is going</>;
-	if (isLoading) return <>Loading...</>;
+	const handleNavigateToDo = () => {
+		if (currentAttemptData.currentAttempt == null) return;
+		navigate(paths2.candidate.tests.in(currentAttemptData.currentAttempt.test.id).DO);
+	}
+
+	const { test, secondsLeft } = currentAttemptData.currentAttempt;
+
 	return <>
-		<div className="flex items-center bg-primary-toned-200 p-6 rounded-lg shadow-md">
-			<div className="text-secondary-toned-600 font-bold">You have ongoing Test</div>
+		<div onClick={handleNavigateToDo}
+			className="flex flex-col items-center border-primary-toned-900 bg-primary-toned-100 p-6 rounded-lg shadow-md m-2 cursor-pointer">
+			<div className="text-primary-toned-600 font-arya text-sm">{test.title}</div>
 			<TestTimer
-				timeLeft={data?.currentAttempt?.secondsLeft ?? 0}
+				className="text-secondary-toned-600 font-bold"
+				timeLeft={secondsLeft}
 			/>
 		</div>
 	</>

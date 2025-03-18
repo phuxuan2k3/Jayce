@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { usePostTestsByTestIdCurrentSubmitMutation } from "../../../../features/Test/api/test.api-gen";
 import paths2 from "../../../../router/path-2";
 import useGetTestIdParams from "../../../../features/Test/hooks/useGetTestIdParams";
 import { useEffect } from "react";
@@ -7,6 +6,7 @@ import TestTimer from "../../../../features/Test/partials/TestTimer";
 import { useAppDispatch, useAppSelector } from "../../../../app/redux/hooks";
 import { currentAttemptActions, curerntAttemptSelects } from "../../../../features/Test/reducers/currentAttemtpSlice";
 import { CurrentAttempt } from "../../../../features/Test/types/current";
+import { usePostCurrentAttemptSubmitMutation } from "../../../../features/Test/api/test.api-gen";
 
 interface SidebarProps {
 	currentAttempt: CurrentAttempt;
@@ -22,7 +22,7 @@ export default function Sidebar({
 	const dispatch = useAppDispatch();
 	const currentAttemptState = useAppSelector(curerntAttemptSelects.selectCurrentAttempt);
 
-	const [submitTest, { isSuccess, isLoading, isError }] = usePostTestsByTestIdCurrentSubmitMutation();
+	const [submitTest, { isSuccess, isLoading, error }] = usePostCurrentAttemptSubmitMutation();
 
 	const { secondsLeft, answers } = currentAttempt;
 	const { currentQuestionIndex, flaggedQuestionIndexes, } = currentAttemptState;
@@ -38,7 +38,7 @@ export default function Sidebar({
 	}, [isSuccess]);
 
 	const handleSubmitClick = () => {
-		submitTest({ testId });
+		submitTest({});
 	}
 
 	return (
@@ -76,7 +76,9 @@ export default function Sidebar({
 					onClick={handleSubmitClick}>
 					Submit
 				</button>
-				<span className="text-sm text-red-600 block" hidden={isError == false}>There was an error.</span>
+				{error &&
+					<span className="text-sm text-red-600 block">There was an error.</span>
+				}
 			</div>
 			<button
 				className="mt-4 w-full px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer"

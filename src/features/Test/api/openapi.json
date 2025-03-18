@@ -190,23 +190,12 @@
 				}
 			}
 		},
-		"/tests/{testId}/current": {
+		"/current-attempt/state": {
 			"get": {
 				"tags": [
 					"Current"
 				],
 				"parameters": [
-					{
-						"schema": {
-							"type": [
-								"number",
-								"null"
-							]
-						},
-						"required": false,
-						"name": "testId",
-						"in": "path"
-					},
 					{
 						"schema": {
 							"type": [
@@ -267,6 +256,25 @@
 															"chosenOption"
 														]
 													}
+												},
+												"test": {
+													"type": "object",
+													"properties": {
+														"id": {
+															"type": "number"
+														},
+														"title": {
+															"type": "string"
+														},
+														"minutesToAnswer": {
+															"type": "number"
+														}
+													},
+													"required": [
+														"id",
+														"title",
+														"minutesToAnswer"
+													]
 												}
 											},
 											"required": [
@@ -274,7 +282,8 @@
 												"secondsLeft",
 												"createdAt",
 												"endedAt",
-												"answers"
+												"answers",
+												"test"
 											]
 										}
 									},
@@ -289,23 +298,12 @@
 				}
 			}
 		},
-		"/tests/{testId}/current/new": {
+		"/current-attempt/new": {
 			"post": {
 				"tags": [
 					"Current"
 				],
 				"parameters": [
-					{
-						"schema": {
-							"type": [
-								"number",
-								"null"
-							]
-						},
-						"required": false,
-						"name": "testId",
-						"in": "path"
-					},
 					{
 						"schema": {
 							"type": [
@@ -320,6 +318,28 @@
 						"in": "header"
 					}
 				],
+				"requestBody": {
+					"description": "Request body",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"testId": {
+										"type": [
+											"number",
+											"null"
+										]
+									}
+								},
+								"required": [
+									"testId"
+								]
+							}
+						}
+					}
+				},
 				"responses": {
 					"200": {
 						"description": "Success"
@@ -327,24 +347,13 @@
 				}
 			}
 		},
-		"/tests/{testId}/current/do": {
+		"/current-attempt/do": {
 			"get": {
 				"summary": "Prepare the test for the candidate to do",
 				"tags": [
 					"Current"
 				],
 				"parameters": [
-					{
-						"schema": {
-							"type": [
-								"number",
-								"null"
-							]
-						},
-						"required": false,
-						"name": "testId",
-						"in": "path"
-					},
 					{
 						"schema": {
 							"type": [
@@ -463,23 +472,12 @@
 				}
 			}
 		},
-		"/tests/{testId}/current/submit": {
+		"/current-attempt/submit": {
 			"post": {
 				"tags": [
 					"Current"
 				],
 				"parameters": [
-					{
-						"schema": {
-							"type": [
-								"number",
-								"null"
-							]
-						},
-						"required": false,
-						"name": "testId",
-						"in": "path"
-					},
 					{
 						"schema": {
 							"type": [

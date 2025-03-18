@@ -1,11 +1,11 @@
 import { url } from "../../../app/env";
-import { CurrentTestSocket } from "../api/socket.schema";
+import { CurrentAttemptSocket } from "../api/socket.schema";
 import { io } from "socket.io-client";
 import { testApiGen } from "../api/test.api-gen";
 import { RootState } from "../../../app/redux/store";
 import { currentAttemptActions } from "./currentAttemtpSlice";
 
-let _socket: CurrentTestSocket | null = null;
+let _socket: CurrentAttemptSocket | null = null;
 
 function connectSocket(getState: () => any) {
 	if (!_socket) {
@@ -31,24 +31,22 @@ function clearSocket() {
 }
 
 const currentAttemptApi = testApiGen.enhanceEndpoints({
-	addTagTypes: ["CurrentTestSocket"],
+	addTagTypes: ["CurrentAttempt"],
 	endpoints: {
-		postTestsByTestIdCurrentNew: {
-			invalidatesTags: ["CurrentTestSocket"],
-			queryFn(arg, api, _, baseQuery) {
-				const { currentAttempt } = api.getState() as RootState;
-				// Prevent accidentally API calls if there is already an attempt. Ex: Navigate back, refresh page, etc.
-				// Only allow to call this API when user confirm the dialog => dispatch(currentAttemptActions.endTest())
-				if (currentAttempt.attemptInfo != null) {
-					throw new Error("Already has an attempt");
-				}
-				return baseQuery(arg);
-			},
+		postCurrentAttemptNew: {
+			invalidatesTags: ["CurrentAttempt"],
+			onQueryStarted: async (_, {
+				dispatch,
+				queryFulfilled,
+			}) => {
+				await queryFulfilled;
+				dispatch(currentAttemptActions.startTest());
+			}
 		},
-		getTestsByTestIdCurrent: {
-			providesTags: ["CurrentTestSocket"],
+		getCurrentAttemptState: {
+			providesTags: ["CurrentAttempt"],
 
-			async onQueryStarted(arg, {
+			async onQueryStarted(_, {
 				queryFulfilled,
 				getState,
 				dispatch,
@@ -57,7 +55,7 @@ const currentAttemptApi = testApiGen.enhanceEndpoints({
 					// Wait for the query to be fulfilled
 					const { data } = await queryFulfilled;
 
-					if (arg.testId == null || data == null) {
+					if (data == null) {
 						console.error("Error: NULL in currentAttemptApi >> postTestsByTestIdCurrentNew >> onQueryStarted");
 						return;
 					}
@@ -66,16 +64,12 @@ const currentAttemptApi = testApiGen.enhanceEndpoints({
 					if (data.currentAttempt != null) {
 						socket.emit("REGISTERED", { attemptId: data.currentAttempt.id }, ({ isInprogress }) => {
 							if (isInprogress == false) {
-								dispatch(currentAttemptApi.util.invalidateTags(["CurrentTestSocket"]));
+								throw new Error("Candidate do not have test that is in progress");
 							}
 						});
-						dispatch(currentAttemptActions.startNewTest({
-							testId: arg.testId,
-							id: data.currentAttempt.id,
-						}));
 					}
 					else {
-						// End the test as the server response
+						// This is the case when: fetch or re-fetch to the server with no current attempts, used for all cases when dispatch(invaildateTags) is called
 						dispatch(currentAttemptActions.endTest());
 					}
 
@@ -128,7 +122,8 @@ const currentAttemptApi = testApiGen.enhanceEndpoints({
 					});
 
 					socket.on("ENDED", () => {
-						dispatch(currentAttemptApi.util.invalidateTags(["CurrentTestSocket"]));
+						dispatch(currentAttemptActions.endTest()); // Ends the test
+						dispatch(currentAttemptApi.util.invalidateTags(["CurrentAttempt"])); // Re-fetch to make sure it ends
 					});
 
 					// Cache time ends when data is not used in a certain time

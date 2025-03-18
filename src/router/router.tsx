@@ -44,226 +44,237 @@ import DashboardPage from "../pages/common/DashboardPage";
 import TestsPage from "../pages/Test/Candidate/Tests/TestsPage";
 import TestDoPage from "../pages/Test/Candidate/TestDo/TestDoPage";
 import TestAttemtpsPage from "../pages/Test/Candidate/TestAttempts/TestAttemptsPage";
+import CurrentTestLayout from "../features/Test/layout/CurrentTestLayout";
 
 const router = createBrowserRouter([{
 	errorElement: <ErrorPage />,
-	children: [{
-		path: paths2.auth.ROOT,
-		element: <AuthLayout />,
-		children: [{
-			path: paths2.auth.LOGIN,
-			element: <Login />
+	children: [
+		{
+			path: paths2.auth.ROOT,
+			element: <AuthLayout />,
+			children: [
+				{
+					path: paths2.auth.LOGIN,
+					element: <Login />
+				},
+				{
+					path: paths2.auth.REGISTER,
+					element: <Register />
+				}
+			],
 		},
 		{
-			path: paths2.auth.REGISTER,
-			element: <Register />
-		}],
-	},
-	{
-		path: paths2.candidate.ROOT,
-		element: <CandidateLayout />,
-		children: [{
 			path: paths2.candidate.ROOT,
-			element: <DashboardPage />
+			element: <CandidateLayout />,
+			children: [
+				{
+					element: <CurrentTestLayout />,
+					children: [
+						{
+							path: paths2.candidate.ROOT,
+							element: <DashboardPage />
+						},
+						{
+							path: paths2.candidate.tests.ROOT,
+							element: <TestsPage />
+						},
+						{
+							path: paths2.candidate.tests.in().RECOMMENDATION,
+							element: <TestSchedule />
+						},
+						{
+							path: paths2.candidate.tests.in().ASSESSMENT,
+							element: <TestEvaluate />
+						},
+						{
+							path: paths2.candidate.tests.attempts.in().ROOT,
+							element: <AttemptDetailPage />
+						}
+					]
+				},
+				{
+					path: paths2.candidate.tests.in().DO,
+					element: <TestDoPage />
+				},
+				{
+					path: paths2.candidate.tests.in().ATTEMPTS,
+					element: <TestAttemtpsPage />
+				},
+			]
 		},
 		{
-			path: paths2.candidate.tests.ROOT,
-			element: <TestsPage />
-		},
-		{
-			path: paths2.candidate.tests.in().DO,
-			element: <TestDoPage />
-		},
-		{
-			path: paths2.candidate.tests.in().ATTEMPTS,
-			element: <TestAttemtpsPage />
-		},
-		{
-			path: paths2.candidate.tests.in().RECOMMENDATION,
-			element: <TestSchedule />
-		},
-		{
-			path: paths2.candidate.tests.in().ASSESSMENT,
-			element: <TestEvaluate />
-		},
-		{
-			path: paths2.candidate.tests.attempts.in().ROOT,
-			element: <AttemptDetailPage />
-		}]
-	},
-	{
-		path: paths2.ROOT,
-		element: <UnauthLayout />,
-		children: [{
 			path: paths2.ROOT,
-			element: <DashboardPage />,
-			index: true
+			element: <UnauthLayout />,
+			children: [{
+				path: paths2.ROOT,
+				element: <DashboardPage />,
+				index: true
+			}]
+		},
+
+
+		// Old paths
+
+		{
+			path: paths.SUGGESTION,
+			element: <Suggestion />
+		},
+		{
+			path: paths.ROLE,
+			element: <Role />
+		},
+		{
+			path: paths.COMPANY,
+			element: <Company />
+		},
+		{
+			path: paths.RESET,
+			element: <ResetPassword />
+		},
+		{
+			path: paths.NEWPASS,
+			element: <NewPassword />
+		},
+		{
+			path: paths.TEST.ROOT,
+			element: <Layout />,
+			children: [
+				{
+					path: paths.TEST.VIEWANSWER,
+					element: <AttemptDetailPage />
+				},
+				{
+					path: paths.TEST.SUBMISSION.ROOT,
+					children: [
+						{
+							path: paths.TEST.SUBMISSION.LIST,
+							element: <TestSubmissionListView />
+						},
+						{
+							path: paths.TEST.SUBMISSION.DETAIL,
+							element: <TestSubmissionDetail />
+						}
+					]
+				},
+				{
+					path: paths.TEST.EDIT.ROOT,
+					children: [
+						{
+							path: paths.TEST.EDIT.DETAIL,
+							element: <EditTestDetail />
+						},
+						{
+							path: paths.TEST.EDIT.QUESTION,
+							element: <EditTestQuestion />
+						}
+					]
+				},
+				{
+					path: paths.TEST.CREATENEWTEST,
+					element: <CreateNewTest />
+				},
+				{
+					path: paths.TEST.CREATETEST,
+					element: <CreateTest />,
+				},
+				{
+					path: paths.TEST.TESTLISTVIEW,
+					element: <TestListView />,
+				},
+			],
+		},
+		{
+			path: paths.SCENARIO.ROOT,
+			element: <ScenarioLayout />,
+			children: [
+				{
+					path: '',
+					element: <Navigate to={paths.SCENARIO.LIST} />, // Redirect to paths.SCENARIO.LIST
+				},
+				{
+					path: paths.SCENARIO.LIST,
+					element: <ScenarioListView />,
+				},
+				{
+					path: paths.SCENARIO.SUBMISSION.ROOT,
+					element: <ScenarioSubmissionListView />,
+				},
+				{
+					path: paths.SCENARIO.SUBMISSION.DETAIL,
+					element: <ScenarioSubmissionDetail />
+				},
+				{
+					path: paths.SCENARIO.CREATE.ROOT,
+					element: <Navigate to={paths.SCENARIO.LIST} />,
+				},
+				{
+					path: paths.SCENARIO.CREATE.DETAIL,
+					element: <ScenarioCreateDetail />
+				},
+				{
+					path: paths.SCENARIO.CREATE.QUESTION,
+					element: <ScenarioCreateQuestion />
+				},
+				{
+					path: paths.SCENARIO.EDIT.ROOT,
+					element: <Navigate to={paths.SCENARIO.LIST} />,
+				},
+				{
+					path: paths.SCENARIO.EDIT.DETAIL,
+					element: <ScenarioEditDetail />,
+				},
+				{
+					path: paths.SCENARIO.EDIT.QUESTION,
+					element: <ScenarioEditQuestion />,
+				},
+			],
+		},
+		{
+			path: paths.INTERVIEWPRACTICE.ROOT,
+			element: <LayoutInterviewPractice />,
+			children: [
+				{
+					path: paths.INTERVIEWPRACTICE.PICK,
+					element: <PickAField />,
+				},
+				{
+					path: paths.INTERVIEWPRACTICE.CHOOSE,
+					element: <ChooseScenario />,
+				},
+				{
+					path: paths.INTERVIEWPRACTICE.DETAIL,
+					element: <ScenarioDetail />,
+				},
+				{
+					path: paths.INTERVIEWPRACTICE.ANSWER,
+					element: <AnswerQuestion />,
+				},
+				{
+					path: paths.INTERVIEWPRACTICE.REVIEW,
+					element: <Review />,
+				}
+			]
+		},
+		{
+			path: paths.PROFILE.ROOT,
+			element: <ProfileLayout />,
+			children: [
+				{
+					path: '',
+					element: <ProfileDashboard />,
+				},
+			],
+		},
+		{
+			path: paths.PRICING.ROOT,
+			element: <ProfileLayout />,
+			children: [
+				{
+					path: '',
+					element: <PricingPage />,
+				},
+			],
 		}]
-	},
-
-
-	// Old paths
-
-	{
-		path: paths.SUGGESTION,
-		element: <Suggestion />
-	},
-	{
-		path: paths.ROLE,
-		element: <Role />
-	},
-	{
-		path: paths.COMPANY,
-		element: <Company />
-	},
-	{
-		path: paths.RESET,
-		element: <ResetPassword />
-	},
-	{
-		path: paths.NEWPASS,
-		element: <NewPassword />
-	},
-	{
-		path: paths.TEST.ROOT,
-		element: <Layout />,
-		children: [
-			{
-				path: paths.TEST.VIEWANSWER,
-				element: <AttemptDetailPage />
-			},
-			{
-				path: paths.TEST.SUBMISSION.ROOT,
-				children: [
-					{
-						path: paths.TEST.SUBMISSION.LIST,
-						element: <TestSubmissionListView />
-					},
-					{
-						path: paths.TEST.SUBMISSION.DETAIL,
-						element: <TestSubmissionDetail />
-					}
-				]
-			},
-			{
-				path: paths.TEST.EDIT.ROOT,
-				children: [
-					{
-						path: paths.TEST.EDIT.DETAIL,
-						element: <EditTestDetail />
-					},
-					{
-						path: paths.TEST.EDIT.QUESTION,
-						element: <EditTestQuestion />
-					}
-				]
-			},
-			{
-				path: paths.TEST.CREATENEWTEST,
-				element: <CreateNewTest />
-			},
-			{
-				path: paths.TEST.CREATETEST,
-				element: <CreateTest />,
-			},
-			{
-				path: paths.TEST.TESTLISTVIEW,
-				element: <TestListView />,
-			},
-		],
-	},
-	{
-		path: paths.SCENARIO.ROOT,
-		element: <ScenarioLayout />,
-		children: [
-			{
-				path: '',
-				element: <Navigate to={paths.SCENARIO.LIST} />, // Redirect to paths.SCENARIO.LIST
-			},
-			{
-				path: paths.SCENARIO.LIST,
-				element: <ScenarioListView />,
-			},
-			{
-				path: paths.SCENARIO.SUBMISSION.ROOT,
-				element: <ScenarioSubmissionListView />,
-			},
-			{
-				path: paths.SCENARIO.SUBMISSION.DETAIL,
-				element: <ScenarioSubmissionDetail />
-			},
-			{
-				path: paths.SCENARIO.CREATE.ROOT,
-				element: <Navigate to={paths.SCENARIO.LIST} />,
-			},
-			{
-				path: paths.SCENARIO.CREATE.DETAIL,
-				element: <ScenarioCreateDetail />
-			},
-			{
-				path: paths.SCENARIO.CREATE.QUESTION,
-				element: <ScenarioCreateQuestion />
-			},
-			{
-				path: paths.SCENARIO.EDIT.ROOT,
-				element: <Navigate to={paths.SCENARIO.LIST} />,
-			},
-			{
-				path: paths.SCENARIO.EDIT.DETAIL,
-				element: <ScenarioEditDetail />,
-			},
-			{
-				path: paths.SCENARIO.EDIT.QUESTION,
-				element: <ScenarioEditQuestion />,
-			},
-		],
-	},
-	{
-		path: paths.INTERVIEWPRACTICE.ROOT,
-		element: <LayoutInterviewPractice />,
-		children: [
-			{
-				path: paths.INTERVIEWPRACTICE.PICK,
-				element: <PickAField />,
-			},
-			{
-				path: paths.INTERVIEWPRACTICE.CHOOSE,
-				element: <ChooseScenario />,
-			},
-			{
-				path: paths.INTERVIEWPRACTICE.DETAIL,
-				element: <ScenarioDetail />,
-			},
-			{
-				path: paths.INTERVIEWPRACTICE.ANSWER,
-				element: <AnswerQuestion />,
-			},
-			{
-				path: paths.INTERVIEWPRACTICE.REVIEW,
-				element: <Review />,
-			}
-		]
-	},
-	{
-		path: paths.PROFILE.ROOT,
-		element: <ProfileLayout />,
-		children: [
-			{
-				path: '',
-				element: <ProfileDashboard />,
-			},
-		],
-	},
-	{
-		path: paths.PRICING.ROOT,
-		element: <ProfileLayout />,
-		children: [
-			{
-				path: '',
-				element: <PricingPage />,
-			},
-		],
-	}]
 }], {
 	basename: '/'
 });

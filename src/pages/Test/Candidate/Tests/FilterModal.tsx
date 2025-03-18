@@ -8,8 +8,8 @@ import {
 	Checkbox,
 	Slider,
 } from "@mui/material";
-import Modal from "../../../../components/ui/common/Modal";
 import { GetTestsApiArg } from "../../../../features/Test/api/test.api-gen";
+import ModalBase from "../../../../components/ui/modal/Modal.base";
 
 interface Props {
 	open: boolean;
@@ -73,7 +73,7 @@ const FilterModal: React.FC<Props> = ({ filters, open, onClose, setFilters }) =>
 	};
 
 	return (
-		<Modal isOpen={open} onClose={onClose}>
+		<ModalBase isOpen={open} onClose={onClose}>
 			<div className="grid grid-cols-12 gap-4">
 				<div className="col-span-4">
 					<Typography>Choose time range (minutes):</Typography>
@@ -133,7 +133,7 @@ const FilterModal: React.FC<Props> = ({ filters, open, onClose, setFilters }) =>
 					</Button>
 				</div>
 			</div>
-		</Modal>
+		</ModalBase>
 	);
 };
 

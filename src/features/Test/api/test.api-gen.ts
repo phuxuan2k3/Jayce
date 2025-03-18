@@ -36,46 +36,47 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
-    getTestsByTestIdCurrent: build.query<
-      GetTestsByTestIdCurrentApiResponse,
-      GetTestsByTestIdCurrentApiArg
+    getCurrentAttemptState: build.query<
+      GetCurrentAttemptStateApiResponse,
+      GetCurrentAttemptStateApiArg
     >({
       query: (queryArg) => ({
-        url: `/tests/${queryArg.testId}/current`,
+        url: `/current-attempt/state`,
         headers: {
           "x-user-id": queryArg["x-user-id"],
         },
       }),
     }),
-    postTestsByTestIdCurrentNew: build.mutation<
-      PostTestsByTestIdCurrentNewApiResponse,
-      PostTestsByTestIdCurrentNewApiArg
+    postCurrentAttemptNew: build.mutation<
+      PostCurrentAttemptNewApiResponse,
+      PostCurrentAttemptNewApiArg
     >({
       query: (queryArg) => ({
-        url: `/tests/${queryArg.testId}/current/new`,
+        url: `/current-attempt/new`,
         method: "POST",
+        body: queryArg.body,
         headers: {
           "x-user-id": queryArg["x-user-id"],
         },
       }),
     }),
-    getTestsByTestIdCurrentDo: build.query<
-      GetTestsByTestIdCurrentDoApiResponse,
-      GetTestsByTestIdCurrentDoApiArg
+    getCurrentAttemptDo: build.query<
+      GetCurrentAttemptDoApiResponse,
+      GetCurrentAttemptDoApiArg
     >({
       query: (queryArg) => ({
-        url: `/tests/${queryArg.testId}/current/do`,
+        url: `/current-attempt/do`,
         headers: {
           "x-user-id": queryArg["x-user-id"],
         },
       }),
     }),
-    postTestsByTestIdCurrentSubmit: build.mutation<
-      PostTestsByTestIdCurrentSubmitApiResponse,
-      PostTestsByTestIdCurrentSubmitApiArg
+    postCurrentAttemptSubmit: build.mutation<
+      PostCurrentAttemptSubmitApiResponse,
+      PostCurrentAttemptSubmitApiArg
     >({
       query: (queryArg) => ({
-        url: `/tests/${queryArg.testId}/current/submit`,
+        url: `/current-attempt/submit`,
         method: "POST",
         headers: {
           "x-user-id": queryArg["x-user-id"],
@@ -246,7 +247,7 @@ export type DeleteTagsByTagIdApiResponse = unknown;
 export type DeleteTagsByTagIdApiArg = {
   tagId?: number | null;
 };
-export type GetTestsByTestIdCurrentApiResponse = /** status 200 Success */ {
+export type GetCurrentAttemptStateApiResponse = /** status 200 Success */ {
   hasCurrentAttempt: boolean;
   currentAttempt: {
     id: number;
@@ -257,18 +258,25 @@ export type GetTestsByTestIdCurrentApiResponse = /** status 200 Success */ {
       questionId: number;
       chosenOption: number;
     }[];
+    test: {
+      id: number;
+      title: string;
+      minutesToAnswer: number;
+    };
   } | null;
 };
-export type GetTestsByTestIdCurrentApiArg = {
-  testId?: number | null;
+export type GetCurrentAttemptStateApiArg = {
   "x-user-id"?: string | null;
 };
-export type PostTestsByTestIdCurrentNewApiResponse = unknown;
-export type PostTestsByTestIdCurrentNewApiArg = {
-  testId?: number | null;
+export type PostCurrentAttemptNewApiResponse = unknown;
+export type PostCurrentAttemptNewApiArg = {
   "x-user-id"?: string | null;
+  /** Request body */
+  body: {
+    testId: number | null;
+  };
 };
-export type GetTestsByTestIdCurrentDoApiResponse = /** status 200 Success */ {
+export type GetCurrentAttemptDoApiResponse = /** status 200 Success */ {
   id: number;
   test: {
     id: number;
@@ -290,13 +298,11 @@ export type GetTestsByTestIdCurrentDoApiResponse = /** status 200 Success */ {
     points: number;
   }[];
 };
-export type GetTestsByTestIdCurrentDoApiArg = {
-  testId?: number | null;
+export type GetCurrentAttemptDoApiArg = {
   "x-user-id"?: string | null;
 };
-export type PostTestsByTestIdCurrentSubmitApiResponse = unknown;
-export type PostTestsByTestIdCurrentSubmitApiArg = {
-  testId?: number | null;
+export type PostCurrentAttemptSubmitApiResponse = unknown;
+export type PostCurrentAttemptSubmitApiArg = {
   "x-user-id"?: string | null;
 };
 export type GetTestsApiResponse = /** status 200 Success */ {
@@ -545,12 +551,12 @@ export const {
   useLazyGetTagsByTagIdQuery,
   usePutTagsByTagIdMutation,
   useDeleteTagsByTagIdMutation,
-  useGetTestsByTestIdCurrentQuery,
-  useLazyGetTestsByTestIdCurrentQuery,
-  usePostTestsByTestIdCurrentNewMutation,
-  useGetTestsByTestIdCurrentDoQuery,
-  useLazyGetTestsByTestIdCurrentDoQuery,
-  usePostTestsByTestIdCurrentSubmitMutation,
+  useGetCurrentAttemptStateQuery,
+  useLazyGetCurrentAttemptStateQuery,
+  usePostCurrentAttemptNewMutation,
+  useGetCurrentAttemptDoQuery,
+  useLazyGetCurrentAttemptDoQuery,
+  usePostCurrentAttemptSubmitMutation,
   useGetTestsQuery,
   useLazyGetTestsQuery,
   usePostTestsMutation,

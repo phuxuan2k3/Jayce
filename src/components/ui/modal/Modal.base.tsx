@@ -6,7 +6,7 @@ interface ModalProps {
 	children: React.ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+const ModalBase: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (event.key === "Escape") {
@@ -38,4 +38,4 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 	);
 };
 
-export default Modal;
+export default ModalBase;
