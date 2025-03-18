@@ -4,4 +4,4 @@ import { GetTestsByTestIdCurrentApiResponse } from "../api/test.api-gen";
 
 // export type CurrentAttemptQuestion = GetTestsByTestIdCurrentDoApiResponse["questions"][0];
 
-export type CurrentTest = GetTestsByTestIdCurrentApiResponse;
+export type CurrentAttempt = NonNullable<GetTestsByTestIdCurrentApiResponse["currentAttempt"]>;

@@ -7,27 +7,30 @@ import { useGetTestsByTestIdCurrentDoQuery, useGetTestsByTestIdCurrentQuery } fr
 import paths2 from '../../../../router/path-2';
 import FetchState from '../../../../components/wrapper/FetchState';
 import { useAppSelector } from '../../../../app/redux/hooks';
-import { testClientSliceSelects } from '../../../../features/Test/slice/testClientSlice';
+import { curerntAttemptSelects } from '../../../../features/Test/reducers/currentAttemtpSlice';
 
 const TestDoPage = () => {
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
-	const { data, isLoading, error } = useGetTestsByTestIdCurrentDoQuery({ testId });
-	const { hasOnGoingTest, currentQuestionIndex } = useAppSelector(testClientSliceSelects.selectClientState);
-	const { data: currentAttempt } = useGetTestsByTestIdCurrentQuery({ testId });
+	const { data: testToDo, isLoading, error } = useGetTestsByTestIdCurrentDoQuery({ testId });
+	const { currentQuestionIndex } = useAppSelector(curerntAttemptSelects.selectCurrentAttempt);
+	const currentAttemptQuery = useGetTestsByTestIdCurrentQuery({ testId });
 
 	// TODO: Add notification upon test ends.
 	useEffect(() => {
-		if (hasOnGoingTest === false) {
+		if (currentAttemptQuery.isSuccess == false) return;
+		if (currentAttemptQuery.data.hasCurrentAttempt === false) {
+			// TODO: Add modal to notify user that the test has ended.
 			navigate(paths2.candidate.tests.in(testId).ATTEMPTS);
 		}
-	}, [hasOnGoingTest]);
+	}, [currentAttemptQuery]);
 
 	// TODO: Use loading page
-	if (!data || !currentAttempt) return <>Loading...</>;
-	const { } = currentAttempt;
+	if (!testToDo || currentAttemptQuery.isSuccess == false) return <>Loading...</>;
+	if (currentAttemptQuery.data.currentAttempt == null) return <>No current attempt</>;
 
-	const currentQuestion = data.questions[currentQuestionIndex];
+	const currentQuestion = testToDo.questions[currentQuestionIndex];
+	const { currentAttempt } = currentAttemptQuery.data;
 
 	return (
 		<div className="w-full flex-grow flex flex-col items-center px-4">
@@ -37,7 +40,7 @@ const TestDoPage = () => {
 					error={error}
 				>
 					<h1 className="text-2xl font-bold mb-6">
-						{data?.test.title}
+						{testToDo?.test.title}
 					</h1>
 				</FetchState>
 				<div className="flex flex-row w-full justify-between">
@@ -45,15 +48,15 @@ const TestDoPage = () => {
 						isLoading={isLoading}
 						error={error}
 					>
-						{data?.questions.length === 0 ? (
+						{testToDo?.questions.length === 0 ? (
 							<div>No questions found</div>
 						) : (
 							<>
-								{data &&
+								{testToDo &&
 									<QuestionComponent
 										currentAttempt={currentAttempt}
 										question={currentQuestion}
-										totalQuestion={data.questions.length}
+										totalQuestion={testToDo.questions.length}
 									/>
 								}
 							</>
@@ -61,7 +64,7 @@ const TestDoPage = () => {
 					</FetchState>
 
 					<Sidebar
-						questionIds={data.questions.map((question) => question.id) ?? []}
+						questionIds={testToDo.questions.map((question) => question.id) ?? []}
 						currentAttempt={currentAttempt}
 					/>
 				</div>

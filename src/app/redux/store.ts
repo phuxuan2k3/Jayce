@@ -7,7 +7,7 @@ import accountApi from '../../features/Account/account.api';
 import aiAPI from '../../features/Test/api/AI.api';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import testClientReducer from '../../features/Test/slice/testClientSlice';
+import currentAttemptReducer from '../../features/Test/reducers/currentAttemtpSlice';
 
 const persistConfig = {
 	key: 'root',
@@ -22,7 +22,9 @@ const rootReducer = combineReducers({
 	testApi: testApi.reducer,
 	aiApi: aiAPI.reducer,
 	accountApi: accountApi.reducer,
-	testClient: testClientReducer,
+
+	// Custom reducers
+	currentAttempt: currentAttemptReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

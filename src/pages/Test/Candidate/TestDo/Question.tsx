@@ -1,10 +1,10 @@
 import { useAppDispatch, useAppSelector } from "../../../../app/redux/hooks";
-import { GetTestsByTestIdCurrentApiResponse } from "../../../../features/Test/api/test.api-gen";
-import { useAnswerTestQuestionMutation } from "../../../../features/Test/slice/currentSocketApi";
-import { testClientSliceActions, testClientSliceSelects } from "../../../../features/Test/slice/testClientSlice";
+import { useAnswerTestQuestionMutation } from "../../../../features/Test/reducers/currentAttemptApi";
+import { currentAttemptActions, curerntAttemptSelects } from "../../../../features/Test/reducers/currentAttemtpSlice";
+import { CurrentAttempt } from "../../../../features/Test/types/current";
 
 interface QuestionComponentProps {
-	currentAttempt: NonNullable<GetTestsByTestIdCurrentApiResponse>;
+	currentAttempt: CurrentAttempt;
 	totalQuestion: number;
 	question: {
 		id: number;
@@ -24,10 +24,10 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
 }) => {
 	const dispatch = useAppDispatch();
 	const [answerQuestion] = useAnswerTestQuestionMutation();
-	const testClientState = useAppSelector(testClientSliceSelects.selectClientState);
-	const isFlagged = testClientState.isFlagged();
+	const currentAttemptState = useAppSelector(curerntAttemptSelects.selectCurrentAttempt);
+	const isFlagged = currentAttemptState.isFlagged();
 
-	const { currentQuestionIndex } = testClientState;
+	const { currentQuestionIndex } = currentAttemptState;
 	const currentAnswer = currentAttempt.answers.find((answer) => answer.questionId === question.id);
 
 	const isFirstQuestion = currentQuestionIndex === 0;
@@ -35,13 +35,13 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
 
 	const handleNextQuestion = () => {
 		if (currentQuestionIndex < totalQuestion) {
-			dispatch(testClientSliceActions.setCurrentQuestionIndex(currentQuestionIndex + 1));
+			dispatch(currentAttemptActions.setCurrentQuestionIndex(currentQuestionIndex + 1));
 		}
 	};
 
 	const handlePreviousQuestion = () => {
 		if (currentQuestionIndex >= 1) {
-			dispatch(testClientSliceActions.setCurrentQuestionIndex(currentQuestionIndex - 1));
+			dispatch(currentAttemptActions.setCurrentQuestionIndex(currentQuestionIndex - 1));
 		}
 	}
 
@@ -55,7 +55,7 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
 	}
 
 	const handleFlagQuestionToggle = () => {
-		dispatch(testClientSliceActions.toggleFlagCurrentQuestion());
+		dispatch(currentAttemptActions.toggleFlagCurrentQuestion());
 	}
 
 	return (

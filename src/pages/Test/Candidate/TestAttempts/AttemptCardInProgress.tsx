@@ -27,14 +27,15 @@ const AttemptCardInProgress: React.FC<Props> = ({
 	test,
 }) => {
 	const navigate = useNavigate();
-	const { data: currentAttempt, isLoading, error } = useGetTestsByTestIdCurrentQuery({ testId: test.id });
+	const { data, isLoading, error } = useGetTestsByTestIdCurrentQuery({ testId: test.id });
 
 	const handleOnInProgressAttemptClick = () => {
 		navigate(paths2.candidate.tests.in(test.id).DO);
 	};
 
-	if (currentAttempt == null) return null;
-
+	if (data == null) return <>Loading...</>;
+	if (data.currentAttempt == null) return <>No current attempt</>;
+	const currentAttempt = data.currentAttempt;
 	return (
 		<FetchState
 			isLoading={isLoading}

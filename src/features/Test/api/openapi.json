@@ -227,48 +227,60 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": [
-										"object",
-										"null"
-									],
+									"type": "object",
 									"properties": {
-										"id": {
-											"type": "number"
+										"hasCurrentAttempt": {
+											"type": "boolean"
 										},
-										"secondsLeft": {
-											"type": "number"
-										},
-										"createdAt": {
-											"type": "string"
-										},
-										"endedAt": {
-											"type": "string"
-										},
-										"answers": {
-											"type": "array",
-											"items": {
-												"type": "object",
-												"properties": {
-													"questionId": {
-														"type": "number"
-													},
-													"chosenOption": {
-														"type": "number"
-													}
+										"currentAttempt": {
+											"type": [
+												"object",
+												"null"
+											],
+											"properties": {
+												"id": {
+													"type": "number"
 												},
-												"required": [
-													"questionId",
-													"chosenOption"
-												]
-											}
+												"secondsLeft": {
+													"type": "number"
+												},
+												"createdAt": {
+													"type": "string"
+												},
+												"endedAt": {
+													"type": "string"
+												},
+												"answers": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"properties": {
+															"questionId": {
+																"type": "number"
+															},
+															"chosenOption": {
+																"type": "number"
+															}
+														},
+														"required": [
+															"questionId",
+															"chosenOption"
+														]
+													}
+												}
+											},
+											"required": [
+												"id",
+												"secondsLeft",
+												"createdAt",
+												"endedAt",
+												"answers"
+											]
 										}
 									},
 									"required": [
-										"id",
-										"secondsLeft",
-										"createdAt",
-										"endedAt",
-										"answers"
+										"hasCurrentAttempt",
+										"currentAttempt"
 									]
 								}
 							}

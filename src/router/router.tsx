@@ -39,7 +39,7 @@ import NewPassword from "../pages/Authen/newpass/newpass";
 import paths2 from "./path-2";
 import AuthLayout from "../components/layouts/AuthLayout";
 import UnauthLayout from "../components/layouts/UnauthLayout";
-import CandidateLayout from "../components/layouts/CandidateLayout";
+import CandidateLayout from "../features/Test/layout/CandidateLayout";
 import DashboardPage from "../pages/common/DashboardPage";
 import TestsPage from "../pages/Test/Candidate/Tests/TestsPage";
 import TestDoPage from "../pages/Test/Candidate/TestDo/TestDoPage";

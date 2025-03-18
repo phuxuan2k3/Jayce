@@ -1,25 +1,38 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface TestClientState {
+export interface CurrentAttemptState {
+	attemptInfo: {
+		id: number;
+		testId: number;
+	} | null;
 	flaggedQuestionIndexes: Set<number>;
 	currentQuestionIndex: number;
-	hasOnGoingTest: boolean;
 	isFlagged(): boolean;
+
 }
 
-const initialState: TestClientState = {
+const initialState: CurrentAttemptState = {
+	attemptInfo: null,
 	flaggedQuestionIndexes: new Set<number>(),
 	currentQuestionIndex: 0,
-	hasOnGoingTest: false,
 	isFlagged() {
 		return this.flaggedQuestionIndexes.has(this.currentQuestionIndex);
 	}
 };
 
-const testClientSlice = createSlice({
-	name: 'testClient',
+const currentAttemptSlice = createSlice({
+	name: 'currentAttempt',
 	initialState,
 	reducers: {
+		startNewTest: (state, action: PayloadAction<{ id: number, testId: number }>) => {
+			state.attemptInfo = {
+				id: action.payload.id,
+				testId: action.payload.testId
+			};
+			state.flaggedQuestionIndexes = new Set<number>();
+			state.currentQuestionIndex = 0;
+		},
+
 		toggleFlagCurrentQuestion: (state) => {
 			if (state.flaggedQuestionIndexes.has(state.currentQuestionIndex)) {
 				state.flaggedQuestionIndexes.delete(state.currentQuestionIndex);
@@ -33,18 +46,16 @@ const testClientSlice = createSlice({
 			state.currentQuestionIndex = action.payload;
 		},
 
-		setHasOnGoingTest: (state, action: PayloadAction<boolean>) => {
-			state.hasOnGoingTest = action.payload;
-		}
+		endTest: () => initialState,
 	},
 	selectors: {
-		selectClientState: (state) => {
+		selectCurrentAttempt: (state) => {
 			return { ...state };
 		},
 	},
 });
 
-export const testClientSliceActions = testClientSlice.actions;
-export const testClientSliceSelects = testClientSlice.selectors;
+export const currentAttemptActions = currentAttemptSlice.actions;
+export const curerntAttemptSelects = currentAttemptSlice.selectors;
 
-export default testClientSlice.reducer;
+export default currentAttemptSlice.reducer;

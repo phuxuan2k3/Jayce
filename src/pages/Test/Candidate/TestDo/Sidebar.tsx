@@ -1,14 +1,15 @@
 import { useNavigate } from "react-router-dom";
-import { GetTestsByTestIdCurrentApiResponse, usePostTestsByTestIdCurrentSubmitMutation } from "../../../../features/Test/api/test.api-gen";
+import { usePostTestsByTestIdCurrentSubmitMutation } from "../../../../features/Test/api/test.api-gen";
 import paths2 from "../../../../router/path-2";
 import useGetTestIdParams from "../../../../features/Test/hooks/useGetTestIdParams";
 import { useEffect } from "react";
 import TestTimer from "../../../../features/Test/partials/TestTimer";
 import { useAppDispatch, useAppSelector } from "../../../../app/redux/hooks";
-import { testClientSliceActions, testClientSliceSelects } from "../../../../features/Test/slice/testClientSlice";
+import { currentAttemptActions, curerntAttemptSelects } from "../../../../features/Test/reducers/currentAttemtpSlice";
+import { CurrentAttempt } from "../../../../features/Test/types/current";
 
 interface SidebarProps {
-	currentAttempt: NonNullable<GetTestsByTestIdCurrentApiResponse>;
+	currentAttempt: CurrentAttempt;
 	questionIds: number[];
 }
 
@@ -19,12 +20,12 @@ export default function Sidebar({
 	const testId = useGetTestIdParams();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const testClientState = useAppSelector(testClientSliceSelects.selectClientState);
+	const currentAttemptState = useAppSelector(curerntAttemptSelects.selectCurrentAttempt);
 
 	const [submitTest, { isSuccess, isLoading, isError }] = usePostTestsByTestIdCurrentSubmitMutation();
 
 	const { secondsLeft, answers } = currentAttempt;
-	const { currentQuestionIndex, flaggedQuestionIndexes, } = testClientState;
+	const { currentQuestionIndex, flaggedQuestionIndexes, } = currentAttemptState;
 
 	const handleCancelTest = () => {
 		navigate(paths2.candidate.tests.in(testId).ATTEMPTS);
@@ -37,7 +38,6 @@ export default function Sidebar({
 	}, [isSuccess]);
 
 	const handleSubmitClick = () => {
-		dispatch(testClientSliceActions.setHasOnGoingTest(false));
 		submitTest({ testId });
 	}
 
@@ -62,7 +62,7 @@ export default function Sidebar({
 										? "bg-primary-toned-200"
 										: "bg-white"
 								}`}
-							onClick={() => dispatch(testClientSliceActions.setCurrentQuestionIndex(index))}
+							onClick={() => dispatch(currentAttemptActions.setCurrentQuestionIndex(index))}
 						>
 							{index + 1}
 						</button>
