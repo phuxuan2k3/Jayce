@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaChevronDown, FaFilePdf, FaLink, FaRegFileAlt, FaRegImage } from "react-icons/fa";
-import {Loading} from "./loading"
+import { Loading } from "./loading"
+import { useGenerateMutation } from "../questionai.test-api";
+import { CriteriaRequest } from "../types";
 interface Step1Props {
     onNext: () => void;
+    setGeneratedData: (data: any) => void;
 }
 
-export const Step2: React.FC<Step1Props> = ({ onNext }) => {
+export const Step2: React.FC<Step1Props> = ({ onNext, setGeneratedData }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const storedTestInfo = localStorage.getItem('testInfo');
+    const parsedTestInfo = storedTestInfo ? JSON.parse(storedTestInfo) : {};
     const options = [
         { id: "text", label: "Text", icon: <FaRegFileAlt />, active: true },
         { id: "link", label: "Link", icon: <FaLink /> },
@@ -20,17 +25,77 @@ export const Step2: React.FC<Step1Props> = ({ onNext }) => {
     const [language, setLanguage] = useState("Auto");
     const [seniority, setSeniority] = useState("Intern");
     const [isLoadingPage, setIsLoadingPage] = useState(false);
-    const handleSave = () => {
+    const [generate] = useGenerateMutation();
+    const [criteria, setCriteria] = useState<CriteriaRequest>({
+        name: parsedTestInfo.testName || "Default Name",
+        description: parsedTestInfo.testDesciption || "Default Description",
+        fields: parsedTestInfo.testField ? [parsedTestInfo.testField] : ["Default Field"],
+        duration: parsedTestInfo.testDuration || "30",
+        question_type: "multiple_choice",
+        language: "en",
+        options: 4,
+        number_of_question: 3,
+        candidate_seniority: "itern",
+        difficulty: parsedTestInfo.testDifficulty || "Easy",
+        context: "this is a beautiful",
+    });
+
+    // const handleGenerate = async () => {
+    //     try {
+    //         const response = await generate(criteria).unwrap();
+    //         console.log(response)
+    //     } catch (err) {
+    //         console.error("Error generating questions:", err);
+    //     }
+    // };
+    // useEffect(() => {
+    //     handleGenerate();
+    // }, [])
+    const handleSave = async () => {
         setIsLoadingPage(true);
-        setTimeout(() => {
+
+        const updatedCriteria: CriteriaRequest = {
+            ...criteria,
+            language,
+            options: answers,
+            number_of_question: numQuestions,
+            candidate_seniority: seniority.toLowerCase(),
+            context: text,
+        };
+        // const updatedCriteria: CriteriaRequest = {
+        //     name: "Default Name",
+        //     description:  "Default Description",
+        //     fields:  ["Default Field"],
+        //     duration: "30",
+        //     question_type: "multiple_choice",
+        //     language: "en",
+        //     options: 4,
+        //     number_of_question: 3,
+        //     candidate_seniority: "itern",   
+        //     difficulty:  "Easy",
+        //     context: "this is a beautiful",
+        // };
+        setCriteria(updatedCriteria);
+
+        try {
+            const response = await generate(updatedCriteria).unwrap();
+            console.log('req', criteria);
+            console.log('res', response.questionList);
+            setGeneratedData(response);
             onNext();
-        }, 3000);
+            setIsLoadingPage(false);
+        } catch (err) {
+            console.error("Error generating questions:", err);
+            setIsLoadingPage(false);
+        }
+
+      
     };
 
 
     if (isLoadingPage) {
         return (
-            <Loading/>
+            <Loading />
         );
     }
     return (
@@ -110,7 +175,7 @@ export const Step2: React.FC<Step1Props> = ({ onNext }) => {
             </div>
             {/* <QuestionModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onNextStep={onNext} /> */}
             {
-                isModalOpen&&(<div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                isModalOpen && (<div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
                     <div className="bg-white w-96 p-6 rounded-lg shadow-lg">
                         <h2 className="text-2xl font-semibold mb-4">Question type <span className="text-blue-500 text-sm border border-blue-300 rounded-lg px-2">Pro</span></h2>
                         <div className="my-3 flex justify-between">
@@ -121,9 +186,9 @@ export const Step2: React.FC<Step1Props> = ({ onNext }) => {
                                     onChange={(e) => setLanguage(e.target.value)}
                                     className="w-full border p-2 rounded-md appearance-none"
                                 >
-                                    <option>Auto</option>
-                                    <option>VietNamese</option>
-                                    <option>English</option>
+                                    <option value="en">Auto</option>
+                                    <option value="vie">VietNamese</option>
+                                    <option value="en">English</option>
                                 </select>
                                 <FaChevronDown className="absolute top-3 right-3 text-gray-400" />
                             </div>
@@ -156,17 +221,17 @@ export const Step2: React.FC<Step1Props> = ({ onNext }) => {
                                 <FaChevronDown className="absolute top-3 right-3 text-gray-400" />
                             </div>
                         </div>
-        
+
                         <div className="flex  gap-1 mt-4">
-                            <button onClick={()=>setIsModalOpen(false)} className="w-1/2 px-4 py-2 bg-gray-200 rounded-md">Cancel</button>
+                            <button onClick={() => setIsModalOpen(false)} className="w-1/2 px-4 py-2 bg-gray-200 rounded-md">Cancel</button>
                             <button
-                                onClick={()=>handleSave()}
+                                onClick={() => handleSave()}
                                 className=" text-center w-1/2 px-4 py-2 bg-[var(--primary-color)] text-white rounded-md "> Save </button>
                         </div>
                     </div>
                 </div>)
             }
             <div className="absolute top-10 right-10"><img className="w-4" src="https://cdn-icons-png.flaticon.com/512/566/566013.png" alt="" /></div>
-                
+
         </div>)
 };
