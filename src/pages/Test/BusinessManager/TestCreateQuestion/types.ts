@@ -24,8 +24,17 @@ export type CriteriaRequestFormat = {
 }
 
 export type CriteriaRequest = {
-	generalInfo: GeneralInfo;
-	criteriaList: CriteriaRequestFormat[];
+	name:string;
+	description:string;
+	fields:string[];
+	duration :string;
+	question_type:string;
+	language:string;
+	options:number;
+	number_of_question:number;
+	candidate_seniority:string;
+	difficulty:string;
+	context:string;
 }
 
 export type CriteriaResponse = {

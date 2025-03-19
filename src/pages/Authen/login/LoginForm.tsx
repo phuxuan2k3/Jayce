@@ -6,7 +6,7 @@ import { useLoginMutation, useGoogleMutation } from "../../../features/Auth/auth
 import { toErrorMessage } from "../../../error/fetchBaseQuery.error";
 import LocalLoading from "../../../components/LocalLoading";
 import LocalError from "../../../components/LocalError";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../app/hooks";
 import { selectIsAuthenticated } from "../../../global/authSlice";
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
@@ -17,6 +17,8 @@ const LoginForm = () => {
 	const navigate = useNavigate();
 	const [login, { isLoading, error }] = useLoginMutation();
 	const [google, { }] = useGoogleMutation();
+	const [password, setPassword] = useState("");
+	const [username, setUsername] = useState("");
 	const errorMessage = toErrorMessage(error as FetchBaseQueryError | SerializedError | undefined);
 
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
@@ -28,9 +30,9 @@ const LoginForm = () => {
 
 	const handleFormSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		const formData = new FormData(e.target as HTMLFormElement);
-		const username = formData.get('username') as string;
-		const password = formData.get('password') as string;
+		// const formData = new FormData(e.target as HTMLFormElement);
+		// const username = formData.get('username') as string;
+		// const password = formData.get('password') as string;
 
 		try {
 			await login({ username, password });
@@ -107,11 +109,31 @@ const LoginForm = () => {
 		{errorMessage && <LocalError errorMessage={errorMessage} />}
 
 		<form onSubmit={handleFormSubmit} className="flex-col ">
-			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">
-				<input className="w-full p-4 rounded-lg" name="username" id="username" placeholder="Username" />
+			<GradientBorder className="relative mt-8 w-full p-[1px] rounded-lg">
+				<input
+					type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder=" "
+					className="peer block w-full rounded-lg border border-gray-300  px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
+				/>
+				<label
+					className={`bg-white absolute left-2 transform text-sm text-gray-500 transition-all
+							${username !== "" ? "top-2 -translate-y-4 scale-75" : ""}
+							${username.trim() === "" ? "top-1/2 -translate-y-1/2 scale-100 peer-placeholder-shown:top-1/2 peer-placeholder-shown:scale-100" : ""}
+							peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-blue-600`}>
+					Username
+				</label>
 			</GradientBorder>
-			<GradientBorder className="mt-8 w-full p-[1px] rounded-lg">
-				<input className="w-full p-4 rounded-lg" type="password" name="password" id="password" placeholder="Password" />
+			<GradientBorder className="relative mt-8 w-full p-[1px] rounded-lg">
+				<input
+					type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder=" "
+					className="peer block w-full rounded-lg border border-gray-300  px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
+				/>
+				<label
+					className={`bg-white absolute left-2 transform text-sm text-gray-500 transition-all
+							${password !== "" ? "top-2 -translate-y-4 scale-75" : ""}
+							${password.trim() === "" ? "top-1/2 -translate-y-1/2 scale-100 peer-placeholder-shown:top-1/2 peer-placeholder-shown:scale-100" : ""}
+							peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-blue-600`}>
+					Password
+				</label>
 			</GradientBorder>
 			<div className="w-full p-2 mt-14 text-center">
 				Forgot your password? <a className="text-[var(--primary-color)]" href="/reset">Reset it here.</a>

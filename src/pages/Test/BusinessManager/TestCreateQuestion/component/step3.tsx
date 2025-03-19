@@ -7,161 +7,149 @@ import { useCriteriaMutation } from "../questionai.test-api";
 import { Question } from "../types";
 interface Step1Props {
     onNext: () => void;
+    generatedData: any;
 }
 
-export const Step3: React.FC<Step1Props> = ({ onNext }) => {
+export const Step3: React.FC<Step1Props> = ({ onNext, generatedData }) => {
     const location = useLocation();
-	// const { testID, testTitle, testDescription, testDifficulty, testDuration } = location.state || { testID: null, testTitle: "", testDescription: "", testDifficulty: "", testDuration: 0 };
-	const [criteriaList, setCriteriaList] = React.useState<{ criteria: string, optionList: string[], customOption: string }[]>([]);
-	const [maxNumberOfQuestions, setMaxNumberOfQuestions] = React.useState<number>(5);
-	const [error, setError] = React.useState<string | null>(null);
-	const [cooldowns, setCooldowns] = React.useState<number[]>([]);
-	const [addAllCooldown, setAddAllCooldown] = React.useState<number>(0);
-	const [criteria] = useCriteriaMutation();
+    // const { testID, testTitle, testDescription, testDifficulty, testDuration } = location.state || { testID: null, testTitle: "", testDescription: "", testDifficulty: "", testDuration: 0 };
+    const [criteriaList, setCriteriaList] = React.useState<{ criteria: string, optionList: string[], customOption: string }[]>([]);
+    const [maxNumberOfQuestions, setMaxNumberOfQuestions] = React.useState<number>(5);
+    const [error, setError] = React.useState<string | null>(null);
+    const [cooldowns, setCooldowns] = React.useState<number[]>([]);
+    const [addAllCooldown, setAddAllCooldown] = React.useState<number>(0);
+    const [criteria] = useCriteriaMutation();
 
-	React.useEffect(() => {
-		// const fetchCriteria = async () => {
-		// 	try {
-		// 		const generalInfo = {
-		// 			title: testTitle,
-		// 			description: testDescription,
-		// 			duration: testDuration + " minutes",
-		// 			difficulty: testDifficulty,
-		// 			maxNumberOfQuestions,
-		// 		}
+    React.useEffect(() => {
+        // const fetchCriteria = async () => {
+        // 	try {
+        // 		const generalInfo = {
+        // 			title: testTitle,
+        // 			description: testDescription,
+        // 			duration: testDuration + " minutes",
+        // 			difficulty: testDifficulty,
+        // 			maxNumberOfQuestions,
+        // 		}
 
-		// 		const input = {
-		// 			generalInfo,
-		// 			criteriaList: [],
-		// 		}
+        // 		const input = {
+        // 			generalInfo,
+        // 			criteriaList: [],
+        // 		}
 
-		// 		const { data, error } = await criteria(input);
+        // 		const { data, error } = await criteria(input);
 
-		// 		if (error) {
-		// 			console.log("Error getting criteria:", error);
-		// 			setError("An error occurred while getting the criteria. Please try again later.");
-		// 		}
+        // 		if (error) {
+        // 			console.log("Error getting criteria:", error);
+        // 			setError("An error occurred while getting the criteria. Please try again later.");
+        // 		}
 
-		// 		if (data) {
-		// 			const newCriteria = data.criteriaList.map((c) => ({ ...c, customOption: "" }));
-		// 			setCriteriaList(newCriteria);
-		// 		}
-		// 	} catch (error) {
-		// 		console.log("Error getting criteria:", error);
-		// 		setError("An error occurred while getting the criteria. Please try again later.");
-		// 	}
-		// };
+        // 		if (data) {
+        // 			const newCriteria = data.criteriaList.map((c) => ({ ...c, customOption: "" }));
+        // 			setCriteriaList(newCriteria);
+        // 		}
+        // 	} catch (error) {
+        // 		console.log("Error getting criteria:", error);
+        // 		setError("An error occurred while getting the criteria. Please try again later.");
+        // 	}
+        // };
 
-		// fetchCriteria();
-	}, []);
-
-
-
-	const [questionList, setQuestionList] = React.useState<Question[]>([
-		{
-			text: "What is the first step in the design process?",
-			options: ["Research", "Design", "Develop", "Test"],
-			correctAnswer: 0,
-			points: 10,
-		},
-		{
-			text: "What is the main purpose of user research?",
-			options: ["Identify needs", "Develop code", "Write tests", "Launch product"],
-			correctAnswer: 0,
-			points: 10,
-		},
-	]);
-
-	const handlePointChange = (index: number, value: number) => {
-		const updatedQuestions = [...questionList];
-		updatedQuestions[index].points = value;
-		setQuestionList(updatedQuestions);
-	};
-
-	const handleQuestionChange = (index: number, newValue: string) => {
-		const updatedQuestions = [...questionList];
-		updatedQuestions[index].text = newValue;
-		setQuestionList(updatedQuestions);
-	};
-
-	const handleOptionChange = (questionIndex: number, optionIndex: number, newValue: string) => {
-		const updatedQuestions = [...questionList];
-		updatedQuestions[questionIndex].options[optionIndex] = newValue;
-		setQuestionList(updatedQuestions);
-	};
-
-	const handleAnswerSelect = (questionIndex: number, optionIndex: number) => {
-		const updatedQuestions = [...questionList];
-		updatedQuestions[questionIndex].correctAnswer = optionIndex;
-		setQuestionList(updatedQuestions);
-	};
-
-	const handleAddOption = (index: number) => {
-		const updatedQuestions = [...questionList];
-		updatedQuestions[index].options.push(`Option ${updatedQuestions[index].options.length + 1}`);
-		setQuestionList(updatedQuestions);
-	};
-
-	const handleDeleteOption = (questionIndex: number, optionIndex: number) => {
-		const updatedQuestions = [...questionList];
-		updatedQuestions[questionIndex].options.splice(optionIndex, 1);
-
-		if (updatedQuestions[questionIndex].correctAnswer === optionIndex) {
-			updatedQuestions[questionIndex].correctAnswer = 0;
-		} else if (updatedQuestions[questionIndex].correctAnswer > optionIndex) {
-			updatedQuestions[questionIndex].correctAnswer--;
-		}
-
-		setQuestionList(updatedQuestions);
-	};
-
-	const handleAddQuestion = () => {
-		setQuestionList([
-			...questionList,
-			{
-				text: "New question",
-				options: ["Option 1"],
-				correctAnswer: 0,
-				points: 0,
-			},
-		]);
-	};
-
-	const handleDeleteQuestion = (index: number) => {
-		const updatedQuestions = questionList.filter((_, i) => i !== index);
-		setQuestionList(updatedQuestions);
-	};
-
-	
-	
+        // fetchCriteria();
+    }, []);
 
 
-	
 
-	
+    const [questionList, setQuestionList] = React.useState<any[]>(
+        // {
+        // 	text: "What is the first step in the design process?",
+        // 	options: ["Research", "Design", "Develop", "Test"],
+        // 	correctAnswer: 0,
+        // 	points: 10,
+        // },
+        // {
+        // 	text: "What is the main purpose of user research?",
+        // 	options: ["Identify needs", "Develop code", "Write tests", "Launch product"],
+        // 	correctAnswer: 0,
+        // 	points: 10,
+        // },
+        generatedData.questionList
+    );
+
+    // const handlePointChange = (index: number, value: number) => {
+    // 	const updatedQuestions = [...questionList];
+    // 	updatedQuestions[index].points = value;
+    // 	setQuestionList(updatedQuestions);
+    // };
+
+    const handleQuestionChange = (index: number, newValue: string) => {
+        const updatedQuestions = [...questionList];
+        updatedQuestions[index].text = newValue;
+        setQuestionList(updatedQuestions);
+    };
+
+    // const handleOptionChange = (questionIndex: number, optionIndex: number, newValue: string) => {
+    // 	const updatedQuestions = [...questionList];
+    // 	updatedQuestions[questionIndex].options[optionIndex] = newValue;
+    // 	setQuestionList(updatedQuestions);
+    // };
+
+    // const handleAnswerSelect = (questionIndex: number, optionIndex: number) => {
+    // 	const updatedQuestions = [...questionList];
+    // 	updatedQuestions[questionIndex].correctAnswer = optionIndex;
+    // 	setQuestionList(updatedQuestions);
+    // };
+
+    // const handleAddOption = (index: number) => {
+    // 	const updatedQuestions = [...questionList];
+    // 	updatedQuestions[index].options.push(`Option ${updatedQuestions[index].options.length + 1}`);
+    // 	setQuestionList(updatedQuestions);
+    // };
+
+    // const handleDeleteOption = (questionIndex: number, optionIndex: number) => {
+    // 	const updatedQuestions = [...questionList];
+    // 	updatedQuestions[questionIndex].options.splice(optionIndex, 1);
+
+    // 	if (updatedQuestions[questionIndex].correctAnswer === optionIndex) {
+    // 		updatedQuestions[questionIndex].correctAnswer = 0;
+    // 	} else if (updatedQuestions[questionIndex].correctAnswer > optionIndex) {
+    // 		updatedQuestions[questionIndex].correctAnswer--;
+    // 	}
+
+    // 	setQuestionList(updatedQuestions);
+    // };
+
+    // const handleAddQuestion = () => {
+    // 	setQuestionList([
+    // 		...questionList,
+    // 		{
+    // 			text: "New question",
+    // 			options: ["Option 1"],
+    // 			correctAnswer: 0,
+    // 			points: 0,
+    // 		},
+    // 	]);
+    // };
+
+    const handleDeleteQuestion = (index: number) => {
+        const updatedQuestions = questionList.filter((_, i) => i !== index);
+        setQuestionList(updatedQuestions);
+    };
+
+    React.useEffect(() => {
+        const interval = setInterval(() => {
+            setCooldowns((prevCooldowns) =>
+                prevCooldowns.map((time) => (time > 0 ? time - 1 : 0))
+            );
+
+            setAddAllCooldown((prev) => (prev > 0 ? prev - 1 : 0));
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, []);
 
 
-	
-
-	
-	
-
-	React.useEffect(() => {
-		const interval = setInterval(() => {
-			setCooldowns((prevCooldowns) =>
-				prevCooldowns.map((time) => (time > 0 ? time - 1 : 0))
-			);
-
-			setAddAllCooldown((prev) => (prev > 0 ? prev - 1 : 0));
-		}, 1000);
-
-		return () => clearInterval(interval);
-	}, []);
-
-	
     return (
         <div className="relative">
-             <div className="font-arya  pt-12 flex gap-2 items-center  justify-center">
+            <div className="font-arya  pt-12 flex gap-2 items-center  justify-center">
                 <div className="flex items-center gap-2 text-[24px]">
                     <div className="bg-[var(--primary-color)] rounded-3xl h-10 w-10  text-white font-bold text-center">
                         1
@@ -218,7 +206,7 @@ export const Step3: React.FC<Step1Props> = ({ onNext }) => {
                                         <GradientBorderNotGood className="w-full h-fit font-semibold">
                                             <input
                                                 type="text"
-                                                value={question.text}
+                                                value={question.questionContent}
                                                 onChange={(e) => handleQuestionChange(index, e.target.value)}
                                                 className="w-full bg-transparent border-none outline-none"
                                             />
@@ -226,21 +214,21 @@ export const Step3: React.FC<Step1Props> = ({ onNext }) => {
                                     </div>
 
                                     {/* Options */}
-                                    {question.options.map((option, optIndex) => (
+                                    {question.optionList.map((option: { optionContent: string, isCorrect: boolean}, optIndex:number) => (
                                         <div key={optIndex} className="w-full flex flex-row mt-2" >
                                             <GradientBorderNotGood className="w-11/12 h-fit">
                                                 <div className="flex items-center justify-between">
                                                     <span className="mr-2">{String.fromCharCode(97 + optIndex)}.</span>
                                                     <input
                                                         type="text"
-                                                        value={option}
-                                                        onChange={(e) => handleOptionChange(index, optIndex, e.target.value)}
+                                                        value={option.optionContent}
+                                                        // onChange={(e) => handleOptionChange(index, optIndex, e.target.value)}
                                                         className="flex-grow bg-transparent border-none outline-none"
                                                     />
                                                     <FontAwesomeIcon
                                                         icon={faXmark}
                                                         className="w-fit text-gray-500 cursor-pointer ml-2"
-                                                        onClick={() => handleDeleteOption(index, optIndex)}
+                                                    // onClick={() => handleDeleteOption(index, optIndex)}
                                                     />
                                                 </div>
                                             </GradientBorderNotGood>
@@ -249,15 +237,15 @@ export const Step3: React.FC<Step1Props> = ({ onNext }) => {
                                                     type="radio"
                                                     name={`question-${index}`}
                                                     checked={question.correctAnswer === optIndex}
-                                                    onChange={() => handleAnswerSelect(index, optIndex)}
+                                                    // onChange={() => handleAnswerSelect(index, optIndex)}
                                                     className="h-4 w-4 border-primary focus:ring-primary accent-primary cursor-pointer"
                                                 />
                                             </div>
                                         </div>
                                     ))}
-                                    <div className="text-sm text-gray-500 mt-4 cursor-pointer" onClick={() => handleAddOption(index)}>
+                                    {/* <div className="text-sm text-gray-500 mt-4 cursor-pointer" onClick={() => handleAddOption(index)}>
                                         <span className="font-semibold text-[var(--primary-color)] underline">+ Add option</span>
-                                    </div>
+                                    </div> */}
                                 </div>
 
                                 {/* Points */}
@@ -267,7 +255,7 @@ export const Step3: React.FC<Step1Props> = ({ onNext }) => {
                                             className="w-full"
                                             type="number"
                                             value={question.points}
-                                            onChange={(e) => handlePointChange(index, parseInt(e.target.value) || 0)}
+                                            // onChange={(e) => handlePointChange(index, parseInt(e.target.value) || 0)}
                                             min="0"
                                             step="1"
                                         />
@@ -277,7 +265,7 @@ export const Step3: React.FC<Step1Props> = ({ onNext }) => {
                             </div>
                         ))}
 
-                        <div className="w-4/6 flex-1 flex flex-row bg-white rounded-lg shadow-primary p-6 space-x-4 border-r border-b border-solid border-primary justify-center mb-4 cursor-pointer" onClick={handleAddQuestion}>
+                        <div className="w-4/6 flex-1 flex flex-row bg-white rounded-lg shadow-primary p-6 space-x-4 border-r border-b border-solid border-primary justify-center mb-4 cursor-pointer">
                             <FontAwesomeIcon className="w-16 h-16" icon={faPlus} />
                         </div>
                     </div>
@@ -303,5 +291,5 @@ export const Step3: React.FC<Step1Props> = ({ onNext }) => {
             <div className="absolute top-10 right-10"><img className="w-4" src="https://cdn-icons-png.flaticon.com/512/566/566013.png" alt="" /></div>
 
         </div>
-       )
+    )
 };
