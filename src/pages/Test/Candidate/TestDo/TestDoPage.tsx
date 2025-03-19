@@ -14,11 +14,16 @@ const TestDoPage = () => {
 	const testId = useGetTestIdParams();
 	const doQuery = useGetCurrentAttemptDoQuery({});
 	const { currentQuestionIndex } = useAppSelector(curerntAttemptSelects.selectCurrentAttempt);
-	const stateQuery = useGetCurrentAttemptStateQuery({});
+	const stateQuery = useGetCurrentAttemptStateQuery({}, {
+		refetchOnMountOrArgChange: true,
+	});
 
 	// TODO: Add notification upon test ends.
 	useEffect(() => {
-		if (stateQuery.isSuccess == false) return;
+		// Make sure it has fresh data from server, not cached data
+		if (stateQuery.isFetching == true) return;
+		if (stateQuery.isError) throw new Error("Failed to get current Attempt");
+		if (stateQuery.data == null) return;
 		if (stateQuery.data.hasCurrentAttempt === false) {
 			// TODO: Add modal to notify user that the test has ended.
 			navigate(paths2.candidate.tests.in(testId).ATTEMPTS);

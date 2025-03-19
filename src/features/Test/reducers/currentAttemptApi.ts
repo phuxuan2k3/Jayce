@@ -30,6 +30,8 @@ function clearSocket() {
 	}
 }
 
+// TODO: save flagged questions and current index on the server side: Separate current attempt to a dependent entity, use json or cache storage.
+
 const currentAttemptApi = testApiGen.enhanceEndpoints({
 	addTagTypes: ["CurrentAttempt"],
 	endpoints: {
