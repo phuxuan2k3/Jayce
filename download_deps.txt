@@ -1,0 +1,2 @@
+npm i @react-three/drei@9 three-stdlib
+npm i @react-three/fiber@8
