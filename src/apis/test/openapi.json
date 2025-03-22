@@ -80,7 +80,7 @@
 				}
 			}
 		},
-		"/tags/:id": {
+		"/tags/{tagId}": {
 			"get": {
 				"tags": [
 					"Tags"
@@ -124,7 +124,9 @@
 				}
 			},
 			"put": {
-				"tags": [],
+				"tags": [
+					"Tags"
+				],
 				"parameters": [
 					{
 						"schema": {
@@ -188,9 +190,11 @@
 				}
 			}
 		},
-		"/tests/:testId/current": {
+		"/tests/{testId}/current": {
 			"get": {
-				"tags": [],
+				"tags": [
+					"Current"
+				],
 				"parameters": [
 					{
 						"schema": {
@@ -320,9 +324,11 @@
 				}
 			}
 		},
-		"/tests/:testId/current/new": {
+		"/tests/{testId}/current/new": {
 			"post": {
-				"tags": [],
+				"tags": [
+					"Current"
+				],
 				"parameters": [
 					{
 						"schema": {
@@ -343,9 +349,12 @@
 				}
 			}
 		},
-		"/tests/:testId/current/do": {
+		"/tests/{testId}/current/do": {
 			"get": {
-				"tags": [],
+				"summary": "Prepare the test for the candidate to do",
+				"tags": [
+					"Current"
+				],
 				"parameters": [
 					{
 						"schema": {
@@ -475,9 +484,11 @@
 				}
 			}
 		},
-		"/tests/:testId/current/answer": {
+		"/tests/{testId}/current/answer": {
 			"patch": {
-				"tags": [],
+				"tags": [
+					"Current"
+				],
 				"parameters": [
 					{
 						"schema": {
@@ -526,9 +537,11 @@
 				}
 			}
 		},
-		"/tests/:testId/current/submit": {
+		"/tests/{testId}/current/submit": {
 			"post": {
-				"tags": [],
+				"tags": [
+					"Current"
+				],
 				"parameters": [
 					{
 						"schema": {
@@ -551,7 +564,9 @@
 		},
 		"/tests": {
 			"get": {
-				"tags": [],
+				"tags": [
+					"Tests"
+				],
 				"parameters": [
 					{
 						"schema": {
@@ -727,7 +742,9 @@
 				}
 			},
 			"post": {
-				"tags": [],
+				"tags": [
+					"Tests"
+				],
 				"requestBody": {
 					"description": "Request body",
 					"required": true,
@@ -810,9 +827,11 @@
 				}
 			}
 		},
-		"/tests/:testId": {
+		"/tests/{testId}": {
 			"get": {
-				"tags": [],
+				"tags": [
+					"Tests"
+				],
 				"parameters": [
 					{
 						"schema": {
@@ -887,7 +906,9 @@
 				}
 			},
 			"put": {
-				"tags": [],
+				"tags": [
+					"Tests"
+				],
 				"parameters": [
 					{
 						"schema": {
@@ -950,7 +971,9 @@
 				}
 			},
 			"delete": {
-				"tags": [],
+				"tags": [
+					"Tests"
+				],
 				"parameters": [
 					{
 						"schema": {
@@ -971,9 +994,12 @@
 				}
 			}
 		},
-		"/tests/:testId/questions": {
+		"/tests/{testId}/questions": {
 			"get": {
-				"tags": [],
+				"tags": [
+					"Tests",
+					"Questions"
+				],
 				"parameters": [
 					{
 						"schema": {
@@ -1033,7 +1059,9 @@
 		},
 		"/manager/tests": {
 			"get": {
-				"tags": [],
+				"tags": [
+					"Tests"
+				],
 				"parameters": [
 					{
 						"schema": {
@@ -1209,9 +1237,11 @@
 				}
 			}
 		},
-		"/tests/:testId/attempts": {
+		"/tests/{testId}/attempts": {
 			"get": {
-				"tags": [],
+				"tags": [
+					"History"
+				],
 				"parameters": [
 					{
 						"schema": {
@@ -1364,9 +1394,11 @@
 				}
 			}
 		},
-		"/attempts/:attemptId": {
+		"/attempts/{attemptId}": {
 			"get": {
-				"tags": [],
+				"tags": [
+					"History"
+				],
 				"parameters": [
 					{
 						"schema": {
@@ -1461,9 +1493,11 @@
 				}
 			}
 		},
-		"/attempts/:attemptId/answers": {
+		"/attempts/{attemptId}/answers": {
 			"get": {
-				"tags": [],
+				"tags": [
+					"History"
+				],
 				"parameters": [
 					{
 						"schema": {
@@ -1602,7 +1636,9 @@
 		},
 		"/candidate/attempts": {
 			"get": {
-				"tags": [],
+				"tags": [
+					"History"
+				],
 				"parameters": [
 					{
 						"schema": {
@@ -1744,9 +1780,11 @@
 				}
 			}
 		},
-		"/candidate/tests/:testId/attempts": {
+		"/candidate/tests/{testId}/attempts": {
 			"get": {
-				"tags": [],
+				"tags": [
+					"History"
+				],
 				"parameters": [
 					{
 						"schema": {

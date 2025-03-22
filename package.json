@@ -10,7 +10,7 @@
 		"preview": "vite preview",
 		"mock": "json-server --watch mock/test.db.json --routes mock/routes.json --port 5000",
 		"dev:mock": "concurrently \"npm run dev\" \"npm run mock\"",
-		"api": "npx @rtk-query/codegen-openapi api/openapi-config.cts"
+		"api": "npx @rtk-query/codegen-openapi src/apis/openapi-config.cts"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.13.3",
