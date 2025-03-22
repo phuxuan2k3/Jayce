@@ -2,149 +2,108 @@ import { faPlus, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GradientBorderNotGood from "../../../../../components/GradientBorder.notgood";
 import React from "react";
-import { useLocation } from "react-router-dom";
-import { useCriteriaMutation } from "../questionai.test-api";
-import { Question } from "../types";
 interface Step1Props {
     onNext: () => void;
     generatedData: any;
+    setGeneratedData : (data: any) => void;
 }
 
-export const Step3: React.FC<Step1Props> = ({ onNext, generatedData }) => {
-    const location = useLocation();
-    // const { testID, testTitle, testDescription, testDifficulty, testDuration } = location.state || { testID: null, testTitle: "", testDescription: "", testDifficulty: "", testDuration: 0 };
-    const [criteriaList, setCriteriaList] = React.useState<{ criteria: string, optionList: string[], customOption: string }[]>([]);
-    const [maxNumberOfQuestions, setMaxNumberOfQuestions] = React.useState<number>(5);
-    const [error, setError] = React.useState<string | null>(null);
-    const [cooldowns, setCooldowns] = React.useState<number[]>([]);
-    const [addAllCooldown, setAddAllCooldown] = React.useState<number>(0);
-    const [criteria] = useCriteriaMutation();
-
-    React.useEffect(() => {
-        // const fetchCriteria = async () => {
-        // 	try {
-        // 		const generalInfo = {
-        // 			title: testTitle,
-        // 			description: testDescription,
-        // 			duration: testDuration + " minutes",
-        // 			difficulty: testDifficulty,
-        // 			maxNumberOfQuestions,
-        // 		}
-
-        // 		const input = {
-        // 			generalInfo,
-        // 			criteriaList: [],
-        // 		}
-
-        // 		const { data, error } = await criteria(input);
-
-        // 		if (error) {
-        // 			console.log("Error getting criteria:", error);
-        // 			setError("An error occurred while getting the criteria. Please try again later.");
-        // 		}
-
-        // 		if (data) {
-        // 			const newCriteria = data.criteriaList.map((c) => ({ ...c, customOption: "" }));
-        // 			setCriteriaList(newCriteria);
-        // 		}
-        // 	} catch (error) {
-        // 		console.log("Error getting criteria:", error);
-        // 		setError("An error occurred while getting the criteria. Please try again later.");
-        // 	}
-        // };
-
-        // fetchCriteria();
-    }, []);
-
-
-
+export const Step3: React.FC<Step1Props> = ({ onNext, generatedData,setGeneratedData  }) => {
     const [questionList, setQuestionList] = React.useState<any[]>(
-        // {
-        // 	text: "What is the first step in the design process?",
-        // 	options: ["Research", "Design", "Develop", "Test"],
-        // 	correctAnswer: 0,
-        // 	points: 10,
-        // },
-        // {
-        // 	text: "What is the main purpose of user research?",
-        // 	options: ["Identify needs", "Develop code", "Write tests", "Launch product"],
-        // 	correctAnswer: 0,
-        // 	points: 10,
-        // },
         generatedData.questionList
     );
 
-    // const handlePointChange = (index: number, value: number) => {
-    // 	const updatedQuestions = [...questionList];
-    // 	updatedQuestions[index].points = value;
-    // 	setQuestionList(updatedQuestions);
-    // };
-
-    const handleQuestionChange = (index: number, newValue: string) => {
-        const updatedQuestions = [...questionList];
-        updatedQuestions[index].text = newValue;
-        setQuestionList(updatedQuestions);
+    const handleQuestionChange = (index: number, newContent: string) => {
+        setQuestionList((prevQuestions) =>
+            prevQuestions.map((question, i) =>
+                i === index ? { ...question, questionContent: newContent } : question
+            )
+        );
     };
 
-    // const handleOptionChange = (questionIndex: number, optionIndex: number, newValue: string) => {
-    // 	const updatedQuestions = [...questionList];
-    // 	updatedQuestions[questionIndex].options[optionIndex] = newValue;
-    // 	setQuestionList(updatedQuestions);
-    // };
+    const handleOptionChange = (qIndex: number, optIndex: number, newContent: string) => {
+        setQuestionList((prevQuestions) =>
+            prevQuestions.map((question, i) =>
+                i === qIndex
+                    ? {
+                          ...question,
+                          optionList: question.optionList.map((option:any, j:any) =>
+                              j === optIndex ? { ...option, optionContent: newContent } : option
+                          ),
+                      }
+                    : question
+            )
+        );
+    };
+    const handleDeleteOption = (qIndex: number, optIndex: number) => {
+        setQuestionList((prevQuestions) =>
+            prevQuestions.map((question, i) =>
+                i === qIndex
+                    ? {
+                          ...question,
+                          optionList: question.optionList.filter((_:any, j:any) => j !== optIndex),
+                      }
+                    : question
+            )
+        );
+    };
+    const handleAnswerSelect = (qIndex: number, optIndex: number) => {
+        setQuestionList((prevQuestions) =>
+            prevQuestions.map((question, i) =>
+                i === qIndex
+                    ? {
+                          ...question,
+                          optionList: question.optionList.map((option:any, j:any) => ({
+                              ...option,
+                              isCorrect: j === optIndex, // Chỉ một option là đúng
+                          })),
+                      }
+                    : question
+            )
+        );
+    };
 
-    // const handleAnswerSelect = (questionIndex: number, optionIndex: number) => {
-    // 	const updatedQuestions = [...questionList];
-    // 	updatedQuestions[questionIndex].correctAnswer = optionIndex;
-    // 	setQuestionList(updatedQuestions);
-    // };
-
-    // const handleAddOption = (index: number) => {
-    // 	const updatedQuestions = [...questionList];
-    // 	updatedQuestions[index].options.push(`Option ${updatedQuestions[index].options.length + 1}`);
-    // 	setQuestionList(updatedQuestions);
-    // };
-
-    // const handleDeleteOption = (questionIndex: number, optionIndex: number) => {
-    // 	const updatedQuestions = [...questionList];
-    // 	updatedQuestions[questionIndex].options.splice(optionIndex, 1);
-
-    // 	if (updatedQuestions[questionIndex].correctAnswer === optionIndex) {
-    // 		updatedQuestions[questionIndex].correctAnswer = 0;
-    // 	} else if (updatedQuestions[questionIndex].correctAnswer > optionIndex) {
-    // 		updatedQuestions[questionIndex].correctAnswer--;
-    // 	}
-
-    // 	setQuestionList(updatedQuestions);
-    // };
-
-    // const handleAddQuestion = () => {
-    // 	setQuestionList([
-    // 		...questionList,
-    // 		{
-    // 			text: "New question",
-    // 			options: ["Option 1"],
-    // 			correctAnswer: 0,
-    // 			points: 0,
-    // 		},
-    // 	]);
-    // };
+   
+    const handleAddQuestion = () => {
+        setQuestionList((prevQuestions) => [
+            ...prevQuestions,
+            {
+                questionContent: "", 
+                optionList: [
+                    { optionContent: "", isCorrect: true }, 
+                    { optionContent: "", isCorrect: false },
+                    { optionContent: "", isCorrect: false },
+                    { optionContent: "", isCorrect: false },
+                ],
+            },
+        ]);
+    };
+    
+    
 
     const handleDeleteQuestion = (index: number) => {
         const updatedQuestions = questionList.filter((_, i) => i !== index);
         setQuestionList(updatedQuestions);
     };
-
-    React.useEffect(() => {
-        const interval = setInterval(() => {
-            setCooldowns((prevCooldowns) =>
-                prevCooldowns.map((time) => (time > 0 ? time - 1 : 0))
-            );
-
-            setAddAllCooldown((prev) => (prev > 0 ? prev - 1 : 0));
-        }, 1000);
-
-        return () => clearInterval(interval);
-    }, []);
+    const handleAddOption = (qIndex: number) => {
+        setQuestionList((prevQuestions) =>
+            prevQuestions.map((question, i) =>
+                i === qIndex
+                    ? {
+                          ...question,
+                          optionList: [
+                              ...question.optionList,
+                              { optionContent: "", isCorrect: false }, 
+                          ],
+                      }
+                    : question
+            )
+        );
+    };
+    const handleSave = () => {
+        setGeneratedData(questionList);
+        onNext();
+    };
 
 
     return (
@@ -222,13 +181,13 @@ export const Step3: React.FC<Step1Props> = ({ onNext, generatedData }) => {
                                                     <input
                                                         type="text"
                                                         value={option.optionContent}
-                                                        // onChange={(e) => handleOptionChange(index, optIndex, e.target.value)}
+                                                        onChange={(e) => handleOptionChange(index, optIndex, e.target.value)}
                                                         className="flex-grow bg-transparent border-none outline-none"
                                                     />
                                                     <FontAwesomeIcon
                                                         icon={faXmark}
                                                         className="w-fit text-gray-500 cursor-pointer ml-2"
-                                                    // onClick={() => handleDeleteOption(index, optIndex)}
+                                                        onClick={() => handleDeleteOption(index, optIndex)}
                                                     />
                                                 </div>
                                             </GradientBorderNotGood>
@@ -236,16 +195,16 @@ export const Step3: React.FC<Step1Props> = ({ onNext, generatedData }) => {
                                                 <input
                                                     type="radio"
                                                     name={`question-${index}`}
-                                                    checked={question.correctAnswer === optIndex}
-                                                    // onChange={() => handleAnswerSelect(index, optIndex)}
+                                                    checked={option.isCorrect}
+                                                    onChange={() => handleAnswerSelect(index, optIndex)}
                                                     className="h-4 w-4 border-primary focus:ring-primary accent-primary cursor-pointer"
                                                 />
                                             </div>
                                         </div>
                                     ))}
-                                    {/* <div className="text-sm text-gray-500 mt-4 cursor-pointer" onClick={() => handleAddOption(index)}>
+                                    <div className="text-sm text-gray-500 mt-4 cursor-pointer" onClick={() => handleAddOption(index)}>
                                         <span className="font-semibold text-[var(--primary-color)] underline">+ Add option</span>
-                                    </div> */}
+                                    </div>
                                 </div>
 
                                 {/* Points */}
@@ -254,7 +213,7 @@ export const Step3: React.FC<Step1Props> = ({ onNext, generatedData }) => {
                                         <input
                                             className="w-full"
                                             type="number"
-                                            value={question.points}
+                                            value={10}
                                             // onChange={(e) => handlePointChange(index, parseInt(e.target.value) || 0)}
                                             min="0"
                                             step="1"
@@ -265,26 +224,16 @@ export const Step3: React.FC<Step1Props> = ({ onNext, generatedData }) => {
                             </div>
                         ))}
 
-                        <div className="w-4/6 flex-1 flex flex-row bg-white rounded-lg shadow-primary p-6 space-x-4 border-r border-b border-solid border-primary justify-center mb-4 cursor-pointer">
+                        <div onClick={()=>handleAddQuestion()}className="w-4/6 flex-1 flex flex-row bg-white rounded-lg shadow-primary p-6 space-x-4 border-r border-b border-solid border-primary justify-center mb-4 cursor-pointer">
                             <FontAwesomeIcon className="w-16 h-16" icon={faPlus} />
                         </div>
                     </div>
                 </div>
 
-                {/* <div className="flex flex-col">
-                    {submitError && <div className="text-center text-red-500 mb-8">{submitError}</div>}
-                    <div className="flex flex-row justify-center space-x-10">
-                        <button className="w-fit px-3 font-semibold rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleBack} disabled={isCreating}>
-                            Back
-                        </button>
-                        <button className="w-fit px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={()=>{handleSave(),onNext()}} disabled={isCreating}>
-                            {isCreating ? "Creating..." : "Save"}
-                        </button>
-                    </div>
-                </div> */}
+             
             </div>
             <div className="pb-12 flex justify-center ">
-                <button className="bg-[var(--primary-color)] text-white rounded-md py-1 px-10 " onClick={onNext}>
+                <button  className="bg-[var(--primary-color)] text-white rounded-md py-1 px-10 " onClick={()=>handleSave()}>
                     Save
                 </button>
             </div>

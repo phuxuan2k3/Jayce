@@ -1,24 +1,13 @@
-import { faCheck, faEdit, faPlus, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faEdit, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GradientBorderNotGood from "../../../../../components/GradientBorder.notgood";
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { useCriteriaMutation } from "../questionai.test-api";
-import { Question } from "../types";
-import { inputAdornmentClasses } from "@mui/material";
 interface Step1Props {
     onNext: () => void;
+    generatedData: any;
 }
 
-export const Step4: React.FC<Step1Props> = ({ onNext }) => {
-    const location = useLocation();
-    // const { testID, testTitle, testDescription, testDifficulty, testDuration } = location.state || { testID: null, testTitle: "", testDescription: "", testDifficulty: "", testDuration: 0 };
-    const [criteriaList, setCriteriaList] = React.useState<{ criteria: string, optionList: string[], customOption: string }[]>([]);
-    const [maxNumberOfQuestions, setMaxNumberOfQuestions] = React.useState<number>(5);
-    const [error, setError] = React.useState<string | null>(null);
-    const [cooldowns, setCooldowns] = React.useState<number[]>([]);
-    const [addAllCooldown, setAddAllCooldown] = React.useState<number>(0);
-    const [criteria] = useCriteriaMutation();
+export const Step4: React.FC<Step1Props> = ({ onNext, generatedData }) => {
     const [testName, setTestName] = useState('');
     const [testDescription, setTestDescription] = useState('');
     const [testField, setTestField] = useState('');
@@ -30,8 +19,8 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
     const [tempTestField, setTempTestField] = useState('');
     const [tempTestDuration, setTempTestDuration] = useState('');
     const [tempTestDifficulty, setTempTestDifficulty] = useState('');
-    const [edit,setEdit]=useState(false);
-    const [isEditing,setIsEditing]=useState<number>(-1);
+    const [edit, setEdit] = useState(false);
+    const [editQuestion,setEditQuestion]=useState<any>(null);
     useEffect(() => {
         const savedData = localStorage.getItem('testInfo');
         if (savedData) {
@@ -49,98 +38,51 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
             setTempTestDifficulty(parsedData.testDifficulty || '');
         }
     }, []);
-    React.useEffect(() => {
-        // const fetchCriteria = async () => {
-        // 	try {
-        // 		const generalInfo = {
-        // 			title: testTitle,
-        // 			description: testDescription,
-        // 			duration: testDuration + " minutes",
-        // 			difficulty: testDifficulty,
-        // 			maxNumberOfQuestions,
-        // 		}
 
-        // 		const input = {
-        // 			generalInfo,
-        // 			criteriaList: [],
-        // 		}
+    const [questionList, setQuestionList] = React.useState<any[]>(
+        generatedData
+    );
 
-        // 		const { data, error } = await criteria(input);
-
-        // 		if (error) {
-        // 			console.log("Error getting criteria:", error);
-        // 			setError("An error occurred while getting the criteria. Please try again later.");
-        // 		}
-
-        // 		if (data) {
-        // 			const newCriteria = data.criteriaList.map((c) => ({ ...c, customOption: "" }));
-        // 			setCriteriaList(newCriteria);
-        // 		}
-        // 	} catch (error) {
-        // 		console.log("Error getting criteria:", error);
-        // 		setError("An error occurred while getting the criteria. Please try again later.");
-        // 	}
-        // };
-
-        // fetchCriteria();
-    }, []);
-    const [questionList, setQuestionList] = React.useState<Question[]>([
-        {
-            text: "What is the first step in the design process?",
-            options: ["Research", "Design", "Develop", "Test"],
-            correctAnswer: 0,
-            points: 10,
-        },
-        {
-            text: "What is the main purpose of user research?",
-            options: ["Identify needs", "Develop code", "Write tests", "Launch product"],
-            correctAnswer: 0,
-            points: 10,
-        },
-    ]);
-
-    const handlePointChange = (index: number, value: number) => {
-        const updatedQuestions = [...questionList];
-        updatedQuestions[index].points = value;
-        setQuestionList(updatedQuestions);
+    const handleQuestionChange = (index: number, newContent: string) => {
+        setQuestionList((prevQuestions) =>
+            prevQuestions.map((question, i) =>
+                i === index ? { ...question, questionContent: newContent } : question
+            )
+        );
     };
 
-    const handleQuestionChange = (index: number, newValue: string) => {
-        const updatedQuestions = [...questionList];
-        updatedQuestions[index].text = newValue;
-        setQuestionList(updatedQuestions);
+    const handleOptionChange = (qIndex: number, optIndex: number, newContent: string) => {
+        setQuestionList((prevQuestions) =>
+            prevQuestions.map((question, i) =>
+                i === qIndex
+                    ? {
+                        ...question,
+                        optionList: question.optionList.map((option: any, j: any) =>
+                            j === optIndex ? { ...option, optionContent: newContent } : option
+                        ),
+                    }
+                    : question
+            )
+        );
+    };
+  
+    const handleAnswerSelect = (qIndex: number, optIndex: number) => {
+        setQuestionList((prevQuestions) =>
+            prevQuestions.map((question, i) =>
+                i === qIndex
+                    ? {
+                        ...question,
+                        optionList: question.optionList.map((option: any, j: any) => ({
+                            ...option,
+                            isCorrect: j === optIndex, // Chỉ một option là đúng
+                        })),
+                    }
+                    : question
+            )
+        );
     };
 
-    const handleOptionChange = (questionIndex: number, optionIndex: number, newValue: string) => {
-        const updatedQuestions = [...questionList];
-        updatedQuestions[questionIndex].options[optionIndex] = newValue;
-        setQuestionList(updatedQuestions);
-    };
 
-    const handleAnswerSelect = (questionIndex: number, optionIndex: number) => {
-        const updatedQuestions = [...questionList];
-        updatedQuestions[questionIndex].correctAnswer = optionIndex;
-        setQuestionList(updatedQuestions);
-    };
-
-    const handleAddOption = (index: number) => {
-        const updatedQuestions = [...questionList];
-        updatedQuestions[index].options.push(`Option ${updatedQuestions[index].options.length + 1}`);
-        setQuestionList(updatedQuestions);
-    };
-
-    const handleDeleteOption = (questionIndex: number, optionIndex: number) => {
-        const updatedQuestions = [...questionList];
-        updatedQuestions[questionIndex].options.splice(optionIndex, 1);
-
-        if (updatedQuestions[questionIndex].correctAnswer === optionIndex) {
-            updatedQuestions[questionIndex].correctAnswer = 0;
-        } else if (updatedQuestions[questionIndex].correctAnswer > optionIndex) {
-            updatedQuestions[questionIndex].correctAnswer--;
-        }
-
-        setQuestionList(updatedQuestions);
-    };
 
 
 
@@ -148,23 +90,7 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
     //     const updatedQuestions = questionList.filter((_, i) => i !== index);
     //     setQuestionList(updatedQuestions);
     // };
-    // const [edit, setEdit] = useState(false);
-
-
-
-
-    React.useEffect(() => {
-        const interval = setInterval(() => {
-            setCooldowns((prevCooldowns) =>
-                prevCooldowns.map((time) => (time > 0 ? time - 1 : 0))
-            );
-
-            setAddAllCooldown((prev) => (prev > 0 ? prev - 1 : 0));
-        }, 1000);
-
-        return () => clearInterval(interval);
-    }, []);
-
+   
 
     return (
         <div className="relative">
@@ -282,49 +208,43 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
                                     <div className="w-11/12 mb-4">
                                         <GradientBorderNotGood className="w-full h-fit font-semibold">
                                             <input
-                                                type="text" disabled={index!==isEditing}
-                                                value={question.text}
+                                                type="text"
+                                                value={question.questionContent}
                                                 onChange={(e) => handleQuestionChange(index, e.target.value)}
                                                 className="w-full bg-transparent border-none outline-none"
+                                                disabled={(index!==editQuestion)}
                                             />
                                         </GradientBorderNotGood>
                                     </div>
 
                                     {/* Options */}
-                                    {question.options.map((option, optIndex) => (
+                                    {question.optionList.map((option: { optionContent: string, isCorrect: boolean }, optIndex: number) => (
                                         <div key={optIndex} className="w-full flex flex-row mt-2" >
                                             <GradientBorderNotGood className="w-11/12 h-fit">
                                                 <div className="flex items-center justify-between">
                                                     <span className="mr-2">{String.fromCharCode(97 + optIndex)}.</span>
                                                     <input
-                                                        type="text" disabled={index!==isEditing}
-                                                        value={option}
+                                                        type="text"
+                                                        value={option.optionContent}
                                                         onChange={(e) => handleOptionChange(index, optIndex, e.target.value)}
                                                         className="flex-grow bg-transparent border-none outline-none"
+                                                        disabled={(index!==editQuestion)}
                                                     />
-                                                    <FontAwesomeIcon
-                                                        icon={faXmark}
-                                                        className={`w-fit text-gray-500 cursor-pointer ml-2 ${
-                                                            index !== isEditing ? "pointer-events-none opacity-50" : ""
-                                                        }`}
-                                                        onClick={() => handleDeleteOption(index, optIndex)}
-                                                    />
+                                                    
                                                 </div>
                                             </GradientBorderNotGood>
                                             <div className="w-1/12 flex items-center justify-center">
                                                 <input
-                                                    type="radio" disabled={index!==isEditing}
+                                                    type="radio"  disabled={(index!==editQuestion)}
                                                     name={`question-${index}`}
-                                                    checked={question.correctAnswer === optIndex}
+                                                    checked={option.isCorrect}
                                                     onChange={() => handleAnswerSelect(index, optIndex)}
                                                     className="h-4 w-4 border-primary focus:ring-primary accent-primary cursor-pointer"
                                                 />
                                             </div>
                                         </div>
                                     ))}
-                                    {/* <div className="text-sm text-gray-500 mt-4 cursor-pointer" onClick={() => handleAddOption(index)}>
-                                        <span className="font-semibold text-[var(--primary-color)] underline">+ Add option</span>
-                                    </div> */}
+                                    
                                 </div>
 
                                 {/* Points */}
@@ -333,14 +253,13 @@ export const Step4: React.FC<Step1Props> = ({ onNext }) => {
                                         <input
                                             className="w-full"
                                             type="number"
-                                            value={question.points}
-                                            onChange={(e) => handlePointChange(index, parseInt(e.target.value) || 0)}
+                                            value={10}
+                                            // onChange={(e) => handlePointChange(index, parseInt(e.target.value) || 0)}
                                             min="0"
                                             step="1"
-                                            disabled={index!==isEditing}
                                         />
                                     </GradientBorderNotGood>
-                                    <FontAwesomeIcon className={`"w-5 h-5 cursor-pointer" ${isEditing===index?"bg-[var(--primary-color)] p-1 rounded-lg":""}`} icon={faEdit} onClick={() =>setIsEditing(index) } />
+                                    <FontAwesomeIcon className={`w-5 h-5 cursor-pointer ${editQuestion === index ? "text-green-700" : ""}`} icon={faEdit}  onClick={()=>setEditQuestion(index)}/>
                                 </div>
                             </div>
                         ))}
