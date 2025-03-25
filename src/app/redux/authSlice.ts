@@ -6,12 +6,11 @@ import { bulbasaur } from '../../features/Auth/api/bulbasaur.ts';
 import { Role } from '../enum.ts';
 
 export type UserInfo = {
-	//name: string;
-	email: string;
 	username: string;
-	avatarPath: string;
-	//phone: string;
-	//address: string;
+    email: string;
+    role: string;
+    id: string;
+    metadata: any;
 }
 
 export type Token = {

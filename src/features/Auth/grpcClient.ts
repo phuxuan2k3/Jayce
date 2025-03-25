@@ -6,19 +6,30 @@ import { backendEndpoint } from "../../app/env"
 const Empty = empty.google.protobuf.Empty;
 
 const client = new bulbasaur.BulbasaurClient(backendEndpoint);
+const clientIvysaur = new bulbasaur.IvysaurClient(backendEndpoint);
 
-export const grpcSignUp = (username: string, email: string, password: string, confirm_password: string): Promise<bulbasaur.SignUpResponse> => {
+export const grpcSignUp = (local:any,metadata:any,role:number): Promise<bulbasaur.SignUpResponse> => {
     return new Promise((resolve, reject) => {
         const signUpRequest = new bulbasaur.SignUpRequest();
         const localCredentials = new bulbasaur.SignUpRequest.Local();
-
-        localCredentials.username = username;
-        localCredentials.password = password;
-        localCredentials.confirm_password = confirm_password;
-        localCredentials.email = email;
-
+        console.log('clientgrpc',metadata);
+        localCredentials.username = local.username;
+        localCredentials.password = local.password;
+        localCredentials.confirm_password = local.confirm_password;
+        localCredentials.email = local.email;
+        localCredentials.otp = local.otp;
         signUpRequest.local = localCredentials;
-        signUpRequest.role = bulbasaur.Role.ROLE_CANDIDATE;
+        signUpRequest.role =role;
+        console.log('request1',signUpRequest.local);
+        const metadata1= new bulbasaur.metadata();
+        metadata1.fullname=metadata.fullname;
+        metadata1.company=metadata.company;
+        metadata1.country=metadata.country;
+        metadata1.avatarPath=metadata.avatarPath;
+        metadata1.jobTitle=metadata.jobTitle;
+
+        signUpRequest.metadata = metadata1;
+        console.log('request',signUpRequest.local);
 
         client.SignUp(signUpRequest, null, (err: Error | null, response: bulbasaur.SignUpResponse) => {
             if (err) {
@@ -96,7 +107,7 @@ export const grpcMe = (access_token: string): Promise<bulbasaur.MeResponse> => {
             Authorization: `Bearer ${access_token}`,
         };
 
-        client.Me(request, metadata, (err: Error | null, response: bulbasaur.MeResponse) => {
+        clientIvysaur.Me(request, metadata, (err: Error | null, response: bulbasaur.MeResponse) => {
             if (err) {
                 reject(err);
             } else {

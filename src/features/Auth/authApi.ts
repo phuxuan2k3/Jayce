@@ -12,10 +12,15 @@ interface LoginRequest {
 }
 
 interface RegisterRequest {
-	username: string;
-	email: string;
-	password: string;
-	confirm_password: string;
+	local: {
+		username: string;
+		password: string;
+		confirm_password: string;
+		email: string;
+		otp: string;
+	};
+	metadata: any;
+	role: number;
 }
 
 const authApiReducerPath = 'authApi';
@@ -63,9 +68,11 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 			return {
 				data: {
 					user: {
-						email: meResponse.user.email,
-						username: meResponse.user.username,
-						avatarPath: 'https://cdn.tuoitre.vn/zoom/700_700/2019/5/8/avatar-publicitystill-h2019-1557284559744252594756-crop-15572850428231644565436.jpg',
+						username: response.user.username,
+						email: response.user.email,
+						role: response.user.role,
+						id: response.user.id,
+						metadata: response.user.metadata,
 					},
 					tokens: {
 						access_token: response.token_info.access_token,
@@ -87,19 +94,22 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 		}
 
 		if (url === 'auth/register') {
-			const username = args.body.username as string;
-			const email = args.body.email as string;
-			const password = args.body.password as string;
-			const response = await grpcSignUp(username, email, password, password);
+			const local = args.body.local;
+			const metadata = args.body.metadata;
+			const role = args.body.role;
+			console.log('url',args.body)
+			const response = await grpcSignUp(local, metadata, role);
 
 			const meResponse = await grpcMe(response.token_info.access_token);
 
 			return {
 				data: {
 					user: {
-						email: meResponse.user.email,
-						username: meResponse.user.username,
-						avatarPath: 'https://cdn.tuoitre.vn/zoom/700_700/2019/5/8/avatar-publicitystill-h2019-1557284559744252594756-crop-15572850428231644565436.jpg',
+						username: response.user.username,
+						email: response.user.email,
+						role: response.user.role,
+						id: response.user.id,
+						metadata: response.user.metadata,
 					},
 					tokens: {
 						access_token: response.token_info.access_token,
