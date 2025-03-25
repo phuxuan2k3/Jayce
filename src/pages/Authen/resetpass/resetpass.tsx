@@ -1,8 +1,10 @@
 import { useState } from "react";
 import logo from "/svg/logo.svg";
 import { useReqResetPasswordMutation } from "../register/register.api";
-import GradientBorder from "../../../components/GradientBorder";
 import { useNavigate } from "react-router-dom";
+import GradientBorder from "../../../components/ui/border/GradientBorder";
+import Navbar from "../../../trash/Navbar";
+
 export default function ResetPassword() {
 	const [submitted, setSubmitted] = useState(false);
 	const [email, setEmail] = useState("");

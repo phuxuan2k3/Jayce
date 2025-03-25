@@ -13,16 +13,16 @@ export const useRole = () => {
 	if (noAuth == true) {
 		dispatch(setAuthState({
 			user: {
-				"email": "string",
-				"username": "string",
-				"avatarPath": "string"
+				email: "123@gmail.com",
+				username: "johndoe",
+				metadata: null
 			},
 			tokens: {
-				"access_token": "string",
-				"refresh_token": "string",
-				"role": 1,
-				"safe_id": "string",
-				"user_id": 1
+				access_token: "string",
+				refresh_token: "string",
+				role: 1,
+				safe_id: "string",
+				user_id: 1
 			}
 		}));
 	}

@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import logo from "/svg/logo.svg";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useResetPasswordMutation, useVerifyResetCodeMutation } from "../register/register.api";
-import GradientBorder from "../../../components/GradientBorder";
+import GradientBorder from "../../../components/ui/border/GradientBorder";
+import Navbar from "../../../trash/Navbar";
+
 export default function NewPassword() {
 	const [email, setEmail] = useState("");
 	const [searchParams] = useSearchParams();

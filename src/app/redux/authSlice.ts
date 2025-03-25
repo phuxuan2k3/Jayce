@@ -7,10 +7,8 @@ import { Role } from '../enum.ts';
 
 export type UserInfo = {
 	username: string;
-    email: string;
-    role: string;
-    id: string;
-    metadata: any;
+	email: string;
+	metadata: any;
 }
 
 export type Token = {

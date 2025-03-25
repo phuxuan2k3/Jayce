@@ -7,7 +7,7 @@ import accountApi from '../../features/Account/account.api';
 import aiAPI from '../../features/Test/api/AI.api';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import registerAPI from '../pages/Authen/register/register.api';
+import registerAPI from '../../pages/Authen/register/register.api';
 import currentAttemptReducer from '../../features/Test/reducers/currentAttemtpSlice';
 
 const persistConfig = {
