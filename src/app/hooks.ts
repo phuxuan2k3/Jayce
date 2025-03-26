@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "./store";
-import { selectRole, setAuthState } from "./authSlice";
-import { noAuth } from "../env";
+import { selectRole, setAuthState } from "../features/Auth/store/authSlice";
+import { noAuth } from "./env";
 
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`

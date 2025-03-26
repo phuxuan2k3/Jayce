@@ -2,8 +2,8 @@ import React from "react";
 import UserProfile from "./UserInfo";
 import Activities from "./Activities/Activities";
 import Settings from "./Settings";
-import { useAppSelector } from '../../../app/redux/hooks';
-import { selectUserInfo, UserInfo } from '../../../app/redux/authSlice';
+import { useAppSelector } from '../../../app/hooks';
+import { selectUserInfo, UserInfo } from '../../../features/Auth/store/authSlice';
 
 const ProfileDashboard = () => {
 	const [activeTab, setActiveTab] = React.useState<"Activities" | "Settings">("Activities");

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Role } from "../../app/enum"
-import { useRole } from "../../app/redux/hooks";
+import { useRole } from "../../app/hooks";
 
 type Props = {
 	roleSwitch: {

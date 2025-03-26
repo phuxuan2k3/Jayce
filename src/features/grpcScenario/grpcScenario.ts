@@ -2,7 +2,7 @@ import { ekko } from './api/ekko';
 import * as empty from './google/protobuf/empty';
 import { Metadata } from 'grpc-web';
 import { backendEndpoint } from "../../app/env"
-import store, { RootState } from "../../app/redux/store";
+import store, { RootState } from "../../app/store";
 import { useSelector } from 'react-redux';
 
 const Empty = empty.google.protobuf.Empty;

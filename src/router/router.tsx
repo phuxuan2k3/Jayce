@@ -105,11 +105,13 @@ const router = createBrowserRouter([{
 		{
 			path: paths2.ROOT,
 			element: <UnauthLayout />,
-			children: [{
-				path: paths2.ROOT,
-				element: <DashboardPage />,
-				index: true
-			}]
+			children: [
+				{
+					path: paths2.ROOT,
+					element: <DashboardPage />,
+					index: true
+				}
+			]
 		},
 
 

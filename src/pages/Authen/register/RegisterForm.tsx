@@ -2,10 +2,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import GradientBorder from "../../../components/ui/border/GradientBorder"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom";
-import { useRegisterMutation } from "../../../features/Auth/authApi";
+import { useRegisterMutation } from "../../../features/Auth/api/authApi";
 import { useEffect, useState } from "react";
-import { useAppSelector } from "../../../app/redux/hooks";
-import { selectIsAuthenticated } from "../../../app/redux/authSlice";
+import { useAppSelector } from "../../../app/hooks";
+import { selectIsAuthenticated } from "../../../features/Auth/store/authSlice";
 import { toErrorMessage } from "../../../helpers/fetchBaseQuery.error";
 import AlertError from "../../../components/ui/error/AlertError";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";

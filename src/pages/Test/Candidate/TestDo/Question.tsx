@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "../../../../app/redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { useAnswerTestQuestionMutation } from "../../../../features/Test/reducers/currentAttemptApi";
 import { currentAttemptActions, curerntAttemptSelects } from "../../../../features/Test/reducers/currentAttemtpSlice";
 import { CurrentAttempt } from "../../../../features/Test/types/current";

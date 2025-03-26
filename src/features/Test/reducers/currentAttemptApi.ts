@@ -2,7 +2,7 @@ import { url } from "../../../app/env";
 import { CurrentAttemptSocket } from "../api/socket.schema";
 import { io } from "socket.io-client";
 import { testApiGen } from "../api/test.api-gen";
-import { RootState } from "../../../app/redux/store";
+import { RootState } from "../../../app/store";
 import { currentAttemptActions } from "./currentAttemtpSlice";
 
 let _socket: CurrentAttemptSocket | null = null;

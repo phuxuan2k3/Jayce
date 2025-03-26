@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import GradientBorder from "../../../components/ui/border/GradientBorder"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom";
-import { useLoginMutation, useGoogleMutation } from "../../../features/Auth/authApi";
+import { useLoginMutation, useGoogleMutation } from "../../../features/Auth/api/authApi";
 import { toErrorMessage } from "../../../helpers/fetchBaseQuery.error";
 import AlertError from "../../../components/ui/error/AlertError";
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';

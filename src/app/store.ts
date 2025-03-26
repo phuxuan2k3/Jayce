@@ -1,14 +1,14 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import authReducer from './authSlice';
-import authApi from '../../features/Auth/authApi';
+import authReducer from '../features/Auth/store/authSlice';
+import authApi from '../features/Auth/api/authApi';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import testApi from '../../features/Test/api/test.api';
-import accountApi from '../../features/Account/account.api';
-import aiAPI from '../../features/Test/api/AI.api';
+import testApi from '../features/Test/api/test.api';
+import accountApi from '../features/Account/account.api';
+import aiAPI from '../features/Test/api/AI.api';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import registerAPI from '../../pages/Authen/register/register.api';
-import currentAttemptReducer from '../../features/Test/reducers/currentAttemtpSlice';
+import registerAPI from '../pages/Authen/register/register.api';
+import currentAttemptReducer from '../features/Test/reducers/currentAttemtpSlice';
 
 const persistConfig = {
 	key: 'root',

@@ -4,7 +4,7 @@ import "./assets/styles/index.css";
 import App from "./App.tsx";
 import { createTheme, StyledEngineProvider, ThemeProvider } from "@mui/material";
 import { Provider } from "react-redux";
-import store, { persistor } from "./app/redux/store.ts";
+import store, { persistor } from "./app/store.ts";
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { GoogleOAuthProvider } from '@react-oauth/google';

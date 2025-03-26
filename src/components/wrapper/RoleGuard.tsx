@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { Role } from '../../app/enum';
 import paths2 from '../../router/path-2';
-import { useRole } from '../../app/redux/hooks';
+import { useRole } from '../../app/hooks';
 
 type RoleAlternativeUrl = {
 	role: Role;

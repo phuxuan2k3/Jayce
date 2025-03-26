@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import UnauthNavbar from "../ui/navbar/UnauthNavbar";
 import FooterLong from "../ui/footer/FooterLong";
-import RoleGuard from "../wrapper/ProtectedRoute";
+import RoleGuard from "../wrapper/RoleGuard";
 import { Role } from "../../app/enum";
 import paths2 from "../../router/path-2";
 

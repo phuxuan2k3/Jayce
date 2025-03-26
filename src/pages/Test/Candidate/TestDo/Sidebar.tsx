@@ -3,7 +3,7 @@ import paths2 from "../../../../router/path-2";
 import useGetTestIdParams from "../../../../features/Test/hooks/useGetTestIdParams";
 import { useEffect } from "react";
 import TestTimer from "../../../../features/Test/partials/TestTimer";
-import { useAppDispatch, useAppSelector } from "../../../../app/redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { currentAttemptActions, curerntAttemptSelects } from "../../../../features/Test/reducers/currentAttemtpSlice";
 import { CurrentAttempt } from "../../../../features/Test/types/current";
 import { usePostCurrentAttemptSubmitMutation } from "../../../../features/Test/api/test.api-gen";

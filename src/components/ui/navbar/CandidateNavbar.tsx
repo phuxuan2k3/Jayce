@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import logo from "/svg/logo.svg";
 import skillsharp from "/svg/skillsharp.svg";
-import { selectUserInfo } from "../../../app/redux/authSlice";
-import { useAppSelector } from "../../../app/redux/hooks";
-import { useLogoutMutation } from "../../../features/Auth/authApi";
+import { selectUserInfo } from "../../../features/Auth/store/authSlice";
+import { useAppSelector } from "../../../app/hooks";
+import { useLogoutMutation } from "../../../features/Auth/api/authApi";
 import paths2 from "../../../router/path-2";
 
 const CandidateNavbar = ({ showNav = true }: { showNav?: boolean; }) => {

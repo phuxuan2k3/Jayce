@@ -1,8 +1,7 @@
-import loginAPI from "../../../features/Test/login.api";
+import authRestApi from "../../../features/Auth/api/authRestApi";
 
-const resetAPI = loginAPI.injectEndpoints({
+const resetAPI = authRestApi.injectEndpoints({
 	endpoints: (builder) => ({
-
 		resetPassword: builder.mutation<void, { email: string }>({
 			query: ({ email }) => ({
 				url: `/account/generate/resetcode`,
