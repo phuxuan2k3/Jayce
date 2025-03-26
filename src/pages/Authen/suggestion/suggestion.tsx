@@ -1,4 +1,4 @@
-import Navbar from "../../../trash/Navbar";
+import CandidateNavbar from "../../../components/ui/navbar/CandidateNavbar";
 import logo from "/svg/logo.svg";
 
 export default function Suggestion() {
@@ -25,7 +25,7 @@ export default function Suggestion() {
 
 	return (
 		<div className="min-h-screen flex flex-col">
-			<Navbar />
+			<CandidateNavbar />
 			<div className="w-1/2 mx-auto">
 				<div className="mt-16 text-3xl font-bold">
 					I need help with ...

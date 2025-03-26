@@ -9,6 +9,7 @@ export type UserInfo = {
 	username: string;
 	email: string;
 	metadata: any;
+	avatarPath?: string;
 }
 
 export type Token = {

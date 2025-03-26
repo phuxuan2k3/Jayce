@@ -1,6 +1,6 @@
 import { Outlet, useLocation, Link } from "react-router-dom";
-import Navbar from "../../../trash/Navbar";
 import FooterShort from "../../../components/ui/footer/FooterShort";
+import CandidateNavbar from "../../../components/ui/navbar/CandidateNavbar";
 
 export default function Layout() {
 	const location = useLocation();
@@ -8,7 +8,7 @@ export default function Layout() {
 
 	return (
 		<div className="min-h-screen flex flex-col">
-			<Navbar />
+			<CandidateNavbar />
 			<div className="px-6 py-4 min-h-screen">
 				<div className="text-sm text-gray-500 mb-4 ml-12">
 					<span key="Home">

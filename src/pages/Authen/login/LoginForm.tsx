@@ -4,11 +4,12 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation, useGoogleMutation } from "../../../features/Auth/authApi";
 import { toErrorMessage } from "../../../helpers/fetchBaseQuery.error";
-import LocalLoading from "../../../trash/LocalLoading";
 import AlertError from "../../../components/ui/error/AlertError";
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
+import { useState } from "react";
+import SpinnerLoading from "../../../components/ui/loading/SpinnerLoading";
 
 const LoginForm = () => {
 	const navigate = useNavigate();
@@ -95,7 +96,7 @@ const LoginForm = () => {
 			<hr className="flex-grow border-t border-gray-300" />
 		</div>
 
-		{isLoading && <LocalLoading />}
+		{isLoading && <SpinnerLoading />}
 		{errorMessage && <AlertError errorMessage={errorMessage} />}
 
 		<form onSubmit={handleFormSubmit} className="flex-col ">

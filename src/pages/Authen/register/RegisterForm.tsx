@@ -8,17 +8,15 @@ import { useAppSelector } from "../../../app/redux/hooks";
 import { selectIsAuthenticated } from "../../../app/redux/authSlice";
 import { toErrorMessage } from "../../../helpers/fetchBaseQuery.error";
 import AlertError from "../../../components/ui/error/AlertError";
-import LocalLoading from "../../../trash/LocalLoading";
-import LocalSuccess from "../../../trash/LocalSuccess";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { useVerificationEmailMutation } from "./register.api";
+import SpinnerLoading from "../../../components/ui/loading/SpinnerLoading";
 
 const RegisterForm = () => {
 	const navigate = useNavigate();
 	const [register, { isLoading, error }] = useRegisterMutation();
 	const errorMessage = toErrorMessage(error as FetchBaseQueryError | SerializedError | undefined);
-	const [successMessage, setSuccessMessage] = useState<string | null>(null);
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const [verificationEmail] = useVerificationEmailMutation();
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
@@ -153,9 +151,8 @@ const RegisterForm = () => {
 			<hr className="flex-grow border-t border-gray-300" />
 		</div>
 
-		{isLoading && <LocalLoading />}
+		{isLoading && <SpinnerLoading />}
 		{errorMessage && <AlertError errorMessage={errorMessage} />}
-		{successMessage && <LocalSuccess successMessage={successMessage} />}
 
 		<div className="flex-col ">
 			<GradientBorder className="relative mt-8 w-full p-[1px] rounded-lg">
@@ -229,7 +226,7 @@ const RegisterForm = () => {
 							Nhập OTP
 						</label>
 					</div>
-					
+
 					<div className="flex  gap-1 pt-8 ">
 						<button onClick={() => handleFormSubmit()} className=" text-center w-full px-4 py-2 bg-[var(--primary-color)] text-white rounded-md ">Verify email</button>
 					</div>

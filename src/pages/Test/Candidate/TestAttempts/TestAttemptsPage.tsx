@@ -7,7 +7,6 @@ import Sidebar from './Sidebar';
 import useGetTestIdParams from '../../../../features/Test/hooks/useGetTestIdParams';
 import { GetTestsByTestIdAttemptsApiArg, useGetTestsByTestIdAttemptsQuery, useGetTestsByTestIdQuery } from '../../../../features/Test/api/test.api-gen';
 import FetchState from '../../../../components/wrapper/FetchState';
-import FetchStateContent from '../../../../trash/FetchStateContent';
 
 const mockCompany = {
 	name: "Company",
@@ -59,7 +58,7 @@ const TestAttemtpsPage: React.FC = () => {
 						</FetchState>
 
 						<div className="flex flex-col bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
-							<FetchStateContent isLoading={attemptsQuery.isLoading} error={attemptsQuery.error} skeletonAmount={2}>
+							<FetchState isLoading={attemptsQuery.isLoading} error={attemptsQuery.error}>
 								{attemptsQuery.data?.data.map((attempt) => (
 									<AttemptCardFinished
 										key={attempt.id}
@@ -74,7 +73,7 @@ const TestAttemtpsPage: React.FC = () => {
 								<div className="flex justify-center pt-5">
 									<MyPagination totalPage={attemptsQuery.data?.totalPages || 0} onPageChange={handlePaging} />
 								</div>
-							</FetchStateContent>
+							</FetchState>
 						</div>
 					</div>
 

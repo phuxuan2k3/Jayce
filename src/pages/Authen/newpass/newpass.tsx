@@ -3,7 +3,7 @@ import logo from "/svg/logo.svg";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useResetPasswordMutation, useVerifyResetCodeMutation } from "../register/register.api";
 import GradientBorder from "../../../components/ui/border/GradientBorder";
-import Navbar from "../../../trash/Navbar";
+import CandidateNavbar from "../../../components/ui/navbar/CandidateNavbar";
 
 export default function NewPassword() {
 	const [email, setEmail] = useState("");
@@ -68,7 +68,7 @@ export default function NewPassword() {
 
 	return (
 		<div className="min-h-screen flex flex-col">
-			<Navbar />
+			<CandidateNavbar />
 			<div className="w-1/3 mx-auto text-center">
 				<div className="font-arya font-bold mt-16 text-[24px]">
 					Reset your password

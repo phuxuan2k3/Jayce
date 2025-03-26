@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import Navbar from "../../../trash/Navbar";
 import FooterShort from "../../../components/ui/footer/FooterShort";
 import { paths } from "../../../router/path";
+import CandidateNavbar from "../../../components/ui/navbar/CandidateNavbar";
 
 export default function LayoutInterviewPractice() {
 	const navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function LayoutInterviewPractice() {
 
 	return (
 		<div className="min-h-screen flex flex-col">
-			<Navbar />
+			<CandidateNavbar />
 			<div className="px-6 py-4 min-h-screen">
 				<div className="text-sm text-gray-500 mb-4">
 					<span className="font-semibold text-[var(--primary-color)]">

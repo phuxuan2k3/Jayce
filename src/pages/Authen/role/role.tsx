@@ -1,4 +1,4 @@
-import Navbar from "../../../trash/Navbar";
+import CandidateNavbar from "../../../components/ui/navbar/CandidateNavbar";
 import logo from "/svg/logo.svg";
 
 export default function Role() {
@@ -32,7 +32,7 @@ export default function Role() {
 
 	return (
 		<div className="min-h-screen flex flex-col">
-			<Navbar />
+			<CandidateNavbar />
 			<div className="w-1/2 mx-auto">
 				<div className="mt-16 mb-4 text-3xl font-bold">
 					What role are you preparing for ?
