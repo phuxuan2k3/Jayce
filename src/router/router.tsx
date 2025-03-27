@@ -37,7 +37,7 @@ import Company from "../pages/Authen/company/company";
 import ResetPassword from "../pages/Authen/resetpass/resetpass";
 import NewPassword from "../pages/Authen/newpass/newpass";
 import paths2 from "./path-2";
-import AuthLayout from "../components/layouts/AuthLayout";
+import AuthenticateLayout from "../components/layouts/AuthenticateLayout";
 import UnauthLayout from "../components/layouts/UnauthLayout";
 import CandidateLayout from "../features/Test/layout/CandidateLayout";
 import DashboardPage from "../pages/common/DashboardPage";
@@ -51,7 +51,7 @@ const router = createBrowserRouter([{
 	children: [
 		{
 			path: paths2.auth.ROOT,
-			element: <AuthLayout />,
+			element: <AuthenticateLayout />,
 			children: [
 				{
 					path: paths2.auth.LOGIN,

@@ -7,7 +7,6 @@ import accountApi from '../features/Account/account.api';
 import aiAPI from '../features/Test/api/AI.api';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import registerAPI from '../pages/Authen/register/register.api';
 import currentAttemptReducer from '../features/Test/reducers/currentAttemtpSlice';
 
 const persistConfig = {
@@ -23,7 +22,6 @@ const rootReducer = combineReducers({
 	testApi: testApi.reducer,
 	aiApi: aiAPI.reducer,
 	accountApi: accountApi.reducer,
-	registerAPI: registerAPI.reducer,
 
 	// Custom reducers
 	currentAttempt: currentAttemptReducer,
@@ -41,8 +39,7 @@ const store = configureStore({
 				.concat(authApi.middleware)
 				.concat(testApi.middleware)
 				.concat(aiAPI.middleware)
-				.concat(accountApi.middleware)
-				.concat(registerAPI.middleware),
+				.concat(accountApi.middleware),
 });
 
 export const persistor = persistStore(store);

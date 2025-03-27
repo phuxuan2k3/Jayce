@@ -44,6 +44,7 @@ function _setAuthState(state: AuthState, action: PayloadAction<AuthStateResponse
 function _clearAuthState(state: AuthState) {
 	state.user = null;
 	state.tokens = null;
+	console.log("Cleared auth state");
 }
 
 const authSlice = createSlice({
@@ -89,6 +90,7 @@ const authSlice = createSlice({
 			.addMatcher(
 				authApi.endpoints.login.matchFulfilled,
 				(state, action) => {
+					console.log("Login fulfilled");
 					_setAuthState(state, action);
 				})
 
@@ -96,6 +98,7 @@ const authSlice = createSlice({
 			.addMatcher(
 				authApi.endpoints.register.matchFulfilled,
 				(state, action) => {
+					console.log("Register fulfilled");
 					_setAuthState(state, action);
 				})
 
@@ -103,11 +106,13 @@ const authSlice = createSlice({
 			.addMatcher(
 				authApi.endpoints.refresh.matchFulfilled,
 				(state, action) => {
+					console.log("Refresh fulfilled");
 					_setAuthState(state, action);
 				})
 			.addMatcher(
 				authApi.endpoints.refresh.matchRejected,
 				(state) => {
+					console.log("Refresh rejected");
 					_clearAuthState(state);
 				}
 			)

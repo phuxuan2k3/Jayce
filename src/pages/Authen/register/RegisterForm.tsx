@@ -4,32 +4,32 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../../../features/Auth/api/authApi";
 import { useEffect, useState } from "react";
-import { useAppSelector } from "../../../app/hooks";
-import { selectIsAuthenticated } from "../../../features/Auth/store/authSlice";
 import { toErrorMessage } from "../../../helpers/fetchBaseQuery.error";
 import AlertError from "../../../components/ui/error/AlertError";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { useVerificationEmailMutation } from "./register.api";
 import SpinnerLoading from "../../../components/ui/loading/SpinnerLoading";
+import paths2 from "../../../router/path-2";
 
 const RegisterForm = () => {
 	const navigate = useNavigate();
-	const [register, { isLoading, error }] = useRegisterMutation();
+	const [register, { isLoading, error, isSuccess }] = useRegisterMutation();
 	const errorMessage = toErrorMessage(error as FetchBaseQueryError | SerializedError | undefined);
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const [verificationEmail] = useVerificationEmailMutation();
-	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 	const [otp, setOtp] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [username, setUsername] = useState("");
 	const [errors, setErrors] = useState({ username: "", email: "", password: "" });
+
 	useEffect(() => {
-		if (isAuthenticated) {
-			navigate('/')
+		if (error === null) {
+			navigate(paths2.ROOT);
 		}
-	}, [isAuthenticated])
+	}, [isSuccess]);
+
 	const validateForm = () => {
 		let newErrors = { username: "", email: "", password: "" };
 		let isValid = true;
@@ -74,33 +74,28 @@ const RegisterForm = () => {
 		setErrors(newErrors);
 		return isValid;
 	};
+
+	// TODO: Fullfill the data
 	const handleFormSubmit = async () => {
-		try {
-			alert(password);
-			await register({
-				local: {
-					username,
-					email,
-					password: password,
-					confirm_password: password,
-					otp,
-				},
-				metadata: {
-					fullname: "I Am Miboy",
-					company: "Cty",
-					country: "Viet Nam",
-					jobTitle: "CEO",
-					avatarPath: "https://thumbs.dreamstime.com/b/female-avatar-icon-women-clipart-png-vector-girl-avatar-women-clipart-bor-bisiness-icon-png-vector-233362315.jpg"
-				},
-				role: 1
-			});
-			if (error === null) {
-				navigate('/')
-			}
-		} catch (error) {
-			console.log("Register failed:", error);
-		}
+		register({
+			local: {
+				username,
+				email,
+				password: password,
+				confirm_password: password,
+				otp,
+			},
+			metadata: {
+				fullname: "I Am Miboy",
+				company: "Cty",
+				country: "Viet Nam",
+				jobTitle: "CEO",
+				avatarPath: "https://thumbs.dreamstime.com/b/female-avatar-icon-women-clipart-png-vector-girl-avatar-women-clipart-bor-bisiness-icon-png-vector-233362315.jpg"
+			},
+			role: 1
+		});
 	}
+
 	const handleVerifyEmail = async () => {
 		if (!validateForm()) return;
 		console.log('1');
@@ -118,8 +113,9 @@ const RegisterForm = () => {
 			console.error("Verification failed:", error);
 		}
 	};
+
 	const toLogin = () => {
-		navigate('/login')
+		navigate(paths2.auth.LOGIN);
 	}
 
 	return <div>
@@ -132,18 +128,6 @@ const RegisterForm = () => {
 			}} className="px-3 w-1/2 rounded-s-lg font-bold text-xl py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 hover:bg-[var(--primary-color)] hover:text-white">Log In</button>
 			<button className="px-3 w-1/2 rounded-e-lg font-bold text-xl py-2  border-2 border-[var(--primary-color)] bg-[var(--primary-color)] text-white">Sign Up</button>
 		</div>
-
-		<GradientBorder className="mt-14 hover:shadow-gradient duration-150 w-full p-[1px] rounded-lg">
-			<div className=" flex h-12 justify-center items-center  bg-white rounded-lg p-4">
-				<img src="./svg/google.svg" alt="google logo" />
-				<span className="ml-4"> Sign in with Google</span>
-			</div>
-		</GradientBorder>
-		<GradientBorder className="mt-8 hover:shadow-gradient duration-150 w-full p-[1px] rounded-lg">
-			<div className="flex h-12 justify-center items-center  text-center z-10 bg-white rounded-lg p-4">
-				Sign in with University
-			</div>
-		</GradientBorder>
 
 		<div className="flex mt-8 items-center space-x-4">
 			<hr className="flex-grow border-t border-gray-300" />

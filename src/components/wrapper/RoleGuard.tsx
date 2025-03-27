@@ -2,7 +2,8 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { Role } from '../../app/enum';
 import paths2 from '../../router/path-2';
-import { useRole } from '../../app/hooks';
+import { useAppSelector } from '../../app/hooks';
+import { selectRole } from '../../features/Auth/store/authSlice';
 
 type RoleAlternativeUrl = {
 	role: Role;
@@ -22,7 +23,7 @@ const RoleGuard: React.FC<Props> = ({
 	exclude = false,
 	alternativeUrl = paths2.auth.LOGIN,
 }) => {
-	const role = useRole();
+	const role = useAppSelector(selectRole);
 	const _alternativeUrl = typeof alternativeUrl === 'string'
 		? alternativeUrl
 		: (alternativeUrl as RoleAlternativeUrl[]).find(a => a.role === role)?.alternativeUrl || paths2.auth.LOGIN;

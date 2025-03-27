@@ -43,7 +43,12 @@ export function toErrorMessage(error: FetchBaseQueryError | SerializedError | un
 				return 'Internal Server Error';
 			}
 			else if (error.status === 400) {
-				return 'Bad Request: ' + (error.data as any).message || 'An error occurred';
+				let message = "Unknown error";
+				const data = error.data as any;
+				if ("message" in data) {
+					message = data.message;
+				}
+				return 'Bad Request: ' + message;
 			}
 			return 'error' in error ? error.error : JSON.stringify(error.data)
 		} else if (isErrorWithMessage(error)) {

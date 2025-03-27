@@ -1,6 +1,6 @@
 import authRestApi from '../../../features/Auth/api/authRestApi';
 
-export const registerAPI = authRestApi.injectEndpoints({
+export const registerApi = authRestApi.injectEndpoints({
 	endpoints: (builder) => ({
 		verificationEmail: builder.mutation<void, { email: string }>({
 			query: ({ email }) => ({
@@ -33,8 +33,12 @@ export const registerAPI = authRestApi.injectEndpoints({
 			}),
 		}),
 	}),
+	overrideExisting: false,
 });
 
-export const { useVerificationEmailMutation, useResetPasswordMutation, useReqResetPasswordMutation, useVerifyResetCodeMutation } = registerAPI;
-
-export default registerAPI;
+export const {
+	useVerificationEmailMutation,
+	useResetPasswordMutation,
+	useReqResetPasswordMutation,
+	useVerifyResetCodeMutation
+} = registerApi;

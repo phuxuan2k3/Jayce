@@ -1,7 +1,7 @@
-import { bulbasaur } from './grpc/bulbasaur';
-import * as empty from './google/protobuf/empty';
+import { bulbasaur } from '../grpc/bulbasaur';
+import * as empty from '../google/protobuf/empty';
 import { Metadata } from 'grpc-web';
-import { backendEndpoint } from "../../app/env"
+import { backendEndpoint } from "../../../app/env"
 
 const Empty = empty.google.protobuf.Empty;
 

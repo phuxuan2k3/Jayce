@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Role } from "../../app/enum"
-import { useRole } from "../../app/hooks";
+import { useAppSelector } from "../../app/hooks";
+import { selectRole } from "../../features/Auth/store/authSlice";
 
 type Props = {
 	roleSwitch: {
@@ -15,7 +16,7 @@ type Props = {
  */
 
 export default function RoleBaseSwitch({ roleSwitch }: Props) {
-	const role = useRole();
+	const role = useAppSelector(selectRole);
 	const component = roleSwitch.find(r => r.role === role)?.component;
 	return (
 		<>

@@ -1,8 +1,8 @@
 import { BaseQueryApi, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { backendEndpoint } from '../../../app/env';
-import { AuthStateResponse, clearAuthState, selectTokens, Token } from '../store/authSlice';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { grpcSignUp, grpcSignIn, grpcSignInGoogle, grpcMe, grpcRefreshToken } from '../grpcClient';
+import { AuthStateResponse, clearAuthState, Token } from '../store/authSlice';
+import { useAppDispatch } from '../../../app/hooks';
+import { grpcSignUp, grpcSignIn, grpcSignInGoogle, grpcMe, grpcRefreshToken } from './grpcClient';
 
 interface LoginRequest {
 	username: string;
@@ -23,7 +23,7 @@ interface RegisterRequest {
 
 const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions: {}): Promise<{ data: any } | { error: FetchBaseQueryError }> => {
 	const { url, method } = args;
-
+	// TODO: where is logout??
 	if ((
 		url === 'auth/login' ||
 		url === 'auth/register' ||
@@ -171,20 +171,8 @@ const authApi = createApi({
 		}),
 
 		logout: builder.mutation<void, void>({
-			queryFn: async (_, __, ___, baseQuery) => {
-				const tokens = useAppSelector(selectTokens);
-				const dispatch = useAppDispatch();
+			queryFn: async (_, { dispatch }) => {
 				dispatch(clearAuthState());
-				if (tokens != null) {
-					const result = await baseQuery({
-						url: 'auth/logout',
-						method: 'POST',
-						body: { refreshToken: tokens.refresh_token },
-					});
-					if ('error' in result) {
-						return result;
-					}
-				}
 				return { data: void 0 };
 			},
 		}),
