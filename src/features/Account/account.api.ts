@@ -18,7 +18,8 @@ export type CompanyResponse = {
 	imageUrl: string;
 }
 
-export const accountApi = createApi({
+const accountApi = createApi({
+	reducerPath: 'accountApi',
 	baseQuery: baseQuery,
 	endpoints: (builder) => ({
 		getCompanies: builder.query<CompanyResponse[], string[]>({
@@ -31,8 +32,9 @@ export const accountApi = createApi({
 	}),
 });
 
-export default accountApi;
 export const {
 	useGetCompaniesQuery,
 	useLazyGetCompaniesQuery
 } = accountApi;
+
+export default accountApi;

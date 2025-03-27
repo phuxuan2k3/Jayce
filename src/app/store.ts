@@ -3,11 +3,12 @@ import authReducer from '../features/Auth/store/authSlice';
 import authApi from '../features/Auth/api/authApi';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import testApi from '../features/Test/api/test.api';
-import accountApi from '../features/Account/account.api';
 import aiAPI from '../features/Test/api/AI.api';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import currentAttemptReducer from '../features/Test/reducers/currentAttemtpSlice';
+import authRestApi from '../features/Auth/api/authRestApi';
+import accountApi from '../features/Account/account.api';
 
 const persistConfig = {
 	key: 'root',
@@ -19,6 +20,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
 	auth: authReducer,
 	authApi: authApi.reducer,
+	authRestApi: authRestApi.reducer,
 	testApi: testApi.reducer,
 	aiApi: aiAPI.reducer,
 	accountApi: accountApi.reducer,
@@ -39,7 +41,8 @@ const store = configureStore({
 				.concat(authApi.middleware)
 				.concat(testApi.middleware)
 				.concat(aiAPI.middleware)
-				.concat(accountApi.middleware),
+				.concat(accountApi.middleware)
+				.concat(authRestApi.middleware),
 });
 
 export const persistor = persistStore(store);

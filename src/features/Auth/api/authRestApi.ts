@@ -9,7 +9,8 @@ const baseQuery = fetchBaseQuery({
 	},
 });
 
-export const authRestApi = createApi({
+const authRestApi = createApi({
+	reducerPath: 'authRestApi',
 	baseQuery: baseQuery,
 	endpoints: (builder) => ({
 		verificationEmail: builder.mutation<void, { email: string }>({

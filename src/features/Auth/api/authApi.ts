@@ -1,7 +1,6 @@
 import { BaseQueryApi, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { backendEndpoint } from '../../../app/env';
 import { AuthStateResponse, clearAuthState, Token } from '../store/authSlice';
-import { useAppDispatch } from '../../../app/hooks';
 import { grpcSignUp, grpcSignIn, grpcSignInGoogle, grpcMe, grpcRefreshToken } from './grpcClient';
 
 interface LoginRequest {
@@ -136,6 +135,7 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 };
 
 const authApi = createApi({
+	reducerPath: 'authApi',
 	baseQuery: customFetchQuery,
 	endpoints: (builder) => ({
 		login: builder.mutation<AuthStateResponse, LoginRequest>({
