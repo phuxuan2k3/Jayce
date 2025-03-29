@@ -117,8 +117,8 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 			}
 			return {
 				error: {
-					status: 'FETCH_ERROR',
-					error: message,
+					status: 400,
+					data: error,
 				}
 			}
 		}

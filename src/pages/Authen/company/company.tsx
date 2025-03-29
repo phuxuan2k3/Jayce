@@ -1,4 +1,3 @@
-import CandidateNavbar from "../../../components/ui/navbar/CandidateNavbar";
 import logo from "/svg/logo.svg";
 
 export default function Company() {
@@ -18,30 +17,27 @@ export default function Company() {
 	];
 
 	return (
-		<div className="min-h-screen flex flex-col">
-			<CandidateNavbar />
-			<div className="w-1/2 mx-auto">
-				<div className="mt-16 mb-4 text-3xl font-bold">
-					What companies are you interested in?
-				</div>
-				<input type="text" placeholder="Filter..." className="border w-full p-1 rounded-lg px-5 mt-8" />
-				<div className="h-[200px] overflow-y-auto my-8">
-					<div className="flex-wrap full flex  gap-2">
-						{companies.map((company, index) => (
-							<div key={index} className="w-24 flex flex-wrap justify-center items-center">
-								<div className="p-2 rounded-3xl border border-gray-300">
-									<img className="w-8" src={company.link} alt="" />
-								</div>
-								<div className="w-full text-center">{company.name}</div>
-							</div>
-						))}
-					</div>
-				</div>
-				<div className="text-white text-center p-2 rounded-lg bg-[var(--primary-color)] mb-8 font-bold">
-					<span> Continue</span>
-				</div>
-				<img src={logo} className="absolute opacity-25 bottom-0 right-0 w-52" alt="logo" />
+		<div className="w-1/2 mx-auto">
+			<div className="mt-16 mb-4 text-3xl font-bold">
+				What companies are you interested in?
 			</div>
+			<input type="text" placeholder="Filter..." className="border w-full p-1 rounded-lg px-5 mt-8" />
+			<div className="h-[200px] overflow-y-auto my-8">
+				<div className="flex-wrap full flex  gap-2">
+					{companies.map((company, index) => (
+						<div key={index} className="w-24 flex flex-wrap justify-center items-center">
+							<div className="p-2 rounded-3xl border border-gray-300">
+								<img className="w-8" src={company.link} alt="" />
+							</div>
+							<div className="w-full text-center">{company.name}</div>
+						</div>
+					))}
+				</div>
+			</div>
+			<div className="text-white text-center p-2 rounded-lg bg-[var(--primary-color)] mb-8 font-bold">
+				<span> Continue</span>
+			</div>
+			<img src={logo} className="absolute opacity-25 bottom-0 right-0 w-52" alt="logo" />
 		</div>
 	);
 }

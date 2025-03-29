@@ -3,7 +3,6 @@ import logo from "/svg/logo.svg";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useResetPasswordMutation, useVerifyResetCodeMutation } from "../register/register.api";
 import GradientBorder from "../../../components/ui/border/GradientBorder";
-import CandidateNavbar from "../../../components/ui/navbar/CandidateNavbar";
 
 export default function NewPassword() {
 	const [email, setEmail] = useState("");
@@ -67,37 +66,34 @@ export default function NewPassword() {
 	}, [resetCodeFromURL]);
 
 	return (
-		<div className="min-h-screen flex flex-col">
-			<CandidateNavbar />
-			<div className="w-1/3 mx-auto text-center">
-				<div className="font-arya font-bold mt-16 text-[24px]">
-					Reset your password
-					<div>
-						<GradientBorder className="relative mt-8 w-full p-[1px] rounded-lg">
-							<input
-								type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder=" "
-								className="peer block w-full rounded-lg border border-gray-300  px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
-							/>
-							<label
-								className={`bg-white absolute left-2 transform text-sm text-gray-500 transition-all
+		<div className="w-1/3 mx-auto text-center">
+			<div className="font-arya font-bold mt-16 text-[24px]">
+				Reset your password
+				<div>
+					<GradientBorder className="relative mt-8 w-full p-[1px] rounded-lg">
+						<input
+							type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder=" "
+							className="peer block w-full rounded-lg border border-gray-300  px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
+						/>
+						<label
+							className={`bg-white absolute left-2 transform text-sm text-gray-500 transition-all
 							${newPassword !== "" ? "top-2 -translate-y-4 scale-75" : ""}
 							${newPassword.trim() === "" ? "top-1/2 -translate-y-1/2 scale-100 peer-placeholder-shown:top-1/2 peer-placeholder-shown:scale-100" : ""}
 							peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-blue-600`}>
-								Password
-							</label>
-						</GradientBorder>
-						{errors && <span className="text-red-400 text-sm">{errors}</span>}
-						<div onClick={() => { handleResetPassword() }} className="bg-[var(--primary-color)] text-white text-[20px] rounded-lg font-bold mt-8 p-2">
-							Submit
-						</div>
-
-
-						<div onClick={() => navigate('/')} className="underline text-[var(--primary-color)] mt-2">
-							Or go back
-						</div>
+							Password
+						</label>
+					</GradientBorder>
+					{errors && <span className="text-red-400 text-sm">{errors}</span>}
+					<div onClick={() => { handleResetPassword() }} className="bg-[var(--primary-color)] text-white text-[20px] rounded-lg font-bold mt-8 p-2">
+						Submit
 					</div>
-					<img src={logo} className="absolute opacity-25 bottom-0 right-0 w-52" alt="logo" />
+
+
+					<div onClick={() => navigate('/')} className="underline text-[var(--primary-color)] mt-2">
+						Or go back
+					</div>
 				</div>
+				<img src={logo} className="absolute opacity-25 bottom-0 right-0 w-52" alt="logo" />
 			</div>
 		</div>
 	);

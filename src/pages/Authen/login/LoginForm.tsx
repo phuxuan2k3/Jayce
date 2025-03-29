@@ -8,7 +8,7 @@ import AlertError from "../../../components/ui/error/AlertError";
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SpinnerLoading from "../../../components/ui/loading/SpinnerLoading";
 import paths2 from "../../../router/path-2";
 
@@ -18,7 +18,11 @@ const LoginForm = () => {
 	const [google, { }] = useGoogleMutation();
 	const [password, setPassword] = useState("");
 	const [username, setUsername] = useState("");
-	const errorMessage = toErrorMessage(error as FetchBaseQueryError | SerializedError | undefined);
+	const errorMessage = useMemo(() => {
+		return toErrorMessage(error as FetchBaseQueryError | SerializedError | undefined);
+	}, [error]);
+
+	console.log("LoginForm errorMessage", errorMessage);
 
 	useEffect(() => {
 		if (isSuccess) {
