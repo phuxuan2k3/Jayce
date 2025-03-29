@@ -3,6 +3,7 @@ import RoleGuard from "../wrapper/RoleGuard";
 import { Role } from "../../app/enum";
 import paths2 from "../../router/path-2";
 import UnauthNavbar from "../ui/navbar/UnauthNavbar";
+import React from "react";
 
 export default function AuthenticateLayout() {
 	return <>

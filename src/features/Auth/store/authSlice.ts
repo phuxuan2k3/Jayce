@@ -88,11 +88,11 @@ const authSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			// Login
-			// .addMatcher(
-			// 	authApi.endpoints.login.matchFulfilled,
-			// 	(state, action) => {
-			// 		_setAuthState(state, action);
-			// 	})
+			.addMatcher(
+				authApi.endpoints.login.matchFulfilled,
+				(state, action) => {
+					_setAuthState(state, action);
+				})
 
 			// Register
 			.addMatcher(

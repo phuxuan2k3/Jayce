@@ -111,10 +111,7 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 				};
 			}
 		} catch (error: any) {
-			let message = 'Unknown error';
-			if ('message' in error) {
-				message = error.message.toString();
-			}
+			// TODO: handle error code based on a common error response contract
 			return {
 				error: {
 					status: 400,
