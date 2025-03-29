@@ -1,64 +1,45 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import GradientBorderNotGood from "../../../../components/GradientBorder.notgood";
-import { useState } from "react";
-
-const scenarioData = {
-    scenarioNumber: 1,
-    submitter: "Nguyen Van A",
-    scenarioName: "SQL Query",
-};
-
-const answerData = [
-    {
-        question: "What is the difference between == and === in JavaScript?",
-        answer: " The == operator compares the values of two variables after performing type conversion if necessary. On the other hand, the === operator compares the values of two variables without performing type conversion.",
-        rating: {
-            relevance: 5,
-            clarityAndCompleteness: 9,
-            accuracy: 3,
-        }
-    },
-    {
-        question: "What is the difference between == and === in JavaScript?",
-        answer: " The == operator compares the values of two variables after performing type conversion if necessary. On the other hand, the === operator compares the values of two variables without performing type conversion.",
-        rating: {
-            relevance: 5,
-            clarityAndCompleteness: 9,
-            accuracy: 3,
-        }
-    },
-];
+import { Attempt, Scenario } from "../../APIs/types";
 
 const ScenarioSubmissionDetail = () => {
-    const [submissionOverview, _setSubmissionOverview] = useState(scenarioData);
-    const [answerList, _setAnswerList] = useState(answerData);
+    const location = useLocation();
     const navigate = useNavigate();
 
+    const scenarioInfo: Scenario | null = location.state?.scenarioInfo;
+    const attempt: Attempt & { candidate_id: number } = location.state?.attempt;
+    const submitter: string = location.state?.submitter;
+    if (!scenarioInfo || !attempt) {
+        navigate("/");
+        return null;
+    }
+
+    console.log("ScenarioSubmissionDetail:", scenarioInfo, attempt);
+
     const handleGoToSubmissionListView = () => {
-        navigate("/scenario/submission");
+        navigate("/scenario/submission", { state: { scenarioId: scenarioInfo.id } });
     };
 
     return (
         <>
-
             <div className="w-full flex-grow flex flex-col items-center px-4 font-arya">
                 <div className="w-full max-w-7xl py-6">
                     <div className="flex-col text-center">
-                        <h1 className="text-2xl font-bold mb-6">Scenario Detail: #{submissionOverview.scenarioNumber}</h1>
+                        <h1 className="text-2xl font-bold mb-6">Scenario Detail: #{attempt.id}</h1>
                         <div className="flex flex-col font-semibold">
-                            <span> Submitter: {submissionOverview.submitter}</span>
-                            <span> For: {submissionOverview.scenarioName}</span>
+                            <span> Submitter: {submitter}</span>
+                            <span> For: {scenarioInfo.name}</span>
                         </div>
 
                     </div>
 
                     <div className="flex flex-col items-center">
                         <div className="w-4/6 flex flex-row justify-start font-semibold text-[var(--primary-color)] mb-4">
-                            <span>Question List ({answerList.length})</span>
+                            <span>Question List</span>
                         </div>
 
                         {/* Questions List */}
-                        {answerList.map((answer, index) => (
+                        {attempt.answers.map((answer, index) => (
                             <div key={index} className="w-4/6 flex-1 flex flex-row bg-white rounded-lg shadow-primary p-6 space-x-2 border-r border-b border-solid border-primary justify-between mb-4">
                                 <span className="w-1/8 font-bold mb-2 opacity-50">
                                     Question {index + 1}
@@ -69,7 +50,7 @@ const ScenarioSubmissionDetail = () => {
                                     {/* Question */}
                                     <div className="w-full mb-4">
                                         <GradientBorderNotGood className="w-full h-fit font-semibold">
-                                            {answer.question}
+                                            {scenarioInfo.questions[index].content}
                                         </GradientBorderNotGood>
                                     </div>
 
@@ -85,13 +66,13 @@ const ScenarioSubmissionDetail = () => {
                                         Rating
                                     </span>
                                     <span className="font-bold mb-2 text-primary">
-                                        Relevance: <span className="bg-[#EAF6F8] border border-2 border-primary rounded-lg p-1">{answer.rating.relevance}/10</span>
+                                        Relevance: <span className="bg-[#EAF6F8] border border-2 border-primary rounded-lg pl-1 pr-1">{answer.relevance}/10</span>
                                     </span>
                                     <span className="font-bold mb-2 text-primary">
-                                        Clarity and Completeness: <span className="bg-[#EAF6F8] border border-2 border-primary rounded-lg p-1">{answer.rating.clarityAndCompleteness}/10</span>
+                                        Clarity and Completeness: <span className="bg-[#EAF6F8] border border-2 border-primary rounded-lg pl-1 pr-1">{answer.clarity_completeness}/10</span>
                                     </span>
                                     <span className="font-bold mb-2 text-primary">
-                                        Accuracy: <span className="bg-[#EAF6F8] border border-2 border-primary rounded-lg p-1">{answer.rating.accuracy}/10</span>
+                                        Accuracy: <span className="bg-[#EAF6F8] border border-2 border-primary rounded-lg pl-1 pr-1">{answer.accuracy}/10</span>
                                     </span>
                                 </div>
                             </div>

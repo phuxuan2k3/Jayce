@@ -1,29 +1,34 @@
-// import { useState } from "react";
+import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { IoChevronForwardCircleOutline } from "react-icons/io5";
-import { useEffect, useState } from "react";
-import { grpcListField } from "../../../../features/grpcScenario/grpcScenario";
+import { Field } from "../../APIs/types";
+import { useListFieldMutation } from "../../APIs/chronobreak.scenario-api";
 const PickAField = () => {
     const navigate = useNavigate();
+    const [currentPage, setCurrentPage] = React.useState(1);
+    const pageSize = 100;
 
-    const handlePractice = (field: any) => {
-        // alert(field)
+    const handlePractice = (field: Field) => {
         navigate("/ipractice/choose", { state: { field } });
     };
 
-    const [fields, setFields] = useState<any[]>([{name:'data'},{name:"web"}]);
-    // useEffect(() => {
-    //     async function fetchFields() {
-    //         try {
-    //             const response = await grpcListField([], 0, 100);
-    //             const data = response.toObject();
-    //             setFields(data.fields || []);
-    //         } catch (err) {
-    //             console.error("Error fetching fields:", err);
-    //         }
-    //     }
-    //     fetchFields();
-    // }, []);
+    const [fields, setFields] = React.useState<Field[]>([]);
+    
+    const [listFieldMutation] = useListFieldMutation();
+    React.useEffect(() => {
+        const fetchFields = async () => {
+            try {
+                const response = await listFieldMutation({ ids: [], sort_methods: [], page_index: currentPage -1, page_size: pageSize });
+                setFields(response.data?.fields || []);
+                console.log(response.data?.fields[0]);
+            } catch (error) {
+                console.log("Error fetching fields", error);
+            }
+        };
+
+        fetchFields();
+    }, []);
+
     return (
         <>
             <div className="font-arya">

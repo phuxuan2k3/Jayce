@@ -1,18 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays, faList, faPen, faPlus, faStar, faTrash, faUser } from "@fortawesome/free-solid-svg-icons";
-// import { format } from "date-fns";
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
-// import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-// import Button from '@mui/material/Button';
-// import IconButton from '@mui/material/IconButton';
-// import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from "react-router-dom";
-import { grpcListScenario } from "../../../../features/grpcScenario/grpcScenario";
-// import { useEffect, useState } from "react";
+import { useAppSelector } from "../../../../app/hooks";
+import { selectUserInfo } from "../../../../global/authSlice";
+import { useListScenarioMutation, useDeleteScenarioMutation } from "../../APIs/ekko.scenario-api";
+import { Scenario } from "../../APIs/types";
+import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
+import MyPagination from "../../../Test/components/MyPagination";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -23,42 +22,53 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     },
 }));
 
-const scenarioData = [
-    {
-        title: "SQL Query",
-        description: "A SQL Query interview is a technical assessment designed to evaluate a candidate's knowledge and skills in Structured Query Language (SQL). This language is used to interact with relational databases, allowing users to retrieve, manipulate, and manage data efficiently.",
-        rating: 4.6,
-        totalAttemps: 17342,
-        createdAt: "01/01/2023",
-    },
-    {
-        title: "SQL Query 2",
-        description: "A SQL Query interview is a technical assessment designed to evaluate a candidate's knowledge and skills in Structured Query Language (SQL). This language is used to interact with relational databases, allowing users to retrieve, manipulate, and manage data efficiently.",
-        rating: 4.1,
-        totalAttemps: 712,
-        createdAt: "01/01/2023",
-    },
-];
-
 const ScenarioListView = () => {
-    const [open, setOpen] = React.useState(false);
-    const [selectedScenario, setSelectedScenario] = React.useState<typeof scenarioData[0] | null>(null);
-    const [scenarios, setScenarios] = React.useState<any[]>([]);
     const navigate = useNavigate();
+    const [open, setOpen] = React.useState(false);
+    const [selectedScenario, setSelectedScenario] = React.useState<Scenario | null>(null);
+    const [scenarios, setScenarios] = React.useState<Scenario[]>([]);
+    const [currentPage, setCurrentPage] = React.useState(1);
+    const [totalPage, setTotalPage] = React.useState(1);
+    const [from, setFrom] = React.useState<Timestamp>(new Timestamp());
+    const [to, setTo] = React.useState<Timestamp>(new Timestamp());
+    const pageSize = 4;
+
+    const authState = useAppSelector(selectUserInfo);
+    if (authState === null) navigate('/login');
+
+    const [listScenario] = useListScenarioMutation();
+    const [deleteScenario] = useDeleteScenarioMutation();
+
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await listScenario({ bm_ids: [Number(authState?.id)], sort_methods: [], page_index: currentPage - 1, page_size: pageSize, field_ids: [], min_rating: 0, min_participant: 0 }).unwrap();
+                if (response.scenario) {
+                    setScenarios(response.scenario || []);
+                    setTotalPage(response.total_page);
+                    console.log("Scenarios:", response.scenario);
+                }
+            } catch (err) {
+                console.error("Error fetching data:", err);
+            }
+        };
+
+        fetchData();
+    }, [authState, currentPage]);
 
     const handleGoToCreateScenario = () => {
         navigate("/scenario/create/detail");
     };
 
-    const handleGoToEditScenario = () => {
-        navigate("/scenario/edit/detail");
+    const handleGoToEditScenario = (id: number) => {
+        navigate("/scenario/edit/detail", { state: { scenarioId: id } });
     };
 
-    const handleGoToScenarioSubmissionListView = () => {
-        navigate("/scenario/submission");
+    const handleGoToScenarioSubmissionListView = (id: number) => {
+        navigate("/scenario/submission", { state: { scenarioId: id } });
     };
 
-    const handleOpenDialog = (scenario: typeof scenarioData[0]) => {
+    const handleOpenDialog = (scenario: Scenario) => {
         setSelectedScenario(scenario);
         setOpen(true);
     };
@@ -68,24 +78,23 @@ const ScenarioListView = () => {
         setSelectedScenario(null);
     };
 
-    const handleConfirmDelete = () => {
+    const handleConfirmDelete = async () => {
         if (selectedScenario) {
-            setScenarios((prev) => prev.filter((item) => item !== selectedScenario));
+            try {
+                await deleteScenario({ ids: [selectedScenario.id] }).unwrap();
+                setOpen(false);
+                setSelectedScenario(null);
+
+                const response = await listScenario({ bm_ids: [Number(authState?.id)], sort_methods: [], page_index: currentPage - 1, page_size: pageSize, field_ids: [], min_rating: 0, min_participant: 0 }).unwrap();
+                if (response.scenario) {
+                    setScenarios(response.scenario || []);
+                }
+            } catch (error) {
+                console.error("Error deleting scenario:", error);
+            }
         }
-        handleCloseDialog();
     };
-    React.useEffect(() => {
-        async function fetchData() {
-          try { 
-            const response = await grpcListScenario([1], 0, 10);
-            const data = response.toObject();
-            setScenarios(data.scenario || []);
-          } catch (err) {
-            console.error("Error fetching scenarios:", err);
-          }
-        }
-        fetchData();
-      }, []);
+
     return (
         <>
             <div className="w-full flex-grow flex flex-col items-center px-4 font-arya">
@@ -108,55 +117,59 @@ const ScenarioListView = () => {
                         </div>
 
                         {/* Scenario List */}
-                        {scenarios.map((scenario, index) => (
-                            <div key={index} className="w-4/6 flex-1 flex flex-col bg-white rounded-lg shadow-primary p-6 border-r border-b border-solid border-primary items-between mb-4">
-                                <div className="font-bold mb-8 text-xl">
-                                    <span>{scenario.title}</span>
-                                </div>
-                                <div className="mb-8">
-                                    <span>{scenario.description}</span>
-                                </div>
+                        {scenarios.map((scenario, index) => {
+                            let date;
 
-                                <div className="flex-1 flex justify-around mb-2">
-                                    <div className="w-1/2 flex items-center justify-start font-semibold opacity-50 space-x-6">
-                                        <span>
-                                            {scenario.rating} <FontAwesomeIcon icon={faStar} />
-                                        </span>
-                                        <span>
-                                            {/* {scenario.totalAttemps.toLocaleString('de-DE')} <FontAwesomeIcon icon={faUser} /> */}
-                                        </span>
-                                        <span>
-                                            {scenario.createdAt} <FontAwesomeIcon icon={faCalendarDays} />
-                                        </span>
+                            if (scenario.base_data.created_at instanceof Timestamp) {
+                                date = scenario.base_data.created_at.toDate();
+                            } else {
+                                date = new Date(scenario.base_data.created_at);
+                            }
+
+                            return (
+                                <div key={index} className="w-4/6 flex-1 flex flex-col bg-white rounded-lg shadow-primary p-6 border-r border-b border-solid border-primary items-between mb-4">
+                                    <div className="font-bold mb-8 text-xl">
+                                        <span>{scenario.name}</span>
                                     </div>
-                                    <div className="w-1/2 flex items-center justify-end space-x-5">
-                                        <div className="flex items-center justify-center border border-primary p-3 rounded-md bg-[#e1c03e] cursor-pointer" onClick={() => handleGoToScenarioSubmissionListView()}>
-                                            <FontAwesomeIcon className="h-5 w-5" icon={faList} />
+                                    <div className="mb-8">
+                                        <span>{scenario.description}</span>
+                                    </div>
+
+                                    <div className="flex-1 flex justify-around mb-2">
+                                        <div className="w-1/2 flex items-center justify-start font-semibold opacity-50 space-x-6">
+                                            <span>
+                                                {Number.isInteger(scenario.rating) ? scenario.rating : scenario.rating.toFixed(2)} <FontAwesomeIcon icon={faStar} />
+                                            </span>
+                                            <span>
+                                                {scenario.total_participant.toLocaleString('de-DE')} <FontAwesomeIcon icon={faUser} />
+                                            </span>
+                                            <span>
+                                                {date.toLocaleDateString()} <FontAwesomeIcon icon={faCalendarDays} />
+                                            </span>
                                         </div>
-                                        <div className="flex items-center justify-center border border-primary p-3 rounded-md bg-[#d5eef1] cursor-pointer" onClick={() => handleGoToEditScenario()}>
-                                            <FontAwesomeIcon className="h-5 w-5" icon={faPen} />
-                                        </div>
-                                        <div className="flex items-center justify-center border border-primary p-3 rounded-md bg-[#ff807c] cursor-pointer" onClick={() => handleOpenDialog(scenario)}>
-                                            <FontAwesomeIcon className="h-5 w-5" icon={faTrash} />
+                                        <div className="w-1/2 flex items-center justify-end space-x-5">
+                                            <div className="flex items-center justify-center border border-primary p-3 rounded-md bg-[#e1c03e] cursor-pointer" onClick={() => handleGoToScenarioSubmissionListView(scenario.id)}>
+                                                <FontAwesomeIcon className="h-5 w-5" icon={faList} />
+                                            </div>
+                                            <div className="flex items-center justify-center border border-primary p-3 rounded-md bg-[#d5eef1] cursor-pointer" onClick={() => handleGoToEditScenario(scenario.id)}>
+                                                <FontAwesomeIcon className="h-5 w-5" icon={faPen} />
+                                            </div>
+                                            <div className="flex items-center justify-center border border-primary p-3 rounded-md bg-[#ff807c] cursor-pointer" onClick={() => handleOpenDialog(scenario)}>
+                                                <FontAwesomeIcon className="h-5 w-5" icon={faTrash} />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
 
-                    <div className="flex flex-row justify-center items-center space-x-2 mt-4">
-                        <button className="w-10 h-10 bg-[#EAF6F8] rounded-full text-md font-bold text-primary border border-primary cursor-pointer rotate-270">
-                            ^
-                        </button>
-
-                        <button className="w-10 h-10 bg-primary rounded-full text-md font-bold text-white border border-primary cursor-pointer">
-                            1
-                        </button>
-
-                        <button className="w-10 h-10 bg-[#EAF6F8] rounded-full text-md font-bold text-primary border border-primary cursor-pointer rotate-90">
-                            ^
-                        </button>
+                    <div className="flex justify-center items-center">
+                        <MyPagination
+                            totalPage={totalPage}
+                            initialPage={currentPage}
+                            onPageChange={(page) => setCurrentPage(page)}
+                        />
                     </div>
                 </div>
             </div>
@@ -164,7 +177,7 @@ const ScenarioListView = () => {
             <BootstrapDialog className="" onClose={handleCloseDialog} open={open}>
                 <div className="bg-[#eaf6f8] rounded-sm shadow-primary p-4 border border-solid border-primary">
                     <DialogContent className="mb-4">
-                        <span>Do you really want to delete "{selectedScenario?.title}" Scenario?</span>
+                        <span>Do you really want to delete "{selectedScenario?.name}" Scenario?</span>
                     </DialogContent>
                     <DialogActions className="flex items-center justify-evenly mb-4">
                         <button className="w-1/4 px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleCloseDialog}>
@@ -181,6 +194,3 @@ const ScenarioListView = () => {
 }
 
 export default ScenarioListView
-
-
-

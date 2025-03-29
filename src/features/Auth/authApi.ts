@@ -49,8 +49,6 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 			const password = args.body.password as string;
 			const response = await grpcSignIn(username, password);
 
-			const meResponse = await grpcMe(response.token_info.access_token);
-
 			console.log("token_info:", response.token_info);
 
 			// await new Promise(resolve => setTimeout(resolve, 2000));
@@ -99,8 +97,6 @@ const customFetchQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions
 			const role = args.body.role;
 			console.log('url',args.body)
 			const response = await grpcSignUp(local, metadata, role);
-
-			const meResponse = await grpcMe(response.token_info.access_token);
 
 			return {
 				data: {

@@ -121,7 +121,7 @@ const NavBar = ({ showNav = true }: { showNav?: boolean; }) => {
 								<div className="hidden lg:block relative">
 									<img
 										className="size-8 rounded-full cursor-pointer"
-										src={authState?.avatarPath}
+										src={authState?.metadata.avatarPath}
 										alt="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s"
 										onClick={toggleProfileMenu}
 									/>

@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import GradientBorder from "../../../components/GradientBorder"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom";
-import { useRegisterMutation } from "../../../features/Auth/authApi";
+// import { useRegisterMutation } from "../../../features/Auth/authApi";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../app/hooks";
 import { selectIsAuthenticated } from "../../../global/authSlice";
@@ -13,9 +13,13 @@ import LocalSuccess from "../../../components/LocalSuccess";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { useVerificationEmailMutation } from "./register.api";
+import { useRegisterMutation } from "./register.api";
+import { useDispatch } from "react-redux";
+import { setAuthState } from "../../../global/authSlice";
 
 const RegisterForm = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const [register, { isLoading, error }] = useRegisterMutation();
 	const errorMessage = toErrorMessage(error as FetchBaseQueryError | SerializedError | undefined);
 	const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -79,7 +83,7 @@ const RegisterForm = () => {
 	const handleFormSubmit = async () => {
 		try {
 			alert(password);
-			await register({
+			const response = await register({
 				local: {
 					username,
 					email,
@@ -96,6 +100,9 @@ const RegisterForm = () => {
 				},
 				role: 1
 			});
+			console.log(response);
+			dispatch(setAuthState({ user: response.data?.user ?? null, tokens: response.data?.token_info ?? null }));
+			console.log(error);
 			if (error === null) {
 				navigate('/')
 			}

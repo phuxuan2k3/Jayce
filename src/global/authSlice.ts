@@ -6,10 +6,10 @@ import { bulbasaur } from '../features/Auth/api/bulbasaur.ts';
 
 export type UserInfo = {
 	username: string;
-    email: string;
-    role: string;
-    id: string;
-    metadata: any;
+	email: string;
+	role: bulbasaur.Role;
+	id: number;
+	metadata: any;
 }
 
 export type Token = {
@@ -59,11 +59,11 @@ const authSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			// Login
-			.addMatcher(
-				authApi.endpoints.login.matchFulfilled,
-				(state, action) => {
-					_setAuthState(state, action);
-				})
+			// .addMatcher(
+			// 	authApi.endpoints.login.matchFulfilled,
+			// 	(state, action) => {
+			// 		_setAuthState(state, action);
+			// 	})
 
 			// Register
 			.addMatcher(
@@ -82,8 +82,7 @@ const authSlice = createSlice({
 				authApi.endpoints.refresh.matchRejected,
 				(state) => {
 					_clearAuthState(state);
-				}
-			)
+				})
 
 			// Logout
 			.addMatcher(

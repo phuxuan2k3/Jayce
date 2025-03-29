@@ -2,24 +2,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import GradientBorder from "../../../components/GradientBorder"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom";
-import { useLoginMutation, useGoogleMutation } from "../../../features/Auth/authApi";
+import { useGoogleMutation } from "../../../features/Auth/authApi";
 import { toErrorMessage } from "../../../error/fetchBaseQuery.error";
 import LocalLoading from "../../../components/LocalLoading";
 import LocalError from "../../../components/LocalError";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../app/hooks";
-import { selectIsAuthenticated } from "../../../global/authSlice";
+import { selectIsAuthenticated, setAuthState } from "../../../global/authSlice";
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
+import { useLoginMutation } from "../../../features/Test/login.api";
+import { useDispatch } from "react-redux";
 
 const LoginForm = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const [login, { isLoading, error }] = useLoginMutation();
 	const [google, { }] = useGoogleMutation();
 	const [password, setPassword] = useState("");
-	const [username, setUsername] = useState("");
+	const [email, setEmail] = useState("");
 	const errorMessage = toErrorMessage(error as FetchBaseQueryError | SerializedError | undefined);
+	const [errors, setErrors] = useState({ email: "", password: "" });
 
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 	useEffect(() => {
@@ -28,14 +32,61 @@ const LoginForm = () => {
 		}
 	}, [isAuthenticated])
 
+	const validateForm = () => {
+		let newErrors = { email: "", password: "" };
+		let isValid = true;
+
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!email.trim()) {
+			newErrors.email = "Email is required.";
+			isValid = false;
+		} else if (!emailRegex.test(email)) {
+			newErrors.email = "Invalid email format.";
+			isValid = false;
+		}
+
+		if (!password.trim()) {
+			newErrors.password = "Password is required.";
+			isValid = false;
+		} else if (password.length < 6) {
+			newErrors.password = "Password must be at least 6 characters long.";
+			isValid = false;
+		} else if (!/[A-Z]/.test(password)) {
+			newErrors.password = "Password must contain at least one uppercase letter.";
+			isValid = false;
+		} else if (!/[a-z]/.test(password)) {
+			newErrors.password = "Password must contain at least one lowercase letter.";
+			isValid = false;
+		} else if (!/[0-9]/.test(password)) {
+			newErrors.password = "Password must contain at least one number.";
+			isValid = false;
+		} else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+			newErrors.password = "Password must contain at least one special character.";
+			isValid = false;
+		}
+
+		setErrors(newErrors);
+		return isValid;
+	};
+
 	const handleFormSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		// const formData = new FormData(e.target as HTMLFormElement);
 		// const username = formData.get('username') as string;
 		// const password = formData.get('password') as string;
 
+		if (!validateForm()) {
+			return;
+		}
+
 		try {
-			await login({ username, password });
+			const response = await login({ email, password });
+
+			console.log(response);
+
+			dispatch(setAuthState({ user: response.data?.user ?? null, tokens: response.data?.token_info ?? null }));
+
+			console.log(error)
 
 			if (error === null) {
 				navigate('/')
@@ -111,17 +162,18 @@ const LoginForm = () => {
 		<form onSubmit={handleFormSubmit} className="flex-col ">
 			<GradientBorder className="relative mt-8 w-full p-[1px] rounded-lg">
 				<input
-					type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder=" "
+					type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder=" "
 					className="peer block w-full rounded-lg border border-gray-300  px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
 				/>
 				<label
 					className={`bg-white absolute left-2 transform text-sm text-gray-500 transition-all
-							${username !== "" ? "top-2 -translate-y-4 scale-75" : ""}
-							${username.trim() === "" ? "top-1/2 -translate-y-1/2 scale-100 peer-placeholder-shown:top-1/2 peer-placeholder-shown:scale-100" : ""}
+							${email !== "" ? "top-2 -translate-y-4 scale-75" : ""}
+							${email.trim() === "" ? "top-1/2 -translate-y-1/2 scale-100 peer-placeholder-shown:top-1/2 peer-placeholder-shown:scale-100" : ""}
 							peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-blue-600`}>
-					Username
+					Email
 				</label>
 			</GradientBorder>
+			{errors.email && <span className="text-red-400 text-sm">{errors.email}</span>}
 			<GradientBorder className="relative mt-8 w-full p-[1px] rounded-lg">
 				<input
 					type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder=" "
@@ -135,6 +187,7 @@ const LoginForm = () => {
 					Password
 				</label>
 			</GradientBorder>
+			{errors.password && <span className="text-red-400 text-sm">{errors.password}</span>}
 			<div className="w-full p-2 mt-14 text-center">
 				Forgot your password? <a className="text-[var(--primary-color)]" href="/reset">Reset it here.</a>
 			</div>

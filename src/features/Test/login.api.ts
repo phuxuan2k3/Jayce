@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { backendEndpoint } from "../../app/env"
+import { Token, UserInfo } from '../../global/authSlice';
 
 const loginBackendURL = backendEndpoint + '/bulbasaur';
 
@@ -21,8 +22,29 @@ export const loginAPI = createApi({
 				method: "POST",
 				body: {email },
 			})
-		})
+		}),
+        login: builder.mutation<{ token_info: Token, user: UserInfo }, { email: string; password: string }>({
+            query: ({ email, password }) => ({
+                url: '/account/login',
+                method: 'POST',
+                body: {
+                    local: {
+                        email,
+                        password,
+                    }
+                },
+            }),
+        }),
+        google: builder.mutation<{ token_info: Token, user: UserInfo }, { credential: string }>({
+            query: ({ credential }) => ({
+                url: '/account/google',
+                method: 'POST',
+                body: { credential },
+            }),
+        }),
 	}),
 });
+
+export const { useVerificationEmailMutation, useLoginMutation, useGoogleMutation } = loginAPI;
 
 export default loginAPI;

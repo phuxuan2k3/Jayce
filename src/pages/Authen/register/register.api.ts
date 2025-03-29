@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { backendEndpoint } from "../../../app/env";
+import { Token, UserInfo } from '../../../global/authSlice';
 
 const registerBackendURL = backendEndpoint + '/bulbasaur';
 
@@ -15,6 +16,17 @@ export const registerAPI = createApi({
     reducerPath: 'registerAPI',
     baseQuery: baseQuery,
     endpoints: (builder) => ({
+        register: builder.mutation<{ token_info: Token, user: UserInfo }, { local: any, role: number, metadata: any }>({
+            query: ({ local, role, metadata }) => ({
+                url: '/account/register',
+                method: 'POST',
+                body: { 
+                    local,
+                    role,
+                    metadata
+                 },
+            }),
+        }),
         verificationEmail: builder.mutation<void, { email: string }>({
             query: ({ email }) => ({
                 url: `/account/verify/email`,
@@ -36,8 +48,6 @@ export const registerAPI = createApi({
                 body: { resetCode },
             }),
         }),
-
-
         resetPassword: builder.mutation<void, { email: string; resetCode: string; newPassword: string }>({
             query: ({ email, resetCode, newPassword }) => ({
                 url: `/account/resetpassword`,
@@ -48,6 +58,6 @@ export const registerAPI = createApi({
     }),
 });
 
-export const { useVerificationEmailMutation, useResetPasswordMutation ,useReqResetPasswordMutation,useVerifyResetCodeMutation} = registerAPI;
+export const { useRegisterMutation, useVerificationEmailMutation, useResetPasswordMutation ,useReqResetPasswordMutation,useVerifyResetCodeMutation} = registerAPI;
 
 export default registerAPI;
