@@ -5,6 +5,7 @@ import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import logo from "/svg/logo.svg";
 import skillsharp from "/svg/skillsharp.svg";
 import paths2 from "../../../router/path-2";
+import React from "react";
 
 const UnauthNavbar = () => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -41,7 +42,7 @@ const UnauthNavbar = () => {
 					<div className="hidden w-full sm:block">
 						<div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-5 justify-center items-start">
 							<Link to="#" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
-								Mock
+								About
 							</Link>
 							<Link to="#" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
 								Pricing

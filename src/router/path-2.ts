@@ -6,6 +6,11 @@ const paths2 = {
 		ROOT: '/auth',
 		LOGIN: '/auth/login',
 		REGISTER: '/auth/register',
+		RESET: '/auth/reset',
+		NEWPASS: '/auth/newpass',
+		SUGGESTION: '/auth/suggestion',
+		ROLE: '/auth/role',
+		COMPANY: '/auth/company',
 	},
 	candidate: {
 		ROOT: '/candidate/',

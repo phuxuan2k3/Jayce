@@ -4,6 +4,7 @@ import FooterLong from "../ui/footer/FooterLong";
 import RoleGuard from "../wrapper/RoleGuard";
 import { Role } from "../../app/enum";
 import paths2 from "../../router/path-2";
+import React from "react";
 
 export default function UnauthLayout() {
 	return <>

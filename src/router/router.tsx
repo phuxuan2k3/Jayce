@@ -61,7 +61,27 @@ const router = createBrowserRouter([{
 				{
 					path: paths2.auth.REGISTER,
 					element: <Register />
-				}
+				},
+				{
+					path: paths2.auth.SUGGESTION,
+					element: <Suggestion />
+				},
+				{
+					path: paths2.auth.ROLE,
+					element: <Role />
+				},
+				{
+					path: paths2.auth.COMPANY,
+					element: <Company />
+				},
+				{
+					path: paths2.auth.RESET,
+					element: <ResetPassword />
+				},
+				{
+					path: paths2.auth.NEWPASS,
+					element: <NewPassword />
+				},
 			],
 		},
 		{
@@ -118,26 +138,7 @@ const router = createBrowserRouter([{
 
 		// Old paths
 
-		{
-			path: paths.SUGGESTION,
-			element: <Suggestion />
-		},
-		{
-			path: paths.ROLE,
-			element: <Role />
-		},
-		{
-			path: paths.COMPANY,
-			element: <Company />
-		},
-		{
-			path: paths.RESET,
-			element: <ResetPassword />
-		},
-		{
-			path: paths.NEWPASS,
-			element: <NewPassword />
-		},
+
 		{
 			path: paths.TEST.ROOT,
 			element: <Layout />,
