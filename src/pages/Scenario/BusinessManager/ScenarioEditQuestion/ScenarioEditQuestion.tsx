@@ -2,9 +2,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
-import GradientBorderNotGood from "../../../../components/GradientBorder.notgood";
 import { ScenarioQuestion } from "../../APIs/types";
 import { useUpdateScenarioMutation } from "../../APIs/ekko.scenario-api";
+import GradientBorderNotGood from "../../../../components/ui/border/GradientBorder.notgood";
 
 const ScenarioEditQuestion = () => {
 	const location = useLocation();

@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import GradientBorderNotGood from "../../../../components/GradientBorder.notgood";
 import { Attempt, Scenario } from "../../APIs/types";
+import GradientBorderNotGood from "../../../../components/ui/border/GradientBorder.notgood";
 
 const ScenarioSubmissionDetail = () => {
 	const location = useLocation();

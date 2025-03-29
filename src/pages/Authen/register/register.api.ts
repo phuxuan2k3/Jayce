@@ -1,6 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { backendEndpoint } from "../../../app/env";
-import { Token, UserInfo } from '../../../global/authSlice';
+import { Token, UserInfo } from '../../../features/Auth/store/authSlice';
 
 const registerBackendURL = backendEndpoint + '/bulbasaur';
 
