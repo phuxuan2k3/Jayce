@@ -1,30 +1,42 @@
-import { useState } from "react";
+import * as React from "react";
 import { FaChevronRight, FaKeyboard, FaMicrophone, FaTrash, FaVolumeUp, FaStopCircle } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
-import { grpcSubmitAnswer } from "../../../../features/grpcScenario/grpcScenario";
-
-type Question = {
-    id: number;
-    content: string;
-    hint: string;
-    question: string;
-};
+import { useSubmitAnswerMutation } from "../../APIs/ekko.scenario-api";
+import { useGetScenarioMutation } from "../../APIs/chronobreak.scenario-api";
+import { Question, Scenario, SubmittedAnswer } from "../../APIs/types";
 
 const AnswerQuestion = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const scenario = location.state?.scenario;
-    const field = location.state?.field;
-    const questions: Question[] = location.state?.questions || [];
-    const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(null);
-    const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-    const [showHint, setShowHint] = useState(false);
-    const attempt = "1";
-    const [answers, setAnswers] = useState<{ [key: number]: string }>({});
-    const [isSpeechSupported, setIsSpeechSupported] = useState<boolean>(true);
-    const [isListening, setIsListening] = useState<boolean>(false);
-    const [isProcessing, setIsProcessing] = useState<boolean>(false);
+    const scenarioId = location.state?.scenarioId;
+
+    const [scenario, setScenario] = React.useState<Scenario | null>(null);
+    const [questions, setQuestions] = React.useState<Question[]>([]);
+
+    const [getScenario] = useGetScenarioMutation();
+    React.useEffect(() => {
+        const fetchScenario = async () => {
+            try {
+                const response = await getScenario({ id: scenarioId });
+                setScenario(response.data?.scenario || null);
+                setQuestions(response.data?.scenario?.questions || []);
+            } catch (err) {
+                console.error("Error fetching scenario:", err);
+            }
+        }
+
+        fetchScenario();
+    }, []);
+
+    const [selectedQuestion, setSelectedQuestion] = React.useState<Question | null>(null);
+    const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
+    const [showHint, setShowHint] = React.useState(false);
+    const [answers, setAnswers] = React.useState<{ [key: number]: string }>({});
+
+    const [isSpeechSupported, setIsSpeechSupported] = React.useState<boolean>(true);
+    const [isListening, setIsListening] = React.useState<boolean>(false);
+    const [isProcessing, setIsProcessing] = React.useState<boolean>(false);
 
     const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
 
@@ -36,25 +48,25 @@ const AnswerQuestion = () => {
         setShowConfirmDialog(true);
     };
 
+    const [submitAnswer] = useSubmitAnswerMutation();
     const confirmSubmit = async () => {
         setShowConfirmDialog(false);
-        const answerArray = Object.keys(answers).map((key) => ({
+        const answerArray: SubmittedAnswer[] = Object.keys(answers).map((key) => ({
             question_id: Number(key),
-            answer: answers[Number(key)]
+            answer: answers[Number(key)] || ""
         }));
+        console.log("Submitting answers:", answerArray);
         try {
-            await grpcSubmitAnswer(scenario.id, answerArray);
-            alert("Your answers have been submitted!");
-            navigate("/ipractice/review", { state: { scenario, field, answers, questions } });
+            console.log("Submitting answers:", scenarioId, answerArray);
+            const response = await submitAnswer({ scenario_id: scenarioId, answers: answerArray });
+            if (response.error) {
+                console.error("Error submitting answers:", response.error);
+                return;
+            }
+            navigate("/ipractice/review", { state: { scenario: scenario, attempt: response.data.attempt } });
         } catch (err) {
             console.error("Error submitting answers:", err);
-            alert("Error submitting your answers. Please try again.");
         }
-    };
-
-    const handleQuestionClick = (question: Question) => {
-        setSelectedQuestion(question);
-        setShowHint(false);
     };
 
     const startListening = () => {
@@ -75,8 +87,31 @@ const AnswerQuestion = () => {
         setIsProcessing(false);
     };
 
+    const handleQuestionClick = (question: Question) => {
+        setSelectedQuestion(question);
+        setShowHint(false);
+    };
+
     const handleAnswerChange = (questionId: number, value: string) => {
         setAnswers((prev) => ({ ...prev, [questionId]: value }));
+    };
+
+    const handleDiscard = () => {
+        if (selectedQuestion) {
+            setAnswers((prev) => ({
+                ...prev,
+                [selectedQuestion.id]: "",
+            }));
+        }
+    };
+
+    const handleNextQuestion = () => {
+        const currentIndex = questions.findIndex((q) => q === selectedQuestion);
+        const nextIndex = currentIndex + 1;
+        if (nextIndex < questions.length) {
+            setSelectedQuestion(questions[nextIndex]);
+            setAnswers((prev) => ({ ...prev, [questions[nextIndex].id]: answers[questions[nextIndex].id] || "" }));
+        }
     };
 
     return (
@@ -85,13 +120,13 @@ const AnswerQuestion = () => {
                 <div className="w-[65%]  mx-12">
                     <div className="flex justify-between">
                         <div className="flex items-center gap-10">
-                            <span className="text-3xl font-bold">{scenario.name}</span>
+                            <span className="text-3xl font-bold">{scenario?.name}</span>
                         </div>
-                        <div className="rounded-lg bg-[var(--primary-color)] py-1 px-4 font-bold text-white flex gap-2 items-center" onClick={handleSubmit}>Submit</div>
+                        <div className="rounded-lg bg-[var(--primary-color)] py-1 px-4 font-bold text-white flex gap-2 items-center cursor-pointer" onClick={handleSubmit}>Submit</div>
                     </div>
-                    <div className="mt-4 text-xl">
+                    {/* <div className="mt-4 text-xl">
                         {field}
-                    </div>
+                    </div> */}
                     <hr className=" border-gray-400 mb-4 mt-2" />
                     <div className="max-h-96 overflow-y-auto" style={{ scrollbarWidth: "thin", scrollbarColor: "var(--primary-color)", }}>
                         <span className="text-2xl font-bold text-[var(--primary-color)] flex gap-2 items-center">
@@ -123,10 +158,10 @@ const AnswerQuestion = () => {
 
                     <div className="flex justify-between mt-12">
                         <div className="flex gap-4">
-                            <div className=" rounded-lg bg-[var(--primary-color)] py-1 px-4 font-bold text-white flex gap-2 items-center">Edit <FaKeyboard /></div>
-                            <div className="rounded-lg bg-red-400 py-1 px-4 font-bold text-white flex gap-2 items-center">Discard <FaTrash /> </div>
+                            <div className=" rounded-lg bg-[var(--primary-color)] py-1 px-4 font-bold text-white flex gap-2 items-center cursor-pointer">Edit <FaKeyboard /></div>
+                            <div className="rounded-lg bg-red-400 py-1 px-4 font-bold text-white flex gap-2 items-center cursor-pointer" onClick={handleDiscard}>Discard <FaTrash /> </div>
                         </div>
-                        <div className=" rounded-lg bg-[var(--primary-color)] py-1 px-4 font-bold text-white flex gap-2 items-center">Next question</div>
+                        <div className=" rounded-lg bg-[var(--primary-color)] py-1 px-4 font-bold text-white flex gap-2 items-center cursor-pointer" onClick={handleNextQuestion}>Next question</div>
                     </div>
                 </div>
 
@@ -139,7 +174,7 @@ const AnswerQuestion = () => {
                         {questions.length > 0 ? (
                             questions.map((item, index) => (
                                 <div key={index}>
-                                    <li onClick={() => handleQuestionClick(item)} key={index} className="flex justify-between font-bold items-center py-3 text-[var(--primary-color)] hover:text-red-600 ">
+                                    <li onClick={() => handleQuestionClick(item)} key={index} className="flex justify-between font-bold items-center py-3 text-[var(--primary-color)] cursor-pointer hover:text-red-600 ">
                                         <span className="font-semibold truncate">{index + 1}. <span className="font-semibold truncate">{item.content}</span></span>
                                         <FaChevronRight />
                                     </li>

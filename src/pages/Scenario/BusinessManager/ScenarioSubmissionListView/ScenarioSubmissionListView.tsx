@@ -1,203 +1,219 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSliders, faMagnifyingGlass, faSquarePollHorizontal, faCalendarMinus, faListCheck } from "@fortawesome/free-solid-svg-icons";
-import { format } from "date-fns";
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-    '& .MuiDialogContent-root': {
-        padding: theme.spacing(2),
-    },
-    '& .MuiDialogActions-root': {
-        padding: theme.spacing(1),
-    },
-}));
-
-const scenarioData = {
-    testName: "SQL Query",
-    totalPoints: 10,
-}
-
-const submissionData = [
-    {
-        submitter: "Nguyen Van A",
-        submitedAt: "2024-10-20T13:09:00",
-        completeness: 100,
-        score: 7.5,
-    },
-    {
-        submitter: "Nguyen Van B",
-        submitedAt: "2024-10-20T15:12:00",
-        completeness: 10,
-        score: 1,
-    },
-];
+import { useLocation, useNavigate } from "react-router-dom";
+import { useListAllSubmissionMutation } from "../../APIs/ekko.scenario-api";
+import { useListUsersMutation } from "../../APIs/bulbasaur.scenario-api";
+import { Attempt, Scenario } from "../../APIs/types";
+import { useGetScenarioMutation } from "../../APIs/chronobreak.scenario-api";
+import { UserInfo } from "../../../../global/authSlice";
+import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
 
 const ScenarioSubmissionListView = () => {
-    const [open, setOpen] = React.useState(false);
-    const [submissionList, _setSubmissionList] = React.useState(submissionData);
-    const [submissionOverview, _setSubmissionOverview] = React.useState(scenarioData);
-    const [selectedVersion, _setSelectedVersion] = useState<string | "all">("all");
-    const [availableVersions, _setAvailableVersions] = useState<string[]>([]);
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const [isFilterOpen, setIsFilterOpen] = React.useState(false);
+
+    const [currentPage, _setCurrentPage] = React.useState(1);
+    const [_totalCount, setTotalCount] = React.useState(0);
+    const [_totalPage, setTotalPage] = React.useState(0);
+    const pageSize = 1000;
+    const [candidateName, setCandidateName] = React.useState("");
+    const [dates, setDates] = React.useState({ from: new Date("2000-01-01").toISOString().split("T")[0], to: new Date().toISOString().split("T")[0] });
+    const [filterForFetch, setFilterForFetch] = React.useState<{ candidateName: string, dates: { from: string, to: string } }>({ candidateName: "", dates: { from: new Date("2000-01-01").toISOString().split("T")[0], to: new Date().toISOString().split("T")[0] } });
+
+    const scenarioId = location.state?.scenarioId;
+    if (!scenarioId) {
+        navigate("/scenario/list");
+        return null;
+    }
+
+    const [scenarioInfo, setScenarioInfo] = React.useState<Scenario | null>(null);
+    const [attempts, setAttempts] = React.useState<(Attempt & { candidate_id: number })[]>([]);
+    const [users, setUsers] = React.useState<Record<number, UserInfo>>({});
+
+    const [getScenarioData] = useGetScenarioMutation();
+    const [fetchUsers] = useListUsersMutation();
+
+    React.useEffect(() => {
+        const fetchScenario = async () => {
+            try {
+                const response = await getScenarioData({ id: scenarioId }).unwrap();
+
+                setScenarioInfo(response.scenario);
+            } catch (error) {
+                console.error("Failed to fetch scenario:", error);
+            }
+        };
+
+        fetchScenario();
+    }, [scenarioId]);
+
+    const [fetchSubmissionList] = useListAllSubmissionMutation();
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const submissionList = await fetchSubmissionList({
+                    scenario_id: scenarioId,
+                    page_index: currentPage - 1,
+                    page_size: pageSize,
+                    sort_method: [],
+                    from: new Date(dates.from).toISOString(),
+                    to: (() => {
+                        const date = new Date(dates.to);
+                        date.setHours(23, 59, 59, 999);
+                        return date.toISOString();
+                    })(),
+                }).unwrap();
+                if (submissionList.submissions) {
+                    const allAttempts = submissionList.submissions.flatMap(submission =>
+                        submission.attempts.map(attempt => ({
+                            ...attempt,
+                            candidate_id: submission.candidate_id,
+                        }))
+                    );
+                    setAttempts(allAttempts);
+                    setTotalCount(submissionList.total_count);
+                    setTotalPage(submissionList.total_page);
+
+                    const userIds = [...new Set(allAttempts.map(a => a.candidate_id))];
+                    if (userIds.length > 0) {
+                        const response = await fetchUsers({ user_ids: userIds }).unwrap();
+                        const userMap = response.users.reduce((acc, user) => {
+                            acc[user.id] = user;
+                            return acc;
+                        }, {} as Record<string, UserInfo>);
+                        setUsers(userMap);
+                        console.log(userMap[0])
+                    }
+                }
+            } catch (err) {
+                console.error("Error fetching data:", err);
+            }
+        };
+
+        fetchData();
+    }, [fetchSubmissionList, fetchUsers, currentPage, filterForFetch, scenarioInfo]);
+
+    const handleApplyFilter = () => {
+        setFilterForFetch({ candidateName, dates });
+        setIsFilterOpen(false);
     };
-    const handleClose = () => {
-        setOpen(false);
-    };
-    
-    function handleGoToSubmissionDetail(submission: { submitter: string; submitedAt: string; completeness: number; score: number; }): void {
-        navigate("/scenario/submission/detail", { state: { submission } });
+
+    function handleGoToSubmissionDetail(attempt: Attempt & { candidate_id: number }): void {
+        navigate("/scenario/submission/detail", { state: { scenarioInfo, attempt, submitter: users[attempt.candidate_id]?.metadata?.fullname || "Unknown" } });
     }
 
     return (
         <>
             <div className="w-full flex-grow flex flex-col items-center px-4 font-arya">
-                <div className="w-full max-w-7xl py-6">
-                    <h1 className="text-3xl text-center text-[var(--primary-color)] font-bold mb-6">{submissionOverview.testName}</h1>
+                <div className="w-full max-w-7xl py-6 flex flex-col items-center">
+                    <h1 className="text-3xl text-center text-[var(--primary-color)] font-bold mb-6">{scenarioInfo?.name}</h1>
 
-                    <div className="flex flex-col items-center">
+                    <div className="w-full flex flex-col items-center">
                         <div className="w-4/6 flex flex-row justify-between font-semibold text-[var(--primary-color)] mb-4">
-                            <span>Submission List ({submissionList.length})</span>
+                            <span>Submission List</span>
                             <div className="h-full w-fit flex items-center">
-                                <div className="h-7 w-7 bg-[#EAF6F8] flex items-center justify-center rounded-lg cursor-pointer" onClick={handleClickOpen}>
+                                <div className="h-7 w-7 bg-[#EAF6F8] flex items-center justify-center rounded-lg cursor-pointer" onClick={() => setIsFilterOpen(true)}>
                                     <FontAwesomeIcon icon={faSliders} rotation={90} />
                                 </div>
 
                                 <div className="flex items-center ml-4">
                                     <div className="h-7 w-fit bg-[#EAF6F8] flex items-center justify-center rounded-lg p-2">
                                         <FontAwesomeIcon className="h-4 w-4 mr-2" icon={faMagnifyingGlass} />
-                                        <input className="bg-[#EAF6F8]" type="text" placeholder="Search for submitter" />
+                                        <input className="bg-[#EAF6F8]" type="text" placeholder="Search for submitter" onChange={(e) => setCandidateName(e.target.value)}/>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Submission List */}
-                        {submissionList.map((submission, index) => (
-                            <div key={index} className="w-4/6 flex-1 flex flex-col bg-white rounded-lg shadow-primary p-6 border-r border-b border-solid border-primary items-between mb-4">
-                                <div className="flex-1 flex justify-between mb-4">
-                                    <span className="font-bold mb-2 opacity-50">
-                                        #Version number
-                                    </span>
+                        <div className="w-full flex flex-col items-center max-h-[800px] overflow-y-auto pl-4">
+                            {attempts.map((attempt, index) => {
+                                const totalScore = attempt.answers.reduce((sum, answer) => sum + answer.overall, 0);
+                                const averageScore = attempt.answers.length ? (totalScore / attempt.answers.length).toFixed(2) : "N/A";
 
-                                    <div className="cursor-pointer" onClick={() => handleGoToSubmissionDetail(submission)}>
-                                        <FontAwesomeIcon className="h-6 w-6" icon={faSquarePollHorizontal} />
-                                    </div>
-                                </div>
+                                let date;
 
-                                <div className="font-bold mb-8">
-                                    Submitter: <span className=" font-bold text-[#39A0AD] underline">{submission.submitter}</span>
-                                </div>
+                                if (attempt.base_data.created_at instanceof Timestamp) {
+                                    date = attempt.base_data.created_at.toDate();
+                                } else {
+                                    date = new Date(attempt.base_data.created_at);
+                                }
 
-                                <div className="flex justify-between">
-                                    <div className="flex items-center">
-                                        <div className="flex items-center">
-                                            <FontAwesomeIcon className="h-4 w-4" icon={faCalendarMinus} />
-                                            <span className="ml-2 text-gray-600 text-sm font-medium">{format(new Date(submission.submitedAt), "dd-MM-yyyy HH:mm:ss")}</span>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <FontAwesomeIcon className="h-4 w-4 ml-4" icon={faListCheck} />
-                                            <span className="ml-2 text-gray-600 text-sm font-medium">Completeness: {submission.completeness}%</span>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        {submission.score === null ? (
-                                            <span className="text-red-600 font-semibold">Not graded</span>
-                                        ) : (
-                                            <span className="text-primary font-semibold">
-                                                Overall: {submission.score}/{submissionOverview?.totalPoints}
+                                return (
+                                    <div key={index} className="w-4/6 flex-1 flex flex-col bg-white rounded-lg shadow-primary p-6 border-r border-b border-solid border-primary items-between mb-4">
+                                        <div className="flex-1 flex justify-between mb-4">
+                                            <span className="font-bold mb-2 opacity-50">
+                                                #Attempt {attempt.attempt_number}
                                             </span>
-                                        )}
+
+                                            <div className="cursor-pointer" onClick={() => handleGoToSubmissionDetail(attempt)}>
+                                                <FontAwesomeIcon className="h-6 w-6" icon={faSquarePollHorizontal} />
+                                            </div>
+                                        </div>
+
+                                        <div className="font-bold mb-8">
+                                            Submitter: <span className=" font-bold text-[#39A0AD] underline">{users[attempt.candidate_id]?.metadata?.fullname || "Unknown"}</span>
+                                        </div>
+
+                                        <div className="flex justify-between">
+                                            <div className="flex items-center">
+                                                <div className="flex items-center">
+                                                    <FontAwesomeIcon className="h-4 w-4" icon={faCalendarMinus} />
+                                                    <span className="ml-2 text-gray-600 text-sm font-medium">{date.toLocaleDateString()}</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span className="text-primary font-semibold">
+                                                    Overall: {averageScore}
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        ))}
+                                );
+                            })}
+                        </div>
                     </div>
 
-                    <div className="flex flex-row justify-center items-center space-x-2 mt-4">
-                        <button className="w-10 h-10 bg-[#EAF6F8] rounded-full text-md font-bold text-primary border border-primary cursor-pointer rotate-270">
-                            ^
-                        </button>
-
-                        <button className="w-10 h-10 bg-primary rounded-full text-md font-bold text-white border border-primary cursor-pointer">
-                            1
-                        </button>
-
-                        <button className="w-10 h-10 bg-[#EAF6F8] rounded-full text-md font-bold text-primary border border-primary cursor-pointer rotate-90">
-                            ^
-                        </button>
-                    </div>
+                    {/* <div className="flex justify-center items-center">
+                        <MyPagination
+                            totalPage={totalPage}
+                            initialPage={currentPage}
+                            onPageChange={(page) => setCurrentPage(page)}
+                        />
+                    </div> */}
                 </div>
             </div>
-            <React.Fragment>
-                <BootstrapDialog
-                    onClose={handleClose}
-                    aria-labelledby="customized-dialog-title"
-                    open={open}
-                    sx={{
-                        "& .MuiPaper-root": {
-                            backgroundColor: "#EAF6F8",
-                        },
-                    }}
-                >
-                    <DialogTitle className="text-center font-bold font-arya" sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                        Filter
-                    </DialogTitle>
-                    <IconButton
-                        aria-label="close"
-                        onClick={handleClose}
-                        sx={(theme) => ({
-                            position: 'absolute',
-                            right: 8,
-                            top: 8,
-                            color: theme.palette.grey[500],
-                        })}
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                    <DialogContent dividers>
-                        <div className="flex flex-row justify-center font-arya">
-                            <span className="font-semibold">Date</span>
-                            <div className="flex flex-row gap-2 ml-16">
-                                <input type="date" className="border border-black rounded-lg text-sm p-1"
+
+            {isFilterOpen && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 font-arya">
+                    <div className="bg-gray-100 p-6 rounded-lg w-100 shadow">
+                        <h2 className="text-2xl text-center font-bold mb-4">Filter</h2>
+                        <div className="flex flex-col gap-4 w-full">
+                            <label className="grid grid-cols-3 items-center justify-between gap-2">
+                                <span>Date</span>
+                                <input
+                                    type="date"
+                                    className="h-6 w-32 border-gray-400 border rounded px-2"
+                                    value={dates.from}
+                                    onChange={(e) => setDates({ ...dates, from: new Date(e.target.value).toISOString().split("T")[0] })}
                                 />
-                                <input type="date" className="border border-black rounded-lg text-sm p-1"
+                                <input
+                                    type="date"
+                                    className="h-6 w-32 border-gray-400 border rounded px-2"
+                                    value={dates.to}
+                                    onChange={(e) => setDates({ ...dates, to: new Date(e.target.value).toISOString().split("T")[0] })}
                                 />
-                            </div>
+                            </label>
                         </div>
-                        <div className="flex justify-between mt-2 font-arya">
-                            <label className="font-semibold">Version</label>
-                            <select className="border border-black rounded-lg text-sm p-1 w-fit" value={selectedVersion}>
-                                <option value="all">All</option>
-                                {availableVersions.map(version => (
-                                    <option key={version} value={version}>
-                                        {version}
-                                    </option>
-                                ))}
-                            </select>
+                        <div className="flex justify-between gap-3 mt-4 mx-12">
+                            <button className="px-4 py-2 bg-gray-300 rounded-lg cursor-pointer" onClick={() => setIsFilterOpen(false)}>Cancel</button>
+                            <button className="px-4 py-2 bg-[var(--primary-color)] text-white rounded-lg cursor-pointer" onClick={() => handleApplyFilter()}>Apply</button>
                         </div>
-                    </DialogContent>
-                    <DialogActions>
-                        <button className=" font-arya w-fit px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleClose}>
-                            Reset
-                        </button>
-                        <button className="font-arya w-fit px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={handleClose}>
-                            Apply
-                        </button>
-                    </DialogActions>
-                </BootstrapDialog>
-            </React.Fragment>
+                    </div>
+                </div>
+            )}
         </>
     );
 }

@@ -1,40 +1,90 @@
 import * as React from 'react';
-import { useNavigate } from "react-router-dom";
-import { grpcUpdateScenario } from '../../../../features/grpcScenario/grpcScenario';
-
-const scenarioData = {
-    id: 1,
-    title: "SQL Query For Beginners",
-    description: "This a super good question set for the people who start to learn programming and database.",
-};
+import { useNavigate, useLocation } from "react-router-dom";
+import { useGetScenarioMutation, useListFieldMutation } from '../../APIs/chronobreak.scenario-api';
+import { Field, Scenario, ScenarioQuestion } from '../../APIs/types';
 
 const ScenarioEditDetail = () => {
-    const [scenarioDetails, setScenarioDetails] = React.useState(scenarioData);
+    const [scenarioDetails, setScenarioDetails] = React.useState<Scenario | null>(null);
+    const [questionList, setQuestionList] = React.useState<ScenarioQuestion[]>([]);
+    const [fieldList, setFieldList] = React.useState<Field[]>([]);
+
     const navigate = useNavigate();
-    // const location = useLocation();
-    
+    const location = useLocation();
+    const scenarioId = location.state?.scenarioId;
+
+    if (!scenarioId) {
+        navigate("/scenario/list");
+        return null;
+    }
+
+    const [getScenarioData] = useGetScenarioMutation();
+    const [listFieldMutation] = useListFieldMutation();
+
+    React.useEffect(() => {
+        const fetchFieldList = async () => {
+            try {
+                const response = await listFieldMutation({ ids: [], sort_methods: [], page_index: 0, page_size: 1000 });
+                setFieldList(response.data?.fields || []);
+            } catch (error) {
+                console.error("Error fetching fields", error);
+            }
+        };
+
+        fetchFieldList();
+
+        if (location.state?.scenarioDetails && location.state?.questionList) {
+            setScenarioDetails(location.state.scenarioDetails);
+            setQuestionList(location.state.questionList);
+        } else {
+            const fetchScenario = async () => {
+                try {
+                    const response = await getScenarioData({ id: scenarioId }).unwrap();
+
+                    const filteredQuestions = response.scenario.questions.map((question: any) => ({
+                        content: question.content || "",
+                        hint: question.hint || "",
+                        criteria: question.criteria || "",
+                    }));
+
+                    setScenarioDetails(response.scenario);
+                    setQuestionList(filteredQuestions);
+                } catch (error) {
+                    console.error("Failed to fetch scenario:", error);
+                }
+            };
+
+            fetchScenario();
+        }
+    }, [scenarioId, location.state, getScenarioData, listFieldMutation]);
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setScenarioDetails((prev) => ({ ...prev, [name]: value }));
+        setScenarioDetails((prev) => (prev ? { ...prev, [name]: value } : null));
     };
 
-    const handleNext = async () => {
-        try {
-            await grpcUpdateScenario(
-              scenarioDetails.id,
-              scenarioDetails.title,
-              scenarioDetails.description,
-              [],
-              []
-            );
-            navigate("/scenario/edit/question", { state: { testDetails: scenarioDetails } });
-          } catch (err) {
-            console.error("Failed to edit test detail:", err);
-        }
+    const handleFieldSelection = (fieldId: number) => {
+        setScenarioDetails((prev) => {
+            if (!prev) return null;
+            const isSelected = prev.fields.some(field => field.id === fieldId);
+            return {
+                ...prev,
+                fields: isSelected
+                    ? prev.fields.filter(field => field.id !== fieldId)
+                    : [...prev.fields, fieldList.find(field => field.id === fieldId)!]
+            };
+        });
     };
 
     const handleCancel = () => {
         navigate("/scenario/list");
+    };
+
+    const handleNext = async () => {
+        try {
+            navigate("/scenario/edit/question", { state: { scenarioId, scenarioDetails, questionList } });
+        } catch (err) {
+            console.error("Failed to edit test detail:", err);
+        }
     };
 
     return (
@@ -52,10 +102,10 @@ const ScenarioEditDetail = () => {
                         </label>
                         <input
                             id="scenarioName"
-                            name="title"
+                            name="name"
                             type="text"
                             placeholder="Enter scenario's name"
-                            value={scenarioDetails.title}
+                            value={scenarioDetails?.name || ""}
                             onChange={handleInputChange}
                             className="w-2/4 px-4 py-2 border border-[var(--primary-color)] rounded-md focus:outline-none focus:ring focus:ring-teal-300"
                         />
@@ -68,10 +118,25 @@ const ScenarioEditDetail = () => {
                             id="scenarioDescription"
                             name="description"
                             placeholder="Enter scenario's description"
-                            value={scenarioDetails.description}
+                            value={scenarioDetails?.description || ""}
                             onChange={handleInputChange}
                             className="w-2/4 px-4 py-2 border border-[var(--primary-color)] rounded-md focus:outline-none focus:ring focus:ring-teal-300"
                         />
+                    </div>
+                    <div className="flex justify-center space-x-4">
+                        <label className="font-medium text-[var(--primary-color)] text-xl w-1/4">Fields</label>
+                        <div className="w-2/4 flex flex-wrap gap-2 px-4 py-2 border border-[var(--primary-color)] rounded-md max-h-[200px] overflow-y-auto">
+                            {fieldList.map((field) => (
+                                <div key={field.id} className="flex items-center space-x-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={scenarioDetails?.fields.some(f => f.id === field.id) || false}
+                                        onChange={() => handleFieldSelection(field.id)}
+                                    />
+                                    <label>{field.name}</label>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
                 <div className="flex flex-row justify-center">

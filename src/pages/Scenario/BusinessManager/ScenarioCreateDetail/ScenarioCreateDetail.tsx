@@ -1,33 +1,65 @@
 import * as React from 'react';
-import { useNavigate } from "react-router-dom";
-import { grpcCreateScenario } from '../../../../features/grpcScenario/grpcScenario';
+import { useLocation, useNavigate } from "react-router-dom";
+import { useListFieldMutation } from '../../APIs/chronobreak.scenario-api';
+import { Field } from '../../APIs/types';
+
+interface ScenarioDetails {
+    name: string;
+    description: string;
+    field_ids: number[];
+}
 
 const ScenarioCreateDetail = () => {
     const navigate = useNavigate();
-    // const location = useLocation();
-    const [scenarioDetails, setScenarioDetails] = React.useState({
-        title: "",
-        description: "",
-    });
-    
+    const location = useLocation();
+
+    const [fieldList, setFieldList] = React.useState<Field[]>([]);
+
+    const [listFieldMutation] = useListFieldMutation();
+    React.useEffect(() => {
+        const fetchFieldList = async () => {
+            try {
+                const response = await listFieldMutation({ ids: [], sort_methods: [], page_index: 0, page_size: 1000 });
+                setFieldList(response.data?.fields || []);
+            } catch (error) {
+                console.log("Error fetching fields", error);
+            }
+        }
+
+        fetchFieldList();
+    }, []);
+
+    const [scenarioDetails, setScenarioDetails] = React.useState<ScenarioDetails>(
+        location.state?.scenarioDetails || { name: "", description: "", field_ids: [] }
+    );
+
+    const [questionList, _setQuestionList] = React.useState(
+        location.state?.questionList || []
+    );
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setScenarioDetails((prev) => ({ ...prev, [name]: value }));
     };
 
+    const handleFieldSelection = (fieldId: number) => {
+        setScenarioDetails((prev) => {
+            const isSelected = prev.field_ids.includes(fieldId);
+            return {
+                ...prev,
+                field_ids: isSelected
+                    ? prev.field_ids.filter(id => id !== fieldId)
+                    : [...prev.field_ids, fieldId],
+            };
+        });
+    };
+
     const handleNext = async () => {
         try {
-            const response = await grpcCreateScenario(
-                scenarioDetails.title,
-                scenarioDetails.description,
-                [], 
-                []  
-            );
-            const data = response.toObject();
-            navigate("/scenario/create/question", { state: { testDetails: scenarioDetails, scenarioId: data.scenario?.id } });
+            navigate("/scenario/create/question", { state: { scenarioDetails, questionList } });
         } catch (err: any) {
-            console.error("Failed to create scenario:", err);
-        }   
+            console.error("Scenario Create Detail:", err);
+        }
     };
 
     const handleCancel = () => {
@@ -49,10 +81,10 @@ const ScenarioCreateDetail = () => {
                         </label>
                         <input
                             id="scenarioName"
-                            name="title"
+                            name="name"
                             type="text"
                             placeholder="Enter scenario's name"
-                            value={scenarioDetails.title}
+                            value={scenarioDetails.name}
                             onChange={handleInputChange}
                             className="w-2/4 px-4 py-2 border border-[var(--primary-color)] rounded-md focus:outline-none focus:ring focus:ring-teal-300"
                         />
@@ -69,6 +101,24 @@ const ScenarioCreateDetail = () => {
                             onChange={handleInputChange}
                             className="h-36 w-2/4 px-4 py-2 border border-[var(--primary-color)] rounded-md focus:outline-none focus:ring focus:ring-teal-300"
                         />
+                    </div>
+
+                    <div className="flex justify-center space-x-4">
+                        <label className="font-medium text-[var(--primary-color)] text-xl w-1/4">Fields</label>
+                        <div className="w-2/4 flex flex-wrap gap-2 px-4 py-2 border border-[var(--primary-color)] rounded-md max-h-[200px] overflow-y-auto">
+                            {fieldList.map((field) => (
+                                <div key={field.id} className="w-fit flex items-center p-1 bg-[#EAF6F8] rounded-lg">
+                                    <input
+                                        type="checkbox"
+                                        id={`field-${field.id}`}
+                                        checked={scenarioDetails.field_ids.includes(field.id)}
+                                        onChange={() => handleFieldSelection(field.id)}
+                                        className="mr-2"
+                                    />
+                                    <label htmlFor={`field-${field.id}`} className="text-lg">{field.name}</label>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
                 <div className="flex w-full justify-end gap-4 pe-24">

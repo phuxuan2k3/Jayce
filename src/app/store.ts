@@ -9,6 +9,8 @@ import storage from 'redux-persist/lib/storage';
 import currentAttemptReducer from '../features/Test/reducers/currentAttemtpSlice';
 import authRestApi from '../features/Auth/api/authRestApi';
 import accountApi from '../features/Account/account.api';
+import ekkoApi from '../features/Scenario/ekko.api';
+import chronobreakApi from '../features/Scenario/chronobreak.api';
 
 const persistConfig = {
 	key: 'root',
@@ -27,6 +29,8 @@ const rootReducer = combineReducers({
 
 	// Custom reducers
 	currentAttempt: currentAttemptReducer,
+	ekkoApi: ekkoApi.reducer,
+	chronobreakApi: chronobreakApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -42,6 +46,8 @@ const store = configureStore({
 				.concat(testApi.middleware)
 				.concat(aiAPI.middleware)
 				.concat(accountApi.middleware)
+				.concat(ekkoApi.middleware)
+				.concat(chronobreakApi.middleware)
 				.concat(authRestApi.middleware),
 });
 

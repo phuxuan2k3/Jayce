@@ -2,83 +2,47 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
-import GradientBorderNotGood from "../../../../components/ui/border/GradientBorder.notgood";
-import { grpcUpdateScenario } from "../../../../features/grpcScenario/grpcScenario";
-// import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
-// import AddIcon from '@mui/icons-material/Add';
-// import Box from '@mui/material/Box';
-// import Drawer from '@mui/material/Drawer';
-// import Button from '@mui/material/Button';
-// import IconButton from "@mui/material/IconButton";
-// import Typography from "@mui/material/Typography";
-// import CloseIcon from "@mui/icons-material/Close";
-// import CircularProgress from '@mui/material/CircularProgress';
+import GradientBorderNotGood from "../../../../components/GradientBorder.notgood";
+import { useCreateScenarioMutation } from "../../APIs/ekko.scenario-api";
 
-// const questionData = [
-//     {
-//         question: "What is the first step in the design process?",
-//         hints: "Think about the problem you are trying to solve",
-//         criteria: "Identify the problem",
-//     },
-//     {
-//         question: "What is the first step in the design process?",
-//         hints: "Think about the problem you are trying to solve",
-//         criteria: "Identify the problem",
-//     },
-// ];
+interface ScenarioQuestion {
+	content: string;
+	hint: string;
+	criteria: string;
+}
 
 const ScenarioCreateQuestion = () => {
-	// const location = useLocation();
-	const [questionList, setQuestionList] = React.useState<any[]>([]);
 	const location = useLocation();
-	// Giả sử location.state chứa scenarioDetails
-	const scenarioDetails: any = location.state?.scenarioDetails || {
-		id: 0,
-		title: "",
-		description: "",
-	};
-	// const [open, setOpen] = React.useState(false);
-	// const [question, setQuestion] = React.useState("");
-	// const [generatedQuestions, setGeneratedQuestions] = React.useState<{ content: string; description: string; level: string; reason: string }[]>([]);
-	// const [error, setError] = React.useState<string | null>(null);
-	// const [cooldowns, setCooldowns] = React.useState<number[]>([]);
-	// const [isLoading, setLoading] = React.useState(false);
+
+	const scenarioDetails = location.state?.scenarioDetails || { name: "", description: "", field_ids: [] };
+	const [questionList, setQuestionList] = React.useState<ScenarioQuestion[]>(location.state?.questionList || []);
+
 	const [isCreating, setIsCreating] = React.useState(false);
 	const [submitError, setSubmmitError] = React.useState<string | null>(null);
-
-	// const toggleDrawer = (newOpen: boolean) => () => {
-	//     setOpen(newOpen);
-	// };
 
 	const navigate = useNavigate();
 
 	const handleBack = () => {
-		navigate("/scenario/create/detail");
+		navigate("/scenario/create/detail", { state: { scenarioDetails, questionList } });
 	};
 
-	// const [createnewtest] = useCreatenewtestMutation();
+	const [createScenario] = useCreateScenarioMutation();
+
 	const handleSave = async () => {
 		setSubmmitError(null);
 		setIsCreating(true);
 		try {
-			// Map questionList thành mảng ScenarioQuestion theo định dạng của file proto
-			// Giả sử ScenarioQuestion có 3 trường: criteria, hint, content
+			await createScenario({
+				name: scenarioDetails.name,
+				description: scenarioDetails.description,
+				field_ids: scenarioDetails.field_ids,
+				questions: questionList,
+			}).unwrap();
 
-
-			// Gọi API cập nhật scenario; giả sử field_ids là mảng rỗng nếu không có thông tin
-			await grpcUpdateScenario(
-				scenarioDetails.id,
-				scenarioDetails.title,
-				scenarioDetails.description,
-				[],
-				questionList
-			);
-
-			// Sau khi update thành công, chuyển hướng đến trang danh sách scenario
 			navigate("/scenario/list");
 		} catch (error) {
 			setSubmmitError("An error occurred while creating the scenario. Please try again later.");
-			console.error("Lỗi khi tạo bộ câu hỏi tình huống:", error);
+			console.error("Error while creating the scenario:", error);
 		} finally {
 			setIsCreating(false);
 		}
@@ -86,13 +50,13 @@ const ScenarioCreateQuestion = () => {
 
 	const handleQuestionChange = (index: number, newValue: string) => {
 		const updatedQuestions = [...questionList];
-		updatedQuestions[index].question = newValue;
+		updatedQuestions[index].content = newValue;
 		setQuestionList(updatedQuestions);
 	};
 
 	const handleHintsChange = (questionIndex: number, newValue: string) => {
 		const updatedQuestions = [...questionList];
-		updatedQuestions[questionIndex].hints = newValue;
+		updatedQuestions[questionIndex].hint = newValue;
 		setQuestionList(updatedQuestions);
 	};
 
@@ -106,8 +70,8 @@ const ScenarioCreateQuestion = () => {
 		setQuestionList([
 			...questionList,
 			{
-				question: "",
-				hints: "",
+				content: "",
+				hint: "",
 				criteria: "",
 			},
 		]);
@@ -117,110 +81,6 @@ const ScenarioCreateQuestion = () => {
 		const updatedQuestions = questionList.filter((_, i) => i !== index);
 		setQuestionList(updatedQuestions);
 	};
-
-	// const handleAddGeneratedQuestion = (index: number) => {
-	//     const questionToAdd = generatedQuestions[index];
-
-	//     setQuestionList([
-	//         ...questionList,
-	//         {
-	//             question: questionToAdd.content,
-	//             options: ["Option 1"],
-	//             correctAnswer: 0,
-	//             point: 10,
-	//         },
-	//     ]);
-
-	//     setCooldowns((prev) => {
-	//         const updatedCooldowns = [...prev];
-	//         updatedCooldowns[index] = 2;
-	//         return updatedCooldowns;
-	//     });
-	// };
-
-	// React.useEffect(() => {
-	//     const interval = setInterval(() => {
-	//         setCooldowns((prevCooldowns) =>
-	//             prevCooldowns.map((time) => (time > 0 ? time - 1 : 0))
-	//         );
-	//     }, 1000);
-
-	//     return () => clearInterval(interval);
-	// }, []);
-
-	// const handleGenerateClick = async (): Promise<void> => {
-	//     setLoading(true);
-	//     setError(null);
-	//     try {
-	//         const prompt = (document.querySelector("#prompt") as HTMLTextAreaElement).value;
-	//         // const response = await fetch(`/api/questionai/question`, {
-	//         //     method: "POST",
-	//         //     headers: {
-	//         //         "Content-Type": "application/json",
-	//         //     },
-	//         //     body: JSON.stringify({
-	//         //         question: prompt,
-	//         //     }),
-	//         // });
-
-	//         const [fetchquestion] = useFetchquestionMutation();
-	//         const response = await fetchquestion({ question: prompt }).unwrap();
-
-	//         console.log(response)
-
-	//         const { answer, conversation_id, question } = response;
-
-	//         console.log(answer);
-
-	//         const questions = [];
-	//         const lines = answer.split("\n");
-
-	//         let currentQuestion = null;
-
-	//         for (const line of lines) {
-	//             const trimmedLine = line.trim();
-
-	//             if (trimmedLine.startsWith("- Question:")) {
-	//                 if (currentQuestion) {
-	//                     questions.push(currentQuestion);
-	//                 }
-	//                 currentQuestion = {
-	//                     content: trimmedLine.replace("- Question:", "").trim(),
-	//                     description: "",
-	//                     level: "",
-	//                     reason: "",
-	//                 };
-	//             } else if (trimmedLine.startsWith("+ Description:") && currentQuestion) {
-	//                 currentQuestion.description = trimmedLine.replace("+ Description:", "").trim();
-	//             } else if (trimmedLine.startsWith("+ Level:") && currentQuestion) {
-	//                 currentQuestion.level = trimmedLine.replace("+ Level:", "").trim();
-	//             } else if (trimmedLine.startsWith("+ Reason:") && currentQuestion) {
-	//                 currentQuestion.reason = trimmedLine.replace("+ Reason:", "").trim();
-	//             } else if (trimmedLine === "" && currentQuestion) {
-	//                 questions.push(currentQuestion);
-	//                 currentQuestion = null;
-	//             }
-	//         }
-
-	//         if (currentQuestion) {
-	//             questions.push(currentQuestion);
-	//         }
-
-	//         setGeneratedQuestions(questions);
-	//         setCooldowns(new Array(questions.length).fill(0));
-	//     } catch (error) {
-	//         console.error("Error generating questions:", error);
-	//         setError("An error occurred while generating questions. Please try again later.");
-	//     } finally {
-	//         setLoading(false);
-	//     }
-	// };
-
-	// const handleGenerateKeyDown = (event: any) => {
-	//     if (event.key === 'Enter') {
-	//         handleGenerateClick();
-	//     }
-	// };
 
 	return (
 		<>
@@ -249,7 +109,7 @@ const ScenarioCreateQuestion = () => {
 									<div className="w-11/12 mb-4">
 										<GradientBorderNotGood className="w-full h-fit font-semibold">
 											<textarea
-												value={question.question}
+												value={question.content}
 												placeholder="Enter your question here..."
 												onChange={(e) => handleQuestionChange(index, e.target.value)}
 												className="w-full bg-transparent border-none outline-none"
@@ -262,7 +122,7 @@ const ScenarioCreateQuestion = () => {
 									<div className="w-11/12 mb-4">
 										<GradientBorderNotGood className="w-full h-fit font-normal">
 											<textarea
-												value={question.hints}
+												value={question.hint}
 												placeholder="Enter hints here..."
 												onChange={(e) => handleHintsChange(index, e.target.value)}
 												className="w-full bg-transparent border-none outline-none italic"
@@ -310,94 +170,6 @@ const ScenarioCreateQuestion = () => {
 					</div>
 				</div>
 			</div>
-			{/* <Button onClick={toggleDrawer(true)} className="fixed bottom-4 w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center shadow-lg">
-                <TipsAndUpdatesIcon />
-            </Button>
-            <Drawer open={open} onClose={toggleDrawer(false)}>
-                <Box sx={{ width: 750, position: "relative" }} role="presentation">
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "16px",
-                            borderBottom: "1px solid #ddd",
-                        }}
-                    >
-                        <Typography variant="h6" component="div" fontWeight="bold">
-                            Question Generator
-                        </Typography>
-                        <IconButton onClick={toggleDrawer(false)} size="small">
-                            <CloseIcon />
-                        </IconButton>
-                    </Box>
-
-                    <Box sx={{ padding: "16px" }}>
-                        <GradientBorderNotGood className="w-full h-fit">
-                            <textarea
-                                id="prompt"
-                                className="w-full flex-grow bg-transparent border-none outline-none"
-                                placeholder="Type your prompt here..."
-                                value={question}
-                                onChange={(e) => setQuestion(e.target.value)}
-                                onKeyDown={() => handleGenerateKeyDown}
-                            />
-                        </GradientBorderNotGood>
-
-                        <div className="flex justify-end mt-4">
-                            <button className="w-2/5 bg-gradient-text from-blue-500 to-green-500 text-md font-bold text-white px-6 py-3 rounded-lg" onClick={handleGenerateClick}>
-                                Generate
-                            </button>
-                        </div>
-
-                        <div className="mt-4 flex flex-col items-center justify-center">
-                            {isLoading ? (
-                                <CircularProgress />
-                            ) : (
-                                <>
-                                    {error ? (
-                                        <div className="text-center text-red-500">{error}</div>
-                                    ) : (
-                                        generatedQuestions.map((question, index) => (
-                                            <div
-                                                key={index}
-                                                className="w-full max-w-4xl mb-4 flex flex-col bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary space-y-4"
-                                            >
-                                                <div className="flex justify-between items-center">
-                                                    <Typography variant="h6" fontWeight="bold">
-                                                        Question {index + 1}
-                                                    </Typography>
-                                                    <button
-                                                        className={`flex items-center rounded-lg px-4 py-2 text-white cursor-pointer ${cooldowns[index] > 0 ? "bg-gray-500" : "bg-[var(--primary-color)]"}`}
-                                                        onClick={() => handleAddGeneratedQuestion(index)}
-                                                        disabled={cooldowns[index] > 0}
-                                                    >
-                                                        <AddIcon className="mr-2" /> Add
-                                                    </button>
-                                                </div>
-
-                                                <div className="italic text-black">{question.content}</div>
-
-                                                <Typography variant="body2" className="text-gray-500">
-                                                    <span className="text-black">Description:</span> {question.description}
-                                                </Typography>
-
-                                                <Typography variant="body2" className="text-gray-500">
-                                                    <span className="text-black">Level:</span> {question.level}
-                                                </Typography>
-
-                                                <Typography variant="body2" className="text-gray-500">
-                                                    <span className="text-black">Reason:</span> {question.reason}
-                                                </Typography>
-                                            </div>
-                                        ))
-                                    )}
-                                </>
-                            )}
-                        </div>
-                    </Box>
-                </Box>
-            </Drawer> */}
 		</>
 	);
 }

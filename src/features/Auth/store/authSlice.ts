@@ -7,6 +7,8 @@ import { Role } from '../../../app/enum.ts';
 export type UserInfo = {
 	username: string;
 	email: string;
+	role: bulbasaur.Role;
+	id: number;
 	metadata: any;
 	avatarPath?: string;
 }
@@ -86,11 +88,11 @@ const authSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			// Login
-			.addMatcher(
-				authApi.endpoints.login.matchFulfilled,
-				(state, action) => {
-					_setAuthState(state, action);
-				})
+			// .addMatcher(
+			// 	authApi.endpoints.login.matchFulfilled,
+			// 	(state, action) => {
+			// 		_setAuthState(state, action);
+			// 	})
 
 			// Register
 			.addMatcher(
@@ -109,8 +111,7 @@ const authSlice = createSlice({
 				authApi.endpoints.refresh.matchRejected,
 				(state) => {
 					_clearAuthState(state);
-				}
-			)
+				})
 
 			// Logout
 			.addMatcher(

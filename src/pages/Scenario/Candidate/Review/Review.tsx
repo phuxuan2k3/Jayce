@@ -1,79 +1,66 @@
-import { useEffect, useState } from "react";
+import * as React from "react";
 import { FaArrowRight, FaChevronRight, FaPaperPlane, FaRegUser } from "react-icons/fa";
 import { Sparkles } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { grpcGetAttempt } from "../../../../features/grpcScenario/grpcScenario";
+import { Attempt, Question, Scenario, ScenarioQuestion } from "../../APIs/types";
+import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
+
 const Review = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const scenario = location.state?.scenario;
-    const field = location.state?.field;
-    const attempt = location.state?.attempt;
-    const [selectedTab, setSelectedTab] = useState<"questions" | "history">("questions");
-    const content = "SQL query interview scenarios can vary widely in complexity, but here are some common types you might encounter Basic SQL Queries   Simple Data RetrievalWrite a query to retrieve specific columns from a table. Find the number of rows in a table. Retrieve unique values from a column. Data Filtering: Select rows based on specific conditions(e.g., age > 30, salary < 50000). Sort data in ascending or descending order. Limit the number of rows returned. Data Aggregation: Calculate the sum, average, minimum, or maximum of a column. Count the number of rows that meet a certain criteria. Group data by a specific column and perform calculations on each group.";
-    const questions = location.state?.questions;
-    const [selectedQuestion, setSelectedQuestion] = useState<any>();
-    const [showHint, setShowHint] = useState(false);
-    const attemptId = location.state?.attempt;
-    const [attemptDetails, setAttemptDetails] = useState<any>(null);
-    const history =
-    {
-        attempt: 1,
-        relevance: "5",
-        rel: "The query does not directly address the promt, as it does not select the top 5 customers or sort the results. The query demonstrates a basic uderstandung of aggrate functions.",
-        clarity: "9",
-        cla: "The query is concise and easy to read",
-        accuracy: "3",
-        acc: "The query will correctly calculate the total purchase amount for each customer, but it does not provide the top  5.",
-        overall: "6.4",
-        date: "01/01/2024 13:53 PM"
+    const scenario: Scenario = location.state?.scenario;
+    const attempt: Attempt = location.state?.attempt;
+
+    if (!scenario || !attempt) {
+        navigate("/ipractice/choose");
+    }
+
+    console.log("Review:", attempt);
+
+    let submittedDate;
+
+    if (attempt.base_data.created_at instanceof Timestamp) {
+        submittedDate = attempt.base_data.created_at.toDate();
+    } else {
+        submittedDate = new Date(attempt.base_data.created_at ?? Date.now());
+    }
+
+    const [selectedTab, setSelectedTab] = React.useState<"questions" | "history">("questions");
+    const [selectedQuestion, setSelectedQuestion] = React.useState<ScenarioQuestion>();
+    const [showHint, setShowHint] = React.useState(false);
+
+    const handleBack = () => {
+        navigate("/ipractice/detail", { state: { scenarioId: scenario.id } });
     };
-    const remark = "Candidate was well-prepared and enthusiastic about the role"
-    const handleAnswer = () => {
-        navigate("/ipractice/answer", { state: { scenario, field, questions } });
-    };
-    const handleQuestionClick = (question: any) => {
+
+    const handleQuestionClick = (question: ScenarioQuestion) => {
         setSelectedQuestion(question);
         setShowHint(false);
     };
-    useEffect(() => {
-        async function fetchAttempt() {
-            if (attemptId) {
-                try {
-                    const response = await grpcGetAttempt(attemptId);
-                    const data = response.toObject();
-                    setAttemptDetails(data.attempt);
-                } catch (err) {
-                    console.error("Error fetching attempt details:", err);
-                }
-            }
-        }
-        fetchAttempt();
-    }, []);
+
     return (
         <>
-
             <div className="flex gap-4 mt-10 font-arya">
                 <div className="w-[65%]  mx-12">
                     <div className="flex justify-between mb-8">
                         <div className="flex items-center gap-10">
-                            <span className="text-3xl font-bold text-red-600">Attempt #{attempt}</span>
+                            <span className="text-3xl font-bold text-red-600">Attempt #{attempt.id}</span>
                             <div className={`px-3 py-1 rounded-lg text-sm font-medium font-bold text-[var(--primary-color)] border border-gray-500`}>
-                                Submitted on: {history.date}
+                                Submitted on: {submittedDate.toLocaleDateString()}
                             </div>
                         </div>
-                        <div className="rounded-lg font-bold text-[var(--primary-color)] border border-gray-500 py-1 px-4 flex gap-2 items-center" onClick={handleAnswer}><FaArrowRight /> Back</div>
+                        <div className="rounded-lg font-bold text-[var(--primary-color)] border border-gray-500 py-1 px-4 flex gap-2 items-center" onClick={handleBack}><FaArrowRight /> Back</div>
                     </div>
                     <span className="text-3xl font-bold">{scenario.name}</span>
-                    <div className="mt-2 text-xl">
+                    {/* <div className="mt-2 text-xl">
                         {field}
-                    </div>
+                    </div> */}
                     <hr className=" border-gray-400 mb-4 mt-2" />
                     <div className="max-h-96 overflow-y-auto">
                         <span className="text-2xl font-bold text-[var(--primary-color)] flex gap-2 items-center">
-                            Question {selectedQuestion ? questions.findIndex(q => q === selectedQuestion) + 1 : ""}
+                            Question {selectedQuestion ? scenario.questions.findIndex((q: Question) => q === selectedQuestion) + 1 : ""}
                         </span>
-                        <div>{selectedQuestion ? selectedQuestion.content : content}</div>
+                        <div>{selectedQuestion ? selectedQuestion.content : scenario.description}</div>
                     </div>
                     <hr className=" border-gray-400 my-4" />
                     <span className="cursor-pointer text-[var(--primary-color)]" onClick={() => setShowHint(!showHint)}>Hint</span>
@@ -83,9 +70,12 @@ const Review = () => {
                         <span className="text-2xl font-bold text-[var(--primary-color)] flex gap-2 items-center">
                             Your answer
                         </span>
-                        <div>{selectedQuestion ? selectedQuestion.content : content}</div>
+                        <div>
+                            {selectedQuestion
+                                ? attempt.answers[scenario.questions.findIndex((q) => q === selectedQuestion)]?.answer || "No answer provided"
+                                : ""}
+                        </div>
                     </div>
-
 
                     <hr className=" border-gray-400 my-4" />
                     <span className="text-2xl font-bold text-[var(--primary-color)] flex gap-3">
@@ -94,28 +84,28 @@ const Review = () => {
                     <div className="flex items-center gap-3 mt-3">
                         <span className="text-xl text-[var(--primary-color)] font-bold">Relevance: </span>
                         <div className={`px-3 py-1 rounded-lg text-sm font-bold text-[var(--primary-color)] border-2 border-gray-500`}>
-                            {history.relevance}/10
+                            {attempt.answers.reduce((sum, answer) => sum + (answer.relevance || 0), 0) / attempt.answers.length}/10
                         </div>
                     </div>
-                    <span className="text-[var(--primary-color)]">{history.rel}</span>
+                    {/* <span className="text-[var(--primary-color)]">{history.rel}</span> */}
                     <div className="flex items-center gap-3 mt-3">
                         <span className="text-xl text-[var(--primary-color)] font-bold">Clarity and Completeness: </span>
                         <div className={`px-3 py-1 rounded-lg text-sm font-bold text-[var(--primary-color)] border-2 border-gray-500`}>
-                            {history.clarity}/10
+                            {attempt.answers.reduce((sum, answer) => sum + (answer.clarity_completeness || 0), 0) / attempt.answers.length}/10
                         </div>
                     </div>
-                    <span className="text-[var(--primary-color)]">{history.cla}</span>
+                    {/* <span className="text-[var(--primary-color)]">{history.cla}</span> */}
                     <div className="flex items-center gap-3 mt-3">
                         <span className="text-xl text-[var(--primary-color)] font-bold">Accuracy: </span>
                         <div className={`px-3 py-1 rounded-lg text-sm font-bold text-[var(--primary-color)] border-2 border-gray-500`}>
-                            {history.accuracy}/10
+                            {attempt.answers.reduce((sum, answer) => sum + (answer.accuracy || 0), 0) / attempt.answers.length}/10
                         </div>
                     </div>
-                    <span className="text-[var(--primary-color)]">{history.acc}</span>
+                    {/* <span className="text-[var(--primary-color)]">{history.acc}</span> */}
                     <div className="flex items-center gap-3 mt-4 ">
                         <span className="text-xl text-[var(--primary-color)] font-bold">Overall: </span>
                         <div className={`px-3 py-1 rounded-lg text-sm font-bold text-[var(--primary-color)] border-2 border-gray-500`}>
-                            {history.overall}/10
+                            {attempt.answers.reduce((sum, answer) => sum + (answer.overall || 0), 0) / attempt.answers.length}/10
                         </div>
                     </div>
 
@@ -123,13 +113,10 @@ const Review = () => {
                     <span className="text-2xl font-bold text-[var(--primary-color)] flex gap-3 ">
                         <Sparkles /> Remark
                     </span>
-                    <div>
-                        <span className="text-[var(--primary-color)]">{remark}</span>
-                    </div>
-
+                    {/* <div>
+                        <span className="text-[var(--primary-color)]">hehe</span>
+                    </div> */}
                 </div>
-
-
 
                 <div className="w-[35%]">
                     <div className="flex  pb-2 mb-4">
@@ -148,13 +135,13 @@ const Review = () => {
                     <div className="w-full">
                         {selectedTab === "questions" && (
                             <ul className="w-full">
-                                {questions.map((item, index) => (
-                                    <div key="index">
+                                {scenario.questions.map((item: Question, index: number) => (
+                                    <div key={index}>
                                         <li key={index} onClick={() => handleQuestionClick(item)} className="flex justify-between items-center py-3  text-[var(--primary-color)] hover:text-red-600  cursor-pointer">
                                             <span className="font-semibold truncate">{index + 1}. <span className="font-bold">{item.content}</span></span>
                                             <FaChevronRight />
                                         </li>
-                                        {index !== questions.length - 1 && <hr className="border-gray-400" />}
+                                        {index !== scenario.questions.length - 1 && <hr className="border-gray-400" />}
                                     </div>
                                 ))}
 
@@ -199,8 +186,6 @@ const Review = () => {
                     </div>
                 </div>
             </div>
-
-
         </>
     );
 }
