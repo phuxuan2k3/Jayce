@@ -143,7 +143,7 @@ const NavBar = ({ showNav = true }: { showNav?: boolean; }) => {
 									<Link to="/login">
 										<button className="px-3 mr-3 rounded-lg font-bold text-xl py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2">Log In</button>
 									</Link>
-									<Link to="/register">
+									<Link to="/chooserole">
 										<button className="px-3 rounded-lg font-bold text-xl py-2  text-white bg-[var(--primary-color)]">Sign Up</button>
 									</Link>
 								</div>

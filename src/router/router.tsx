@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Login from "../pages/Authen/login/Login";
-import Dashboard from "../pages/Dashboard";
+// import Dashboard from "../pages/Dashboard";
 import TestDo from "../pages/Test/Candidate/TestDo/TestDo";
 import { paths } from "./path"
 import Register from "../pages/Authen/register/Register";
@@ -40,13 +40,24 @@ import Role from "../pages/Authen/role/role";
 import Company from "../pages/Authen/company/company";
 import ResetPassword from "../pages/Authen/resetpass/resetpass";
 import NewPassword from "../pages/Authen/newpass/newpass";
+import Home from "../pages/Home";
+import BRegister from "../pages/Authen/register/BRegister";
+import ChooseRole from "../pages/Authen/chooseRole/chooseRole";
 const router = createBrowserRouter([
 	{
 		errorElement: <ErrorPage />,
 		children: [
 			{
+				path: paths.CHOOSEROLE,
+				element: <ChooseRole />,
+			},
+			{
 				path: paths.REGISTER,
 				element: <Register />,
+			},
+			{
+				path: paths.BREGISTER,
+				element: <BRegister />
 			},
 			{
 				path: paths.LOGIN,
@@ -54,7 +65,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/",
-				element: <Dashboard />
+				element: <Home />
 			},
 			{
 				path:paths.SUGGESTION,

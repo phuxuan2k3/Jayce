@@ -120,7 +120,7 @@ export default {
 		},
 	],
 	daisyui:{
-		themes:["light"],
+		themes:["dark","light"],
 	},
 	important: true,
 	corePlugins: {
