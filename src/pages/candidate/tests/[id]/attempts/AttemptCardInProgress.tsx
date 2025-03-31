@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import FetchState from '../../../../../components/wrapper/FetchState';
-import paths2 from '../../../../../router/path-2';
+import paths2 from '../../../../../router/paths';
 import GradientBorderGood from '../../../../../components/ui/border/GradientBorder.good';
 import TestTimer from '../../../../../features/Test/partials/TestTimer';
 import { useGetCurrentAttemptStateQuery } from '../../../../../features/Test/api/test.api-gen';

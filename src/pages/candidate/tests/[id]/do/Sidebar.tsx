@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import paths2 from "../../../../../router/path-2";
+import paths2 from "../../../../../router/paths";
 import useGetTestIdParams from "../../../../../features/Test/hooks/useGetTestIdParams";
 import { useEffect } from "react";
 import TestTimer from "../../../../../features/Test/partials/TestTimer";

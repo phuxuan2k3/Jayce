@@ -1,6 +1,6 @@
 import TestTimer from "./TestTimer";
 import { useNavigate } from "react-router-dom";
-import paths2 from "../../../router/path-2";
+import paths2 from "../../../router/paths";
 import { useGetCurrentAttemptStateQuery } from "../api/test.api-gen";
 
 export default function CurrentAttemptStatus() {

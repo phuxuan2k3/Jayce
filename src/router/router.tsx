@@ -1,51 +1,50 @@
 import { createBrowserRouter } from "react-router-dom";
-import Login from "../pages/Authen/login/Login";
-import { paths } from "./path"
-import Register from "../pages/Authen/register/Register";
+import Login from "../pages/auth/login/Login";
+import Register from "../pages/auth/register/Register";
 import TestEvaluate from "../pages/candidate/tests/evaluate/TestEvaluate";
 import ErrorPage from "../components/pages/ErrorPage";
 import TestSchedule from "../pages/candidate/tests/schedule/TestSchedule";
-import TestSubmissionListView from "../pages/Test/BusinessManager/TestSubmissionListView/TestSubmissionListView";
-import TestSubmissionDetail from "../pages/Test/BusinessManager/TestSubmissionDetail/TestSubmissionDetail";
-import TestListView from "../pages/Test/BusinessManager/TestListView/TestListView";
-import CreateTest from "../pages/Test/BusinessManager/TestCreateDetail/TestCreateDetail";
-import EditTestDetail from "../pages/Test/BusinessManager/TestEditDetail/TestEditDetail";
-import EditTestQuestion from "../pages/Test/BusinessManager/TestEditQuestion/EditTestQuestion";
-import CreateNewTest from "../pages/Test/BusinessManager/TestCreateQuestion/TestCreateQuestion";
-import ScenarioListView from "../pages/Scenario/BusinessManager/ScenarioListView/ScenarioListView";
-import ScenarioLayout from "../pages/Scenario/components/ScenarioLayout";
-import ScenarioSubmissionListView from "../pages/Scenario/BusinessManager/ScenarioSubmissionListView/ScenarioSubmissionListView";
-import ScenarioSubmissionDetail from "../pages/Scenario/BusinessManager/ScenarioSubmissionDetail/ScenarioSubmissionDetail";
-import ScenarioCreateDetail from "../pages/Scenario/BusinessManager/ScenarioCreateDetail/ScenarioCreateDetail";
-import ScenarioCreateQuestion from "../pages/Scenario/BusinessManager/ScenarioCreateQuestion/ScenarioCreateQuestion";
-import ScenarioEditDetail from "../pages/Scenario/BusinessManager/ScenarioEditDetail/ScenarioEditDetail";
-import ScenarioEditQuestion from "../pages/Scenario/BusinessManager/ScenarioEditQuestion/ScenarioEditQuestion";
-import PickAField from "../pages/Scenario/Candidate/PickAField/PickAField";
-import LayoutInterviewPractice from "../pages/Scenario/components/InterviewLayout";
-import ChooseScenario from "../pages/Scenario/Candidate/ChooseScenario/ChooseScenario";
-import ScenarioDetail from "../pages/Scenario/Candidate/Detail/Detail";
-import AnswerQuestion from "../pages/Scenario/Candidate/AnswerQuestion/AnswerQuestion";
-import Review from "../pages/Scenario/Candidate/Review/Review";
-import ProfileDashboard from "../pages/Profile/Candidate/ProfileDashboard";
-import ProfileLayout from "../pages/Profile/components/Layout";
-import PricingPage from "../pages/Profile/Candidate/PricingPage";
-import Suggestion from "../pages/Authen/suggestion/suggestion";
-import Role from "../pages/Authen/role/role";
-import Company from "../pages/Authen/company/company";
-import ResetPassword from "../pages/Authen/resetpass/resetpass";
-import NewPassword from "../pages/Authen/newpass/newpass";
-import paths2 from "./path-2";
+import TestSubmissionListView from "../pages/manager/tests/TestSubmissionListView/TestSubmissionListView";
+import TestSubmissionDetail from "../pages/manager/tests/TestSubmissionDetail/TestSubmissionDetail";
+import TestListView from "../pages/manager/tests/TestListView/TestListView";
+import CreateTest from "../pages/manager/tests/TestCreateDetail/TestCreateDetail";
+import EditTestDetail from "../pages/manager/tests/TestEditDetail/TestEditDetail";
+import EditTestQuestion from "../pages/manager/tests/TestEditQuestion/EditTestQuestion";
+import CreateNewTest from "../pages/manager/tests/TestCreateQuestion/TestCreateQuestion";
+import ScenarioListView from "../pages/manager/scenario/ScenarioListView/ScenarioListView";
+import ScenarioLayout from "../pages/manager/scenario/ScenarioLayout";
+import ScenarioSubmissionListView from "../pages/manager/scenario/ScenarioSubmissionListView/ScenarioSubmissionListView";
+import ScenarioSubmissionDetail from "../pages/manager/scenario/ScenarioSubmissionDetail/ScenarioSubmissionDetail";
+import ScenarioCreateDetail from "../pages/manager/scenario/ScenarioCreateDetail/ScenarioCreateDetail";
+import ScenarioCreateQuestion from "../pages/manager/scenario/ScenarioCreateQuestion/ScenarioCreateQuestion";
+import ScenarioEditDetail from "../pages/manager/scenario/ScenarioEditDetail/ScenarioEditDetail";
+import ScenarioEditQuestion from "../pages/manager/scenario/ScenarioEditQuestion/ScenarioEditQuestion";
+import PickAField from "../pages/candidate/scenarios/PickAField/PickAField";
+import LayoutInterviewPractice from "../pages/candidate/scenarios/InterviewLayout";
+import ChooseScenario from "../pages/candidate/scenarios/ChooseScenario/ChooseScenario";
+import ScenarioDetail from "../pages/candidate/scenarios/Detail/Detail";
+import AnswerQuestion from "../pages/candidate/scenarios/AnswerQuestion/AnswerQuestion";
+import Review from "../pages/candidate/scenarios/Review/Review";
+import ProfileDashboard from "../pages/common/Profile/Candidate/ProfileDashboard";
+import ProfileLayout from "../pages/common/Profile/components/Layout";
+import PricingPage from "../pages/common/Profile/Candidate/PricingPage";
+import Suggestion from "../pages/auth/suggestion/suggestion";
+import Role from "../pages/auth/role/role";
+import Company from "../pages/auth/company/company";
+import ResetPassword from "../pages/auth/resetpass/resetpass";
+import NewPassword from "../pages/auth/newpass/newpass";
+import paths2 from "./paths";
 import AuthenticateLayout from "../components/layouts/AuthenticateLayout";
 import UnauthLayout from "../components/layouts/UnauthLayout";
 import CandidateLayout from "../pages/candidate/layout";
 import DashboardPage from "../pages/common/DashboardPage";
-import TestsPage from "../pages/candidate/tests/index/TestsPage";
+import TestsPage from "../pages/common/tests/index/TestsPage";
 import TestDoPage from "../pages/candidate/tests/[id]/do/TestDoPage";
 import TestAttemtpsPage from "../pages/candidate/tests/[id]/attempts/TestAttemptsPage";
 import CurrentTestLayout from "../features/Test/layout/CurrentTestLayout";
 import ManagerLayout from "../components/layouts/ManagerLayout";
-import BRegister from "../pages/Authen/register/BRegister";
-import ChooseRole from "../pages/Authen/chooseRole/chooseRole";
+import BRegister from "../pages/auth/register/BRegister";
+import ChooseRole from "../pages/auth/chooseRole/chooseRole";
 import AttemptDetailPage from "../pages/candidate/tests/attempts/[id]/AttemptDetailPage";
 import React from "react";
 
@@ -53,7 +52,7 @@ const router = createBrowserRouter([{
 	errorElement: <ErrorPage />,
 	children: [
 
-		// Authentication Layout
+		// Authentication pages
 
 		{
 			path: paths2.auth._layout,
@@ -98,7 +97,7 @@ const router = createBrowserRouter([{
 			],
 		},
 
-		// Candidate layout
+		// Candidate pages
 
 		{
 			path: paths2.candidate._layout,
@@ -213,7 +212,7 @@ const router = createBrowserRouter([{
 			]
 		},
 
-		// Manager layout
+		// Manager pages
 
 		{
 			path: paths2.manager._layout,
@@ -333,7 +332,7 @@ const router = createBrowserRouter([{
 			]
 		},
 
-		// No authentication layout
+		// No authentication pages
 
 		{
 			path: paths2._layout,
@@ -345,30 +344,7 @@ const router = createBrowserRouter([{
 				}
 			]
 		},
-
-
-		// Old paths
-
-		{
-			path: paths.PROFILE.ROOT,
-			element: <ProfileLayout />,
-			children: [
-				{
-					path: '',
-					element: <ProfileDashboard />,
-				},
-			],
-		},
-		{
-			path: paths.PRICING.ROOT,
-			element: <ProfileLayout />,
-			children: [
-				{
-					path: '',
-					element: <PricingPage />,
-				},
-			],
-		}]
+	]
 }], {
 	basename: '/'
 });

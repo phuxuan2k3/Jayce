@@ -1,5 +1,5 @@
 import React from 'react';
-import MyPagination from '../../../../Test/components/MyPagination';
+import MyPagination from '../../../../../trash/components/MyPagination';
 import { useState } from 'react';
 import AttemptCardFinished from './AttemptCardFinished';
 import AttemptCardInProgress from './AttemptCardInProgress';

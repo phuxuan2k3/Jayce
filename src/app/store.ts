@@ -9,8 +9,8 @@ import storage from 'redux-persist/lib/storage';
 import currentAttemptReducer from '../features/Test/reducers/currentAttemtpSlice';
 import authRestApi from '../features/Auth/api/authRestApi';
 import accountApi from '../features/Account/account.api';
-import ekkoApi from '../features/Scenario/ekko.api';
-import chronobreakApi from '../features/Scenario/chronobreak.api';
+import ekkoApi from '../features/Scenario/apis/base/ekko.api';
+import chronobreakApi from '../features/Scenario/apis/base/chronobreak.api';
 
 const persistConfig = {
 	key: 'root',

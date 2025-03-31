@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import QuestionComponent from './Question';
 import Sidebar from './Sidebar';
 import useGetTestIdParams from '../../../../../features/Test/hooks/useGetTestIdParams';
-import paths2 from '../../../../../router/path-2';
+import paths2 from '../../../../../router/paths';
 import FetchState from '../../../../../components/wrapper/FetchState';
 import { useAppSelector } from '../../../../../app/hooks';
 import { curerntAttemptSelects } from '../../../../../features/Test/reducers/currentAttemtpSlice';

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import logo from "/svg/logo.svg";
 import skillsharp from "/svg/skillsharp.svg";
-import paths2 from "../../../router/path-2";
+import paths2 from "../../../router/paths";
 import React from "react";
 
 const UnauthNavbar = () => {

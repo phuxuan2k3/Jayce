@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { paths } from "../../../../../router/path";
 import useGetTestIdParams from "../../../../../features/Test/hooks/useGetTestIdParams";
-import paths2 from "../../../../../router/path-2";
+import paths2 from "../../../../../router/paths";
 import { useEffect, useState } from "react";
 import ModalBase from "../../../../../components/ui/modal/Modal.base";
 import { usePostCurrentAttemptNewMutation } from "../../../../../features/Test/api/test.api-gen";

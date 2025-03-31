@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { Role } from '../../app/enum';
-import paths2 from '../../router/path-2';
+import paths2 from '../../router/paths';
 import { useAppSelector } from '../../app/hooks';
 import { selectRole } from '../../features/Auth/store/authSlice';
 

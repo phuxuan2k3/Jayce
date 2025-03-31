@@ -7,7 +7,7 @@ import skillsharp from "/svg/skillsharp.svg";
 import { selectUserInfo } from "../../../features/Auth/store/authSlice";
 import { useAppSelector } from "../../../app/hooks";
 import { useLogoutMutation } from "../../../features/Auth/api/authApi";
-import paths2 from "../../../router/path-2";
+import paths2 from "../../../router/paths";
 
 const CandidateNavbar = ({ showNav = true }: { showNav?: boolean; }) => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
