@@ -30,7 +30,7 @@ const ManagerNavbar = ({ showNav = true }: { showNav?: boolean; }) => {
 	};
 
 	const handleLogoClick = () => {
-		navigate(paths2.candidate.ROOT);
+		navigate(paths2.candidate._layout);
 	};
 
 	return <nav className="bg-white drop-shadow-lg">
@@ -59,7 +59,7 @@ const ManagerNavbar = ({ showNav = true }: { showNav?: boolean; }) => {
 							<Link to="/ipractice/pick" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
 								Scenario
 							</Link>
-							<Link to={paths2.candidate.tests.ROOT} className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
+							<Link to={paths2.candidate.tests._layout} className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
 								Tests
 							</Link>
 							<Link to="/pricing" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">

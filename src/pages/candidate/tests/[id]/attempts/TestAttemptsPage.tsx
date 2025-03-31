@@ -1,12 +1,12 @@
 import React from 'react';
-import MyPagination from '../../components/MyPagination';
+import MyPagination from '../../../../Test/components/MyPagination';
 import { useState } from 'react';
 import AttemptCardFinished from './AttemptCardFinished';
 import AttemptCardInProgress from './AttemptCardInProgress';
 import Sidebar from './Sidebar';
-import useGetTestIdParams from '../../../../features/Test/hooks/useGetTestIdParams';
-import { GetTestsByTestIdAttemptsApiArg, useGetTestsByTestIdAttemptsQuery, useGetTestsByTestIdQuery } from '../../../../features/Test/api/test.api-gen';
-import FetchState from '../../../../components/wrapper/FetchState';
+import useGetTestIdParams from '../../../../../features/Test/hooks/useGetTestIdParams';
+import { GetTestsByTestIdAttemptsApiArg, useGetTestsByTestIdAttemptsQuery, useGetTestsByTestIdQuery } from '../../../../../features/Test/api/test.api-gen';
+import FetchState from '../../../../../components/wrapper/FetchState';
 
 const mockCompany = {
 	name: "Company",

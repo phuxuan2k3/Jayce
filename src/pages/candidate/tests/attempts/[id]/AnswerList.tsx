@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useGetAttemptsByAttemptIdAnswersQuery } from "../../../../features/Test/api/test.api-gen";
 import FetchState from "../../../../components/wrapper/FetchState";
-import MyPagination from "../../components/MyPagination";
+import MyPagination from "../../../Test/components/MyPagination";
 import GradientBorderNotGood from "../../../../components/ui/border/GradientBorder.notgood";
 import GradientBorderGood from "../../../../components/ui/border/GradientBorder.good";
 import ChoiceIcon from "../../../../components/ui/icon/ChoiceIcon";

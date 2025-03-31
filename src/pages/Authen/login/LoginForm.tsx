@@ -73,7 +73,7 @@ const LoginForm = () => {
 			console.log(error)
 
 			if (error === null) {
-				navigate(paths2.ROOT);
+				navigate(paths2._layout);
 			}
 		} catch (error) {
 			console.log("Login failed:", error);

@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
 import { Role } from "../../app/enum";
-import CandidateNavbar from "../ui/navbar/CandidateNavbar";
-import RoleGuard from "../wrapper/RoleGuard";
-import FooterShort from "../ui/footer/FooterShort";
+import CandidateNavbar from "../../components/ui/navbar/CandidateNavbar";
+import RoleGuard from "../../components/wrapper/RoleGuard";
+import FooterShort from "../../components/ui/footer/FooterShort";
 
 export default function CandidateLayout() {
 	return (

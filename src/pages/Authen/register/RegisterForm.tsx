@@ -26,7 +26,7 @@ const RegisterForm = () => {
 
 	useEffect(() => {
 		if (error === null) {
-			navigate(paths2.ROOT);
+			navigate(paths2._layout);
 		}
 	}, [isSuccess]);
 

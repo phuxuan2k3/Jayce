@@ -11,8 +11,8 @@ export default function UnauthLayout() {
 		<RoleGuard
 			roles={[Role.None]}
 			alternativeUrl={[
-				{ role: Role.Candidate, alternativeUrl: paths2.candidate.ROOT },
-				{ role: Role.Manager, alternativeUrl: paths2.manager.ROOT },
+				{ role: Role.Candidate, alternativeUrl: paths2.candidate._layout },
+				{ role: Role.Manager, alternativeUrl: paths2.manager._layout },
 			]}>
 			<UnauthNavbar />
 			<Outlet />

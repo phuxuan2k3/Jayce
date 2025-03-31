@@ -16,7 +16,7 @@ const UnauthNavbar = () => {
 	};
 
 	const handleLogoClick = () => {
-		navigate(paths2.ROOT);
+		navigate(paths2._layout);
 	};
 
 	return (

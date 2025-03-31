@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import QuestionComponent from './Question';
 import Sidebar from './Sidebar';
-import useGetTestIdParams from '../../../../features/Test/hooks/useGetTestIdParams';
-import paths2 from '../../../../router/path-2';
-import FetchState from '../../../../components/wrapper/FetchState';
-import { useAppSelector } from '../../../../app/hooks';
-import { curerntAttemptSelects } from '../../../../features/Test/reducers/currentAttemtpSlice';
-import { useGetCurrentAttemptDoQuery, useGetCurrentAttemptStateQuery } from '../../../../features/Test/api/test.api-gen';
+import useGetTestIdParams from '../../../../../features/Test/hooks/useGetTestIdParams';
+import paths2 from '../../../../../router/path-2';
+import FetchState from '../../../../../components/wrapper/FetchState';
+import { useAppSelector } from '../../../../../app/hooks';
+import { curerntAttemptSelects } from '../../../../../features/Test/reducers/currentAttemtpSlice';
+import { useGetCurrentAttemptDoQuery, useGetCurrentAttemptStateQuery } from '../../../../../features/Test/api/test.api-gen';
 
 const TestDoPage = () => {
 	const navigate = useNavigate();

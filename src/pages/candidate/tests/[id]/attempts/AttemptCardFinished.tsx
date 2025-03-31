@@ -3,8 +3,8 @@ import { format, formatDistanceToNow } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import GradientBorderGood from '../../../../components/ui/border/GradientBorder.good';
-import paths2 from '../../../../router/path-2';
+import GradientBorderGood from '../../../../../components/ui/border/GradientBorder.good';
+import paths2 from '../../../../../router/path-2';
 
 type Props = {
 	company: {
@@ -29,7 +29,7 @@ const AttemptCardFinished: React.FC<Props> = ({ company, test, attempt }) => {
 	const navigate = useNavigate();
 
 	const handleOnAttemptClick = () => {
-		navigate(paths2.candidate.tests.attempts.in(attempt.id).ROOT);
+		navigate(paths2.candidate.tests.attempts.in(attempt.id)._layout);
 	};
 
 	return (

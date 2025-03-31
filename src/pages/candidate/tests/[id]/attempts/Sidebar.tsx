@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom"
-import { paths } from "../../../../router/path";
-import useGetTestIdParams from "../../../../features/Test/hooks/useGetTestIdParams";
-import paths2 from "../../../../router/path-2";
+import { paths } from "../../../../../router/path";
+import useGetTestIdParams from "../../../../../features/Test/hooks/useGetTestIdParams";
+import paths2 from "../../../../../router/path-2";
 import { useEffect, useState } from "react";
-import ModalBase from "../../../../components/ui/modal/Modal.base";
-import { usePostCurrentAttemptNewMutation } from "../../../../features/Test/api/test.api-gen";
+import ModalBase from "../../../../../components/ui/modal/Modal.base";
+import { usePostCurrentAttemptNewMutation } from "../../../../../features/Test/api/test.api-gen";
 
 export default function Sidebar() {
 	const testId = useGetTestIdParams();
@@ -25,7 +25,7 @@ export default function Sidebar() {
 	};
 
 	const handleBackToQuestions = () => {
-		navigate(paths2.candidate.tests.ROOT);
+		navigate(paths2.candidate.tests._layout);
 	};
 
 	const handleViewEvaluated = () => {
