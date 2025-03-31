@@ -18,7 +18,6 @@ const paths2 = {
 			ROOT: '/candidate/tests/',
 			in(id: number | string = ":testId") {
 				return {
-					_layout: `/candidate/tests/${id}/`,
 					ATTEMPTS: `/candidate/tests/${id}/attempts/`,
 					DO: `/candidate/tests/${id}/do/`,
 					ASSESSMENT: `/candidate/tests/${id}/assessment/`,
@@ -37,6 +36,30 @@ const paths2 = {
 	},
 	manager: {
 		ROOT: '/manager',
+		tests: {
+			ROOT: '/manager/tests/',
+			SELF: '/manager/tests/self/',
+			in(id: number | string = ":testId") {
+				return {
+					submissions: {
+						ROOT: `/manager/tests/${id}/submissions/`,
+						in(id: number | string = ":submissionId") {
+							return {
+								ROOT: `/manager/tests/${id}/submissions/${id}/`,
+							}
+						}
+					},
+					edit: {
+						DETAIL: `/manager/tests/${id}/edit/detail/`,
+						QUESTION: `/manager/tests/${id}/edit/question/`,
+					},
+					create: {
+						DETAIL: `/manager/tests/${id}/create/detail/`,
+						QUESTION: `/manager/tests/${id}/create/question/`,
+					},
+				}
+			},
+		},
 	},
 }
 

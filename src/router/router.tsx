@@ -39,13 +39,13 @@ import NewPassword from "../pages/Authen/newpass/newpass";
 import paths2 from "./path-2";
 import AuthenticateLayout from "../components/layouts/AuthenticateLayout";
 import UnauthLayout from "../components/layouts/UnauthLayout";
-import CandidateLayout from "../features/Test/layout/CandidateLayout";
+import CandidateLayout from "../components/layouts/CandidateLayout";
 import DashboardPage from "../pages/common/DashboardPage";
 import TestsPage from "../pages/Test/Candidate/Tests/TestsPage";
 import TestDoPage from "../pages/Test/Candidate/TestDo/TestDoPage";
 import TestAttemtpsPage from "../pages/Test/Candidate/TestAttempts/TestAttemptsPage";
 import CurrentTestLayout from "../features/Test/layout/CurrentTestLayout";
-import React from "react";
+import ManagerLayout from "../components/layouts/ManagerLayout";
 
 const router = createBrowserRouter([{
 	errorElement: <ErrorPage />,
@@ -93,7 +93,8 @@ const router = createBrowserRouter([{
 					children: [
 						{
 							path: paths2.candidate.ROOT,
-							element: <DashboardPage />
+							element: <DashboardPage />,
+							index: true
 						},
 						{
 							path: paths2.candidate.tests.ROOT,
@@ -124,6 +125,49 @@ const router = createBrowserRouter([{
 			]
 		},
 		{
+			path: paths2.manager.ROOT,
+			element: <ManagerLayout />,
+			children: [
+				{
+					path: paths2.manager.ROOT,
+					element: <DashboardPage />,
+					index: true
+				},
+				{
+					path: paths2.manager.tests.ROOT,
+					element: <TestsPage />,
+				},
+				{
+					path: paths2.manager.tests.SELF,
+					element: <TestListView />,
+				},
+				{
+					path: paths2.manager.tests.in().submissions.ROOT,
+					element: <TestSubmissionListView />
+				},
+				{
+					path: paths2.manager.tests.in().submissions.in().ROOT,
+					element: <TestSubmissionDetail />
+				},
+				{
+					path: paths2.manager.tests.in().create.DETAIL,
+					element: <CreateTest />
+				},
+				{
+					path: paths2.manager.tests.in().create.QUESTION,
+					element: <CreateNewTest />
+				},
+				{
+					path: paths2.manager.tests.in().edit.DETAIL,
+					element: <EditTestDetail />
+				},
+				{
+					path: paths2.manager.tests.in().edit.QUESTION,
+					element: <EditTestQuestion />
+				}
+			]
+		},
+		{
 			path: paths2.ROOT,
 			element: <UnauthLayout />,
 			children: [
@@ -138,55 +182,6 @@ const router = createBrowserRouter([{
 
 		// Old paths
 
-
-		{
-			path: paths.TEST.ROOT,
-			element: <Layout />,
-			children: [
-				{
-					path: paths.TEST.VIEWANSWER,
-					element: <AttemptDetailPage />
-				},
-				{
-					path: paths.TEST.SUBMISSION.ROOT,
-					children: [
-						{
-							path: paths.TEST.SUBMISSION.LIST,
-							element: <TestSubmissionListView />
-						},
-						{
-							path: paths.TEST.SUBMISSION.DETAIL,
-							element: <TestSubmissionDetail />
-						}
-					]
-				},
-				{
-					path: paths.TEST.EDIT.ROOT,
-					children: [
-						{
-							path: paths.TEST.EDIT.DETAIL,
-							element: <EditTestDetail />
-						},
-						{
-							path: paths.TEST.EDIT.QUESTION,
-							element: <EditTestQuestion />
-						}
-					]
-				},
-				{
-					path: paths.TEST.CREATENEWTEST,
-					element: <CreateNewTest />
-				},
-				{
-					path: paths.TEST.CREATETEST,
-					element: <CreateTest />,
-				},
-				{
-					path: paths.TEST.TESTLISTVIEW,
-					element: <TestListView />,
-				},
-			],
-		},
 		{
 			path: paths.SCENARIO.ROOT,
 			element: <ScenarioLayout />,
