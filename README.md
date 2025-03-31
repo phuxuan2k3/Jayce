@@ -1,50 +1,36 @@
-# React + TypeScript + Vite
+# Frontend Development Conventions
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## _Components_
 
-Currently, two official plugins are available:
+- Each file should only reflect 1 components (except context).
+- Components can be: UI components, contexts (socket-context.tsx), hooks,
+- There are 2 types of UI components:
+  1.  Reusable components (UI): Could be used across the project (global component folder), or page specific components (same folder of its beloging page).
+  2.  Routing components: A component without props and to be replaced in routers. There are 2 types: Page and Layout.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Paths
 
-## Expanding the ESLint configuration
+- All navigateion (using react-router) must use pre-defined path variable in src/router/paths.ts. DO NOT use string.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Paging
 
-- Configure the top-level `parserOptions` property like this:
+- Page component must ends with Page, ex: LoginPage.tsx.
+- Page components must be in the same folder of the page that uses it.
+  - If the component is shared across the page. Place it in "common" folder.
+- Pages folder **ONLY being nested in a layout folder**, otherwise, place at the same level.
+- Prioritize using nested components, not pages. Only use page as a check point for user can navigate back.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Layout
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- Layout component must ends with Layout, ex: NoAuthLayout.tsx.
+- Layout not only for nested pages, but also contexts (useContext).
+- Shared layout will be placed in the root component folder. Some shared layouts like:
+  - RoleGuard (ProtectedRoute) is a layout for role managing pages.
+  - ...
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Features
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- All logic defined in features folder, not in the page folder. This includes:
+  1.  Hooks
+  2.  Redux state (backend for frontend)
+  3.  API calls to backend

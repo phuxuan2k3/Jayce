@@ -1,18 +1,19 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useAppSelector } from "../../../app/hooks";
+import { useState } from "react";
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { selectIsAuthenticated, setAuthState } from "../../../features/Auth/store/authSlice";
+import { setAuthState } from "../../../features/Auth/store/authSlice";
 import { toErrorMessage } from "../../../helpers/fetchBaseQuery.error";
 import GradientBorder from "../../../components/ui/border/GradientBorder";
 import { useGoogleMutation, useLoginMutation } from "../../../features/Auth/api/authRestApi";
 import SpinnerLoading from "../../../components/ui/loading/SpinnerLoading";
 import AlertError from "../../../components/ui/error/AlertError";
+import paths2 from "../../../router/path-2";
+import React from "react";
 
 const LoginForm = () => {
 	const navigate = useNavigate();
@@ -23,13 +24,6 @@ const LoginForm = () => {
 	const [email, setEmail] = useState("");
 	const errorMessage = toErrorMessage(error as FetchBaseQueryError | SerializedError | undefined);
 	const [errors, setErrors] = useState({ email: "", password: "" });
-
-	const isAuthenticated = useAppSelector(selectIsAuthenticated);
-	useEffect(() => {
-		if (isAuthenticated) {
-			navigate('/')
-		}
-	}, [isAuthenticated])
 
 	const validateForm = () => {
 		let newErrors = { email: "", password: "" };
@@ -79,7 +73,7 @@ const LoginForm = () => {
 			console.log(error)
 
 			if (error === null) {
-				navigate('/')
+				navigate(paths2.ROOT);
 			}
 		} catch (error) {
 			console.log("Login failed:", error);
@@ -87,7 +81,7 @@ const LoginForm = () => {
 	}
 
 	const toSignUp = () => {
-		navigate('/chooserole')
+		navigate(paths2.auth.CHOOSE_ROLE);
 	}
 
 	const handleGoogleSuccess = async (credentialResponse: CredentialResponse): Promise<void> => {
@@ -122,12 +116,6 @@ const LoginForm = () => {
 			}} className="px-3 w-1/2 rounded-e-lg font-bold text-xl py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 hover:bg-[var(--primary-color)] hover:text-white">Sign Up</button>
 		</div>
 
-		<GradientBorder className="mt-14 hover:shadow-gradient duration-150 w-full p-[1px] rounded-lg">
-			<div className=" flex h-12 justify-center items-center  bg-white rounded-lg p-4">
-				<img src="./svg/google.svg" alt="google logo" />
-				<span className="ml-4"> Sign in with Google</span>
-			</div>
-		</GradientBorder>
 		<GradientBorder className="mt-14 hover:shadow-gradient duration-150 w-full p-[1px] rounded-lg">
 			<GoogleLogin
 				onSuccess={handleGoogleSuccess}

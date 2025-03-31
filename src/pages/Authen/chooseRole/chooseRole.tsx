@@ -2,6 +2,7 @@ import { useState } from "react";
 import logo from "/svg/logo.svg";
 import { useNavigate } from "react-router-dom";
 import GradientBorder from "../../../components/ui/border/GradientBorder";
+import paths2 from "../../../router/path-2";
 export default function ChooseRole() {
 	const navigate = useNavigate();
 	const [tab, setTab] = useState("");
@@ -37,7 +38,10 @@ export default function ChooseRole() {
 			<div
 				onClick={() => {
 					if (tab) {
-						navigate(tab === "candidate" ? "/register" : "/bregister");
+						navigate(tab === "candidate"
+							? paths2.auth.REGISTER
+							: paths2.auth.B_REGISTER
+						);
 					}
 				}}
 				className={`bg-[var(--primary-color)] py-2 text-white font-bold  mt-12 w-fit mx-20 rounded-lg px-28

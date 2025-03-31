@@ -15,6 +15,7 @@ export default function AuthenticateLayout() {
 		]}>
 			<UnauthNavbar />
 			<Outlet />
+			{/* Doesn't have footer */}
 		</RoleGuard>
 	</>;
 }

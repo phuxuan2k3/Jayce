@@ -10,7 +10,6 @@ export default function UnauthLayout() {
 	return <>
 		<RoleGuard
 			roles={[Role.None]}
-			exclude={false}
 			alternativeUrl={[
 				{ role: Role.Candidate, alternativeUrl: paths2.candidate.ROOT },
 				{ role: Role.Manager, alternativeUrl: paths2.manager.ROOT },
