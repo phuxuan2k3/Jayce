@@ -10,7 +10,7 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { useVerificationEmailMutation } from "./register.api";
 import SpinnerLoading from "../../../components/ui/loading/SpinnerLoading";
-import paths2 from "../../../router/paths";
+import paths from "../../../router/paths";
 
 const RegisterForm = () => {
 	const navigate = useNavigate();
@@ -26,7 +26,7 @@ const RegisterForm = () => {
 
 	useEffect(() => {
 		if (error === null) {
-			navigate(paths2._layout);
+			navigate(paths._layout);
 		}
 	}, [isSuccess]);
 
@@ -115,7 +115,7 @@ const RegisterForm = () => {
 	};
 
 	const toLogin = () => {
-		navigate(paths2.auth.LOGIN);
+		navigate(paths.auth.LOGIN);
 	}
 
 	return <div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import MyPagination from '../../../../../trash/components/MyPagination';
 import { useState } from 'react';
 import AttemptCardFinished from './AttemptCardFinished';
 import AttemptCardInProgress from './AttemptCardInProgress';
@@ -7,6 +6,7 @@ import Sidebar from './Sidebar';
 import useGetTestIdParams from '../../../../../features/Test/hooks/useGetTestIdParams';
 import { GetTestsByTestIdAttemptsApiArg, useGetTestsByTestIdAttemptsQuery, useGetTestsByTestIdQuery } from '../../../../../features/Test/api/test.api-gen';
 import FetchState from '../../../../../components/wrapper/FetchState';
+import Pagination from '../../../../../components/ui/common/Pagination';
 
 const mockCompany = {
 	name: "Company",
@@ -71,7 +71,7 @@ const TestAttemtpsPage: React.FC = () => {
 									<span>Highest score: {highestScore}</span>
 								</div>
 								<div className="flex justify-center pt-5">
-									<MyPagination totalPage={attemptsQuery.data?.totalPages || 0} onPageChange={handlePaging} />
+									<Pagination totalPage={attemptsQuery.data?.totalPages || 0} onPageChange={handlePaging} />
 								</div>
 							</FetchState>
 						</div>

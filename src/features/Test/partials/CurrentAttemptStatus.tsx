@@ -1,6 +1,6 @@
 import TestTimer from "./TestTimer";
 import { useNavigate } from "react-router-dom";
-import paths2 from "../../../router/paths";
+import paths from "../../../router/paths";
 import { useGetCurrentAttemptStateQuery } from "../api/test.api-gen";
 
 export default function CurrentAttemptStatus() {
@@ -11,7 +11,7 @@ export default function CurrentAttemptStatus() {
 
 	const handleNavigateToDo = () => {
 		if (currentAttemptData.currentAttempt == null) return;
-		navigate(paths2.candidate.tests.in(currentAttemptData.currentAttempt.test.id).DO);
+		navigate(paths.candidate.tests.in(currentAttemptData.currentAttempt.test.id).DO);
 	}
 
 	const { test, secondsLeft } = currentAttemptData.currentAttempt;

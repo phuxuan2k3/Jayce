@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import logo from "/svg/logo.svg";
 import skillsharp from "/svg/skillsharp.svg";
-import paths2 from "../../../router/paths";
+import paths from "../../../router/paths";
 import React from "react";
 
 const UnauthNavbar = () => {
@@ -16,7 +16,7 @@ const UnauthNavbar = () => {
 	};
 
 	const handleLogoClick = () => {
-		navigate(paths2._layout);
+		navigate(paths._layout);
 	};
 
 	return (
@@ -56,10 +56,10 @@ const UnauthNavbar = () => {
 							<div>
 								<FontAwesomeIcon className="block lg:hidden  text-[var(--primary-color)] text-xl" icon={faRightToBracket}></FontAwesomeIcon>
 								<div className="hidden lg:block">
-									<Link to={paths2.auth.LOGIN} className="px-3 mr-3 rounded-lg font-bold text-xl py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2">
+									<Link to={paths.auth.LOGIN} className="px-3 mr-3 rounded-lg font-bold text-xl py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2">
 										Log In
 									</Link>
-									<Link to={paths2.auth.CHOOSE_ROLE} className="px-3 rounded-lg font-bold text-xl py-2  text-white bg-[var(--primary-color)]">
+									<Link to={paths.auth.CHOOSE_ROLE} className="px-3 rounded-lg font-bold text-xl py-2  text-white bg-[var(--primary-color)]">
 										Sign up
 									</Link>
 								</div>

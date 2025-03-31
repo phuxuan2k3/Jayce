@@ -1,6 +1,6 @@
 import logo from "/svg/logo.svg";
 
-export default function Company() {
+export default function ProvideCompaniesPage() {
 	const companies = [
 		{ name: "TikTok", link: "https://cdn-icons-png.flaticon.com/512/3670/3670358.png" },
 		{ name: "Microsoft", link: "https://cdn-icons-png.flaticon.com/512/732/732221.png" },

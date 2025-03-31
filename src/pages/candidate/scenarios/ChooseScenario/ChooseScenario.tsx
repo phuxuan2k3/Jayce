@@ -1,13 +1,13 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaFilter, FaStar, FaUser, FaCalendarAlt, FaArrowRight } from "react-icons/fa";
 import * as React from "react";
-import { Field, Scenario, SortMethod, SortType } from "../../../../features/Scenario/types";
+import { Field, Scenario, SortType } from "../../../../features/Scenario/types";
 import { useListAttemptMutation } from "../../../../features/Scenario/apis/concrete/ekko.scenario-api";
 import { useListScenarioMutation } from "../../../../features/Scenario/apis/concrete/ekko.scenario-api";
 import { useAppSelector } from "../../../../app/hooks";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
-import MyPagination from "../../../../trash/components/MyPagination";
 import { selectUserInfo } from "../../../../features/Auth/store/authSlice";
+import Pagination from "../../../../components/ui/common/Pagination";
 
 const ChooseScenario = () => {
 	const navigate = useNavigate();
@@ -167,7 +167,7 @@ const ChooseScenario = () => {
 					})}
 
 					<div className="flex justify-center items-center">
-						<MyPagination
+						<Pagination
 							totalPage={totalPage}
 							initialPage={currentPage}
 							onPageChange={(page) => setCurrentPage(page)}

@@ -1,7 +1,7 @@
-import Carousel from "../components/Carousel";
-import BRegisterForm from "./BRegisterForm";
+import Carousel from "../common/Carousel";
+import BusinessRegisterForm from "./BusinessRegisterForm";
 
-export default function BRegister() {
+export default function BusinessRegisterPage() {
 	return (
 		<div className="grid grid-cols-12 flex-grow">
 			<Carousel
@@ -9,7 +9,7 @@ export default function BRegister() {
 				buttonClass="bg-white"
 			/>
 			<div className=" col-span-12 lg:col-span-7 mx-8 py-12 ">
-				<BRegisterForm></BRegisterForm>
+				<BusinessRegisterForm></BusinessRegisterForm>
 			</div>
 		</div>
 	);

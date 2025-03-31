@@ -12,7 +12,7 @@ import GradientBorder from "../../../components/ui/border/GradientBorder";
 import { useGoogleMutation, useLoginMutation } from "../../../features/Auth/api/authRestApi";
 import SpinnerLoading from "../../../components/ui/loading/SpinnerLoading";
 import AlertError from "../../../components/ui/error/AlertError";
-import paths2 from "../../../router/paths";
+import paths from "../../../router/paths";
 import React from "react";
 
 const LoginForm = () => {
@@ -73,7 +73,7 @@ const LoginForm = () => {
 			console.log(error)
 
 			if (error === null) {
-				navigate(paths2._layout);
+				navigate(paths._layout);
 			}
 		} catch (error) {
 			console.log("Login failed:", error);
@@ -81,7 +81,7 @@ const LoginForm = () => {
 	}
 
 	const toSignUp = () => {
-		navigate(paths2.auth.CHOOSE_ROLE);
+		navigate(paths.auth.CHOOSE_ROLE);
 	}
 
 	const handleGoogleSuccess = async (credentialResponse: CredentialResponse): Promise<void> => {

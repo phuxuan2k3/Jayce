@@ -1,18 +1,18 @@
-const paths2 = {
+const paths = {
 	_layout: '/',
 	ABOUT: '/about',
 	PRICING: '/pricing',
 	auth: {
 		_layout: '/auth',
 		LOGIN: '/auth/login',
-		REGISTER: '/auth/register',
-		B_REGISTER: '/auth/b-register',
-		RESET: '/auth/reset',
-		NEWPASS: '/auth/newpass',
-		SUGGESTION: '/auth/suggestion',
-		ROLE: '/auth/role',
-		COMPANY: '/auth/company',
+		RESET_PASSWORD: '/auth/reset-password',
+		NEW_PASSWORD: '/auth/new-password',
 		CHOOSE_ROLE: '/auth/choose-role',
+		REGISTER: '/auth/register',
+		BUSINESS_REGISTER: '/auth/business-register',
+		PROVIDE_SUGGESTION: '/auth/provide-suggestion',
+		PROVIDE_POSITION: '/auth/provide-position',
+		PROVIDE_COMPANIES: '/auth/provide-companies',
 	},
 	candidate: {
 		_layout: '/candidate/',
@@ -110,4 +110,4 @@ const paths2 = {
 	},
 }
 
-export default paths2;
+export default paths;

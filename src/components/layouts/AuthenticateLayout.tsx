@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import RoleGuard from "../wrapper/RoleGuard";
 import { Role } from "../../app/enum";
-import paths2 from "../../router/paths";
+import paths from "../../router/paths";
 import UnauthNavbar from "../ui/navbar/UnauthNavbar";
 import React from "react";
 
@@ -10,8 +10,8 @@ export default function AuthenticateLayout() {
 		<RoleGuard roles={[
 			Role.None
 		]} alternativeUrl={[
-			{ role: Role.Candidate, alternativeUrl: paths2.candidate._layout },
-			{ role: Role.Manager, alternativeUrl: paths2.candidate._layout }
+			{ role: Role.Candidate, alternativeUrl: paths.candidate._layout },
+			{ role: Role.Manager, alternativeUrl: paths.candidate._layout }
 		]}>
 			<UnauthNavbar />
 			<Outlet />

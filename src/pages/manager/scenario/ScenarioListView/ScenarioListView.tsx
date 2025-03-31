@@ -10,8 +10,8 @@ import { useAppSelector } from "../../../../app/hooks";
 import { useListScenarioMutation, useDeleteScenarioMutation } from "../../../../features/Scenario/apis/concrete/ekko.scenario-api";
 import { Scenario } from "../../../../features/Scenario/types";
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
-import MyPagination from "../../../../trash/components/MyPagination";
 import { selectUserInfo } from "../../../../features/Auth/store/authSlice";
+import Pagination from "../../../../components/ui/common/Pagination";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 	'& .MuiDialogContent-root': {
@@ -165,7 +165,7 @@ const ScenarioListView = () => {
 					</div>
 
 					<div className="flex justify-center items-center">
-						<MyPagination
+						<Pagination
 							totalPage={totalPage}
 							initialPage={currentPage}
 							onPageChange={(page) => setCurrentPage(page)}

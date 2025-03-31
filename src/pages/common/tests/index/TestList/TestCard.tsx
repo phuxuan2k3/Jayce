@@ -7,7 +7,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { toCompanyImagesDir } from "../../../../../helpers/images";
 import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import paths2 from "../../../../../router/paths";
+import paths from "../../../../../router/paths";
 import GradientBorderGood from "../../../../../components/ui/border/GradientBorder.good";
 import { GetTestsApiResponse } from "../../../../../features/Test/api/test.api-gen";
 
@@ -21,7 +21,7 @@ const TestCard: React.FC<Props> = ({ id, managerId, minutesToAnswer, company, cr
 	const minutesToAnswerString = minutesToAnswer === 1 ? "1 minute" : `${minutesToAnswer} minutes`;
 
 	const handleOnCardClick = () => {
-		navigate(paths2.candidate.tests.in(id).ATTEMPTS);
+		navigate(paths.candidate.tests.in(id).ATTEMPTS);
 	}
 
 	return (

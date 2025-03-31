@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import FetchState from '../../../../../components/wrapper/FetchState';
-import paths2 from '../../../../../router/paths';
+import paths from '../../../../../router/paths';
 import GradientBorderGood from '../../../../../components/ui/border/GradientBorder.good';
 import TestTimer from '../../../../../features/Test/partials/TestTimer';
 import { useGetCurrentAttemptStateQuery } from '../../../../../features/Test/api/test.api-gen';
@@ -30,7 +30,7 @@ const AttemptCardInProgress: React.FC<Props> = ({
 	const { data, isLoading, error } = useGetCurrentAttemptStateQuery({});
 
 	const handleOnInProgressAttemptClick = () => {
-		navigate(paths2.candidate.tests.in(test.id).DO);
+		navigate(paths.candidate.tests.in(test.id).DO);
 	};
 
 	if (data == null) return <>Loading...</>;

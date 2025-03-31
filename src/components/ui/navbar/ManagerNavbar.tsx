@@ -7,7 +7,7 @@ import skillsharp from "/svg/skillsharp.svg";
 import { selectUserInfo } from "../../../features/Auth/store/authSlice";
 import { useAppSelector } from "../../../app/hooks";
 import { useLogoutMutation } from "../../../features/Auth/api/authApi";
-import paths2 from "../../../router/paths";
+import paths from "../../../router/paths";
 
 const ManagerNavbar = ({ showNav = true }: { showNav?: boolean; }) => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -26,11 +26,11 @@ const ManagerNavbar = ({ showNav = true }: { showNav?: boolean; }) => {
 
 	const handleLogout = async () => {
 		await logout();
-		navigate(paths2.auth.LOGIN);
+		navigate(paths.auth.LOGIN);
 	};
 
 	const handleLogoClick = () => {
-		navigate(paths2.candidate._layout);
+		navigate(paths.candidate._layout);
 	};
 
 	return <nav className="bg-white drop-shadow-lg">
@@ -59,7 +59,7 @@ const ManagerNavbar = ({ showNav = true }: { showNav?: boolean; }) => {
 							<Link to="/ipractice/pick" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
 								Scenario
 							</Link>
-							<Link to={paths2.candidate.tests._layout} className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
+							<Link to={paths.candidate.tests._layout} className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
 								Tests
 							</Link>
 							<Link to="/pricing" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">

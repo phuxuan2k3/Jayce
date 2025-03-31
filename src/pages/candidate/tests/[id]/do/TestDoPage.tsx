@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import QuestionComponent from './Question';
 import Sidebar from './Sidebar';
 import useGetTestIdParams from '../../../../../features/Test/hooks/useGetTestIdParams';
-import paths2 from '../../../../../router/paths';
+import paths from '../../../../../router/paths';
 import FetchState from '../../../../../components/wrapper/FetchState';
 import { useAppSelector } from '../../../../../app/hooks';
 import { curerntAttemptSelects } from '../../../../../features/Test/reducers/currentAttemtpSlice';
@@ -26,7 +26,7 @@ const TestDoPage = () => {
 		if (stateQuery.data == null) return;
 		if (stateQuery.data.hasCurrentAttempt === false) {
 			// TODO: Add modal to notify user that the test has ended.
-			navigate(paths2.candidate.tests.in(testId).ATTEMPTS);
+			navigate(paths.candidate.tests.in(testId).ATTEMPTS);
 		}
 	}, [stateQuery]);
 

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import paths2 from "../../../../../router/paths";
+import paths from "../../../../../router/paths";
 import useGetTestIdParams from "../../../../../features/Test/hooks/useGetTestIdParams";
 import { useEffect } from "react";
 import TestTimer from "../../../../../features/Test/partials/TestTimer";
@@ -28,12 +28,12 @@ export default function Sidebar({
 	const { currentQuestionIndex, flaggedQuestionIndexes, } = currentAttemptState;
 
 	const handleCancelTest = () => {
-		navigate(paths2.candidate.tests.in(testId).ATTEMPTS);
+		navigate(paths.candidate.tests.in(testId).ATTEMPTS);
 	}
 
 	useEffect(() => {
 		if (isSuccess) {
-			navigate(paths2.candidate.tests.in(testId).ATTEMPTS);
+			navigate(paths.candidate.tests.in(testId).ATTEMPTS);
 		}
 	}, [isSuccess]);
 

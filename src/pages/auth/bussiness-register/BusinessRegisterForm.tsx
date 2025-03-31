@@ -3,17 +3,16 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom";
 // import { useRegisterMutation } from "../../../features/Auth/authApi";
 import { useEffect, useState } from "react";
-import { useAppSelector } from "../../../app/hooks";
-import { useVerificationEmailMutation } from "./register.api";
-import { useRegisterMutation } from "./register.api";
-import { useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import GradientBorder from "../../../components/ui/border/GradientBorder";
 import { selectIsAuthenticated, setAuthState } from "../../../features/Auth/store/authSlice";
+import { useRegisterMutation } from "../../../features/Auth/api/authApi";
+import { useVerificationEmailMutation } from "../../../features/Auth/api/authRestApi";
 
-const BRegisterForm = () => {
+const BusinessRegisterForm = () => {
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
-	const [register, { isLoading, error }] = useRegisterMutation();
+	const dispatch = useAppDispatch();
+	const [register, { error }] = useRegisterMutation();
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const [verificationEmail] = useVerificationEmailMutation();
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
@@ -97,7 +96,10 @@ const BRegisterForm = () => {
 				role: 1
 			});
 			console.log(response);
-			dispatch(setAuthState({ user: response.data?.user ?? null, tokens: response.data?.token_info ?? null }));
+			dispatch(setAuthState({
+				user: response.data?.user ?? null,
+				tokens: response.data?.tokens ?? null
+			}));
 			console.log(error);
 			if (error === null) {
 				navigate('/')
@@ -290,4 +292,4 @@ const BRegisterForm = () => {
 	</div>
 }
 
-export default BRegisterForm
+export default BusinessRegisterForm

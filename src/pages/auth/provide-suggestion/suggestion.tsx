@@ -1,7 +1,6 @@
-import CandidateNavbar from "../../../components/ui/navbar/CandidateNavbar";
 import logo from "/svg/logo.svg";
 
-export default function Suggestion() {
+export default function ProvideSuggestionPage() {
 	const suggestions = [
 		"Findding job oppotunities",
 		"Passing resume screens",
