@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import FetchState from '../../../../../components/wrapper/FetchState';
 import paths from '../../../../../router/paths';
 import GradientBorderGood from '../../../../../components/ui/border/GradientBorder.good';
-import TestTimer from '../../../../../features/Test/partials/TestTimer';
-import { useGetCurrentAttemptStateQuery } from '../../../../../features/Test/api/test.api-gen';
+import TestTimer from '../../common/TestTimer';
+import { useGetCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
 
 type Props = {
 	company: {

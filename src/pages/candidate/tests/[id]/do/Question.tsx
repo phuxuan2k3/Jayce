@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "../../../../../app/hooks";
-import { useAnswerTestQuestionMutation } from "../../../../../features/Test/reducers/currentAttemptApi";
-import { currentAttemptActions, curerntAttemptSelects } from "../../../../../features/Test/reducers/currentAttemtpSlice";
-import { CurrentAttempt } from "../../../../../features/Test/types/current";
+import { useAnswerTestQuestionMutation } from "../../../../../features/tests/api/currentAttemptApi";
+import { currentAttemptActions, curerntAttemptSelects } from "../../../../../features/tests/stores/currentAttemtpSlice";
+import { CurrentAttempt } from "../../../../../features/tests/types/current";
 
 interface QuestionComponentProps {
 	currentAttempt: CurrentAttempt;

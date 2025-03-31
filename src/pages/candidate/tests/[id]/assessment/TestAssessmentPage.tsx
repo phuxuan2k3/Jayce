@@ -1,41 +1,71 @@
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
-import { useNavigate, useParams } from "react-router-dom";
-import { mockData } from "./types";
-import { paths } from "../../../../router/path";
+import { useNavigate } from "react-router-dom";
+import paths from "../../../../../router/paths";
+import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 
 ChartJS.register(ArcElement, Tooltip);
 
-const TestEvaluate = () => {
+type SkillAssessment = {
+	name: string;
+	rating: number;
+}
+
+type TestEvaluateProps = {
+	title: string;
+	comment: string;
+	skills: SkillAssessment[];
+	completionOverview: {
+		excellentCompletion: number;
+		satifactoyCompletion: number;
+		needsImprovement: number;
+	}
+}
+
+const mockData: TestEvaluateProps = {
+	title: "Test Evaluation",
+	comment: "Great job! You have shown excellent understanding of the concepts. Keep up the good work and continue to build on your strengths. There are a few areas that need improvement, but overall, you did very well.",
+	skills: [
+		{ name: "JavaScript", rating: 4.5 },
+		{ name: "React", rating: 4.0 },
+		{ name: "CSS", rating: 3.5 },
+	],
+	completionOverview: {
+		excellentCompletion: 50,
+		satifactoyCompletion: 30,
+		needsImprovement: 20,
+	},
+};
+
+const evaluate = mockData;
+const completionOverview = {
+	legend: [
+		{
+			color: "#2b6cb0",
+			text: "Excellent Completion",
+			percentage: evaluate.completionOverview.excellentCompletion
+		},
+		{
+			color: "#38b2ac",
+			text: "Satisfactory Completion",
+			percentage: evaluate.completionOverview.satifactoyCompletion
+		},
+		{
+			color: "#81e6d9",
+			text: "Needs Improvement",
+			percentage: evaluate.completionOverview.needsImprovement
+		},
+	],
+};
+
+// TODO: complete the page
+
+const TestAssessmentPage = () => {
 	const navigate = useNavigate();
-	const { testId } = useParams<{ testId: string }>();
-	if (!testId) throw new Error("Test ID is required to evaluate the test");
-
-	// Todo
-	const evaluate = mockData;
-
-	const completionOverview = {
-		legend: [
-			{
-				color: "#2b6cb0",
-				text: "Excellent Completion",
-				percentage: evaluate.completionOverview.excellentCompletion
-			},
-			{
-				color: "#38b2ac",
-				text: "Satisfactory Completion",
-				percentage: evaluate.completionOverview.satifactoyCompletion
-			},
-			{
-				color: "#81e6d9",
-				text: "Needs Improvement",
-				percentage: evaluate.completionOverview.needsImprovement
-			},
-		],
-	};
+	const testId = useGetTestIdParams();
 
 	const handleCoursesForYou = () => {
-		navigate(paths.TEST.SCHEDULE);
+		navigate(paths.candidate.tests.in().RECOMMENDATION);
 	}
 
 	return (
@@ -176,4 +206,4 @@ const PieChart = ({ legend }: { legend: { color: string; text: string; percentag
 		</div>
 	);
 };
-export default TestEvaluate;
+export default TestAssessmentPage;

@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom"
 import { paths } from "../../../../../router/path";
-import useGetTestIdParams from "../../../../../features/Test/hooks/useGetTestIdParams";
+import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import paths from "../../../../../router/paths";
 import { useEffect, useState } from "react";
 import ModalBase from "../../../../../components/ui/modal/Modal.base";
-import { usePostCurrentAttemptNewMutation } from "../../../../../features/Test/api/test.api-gen";
+import { usePostCurrentAttemptNewMutation } from "../../../../../features/tests/api/test.api-gen";
 
 export default function Sidebar() {
 	const testId = useGetTestIdParams();

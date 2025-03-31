@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../router/paths";
-import useGetTestIdParams from "../../../../../features/Test/hooks/useGetTestIdParams";
+import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import { useEffect } from "react";
-import TestTimer from "../../../../../features/Test/partials/TestTimer";
+import TestTimer from "../../common/TestTimer";
 import { useAppDispatch, useAppSelector } from "../../../../../app/hooks";
-import { currentAttemptActions, curerntAttemptSelects } from "../../../../../features/Test/reducers/currentAttemtpSlice";
-import { CurrentAttempt } from "../../../../../features/Test/types/current";
-import { usePostCurrentAttemptSubmitMutation } from "../../../../../features/Test/api/test.api-gen";
+import { currentAttemptActions, curerntAttemptSelects } from "../../../../../features/tests/stores/currentAttemtpSlice";
+import { CurrentAttempt } from "../../../../../features/tests/types/current";
+import { usePostCurrentAttemptSubmitMutation } from "../../../../../features/tests/api/test.api-gen";
 
 interface SidebarProps {
 	currentAttempt: CurrentAttempt;

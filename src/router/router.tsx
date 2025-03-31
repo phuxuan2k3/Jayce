@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import LoginPage from "../pages/auth/login/LoginPage";
 import RegisterPage from "../pages/auth/register/RegisterPage";
-import TestEvaluate from "../pages/candidate/tests/evaluate/TestEvaluate";
+import TestAssessmentPage from "../pages/candidate/tests/[id]/assessment/TestAssessmentPage";
 import ErrorPage from "../components/pages/ErrorPage";
-import TestSchedule from "../pages/candidate/tests/schedule/TestSchedule";
+import TestRecommendationPage from "../pages/candidate/tests/[id]/recommendation/TestRecommendationPage";
 import TestSubmissionListView from "../pages/manager/tests/TestSubmissionListView/TestSubmissionListView";
 import TestSubmissionDetail from "../pages/manager/tests/TestSubmissionDetail/TestSubmissionDetail";
 import TestListView from "../pages/manager/tests/TestListView/TestListView";
@@ -20,14 +20,12 @@ import ScenarioCreateQuestion from "../pages/manager/scenario/ScenarioCreateQues
 import ScenarioEditDetail from "../pages/manager/scenario/ScenarioEditDetail/ScenarioEditDetail";
 import ScenarioEditQuestion from "../pages/manager/scenario/ScenarioEditQuestion/ScenarioEditQuestion";
 import PickAField from "../pages/candidate/scenarios/PickAField/PickAField";
-import LayoutInterviewPractice from "../pages/candidate/scenarios/InterviewLayout";
 import ChooseScenario from "../pages/candidate/scenarios/ChooseScenario/ChooseScenario";
 import ScenarioDetail from "../pages/candidate/scenarios/Detail/Detail";
 import AnswerQuestion from "../pages/candidate/scenarios/AnswerQuestion/AnswerQuestion";
 import Review from "../pages/candidate/scenarios/Review/Review";
-import ProfileDashboard from "../pages/common/Profile/Candidate/ProfileDashboard";
-import ProfileLayout from "../pages/common/Profile/components/Layout";
-import PricingPage from "../pages/common/Profile/Candidate/PricingPage";
+import ProfilePage from "../pages/common/profile/index/ProfilePage";
+import PricingPage from "../pages/common/profile/pricing/PricingPage";
 import ProvideSuggestionPage from "../pages/auth/provide-suggestion/suggestion";
 import ProvidePositionPage from "../pages/auth/provide-position/ProvidePositionPage";
 import ProvideCompaniesPage from "../pages/auth/provide-companies/ProvideCompaniesPage";
@@ -36,17 +34,19 @@ import NewPasswordPage from "../pages/auth/new-password/NewPasswordPage";
 import paths from "./paths";
 import AuthenticateLayout from "../components/layouts/AuthenticateLayout";
 import UnauthLayout from "../components/layouts/UnauthLayout";
-import CandidateLayout from "../pages/candidate/layout";
-import DashboardPage from "../pages/unauth/DashboardPage";
+import CandidateLayout from "../pages/candidate/CandidateLayout";
+import GuestPage from "../pages/unauth/GuestPage";
 import TestsPage from "../pages/common/tests/index/TestsPage";
 import TestDoPage from "../pages/candidate/tests/[id]/do/TestDoPage";
 import TestAttemtpsPage from "../pages/candidate/tests/[id]/attempts/TestAttemptsPage";
-import CurrentTestLayout from "../features/Test/layout/CurrentTestLayout";
+import CandidateTestLayout from "../pages/candidate/tests/CandidateTestLayout";
 import ManagerLayout from "../components/layouts/ManagerLayout";
 import BusinessRegisterPage from "../pages/auth/bussiness-register/BusinessRegisterPage";
 import ChooseRolePage from "../pages/auth/choose-role/ChooseRolePage";
 import AttemptDetailPage from "../pages/candidate/tests/attempts/[id]/AttemptDetailPage";
+import HomePage from "../pages/common/HomePage";
 import React from "react";
+import CandidateInTestLayout from "../pages/candidate/tests/[id]/CandidateInTestLayout";
 
 const router = createBrowserRouter([{
 	errorElement: <ErrorPage />,
@@ -104,18 +104,18 @@ const router = createBrowserRouter([{
 			element: <CandidateLayout />,
 			children: [
 
-				// Dashboard
+				// Common pages
 
 				{
 					index: true,
-					element: <DashboardPage />,
+					element: <HomePage />,
 				},
 
 				// F1 - Tests
 
 				{
 					path: paths.candidate.tests._layout,
-					element: <CurrentTestLayout />,
+					element: <CandidateTestLayout />,
 					children: [
 						{
 							index: true,
@@ -123,11 +123,11 @@ const router = createBrowserRouter([{
 						},
 						{
 							path: paths.candidate.tests.in().RECOMMENDATION,
-							element: <TestSchedule />
+							element: <TestRecommendationPage />
 						},
 						{
 							path: paths.candidate.tests.in().ASSESSMENT,
-							element: <TestEvaluate />
+							element: <TestAssessmentPage />
 						},
 
 						// In an Attempt
@@ -146,6 +146,7 @@ const router = createBrowserRouter([{
 
 						{
 							path: paths.candidate.tests.in()._layout,
+							element: <CandidateInTestLayout />,
 							children: [
 								{
 									path: paths.candidate.tests.in().DO,
@@ -164,7 +165,6 @@ const router = createBrowserRouter([{
 
 				{
 					path: paths.candidate.scenarios._layout,
-					element: <LayoutInterviewPractice />,
 					children: [
 						{
 							path: paths.candidate.scenarios.PICK,
@@ -197,11 +197,10 @@ const router = createBrowserRouter([{
 				// Profile
 				{
 					path: paths.candidate.profile._layout,
-					element: <ProfileLayout />,
 					children: [
 						{
 							index: true,
-							element: <ProfileDashboard />,
+							element: <ProfilePage />,
 						},
 						{
 							path: paths.candidate.profile.PRICING,
@@ -219,10 +218,10 @@ const router = createBrowserRouter([{
 			element: <ManagerLayout />,
 			children: [
 
-				// Dashboard
+				// Common pages
 
 				{
-					element: <DashboardPage />,
+					element: <HomePage />,
 					index: true
 				},
 
@@ -317,11 +316,10 @@ const router = createBrowserRouter([{
 
 				{
 					path: paths.manager.profile._layout,
-					element: <ProfileLayout />,
 					children: [
 						{
 							index: true,
-							element: <ProfileDashboard />,
+							element: <ProfilePage />,
 						},
 						{
 							path: paths.manager.profile.PRICING,
@@ -339,7 +337,7 @@ const router = createBrowserRouter([{
 			element: <UnauthLayout />,
 			children: [
 				{
-					element: <DashboardPage />,
+					element: <GuestPage />,
 					index: true
 				}
 			]

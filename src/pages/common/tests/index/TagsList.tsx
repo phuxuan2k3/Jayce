@@ -1,6 +1,6 @@
 import FetchState from "../../../../components/wrapper/FetchState";
 import GradientBorderGood from "../../../../components/ui/border/GradientBorder.good";
-import { GetTestsApiArg, useGetTagsQuery } from "../../../../features/Test/api/test.api-gen";
+import { GetTestsApiArg, useGetTagsQuery } from "../../../../features/tests/api/test.api-gen";
 
 type Props = {
 	filter: GetTestsApiArg;

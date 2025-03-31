@@ -1,4 +1,4 @@
-import testApi from "../../../../features/Test/api/test.api";
+import testApi from "../../../../features/tests/api/test.api";
 import { TestDetails } from "./types";
 
 const editdetailAPI = testApi.injectEndpoints({

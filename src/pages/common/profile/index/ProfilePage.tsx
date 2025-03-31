@@ -5,7 +5,7 @@ import Settings from "./Settings";
 import { useAppSelector } from '../../../../app/hooks';
 import { selectUserInfo, UserInfo } from '../../../../features/Auth/store/authSlice';
 
-const ProfileDashboard = () => {
+const ProfilePage = () => {
 	const [activeTab, setActiveTab] = React.useState<"Activities" | "Settings">("Activities");
 	const authData = useAppSelector(selectUserInfo);
 
@@ -77,4 +77,4 @@ const ProfileDashboard = () => {
 	);
 };
 
-export default ProfileDashboard;
+export default ProfilePage;

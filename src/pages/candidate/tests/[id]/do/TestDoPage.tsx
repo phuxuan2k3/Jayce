@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import QuestionComponent from './Question';
 import Sidebar from './Sidebar';
-import useGetTestIdParams from '../../../../../features/Test/hooks/useGetTestIdParams';
+import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
 import paths from '../../../../../router/paths';
 import FetchState from '../../../../../components/wrapper/FetchState';
 import { useAppSelector } from '../../../../../app/hooks';
-import { curerntAttemptSelects } from '../../../../../features/Test/reducers/currentAttemtpSlice';
-import { useGetCurrentAttemptDoQuery, useGetCurrentAttemptStateQuery } from '../../../../../features/Test/api/test.api-gen';
+import { curerntAttemptSelects } from '../../../../../features/tests/stores/currentAttemtpSlice';
+import { useGetCurrentAttemptDoQuery, useGetCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
 
 const TestDoPage = () => {
 	const navigate = useNavigate();

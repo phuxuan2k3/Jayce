@@ -9,7 +9,7 @@ import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../router/paths";
 import GradientBorderGood from "../../../../../components/ui/border/GradientBorder.good";
-import { GetTestsApiResponse } from "../../../../../features/Test/api/test.api-gen";
+import { GetTestsApiResponse } from "../../../../../features/tests/api/test.api-gen";
 
 type Props = GetTestsApiResponse['data'][0] & {
 	company: string;

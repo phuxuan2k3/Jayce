@@ -1,7 +1,7 @@
 import FetchState from "../../../../../components/wrapper/FetchState";
 import Pagination from "../../../../../components/ui/common/Pagination";
 import SkeletonLoading from "../../../../../components/ui/loading/SkeletonLoading";
-import { GetTestsApiArg, useGetTestsQuery } from "../../../../../features/Test/api/test.api-gen";
+import { GetTestsApiArg, useGetTestsQuery } from "../../../../../features/tests/api/test.api-gen";
 import TestCard from "./TestCard";
 
 type Props = {

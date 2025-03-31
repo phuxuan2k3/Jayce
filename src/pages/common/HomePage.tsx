@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import paths from "../../router/paths";
 
-const DashboardPage = () => {
+const HomePage = () => {
 	const navigate = useNavigate();
 	const features = [
 		{
@@ -86,4 +86,4 @@ const DashboardPage = () => {
 	</div>
 }
 
-export default DashboardPage;
+export default HomePage;

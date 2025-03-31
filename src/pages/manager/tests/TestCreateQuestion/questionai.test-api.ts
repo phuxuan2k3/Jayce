@@ -1,4 +1,4 @@
-import aiAPI from "../../../../features/Test/api/AI.api";
+import aiAPI from "../../../../features/tests/api/AI.api";
 import { CriteriaRequest, CriteriaResponse, GeneratedQuestionFormat } from "./types";
 
 const questionaiAPI = aiAPI.injectEndpoints({

@@ -1,9 +1,9 @@
 import { url } from "../../../app/env";
-import { CurrentAttemptSocket } from "../api/socket.schema";
+import { CurrentAttemptSocket } from "./socket.schema";
 import { io } from "socket.io-client";
-import { testApiGen } from "../api/test.api-gen";
+import { testApiGen } from "./test.api-gen";
 import { RootState } from "../../../app/store";
-import { currentAttemptActions } from "./currentAttemtpSlice";
+import { currentAttemptActions } from "../stores/currentAttemtpSlice";
 
 let _socket: CurrentAttemptSocket | null = null;
 

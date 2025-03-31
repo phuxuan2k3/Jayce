@@ -3,8 +3,8 @@ import { useState } from 'react';
 import AttemptCardFinished from './AttemptCardFinished';
 import AttemptCardInProgress from './AttemptCardInProgress';
 import Sidebar from './Sidebar';
-import useGetTestIdParams from '../../../../../features/Test/hooks/useGetTestIdParams';
-import { GetTestsByTestIdAttemptsApiArg, useGetTestsByTestIdAttemptsQuery, useGetTestsByTestIdQuery } from '../../../../../features/Test/api/test.api-gen';
+import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
+import { GetTestsByTestIdAttemptsApiArg, useGetTestsByTestIdAttemptsQuery, useGetTestsByTestIdQuery } from '../../../../../features/tests/api/test.api-gen';
 import FetchState from '../../../../../components/wrapper/FetchState';
 import Pagination from '../../../../../components/ui/common/Pagination';
 

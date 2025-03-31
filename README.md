@@ -10,6 +10,8 @@
 
 # Page Folder Structure (Important)
 
+- "common" folder is for shared component across pages in the folder or components being used by the layout.
+
 # More Information
 
 ## Paths
