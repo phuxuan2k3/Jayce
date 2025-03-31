@@ -150,8 +150,7 @@ export default {
 		},
 	],
 	daisyui: {
-		themes: ["light", "dark"],
-		defaultTheme: "light",
+		themes: ["dark", "light"],
 	},
 	important: true,
 	corePlugins: {

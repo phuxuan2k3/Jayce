@@ -2,7 +2,6 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import Login from "../pages/Authen/login/Login";
 import { paths } from "./path"
 import Register from "../pages/Authen/register/Register";
-import Layout from "../pages/Test/components/Layout";
 import TestEvaluate from "../pages/Test/Candidate/TestEvaluate/TestEvaluate";
 import ErrorPage from "../components/pages/ErrorPage";
 import TestSchedule from "../pages/Test/Candidate/TestSchedule/TestSchedule";
@@ -46,6 +45,8 @@ import TestDoPage from "../pages/Test/Candidate/TestDo/TestDoPage";
 import TestAttemtpsPage from "../pages/Test/Candidate/TestAttempts/TestAttemptsPage";
 import CurrentTestLayout from "../features/Test/layout/CurrentTestLayout";
 import ManagerLayout from "../components/layouts/ManagerLayout";
+import BRegister from "../pages/Authen/register/BRegister";
+import ChooseRole from "../pages/Authen/chooseRole/chooseRole";
 
 const router = createBrowserRouter([{
 	errorElement: <ErrorPage />,
@@ -57,6 +58,14 @@ const router = createBrowserRouter([{
 				{
 					path: paths2.auth.LOGIN,
 					element: <Login />
+				},
+				{
+					path: paths2.auth.CHOOSE_ROLE,
+					element: <ChooseRole />
+				},
+				{
+					path: paths2.auth.B_REGISTER,
+					element: <BRegister />
 				},
 				{
 					path: paths2.auth.REGISTER,

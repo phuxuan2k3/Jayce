@@ -1,4 +1,3 @@
-import CandidateNavbar from "../../../components/ui/navbar/CandidateNavbar";
 import logo from "/svg/logo.svg";
 
 export default function Role() {

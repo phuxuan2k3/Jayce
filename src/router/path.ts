@@ -1,8 +1,10 @@
 export const paths = {
 	REGISTER: '/register',
+	BREGISTER: '/bregister',
 	LOGIN: '/login',
 	SUGGESTION: '/suggestion',
 	ROLE: '/role',
+	CHOOSEROLE: '/chooserole',
 	COMPANY: '/company',
 	RESET: '/reset',
 	NEWPASS: '/resetpassword',

@@ -142,7 +142,7 @@ const RegisterForm = () => {
 			<GradientBorder className="relative mt-8 w-full p-[1px] rounded-lg">
 				<input
 					type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder=" "
-					className="peer block w-full rounded-lg border border-gray-300  px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
+					className="peer block w-full rounded-lg border border-gray-300  px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0  "
 				/>
 				<label
 					className={`bg-white absolute left-2 transform text-sm text-gray-500 transition-all
@@ -156,7 +156,7 @@ const RegisterForm = () => {
 			<GradientBorder className="relative mt-8 w-full p-[1px] rounded-lg">
 				<input
 					type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder=" "
-					className="peer block w-full rounded-lg border border-gray-300  px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
+					className="peer block w-full rounded-lg border border-gray-300  px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0  "
 				/>
 				<label
 					className={`bg-white absolute left-2 transform text-sm text-gray-500 transition-all
@@ -170,7 +170,7 @@ const RegisterForm = () => {
 			<GradientBorder className="relative mt-8 w-full p-[1px] rounded-lg">
 				<input
 					type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder=" "
-					className="peer block w-full rounded-lg border border-gray-300  px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
+					className="peer block w-full rounded-lg border border-gray-300  px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0  "
 				/>
 				<label
 					className={`bg-white absolute left-2 transform text-sm text-gray-500 transition-all
@@ -200,7 +200,7 @@ const RegisterForm = () => {
 					<div className="relative ">
 						<input
 							type="text" value={otp} onChange={(e) => setOtp(e.target.value)} placeholder=" "
-							className="peer block w-full rounded-lg border border-gray-300 bg-transparent px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
+							className="peer block w-full rounded-lg border border-gray-300 bg-transparent px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0  "
 						/>
 						<label
 							className={`bg-white absolute left-2 transform text-sm text-gray-500 transition-all

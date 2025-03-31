@@ -3,6 +3,7 @@ import logo from "/svg/logo.svg";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useResetPasswordMutation, useVerifyResetCodeMutation } from "../register/register.api";
 import GradientBorder from "../../../components/ui/border/GradientBorder";
+import React from "react";
 
 export default function NewPassword() {
 	const [email, setEmail] = useState("");
@@ -73,7 +74,7 @@ export default function NewPassword() {
 					<GradientBorder className="relative mt-8 w-full p-[1px] rounded-lg">
 						<input
 							type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder=" "
-							className="peer block w-full rounded-lg border border-gray-300  px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
+							className="peer block w-full rounded-lg border border-gray-300  px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0   "
 						/>
 						<label
 							className={`bg-white absolute left-2 transform text-sm text-gray-500 transition-all
