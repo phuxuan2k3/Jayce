@@ -9,7 +9,7 @@ import { useAppSelector } from '../../../../../app/hooks';
 import { curerntAttemptSelects } from '../../../../../features/tests/stores/currentAttemtpSlice';
 import { useGetCurrentAttemptDoQuery, useGetCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
 
-const TestDoPage = () => {
+const CandidateTestDoPage = () => {
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
 	const doQuery = useGetCurrentAttemptDoQuery({});
@@ -80,4 +80,4 @@ const TestDoPage = () => {
 	);
 }
 
-export default TestDoPage
+export default CandidateTestDoPage

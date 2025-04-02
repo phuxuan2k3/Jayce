@@ -28,10 +28,10 @@ const paths = {
 				}
 			},
 			attempts: {
-				// ROOT: '/candidate/attempts', // todo: add this page
+				// TODO: add this page: '/candidate/attempts', 
 				in(id: number | string = ":attemptId") {
 					return {
-						_layout: `/candidate/attempts/${id}/`,
+						_layout: `/candidate/tests/attempts/${id}/`,
 					}
 				}
 			}
@@ -60,24 +60,19 @@ const paths = {
 			SELF: '/manager/tests/self/',
 			in(id: number | string = ":testId") {
 				return {
-					submissions: {
-						ROOT: `/manager/tests/${id}/submissions/`,
-						in(id: number | string = ":submissionId") {
-							return {
-								ROOT: `/manager/tests/${id}/submissions/${id}/`,
-							}
-						}
-					},
-					edit: {
-						DETAIL: `/manager/tests/${id}/edit/detail/`,
-						QUESTION: `/manager/tests/${id}/edit/question/`,
-					},
+					_layout: `/manager/tests/${id}/`,
+					ATTEMPTS: `/manager/tests/${id}/attempts/`,
+					EDIT: `/manager/tests/${id}/edit/`,
 				}
 			},
-			create: {
-				DETAIL: `/manager/tests/create/detail/`,
-				QUESTION: `/manager/tests/create/question/`,
+			attempts: {
+				in(id: number | string = ":attemptId") {
+					return {
+						_layout: `/manager/tests/attempts/${id}/`,
+					}
+				}
 			},
+			CREATE: `/manager/tests/create/`,
 		},
 		scenario: {
 			_layout: '/manager/scenarios/',

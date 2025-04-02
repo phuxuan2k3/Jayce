@@ -60,7 +60,7 @@ const completionOverview = {
 
 // TODO: complete the page
 
-const TestAssessmentPage = () => {
+const CandidateTestAssessmentPage = () => {
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
 
@@ -206,4 +206,4 @@ const PieChart = ({ legend }: { legend: { color: string; text: string; percentag
 		</div>
 	);
 };
-export default TestAssessmentPage;
+export default CandidateTestAssessmentPage;

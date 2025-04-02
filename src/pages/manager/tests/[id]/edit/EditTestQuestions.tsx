@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import QuestionEditCard from "../common/QuestionEditCard";
-import { testPersistActions, testPersistSelectors } from "../../../../features/tests/stores/testPersistSlice";
+import { useAppDispatch, useAppSelector } from "../../../../../app/hooks";
+import QuestionEditCard from "../../common/QuestionEditCard";
+import { testPersistActions, testPersistSelectors } from "../../../../../features/tests/stores/testPersistSlice";
 
 const EditTestQuestions = () => {
 	const dispatch = useAppDispatch();

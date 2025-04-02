@@ -1,5 +1,5 @@
-import testApi from "../../../../app/bases/test.api";
-import { Submission } from "./types";
+import testApi from "../../../../../app/bases/test.api";
+import { Submission } from "../../TestSubmissionDetail/types";
 type TestSubmissionParams = {
 	attemptId: string;
 	candidateId: string;

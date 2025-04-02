@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Scheduler from "react-mui-scheduler"
 import { mockData } from './types';
 
-const TestRecommendationPage = () => {
+const CandidateTestRecommendationPage = () => {
 	const title = mockData.title;
 	const events = mockData.events;
 
@@ -80,4 +80,4 @@ const TestRecommendationPage = () => {
 	);
 };
 
-export default TestRecommendationPage;
+export default CandidateTestRecommendationPage;

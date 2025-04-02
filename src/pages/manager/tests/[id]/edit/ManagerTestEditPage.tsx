@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
-import useGetTestIdParams from "../../../../features/tests/hooks/useGetTestIdParams";
+import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import EditTestQuestions from "./EditTestQuestions";
-import { useGetTestsByTestIdQuery, useGetTestsByTestIdQuestionsQuery } from "../../../../features/tests/api/test.api-gen";
+import { useGetTestsByTestIdQuery, useGetTestsByTestIdQuestionsQuery } from "../../../../../features/tests/api/test.api-gen";
 import { Snackbar, Alert } from "@mui/material";
-import { useAppDispatch } from "../../../../app/hooks";
-import { toErrorMessage } from "../../../../helpers/fetchBaseQuery.error";
-import { testPersistActions } from "../../../../features/tests/stores/testPersistSlice";
-import TestFieldsEditForm from "../common/TestFieldsEditForm";
+import { useAppDispatch } from "../../../../../app/hooks";
+import { toErrorMessage } from "../../../../../helpers/fetchBaseQuery.error";
+import { testPersistActions } from "../../../../../features/tests/stores/testPersistSlice";
+import TestFieldsEditForm from "../../common/TestFieldsEditForm";
 
 type Tab = "detail" | "questions";
 
 // TODO: handle error and loading states properly
 
-export default function TestEditPage() {
+export default function ManagerTestEditPage() {
 	const testId = useGetTestIdParams();
 	const [tab, setTab] = useState<Tab>("detail");
 	const [snackbar, setSnackbar] = useState<{

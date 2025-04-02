@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { testPersistActions, testPersistSelectors } from "../../../../features/tests/stores/testPersistSlice";
 import paths from "../../../../router/paths";
 
-const TestCreateQuestion = () => {
+const ManagerTestsCreatePage = () => {
 	const navigate = useNavigate();
 	const [step, setStep] = useState(0);
 	const dispatch = useAppDispatch();
@@ -79,4 +79,4 @@ const TestCreateQuestion = () => {
 	);
 }
 
-export default TestCreateQuestion;
+export default ManagerTestsCreatePage;

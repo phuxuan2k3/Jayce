@@ -14,7 +14,7 @@ const mockCompany = {
 };
 const perPage = 5;
 
-const TestAttemtpsPage: React.FC = () => {
+const CandidateTestAttemtpsPage: React.FC = () => {
 	const testId = useGetTestIdParams();
 	const [filters, setFilters] = useState<GetTestsByTestIdAttemptsApiArg>({
 		testId,
@@ -85,4 +85,4 @@ const TestAttemtpsPage: React.FC = () => {
 	);
 }
 
-export default TestAttemtpsPage;
+export default CandidateTestAttemtpsPage;

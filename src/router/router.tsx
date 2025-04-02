@@ -1,16 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import LoginPage from "../pages/auth/login/LoginPage";
 import RegisterPage from "../pages/auth/register/RegisterPage";
-import TestAssessmentPage from "../pages/candidate/tests/[id]/assessment/TestAssessmentPage";
+import CandidateTestAssessmentPage from "../pages/candidate/tests/[id]/assessment/CandidateTestAssessmentPage";
 import ErrorPage from "../components/pages/ErrorPage";
-import TestRecommendationPage from "../pages/candidate/tests/[id]/recommendation/TestRecommendationPage";
-import TestSubmissionListView from "../pages/manager/tests/TestSubmissionListView/TestSubmissionListView";
-import TestSubmissionDetail from "../pages/manager/tests/TestSubmissionDetail/TestSubmissionDetail";
-import TestListView from "../pages/manager/tests/TestListView/TestListView";
-import CreateTest from "../pages/manager/tests/create/TestCreateDetail";
-import EditTestGeneral from "../pages/manager/tests/edit/EditTestFields";
-import EditTestQuestions from "../pages/manager/tests/edit/EditTestQuestions";
-import TestCreateQuestion from "../pages/manager/tests/create/TestCreatePage";
+import CandidateTestRecommendationPage from "../pages/candidate/tests/[id]/recommendation/CandidateTestRecommendationPage";
+import ManagerTestAttemptsPage from "../pages/manager/tests/[id]/attempts/ManagerTestAttemptsPage";
+import ManagerTestAttemptPage from "../pages/manager/tests/attempts/[id]/ManagerTestAttemptPage";
+import ManagerTestsCreatePage from "../pages/manager/tests/create/ManagerTestsCreatePage";
 import ScenarioListView from "../pages/manager/scenario/ScenarioListView/ScenarioListView";
 import ScenarioLayout from "../pages/manager/scenario/ScenarioLayout";
 import ScenarioSubmissionListView from "../pages/manager/scenario/ScenarioSubmissionListView/ScenarioSubmissionListView";
@@ -37,16 +33,18 @@ import UnauthLayout from "../components/layouts/UnauthLayout";
 import CandidateLayout from "../pages/candidate/CandidateLayout";
 import GuestPage from "../pages/unauth/GuestPage";
 import TestsPage from "../pages/common/tests/index/TestsPage";
-import TestDoPage from "../pages/candidate/tests/[id]/do/TestDoPage";
-import TestAttemtpsPage from "../pages/candidate/tests/[id]/attempts/TestAttemptsPage";
+import CandidateTestDoPage from "../pages/candidate/tests/[id]/do/CandidateTestDoPage";
+import CandidateTestAttemtpsPage from "../pages/candidate/tests/[id]/attempts/CandidateTestAttemptsPage";
 import CandidateTestLayout from "../pages/candidate/tests/CandidateTestLayout";
 import ManagerLayout from "../components/layouts/ManagerLayout";
 import BusinessRegisterPage from "../pages/auth/bussiness-register/BusinessRegisterPage";
 import ChooseRolePage from "../pages/auth/choose-role/ChooseRolePage";
-import AttemptDetailPage from "../pages/candidate/tests/attempts/[id]/AttemptDetailPage";
+import CandidateAttemptPage from "../pages/candidate/tests/attempts/[id]/CandidateAttemptPage";
 import HomePage from "../pages/common/HomePage";
 import React from "react";
 import CandidateInTestLayout from "../pages/candidate/tests/[id]/CandidateInTestLayout";
+import ManagerTestsSelfPage from "../pages/manager/tests/self/ManagerTestsSelfPage";
+import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/ManagerTestEditPage";
 
 const router = createBrowserRouter([{
 	errorElement: <ErrorPage />,
@@ -123,11 +121,11 @@ const router = createBrowserRouter([{
 						},
 						{
 							path: paths.candidate.tests.in().RECOMMENDATION,
-							element: <TestRecommendationPage />
+							element: <CandidateTestRecommendationPage />
 						},
 						{
 							path: paths.candidate.tests.in().ASSESSMENT,
-							element: <TestAssessmentPage />
+							element: <CandidateTestAssessmentPage />
 						},
 
 						// In an Attempt
@@ -137,7 +135,7 @@ const router = createBrowserRouter([{
 							children: [
 								{
 									index: true,
-									element: <AttemptDetailPage />
+									element: <CandidateAttemptPage />
 								}
 							]
 						},
@@ -150,11 +148,11 @@ const router = createBrowserRouter([{
 							children: [
 								{
 									path: paths.candidate.tests.in().DO,
-									element: <TestDoPage />
+									element: <CandidateTestDoPage />
 								},
 								{
 									path: paths.candidate.tests.in().ATTEMPTS,
-									element: <TestAttemtpsPage />
+									element: <CandidateTestAttemtpsPage />
 								},
 							],
 						},
@@ -236,31 +234,28 @@ const router = createBrowserRouter([{
 						},
 						{
 							path: paths.manager.tests.SELF,
-							element: <TestListView />,
+							element: <ManagerTestsSelfPage />
 						},
 						{
-							path: paths.manager.tests.in().submissions.ROOT,
-							element: <TestSubmissionListView />
+							path: paths.manager.tests.in()._layout,
+							children: [
+								{
+									path: paths.manager.tests.in().ATTEMPTS,
+									element: <ManagerTestAttemptsPage />
+								}
+							],
 						},
 						{
-							path: paths.manager.tests.in().submissions.in().ROOT,
-							element: <TestSubmissionDetail />
+							path: paths.manager.tests.in().ATTEMPTS.in()._layout,
+							element: <ManagerTestAttemptPage />
 						},
 						{
-							path: paths.manager.tests.create.DETAIL,
-							element: <CreateTest />
+							path: paths.manager.tests.CREATE,
+							element: <ManagerTestsCreatePage />
 						},
 						{
-							path: paths.manager.tests.create.QUESTION,
-							element: <TestCreateQuestion />
-						},
-						{
-							path: paths.manager.tests.in().edit.DETAIL,
-							element: <EditTestGeneral />
-						},
-						{
-							path: paths.manager.tests.in().edit.QUESTION,
-							element: <EditTestQuestions />
+							path: paths.manager.tests.in().EDIT,
+							element: <ManagerTestEditPage />
 						},
 					],
 				},

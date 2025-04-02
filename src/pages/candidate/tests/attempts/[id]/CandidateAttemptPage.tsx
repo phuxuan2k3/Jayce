@@ -3,7 +3,7 @@ import useGetAttemptIdParams from "../../../../features/Test/hooks/useGetAttempt
 import AnswerList from "./AnswerList";
 import TestInfo from "./AttemptSummary";
 
-const AttemptDetailPage = () => {
+const CandidateAttemptPage = () => {
 	const attemptId = useGetAttemptIdParams();
 	const navigate = useNavigate();
 
@@ -30,4 +30,4 @@ const AttemptDetailPage = () => {
 	);
 }
 
-export default AttemptDetailPage;
+export default CandidateAttemptPage;
