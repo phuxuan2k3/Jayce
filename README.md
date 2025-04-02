@@ -12,35 +12,57 @@
 
 # Page Folder Structure (Important)
 
-- "common" folder is for shared component across pages in the folder or components being used by the layout.
+- Folder structure is a "tree".
+  - Each leaf folder contain **ONE** page component.
+  - Each parent folder contain **ONE or NONE** layout component. And all subfolders's pages or layouts will be that layout's child in the router.
+- There are 2 special folder:
+  - "common" folder is for shared component in all subfolder's components (pages, layouts, or regular components). Ex: a/b/common => shared among components in a/b/...
+  - "context" folder is only used for contexts (useContext API). And that context **can ONLY be provided** in the layout at the same level. Ex: a/b/context => provided in a/b/Layout.tsx.
+- Normal folder will have its name corresponding to its folder path to root. (see the Paths section below)
+  - If path using dynamic ID segment, uses \[id\] name for any segment. Ex: a/:testId => a >> [id]
+  - If path uses index attribute in router, use "index" name. Ex: a/ => a > index.
+
+## Paths
+
+- Uses plural forms (has s/es) when access a resource type (tests, scenarios, ...). ONE resource = ONE parent folder.
+  - Uses dynamic path ID (:id) to access a resource's detail.
+  - If a resource is nested, add one more path segments. Ex: Tests has many Attempts => tests/attempts (accessing atttmepts resource).
+- Resource path **only** has layout, they **DO NOT** contain any pages. To access a page, use index in children (which means you want to get all resource of that type).
+- Action path shows what you what to do with that resource:
+  - tests/self => get self's tests
+  - tests/[id]/edit => edit a test
+- Dynamic paths are used with "in()" method (default is its dynamic segment, Ex: :testId).
+- "\_layout" paths is just an extra segment, and usally has a layout wrap all pages with deeper segments (but not always). Also called ROOT path.
+- If a page uses \_layout as its path, uses _index_ attribute of react-router.
+
+## Routing Component
+
+- Name must **follow folder structure**. Except for 2 special folder: \[id\] and index (applies for Page and Layout):
+  - \[id\]: uses singular (no s/es) form of the parent folder. Ex: tests > [id] => TestPage.tsx, tests > attempts > [id] => TestsAttemptPage.tsx (get attempt of any tests).
+  - index: don't add any path segment. Ex: tests > index => TestsPage.tsx
+
+### Paging
+
+- Name must ends with Page, ex: LoginPage.tsx.
+- Page components can be shared in "common" folder.
+- Prioritize using nested components, not pages. Only use page as a check point for user can navigate back.
+
+### Layout
+
+- Name must ends with Layout, ex: NoAuthLayout.tsx.
+- Layout not only for nested pages, but also contexts (useContext), and also handle role guarding routes.
+- **ONE parent** folder only has **ONE** layout. Leaf folder **DO NOT** have layout.
 
 # More Information
+
+## Paths
+
+- All navigateion (using react-router) must use pre-defined path variable in src/router/paths.ts. DO NOT use hard-coded string.
 
 ## API
 
 - **ONLY** use URL from the app/env.ts for consistency.
 - All baseQuery is in app/bases folder.
-
-## Paths
-
-- All navigateion (using react-router) must use pre-defined path variable in src/router/paths.ts. DO NOT use hard-coded string.
-- Dynamic paths are used with "in()" method (default is its dynamic segment, Ex: :testId).
-- "\_layout" paths is just an extra segment, and usally has a layout wrap all pages with deeper segments (but not always). Also called ROOT path.
-- If a page uses \_layout as its path, uses _index_ attribute of react-router.
-
-## Paging
-
-- Page component must ends with Page, ex: LoginPage.tsx.
-- Page components must be in the same folder of the page that uses it.
-  - If the component is shared across the page. Place it in "common" folder.
-- Pages folder **FOLLOW the path structure**.
-- Prioritize using nested components, not pages. Only use page as a check point for user can navigate back.
-
-## Layout & Context
-
-- Layout component must ends with Layout, ex: NoAuthLayout.tsx.
-- Layout not only for nested pages, but also contexts (useContext), and also handle role guarding routes.
-- Context can be placed the same level as layout in pages if the context is used for multiple pages. Then, they will provide the layout with their context.
 
 ## Features
 
