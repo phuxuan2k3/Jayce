@@ -1,4 +1,4 @@
-import testApi from "../../../../features/tests/api/test.api";
+import testApi from "../../../../app/bases/test.api";
 import { Paged } from "../../../../interfaces/paged.type";
 // import { YourTest } from "./types";
 // import { Paged } from "../../interfaces/paged.type";

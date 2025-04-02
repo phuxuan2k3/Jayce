@@ -7,10 +7,10 @@ import TestRecommendationPage from "../pages/candidate/tests/[id]/recommendation
 import TestSubmissionListView from "../pages/manager/tests/TestSubmissionListView/TestSubmissionListView";
 import TestSubmissionDetail from "../pages/manager/tests/TestSubmissionDetail/TestSubmissionDetail";
 import TestListView from "../pages/manager/tests/TestListView/TestListView";
-import CreateTest from "../pages/manager/tests/TestCreateDetail/TestCreateDetail";
-import EditTestDetail from "../pages/manager/tests/TestEditDetail/TestEditDetail";
-import EditTestQuestion from "../pages/manager/tests/TestEditQuestion/EditTestQuestion";
-import CreateNewTest from "../pages/manager/tests/TestCreateQuestion/TestCreateQuestion";
+import CreateTest from "../pages/manager/tests/create/TestCreateDetail";
+import EditTestGeneral from "../pages/manager/tests/edit/EditTestFields";
+import EditTestQuestions from "../pages/manager/tests/edit/EditTestQuestions";
+import TestCreateQuestion from "../pages/manager/tests/create/TestCreatePage";
 import ScenarioListView from "../pages/manager/scenario/ScenarioListView/ScenarioListView";
 import ScenarioLayout from "../pages/manager/scenario/ScenarioLayout";
 import ScenarioSubmissionListView from "../pages/manager/scenario/ScenarioSubmissionListView/ScenarioSubmissionListView";
@@ -252,15 +252,15 @@ const router = createBrowserRouter([{
 						},
 						{
 							path: paths.manager.tests.create.QUESTION,
-							element: <CreateNewTest />
+							element: <TestCreateQuestion />
 						},
 						{
 							path: paths.manager.tests.in().edit.DETAIL,
-							element: <EditTestDetail />
+							element: <EditTestGeneral />
 						},
 						{
 							path: paths.manager.tests.in().edit.QUESTION,
-							element: <EditTestQuestion />
+							element: <EditTestQuestions />
 						},
 					],
 				},

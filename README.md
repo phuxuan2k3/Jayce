@@ -1,5 +1,7 @@
 # Frontend Development Conventions
 
+**_First rule: DO NOT use "any" type (for all cost)_**
+
 ## _Components_
 
 - Each file should only reflect 1 components (except context).
@@ -13,6 +15,11 @@
 - "common" folder is for shared component across pages in the folder or components being used by the layout.
 
 # More Information
+
+## API
+
+- **ONLY** use URL from the app/env.ts for consistency.
+- All baseQuery is in app/bases folder.
 
 ## Paths
 

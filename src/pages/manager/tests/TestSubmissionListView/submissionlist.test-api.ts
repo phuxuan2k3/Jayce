@@ -1,4 +1,4 @@
-import testApi from "../../../../features/tests/api/test.api";
+import testApi from "../../../../app/bases/test.api";
 import { SubmissionItem, SubmissionOverView } from "./types";
 
 const submissionlistAPI = testApi.injectEndpoints({

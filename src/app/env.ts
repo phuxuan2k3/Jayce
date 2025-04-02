@@ -6,12 +6,15 @@ const threshSocketUrl = import.meta.env.VITE_THRESH_SOCKET_URL as string;
 
 const bulbasaurUrl = import.meta.env.VITE_BULBASAUR_URL as string;
 
+const dariusUrl = import.meta.env.VITE_DARIUS_URL as string;
+
 const url = {
 	thresh: {
 		base: threshUrl ?? backendEndpoint + '/thresh/api/test',
 		socket: threshSocketUrl ?? backendEndpoint,
 	},
 	bulbasaur: bulbasaurUrl ?? backendEndpoint + '/bulbasaur',
+	darius: dariusUrl ?? backendEndpoint + '/darius',
 };
 
 export {

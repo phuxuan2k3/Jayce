@@ -1,5 +1,5 @@
 import { url } from "../../../app/env";
-import { CurrentAttemptSocket } from "./socket.schema";
+import { CurrentAttemptSocket } from "../types/socket.schema";
 import { io } from "socket.io-client";
 import { testApiGen } from "./test.api-gen";
 import { RootState } from "../../../app/store";

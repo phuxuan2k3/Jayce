@@ -1,8 +1,8 @@
 import { BaseQueryFn, createApi, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
-import { RootState } from "../../../app/store";
-import { setAuthState, selectTokens, selectUserInfo } from "../../Auth/store/authSlice";
-import { grpcRefreshToken } from '../../Auth/api/grpcClient';
-import { noAuth, url } from '../../../app/env';
+import { RootState } from "../store";
+import { setAuthState, selectTokens, selectUserInfo } from "../../features/Auth/store/authSlice";
+import { grpcRefreshToken } from '../../features/Auth/api/grpcClient';
+import { noAuth, url } from '../env';
 
 const baseQuery = fetchBaseQuery({
 	baseUrl: url.thresh.base,

@@ -54,7 +54,6 @@
 					"Tags"
 				],
 				"requestBody": {
-					"description": "Request body",
 					"required": true,
 					"content": {
 						"application/json": {
@@ -141,7 +140,6 @@
 					}
 				],
 				"requestBody": {
-					"description": "Request body",
 					"required": true,
 					"content": {
 						"application/json": {
@@ -319,7 +317,6 @@
 					}
 				],
 				"requestBody": {
-					"description": "Request body",
 					"required": true,
 					"content": {
 						"application/json": {
@@ -648,7 +645,19 @@
 													"tags": {
 														"type": "array",
 														"items": {
-															"type": "string"
+															"type": "object",
+															"properties": {
+																"id": {
+																	"type": "number"
+																},
+																"name": {
+																	"type": "string"
+																}
+															},
+															"required": [
+																"id",
+																"name"
+															]
 														}
 													},
 													"createdAt": {
@@ -690,7 +699,6 @@
 					"Tests"
 				],
 				"requestBody": {
-					"description": "Request body",
 					"required": true,
 					"content": {
 						"application/json": {
@@ -821,7 +829,19 @@
 										"tags": {
 											"type": "array",
 											"items": {
-												"type": "string"
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "number"
+													},
+													"name": {
+														"type": "string"
+													}
+												},
+												"required": [
+													"id",
+													"name"
+												]
 											}
 										},
 										"createdAt": {
@@ -867,7 +887,6 @@
 					}
 				],
 				"requestBody": {
-					"description": "Request body",
 					"required": true,
 					"content": {
 						"application/json": {
@@ -901,7 +920,32 @@
 									},
 									"questions": {
 										"type": "array",
-										"items": {}
+										"items": {
+											"type": "object",
+											"properties": {
+												"text": {
+													"type": "string"
+												},
+												"options": {
+													"type": "array",
+													"items": {
+														"type": "string"
+													}
+												},
+												"points": {
+													"type": "number"
+												},
+												"correctOption": {
+													"type": "number"
+												}
+											},
+											"required": [
+												"text",
+												"options",
+												"points",
+												"correctOption"
+											]
+										}
 									}
 								}
 							}
@@ -1149,7 +1193,19 @@
 													"tags": {
 														"type": "array",
 														"items": {
-															"type": "string"
+															"type": "object",
+															"properties": {
+																"id": {
+																	"type": "number"
+																},
+																"name": {
+																	"type": "string"
+																}
+															},
+															"required": [
+																"id",
+																"name"
+															]
 														}
 													},
 													"createdAt": {
