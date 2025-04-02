@@ -3,7 +3,7 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
-import { UserInfo } from '../../../../features/Auth/store/authSlice';
+import { UserInfo } from '../../../../features/auth/store/authSlice';
 import { styled } from '@mui/material/styles';;
 // import { DialogTitle, DialogActions, DialogContent, Dialog } from '@mui/material';
 import Dialog from '@mui/material/Dialog';

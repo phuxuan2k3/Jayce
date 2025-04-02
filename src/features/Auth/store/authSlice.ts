@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../app/store.ts';
-import authApi from '../api/authApi.ts';
 import { bulbasaur } from '../grpc/bulbasaur.ts';
 import { Role } from '../../../app/enum.ts';
+import authApi from '../api/authApi.ts';
 
 export type UserInfo = {
 	username: string;

@@ -2,7 +2,7 @@ import * as React from "react";
 import { FaArrowRight, FaChevronRight, FaPaperPlane, FaRegUser } from "react-icons/fa";
 import { Sparkles } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Attempt, Question, Scenario, ScenarioQuestion } from "../../../../../features/Scenario/types";
+import { Attempt, Question, Scenario, ScenarioQuestion } from "../../../../../features/scenarios/types";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
 
 const CandidateScenarioReviewPage = () => {

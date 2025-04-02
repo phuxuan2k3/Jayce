@@ -1,12 +1,12 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaFilter, FaStar, FaUser, FaCalendarAlt, FaArrowRight } from "react-icons/fa";
 import * as React from "react";
-import { Field, Scenario, SortType } from "../../../../features/Scenario/types";
-import { useListAttemptMutation } from "../../../../features/Scenario/apis/concrete/ekko.scenario-api";
-import { useListScenarioMutation } from "../../../../features/Scenario/apis/concrete/ekko.scenario-api";
+import { Field, Scenario, SortType } from "../../../../features/scenarios/types";
+import { useListAttemptMutation } from "../../../../features/scenarios/apis/concrete/ekko.scenario-api";
+import { useListScenarioMutation } from "../../../../features/scenarios/apis/concrete/ekko.scenario-api";
 import { useAppSelector } from "../../../../app/hooks";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
-import { selectUserInfo } from "../../../../features/Auth/store/authSlice";
+import { selectUserInfo } from "../../../../features/auth/store/authSlice";
 import Pagination from "../../../../components/ui/common/Pagination";
 
 const CandidateScenariosPage = () => {

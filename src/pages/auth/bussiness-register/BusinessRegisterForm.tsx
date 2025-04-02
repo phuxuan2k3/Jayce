@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import GradientBorder from "../../../components/ui/border/GradientBorder";
-import { selectIsAuthenticated, setAuthState } from "../../../features/Auth/store/authSlice";
-import { useRegisterMutation } from "../../../features/Auth/api/authApi";
-import { useVerificationEmailMutation } from "../../../features/Auth/api/authRestApi";
+import { selectIsAuthenticated, setAuthState } from "../../../features/auth/store/authSlice";
+import { useRegisterMutation } from "../../../features/auth/api/authApi";
+import { useVerificationEmailMutation } from "../../../features/auth/api/authRestApi";
 
 const BusinessRegisterForm = () => {
 	const navigate = useNavigate();

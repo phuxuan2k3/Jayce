@@ -2,12 +2,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSliders, faMagnifyingGlass, faSquarePollHorizontal, faCalendarMinus, faListCheck } from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
-import { useListAllSubmissionMutation } from "../../../../../features/Scenario/apis/concrete/ekko.scenario-api";
-import { useListUsersMutation } from "../../../../../features/Scenario/apis/concrete/bulbasaur.scenario-api";
-import { Attempt, Scenario } from "../../../../../features/Scenario/types";
-import { useGetScenarioMutation } from "../../../../../features/Scenario/apis/concrete/chronobreak.scenario-api";
+import { useListAllSubmissionMutation } from "../../../../../features/scenarios/apis/concrete/ekko.scenario-api";
+import { useListUsersMutation } from "../../../../../features/scenarios/apis/concrete/bulbasaur.scenario-api";
+import { Attempt, Scenario } from "../../../../../features/scenarios/types";
+import { useGetScenarioMutation } from "../../../../../features/scenarios/apis/concrete/chronobreak.scenario-api";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
-import { UserInfo } from "../../../../../features/Auth/store/authSlice";
+import { UserInfo } from "../../../../../features/auth/store/authSlice";
 
 const ManagerScenarioSubmissionsPage = () => {
 	const navigate = useNavigate();

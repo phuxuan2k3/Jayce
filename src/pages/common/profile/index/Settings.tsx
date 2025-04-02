@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { UserInfo } from '../../../../features/Auth/store/authSlice';
+import { UserInfo } from '../../../../features/auth/store/authSlice';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';

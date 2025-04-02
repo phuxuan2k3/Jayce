@@ -1,5 +1,5 @@
-import authRestApi from "../../../Auth/api/authRestApi";
-import { UserInfo } from "../../../Auth/store/authSlice";
+import authRestApi from "../../../auth/api/authRestApi";
+import { UserInfo } from "../../../auth/store/authSlice";
 
 interface ListUsersRequest {
 	user_ids: number[];

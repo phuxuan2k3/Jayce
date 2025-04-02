@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import logo from "/svg/logo.svg";
 import skillsharp from "/svg/skillsharp.svg";
-import { selectUserInfo } from "../../../features/Auth/store/authSlice";
+import { selectUserInfo } from "../../../features/auth/store/authSlice";
 import { useAppSelector } from "../../../app/hooks";
-import { useLogoutMutation } from "../../../features/Auth/api/authApi";
+import { useLogoutMutation } from "../../../features/auth/api/authApi";
 import paths from "../../../router/paths";
 
 const CandidateNavbar = ({ showNav = true }: { showNav?: boolean; }) => {

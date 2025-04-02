@@ -2,9 +2,9 @@ import * as React from "react";
 import { FaChevronRight, FaKeyboard, FaMicrophone, FaTrash, FaVolumeUp, FaStopCircle } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
-import { useSubmitAnswerMutation } from "../../../../../features/Scenario/apis/concrete/ekko.scenario-api";
-import { useGetScenarioMutation } from "../../../../../features/Scenario/apis/concrete/chronobreak.scenario-api";
-import { Question, Scenario, SubmittedAnswer } from "../../../../../features/Scenario/types";
+import { useSubmitAnswerMutation } from "../../../../../features/scenarios/apis/concrete/ekko.scenario-api";
+import { useGetScenarioMutation } from "../../../../../features/scenarios/apis/concrete/chronobreak.scenario-api";
+import { Question, Scenario, SubmittedAnswer } from "../../../../../features/scenarios/types";
 
 const CandidateScenarioAnswerPage = () => {
 	const navigate = useNavigate();

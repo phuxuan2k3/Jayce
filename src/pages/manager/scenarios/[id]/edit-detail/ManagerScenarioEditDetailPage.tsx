@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
-import { useGetScenarioMutation, useListFieldMutation } from '../../../../../features/Scenario/apis/concrete/chronobreak.scenario-api';
-import { Field, Scenario, ScenarioQuestion } from '../../../../../features/Scenario/types';
+import { useGetScenarioMutation, useListFieldMutation } from '../../../../../features/scenarios/apis/concrete/chronobreak.scenario-api';
+import { Field, Scenario, ScenarioQuestion } from '../../../../../features/scenarios/types';
 
 const ManagerScenarioEditDetailPage = () => {
 	const [scenarioDetails, setScenarioDetails] = React.useState<Scenario | null>(null);

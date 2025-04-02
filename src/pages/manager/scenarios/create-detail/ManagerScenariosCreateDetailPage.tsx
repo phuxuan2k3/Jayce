@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
-import { useListFieldMutation } from '../../../../features/Scenario/apis/concrete/chronobreak.scenario-api';
-import { Field } from '../../../../features/Scenario/types';
+import { useListFieldMutation } from '../../../../features/scenarios/apis/concrete/chronobreak.scenario-api';
+import { Field } from '../../../../features/scenarios/types';
 
 interface ScenarioDetails {
 	name: string;

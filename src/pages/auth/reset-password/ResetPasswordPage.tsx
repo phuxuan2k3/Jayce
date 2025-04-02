@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import logo from "/svg/logo.svg";
 import { useNavigate } from "react-router-dom";
 import GradientBorder from "../../../components/ui/border/GradientBorder";
-import { useReqResetPasswordMutation } from "../../../features/Auth/api/authRestApi";
+import { useReqResetPasswordMutation } from "../../../features/auth/api/authRestApi";
 
 export default function ResetPasswordPage() {
 	const [submitted, setSubmitted] = useState(false);

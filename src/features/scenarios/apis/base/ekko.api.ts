@@ -1,8 +1,8 @@
 import { BaseQueryFn, createApi, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { backendEndpoint } from "../../../../app/env"
 import { RootState } from "../../../../app/store";
-import { grpcRefreshToken } from '../../../Auth/api/grpcClient';
-import { selectTokens, selectUserInfo, setAuthState } from '../../../Auth/store/authSlice';
+import { grpcRefreshToken } from '../../../auth/api/grpcClient';
+import { selectTokens, selectUserInfo, setAuthState } from '../../../auth/store/authSlice';
 
 const ekkoBackendURL = backendEndpoint + '/ekko';
 console.log('ekkoBackendURL:', ekkoBackendURL);

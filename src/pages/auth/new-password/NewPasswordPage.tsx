@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import logo from "/svg/logo.svg";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import GradientBorder from "../../../components/ui/border/GradientBorder";
-import { useResetPasswordMutation, useVerifyResetCodeMutation } from "../../../features/Auth/api/authRestApi";
+import { useResetPasswordMutation, useVerifyResetCodeMutation } from "../../../features/auth/api/authRestApi";
 import React from "react";
 
 export default function NewPasswordPage() {

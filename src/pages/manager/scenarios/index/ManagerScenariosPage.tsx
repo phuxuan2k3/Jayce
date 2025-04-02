@@ -7,10 +7,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../../app/hooks";
-import { useListScenarioMutation, useDeleteScenarioMutation } from "../../../../features/Scenario/apis/concrete/ekko.scenario-api";
-import { Scenario } from "../../../../features/Scenario/types";
+import { useListScenarioMutation, useDeleteScenarioMutation } from "../../../../features/scenarios/apis/concrete/ekko.scenario-api";
+import { Scenario } from "../../../../features/scenarios/types";
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
-import { selectUserInfo } from "../../../../features/Auth/store/authSlice";
+import { selectUserInfo } from "../../../../features/auth/store/authSlice";
 import Pagination from "../../../../components/ui/common/Pagination";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({

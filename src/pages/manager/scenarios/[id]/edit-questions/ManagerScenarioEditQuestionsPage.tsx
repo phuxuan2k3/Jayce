@@ -2,8 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
-import { ScenarioQuestion } from "../../../../../features/Scenario/types";
-import { useUpdateScenarioMutation } from "../../../../../features/Scenario/apis/concrete/ekko.scenario-api";
+import { ScenarioQuestion } from "../../../../../features/scenarios/types";
+import { useUpdateScenarioMutation } from "../../../../../features/scenarios/apis/concrete/ekko.scenario-api";
 import GradientBorderNotGood from "../../../../../components/ui/border/GradientBorder.notgood";
 
 const ManagerScenarioEditQuestionsPage = () => {

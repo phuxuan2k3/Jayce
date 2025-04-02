@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { Attempt, Scenario } from "../../../../../../features/Scenario/types";
+import { Attempt, Scenario } from "../../../../../../features/scenarios/types";
 import GradientBorderNotGood from "../../../../../../components/ui/border/GradientBorder.notgood";
 
 const ScenarioSubmissionDetail = () => {

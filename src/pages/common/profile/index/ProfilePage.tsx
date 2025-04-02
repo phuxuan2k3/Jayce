@@ -3,7 +3,7 @@ import UserProfile from "./UserInfo";
 import Activities from "./Activities/Activities";
 import Settings from "./Settings";
 import { useAppSelector } from '../../../../app/hooks';
-import { selectUserInfo, UserInfo } from '../../../../features/Auth/store/authSlice';
+import { selectUserInfo, UserInfo } from '../../../../features/auth/store/authSlice';
 
 const ProfilePage = () => {
 	const [activeTab, setActiveTab] = React.useState<"Activities" | "Settings">("Activities");

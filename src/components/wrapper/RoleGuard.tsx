@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { Role } from '../../app/enum';
 import paths from '../../router/paths';
 import { useAppSelector } from '../../app/hooks';
-import { selectRole } from '../../features/Auth/store/authSlice';
+import { selectRole } from '../../features/auth/store/authSlice';
 
 type RoleAlternativeUrl = {
 	role: Role;

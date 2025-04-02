@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Role } from "../../app/enum"
 import { useAppSelector } from "../../app/hooks";
-import { selectRole } from "../../features/Auth/store/authSlice";
+import { selectRole } from "../../features/auth/store/authSlice";
 
 type Props = {
 	roleSwitch: {
