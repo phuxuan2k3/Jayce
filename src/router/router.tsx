@@ -5,21 +5,19 @@ import CandidateTestAssessmentPage from "../pages/candidate/tests/[id]/assessmen
 import ErrorPage from "../components/pages/ErrorPage";
 import CandidateTestRecommendationPage from "../pages/candidate/tests/[id]/recommendation/CandidateTestRecommendationPage";
 import ManagerTestAttemptsPage from "../pages/manager/tests/[id]/attempts/ManagerTestAttemptsPage";
-import ManagerTestAttemptPage from "../pages/manager/tests/attempts/[id]/ManagerTestAttemptPage";
+import ManagerTestAttemptPage from "../pages/manager/tests/attempts/[id]/index/ManagerTestAttemptPage";
 import ManagerTestsCreatePage from "../pages/manager/tests/create/ManagerTestsCreatePage";
-import ScenarioListView from "../pages/manager/scenario/ScenarioListView/ScenarioListView";
-import ScenarioLayout from "../pages/manager/scenario/ScenarioLayout";
-import ScenarioSubmissionListView from "../pages/manager/scenario/ScenarioSubmissionListView/ScenarioSubmissionListView";
-import ScenarioSubmissionDetail from "../pages/manager/scenario/ScenarioSubmissionDetail/ScenarioSubmissionDetail";
-import ScenarioCreateDetail from "../pages/manager/scenario/ScenarioCreateDetail/ScenarioCreateDetail";
-import ScenarioCreateQuestion from "../pages/manager/scenario/ScenarioCreateQuestion/ScenarioCreateQuestion";
-import ScenarioEditDetail from "../pages/manager/scenario/ScenarioEditDetail/ScenarioEditDetail";
-import ScenarioEditQuestion from "../pages/manager/scenario/ScenarioEditQuestion/ScenarioEditQuestion";
-import PickAField from "../pages/candidate/scenarios/PickAField/PickAField";
-import ChooseScenario from "../pages/candidate/scenarios/ChooseScenario/ChooseScenario";
-import ScenarioDetail from "../pages/candidate/scenarios/Detail/Detail";
-import AnswerQuestion from "../pages/candidate/scenarios/AnswerQuestion/AnswerQuestion";
-import Review from "../pages/candidate/scenarios/Review/Review";
+import ManagerScenariosPage from "../pages/manager/scenarios/index/ManagerScenariosPage";
+import ManagerScenarioSubmissionsPage from "../pages/manager/scenarios/[id]/submissions/ManagerScenarioSubmissionsPage";
+import ScenarioSubmissionDetail from "../pages/manager/scenarios/submissions/[id]/index/ManagerScenariosSubmissionPage";
+import ManagerScenariosCreateDetailPage from "../pages/manager/scenarios/create-detail/ManagerScenariosCreateDetailPage";
+import ScenarioCreateQuestion from "../pages/manager/scenarios/create-questions/ManagerScenariosCreateQuestionsPage";
+import ManagerScenarioEditDetailPage from "../pages/manager/scenarios/[id]/edit-detail/ManagerScenarioEditDetailPage";
+import ManagerScenarioEditQuestionsPage from "../pages/manager/scenarios/[id]/edit-questions/ManagerScenarioEditQuestionsPage";
+import CandidateScenariosPage from "../pages/candidate/scenarios/index/CandidateScenariosPage";
+import CandidateScenarioPage from "../pages/candidate/scenarios/[id]/index/CandidateScenarioPage";
+import CandidateScenarioAnswerPage from "../pages/candidate/scenarios/[id]/answer/CandidateScenarioAnswerPage";
+import CandidateScenarioReviewPage from "../pages/candidate/scenarios/[id]/review/CandidateScenarioReviewPage";
 import ProfilePage from "../pages/common/profile/index/ProfilePage";
 import PricingPage from "../pages/common/profile/pricing/PricingPage";
 import ProvideSuggestionPage from "../pages/auth/provide-suggestion/suggestion";
@@ -39,9 +37,8 @@ import CandidateTestLayout from "../pages/candidate/tests/CandidateTestLayout";
 import ManagerLayout from "../components/layouts/ManagerLayout";
 import BusinessRegisterPage from "../pages/auth/bussiness-register/BusinessRegisterPage";
 import ChooseRolePage from "../pages/auth/choose-role/ChooseRolePage";
-import CandidateAttemptPage from "../pages/candidate/tests/attempts/[id]/CandidateAttemptPage";
+import CandidateAttemptPage from "../pages/candidate/tests/attempts/[id]/index/CandidateAttemptPage";
 import HomePage from "../pages/common/HomePage";
-import React from "react";
 import CandidateInTestLayout from "../pages/candidate/tests/[id]/CandidateInTestLayout";
 import ManagerTestsSelfPage from "../pages/manager/tests/self/ManagerTestsSelfPage";
 import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/ManagerTestEditPage";
@@ -165,27 +162,23 @@ const router = createBrowserRouter([{
 					path: paths.candidate.scenarios._layout,
 					children: [
 						{
-							path: paths.candidate.scenarios.PICK,
-							element: <PickAField />,
-						},
-						{
-							path: paths.candidate.scenarios.CHOOSE,
-							element: <ChooseScenario />,
+							index: true,
+							element: <CandidateScenariosPage />,
 						},
 						{
 							path: paths.candidate.scenarios.in()._layout,
 							children: [
 								{
 									index: true,
-									element: <ScenarioDetail />,
+									element: <CandidateScenarioPage />,
 								},
 								{
 									path: paths.candidate.scenarios.in().ANSWER,
-									element: <AnswerQuestion />,
+									element: <CandidateScenarioAnswerPage />,
 								},
 								{
 									path: paths.candidate.scenarios.in().REVIEW,
-									element: <Review />,
+									element: <CandidateScenarioReviewPage />,
 								},
 							],
 						},
@@ -242,20 +235,20 @@ const router = createBrowserRouter([{
 								{
 									path: paths.manager.tests.in().ATTEMPTS,
 									element: <ManagerTestAttemptsPage />
-								}
+								},
+								{
+									path: paths.manager.tests.in().EDIT,
+									element: <ManagerTestEditPage />
+								},
 							],
 						},
 						{
-							path: paths.manager.tests.in().ATTEMPTS.in()._layout,
+							path: paths.manager.tests.attempts.in()._layout,
 							element: <ManagerTestAttemptPage />
 						},
 						{
 							path: paths.manager.tests.CREATE,
 							element: <ManagerTestsCreatePage />
-						},
-						{
-							path: paths.manager.tests.in().EDIT,
-							element: <ManagerTestEditPage />
 						},
 					],
 				},
@@ -264,26 +257,25 @@ const router = createBrowserRouter([{
 
 				{
 					path: paths.manager.scenario._layout,
-					element: <ScenarioLayout />,
 					children: [
 						{
 							index: true,
-							element: <ScenarioListView />,
+							element: <ManagerScenariosPage />,
 						},
 						{
 							path: paths.manager.scenario.in()._layout,
 							children: [
 								{
 									index: true,
-									element: <ScenarioSubmissionListView />,
+									element: <ManagerScenarioSubmissionsPage />,
 								},
 								{
-									path: paths.manager.scenario.in().edit.DETAIL,
-									element: <ScenarioEditDetail />,
+									path: paths.manager.scenario.in().EDIT_DETAIL,
+									element: <ManagerScenarioEditDetailPage />,
 								},
 								{
-									path: paths.manager.scenario.in().edit.QUESTION,
-									element: <ScenarioEditQuestion />,
+									path: paths.manager.scenario.in().EDIT_QUESTIONS,
+									element: <ManagerScenarioEditQuestionsPage />,
 								}
 							]
 						},
@@ -297,11 +289,11 @@ const router = createBrowserRouter([{
 							],
 						},
 						{
-							path: paths.manager.scenario.create.DETAIL,
-							element: <ScenarioCreateDetail />
+							path: paths.manager.scenario.CREATE_DETAIL,
+							element: <ManagerScenariosCreateDetailPage />
 						},
 						{
-							path: paths.manager.scenario.create.QUESTION,
+							path: paths.manager.scenario.CREATE_QUESTIONS,
 							element: <ScenarioCreateQuestion />
 						},
 					],
@@ -325,7 +317,7 @@ const router = createBrowserRouter([{
 			]
 		},
 
-		// No authentication pages
+		// No authentication pages, for guests, if has role, navigate away
 
 		{
 			path: paths._layout,

@@ -9,7 +9,7 @@ interface ScenarioDetails {
 	field_ids: number[];
 }
 
-const ScenarioCreateDetail = () => {
+const ManagerScenariosCreateDetailPage = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 
@@ -140,4 +140,4 @@ const ScenarioCreateDetail = () => {
 	);
 }
 
-export default ScenarioCreateDetail
+export default ManagerScenariosCreateDetailPage

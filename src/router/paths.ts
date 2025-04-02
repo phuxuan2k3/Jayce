@@ -38,8 +38,6 @@ const paths = {
 		},
 		scenarios: {
 			_layout: '/candidate/scenarios/',
-			PICK: '/candidate/scenarios/pick/',
-			CHOOSE: '/candidate/scenarios/choose/',
 			in(id: number | string = ":scenarioId") {
 				return {
 					_layout: `/candidate/scenarios/${id}/`,
@@ -79,11 +77,9 @@ const paths = {
 			in(id: number | string = ":scenarioId") {
 				return {
 					_layout: `/manager/scenarios/${id}/`,
-					edit: {
-						DETAIL: `/manager/scenarios/${id}/edit/detail/`,
-						QUESTION: `/manager/scenarios/${id}/edit/question/`,
-					},
-
+					SUBMISSIONS: `/manager/scenarios/${id}/submissions/`,
+					EDIT_DETAIL: `/manager/scenarios/${id}/edit-detail/`,
+					EDIT_QUESTIONS: `/manager/scenarios/${id}/edit-questions/`,
 				}
 			},
 			submissions: {
@@ -93,10 +89,8 @@ const paths = {
 					}
 				}
 			},
-			create: {
-				DETAIL: `/manager/scenarios/create/detail/`,
-				QUESTION: `/manager/scenarios/create/question/`,
-			}
+			CREATE_DETAIL: `/manager/scenarios/create-detail/`,
+			CREATE_QUESTIONS: `/manager/scenarios/create-questions/`,
 		},
 		profile: {
 			_layout: '/manager/profile/',

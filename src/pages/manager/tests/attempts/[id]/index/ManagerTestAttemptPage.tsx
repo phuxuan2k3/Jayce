@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, useNavigate } from "react-router-dom";
-import GradientBorderNotGood from "../../../../../components/ui/border/GradientBorder.notgood";
+import GradientBorderNotGood from "../../../../../../components/ui/border/GradientBorder.notgood";
 import { useGetInQuery } from "./testsubmissiondetail-api";
 import { useEffect, useState } from "react";
-import { Answer } from "./types";
+import { Answer } from "../types";
 
 const ManagerTestAttemptPage = () => {
 	const navigate = useNavigate();

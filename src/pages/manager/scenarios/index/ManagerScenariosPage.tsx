@@ -22,7 +22,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 	},
 }));
 
-const ScenarioListView = () => {
+const ManagerScenariosPage = () => {
 	const navigate = useNavigate();
 	const [open, setOpen] = React.useState(false);
 	const [selectedScenario, setSelectedScenario] = React.useState<Scenario | null>(null);
@@ -193,4 +193,4 @@ const ScenarioListView = () => {
 	);
 }
 
-export default ScenarioListView
+export default ManagerScenariosPage

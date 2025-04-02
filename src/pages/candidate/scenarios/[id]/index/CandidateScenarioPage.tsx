@@ -2,12 +2,12 @@ import * as React from "react";
 import { FaArrowRight, FaCalendarAlt, FaChevronRight, FaHeart, FaStar, FaUser } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Rating } from "@mui/material";
-import { useListAttemptMutation, useFavoriteScenarioMutation, useRatingScenarioMutation, useGetAttemptMutation } from "../../../../features/Scenario/apis/concrete/ekko.scenario-api";
-import { useGetScenarioMutation } from "../../../../features/Scenario/apis/concrete/chronobreak.scenario-api";
-import { Attempt, Scenario } from "../../../../features/Scenario/types";
+import { useListAttemptMutation, useFavoriteScenarioMutation, useRatingScenarioMutation, useGetAttemptMutation } from "../../../../../features/Scenario/apis/concrete/ekko.scenario-api";
+import { useGetScenarioMutation } from "../../../../../features/Scenario/apis/concrete/chronobreak.scenario-api";
+import { Attempt, Scenario } from "../../../../../features/Scenario/types";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
 
-const ScenarioDetail = () => {
+const CandidateScenarioPage = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const scenarioId = location.state?.scenarioId;
@@ -209,4 +209,4 @@ const ScenarioDetail = () => {
 	);
 }
 
-export default ScenarioDetail
+export default CandidateScenarioPage

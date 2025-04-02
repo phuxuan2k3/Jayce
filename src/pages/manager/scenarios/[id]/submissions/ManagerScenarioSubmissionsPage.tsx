@@ -2,14 +2,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSliders, faMagnifyingGlass, faSquarePollHorizontal, faCalendarMinus, faListCheck } from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
-import { useListAllSubmissionMutation } from "../../../../features/Scenario/apis/concrete/ekko.scenario-api";
-import { useListUsersMutation } from "../../../../features/Scenario/apis/concrete/bulbasaur.scenario-api";
-import { Attempt, Scenario } from "../../../../features/Scenario/types";
-import { useGetScenarioMutation } from "../../../../features/Scenario/apis/concrete/chronobreak.scenario-api";
+import { useListAllSubmissionMutation } from "../../../../../features/Scenario/apis/concrete/ekko.scenario-api";
+import { useListUsersMutation } from "../../../../../features/Scenario/apis/concrete/bulbasaur.scenario-api";
+import { Attempt, Scenario } from "../../../../../features/Scenario/types";
+import { useGetScenarioMutation } from "../../../../../features/Scenario/apis/concrete/chronobreak.scenario-api";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
-import { UserInfo } from "../../../../features/Auth/store/authSlice";
+import { UserInfo } from "../../../../../features/Auth/store/authSlice";
 
-const ScenarioSubmissionListView = () => {
+const ManagerScenarioSubmissionsPage = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 
@@ -218,4 +218,4 @@ const ScenarioSubmissionListView = () => {
 	);
 }
 
-export default ScenarioSubmissionListView
+export default ManagerScenarioSubmissionsPage

@@ -2,10 +2,10 @@ import * as React from "react";
 import { FaArrowRight, FaChevronRight, FaPaperPlane, FaRegUser } from "react-icons/fa";
 import { Sparkles } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Attempt, Question, Scenario, ScenarioQuestion } from "../../../../features/Scenario/types";
+import { Attempt, Question, Scenario, ScenarioQuestion } from "../../../../../features/Scenario/types";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
 
-const Review = () => {
+const CandidateScenarioReviewPage = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const scenario: Scenario = location.state?.scenario;
@@ -190,4 +190,4 @@ const Review = () => {
 	);
 }
 
-export default Review
+export default CandidateScenarioReviewPage

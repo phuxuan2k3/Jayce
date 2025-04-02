@@ -9,7 +9,7 @@ import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
 import { selectUserInfo } from "../../../../features/Auth/store/authSlice";
 import Pagination from "../../../../components/ui/common/Pagination";
 
-const ChooseScenario = () => {
+const CandidateScenariosPage = () => {
 	const navigate = useNavigate();
 	const [isFilterOpen, setIsFilterOpen] = React.useState(false);
 	const [dates, setDates] = React.useState({ from: new Date("2000-01-01").toISOString().split("T")[0], to: new Date().toISOString().split("T")[0] });
@@ -230,4 +230,4 @@ const ChooseScenario = () => {
 	);
 }
 
-export default ChooseScenario
+export default CandidateScenariosPage;
