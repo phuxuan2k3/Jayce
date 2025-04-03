@@ -1,0 +1,23 @@
+## STREAMING UPDATES ##
+
+1. Use middleware: Listen for action to connect to socket.
+	- https://wanago.io/2021/12/20/redux-middleware-websockets/
+
+2. Use cache update after initial request (normal fetch like HTTP, ... then streaming cache data): Fetch initial data and update cache using socket afterwards. (Recommended way to handle socket)
+	- https://redux-toolkit.js.org/rtk-query/usage/streaming-updates#websocket-chat-api
+	- https://wanago.io/2022/01/03/websockets-redux-toolkit-query-typescript/
+
+3. Custom baseQuery / queryFn: Stand-alone socket connection.
+	- https://redux-toolkit.js.org/rtk-query/usage/customizing-queries#streaming-data-with-no-initial-request
+
+
+## CUSTOMIZATION ##
+
+1. queryFn over baseQuery: "for scenarios where you want to have particularly different behavior for a single endpoint, or where the query itself is not relevant...".
+
+2. query uses the baseQuery provided function to fetch while queryFn is a wrapper around the baseQuery so you can call it how ever you like, (even not calling)
+
+3. Both queryFn and baseQuery required to return an object that has either data or error field: { data: T } or { error: any } (or a Promise that return such object).
+
+4. For modifying generated APIs, use Enhance endpoint: https://redux-toolkit.js.org/rtk-query/api/created-api/code-splitting#enhanceendpoints.
+	- This is primarily useful for taking an API slice object that was code-generated from an API schema file like OpenAPI, and adding additional specific hand-written configuration for cache invalidation management on top of the generated endpoint definitions. [...] without modifying the original endpoint definitions

@@ -1,16 +1,16 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import authReducer from '../global/authSlice';
-import authApi from '../features/Auth/authApi';
+import authReducer from '../features/auth/store/authSlice';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import testApi from '../features/Test/test.api';
-import accountApi from '../features/Account/account.api';
-import aiAPI from '../features/Test/AI.api';
+import testApi from '../features/tests/base/test.api';
+import promptApi from '../features/tests/base/prompt.api';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import registerAPI from '../pages/Authen/register/register.api';
-import ekkoApi from '../features/Scenario/ekko.api';
-import chronobreakApi from '../features/Scenario/chronobreak.api';
-import loginAPI from '../features/Test/login.api';
+import currentAttemptReducer from '../features/tests/stores/currentAttemtpSlice';
+import authApi from '../features/auth/api/auth.api';
+import ekkoApi from '../features/scenarios/apis/base/ekko.api';
+import chronobreakApi from '../features/scenarios/apis/base/chronobreak.api';
+import testPersistReducer from '../features/tests/stores/testPersistSlice';
+import accountApi from '../features/auth/api/account.api';
 
 const persistConfig = {
 	key: 'root',
@@ -20,15 +20,17 @@ const persistConfig = {
 
 // Create the root reducer so it can be used in configureStore
 const rootReducer = combineReducers({
-	auth: authReducer,
 	authApi: authApi.reducer,
-	testApi: testApi.reducer,
-	aiApi: aiAPI.reducer,
 	accountApi: accountApi.reducer,
-	registerAPI: registerAPI.reducer,
+	testApi: testApi.reducer,
+	aiApi: promptApi.reducer,
 	ekkoApi: ekkoApi.reducer,
 	chronobreakApi: chronobreakApi.reducer,
-	loginAPI: loginAPI.reducer,
+
+	// Custom reducers
+	auth: authReducer,
+	currentAttempt: currentAttemptReducer,
+	testPersist: testPersistReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -42,12 +44,12 @@ const store = configureStore({
 			})
 				.concat(authApi.middleware)
 				.concat(testApi.middleware)
-				.concat(aiAPI.middleware)
-				.concat(accountApi.middleware)
-				.concat(registerAPI.middleware)
+				.concat(promptApi.middleware)
 				.concat(ekkoApi.middleware)
 				.concat(chronobreakApi.middleware)
-				.concat(loginAPI.middleware),
+				.concat(authApi.middleware)
+				.concat(accountApi.middleware)
+	,
 });
 
 export const persistor = persistStore(store);
@@ -59,3 +61,6 @@ export type AppStore = typeof store;
 setupListeners(store.dispatch);
 
 export default store;
+
+// TODO: global error display / page navigation middleware
+// https://owensiu.medium.com/rtk-query-how-to-centralize-error-handling-40c28bb48d5d

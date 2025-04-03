@@ -1,255 +1,336 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
-import Login from "../pages/Authen/login/Login";
-// import Dashboard from "../pages/Dashboard";
-import TestDo from "../pages/Test/Candidate/TestDo/TestDo";
-import { paths } from "./path"
-import Register from "../pages/Authen/register/Register";
-import TestList from "../pages/Test/Candidate/TestList/TestList";
-import Layout from "../pages/Test/components/Layout";
-import TestDetail from "../pages/Test/Candidate/TestAttempts/TestAttempts";
-import TestEvaluate from "../pages/Test/Candidate/TestEvaluate/TestEvaluate";
-import ErrorPage from "../components/ErrorPage";
-import TestSchedule from "../pages/Test/Candidate/TestSchedule/TestSchedule";
-import TestViewAnswer from "../pages/Test/Candidate/TestViewAnswer/TestViewAnswer";
-import TestSubmissionListView from "../pages/Test/BusinessManager/TestSubmissionListView/TestSubmissionListView";
-import TestSubmissionDetail from "../pages/Test/BusinessManager/TestSubmissionDetail/TestSubmissionDetail";
-import TestListView from "../pages/Test/BusinessManager/TestListView/TestListView";
-import CreateTest from "../pages/Test/BusinessManager/TestCreateDetail/TestCreateDetail";
-import EditTestDetail from "../pages/Test/BusinessManager/TestEditDetail/TestEditDetail";
-import EditTestQuestion from "../pages/Test/BusinessManager/TestEditQuestion/EditTestQuestion";
-import CreateNewTest from "../pages/Test/BusinessManager/TestCreateQuestion/TestCreateQuestion";
-import ScenarioListView from "../pages/Scenario/BusinessManager/ScenarioListView/ScenarioListView";
-import ScenarioLayout from "../pages/Scenario/components/ScenarioLayout";
-import ScenarioSubmissionListView from "../pages/Scenario/BusinessManager/ScenarioSubmissionListView/ScenarioSubmissionListView";
-import ScenarioSubmissionDetail from "../pages/Scenario/BusinessManager/ScenarioSubmissionDetail/ScenarioSubmissionDetail";
-import ScenarioCreateDetail from "../pages/Scenario/BusinessManager/ScenarioCreateDetail/ScenarioCreateDetail";
-import ScenarioCreateQuestion from "../pages/Scenario/BusinessManager/ScenarioCreateQuestion/ScenarioCreateQuestion";
-import ScenarioEditDetail from "../pages/Scenario/BusinessManager/ScenarioEditDetail/ScenarioEditDetail";
-import ScenarioEditQuestion from "../pages/Scenario/BusinessManager/ScenarioEditQuestion/ScenarioEditQuestion";
-import PickAField from "../pages/Scenario/Candidate/PickAField/PickAField";
-import LayoutInterviewPractice from "../pages/Scenario/components/InterviewLayout";
-import ChooseScenario from "../pages/Scenario/Candidate/ChooseScenario/ChooseScenario";
-import ScenarioDetail from "../pages/Scenario/Candidate/Detail/Detail";
-import AnswerQuestion from "../pages/Scenario/Candidate/AnswerQuestion/AnswerQuestion";
-import Review from "../pages/Scenario/Candidate/Review/Review";
-import ProfileDashboard from "../pages/Profile/Candidate/ProfileDashboard";
-import ProfileLayout from "../pages/Profile/components/Layout";
-import PricingPage from "../pages/Profile/Candidate/PricingPage";
-import Suggestion from "../pages/Authen/suggestion/suggestion";
-import Role from "../pages/Authen/role/role";
-import Company from "../pages/Authen/company/company";
-import ResetPassword from "../pages/Authen/resetpass/resetpass";
-import NewPassword from "../pages/Authen/newpass/newpass";
-import Home from "../pages/Home";
-import BRegister from "../pages/Authen/register/BRegister";
-import ChooseRole from "../pages/Authen/chooseRole/chooseRole";
-const router = createBrowserRouter([
-	{
-		errorElement: <ErrorPage />,
-		children: [
-			{
-				path: paths.CHOOSEROLE,
-				element: <ChooseRole />,
-			},
-			{
-				path: paths.REGISTER,
-				element: <Register />,
-			},
-			{
-				path: paths.BREGISTER,
-				element: <BRegister />
-			},
-			{
-				path: paths.LOGIN,
-				element: <Login />
-			},
-			{
-				path: "/",
-				element: <Home />
-			},
-			{
-				path:paths.SUGGESTION,
-				element:<Suggestion/>
-			},
-			{
-				path:paths.ROLE,
-				element:<Role/>
-			},
-			{
-				path:paths.COMPANY,
-				element:<Company/>
-			},
-			{
-				path:paths.RESET,
-				element:<ResetPassword/>
-			},
-			{
-				path:paths.NEWPASS,
-				element:<NewPassword/>
-			},
-			{
-				path: paths.TEST.ROOT,
-				element: <Layout />,
-				children: [
-					{
-						path: paths.TEST.LIST,
-						element: <TestList />,
-					},
-					{
-						path: paths.TEST.DO,
-						element: <TestDo />
-					},
-					{
-						path: paths.TEST.ATTEMPTS,
-						element: <TestDetail />
-					},
-					{
-						path: paths.TEST.VIEWANSWER,
-						element: <TestViewAnswer />
-					},
-					{
-						path: paths.TEST.EVALUATE,
-						element: <TestEvaluate />
-					},
-					{
-						path: paths.TEST.SCHEDULE,
-						element: <TestSchedule />
-					},
-					{
-						path: paths.TEST.SUBMISSION.ROOT,
-						children: [
-							{
-								path: paths.TEST.SUBMISSION.LIST,
-								element: <TestSubmissionListView />
-							},
-							{
-								path: paths.TEST.SUBMISSION.DETAIL,
-								element: <TestSubmissionDetail />
-							}
-						]
-					},
-					{
-						path: paths.TEST.EDIT.ROOT,
-						children: [
-							{
-								path: paths.TEST.EDIT.DETAIL,
-								element: <EditTestDetail />
-							},
-							{
-								path: paths.TEST.EDIT.QUESTION,
-								element: <EditTestQuestion />
-							}
-						]
-					},
-					{
-						path: paths.TEST.CREATENEWTEST,
-						element: <CreateNewTest />
-					},
-					{
-						path: paths.TEST.CREATETEST,
-						element: <CreateTest />,
-					},
-					{
-						path: paths.TEST.TESTLISTVIEW,
-						element: <TestListView />,
-					},
-				],
-			},
-			{
-				path: paths.SCENARIO.ROOT,
-				element: <ScenarioLayout />,
-				children: [
-					{
-						path: '',
-						element: <Navigate to={paths.SCENARIO.LIST} />, // Redirect to paths.SCENARIO.LIST
-					},
-					{
-						path: paths.SCENARIO.LIST,
-						element: <ScenarioListView />,
-					},
-					{
-						path: paths.SCENARIO.SUBMISSION.ROOT,
-						element: <ScenarioSubmissionListView />,
-					},
-					{
-						path: paths.SCENARIO.SUBMISSION.DETAIL,
-						element: <ScenarioSubmissionDetail />
-					},
-					{
-						path: paths.SCENARIO.CREATE.ROOT,
-						element: <Navigate to={paths.SCENARIO.LIST} />,
-					},
-					{
-						path: paths.SCENARIO.CREATE.DETAIL,
-						element: <ScenarioCreateDetail />
-					},
-					{
-						path: paths.SCENARIO.CREATE.QUESTION,
-						element: <ScenarioCreateQuestion />
-					},
-					{
-						path: paths.SCENARIO.EDIT.ROOT,
-						element: <Navigate to={paths.SCENARIO.LIST} />,
-					},
-					{
-						path: paths.SCENARIO.EDIT.DETAIL,
-						element: <ScenarioEditDetail />,
-					},
-					{
-						path: paths.SCENARIO.EDIT.QUESTION,
-						element: <ScenarioEditQuestion />,
-					},
-				],
-			},
-			{
-				path: paths.INTERVIEWPRACTICE.ROOT,
-				element: <LayoutInterviewPractice />,
-				children: [
-					{
-						path: paths.INTERVIEWPRACTICE.PICK,
-						element: <PickAField />,
-					},
-					{
-						path: paths.INTERVIEWPRACTICE.CHOOSE,
-						element: <ChooseScenario />,
-					},
-					{
-						path: paths.INTERVIEWPRACTICE.DETAIL,
-						element: <ScenarioDetail />,
-					},
-					{
-						path: paths.INTERVIEWPRACTICE.ANSWER,
-						element: <AnswerQuestion />,
-					},
-					{
-						path: paths.INTERVIEWPRACTICE.REVIEW,
-						element: <Review />,
-					}
-				]
-			},
-			{
-				path: paths.PROFILE.ROOT,
-				element: <ProfileLayout />,
-				children: [
-					{
-						path: '',
-						element: <ProfileDashboard />,
-					},
-				],
-			},
-			{
-				path: paths.PRICING.ROOT,
-				element: <ProfileLayout />,
-				children: [
-					{
-						path: '',
-						element: <PricingPage />,
-					},
-				],
-			},
-		]
-	}
-], {
+import { createBrowserRouter } from "react-router-dom";
+import AuthLoginPage from "../pages/auth/login/AuthLoginPage";
+import AuthRegisterPage from "../pages/auth/register/AuthRegisterPage";
+import CandidateTestAssessmentPage from "../pages/candidate/tests/[id]/assessment/CandidateTestAssessmentPage";
+import ErrorPage from "../components/pages/ErrorPage";
+import CandidateTestRecommendationPage from "../pages/candidate/tests/[id]/recommendation/CandidateTestRecommendationPage";
+import ManagerTestAttemptsPage from "../pages/manager/tests/[id]/attempts/ManagerTestAttemptsPage";
+import ManagerTestAttemptPage from "../pages/manager/tests/attempts/[id]/index/ManagerTestAttemptPage";
+import ManagerTestsCreatePage from "../pages/manager/tests/create/ManagerTestsCreatePage";
+import ManagerScenariosPage from "../pages/manager/scenarios/index/ManagerScenariosPage";
+import ManagerScenarioSubmissionsPage from "../pages/manager/scenarios/[id]/submissions/ManagerScenarioSubmissionsPage";
+import ScenarioSubmissionDetail from "../pages/manager/scenarios/submissions/[id]/index/ManagerScenariosSubmissionPage";
+import ManagerScenariosCreateDetailPage from "../pages/manager/scenarios/create-detail/ManagerScenariosCreateDetailPage";
+import ScenarioCreateQuestion from "../pages/manager/scenarios/create-questions/ManagerScenariosCreateQuestionsPage";
+import ManagerScenarioEditDetailPage from "../pages/manager/scenarios/[id]/edit-detail/ManagerScenarioEditDetailPage";
+import ManagerScenarioEditQuestionsPage from "../pages/manager/scenarios/[id]/edit-questions/ManagerScenarioEditQuestionsPage";
+import CandidateScenariosPage from "../pages/candidate/scenarios/index/CandidateScenariosPage";
+import CandidateScenarioPage from "../pages/candidate/scenarios/[id]/index/CandidateScenarioPage";
+import CandidateScenarioAnswerPage from "../pages/candidate/scenarios/[id]/answer/CandidateScenarioAnswerPage";
+import CandidateScenarioReviewPage from "../pages/candidate/scenarios/[id]/review/CandidateScenarioReviewPage";
+import ProfilePage from "../pages/common/profile/index/ProfilePage";
+import PricingPage from "../pages/common/profile/pricing/PricingPage";
+import AuthProvideSuggestionPage from "../pages/auth/provide-suggestion/AuthProvideSuggestion";
+import AuthProvidePositionPage from "../pages/auth/provide-position/AuthProvidePositionPage";
+import AuthProvideCompaniesPage from "../pages/auth/provide-companies/AuthProvideCompaniesPage";
+import AuthResetPasswordPage from "../pages/auth/reset-password/AuthResetPasswordPage";
+import AuthNewPasswordPage from "../pages/auth/new-password/AuthNewPasswordPage";
+import paths from "./paths";
+import AuthLayout from "../pages/auth/AuthLayout";
+import UnauthLayout from "../pages/unauth/UnauthLayout";
+import CandidateLayout from "../pages/candidate/CandidateLayout";
+import GuestPage from "../pages/unauth/index/GuestPage";
+import TestsPage from "../pages/common/tests/index/TestsPage";
+import CandidateTestDoPage from "../pages/candidate/tests/[id]/do/CandidateTestDoPage";
+import CandidateTestAttemtpsPage from "../pages/candidate/tests/[id]/attempts/CandidateTestAttemptsPage";
+import CandidateTestLayout from "../pages/candidate/tests/CandidateTestLayout";
+import ManagerLayout from "../pages/manager/ManagerLayout";
+import AuthBusinessRegisterPage from "../pages/auth/bussiness-register/AuthBusinessRegisterPage";
+import AuthChooseRolePage from "../pages/auth/choose-role/AuthChooseRolePage";
+import CandidateAttemptPage from "../pages/candidate/tests/attempts/[id]/index/CandidateAttemptPage";
+import HomePage from "../pages/common/HomePage";
+import CandidateInTestLayout from "../pages/candidate/tests/[id]/CandidateInTestLayout";
+import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/ManagerTestEditPage";
+import ManagerTestsSelfPage from "../pages/manager/tests/self/ManagerTestsSelfPage";
+
+const router = createBrowserRouter([{
+	errorElement: <ErrorPage />,
+	children: [
+
+		// Authentication pages
+
+		{
+			path: paths.auth._layout,
+			element: <AuthLayout />,
+			children: [
+				{
+					path: paths.auth.LOGIN,
+					element: <AuthLoginPage />
+				},
+				{
+					path: paths.auth.CHOOSE_ROLE,
+					element: <AuthChooseRolePage />
+				},
+				{
+					path: paths.auth.BUSINESS_REGISTER,
+					element: <AuthBusinessRegisterPage />
+				},
+				{
+					path: paths.auth.REGISTER,
+					element: <AuthRegisterPage />
+				},
+				{
+					path: paths.auth.PROVIDE_SUGGESTION,
+					element: <AuthProvideSuggestionPage />
+				},
+				{
+					path: paths.auth.PROVIDE_POSITION,
+					element: <AuthProvidePositionPage />
+				},
+				{
+					path: paths.auth.PROVIDE_COMPANIES,
+					element: <AuthProvideCompaniesPage />
+				},
+				{
+					path: paths.auth.RESET_PASSWORD,
+					element: <AuthResetPasswordPage />
+				},
+				{
+					path: paths.auth.NEW_PASSWORD,
+					element: <AuthNewPasswordPage />
+				},
+			],
+		},
+
+		// Candidate pages
+
+		{
+			path: paths.candidate._layout,
+			element: <CandidateLayout />,
+			children: [
+
+				// Common pages
+
+				{
+					index: true,
+					element: <HomePage />,
+				},
+
+				// F1 - Tests
+
+				{
+					path: paths.candidate.tests._layout,
+					element: <CandidateTestLayout />,
+					children: [
+						{
+							index: true,
+							element: <TestsPage />
+						},
+						{
+							path: paths.candidate.tests.in().RECOMMENDATION,
+							element: <CandidateTestRecommendationPage />
+						},
+						{
+							path: paths.candidate.tests.in().ASSESSMENT,
+							element: <CandidateTestAssessmentPage />
+						},
+
+						// In an Attempt
+
+						{
+							path: paths.candidate.tests.attempts.in()._layout,
+							children: [
+								{
+									index: true,
+									element: <CandidateAttemptPage />
+								}
+							]
+						},
+
+						// In a Test
+
+						{
+							path: paths.candidate.tests.in()._layout,
+							element: <CandidateInTestLayout />,
+							children: [
+								{
+									path: paths.candidate.tests.in().DO,
+									element: <CandidateTestDoPage />
+								},
+								{
+									path: paths.candidate.tests.in().ATTEMPTS,
+									element: <CandidateTestAttemtpsPage />
+								},
+							],
+						},
+					]
+				},
+
+				// F2 - Scenario
+
+				{
+					path: paths.candidate.scenarios._layout,
+					children: [
+						{
+							index: true,
+							element: <CandidateScenariosPage />,
+						},
+						{
+							path: paths.candidate.scenarios.in()._layout,
+							children: [
+								{
+									index: true,
+									element: <CandidateScenarioPage />,
+								},
+								{
+									path: paths.candidate.scenarios.in().ANSWER,
+									element: <CandidateScenarioAnswerPage />,
+								},
+								{
+									path: paths.candidate.scenarios.in().REVIEW,
+									element: <CandidateScenarioReviewPage />,
+								},
+							],
+						},
+					]
+				},
+
+				// Profile
+				{
+					path: paths.candidate.profile._layout,
+					children: [
+						{
+							index: true,
+							element: <ProfilePage />,
+						},
+						{
+							path: paths.candidate.profile.PRICING,
+							element: <PricingPage />,
+						},
+					]
+				}
+			]
+		},
+
+		// Manager pages
+
+		{
+			path: paths.manager._layout,
+			element: <ManagerLayout />,
+			children: [
+
+				// Common pages
+
+				{
+					element: <HomePage />,
+					index: true
+				},
+
+				// F1 - Tests
+
+				{
+					path: paths.manager.tests._layout,
+					children: [
+						{
+							index: true,
+							element: <TestsPage />,
+						},
+						{
+							path: paths.manager.tests.SELF,
+							element: <ManagerTestsSelfPage />
+						},
+						{
+							path: paths.manager.tests.in()._layout,
+							children: [
+								{
+									path: paths.manager.tests.in().ATTEMPTS,
+									element: <ManagerTestAttemptsPage />
+								},
+								{
+									path: paths.manager.tests.in().EDIT,
+									element: <ManagerTestEditPage />
+								},
+							],
+						},
+						{
+							path: paths.manager.tests.attempts.in()._layout,
+							element: <ManagerTestAttemptPage />
+						},
+						{
+							path: paths.manager.tests.CREATE,
+							element: <ManagerTestsCreatePage />
+						},
+					],
+				},
+
+				// F2 - Scenario
+
+				{
+					path: paths.manager.scenario._layout,
+					children: [
+						{
+							index: true,
+							element: <ManagerScenariosPage />,
+						},
+						{
+							path: paths.manager.scenario.in()._layout,
+							children: [
+								{
+									index: true,
+									element: <ManagerScenarioSubmissionsPage />,
+								},
+								{
+									path: paths.manager.scenario.in().EDIT_DETAIL,
+									element: <ManagerScenarioEditDetailPage />,
+								},
+								{
+									path: paths.manager.scenario.in().EDIT_QUESTIONS,
+									element: <ManagerScenarioEditQuestionsPage />,
+								}
+							]
+						},
+						{
+							path: paths.manager.scenario.submissions.in()._layout,
+							children: [
+								{
+									index: true,
+									element: <ScenarioSubmissionDetail />,
+								}
+							],
+						},
+						{
+							path: paths.manager.scenario.CREATE_DETAIL,
+							element: <ManagerScenariosCreateDetailPage />
+						},
+						{
+							path: paths.manager.scenario.CREATE_QUESTIONS,
+							element: <ScenarioCreateQuestion />
+						},
+					],
+				},
+
+				// Profile
+
+				{
+					path: paths.manager.profile._layout,
+					children: [
+						{
+							index: true,
+							element: <ProfilePage />,
+						},
+						{
+							path: paths.manager.profile.PRICING,
+							element: <PricingPage />,
+						},
+					]
+				}
+			]
+		},
+
+		// No authentication pages, for guests, if has role, navigate away
+
+		{
+			path: paths._layout,
+			element: <UnauthLayout />,
+			children: [
+				{
+					element: <GuestPage />,
+					index: true
+				}
+			]
+		},
+	]
+}], {
 	basename: '/'
 });
 
