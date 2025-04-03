@@ -1,5 +1,5 @@
 import FetchState from "../../../../../components/wrapper/FetchState";
-import Pagination from "../../../../../components/ui/common/Pagination";
+import MyPagination from "../../../../../components/ui/common/MyPagination";
 import SkeletonLoading from "../../../../../components/ui/loading/SkeletonLoading";
 import { GetTestsApiArg, useGetTestsQuery } from "../../../../../features/tests/api/test.api-gen";
 import TestCard from "./TestCard";
@@ -37,7 +37,7 @@ export default function TestList({ filter, setFilters }: Props) {
 				</FetchState>
 			</div>
 			<div className="flex flex-row justify-center w-full pt-10">
-				<Pagination totalPage={tests?.totalPages || 0} onPageChange={handleApplyPageChange} />
+				<MyPagination totalPage={tests?.totalPages || 0} onPageChange={handleApplyPageChange} />
 			</div>
 		</div>
 	);

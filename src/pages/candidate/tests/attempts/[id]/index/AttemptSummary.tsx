@@ -1,5 +1,5 @@
-import FetchState from '../../../../components/wrapper/FetchState';
-import { useGetAttemptsByAttemptIdQuery } from '../../../../features/Test/api/test.api-gen';
+import FetchState from "../../../../../../components/wrapper/FetchState";
+import { useGetAttemptsByAttemptIdQuery } from "../../../../../../features/tests/api/test.api-gen";
 
 type Props = {
 	attemptId: number;

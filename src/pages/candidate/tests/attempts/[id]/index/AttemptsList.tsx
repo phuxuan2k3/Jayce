@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { useGetAttemptsByAttemptIdAnswersQuery } from "../../../../features/Test/api/test.api-gen";
-import FetchState from "../../../../components/wrapper/FetchState";
-import MyPagination from "../../../Test/components/MyPagination";
-import GradientBorderNotGood from "../../../../components/ui/border/GradientBorder.notgood";
-import GradientBorderGood from "../../../../components/ui/border/GradientBorder.good";
-import ChoiceIcon from "../../../../components/ui/icon/ChoiceIcon";
+import GradientBorderGood from "../../../../../../components/ui/border/GradientBorder.good";
+import GradientBorderNotGood from "../../../../../../components/ui/border/GradientBorder.notgood";
+import ChoiceIcon from "../../../../../../components/ui/icon/ChoiceIcon";
+import FetchState from "../../../../../../components/wrapper/FetchState";
+import { useGetAttemptsByAttemptIdAnswersQuery } from "../../../../../../features/tests/api/test.api-gen";
+import MyPagination from "../../../../../../components/ui/common/MyPagination";
 
 type Props = {
 	attemptId: number;
 }
 
-export default function AnswerList({ attemptId }: Props) {
+export default function AttemptsList({ attemptId }: Props) {
 	const [page, setPage] = useState(1);
 	const { data: answers, isLoading, error } = useGetAttemptsByAttemptIdAnswersQuery({ attemptId, page });
 
@@ -58,12 +58,14 @@ export default function AnswerList({ attemptId }: Props) {
 					</div>
 				))}
 			</FetchState>
-			<div>
-				<MyPagination
-					totalPage={answers?.totalPages}
-					onPageChange={handlePageChange}
-				/>
-			</div>
+			{answers && (
+				<div>
+					<MyPagination
+						totalPage={answers.totalPages}
+						onPageChange={handlePageChange}
+					/>
+				</div>
+			)}
 		</>
 	);
 }

@@ -7,7 +7,7 @@ import { useListScenarioMutation } from "../../../../features/scenarios/apis/con
 import { useAppSelector } from "../../../../app/hooks";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
 import { selectUserInfo } from "../../../../features/auth/store/authSlice";
-import Pagination from "../../../../components/ui/common/Pagination";
+import MyPagination from "../../../../components/ui/common/MyPagination";
 
 const CandidateScenariosPage = () => {
 	const navigate = useNavigate();
@@ -167,7 +167,7 @@ const CandidateScenariosPage = () => {
 					})}
 
 					<div className="flex justify-center items-center">
-						<Pagination
+						<MyPagination
 							totalPage={totalPage}
 							initialPage={currentPage}
 							onPageChange={(page) => setCurrentPage(page)}

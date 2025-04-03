@@ -3,7 +3,7 @@ import paths from "../../../../../router/paths";
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import { useEffect } from "react";
 import TestTimer from "../../common/TestTimer";
-import { useAppDispatch, useAppSelector } from "../../../../../app/hooks";
+import useGetUserId, { useAppDispatch, useAppSelector } from "../../../../../app/hooks";
 import { currentAttemptActions, curerntAttemptSelects } from "../../../../../features/tests/stores/currentAttemtpSlice";
 import { CurrentAttempt } from "../../../../../features/tests/types/current";
 import { usePostCurrentAttemptSubmitMutation } from "../../../../../features/tests/api/test.api-gen";
@@ -17,6 +17,7 @@ export default function Sidebar({
 	currentAttempt,
 	questionIds
 }: SidebarProps) {
+	const userId = useGetUserId();
 	const testId = useGetTestIdParams();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
@@ -38,7 +39,9 @@ export default function Sidebar({
 	}, [isSuccess]);
 
 	const handleSubmitClick = () => {
-		submitTest({});
+		submitTest({
+			"x-user-id": userId,
+		});
 	}
 
 	return (

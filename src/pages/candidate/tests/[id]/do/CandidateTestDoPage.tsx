@@ -5,16 +5,21 @@ import Sidebar from './Sidebar';
 import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
 import paths from '../../../../../router/paths';
 import FetchState from '../../../../../components/wrapper/FetchState';
-import { useAppSelector } from '../../../../../app/hooks';
+import useGetUserId, { useAppSelector } from '../../../../../app/hooks';
 import { curerntAttemptSelects } from '../../../../../features/tests/stores/currentAttemtpSlice';
 import { useGetCurrentAttemptDoQuery, useGetCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
 
 const CandidateTestDoPage = () => {
+	const userId = useGetUserId();
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
-	const doQuery = useGetCurrentAttemptDoQuery({});
+	const doQuery = useGetCurrentAttemptDoQuery({
+		"x-user-id": userId,
+	});
 	const { currentQuestionIndex } = useAppSelector(curerntAttemptSelects.selectCurrentAttempt);
-	const stateQuery = useGetCurrentAttemptStateQuery({}, {
+	const stateQuery = useGetCurrentAttemptStateQuery({
+		"x-user-id": userId,
+	}, {
 		refetchOnMountOrArgChange: true,
 	});
 

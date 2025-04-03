@@ -196,14 +196,11 @@
 				"parameters": [
 					{
 						"schema": {
-							"type": [
-								"string",
-								"null"
-							],
+							"type": "string",
 							"description": "The user ID",
 							"example": "1"
 						},
-						"required": false,
+						"required": true,
 						"name": "x-user-id",
 						"in": "header"
 					}
@@ -304,14 +301,11 @@
 				"parameters": [
 					{
 						"schema": {
-							"type": [
-								"string",
-								"null"
-							],
+							"type": "string",
 							"description": "The user ID",
 							"example": "1"
 						},
-						"required": false,
+						"required": true,
 						"name": "x-user-id",
 						"in": "header"
 					}
@@ -353,14 +347,11 @@
 				"parameters": [
 					{
 						"schema": {
-							"type": [
-								"string",
-								"null"
-							],
+							"type": "string",
 							"description": "The user ID",
 							"example": "1"
 						},
-						"required": false,
+						"required": true,
 						"name": "x-user-id",
 						"in": "header"
 					}
@@ -477,14 +468,11 @@
 				"parameters": [
 					{
 						"schema": {
-							"type": [
-								"string",
-								"null"
-							],
+							"type": "string",
 							"description": "The user ID",
 							"example": "1"
 						},
-						"required": false,
+						"required": true,
 						"name": "x-user-id",
 						"in": "header"
 					}

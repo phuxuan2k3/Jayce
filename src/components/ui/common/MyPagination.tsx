@@ -36,7 +36,7 @@ interface Props {
 	onPageChange?: (page: number) => void;
 }
 
-export default function Pagination({
+export default function MyPagination({
 	totalPage,
 	initialPage,
 	onPageChange

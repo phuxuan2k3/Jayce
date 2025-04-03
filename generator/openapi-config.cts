@@ -4,7 +4,7 @@ const baseApiDirString = __dirname + "/../src/features/tests";
 const testsFeatureDirString = __dirname + "/../src/features/tests";
 
 const testApi: ConfigFile = {
-	apiFile: `${baseApiDirString}/test.api.ts`,
+	apiFile: `${baseApiDirString}/base/test.api.ts`,
 	schemaFile: `${testsFeatureDirString}/docs/openapi.json`,
 	apiImport: "testApi",
 	outputFile: `${testsFeatureDirString}/api/test.api-gen.ts`,

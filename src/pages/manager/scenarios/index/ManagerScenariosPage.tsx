@@ -11,7 +11,7 @@ import { useListScenarioMutation, useDeleteScenarioMutation } from "../../../../
 import { Scenario } from "../../../../features/scenarios/types";
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
 import { selectUserInfo } from "../../../../features/auth/store/authSlice";
-import Pagination from "../../../../components/ui/common/Pagination";
+import MyPagination from "../../../../components/ui/common/MyPagination";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 	'& .MuiDialogContent-root': {
@@ -165,7 +165,7 @@ const ManagerScenariosPage = () => {
 					</div>
 
 					<div className="flex justify-center items-center">
-						<Pagination
+						<MyPagination
 							totalPage={totalPage}
 							initialPage={currentPage}
 							onPageChange={(page) => setCurrentPage(page)}

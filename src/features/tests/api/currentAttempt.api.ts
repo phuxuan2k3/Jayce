@@ -4,15 +4,16 @@ import { io } from "socket.io-client";
 import { testApiGen } from "./test.api-gen";
 import { RootState } from "../../../app/store";
 import { currentAttemptActions } from "../stores/currentAttemtpSlice";
+import { authSelectors } from "../../auth/store/authSlice";
 
 let _socket: CurrentAttemptSocket | null = null;
 
 function connectSocket(getState: () => any) {
 	if (!_socket) {
-		const state = getState() as RootState;
+		const userId = authSelectors.selectUserId(getState() as RootState);
 		_socket = io(`${url.thresh.socket}/current`, {
 			auth: {
-				userId: state.auth.tokens?.user_id,
+				userId: userId,
 			}
 		});
 		_socket.on("connect_error", (error) => {

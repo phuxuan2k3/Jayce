@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Role } from "../types.ts";
 import authApi from '../api/auth.api.ts';
 import { AuthResponse } from '../types.ts';
+import accountApi from '../api/account.api.ts';
 
 export type UserInfo = {
 	id: string;
@@ -83,6 +84,12 @@ const authSlice = createSlice({
 		},
 		selectUserId: (state: AuthState): string | null => {
 			return state.user?.id || null;
+		},
+		selectUserIdStrict: (state: AuthState): string => {
+			if (state.user == null) {
+				throw new Error('User ID is null');
+			}
+			return state.user.id;
 		}
 	},
 	extraReducers: (builder) => {
@@ -110,8 +117,8 @@ const authSlice = createSlice({
 			// Logout
 			.addMatcher(
 				(action) =>
-					authApi.endpoints.logout.matchFulfilled(action) ||
-					authApi.endpoints.logout.matchRejected(action),
+					accountApi.endpoints.logout.matchFulfilled(action) ||
+					accountApi.endpoints.logout.matchRejected(action),
 				(state) => {
 					_clearAuthState(state);
 				}

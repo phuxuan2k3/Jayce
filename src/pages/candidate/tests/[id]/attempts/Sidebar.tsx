@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom"
-import { paths } from "../../../../../router/path";
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
-import paths from "../../../../../router/paths";
 import { useEffect, useState } from "react";
 import ModalBase from "../../../../../components/ui/modal/Modal.base";
 import { usePostCurrentAttemptNewMutation } from "../../../../../features/tests/api/test.api-gen";
+import paths from "../../../../../router/paths";
 
 export default function Sidebar() {
 	const testId = useGetTestIdParams();
@@ -21,16 +20,19 @@ export default function Sidebar() {
 
 	const handleNewAttemptAccept = () => {
 		setOpenNewAttemptModal(false);
-		postNewAttempt({ body: { testId } });
+		postNewAttempt({
+			"x-user-id": '1',
+			body: { testId }
+		});
 	};
 
-	const handleBackToQuestions = () => {
+	const handleBackToTestLists = () => {
 		navigate(paths.candidate.tests._layout);
 	};
 
-	const handleViewEvaluated = () => {
-		navigate(paths.TEST.evaluate(testId.toString()));
-	}
+	const handleViewAssessment = () => {
+		navigate(paths.candidate.tests.in(testId).ASSESSMENT);
+	};
 
 	return (
 		<>
@@ -74,7 +76,7 @@ export default function Sidebar() {
 						{error && "Failed to start a new quiz. Please try again."}
 					</span>
 				</div>
-				<button className="mt-4 w-full px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleBackToQuestions}>
+				<button className="mt-4 w-full px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleBackToTestLists}>
 					Back to Questions
 				</button>
 				<div className="mt-4 bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
@@ -85,7 +87,7 @@ export default function Sidebar() {
 						accuracy rather than speed. Good luck!
 					</p>
 				</div>
-				<button className="mt-4 w-full border bg-gradient-text text-md font-bold text-white px-6 py-3 rounded-lg cursor-pointer" onClick={handleViewEvaluated}>
+				<button className="mt-4 w-full border bg-gradient-text text-md font-bold text-white px-6 py-3 rounded-lg cursor-pointer" onClick={handleViewAssessment}>
 					View Evaluated
 				</button>
 			</div>

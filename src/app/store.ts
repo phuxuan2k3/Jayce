@@ -10,6 +10,7 @@ import authApi from '../features/auth/api/auth.api';
 import ekkoApi from '../features/scenarios/apis/base/ekko.api';
 import chronobreakApi from '../features/scenarios/apis/base/chronobreak.api';
 import testPersistReducer from '../features/tests/stores/testPersistSlice';
+import accountApi from '../features/auth/api/account.api';
 
 const persistConfig = {
 	key: 'root',
@@ -20,6 +21,7 @@ const persistConfig = {
 // Create the root reducer so it can be used in configureStore
 const rootReducer = combineReducers({
 	authApi: authApi.reducer,
+	accountApi: accountApi.reducer,
 	testApi: testApi.reducer,
 	aiApi: promptApi.reducer,
 	ekkoApi: ekkoApi.reducer,
@@ -45,7 +47,9 @@ const store = configureStore({
 				.concat(promptApi.middleware)
 				.concat(ekkoApi.middleware)
 				.concat(chronobreakApi.middleware)
-				.concat(authApi.middleware),
+				.concat(authApi.middleware)
+				.concat(accountApi.middleware)
+	,
 });
 
 export const persistor = persistStore(store);

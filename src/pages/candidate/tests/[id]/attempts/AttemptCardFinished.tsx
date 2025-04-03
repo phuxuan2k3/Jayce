@@ -14,7 +14,10 @@ type Props = {
 	test: {
 		id: number
 		title: string;
-		tags: string[];
+		tags: {
+			id: number;
+			name: string;
+		}[];
 		createdAt: string;
 	};
 	attempt: {
@@ -48,7 +51,7 @@ const AttemptCardFinished: React.FC<Props> = ({ company, test, attempt }) => {
 			<div className="flex flex-wrap gap-2 mb-4">
 				{test.tags.map((tag, index: number) => (
 					<GradientBorderGood key={index}>
-						{tag}
+						{tag.name}
 					</GradientBorderGood>
 				))}
 			</div>

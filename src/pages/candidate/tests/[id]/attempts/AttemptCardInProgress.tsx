@@ -8,6 +8,7 @@ import paths from '../../../../../router/paths';
 import GradientBorderGood from '../../../../../components/ui/border/GradientBorder.good';
 import TestTimer from '../../common/TestTimer';
 import { useGetCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
+import useGetUserId from "../../../../../app/hooks";
 
 type Props = {
 	company: {
@@ -17,7 +18,10 @@ type Props = {
 	test: {
 		id: number
 		title: string;
-		tags: string[];
+		tags: {
+			id: number;
+			name: string;
+		}[];
 		createdAt: string;
 	};
 }
@@ -26,8 +30,11 @@ const AttemptCardInProgress: React.FC<Props> = ({
 	company,
 	test,
 }) => {
+	const userId = useGetUserId();
 	const navigate = useNavigate();
-	const { data, isLoading, error } = useGetCurrentAttemptStateQuery({});
+	const { data, isLoading, error } = useGetCurrentAttemptStateQuery({
+		"x-user-id": userId,
+	});
 
 	const handleOnInProgressAttemptClick = () => {
 		navigate(paths.candidate.tests.in(test.id).DO);
@@ -56,7 +63,7 @@ const AttemptCardInProgress: React.FC<Props> = ({
 					<div className="flex flex-wrap gap-2 mb-4">
 						{test.tags.map((tag, index: number) => (
 							<GradientBorderGood key={index}>
-								{tag}
+								{tag.name}
 							</GradientBorderGood>
 						))}
 					</div>

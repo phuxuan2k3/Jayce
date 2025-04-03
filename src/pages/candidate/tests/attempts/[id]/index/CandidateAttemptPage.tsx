@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import useGetAttemptIdParams from "../../../../features/Test/hooks/useGetAttemptIdParams";
-import AnswerList from "./AnswerList";
+import AttemptsList from "./AttemptsList";
 import TestInfo from "./AttemptSummary";
+import useGetAttemptIdParams from "../../../../../../features/tests/hooks/useGetAttemptIdParams";
 
 const CandidateAttemptPage = () => {
 	const attemptId = useGetAttemptIdParams();
@@ -17,7 +17,7 @@ const CandidateAttemptPage = () => {
 				<TestInfo attemptId={attemptId} />
 
 				<div className="flex flex-col items-center">
-					<AnswerList attemptId={attemptId} />
+					<AttemptsList attemptId={attemptId} />
 				</div>
 
 				<div className="flex flex-row justify-center">
