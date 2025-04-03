@@ -5,10 +5,10 @@ import Sidebar from './Sidebar';
 import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
 import paths from '../../../../../router/paths';
 import FetchState from '../../../../../components/wrapper/FetchState';
-import from '../../../../../app/hooks';
 import useGetUserId from "../../../../../components/hooks/useGetUserId";
 import { curerntAttemptSelects } from '../../../../../features/tests/stores/currentAttemtpSlice';
 import { useGetCurrentAttemptDoQuery, useGetCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
+import { useAppSelector } from '../../../../../app/hooks';
 
 const CandidateTestDoPage = () => {
 	const userId = useGetUserId();

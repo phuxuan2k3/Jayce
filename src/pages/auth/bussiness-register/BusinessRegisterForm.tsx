@@ -25,7 +25,9 @@ const BusinessRegisterForm = () => {
 	const [errors, setErrors] = useState({ username: "", email: "", password: "" });
 
 	useEffect(() => {
-		navigate(paths._layout);
+		if (isSuccess) {
+			navigate(paths._layout);
+		}
 	}, [isSuccess]);
 
 	const validateForm = () => {

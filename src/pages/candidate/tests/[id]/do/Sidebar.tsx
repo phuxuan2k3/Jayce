@@ -3,11 +3,11 @@ import paths from "../../../../../router/paths";
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import { useEffect } from "react";
 import TestTimer from "../../common/TestTimer";
-import from "../../../../../app/hooks";
 import useGetUserId from "../../../../../components/hooks/useGetUserId";
 import { currentAttemptActions, curerntAttemptSelects } from "../../../../../features/tests/stores/currentAttemtpSlice";
 import { CurrentAttempt } from "../../../../../features/tests/types/current";
 import { usePostCurrentAttemptSubmitMutation } from "../../../../../features/tests/api/test.api-gen";
+import { useAppDispatch, useAppSelector } from "../../../../../app/hooks";
 
 interface SidebarProps {
 	currentAttempt: CurrentAttempt;

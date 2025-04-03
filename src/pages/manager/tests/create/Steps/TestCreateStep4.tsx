@@ -15,7 +15,7 @@ export default function TestCreateStep4({
 	const [isEditing, setIsEditing] = useState(false);
 	const dispatch = useAppDispatch();
 	const {
-		selectTestFieldsStrict,
+		selectTestFields: selectTestFieldsStrict,
 		selectQuestionsStrict,
 	} = testPersistSelectors;
 	const testFields = useAppSelector(selectTestFieldsStrict);

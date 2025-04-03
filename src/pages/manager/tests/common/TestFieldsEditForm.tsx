@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import { testPersistActions, testPersistSelectors } from '../../../../features/tests/stores/testPersistSlice';
 
 export default function TestFieldsEditForm() {
-	const testFields = useAppSelector(testPersistSelectors.selectTestFieldsStrict);
+	const testFields = useAppSelector(testPersistSelectors.selectTestFields);
 	const dispatch = useAppDispatch();
 	const {
 		setTestField,

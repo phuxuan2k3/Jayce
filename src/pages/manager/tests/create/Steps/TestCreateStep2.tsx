@@ -11,7 +11,7 @@ export default function TestCreateStep2({
 }: {
 	onNext: () => void;
 }) {
-	const testDetail = useAppSelector(testPersistSelectors.selectTestFieldsStrict);
+	const testDetail = useAppSelector(testPersistSelectors.selectTestFields);
 	const dispatch = useAppDispatch();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const options = [

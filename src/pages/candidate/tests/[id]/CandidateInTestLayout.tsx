@@ -5,11 +5,11 @@ import { useEffect } from "react";
 export default function CandidateInTestLayout() {
 	const { setShowCurrentTest } = useShowCurrentTest();
 
-	// Current test will be hidden in the layout.
-	useEffect(() => {
-		setShowCurrentTest(false);
-		return () => setShowCurrentTest(true);
-	}, []);
+	// // Current test will be hidden in the layout.
+	// useEffect(() => {
+	// 	setShowCurrentTest(false);
+	// 	return () => setShowCurrentTest(true);
+	// }, []);
 
 	return (
 		<Outlet />

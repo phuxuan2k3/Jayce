@@ -7,7 +7,7 @@ import React from "react";
 
 export default function AuthChooseRolePage() {
 	const navigate = useNavigate();
-	const [tab, setTab] = useState("");
+	const [tab, setTab] = useState<"candidate" | "business" | "">("");
 	return (
 		<div className=" relative">
 			<img src="/defaults/question.png" className=" absolute right-[20px] top-[120px] w-1/3" />
@@ -39,11 +39,14 @@ export default function AuthChooseRolePage() {
 			</div>
 			<div
 				onClick={() => {
-					if (tab) {
-						navigate(tab === "candidate"
-							? paths.auth.REGISTER
-							: paths.auth.BUSINESS_REGISTER
-						);
+					if (tab === "candidate") {
+						navigate(paths.auth.REGISTER);
+					} else if (tab === "business") {
+						navigate(paths.auth.BUSINESS_REGISTER);
+					}
+					else {
+						// TODO: show a toast or warning dialog
+						alert("Please select a role to continue")
 					}
 				}}
 				className={`bg-[var(--primary-color)] py-2 text-white font-bold  mt-12 w-fit mx-20 rounded-lg px-28

@@ -6,7 +6,7 @@ import { useListAttemptMutation } from "../../../../features/scenarios/apis/conc
 import { useListScenarioMutation } from "../../../../features/scenarios/apis/concrete/ekko.scenario-api";
 import { useAppSelector } from "../../../../app/hooks";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
-import { selectUserInfo } from "../../../../features/auth/store/authSlice";
+import { authSelectors } from "../../../../features/auth/store/authSlice";
 import MyPagination from "../../../../components/ui/common/MyPagination";
 
 const CandidateScenariosPage = () => {
@@ -27,7 +27,7 @@ const CandidateScenariosPage = () => {
 	const [totalPage, setTotalPage] = React.useState(0);
 	const pageSize = 10;
 
-	const authState = useAppSelector(selectUserInfo);
+	const authState = useAppSelector(authSelectors.selectUserInfo);
 	if (authState === null) navigate('/login');
 
 	const [scenarios, setScenarios] = React.useState<(Scenario & { attempted: boolean; hasFetched: boolean })[]>([]);

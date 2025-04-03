@@ -9,9 +9,11 @@ import TestCreateStep4 from "./Steps/TestCreateStep4";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { testPersistActions, testPersistSelectors } from "../../../../features/tests/stores/testPersistSlice";
 import paths from "../../../../router/paths";
+import useGetUserId from "../../../../components/hooks/useGetUserId";
 
 const ManagerTestsCreatePage = () => {
 	const navigate = useNavigate();
+	const userId = useGetUserId();
 	const [step, setStep] = useState(0);
 	const dispatch = useAppDispatch();
 
@@ -19,8 +21,9 @@ const ManagerTestsCreatePage = () => {
 		loadCreate,
 	} = testPersistActions;
 	const {
-		selectCreateTestApiArg: selectCreateTestParam
+		selectCreateTestApiArg
 	} = testPersistSelectors;
+
 	useEffect(() => {
 		dispatch(loadCreate());
 	}, []);
@@ -52,7 +55,7 @@ const ManagerTestsCreatePage = () => {
 
 
 	const handleCreateTest = () => {
-		const testCreateParam = useAppSelector(selectCreateTestParam);
+		const testCreateParam = useAppSelector((state) => selectCreateTestApiArg(state, userId));
 		if (testCreateParam == null) {
 			// TODO: show snackbar error
 			return;
@@ -62,7 +65,7 @@ const ManagerTestsCreatePage = () => {
 
 
 	return (
-		<div className="relative flex flex-col items-center justify-center w-full h-screen bg-[var(--background-color)]">
+		<div className="relative flex flex-col items-center justify-center w-full h-screen">
 			<TestCreateStepper
 				step={step}
 				onStepChange={(step) => setStep(step)}

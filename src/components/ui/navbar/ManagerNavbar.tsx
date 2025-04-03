@@ -4,15 +4,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import logo from "/svg/logo.svg";
 import skillsharp from "/svg/skillsharp.svg";
-import { selectUserInfo } from "../../../features/auth/store/authSlice";
 import { useAppSelector } from "../../../app/hooks";
-import { useLogoutMutation } from "../../../features/auth/api/authApi";
 import paths from "../../../router/paths";
+import { useLogoutMutation } from "../../../features/auth/api/account.api";
+import { authSelectors } from "../../../features/auth/store/authSlice";
 
 const ManagerNavbar = ({ showNav = true }: { showNav?: boolean; }) => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const authState = useAppSelector(selectUserInfo);
+	const authState = useAppSelector(authSelectors.selectUserInfo);
 	const [logout] = useLogoutMutation();
 	const navigate = useNavigate();
 
@@ -56,14 +56,14 @@ const ManagerNavbar = ({ showNav = true }: { showNav?: boolean; }) => {
 					</div>
 					{showNav && (
 						<div className="hidden w-full sm:flex sm:ml-10 sm:space-x-6 items-center justify-start">
-							<Link to="/ipractice/pick" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
-								Scenario
+							<Link to={paths.manager.scenario._layout} className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
+								Scenarios
 							</Link>
-							<Link to={paths.candidate.tests._layout} className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
+							<Link to={paths.manager.tests._layout} className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
 								Tests
 							</Link>
-							<Link to="/pricing" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
-								Pricing
+							<Link to={paths.manager.tests.SELF} className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
+								Manage Tests
 							</Link>
 						</div>
 					)}
@@ -75,14 +75,14 @@ const ManagerNavbar = ({ showNav = true }: { showNav?: boolean; }) => {
 							<div className="hidden lg:block relative">
 								<img
 									className="size-8 rounded-full cursor-pointer"
-									src={authState.avatarPath}
+									src={authState?.avatarPath || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s"}
 									alt="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqf0Wx4wmsKfLYsiLdBx6H4D8bwQBurWhx5g&s"
 									onClick={toggleProfileMenu}
 								/>
 								{isMenuOpen && (
 									<div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-50">
-										<Link to="/profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Profile</Link>
-										<Link to="/settings" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Settings</Link>
+										<Link to={paths.manager.profile._layout} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Profile</Link>
+										<Link to="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Settings</Link>
 										<button
 											type="button"
 											onClick={handleLogout}

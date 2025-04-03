@@ -1,4 +1,4 @@
-import { createApi } from "@reduxjs/toolkit/query";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { url } from "../../../app/env";
 import serviceBaseQueryWithReauth from "../../../app/serviceBaseQueryAuth";
 
@@ -12,8 +12,11 @@ const accountApi = createApi({
 				method: 'GET',
 			}),
 		}),
-
 	}),
 });
 
 export default accountApi;
+
+export const {
+	useLogoutMutation
+} = accountApi;

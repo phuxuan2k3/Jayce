@@ -47,8 +47,8 @@ const paths = {
 			},
 		},
 		profile: {
-			_layout: '/manager/profile/',
-			PRICING: '/manager/profile/pricing/',
+			_layout: '/candidate/profile/',
+			PRICING: '/candidate/profile/pricing/',
 		},
 	},
 	manager: {

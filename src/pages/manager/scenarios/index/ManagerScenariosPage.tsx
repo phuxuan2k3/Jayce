@@ -10,8 +10,8 @@ import { useAppSelector } from "../../../../app/hooks";
 import { useListScenarioMutation, useDeleteScenarioMutation } from "../../../../features/scenarios/apis/concrete/ekko.scenario-api";
 import { Scenario } from "../../../../features/scenarios/types";
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
-import { selectUserInfo } from "../../../../features/auth/store/authSlice";
 import MyPagination from "../../../../components/ui/common/MyPagination";
+import { authSelectors } from "../../../../features/auth/store/authSlice";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 	'& .MuiDialogContent-root': {
@@ -33,7 +33,7 @@ const ManagerScenariosPage = () => {
 	const [to, setTo] = React.useState<Timestamp>(new Timestamp());
 	const pageSize = 4;
 
-	const authState = useAppSelector(selectUserInfo);
+	const authState = useAppSelector(authSelectors.selectUserInfo);
 	if (authState === null) navigate('/login');
 
 	const [listScenario] = useListScenarioMutation();

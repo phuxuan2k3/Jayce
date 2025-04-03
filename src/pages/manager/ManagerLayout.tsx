@@ -6,10 +6,12 @@ import { Role } from "../../features/auth/types/auth";
 
 export default function ManagerLayout() {
 	return (
-		<RoleGuard roles={[Role.Candidate]}>
-			<ManagerNavbar />
-			<Outlet />
-			<FooterShort />
+		<RoleGuard roles={[Role.Manager]}>
+			<div className="flex flex-col min-h-screen">
+				<ManagerNavbar />
+				<Outlet />
+				<FooterShort />
+			</div>
 		</RoleGuard>
 	)
 }
