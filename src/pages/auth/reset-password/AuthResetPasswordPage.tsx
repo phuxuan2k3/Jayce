@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import GradientBorder from "../../../components/ui/border/GradientBorder";
 import { useReqResetPasswordMutation } from "../../../features/auth/api/auth.api";
 
-export default function ResetPasswordPage() {
+export default function AuthResetPasswordPage() {
 	const [submitted, setSubmitted] = useState(false);
 	const [email, setEmail] = useState("");
 	const [resetPassword] = useReqResetPasswordMutation();

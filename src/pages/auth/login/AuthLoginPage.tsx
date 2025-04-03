@@ -1,7 +1,7 @@
 import Carousel from "../common/Carousel";
 import LoginForm from "./LoginForm";
 
-export default function LoginPage() {
+export default function AuthLoginPage() {
 	return (
 		<div className="min-h-screen flex flex-col">
 			<div className="grid grid-cols-12 flex-grow">

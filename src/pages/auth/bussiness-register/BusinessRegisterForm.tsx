@@ -2,18 +2,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom";
 // import { useRegisterMutation } from "../../../features/Auth/authApi";
-import { useState } from "react";
-import { useAppDispatch } from "../../../app/hooks";
+import { useEffect, useState } from "react";
 import GradientBorder from "../../../components/ui/border/GradientBorder";
 import { useRegisterMutation } from "../../../features/auth/api/auth.api";
 import { useVerificationEmailMutation } from "../../../features/auth/api/auth.api";
-import { authActions } from "../../../features/auth/store/authSlice";
 import paths from "../../../router/paths";
 
 const BusinessRegisterForm = () => {
 	const navigate = useNavigate();
-	const dispatch = useAppDispatch();
-	const [register] = useRegisterMutation();
+	const [register, { isSuccess }] = useRegisterMutation();
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const [verificationEmail] = useVerificationEmailMutation();
 	const [otp, setOtp] = useState("");
@@ -26,6 +23,10 @@ const BusinessRegisterForm = () => {
 	const [job, setJob] = useState("");
 	const [avatar, setAvatar] = useState("");
 	const [errors, setErrors] = useState({ username: "", email: "", password: "" });
+
+	useEffect(() => {
+		navigate(paths._layout);
+	}, [isSuccess]);
 
 	const validateForm = () => {
 		let newErrors = { username: "", email: "", password: "" };
@@ -71,9 +72,9 @@ const BusinessRegisterForm = () => {
 		setErrors(newErrors);
 		return isValid;
 	};
+
 	const handleFormSubmit = async () => {
-		alert(password);
-		const response = await register({
+		register({
 			local: {
 				username,
 				email,
@@ -88,12 +89,8 @@ const BusinessRegisterForm = () => {
 				jobTitle: job,
 				avatarPath: avatar
 			},
-			role: 1
+			role: 2
 		});
-		if (response.data) {
-			dispatch(authActions.setAuthStateFromResponse(response.data));
-			navigate(paths._layout);
-		}
 	}
 
 	const handleVerifyEmail = async () => {

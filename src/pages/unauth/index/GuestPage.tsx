@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import paths from "../../router/paths";
+import paths from "../../../router/paths";
 
 const GuestPage = () => {
 	const navigate = useNavigate();

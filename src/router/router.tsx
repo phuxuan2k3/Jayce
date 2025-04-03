@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-import LoginPage from "../pages/auth/login/AuthLoginPage";
-import RegisterPage from "../pages/auth/register/RegisterPage";
+import AuthLoginPage from "../pages/auth/login/AuthLoginPage";
+import AuthRegisterPage from "../pages/auth/register/AuthRegisterPage";
 import CandidateTestAssessmentPage from "../pages/candidate/tests/[id]/assessment/CandidateTestAssessmentPage";
 import ErrorPage from "../components/pages/ErrorPage";
 import CandidateTestRecommendationPage from "../pages/candidate/tests/[id]/recommendation/CandidateTestRecommendationPage";
@@ -20,21 +20,21 @@ import CandidateScenarioAnswerPage from "../pages/candidate/scenarios/[id]/answe
 import CandidateScenarioReviewPage from "../pages/candidate/scenarios/[id]/review/CandidateScenarioReviewPage";
 import ProfilePage from "../pages/common/profile/index/ProfilePage";
 import PricingPage from "../pages/common/profile/pricing/PricingPage";
-import ProvideSuggestionPage from "../pages/auth/provide-suggestion/suggestion";
-import ProvidePositionPage from "../pages/auth/provide-position/ProvidePositionPage";
-import ProvideCompaniesPage from "../pages/auth/provide-companies/ProvideCompaniesPage";
-import ResetPasswordPage from "../pages/auth/reset-password/ResetPasswordPage";
-import NewPasswordPage from "../pages/auth/new-password/NewPasswordPage";
+import AuthProvideSuggestionPage from "../pages/auth/provide-suggestion/AuthProvideSuggestion";
+import AuthProvidePositionPage from "../pages/auth/provide-position/AuthProvidePositionPage";
+import AuthProvideCompaniesPage from "../pages/auth/provide-companies/AuthProvideCompaniesPage";
+import AuthResetPasswordPage from "../pages/auth/reset-password/AuthResetPasswordPage";
+import AuthNewPasswordPage from "../pages/auth/new-password/AuthNewPasswordPage";
 import paths from "./paths";
-import AuthLayout from "../components/layouts/AuthLayout";
-import UnauthLayout from "../components/layouts/UnauthLayout";
+import AuthLayout from "../pages/auth/AuthLayout";
+import UnauthLayout from "../pages/unauth/UnauthLayout";
 import CandidateLayout from "../pages/candidate/CandidateLayout";
-import GuestPage from "../pages/unauth/GuestPage";
+import GuestPage from "../pages/unauth/index/GuestPage";
 import TestsPage from "../pages/common/tests/index/TestsPage";
 import CandidateTestDoPage from "../pages/candidate/tests/[id]/do/CandidateTestDoPage";
 import CandidateTestAttemtpsPage from "../pages/candidate/tests/[id]/attempts/CandidateTestAttemptsPage";
 import CandidateTestLayout from "../pages/candidate/tests/CandidateTestLayout";
-import ManagerLayout from "../components/layouts/ManagerLayout";
+import ManagerLayout from "../pages/manager/ManagerLayout";
 import AuthBusinessRegisterPage from "../pages/auth/bussiness-register/AuthBusinessRegisterPage";
 import AuthChooseRolePage from "../pages/auth/choose-role/AuthChooseRolePage";
 import CandidateAttemptPage from "../pages/candidate/tests/attempts/[id]/index/CandidateAttemptPage";
@@ -55,7 +55,7 @@ const router = createBrowserRouter([{
 			children: [
 				{
 					path: paths.auth.LOGIN,
-					element: <LoginPage />
+					element: <AuthLoginPage />
 				},
 				{
 					path: paths.auth.CHOOSE_ROLE,
@@ -67,27 +67,27 @@ const router = createBrowserRouter([{
 				},
 				{
 					path: paths.auth.REGISTER,
-					element: <RegisterPage />
+					element: <AuthRegisterPage />
 				},
 				{
 					path: paths.auth.PROVIDE_SUGGESTION,
-					element: <ProvideSuggestionPage />
+					element: <AuthProvideSuggestionPage />
 				},
 				{
 					path: paths.auth.PROVIDE_POSITION,
-					element: <ProvidePositionPage />
+					element: <AuthProvidePositionPage />
 				},
 				{
 					path: paths.auth.PROVIDE_COMPANIES,
-					element: <ProvideCompaniesPage />
+					element: <AuthProvideCompaniesPage />
 				},
 				{
 					path: paths.auth.RESET_PASSWORD,
-					element: <ResetPasswordPage />
+					element: <AuthResetPasswordPage />
 				},
 				{
 					path: paths.auth.NEW_PASSWORD,
-					element: <NewPasswordPage />
+					element: <AuthNewPasswordPage />
 				},
 			],
 		},

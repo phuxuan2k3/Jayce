@@ -2,13 +2,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import GradientBorder from "../../../components/ui/border/GradientBorder"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom";
-import { useRegisterMutation } from "../../../features/auth/api/authApi";
+import { useRegisterMutation } from "../../../features/auth/api/auth.api";
 import { useEffect, useState } from "react";
 import { toErrorMessage } from "../../../helpers/fetchBaseQuery.error";
 import AlertError from "../../../components/ui/error/AlertError";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
-import { useVerificationEmailMutation } from "./register.api";
+import { useVerificationEmailMutation } from '../../../features/auth/api/auth.api';
 import SpinnerLoading from "../../../components/ui/loading/SpinnerLoading";
 import paths from "../../../router/paths";
 
@@ -25,7 +25,7 @@ const RegisterForm = () => {
 	const [errors, setErrors] = useState({ username: "", email: "", password: "" });
 
 	useEffect(() => {
-		if (error === null) {
+		if (isSuccess) {
 			navigate(paths._layout);
 		}
 	}, [isSuccess]);

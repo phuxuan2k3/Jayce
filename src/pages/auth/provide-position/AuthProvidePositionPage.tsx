@@ -1,6 +1,6 @@
 import logo from "/svg/logo.svg";
 
-export default function ProvidePositionPage() {
+export default function AuthProvidePositionPage() {
 	const roles = [
 		"Frontend Developer",
 		"Backend Developer",

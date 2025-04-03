@@ -57,3 +57,6 @@ export type AppStore = typeof store;
 setupListeners(store.dispatch);
 
 export default store;
+
+// TODO: global error display / page navigation middleware
+// https://owensiu.medium.com/rtk-query-how-to-centralize-error-handling-40c28bb48d5d

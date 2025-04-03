@@ -1,6 +1,6 @@
 import logo from "/svg/logo.svg";
 
-export default function ProvideSuggestionPage() {
+export default function AuthProvideSuggestionPage() {
 	const suggestions = [
 		"Findding job oppotunities",
 		"Passing resume screens",

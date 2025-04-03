@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
-import RoleGuard from "../wrapper/RoleGuard";
+import RoleGuard from "../../components/wrapper/RoleGuard";
 import paths from "../../router/paths";
-import UnauthNavbar from "../ui/navbar/UnauthNavbar";
+import UnauthNavbar from "../../components/ui/navbar/UnauthNavbar";
 import { Role } from "../../features/auth/types";
 
 export default function AuthLayout() {

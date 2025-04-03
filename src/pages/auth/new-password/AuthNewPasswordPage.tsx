@@ -5,7 +5,7 @@ import GradientBorder from "../../../components/ui/border/GradientBorder";
 import { useResetPasswordMutation, useVerifyResetCodeMutation } from "../../../features/auth/api/auth.api";
 import React from "react";
 
-export default function NewPasswordPage() {
+export default function AuthNewPasswordPage() {
 	const [email, setEmail] = useState("");
 	const [searchParams] = useSearchParams();
 	const resetCodeFromURL = searchParams.get("key") || "";

@@ -29,25 +29,25 @@ const LoginForm = () => {
 		let newErrors = { email: "", password: "" };
 		let isValid = true;
 
-		// if (!password.trim()) {
-		// 	newErrors.password = "Password is required.";
-		// 	isValid = false;
-		// } else if (password.length < 6) {
-		// 	newErrors.password = "Password must be at least 6 characters long.";
-		// 	isValid = false;
-		// } else if (!/[A-Z]/.test(password)) {
-		// 	newErrors.password = "Password must contain at least one uppercase letter.";
-		// 	isValid = false;
-		// } else if (!/[a-z]/.test(password)) {
-		// 	newErrors.password = "Password must contain at least one lowercase letter.";
-		// 	isValid = false;
-		// } else if (!/[0-9]/.test(password)) {
-		// 	newErrors.password = "Password must contain at least one number.";
-		// 	isValid = false;
-		// } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-		// 	newErrors.password = "Password must contain at least one special character.";
-		// 	isValid = false;
-		// }
+		if (!password.trim()) {
+			newErrors.password = "Password is required.";
+			isValid = false;
+		} else if (password.length < 6) {
+			newErrors.password = "Password must be at least 6 characters long.";
+			isValid = false;
+		} else if (!/[A-Z]/.test(password)) {
+			newErrors.password = "Password must contain at least one uppercase letter.";
+			isValid = false;
+		} else if (!/[a-z]/.test(password)) {
+			newErrors.password = "Password must contain at least one lowercase letter.";
+			isValid = false;
+		} else if (!/[0-9]/.test(password)) {
+			newErrors.password = "Password must contain at least one number.";
+			isValid = false;
+		} else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+			newErrors.password = "Password must contain at least one special character.";
+			isValid = false;
+		}
 
 		setErrors(newErrors);
 		return isValid;

@@ -23,13 +23,15 @@ export type RefreshRequest = {
 		user_id: string;
 		safe_id: string;
 	};
-}; export enum Role {
+};
+
+export enum Role {
 	None = 0,
 	Candidate = 1,
 	Manager = 2
 }
 
-type Local = {
+export type Local = {
 	username: string;
 	email: string;
 	password: string;
@@ -37,7 +39,7 @@ type Local = {
 	otp: string;
 };
 
-type Metadata = {
+export type Metadata = {
 	fullname: string;
 	company: string;
 	country: string;
