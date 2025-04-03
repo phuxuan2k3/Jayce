@@ -5,7 +5,7 @@ import GradientBorder from "../../../components/ui/border/GradientBorder";
 import paths from "../../../router/paths";
 import React from "react";
 
-export default function ChooseRolePage() {
+export default function AuthChooseRolePage() {
 	const navigate = useNavigate();
 	const [tab, setTab] = useState("");
 	return (

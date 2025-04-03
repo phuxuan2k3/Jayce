@@ -1,6 +1,6 @@
 import type { ConfigFile } from '@rtk-query/codegen-openapi'
 
-const baseApiDirString = __dirname + "/../src/app/bases";
+const baseApiDirString = __dirname + "/../src/features/tests";
 const testsFeatureDirString = __dirname + "/../src/features/tests";
 
 const testApi: ConfigFile = {

@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import LoginPage from "../pages/auth/login/LoginPage";
+import LoginPage from "../pages/auth/login/AuthLoginPage";
 import RegisterPage from "../pages/auth/register/RegisterPage";
 import CandidateTestAssessmentPage from "../pages/candidate/tests/[id]/assessment/CandidateTestAssessmentPage";
 import ErrorPage from "../components/pages/ErrorPage";
@@ -26,7 +26,7 @@ import ProvideCompaniesPage from "../pages/auth/provide-companies/ProvideCompani
 import ResetPasswordPage from "../pages/auth/reset-password/ResetPasswordPage";
 import NewPasswordPage from "../pages/auth/new-password/NewPasswordPage";
 import paths from "./paths";
-import AuthenticateLayout from "../components/layouts/AuthenticateLayout";
+import AuthLayout from "../components/layouts/AuthLayout";
 import UnauthLayout from "../components/layouts/UnauthLayout";
 import CandidateLayout from "../pages/candidate/CandidateLayout";
 import GuestPage from "../pages/unauth/GuestPage";
@@ -35,8 +35,8 @@ import CandidateTestDoPage from "../pages/candidate/tests/[id]/do/CandidateTestD
 import CandidateTestAttemtpsPage from "../pages/candidate/tests/[id]/attempts/CandidateTestAttemptsPage";
 import CandidateTestLayout from "../pages/candidate/tests/CandidateTestLayout";
 import ManagerLayout from "../components/layouts/ManagerLayout";
-import BusinessRegisterPage from "../pages/auth/bussiness-register/BusinessRegisterPage";
-import ChooseRolePage from "../pages/auth/choose-role/ChooseRolePage";
+import AuthBusinessRegisterPage from "../pages/auth/bussiness-register/AuthBusinessRegisterPage";
+import AuthChooseRolePage from "../pages/auth/choose-role/AuthChooseRolePage";
 import CandidateAttemptPage from "../pages/candidate/tests/attempts/[id]/index/CandidateAttemptPage";
 import HomePage from "../pages/common/HomePage";
 import CandidateInTestLayout from "../pages/candidate/tests/[id]/CandidateInTestLayout";
@@ -51,7 +51,7 @@ const router = createBrowserRouter([{
 
 		{
 			path: paths.auth._layout,
-			element: <AuthenticateLayout />,
+			element: <AuthLayout />,
 			children: [
 				{
 					path: paths.auth.LOGIN,
@@ -59,11 +59,11 @@ const router = createBrowserRouter([{
 				},
 				{
 					path: paths.auth.CHOOSE_ROLE,
-					element: <ChooseRolePage />
+					element: <AuthChooseRolePage />
 				},
 				{
 					path: paths.auth.BUSINESS_REGISTER,
-					element: <BusinessRegisterPage />
+					element: <AuthBusinessRegisterPage />
 				},
 				{
 					path: paths.auth.REGISTER,

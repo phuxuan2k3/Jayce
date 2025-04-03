@@ -6,14 +6,14 @@ import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { setAuthState } from "../../../features/auth/store/authSlice";
 import { toErrorMessage } from "../../../helpers/fetchBaseQuery.error";
 import GradientBorder from "../../../components/ui/border/GradientBorder";
-import { useGoogleMutation, useLoginMutation } from "../../../features/auth/api/authRestApi";
+import { useGoogleMutation, useLoginMutation } from "../../../features/auth/api/auth.api";
 import SpinnerLoading from "../../../components/ui/loading/SpinnerLoading";
 import AlertError from "../../../components/ui/error/AlertError";
 import paths from "../../../router/paths";
 import React from "react";
+import { authActions } from "../../../features/auth/store/authSlice";
 
 const LoginForm = () => {
 	const navigate = useNavigate();
@@ -65,14 +65,8 @@ const LoginForm = () => {
 
 		try {
 			const response = await login({ email, password });
-
-			console.log(response);
-
-			dispatch(setAuthState({ user: response.data?.user ?? null, tokens: response.data?.token_info ?? null }));
-
-			console.log(error)
-
-			if (error === null) {
+			if (response.data) {
+				dispatch(authActions.setAuthStateFromResponse(response.data));
 				navigate(paths._layout);
 			}
 		} catch (error) {
@@ -94,7 +88,12 @@ const LoginForm = () => {
 			console.log("Google credential:", credentialResponse.credential);
 
 			const response = await google({ credential: credentialResponse.credential });
-
+			if (response.data) {
+				dispatch(authActions.setAuthStateFromResponse(response.data));
+				navigate(paths._layout);
+			} else {
+				console.log("Google login failed: No data in response");
+			}
 			console.log(response);
 		} catch (error: any) {
 			console.log("Google login failed:", error);

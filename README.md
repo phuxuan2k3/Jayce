@@ -2,6 +2,10 @@
 
 **_First rule: DO NOT use "any" type (for all cost)_**
 
+**_Second rule: DO NOT use env directly, define it in env.ts_**
+
+**_Third rule: ONLY use RTK Query to fetch data, do not use "fetch"_**
+
 ## _Components_
 
 - Each file should only reflect 1 components (except context).

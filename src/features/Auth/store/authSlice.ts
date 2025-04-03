@@ -1,14 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../../app/store.ts';
-import { bulbasaur } from '../grpc/bulbasaur.ts';
-import { Role } from '../../../app/enum.ts';
-import authApi from '../api/authApi.ts';
+import { Role } from "../types.ts";
+import authApi from '../api/auth.api.ts';
+import { AuthResponse } from '../types.ts';
 
 export type UserInfo = {
+	id: string;
+	role: Role;
 	username: string;
 	email: string;
-	role: bulbasaur.Role;
-	id: number;
 	metadata: any;
 	avatarPath?: string;
 }
@@ -16,20 +15,13 @@ export type UserInfo = {
 export type Token = {
 	access_token: string;
 	refresh_token: string;
-	role: bulbasaur.Role;
 	safe_id: string;
-	user_id: number;
 }
 
 export interface AuthState {
 	user: UserInfo | null,
 	tokens: Token | null,
 };
-
-export interface AuthStateResponse {
-	user: UserInfo | null,
-	tokens: Token | null,
-}
 
 const initialState: AuthState = ((): AuthState => {
 	return {
@@ -38,9 +30,25 @@ const initialState: AuthState = ((): AuthState => {
 	}
 })();
 
-function _setAuthState(state: AuthState, action: PayloadAction<AuthStateResponse>) {
-	state.tokens = action.payload.tokens;
-	state.user = action.payload.user;
+function _setAuthStateFromResponse(state: AuthState, action: PayloadAction<AuthResponse>) {
+	const data = action.payload;
+	const authState: AuthState = {
+		user: {
+			id: data.user.id.toString(),
+			email: data.user.email,
+			role: data.user.role,
+			username: data.user.username,
+			avatarPath: data.user.metadata?.avatarPath,
+			metadata: data.user.metadata,
+		},
+		tokens: {
+			access_token: data.token_info.access_token,
+			refresh_token: data.token_info.refresh_token,
+			safe_id: data.token_info.safe_id,
+		}
+	}
+	state.user = authState.user;
+	state.tokens = authState.tokens;
 }
 
 function _clearAuthState(state: AuthState) {
@@ -52,37 +60,29 @@ const authSlice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
-		clearAuthState: _clearAuthState,
-		setAuthState: _setAuthState,
+		clearAuthState: (state) => {
+			_clearAuthState(state);
+		},
+		setAuthStateFromResponse: (state, action: PayloadAction<AuthResponse>) => {
+			_setAuthStateFromResponse(state, action);
+		},
 	},
 	selectors: {
-		selectIsAuthenticated: (state: AuthState) => state.tokens != null && state.user != null,
 		selectUserInfo: (state: AuthState) => {
-			const user = state.user;
-			if (user == null) {
-				throw new Error("User is null");
-			}
-			return user;
+			return state.user;
 		},
 		selectTokens: (state: AuthState) => {
-			if (state.tokens == null) {
-				throw new Error("Tokens are null");
-			}
-			state.tokens
+			return state.tokens;
 		},
 		selectRole: (state: AuthState): Role => {
-			const _role = state.tokens?.role;
-			if (_role == null) {
+			const role = state.user?.role;
+			if (role == null) {
 				return Role.None;
 			}
-			switch (_role) {
-				case bulbasaur.Role.ROLE_CANDIDATE:
-					return Role.Candidate;
-				case bulbasaur.Role.ROLE_BUSINESS_MANAGER:
-					return Role.Manager;
-				case bulbasaur.Role.ROLE_UNKNOWN:
-					return Role.None;
-			}
+			return role;
+		},
+		selectUserId: (state: AuthState): string | null => {
+			return state.user?.id || null;
 		}
 	},
 	extraReducers: (builder) => {
@@ -91,28 +91,22 @@ const authSlice = createSlice({
 			.addMatcher(
 				authApi.endpoints.login.matchFulfilled,
 				(state, action) => {
-					_setAuthState(state, action);
+					_setAuthStateFromResponse(state, action);
 				})
 
 			// Register
 			.addMatcher(
 				authApi.endpoints.register.matchFulfilled,
 				(state, action) => {
-					_setAuthState(state, action);
+					_setAuthStateFromResponse(state, action);
 				})
-
-			// Refresh
+			// Login with Google
 			.addMatcher(
-				authApi.endpoints.refresh.matchFulfilled,
+				authApi.endpoints.google.matchFulfilled,
 				(state, action) => {
-					_setAuthState(state, action);
-				})
-			.addMatcher(
-				authApi.endpoints.refresh.matchRejected,
-				(state) => {
-					_clearAuthState(state);
-				})
-
+					_setAuthStateFromResponse(state, action);
+				}
+			)
 			// Logout
 			.addMatcher(
 				(action) =>
@@ -120,37 +114,12 @@ const authSlice = createSlice({
 					authApi.endpoints.logout.matchRejected(action),
 				(state) => {
 					_clearAuthState(state);
-				})
+				}
+			)
 	},
 });
 
-export const selectIsAuthenticated = (state: RootState) => state.auth.tokens != null && state.auth.user != null;
-
-export const selectUserInfo = (state: RootState) => {
-	const user = state.auth.user;
-	if (user == null) {
-		throw new Error("User is null");
-	}
-	return user;
-}
-
-export const selectTokens = (state: RootState) => state.auth.tokens;
-
-export const selectRole = (state: RootState): Role => {
-	const _role = state.auth.tokens?.role;
-	if (_role == null) {
-		return Role.None;
-	}
-	switch (_role) {
-		case bulbasaur.Role.ROLE_CANDIDATE:
-			return Role.Candidate;
-		case bulbasaur.Role.ROLE_BUSINESS_MANAGER:
-			return Role.Manager;
-		case bulbasaur.Role.ROLE_UNKNOWN:
-			return Role.None;
-	}
-}
-
-export const { clearAuthState, setAuthState } = authSlice.actions;
+export const authActions = authSlice.actions;
+export const authSelectors = authSlice.selectors;
 
 export default authSlice.reducer;

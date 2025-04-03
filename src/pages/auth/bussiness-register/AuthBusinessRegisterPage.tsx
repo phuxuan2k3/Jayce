@@ -1,7 +1,7 @@
 import Carousel from "../common/Carousel";
 import BusinessRegisterForm from "./BusinessRegisterForm";
 
-export default function BusinessRegisterPage() {
+export default function AuthBusinessRegisterPage() {
 	return (
 		<div className="grid grid-cols-12 flex-grow">
 			<Carousel

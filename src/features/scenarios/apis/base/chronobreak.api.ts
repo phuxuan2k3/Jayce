@@ -1,16 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { backendEndpoint } from "../../../../app/env"
-
-const chronobreakBackendURL = backendEndpoint + '/chronobreak';
-console.log('chronobreakBackendURL:', chronobreakBackendURL);
-
-const baseQuery = fetchBaseQuery({
-	baseUrl: chronobreakBackendURL
-});
+import { createApi } from '@reduxjs/toolkit/query/react';
+import serviceBaseQueryWithReauth from '../../../../app/serviceBaseQueryAuth';
+import { url } from '../../../../app/env';
 
 export const chronobreakApi = createApi({
 	reducerPath: 'chronobreakApi',
-	baseQuery: baseQuery,
+	baseQuery: serviceBaseQueryWithReauth(url.chronobreak),
 	endpoints: () => ({}),
 });
 

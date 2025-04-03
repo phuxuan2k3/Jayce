@@ -2,20 +2,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom";
 // import { useRegisterMutation } from "../../../features/Auth/authApi";
-import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useState } from "react";
+import { useAppDispatch } from "../../../app/hooks";
 import GradientBorder from "../../../components/ui/border/GradientBorder";
-import { selectIsAuthenticated, setAuthState } from "../../../features/auth/store/authSlice";
-import { useRegisterMutation } from "../../../features/auth/api/authApi";
-import { useVerificationEmailMutation } from "../../../features/auth/api/authRestApi";
+import { useRegisterMutation } from "../../../features/auth/api/auth.api";
+import { useVerificationEmailMutation } from "../../../features/auth/api/auth.api";
+import { authActions } from "../../../features/auth/store/authSlice";
+import paths from "../../../router/paths";
 
 const BusinessRegisterForm = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const [register, { error }] = useRegisterMutation();
+	const [register] = useRegisterMutation();
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const [verificationEmail] = useVerificationEmailMutation();
-	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 	const [otp, setOtp] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -26,11 +26,7 @@ const BusinessRegisterForm = () => {
 	const [job, setJob] = useState("");
 	const [avatar, setAvatar] = useState("");
 	const [errors, setErrors] = useState({ username: "", email: "", password: "" });
-	useEffect(() => {
-		if (isAuthenticated) {
-			navigate('/')
-		}
-	}, [isAuthenticated])
+
 	const validateForm = () => {
 		let newErrors = { username: "", email: "", password: "" };
 		let isValid = true;
@@ -76,48 +72,37 @@ const BusinessRegisterForm = () => {
 		return isValid;
 	};
 	const handleFormSubmit = async () => {
-		try {
-			alert(password);
-			const response = await register({
-				local: {
-					username,
-					email,
-					password: password,
-					confirm_password: password,
-					otp,
-				},
-				metadata: {
-					fullname: fullname,
-					company: company,
-					country: country,
-					jobTitle: job,
-					avatarPath: avatar
-				},
-				role: 1
-			});
-			console.log(response);
-			dispatch(setAuthState({
-				user: response.data?.user ?? null,
-				tokens: response.data?.tokens ?? null
-			}));
-			console.log(error);
-			if (error === null) {
-				navigate('/')
-			}
-		} catch (error) {
-			console.log("Register failed:", error);
+		alert(password);
+		const response = await register({
+			local: {
+				username,
+				email,
+				password: password,
+				confirm_password: password,
+				otp,
+			},
+			metadata: {
+				fullname: fullname,
+				company: company,
+				country: country,
+				jobTitle: job,
+				avatarPath: avatar
+			},
+			role: 1
+		});
+		if (response.data) {
+			dispatch(authActions.setAuthStateFromResponse(response.data));
+			navigate(paths._layout);
 		}
 	}
+
 	const handleVerifyEmail = async () => {
 		if (!validateForm()) return;
-		console.log('1');
 		if (!email) {
-			console.log('2');
 			alert("Please enter your email.");
 			return;
 		}
 		try {
-			console.log('3');
 			await verificationEmail({ email }).unwrap();
 			alert("Verification email sent successfully!");
 			setIsOpenModal(true);

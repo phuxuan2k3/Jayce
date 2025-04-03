@@ -1,4 +1,4 @@
-import promptApi from "../../../app/bases/prompt.api";
+import promptApi from "../base/prompt.api";
 import { CriteriaRequest, CriteriaResponse, GeneratedQuestionResponse, QuestionDTO } from "../types/crud";
 
 const questionaiAPI = promptApi.injectEndpoints({

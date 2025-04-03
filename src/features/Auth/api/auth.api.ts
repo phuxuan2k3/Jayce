@@ -1,22 +1,15 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { url } from "../../../app/env"
-import { Token, UserInfo } from '../store/authSlice';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { url } from "../../../app/env";
+import { AuthResponse } from '../types';
+import serviceBaseQueryNoAuth from '../../../app/serviceBaseQueryNoAuth';
 
-const baseQuery = fetchBaseQuery({
-	baseUrl: url.bulbasaur,
-	prepareHeaders: (headers) => {
-		headers.set('Content-Type', 'application/json');
-		return headers;
-	},
-});
-
-const authRestApi = createApi({
-	reducerPath: 'authRestApi',
-	baseQuery: baseQuery,
+const authApi = createApi({
+	reducerPath: 'authApi',
+	baseQuery: serviceBaseQueryNoAuth(url.bulbasaur),
 	endpoints: (builder) => ({
-		login: builder.mutation<{ token_info: Token, user: UserInfo }, { email: string; password: string }>({
+		login: builder.mutation<AuthResponse, { email: string; password: string }>({
 			query: ({ email, password }) => ({
-				url: '/account/login',
+				url: '/login',
 				method: 'POST',
 				body: {
 					local: {
@@ -26,16 +19,9 @@ const authRestApi = createApi({
 				},
 			}),
 		}),
-		google: builder.mutation<{ token_info: Token, user: UserInfo }, { credential: string }>({
-			query: ({ credential }) => ({
-				url: '/account/google',
-				method: 'POST',
-				body: { credential },
-			}),
-		}),
-		register: builder.mutation<{ token_info: Token, user: UserInfo }, { local: any, role: number, metadata: any }>({
+		register: builder.mutation<AuthResponse, { local: any, role: number, metadata: any }>({
 			query: ({ local, role, metadata }) => ({
-				url: '/account/register',
+				url: '/register',
 				method: 'POST',
 				body: {
 					local,
@@ -44,30 +30,37 @@ const authRestApi = createApi({
 				},
 			}),
 		}),
+		google: builder.mutation<AuthResponse, { credential: string }>({
+			query: ({ credential }) => ({
+				url: '/google',
+				method: 'POST',
+				body: { credential },
+			}),
+		}),
 		verificationEmail: builder.mutation<void, { email: string }>({
 			query: ({ email }) => ({
-				url: `/account/verify/email`,
+				url: `/verify/email`,
 				method: "POST",
 				body: { email },
 			}),
 		}),
 		reqResetPassword: builder.mutation<void, { email: string }>({
 			query: ({ email }) => ({
-				url: `/account/generate/resetcode`,
+				url: `/generate/resetcode`,
 				method: "POST",
 				body: { email },
 			})
 		}),
 		verifyResetCode: builder.mutation<{ email: string }, { resetCode: string }>({
 			query: ({ resetCode }) => ({
-				url: `/account/verify/resetcode`,
+				url: `/verify/resetcode`,
 				method: "POST",
 				body: { resetCode },
 			}),
 		}),
 		resetPassword: builder.mutation<void, { email: string; resetCode: string; newPassword: string }>({
 			query: ({ email, resetCode, newPassword }) => ({
-				url: `/account/resetpassword`,
+				url: `/resetpassword`,
 				method: "POST",
 				body: { email, resetCode, newPassword },
 			}),
@@ -83,6 +76,6 @@ export const {
 	useResetPasswordMutation,
 	useReqResetPasswordMutation,
 	useVerifyResetCodeMutation,
-} = authRestApi;
+} = authApi;
 
-export default authRestApi;
+export default authApi;

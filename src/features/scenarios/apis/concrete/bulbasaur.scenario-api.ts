@@ -1,4 +1,4 @@
-import authRestApi from "../../../auth/api/authRestApi";
+import authApi from "../../../auth/api/auth.api";
 import { UserInfo } from "../../../auth/store/authSlice";
 
 interface ListUsersRequest {
@@ -9,7 +9,7 @@ interface ListUsersResponse {
 	users: UserInfo[];
 }
 
-const bulbasaurAPI = authRestApi.injectEndpoints({
+const bulbasaurAPI = authApi.injectEndpoints({
 	endpoints: (builder) => ({
 		listUsers: builder.mutation<ListUsersResponse, ListUsersRequest>({
 			query: (body) => ({
