@@ -102,6 +102,9 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/tests`,
         method: "POST",
         body: queryArg.body,
+        headers: {
+          "x-user-id": queryArg["x-user-id"],
+        },
       }),
     }),
     getTestsByTestId: build.query<
@@ -141,6 +144,9 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/manager/tests`,
+        headers: {
+          "x-user-id": queryArg["x-user-id"],
+        },
         params: {
           searchTitle: queryArg.searchTitle,
           minMinutesToAnswer: queryArg.minMinutesToAnswer,
@@ -190,6 +196,9 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/candidate/attempts`,
+        headers: {
+          "x-user-id": queryArg["x-user-id"],
+        },
         params: {
           sortByStartDate: queryArg.sortByStartDate,
           sortByScore: queryArg.sortByScore,
@@ -204,6 +213,9 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/candidate/tests/${queryArg.testId}/attempts`,
+        headers: {
+          "x-user-id": queryArg["x-user-id"],
+        },
         params: {
           sortByStartDate: queryArg.sortByStartDate,
           sortByScore: queryArg.sortByScore,
@@ -327,12 +339,13 @@ export type GetTestsApiArg = {
   minMinutesToAnswer?: number | null;
   maxMinutesToAnswer?: number | null;
   difficulty?: ("easy" | "medium" | "hard")[] | string;
-  tags?: (number | null)[] | string;
+  tags?: string[] | string;
   page?: number;
   perPage?: number | null;
 };
 export type PostTestsApiResponse = unknown;
 export type PostTestsApiArg = {
+  "x-user-id": string;
   body: {
     tagIds: number[];
     title: string;
@@ -421,9 +434,10 @@ export type GetManagerTestsApiArg = {
   minMinutesToAnswer?: number | null;
   maxMinutesToAnswer?: number | null;
   difficulty?: ("easy" | "medium" | "hard")[] | string;
-  tags?: (number | null)[] | string;
+  tags?: string[] | string;
   page?: number;
   perPage?: number | null;
+  "x-user-id": string;
 };
 export type GetTestsByTestIdAttemptsApiResponse = /** status 200 Success */ {
   page: number;
@@ -522,6 +536,7 @@ export type GetCandidateAttemptsApiArg = {
   sortByScore?: "asc" | "desc";
   page: number;
   perPage?: number;
+  "x-user-id": string;
 };
 export type GetCandidateTestsByTestIdAttemptsApiResponse =
   /** status 200 Success */ {
@@ -551,6 +566,7 @@ export type GetCandidateTestsByTestIdAttemptsApiArg = {
   sortByScore?: "asc" | "desc";
   page: number;
   perPage?: number;
+  "x-user-id": string;
 };
 export const {
   useGetTagsQuery,

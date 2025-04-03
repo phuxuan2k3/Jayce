@@ -10,10 +10,11 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
+import { EditAbleUserInfo } from '../../../../features/auth/types/profile';
 
 interface UserProfileProps {
-	authData: UserInfo | null;
-	updateProfile: (newUserInfo: UserInfo) => void;
+	userInfo: EditAbleUserInfo | null;
+	updateProfile: (newUserInfo: EditAbleUserInfo) => void;
 	uploadResume: (resume: File | null) => void;
 }
 
@@ -37,7 +38,7 @@ const initUserStat = [
 	{ name: "Networking", total: 2 },
 ];
 
-const UserProfile: React.FC<UserProfileProps> = ({ authData, updateProfile, uploadResume }) => {
+const UserProfile: React.FC<UserProfileProps> = ({ userInfo: authData, updateProfile, uploadResume }) => {
 	const [skillStat, _setSkillStat] = React.useState<{ name: string, total: number }[]>(initUserStat);
 	const [seeMoreSkills, setSeeMoreSkills] = React.useState(false);
 	const [open, setOpen] = React.useState(false);
@@ -45,7 +46,12 @@ const UserProfile: React.FC<UserProfileProps> = ({ authData, updateProfile, uplo
 	const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 	const [errorResume, setErrorResume] = React.useState("");
 	const [isEditing, setIsEditing] = React.useState(false);
-	const [formData, setFormData] = React.useState<UserInfo>(authData || { email: '', username: '', avatarPath: '' });
+	const [formData, setFormData] = React.useState<EditAbleUserInfo>(authData ||
+	{
+		email: '',
+		username: '',
+		avatarPath: '',
+	});
 
 	const handleOpenDialog = () => {
 		console.log("Open dialog");

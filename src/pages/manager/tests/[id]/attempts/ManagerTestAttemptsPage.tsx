@@ -9,55 +9,35 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { useLocation, useNavigate } from "react-router-dom";
-import { useGetSubmissionListQuery, useGetSubmissionOverViewQuery } from "./submissionlist.test-api";
-import { useEffect, useState } from "react";
-import { SubmissionItem, SubmissionOverView } from "./types";
+import { useNavigate } from "react-router-dom";
+import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
+import paths from "../../../../../router/paths";
+import { useGetTestsByTestIdAttemptsQuery, useGetTestsByTestIdQuery } from "../../../../../features/tests/api/test.api-gen";
 
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-	'& .MuiDialogContent-root': {
-		padding: theme.spacing(2),
-	},
-	'& .MuiDialogActions-root': {
-		padding: theme.spacing(1),
-	},
-}));
-
+// TODO: add paging
 const ManagerTestAttemptsPage = () => {
-	const [open, setOpen] = React.useState(false);
-	const [selectedVersion, _setSelectedVersion] = useState<string | "all">("all");
-	const [availableVersions, _setAvailableVersions] = useState<string[]>([]);
 	const navigate = useNavigate();
-	const location = useLocation();
-	const { testID } = location.state || {};
-	const handleGoToSubmissionDetail = (submission: SubmissionItem) => {
-		navigate("/test/submission/detail", { state: { submission } });
-	};
+	const testId = useGetTestIdParams();
+	const [open, setOpen] = React.useState(false);
 
+	const { data: test } = useGetTestsByTestIdQuery({ testId });
+	const { data: attempts } = useGetTestsByTestIdAttemptsQuery({
+		testId,
+		page: 1,
+		perPage: 10,
+	});
+
+	if (!attempts || !test) return null;
+
+	const handleGoToSubmissionDetail = (attemptId: number) => {
+		navigate(paths.manager.tests.attempts.in(attemptId)._layout);
+	};
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
 	const handleClose = () => {
 		setOpen(false);
 	};
-	const [submissionList, setSubmissionList] = useState<SubmissionItem[]>([]);
-	const { data: submissionListData } = useGetSubmissionListQuery(testID);
-	useEffect(() => {
-		if (submissionListData) {
-			console.log("submissionOverviewData:", submissionListData);
-			setSubmissionList(submissionListData);
-		}
-	}, [submissionListData]);
-
-	const [submissionOverview, setsubmissionOverview] = useState<SubmissionOverView>();
-	const { data: submissionOverviewData } = useGetSubmissionOverViewQuery(testID);
-	useEffect(() => {
-		if (submissionOverviewData) {
-			console.log("submissionOverviewData:", submissionOverviewData);
-			setsubmissionOverview(submissionOverviewData);
-
-		}
-	}, [submissionOverviewData]);
 
 	return (
 		<>
@@ -72,11 +52,11 @@ const ManagerTestAttemptsPage = () => {
 				</div>
 
 				<div className="w-full max-w-7xl py-6">
-					<h1 className="text-2xl text-center text-[var(--primary-color)] font-bold mb-6">Test {submissionOverview?.testName}</h1>
+					<h1 className="text-2xl text-center text-[var(--primary-color)] font-bold mb-6">{test.title}</h1>
 
 					<div className="flex flex-col items-center">
 						<div className="w-4/6 flex flex-row justify-between font-semibold text-[var(--primary-color)] mb-4">
-							<span>Submission List ({submissionList.length})</span>
+							<span>Submission List ({attempts.data.length})</span>
 							<div className="h-full w-fit flex items-center">
 								<div className="h-7 w-7 bg-[#EAF6F8] flex items-center justify-center rounded-lg cursor-pointer" onClick={handleClickOpen}>
 									<FontAwesomeIcon icon={faSliders} rotation={90} />
@@ -92,39 +72,39 @@ const ManagerTestAttemptsPage = () => {
 						</div>
 
 						{/* Submission List */}
-						{submissionList.map((submission, index) => (
+						{attempts.data.map((attempt, index) => (
 							<div key={index} className="w-4/6 flex-1 flex flex-col bg-white rounded-lg shadow-primary p-6 border-r border-b border-solid border-primary items-between mb-4">
 								<div className="flex-1 flex justify-between mb-4">
 									<span className="font-bold mb-2 opacity-50">
 										#Version number
 									</span>
 
-									<div className="cursor-pointer" onClick={() => handleGoToSubmissionDetail(submission)}>
+									<div className="cursor-pointer" onClick={() => handleGoToSubmissionDetail(attempt.id)}>
 										<FontAwesomeIcon className="h-6 w-6" icon={faSquarePollHorizontal} />
 									</div>
 								</div>
 
 								<div className="font-medium mb-8">
-									Submitter: <span className="text-[#39A0AD] underline">{submission.candidateId}</span>
+									Submitter: <span className="text-[#39A0AD] underline">{attempt.candidateId}</span>
 								</div>
 
 								<div className="flex justify-between">
 									<div className="flex items-center">
 										<div className="flex items-center">
 											<FontAwesomeIcon className="h-4 w-4" icon={faCalendarMinus} />
-											<span className="ml-2 text-gray-600 text-sm font-medium">{format(new Date(submission.createAt), "dd-MM-yyyy HH:mm:ss")}</span>
+											<span className="ml-2 text-gray-600 text-sm font-medium">{format(new Date(attempt.startDate), "dd-MM-yyyy HH:mm:ss")}</span>
 										</div>
 										<div className="flex items-center">
 											<FontAwesomeIcon className="h-4 w-4 ml-4" icon={faListCheck} />
-											<span className="ml-2 text-gray-600 text-sm font-medium">Completeness: {submission.completeness}%</span>
+											<span className="ml-2 text-gray-600 text-sm font-medium">Time spent: {formatSecondsToMinutes(attempt.secondsSpent)}</span>
 										</div>
 									</div>
 									<div>
-										{submission.score === null ? (
+										{attempt.score === null ? (
 											<span className="text-red-600 font-semibold">Not graded</span>
 										) : (
 											<span className="text-primary font-semibold">
-												Graded: {submission.score}/{submissionOverview?.totalPoints}
+												Graded: {attempt.score}/{attempt.totalScore}
 											</span>
 										)}
 									</div>
@@ -186,13 +166,8 @@ const ManagerTestAttemptsPage = () => {
 						</div>
 						<div className="flex justify-between mt-2">
 							<label className="font-semibold">Version</label>
-							<select className="border border-black rounded-lg text-sm p-1 w-fit" value={selectedVersion}>
+							<select className="border border-black rounded-lg text-sm p-1 w-fit">
 								<option value="all">All</option>
-								{availableVersions.map(version => (
-									<option key={version} value={version}>
-										{version}
-									</option>
-								))}
 							</select>
 						</div>
 					</DialogContent>
@@ -210,4 +185,20 @@ const ManagerTestAttemptsPage = () => {
 	);
 }
 
-export default ManagerTestAttemptsPage
+export default ManagerTestAttemptsPage;
+
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+	'& .MuiDialogContent-root': {
+		padding: theme.spacing(2),
+	},
+	'& .MuiDialogActions-root': {
+		padding: theme.spacing(1),
+	},
+}));
+
+const formatSecondsToMinutes = (seconds: number): string => {
+	const minutes = Math.floor(seconds / 60);
+	const remainingSeconds = seconds % 60;
+	return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+};

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Role } from "../types.ts";
+import { Role } from "../types/auth.ts";
 import authApi from '../api/auth.api.ts';
-import { AuthResponse } from '../types.ts';
+import { AuthResponse } from '../types/auth.ts';
 import accountApi from '../api/account.api.ts';
 
 export type UserInfo = {

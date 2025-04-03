@@ -3,11 +3,12 @@ import UserProfile from "./UserInfo";
 import Activities from "./Activities/Activities";
 import Settings from "./Settings";
 import { useAppSelector } from '../../../../app/hooks';
-import { selectUserInfo, UserInfo } from '../../../../features/auth/store/authSlice';
+import { authSelectors } from '../../../../features/auth/store/authSlice';
+import { EditAbleUserInfo } from "../../../../features/auth/types/profile";
 
 const ProfilePage = () => {
 	const [activeTab, setActiveTab] = React.useState<"Activities" | "Settings">("Activities");
-	const authData = useAppSelector(selectUserInfo);
+	const authData = useAppSelector(authSelectors.selectUserInfo);
 
 	const toggleActiveTab = (tab: "Activities" | "Settings") => {
 		setActiveTab(tab);
@@ -17,7 +18,7 @@ const ProfilePage = () => {
 		console.log("Update email: ", email);
 	};
 
-	const updateProfile = (newUserInfo: UserInfo) => {
+	const updateProfile = (newUserInfo: EditAbleUserInfo) => {
 		console.log("Update profile", newUserInfo);
 	};
 
@@ -28,7 +29,7 @@ const ProfilePage = () => {
 	return (
 		<div className="flex p-4 min-h-screen">
 			<UserProfile
-				authData={authData}
+				userInfo={authData}
 				updateProfile={updateProfile}
 				uploadResume={uploadResume}
 			/>

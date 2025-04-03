@@ -12,6 +12,20 @@
 	],
 	"openapi": "3.1.0",
 	"components": {
+		"securitySchemes": {
+			"User ID": {
+				"type": "apiKey",
+				"name": "x-user-id",
+				"in": "header",
+				"description": "X-User-Id header for authentication"
+			},
+			"Role ID": {
+				"type": "apiKey",
+				"name": "x-role-id",
+				"in": "header",
+				"description": "X-Role-Id header for authentication"
+			}
+		},
 		"schemas": {},
 		"parameters": {}
 	},
@@ -549,10 +563,7 @@
 								{
 									"type": "array",
 									"items": {
-										"type": [
-											"number",
-											"null"
-										]
+										"type": "string"
 									}
 								},
 								{
@@ -685,6 +696,18 @@
 			"post": {
 				"tags": [
 					"Tests"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string",
+							"description": "The user ID",
+							"example": "1"
+						},
+						"required": true,
+						"name": "x-user-id",
+						"in": "header"
+					}
 				],
 				"requestBody": {
 					"required": true,
@@ -1097,10 +1120,7 @@
 								{
 									"type": "array",
 									"items": {
-										"type": [
-											"number",
-											"null"
-										]
+										"type": "string"
 									}
 								},
 								{
@@ -1133,6 +1153,16 @@
 						"required": false,
 						"name": "perPage",
 						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"description": "The user ID",
+							"example": "1"
+						},
+						"required": true,
+						"name": "x-user-id",
+						"in": "header"
 					}
 				],
 				"responses": {
@@ -1663,6 +1693,16 @@
 						"required": false,
 						"name": "perPage",
 						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"description": "The user ID",
+							"example": "1"
+						},
+						"required": true,
+						"name": "x-user-id",
+						"in": "header"
 					}
 				],
 				"responses": {
@@ -1824,6 +1864,16 @@
 						"required": false,
 						"name": "perPage",
 						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"description": "The user ID",
+							"example": "1"
+						},
+						"required": true,
+						"name": "x-user-id",
+						"in": "header"
 					}
 				],
 				"responses": {

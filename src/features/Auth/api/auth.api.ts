@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { url } from "../../../app/env";
-import { AuthResponse } from '../types';
+import { AuthResponse } from '../types/auth';
 import serviceBaseQueryNoAuth from '../../../app/serviceBaseQueryNoAuth';
 
 const authApi = createApi({

@@ -8,7 +8,7 @@ import paths from '../../../../../router/paths';
 import GradientBorderGood from '../../../../../components/ui/border/GradientBorder.good';
 import TestTimer from '../../common/TestTimer';
 import { useGetCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
-import useGetUserId from "../../../../../app/hooks";
+import useGetUserId from "../../../../../components/hooks/useGetUserId";
 
 type Props = {
 	company: {

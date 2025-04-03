@@ -2,8 +2,8 @@ import { BaseQueryFn, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from "@re
 import { mock, noAuth, url } from "./env";
 import { RootState } from "./store";
 import { authActions, authSelectors } from "../features/auth/store/authSlice";
-import { Role } from "../features/auth/types";
-import { AuthResponse, RefreshRequest } from "../features/auth/types";
+import { Role } from "../features/auth/types/auth";
+import { AuthResponse, RefreshRequest } from "../features/auth/types/auth";
 import { Mutex } from 'async-mutex';
 
 const mutex = new Mutex();

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import FilterListIcon from '@mui/icons-material/FilterList';
 import FilterModal from "./FilterModal";
-import TestList from "./TestList/comp";
+import TestList from "./TestList/TestList";
 import TagsList from "./TagsList";
 import Header from "./Header";
 import { GetTestsApiArg } from "../../../../features/tests/api/test.api-gen";

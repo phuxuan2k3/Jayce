@@ -41,7 +41,7 @@ const TestCard: React.FC<Props> = ({ id, managerId, minutesToAnswer, company, cr
 			<div className="flex flex-wrap gap-2 mb-4">
 				{tags.map((tag, index: number) => (
 					<GradientBorderGood key={index}>
-						{tag}
+						{tag.name}
 					</GradientBorderGood>
 				))}
 			</div>
