@@ -1,89 +1,85 @@
 import { services } from "./service";
 
-class InterviewManager{
-    static instance = null;
+class InterviewManager {
+  static instance = null;
 
-    interviewID;
-    questions;
-    currentQuestion;
+  interviewID;
+  questions;
+  currentQuestion;
 
-    constructor(interviewID, questions = null, currentQuestion = -1){
-        if (InterviewManager.instance) {
-            return InterviewManager.instance;
-        }
-
-        this.interviewID = interviewID;
-        this.questions = questions;
-        this.currentQuestion = currentQuestion;
-        InterviewManager.instance = this;
+  constructor(interviewID, questions = null, currentQuestion = -1) {
+    if (InterviewManager.instance) {
+      return InterviewManager.instance;
     }
 
-    async getQuestion(){
-        this.currentQuestion++;
+    this.interviewID = interviewID;
+    this.questions = questions;
+    this.currentQuestion = currentQuestion;
+    InterviewManager.instance = this;
+  }
 
-        if (this.questions === null || this.questions === undefined || this.questions.length === 0){
-            return null;
-        }
+  async getQuestion() {
+    this.currentQuestion++;
+    return await this.requestNextQuestions(this.currentQuestion);
+  }
 
-        if (this.currentQuestion <0 || this.questions[this.currentQuestion] === null || this.questions[this.currentQuestion] === undefined){
-            return null;
-        }
+  // async setQuestion(question){
+  //     if (this.questions === null || this.questions === undefined || this.questions.length === 0){
+  //         this.questions = [question];
+  //         return;
+  //     }
 
-        if (this.currentQuestion >= this.questions.length-2){
-            this.requestNextQuestions()
-        }
+  //     this.questions.push(question);
+  // }
 
-        return this.questions[this.currentQuestion];
+  // async setListQuestions(questions){
+  //     if (this.questions === null || this.questions === undefined || this.questions.length === 0){
+  //         this.questions = [questions];
+  //         return;
+  //     }
+  //     this.questions.push(questions);
+  // }
+
+  async submitAnswer(answer) {
+    services
+      .SubmitAnswer(
+        this.interviewID,
+        this.questions[this.currentQuestion].questionID,
+        answer
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  // async requestInitQuestions(){
+  //     services.GetInitialQuestions(this.interviewID)
+  //     .then(async (res) => {
+  //         await this.setListQuestions(res.data);
+  //     })
+  //     .catch((err) => {
+  //         console.error(err);
+  //     });
+
+  // }
+
+  async requestNextQuestions(questionIndex) {
+    const question = services
+      .GetNextQuestion(questionIndex)
+      .then(async (res) => {
+        console.log(res.data);
+        return res.data;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    if (question !== null) {
+      return question;
     }
-
-    async setQuestion(question){
-        if (this.questions === null || this.questions === undefined || this.questions.length === 0){
-            this.questions = [question];
-            return;
-        }
-
-        this.questions.push(question);
-    }
-
-    async setListQuestions(questions){
-        if (this.questions === null || this.questions === undefined || this.questions.length === 0){
-            this.questions = [questions];
-            return;
-        }      
-        this.questions.push(questions);
-    }
-
-    async submitAnswer(answer){
-        services.SubmitAnswer(this.interviewID, this.questions[this.currentQuestion].questionID, answer)
-        .then((res) => {
-            console.log(res);
-        }
-        )
-        .catch((err) => {
-            console.error(err);
-        });
-    }
-
-    async requestInitQuestions(){
-        services.GetInitialQuestions(this.interviewID)
-        .then(async (res) => {
-            await this.setListQuestions(res.data);
-        })
-        .catch((err) => {
-            console.error(err);
-        });
-
-    }
-
-    async requestNextQuestions(){
-        services.GetNextQuestions(this.interviewID)
-        .then(async(res) => {
-            await this.setListQuestions(res.data);
-        })
-        .catch((err) => {
-            console.error(err);
-        });
-    }
+  }
 }
 
 export default InterviewManager;
