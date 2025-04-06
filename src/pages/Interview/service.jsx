@@ -6,7 +6,7 @@ const instance = axios.create({
     headers: { 'Content-Type': 'application/json' },
 });
 
-export const service = {
+export const services = {
     ConvertTextToSpeech: (text, language, gender) => {
         return instance.post(`/tts`, { content: text, language, gender }, { responseType: 'blob' })
             .then((res) => {
@@ -21,4 +21,8 @@ export const service = {
     }
     ,
     GetLibSync: (text, language, gender) => instance.post(`/lip-sync`, { content: text, language, gender }),
+    CreateInterview: (interviewInfo) => instance.post(`/interview`, interviewInfo),
+    GetInitialQuestions: (interviewID) => instance.get(`/interviews/${interviewID}/questions/initial`),
+    GetNextQuestions: (interviewID) => instance.get(`/interviews/${interviewID}/questions/next`),
+    SubmitAnswer: (interviewID, questionID, answer) => instance.post(`/interviews/${interviewID}/answers`, {questionID, answer}),
 }

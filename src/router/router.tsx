@@ -1,4 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
+import Interview from "../pages/Interview/Main";
 import Login from "../pages/Authen/login/Login";
 import Dashboard from "../pages/Dashboard";
 import TestDo from "../pages/Test/Candidate/TestDo/TestDo";
@@ -54,7 +55,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/",
-				element: <Dashboard />
+				element: <Interview />
 			},
 			{
 				path:paths.SUGGESTION,
