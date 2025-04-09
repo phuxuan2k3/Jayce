@@ -5,8 +5,8 @@ import { useThree } from "@react-three/fiber";
 import { useEffect } from "react";
 
 export function Experience(props) {
-  const texture = useTexture("textures/room.jpeg");
-  const viewport = useThree((state) => state.viewport);
+  const texture = useTexture("textures/room2.jpeg")
+  const viewport = useThree((state) => state.viewport)
   return (
     <>
       <OrbitControls />
