@@ -1,6 +1,8 @@
 import { Canvas } from "@react-three/fiber";
 import { Experience as Female } from "./characters/Alice/Experience";
 import { Experience as Male } from "./characters/John/Experience";
+import { Experience as Jenny } from "./characters/Jenny/Experience";
+import { Experience as Peter } from "./characters/Peter/Experience";
 import Navbar from "../../components/Navbar";
 import { useState, useRef, useEffect } from "react";
 import Webcam from "react-webcam";
@@ -9,9 +11,9 @@ import { Input } from "@mui/material";
 import CircularWithValueLabel from "./loading";
 import InterviewManager from "./interviewManager";
 import { Question } from "./models";
-const interviewID = "123";
+import { useTexture } from "@react-three/drei";
 
-function Interview() {
+function Interview(props) {
   const [play, setPlay] = useState(false);
   const [audio, setAudio] = useState(null);
   const audioRef = useRef(null);
@@ -19,19 +21,40 @@ function Interview() {
   const [libsync, setLibsync] = useState(null);
   const libsyncRef = useRef(null);
   const inputRef = useRef(null);
-  const interviewManager = useRef(new InterviewManager(interviewID));
+  const interviewManager = useRef();
   const currentQuestion = useRef(new Question());
   const [character, setCharacter] = useState(1);
+  const [texture, setTexture] = useState(1);
 
-  useEffect(async () => {
-    loadingRef.current = true;
 
-    currentQuestion.current = await interviewManager.current.getQuestion();
+  useEffect(() => {
+    const fetchData = async () => {
+      if (props.interviewID == "") {
+        return;
+      }
+      console.log("Interview ID: ", props.interviewID);
 
-    loadingRef.current = false;
+      interviewManager.current = new InterviewManager(
+        props.interviewID,
+        null,
+        0
+      );
 
-    playLibsync();
-  }, []);
+      loadingRef.current = true;
+
+      currentQuestion.current = await interviewManager.current.getQuestion();
+
+      // if currentQuestion.current.isLastQuestion == true;
+
+      loadingRef.current = false;
+
+      playLibsync();
+    };
+
+    fetchData();
+
+  }, [props.interviewID]);
+
 
   const handleAnswer = async () => {
     const text = inputRef.current.value;
@@ -46,18 +69,25 @@ function Interview() {
   };
 
   function playLibsync() {
-    audioRef.current = new Audio(currentQuestion.current.audio);
-    libsyncRef.current = currentQuestion.current.libsync.data.json_result;
+    // audioRef.current = new Audio(currentQuestion.current.audio);
+    libsyncRef.current = currentQuestion.current.lipsync;
     // audioRef.current.play();
     playMp3FromBase64(currentQuestion.current.audio);
   }
 
   function changeCharacter() {
     let newCharacter = character + 1;
-    if (newCharacter > 2) {
+    if (newCharacter > 4) {
       newCharacter = 1;
     }
     setCharacter(newCharacter);
+  }
+  function changeTexture() {
+    let newTexture = texture + 1;
+    if (newTexture > 4) {
+      newTexture = 1;
+    }
+    setTexture(newTexture);
   }
 
   function playMp3FromBase64(base64) {
@@ -66,19 +96,16 @@ function Interview() {
       const blob = new Blob([decodedBytes], { type: "audio/mpeg" });
       const url = URL.createObjectURL(blob);
 
-      const audio = new Audio(url);
-      audio.addEventListener("error", (error) => {
+      audioRef.current = new Audio(url);
+      audioRef.current.addEventListener("error", (error) => {
         console.error("Audio playback error:", error);
-        document.getElementById("result").innerText = "Error playing audio.";
       });
-      audio.play();
+      audioRef.current.play();
 
-      audio.onended = () => URL.revokeObjectURL(url);
-      document.getElementById("result").innerText =
-        "Audio played successfully!";
+      audioRef.current.onended = () => URL.revokeObjectURL(url);
+
     } catch (error) {
       console.error("Error playing MP3:", error);
-      document.getElementById("result").innerText = "Error playing audio.";
     }
   }
 
@@ -100,10 +127,16 @@ function Interview() {
 
   function Character() {
     if (character == 1) {
-      return <Male audioRef={audioRef} libsyncRef={libsyncRef} />;
+      return <Male audioRef={audioRef} libsyncRef={libsyncRef} texture={useTexture(`textures/room${texture}.jpeg`)} />;
     }
     if (character == 2) {
-      return <Female />;
+      return <Female audioRef={audioRef} libsyncRef={libsyncRef} texture={useTexture(`textures/room${texture}.jpeg`)} />;
+    }
+    if (character == 3) {
+      return <Jenny audioRef={audioRef} libsyncRef={libsyncRef} texture={useTexture(`textures/room${texture}.jpeg`)} />;
+    }
+    if (character == 4) {
+      return <Peter audioRef={audioRef} libsyncRef={libsyncRef} texture={useTexture(`textures/room${texture}.jpeg`)} />;
     }
   }
 
@@ -122,19 +155,29 @@ function Interview() {
         }}
       >
         <div style={{ backgroundColor: "white" }}>
-          <Input
-            multiline
-            sx={{ width: "300px" }}
-            inputRef={inputRef}
-            placeholder="Nhập nội dung"
-          />
-          <button onClick={handleAnswer}>Trả lời</button>
-          <button onClick={() => changeCharacter()}>Đổi nhân vật</button>
-          <br></br>
+
+          {
+            props.started ? <>
+              <Input
+                multiline
+                sx={{ width: "300px" }}
+                inputRef={inputRef}
+                placeholder="Nhập nội dung"
+              />
+              <button onClick={handleAnswer}>Trả lời</button>
+            </>
+              : <>
+                <br></br>
+                <button onClick={() => changeCharacter()}>Đổi nhân vật</button>
+                <br></br>
+                <button onClick={() => changeTexture()}>Đổi phòng</button>
+                <br></br>
+              </>
+          }
           <CircularWithValueLabel isLoading={loadingRef} />
         </div>
         {/* <WebcamComponent /> */}
-      </div>
+      </div >
 
       <Canvas
         style={{
@@ -153,7 +196,6 @@ function Interview() {
     </>
   );
 }
-
 const WebcamComponent = () => {
   const webcamRef = useRef(null);
   const [isCameraOn, setIsCameraOn] = useState(true);

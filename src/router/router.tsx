@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Interview from "../pages/Interview/Main";
+import InitInterview from "../pages/Interview/Init";
 import Login from "../pages/Authen/login/Login";
 import Dashboard from "../pages/Dashboard";
 import TestDo from "../pages/Test/Candidate/TestDo/TestDo";
@@ -55,27 +56,27 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/",
-				element: <Interview />
+				element: <InitInterview />
 			},
 			{
-				path:paths.SUGGESTION,
-				element:<Suggestion/>
+				path: paths.SUGGESTION,
+				element: <Suggestion />
 			},
 			{
-				path:paths.ROLE,
-				element:<Role/>
+				path: paths.ROLE,
+				element: <Role />
 			},
 			{
-				path:paths.COMPANY,
-				element:<Company/>
+				path: paths.COMPANY,
+				element: <Company />
 			},
 			{
-				path:paths.RESET,
-				element:<ResetPassword/>
+				path: paths.RESET,
+				element: <ResetPassword />
 			},
 			{
-				path:paths.NEWPASS,
-				element:<NewPassword/>
+				path: paths.NEWPASS,
+				element: <NewPassword />
 			},
 			{
 				path: paths.TEST.ROOT,

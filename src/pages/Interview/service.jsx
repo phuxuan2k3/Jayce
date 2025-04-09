@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:9000/api",
+  baseURL: "http://localhost:3141/interviews",
   timeout: 50000,
   headers: { "Content-Type": "application/json" },
 });
@@ -27,19 +27,19 @@ export const services = {
   //   GetLibSync: (text, language, gender) =>
   //     instance.post(`/lip-sync`, { content: text, language, gender }),
   CreateInterview: (interviewInfo) =>
-    instance.post(`/interview`, interviewInfo),
+    instance.post(`/start`, interviewInfo),
   //   GetInitialQuestions: (interviewID) =>
   //     instance.get(`/interviews/${interviewID}/questions/initial`),
   GetNextQuestion: (interviewID, questionIndex) =>
-    instance.get(`/interviews/${interviewID}/${questionIndex}`),
+    instance.get(`/${interviewID}/${questionIndex}`),
   //   /**
   //    * @deprecated This function is deprecated. Use GetNextQuestion instead.
   //    */
   //   GetNextQuestions: (interviewID) =>
   //     instance.get(`/interviews/${interviewID}/questions/next`),
   SubmitAnswer: (interviewID, questionIndex, answer, recordProof = null) =>
-    instance.post(`/interviews/${interviewID}/answers`, {
-      questionIndex,
+    instance.post(`/${interviewID}/answer`, {
+      index: questionIndex,
       answer,
       recordProof,
     }),

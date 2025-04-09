@@ -7,7 +7,7 @@ class InterviewManager {
   questions;
   currentQuestion;
 
-  constructor(interviewID, questions = null, currentQuestion = -1) {
+  constructor(interviewID, questions = null, currentQuestion = 0) {
     if (InterviewManager.instance) {
       return InterviewManager.instance;
     }
@@ -44,7 +44,7 @@ class InterviewManager {
     services
       .SubmitAnswer(
         this.interviewID,
-        this.questions[this.currentQuestion].questionID,
+        this.currentQuestion,
         answer
       )
       .then((res) => {
@@ -67,8 +67,9 @@ class InterviewManager {
   // }
 
   async requestNextQuestions(questionIndex) {
+    console.log("Requesting question index:", questionIndex, this.interviewID);
     const question = services
-      .GetNextQuestion(questionIndex)
+      .GetNextQuestion(this.interviewID, questionIndex)
       .then(async (res) => {
         console.log(res.data);
         return res.data;

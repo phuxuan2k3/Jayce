@@ -63,6 +63,7 @@ export function Avatar(props) {
   // }, [props.libsync]);
 
   useFrame(() => {
+
     if (!props.audioRef.current || !props.libsyncRef.current) return;
 
     const currentAudioTime = props.audioRef.current.currentTime;

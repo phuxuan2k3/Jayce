@@ -1,34 +1,45 @@
 import { services } from "./service";
 import { InterviewInfo } from "./models";
+import Interview from "./Main";
+import { useState, useRef, useEffect } from "react";
 
 function InitInterview() {
+  const [started, setStarted] = useState(false);
+  const [interviewID, setInterviewID] = useState("");
+
   function handleStart(e) {
     e.target.disabled = true;
-    console.log("Start");
     services
       .CreateInterview(
-        new InterviewInfo({
-          job: "Developer",
-          position: "Frontend",
-          language: "en",
-          level: "junior",
-          duration: 10,
-          model: "default",
-        })
+        {
+          field: "AI Engineering",
+          position: "AI Engineer Intern",
+          language: "English",
+          models: "en-AU-NatashaNeural",
+          speed: -20,
+          level: "Easy",
+          maxQuestions: 4,
+          skipIntro: false,
+          coding: false,
+        }
       )
       .then((res) => {
-        console.log(res);
+        setInterviewID(res.data.interviewId);
+        console.log(res.data.interviewId);
+        setStarted(true);
       })
       .catch((err) => {
         console.error(err);
       });
   }
+
   return (
-    <div>
-      <h1>Interview</h1>
+    <>
       <button onClick={handleStart}>Start</button>
-    </div>
-  );
+      <Interview started={started} interviewID={interviewID} />
+    </>
+  )
 }
+
 
 export default InitInterview;
