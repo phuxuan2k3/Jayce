@@ -30,6 +30,9 @@ jobs:
 
       - name: Deploy to VPS
         run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_HOST }} << 'EOF'
           echo "🔍 Finding container using port 80..."
           CONTAINER_ID=$(docker ps --filter "publish=80" --format '{{.ID}}')
