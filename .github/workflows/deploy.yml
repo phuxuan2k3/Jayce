@@ -46,4 +46,4 @@ jobs:
 
           echo "🚀 Running new container..."
           docker run -d --name skfe -p 80:80 ${{ secrets.DOCKER_USERNAME }}/skfe:prod
-        EOF
+          EOF
