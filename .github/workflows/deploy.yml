@@ -38,3 +38,4 @@ jobs:
           docker rm -f skfe || true
           docker run -d --name skfe -p 80:80 ${{ secrets.DOCKER_USERNAME }}/skfe:prod
         EOF
+#t
