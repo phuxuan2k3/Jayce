@@ -10,32 +10,45 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout source
-      uses: actions/checkout@v3
+      - name: Checkout source
+        uses: actions/checkout@v3
 
-    # - name: Install dependencies
-    #   run: npm i @rollup/rollup-linux-x64-gnu && npm ci
+      # - name: Install dependencies
+      #   run: npm i @rollup/rollup-linux-x64-gnu && npm ci
 
-    # - name: Build project
-    #   run: npx vite build
+      # - name: Build project
+      #   run: npx vite build
 
-    - name: Login to Docker Hub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
-    - name: Build Docker image
-      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/skfe:prod .
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/skfe:prod .
 
-    - name: Push Docker image
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/skfe:prod
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/skfe:prod
 
-    - name: Deploy to VPS
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_HOST }} << 'EOF'
-          docker pull ${{ secrets.DOCKER_USERNAME }}/skfe:prod
-          docker rm -f skfe || true
-          docker run -d --name skfe -p 80:80 ${{ secrets.DOCKER_USERNAME }}/skfe:prod
-        EOF
+      - name: Deploy to VPS
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_HOST }} << 'EOF'
+            echo " Finding container using port 80..."
+            CONTAINER_ID=\$(docker ps --filter "publish=80" --format "{{.ID}}")
+            if [ -n "\$CONTAINER_ID" ]; then
+              echo " Stopping container \$CONTAINER_ID"
+              docker stop \$CONTAINER_ID
+              docker rm \$CONTAINER_ID
+            else
+              echo " No container using port 80"
+            fi
+
+            echo " Pulling latest image..."
+            docker pull ${{ secrets.DOCKER_USERNAME }}/skfe:prod
+
+            echo " Running new container..."
+            docker run -d -p 80:80 ${{ secrets.DOCKER_USERNAME }}/skfe:prod
+          EOF
+
 #t
