@@ -20,9 +20,13 @@ export default function UnauthLayout() {
 					alternativeUrl: paths.manager._layout
 				},
 			]}>
-			<UnauthNavbar />
-			<Outlet />
-			<FooterLong />
+			<div className="flex flex-col min-h-screen">
+				<UnauthNavbar />
+				<div className="flex-grow overflow-y-auto">
+					<Outlet />
+				</div>
+				<FooterLong />
+			</div>
 		</RoleGuard>
 	</>;
 }

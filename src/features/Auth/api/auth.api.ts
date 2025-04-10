@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { url } from "../../../app/env";
-import { AuthResponse } from '../types/auth';
 import serviceBaseQueryNoAuth from '../../../app/serviceBaseQueryNoAuth';
+import { AuthResponse } from '../types/auth';
 
 const authApi = createApi({
 	reducerPath: 'authApi',

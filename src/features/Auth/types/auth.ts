@@ -26,9 +26,9 @@ export type RefreshRequest = {
 };
 
 export enum Role {
-	None = 0,
-	Candidate = 1,
-	Manager = 2
+	None = "ROLE_UNKNOWN",
+	Candidate = "ROLE_CANDIDATE",
+	Manager = "ROLE_BUSINESS_MANAGER",
 }
 
 export type Local = {

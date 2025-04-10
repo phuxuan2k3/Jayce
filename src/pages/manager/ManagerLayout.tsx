@@ -9,7 +9,9 @@ export default function ManagerLayout() {
 		<RoleGuard roles={[Role.Manager]}>
 			<div className="flex flex-col min-h-screen">
 				<ManagerNavbar />
-				<Outlet />
+				<div className="flex-grow overflow-y-auto">
+					<Outlet />
+				</div>
 				<FooterShort />
 			</div>
 		</RoleGuard>

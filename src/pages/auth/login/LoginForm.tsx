@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
@@ -166,7 +166,7 @@ const LoginForm = () => {
 			</GradientBorder>
 			{errors.password && <span className="text-red-400 text-sm">{errors.password}</span>}
 			<div className="w-full p-2 mt-14 text-center">
-				Forgot your password? <a className="text-[var(--primary-color)]" href="/reset">Reset it here.</a>
+				Forgot your password? <Link className="text-[var(--primary-color)]" to={paths.auth.RESET_PASSWORD}>Reset it here.</Link>
 			</div>
 			<button type="submit" className="w-full bg-[var(--primary-color)] text-lg font-bold text-white p-4 rounded-lg m-1">
 				Login <FontAwesomeIcon icon={faArrowRight} />
@@ -175,4 +175,4 @@ const LoginForm = () => {
 	</div>
 }
 
-export default LoginForm
+export default LoginForm;

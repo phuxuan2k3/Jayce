@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function TestCreateStepper({
 	step,
 	onStepChange,
@@ -8,53 +10,85 @@ export default function TestCreateStepper({
 	if (step < 0 || step > 3) {
 		throw new Error("Invalid step number. Step number should be between 0 and 3.");
 	}
-	const steps = [
+	const stepLabels = [
 		"Overview",
 		"Question",
 		"Review",
+		"Finish",
 	];
-	const stepClasses = (step: number) => {
-		return `flex items-center gap-2 text-[24px] ${step === step ? "bg-[var(--primary-color)]" : "bg-gray-300"} rounded-3xl h-10 w-10 text-white font-bold text-center`;
-	}
-
-	const stepTextClasses = (step: number) => {
-		return `flex items-center gap-2 text-[24px] ${step === step ? "text-[var(--primary-color)]" : "text-gray-300"}`;
-	}
-
-	const stepLineClasses = (step: number) => {
-		return `w-24 ${step > step ? "border-[var(--primary-color)]" : "border-gray-800"}`;
-	}
-
-	const stepText = (step: number) => {
-		return step === step ? steps[step] : steps[step];
-	}
 
 	return (
 		<div>
-			<div className="relative h-[600px] text-center">
+			<div className="text-center">
 				<div className="font-arya pt-12 flex gap-2 items-center justify-center ">
-					{steps.map((_, index) => (
-						<div onClick={() => onStepChange(index)} key={index}>
-							<div className={stepTextClasses(index)}>
-								<div className={stepClasses(index)}>
-									{index + 1}
-								</div>
-								<span>{stepText(index)}</span>
-							</div>
-							<div className={stepLineClasses(index)}>
-								<hr className="border-2" />
-							</div>
-						</div>
+					{stepLabels.map((stepLabel, index) => (
+						<StepItem
+							key={index}
+							step={index}
+							stepLength={stepLabels.length}
+							currentStep={step}
+							onStepChange={onStepChange}
+							stepLabel={stepLabel}
+						/>
 					))}
 				</div>
-			</div>
-			<div className="absolute inset-0 flex items-center justify-center">
-				<div className="w-1/2 h-1 bg-gray-300 rounded-full animate-pulse"></div>
-				<div className="absolute w-1/2 h-1 bg-[var(--primary-color)] rounded-full animate-pulse"></div>
-			</div>
-			<div className="font-arya text-[24px] font-bold text-center mt-10">
-				Now, complete some specific contexts to generate questions...
 			</div>
 		</div>
 	);
 };
+
+
+function StepItem({
+	step,
+	currentStep,
+	stepLength,
+	onStepChange,
+	stepLabel,
+}: {
+	step: number;
+	currentStep: number;
+	stepLength: number;
+	onStepChange: (step: number) => void;
+	stepLabel: string;
+}) {
+	return (
+		<div
+			className={`flex items-center gap-2 text-2xl ${currentStep >= step
+				? "text-[var(--primary-color)]"
+				: "text-gray-300"
+				}`}
+		>
+			<div
+				className={`flex items-center gap-2 ${currentStep >= step ? "cursor-pointer" : "cursor-not-allowed"}`}
+				onClick={() => {
+					if (currentStep >= step) {
+						onStepChange(step);
+					}
+				}}
+			>
+				{/* Step number */}
+				<div className={`flex items-center justify-center gap-2 text-[24px] ${currentStep >= step
+					? "bg-[var(--primary-color)]"
+					: "bg-gray-300"
+					} rounded-3xl h-10 w-10 text-white font-bold text-center`}
+				>
+					{step + 1}
+				</div>
+
+				{/* Step label*/}
+				<span>{stepLabel}</span>
+			</div>
+
+			{/* Step line */}
+			{/* Only show the line if it's not the last step */}
+			{step != stepLength - 1 && (
+				<div className={`w-24 h-[2px] ${currentStep > step
+					? "bg-[var(--primary-color)]"
+					: "bg-gray-300"
+					} `}
+				>
+				</div>
+			)}
+		</div>
+	);
+}

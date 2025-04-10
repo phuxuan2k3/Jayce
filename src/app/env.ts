@@ -1,5 +1,5 @@
 const backendEndpoint: string = import.meta.env.VITE_BACKEND_URL as string;
-const noAuth = Boolean(import.meta.env.VITE_NO_AUTH) as boolean ?? false;
+const noAuth = Boolean(import.meta.env.VITE_NO_AUTH === "true") as boolean ?? false;
 
 // Auth
 const bulbasaurUrl = import.meta.env.VITE_BULBASAUR_URL as string;

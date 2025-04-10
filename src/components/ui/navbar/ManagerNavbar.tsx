@@ -30,7 +30,7 @@ const ManagerNavbar = ({ showNav = true }: { showNav?: boolean; }) => {
 	};
 
 	const handleLogoClick = () => {
-		navigate(paths.candidate._layout);
+		navigate(paths.manager._layout);
 	};
 
 	return <nav className="bg-white drop-shadow-lg">

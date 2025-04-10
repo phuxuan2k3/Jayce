@@ -9,9 +9,11 @@ export default function CandidateLayout() {
 	return (
 		<RoleGuard roles={[Role.Candidate]}>
 			<ShowCurrentTestProvider>
-				<div className="flex flex-col h-screen">
+				<div className="flex flex-col min-h-screen">
 					<CandidateNavbar />
-					<Outlet />
+					<div className="flex-grow overflow-y-auto">
+						<Outlet />
+					</div>
 					<FooterShort />
 				</div>
 			</ShowCurrentTestProvider>

@@ -44,11 +44,11 @@ import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/ManagerTestEdi
 import ManagerTestsSelfPage from "../pages/manager/tests/self/ManagerTestsSelfPage";
 
 const router = createBrowserRouter([{
+	path: paths._layout,
 	errorElement: <ErrorPage />,
 	children: [
 
 		// Authentication pages
-
 		{
 			path: paths.auth._layout,
 			element: <AuthLayout />,
@@ -318,9 +318,7 @@ const router = createBrowserRouter([{
 		},
 
 		// No authentication pages, for guests, if has role, navigate away
-
 		{
-			path: paths._layout,
 			element: <UnauthLayout />,
 			children: [
 				{

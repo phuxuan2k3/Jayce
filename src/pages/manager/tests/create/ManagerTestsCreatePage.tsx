@@ -28,7 +28,14 @@ const ManagerTestsCreatePage = () => {
 		dispatch(loadCreate());
 	}, []);
 
-	const getStepComponent = useMemo(() => {
+	const [createTest, { isSuccess, isLoading }] = usePostTestsMutation();
+	useEffect(() => {
+		if (isSuccess) {
+			navigate(paths.manager.tests.SELF);
+		}
+	}, [isSuccess, navigate]);
+
+	const StepComponent = useMemo(() => {
 		switch (step) {
 			case 0:
 				return <TestCreateStep1 onNext={() => setStep(1)} />;
@@ -46,14 +53,6 @@ const ManagerTestsCreatePage = () => {
 		}
 	}, [step]);
 
-	const [createTest, { isSuccess, isLoading }] = usePostTestsMutation();
-	useEffect(() => {
-		if (isSuccess) {
-			navigate(paths.manager.tests.SELF);
-		}
-	}, [isSuccess, navigate]);
-
-
 	const handleCreateTest = () => {
 		const testCreateParam = useAppSelector((state) => selectCreateTestApiArg(state, userId));
 		if (testCreateParam == null) {
@@ -63,7 +62,6 @@ const ManagerTestsCreatePage = () => {
 		createTest(testCreateParam);
 	};
 
-
 	return (
 		<div className="relative flex flex-col items-center justify-center w-full h-screen">
 			<TestCreateStepper
@@ -72,11 +70,17 @@ const ManagerTestsCreatePage = () => {
 			/>
 
 			<div>
-				{getStepComponent}
+				{StepComponent}
 			</div>
 
 			<div className="absolute top-10 right-10">
-				<img className="w-4" src="https://cdn-icons-png.flaticon.com/512/566/566013.png" alt="" />
+				<img
+					className="w-4 cursor-pointer"
+					src="https://cdn-icons-png.flaticon.com/512/566/566013.png"
+					alt="X"
+					onClick={() => navigate(paths.manager.tests.SELF)}
+					title="Close"
+				/>
 			</div>
 		</div>
 	);
