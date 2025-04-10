@@ -30,25 +30,20 @@ jobs:
 
       - name: Deploy to VPS
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_HOST }} << 'EOF'
-            echo " Finding container using port 80..."
-            CONTAINER_ID=\$(docker ps --filter "publish=80" --format "{{.ID}}")
-            if [ -n "\$CONTAINER_ID" ]; then
-              echo " Stopping container \$CONTAINER_ID"
-              docker stop \$CONTAINER_ID
-              docker rm \$CONTAINER_ID
-            else
-              echo " No container using port 80"
-            fi
+          echo "🔍 Finding container using port 80..."
+          CONTAINER_ID=$(docker ps --filter "publish=80" --format '{{.ID}}')
+          if [ -n "$CONTAINER_ID" ]; then
+            echo "🛑 Stopping container $CONTAINER_ID"
+            docker stop $CONTAINER_ID
+            docker rm $CONTAINER_ID
+          else
+            echo "✅ No container using port 80"
+          fi
 
-            echo " Pulling latest image..."
-            docker pull ${{ secrets.DOCKER_USERNAME }}/skfe:prod
+          echo "📦 Pulling latest image..."
+          docker pull ${{ secrets.DOCKER_USERNAME }}/skfe:prod
 
-            echo " Running new container..."
-            docker run -d -p 80:80 ${{ secrets.DOCKER_USERNAME }}/skfe:prod
-          EOF
-
-#t
+          echo "🚀 Running new container..."
+          docker run -d --name skfe -p 80:80 ${{ secrets.DOCKER_USERNAME }}/skfe:prod
+        EOF
