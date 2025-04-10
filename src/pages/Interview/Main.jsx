@@ -60,7 +60,7 @@ function Interview(props) {
     const text = inputRef.current.value;
     console.log(text);
     interviewManager.current.submitAnswer(text);
-    if (currentQuestion.current.isEnd) {
+    if (currentQuestion.current.isLastQuestion) {
       alert("Kết thúc phỏng vấn");
       return;
     }
@@ -144,6 +144,7 @@ function Interview(props) {
     <>
       <Navbar />
 
+      
       <div
         style={{
           width: "100%",
@@ -176,8 +177,8 @@ function Interview(props) {
           }
           <CircularWithValueLabel isLoading={loadingRef} />
         </div>
-        {/* <WebcamComponent /> */}
       </div >
+      
 
       <Canvas
         style={{

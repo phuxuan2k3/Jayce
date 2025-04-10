@@ -4,7 +4,7 @@ class InterviewManager {
   static instance = null;
 
   interviewID;
-  questions;
+  questions;//deprecated
   currentQuestion;
 
   constructor(interviewID, questions = null, currentQuestion = 0) {
@@ -23,23 +23,6 @@ class InterviewManager {
     return await this.requestNextQuestions(this.currentQuestion);
   }
 
-  // async setQuestion(question){
-  //     if (this.questions === null || this.questions === undefined || this.questions.length === 0){
-  //         this.questions = [question];
-  //         return;
-  //     }
-
-  //     this.questions.push(question);
-  // }
-
-  // async setListQuestions(questions){
-  //     if (this.questions === null || this.questions === undefined || this.questions.length === 0){
-  //         this.questions = [questions];
-  //         return;
-  //     }
-  //     this.questions.push(questions);
-  // }
-
   async submitAnswer(answer) {
     services
       .SubmitAnswer(
@@ -54,17 +37,6 @@ class InterviewManager {
         console.error(err);
       });
   }
-
-  // async requestInitQuestions(){
-  //     services.GetInitialQuestions(this.interviewID)
-  //     .then(async (res) => {
-  //         await this.setListQuestions(res.data);
-  //     })
-  //     .catch((err) => {
-  //         console.error(err);
-  //     });
-
-  // }
 
   async requestNextQuestions(questionIndex) {
     console.log("Requesting question index:", questionIndex, this.interviewID);
