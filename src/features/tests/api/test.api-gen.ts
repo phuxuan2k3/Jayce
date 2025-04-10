@@ -1,4 +1,6 @@
-import { testApi as api } from "D:\\Projects\\skillsharp\\skillsharp-frontend\\generator/../src/features/tests/base/test.api";
+// import { testApi as api } from "D:\\Projects\\skillsharp\\skillsharp-frontend\\generator/../src/features/tests/base/test.api";
+
+let api: any = null;
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     getTags: build.query<GetTagsApiResponse, GetTagsApiArg>({
