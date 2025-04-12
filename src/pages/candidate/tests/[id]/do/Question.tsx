@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../../../../../app/hooks";
-import { useAnswerTestQuestionMutation } from "../../../../../features/tests/api/currentAttempt.api";
+import { useAnswerTestQuestionMutation } from "../../../../../features/tests/api/current.api-socket";
 import { currentAttemptActions, curerntAttemptSelects } from "../../../../../features/tests/stores/currentAttemtpSlice";
 import { CurrentAttempt } from "../../../../../features/tests/types/current";
 

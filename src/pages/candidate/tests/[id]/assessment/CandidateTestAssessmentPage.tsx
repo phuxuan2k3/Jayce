@@ -2,7 +2,6 @@ import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../router/paths";
-import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 
 ChartJS.register(ArcElement, Tooltip);
 
@@ -62,8 +61,6 @@ const completionOverview = {
 
 const CandidateTestAssessmentPage = () => {
 	const navigate = useNavigate();
-	const testId = useGetTestIdParams();
-
 	const handleCoursesForYou = () => {
 		navigate(paths.candidate.tests.in().RECOMMENDATION);
 	}

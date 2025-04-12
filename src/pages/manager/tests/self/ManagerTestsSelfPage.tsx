@@ -5,7 +5,6 @@ import { useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { GetManagerTestsApiArg, useGetManagerTestsQuery } from "../../../../features/tests/api/test.api-gen";
-import useGetUserId from "../../../../components/hooks/useGetUserId";
 import paths from "../../../../router/paths";
 
 type FilterProps = Omit<GetManagerTestsApiArg, "x-user-id">;
@@ -14,11 +13,10 @@ const ManagerTestsSelfPage = () => {
 	const [snackbar, setSnackbar] = useState<{ snackOpen: boolean; snackMessage: string; snackSeverity: 'error' | 'info' | 'success' | 'warning' }>({ snackOpen: false, snackMessage: '', snackSeverity: 'info' });
 	const { snackOpen, snackMessage, snackSeverity } = snackbar;
 
-	const userId = useGetUserId();
 	const navigate = useNavigate();
 
 	// TODO: add filter to the tests
-	const [filter, setFilter] = useState<FilterProps>({
+	const [filter, _] = useState<FilterProps>({
 		page: 1,
 		perPage: 10,
 	});

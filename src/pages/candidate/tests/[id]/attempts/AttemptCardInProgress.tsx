@@ -8,7 +8,6 @@ import paths from '../../../../../router/paths';
 import GradientBorderGood from '../../../../../components/ui/border/GradientBorder.good';
 import TestTimer from '../../common/TestTimer';
 import { useGetCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
-import useGetUserId from "../../../../../components/hooks/useGetUserId";
 
 type Props = {
 	company: {
@@ -30,10 +29,9 @@ const AttemptCardInProgress: React.FC<Props> = ({
 	company,
 	test,
 }) => {
-	const userId = useGetUserId();
 	const navigate = useNavigate();
-	const { data, isLoading, error } = useGetCurrentAttemptStateQuery({
-		"x-user-id": userId,
+	const { data, isLoading, error } = useGetCurrentAttemptStateQuery(undefined, {
+		refetchOnMountOrArgChange: true,
 	});
 
 	const handleOnInProgressAttemptClick = () => {

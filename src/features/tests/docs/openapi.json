@@ -13,17 +13,17 @@
 	"openapi": "3.1.0",
 	"components": {
 		"securitySchemes": {
-			"User ID": {
+			"userId": {
 				"type": "apiKey",
 				"name": "x-user-id",
 				"in": "header",
-				"description": "X-User-Id header for authentication"
+				"description": "User ID for authentication"
 			},
-			"Role ID": {
+			"roleId": {
 				"type": "apiKey",
 				"name": "x-role-id",
 				"in": "header",
-				"description": "X-Role-Id header for authentication"
+				"description": "Role ID for authentication"
 			}
 		},
 		"schemas": {},
@@ -32,6 +32,7 @@
 	"paths": {
 		"/tags": {
 			"get": {
+				"security": [],
 				"tags": [
 					"Tags"
 				],
@@ -64,6 +65,7 @@
 				}
 			},
 			"post": {
+				"security": [],
 				"tags": [
 					"Tags"
 				],
@@ -95,6 +97,7 @@
 		},
 		"/tags/{tagId}": {
 			"get": {
+				"security": [],
 				"tags": [
 					"Tags"
 				],
@@ -137,6 +140,7 @@
 				}
 			},
 			"put": {
+				"security": [],
 				"tags": [
 					"Tags"
 				],
@@ -179,6 +183,7 @@
 				}
 			},
 			"delete": {
+				"security": [],
 				"tags": [
 					"Tags"
 				],
@@ -204,20 +209,13 @@
 		},
 		"/current-attempt/state": {
 			"get": {
+				"security": [
+					{
+						"userId": []
+					}
+				],
 				"tags": [
 					"Current"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string",
-							"description": "The user ID",
-							"example": "1"
-						},
-						"required": true,
-						"name": "x-user-id",
-						"in": "header"
-					}
 				],
 				"responses": {
 					"200": {
@@ -309,20 +307,13 @@
 		},
 		"/current-attempt/new": {
 			"post": {
+				"security": [
+					{
+						"userId": []
+					}
+				],
 				"tags": [
 					"Current"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string",
-							"description": "The user ID",
-							"example": "1"
-						},
-						"required": true,
-						"name": "x-user-id",
-						"in": "header"
-					}
 				],
 				"requestBody": {
 					"required": true,
@@ -355,20 +346,13 @@
 		"/current-attempt/do": {
 			"get": {
 				"summary": "Prepare the test for the candidate to do",
+				"security": [
+					{
+						"userId": []
+					}
+				],
 				"tags": [
 					"Current"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string",
-							"description": "The user ID",
-							"example": "1"
-						},
-						"required": true,
-						"name": "x-user-id",
-						"in": "header"
-					}
 				],
 				"responses": {
 					"200": {
@@ -476,20 +460,13 @@
 		},
 		"/current-attempt/submit": {
 			"post": {
+				"security": [
+					{
+						"userId": []
+					}
+				],
 				"tags": [
 					"Current"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string",
-							"description": "The user ID",
-							"example": "1"
-						},
-						"required": true,
-						"name": "x-user-id",
-						"in": "header"
-					}
 				],
 				"responses": {
 					"200": {
@@ -500,6 +477,7 @@
 		},
 		"/tests": {
 			"get": {
+				"security": [],
 				"tags": [
 					"Tests"
 				],
@@ -694,20 +672,13 @@
 				}
 			},
 			"post": {
+				"security": [
+					{
+						"userId": []
+					}
+				],
 				"tags": [
 					"Tests"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string",
-							"description": "The user ID",
-							"example": "1"
-						},
-						"required": true,
-						"name": "x-user-id",
-						"in": "header"
-					}
 				],
 				"requestBody": {
 					"required": true,
@@ -792,6 +763,7 @@
 		},
 		"/tests/{testId}": {
 			"get": {
+				"security": [],
 				"tags": [
 					"Tests"
 				],
@@ -881,6 +853,7 @@
 				}
 			},
 			"put": {
+				"security": [],
 				"tags": [
 					"Tests"
 				],
@@ -970,6 +943,7 @@
 				}
 			},
 			"delete": {
+				"security": [],
 				"tags": [
 					"Tests"
 				],
@@ -995,6 +969,7 @@
 		},
 		"/tests/{testId}/questions": {
 			"get": {
+				"security": [],
 				"tags": [
 					"Tests"
 				],
@@ -1057,6 +1032,11 @@
 		},
 		"/manager/tests": {
 			"get": {
+				"security": [
+					{
+						"userId": []
+					}
+				],
 				"tags": [
 					"Tests"
 				],
@@ -1153,16 +1133,6 @@
 						"required": false,
 						"name": "perPage",
 						"in": "query"
-					},
-					{
-						"schema": {
-							"type": "string",
-							"description": "The user ID",
-							"example": "1"
-						},
-						"required": true,
-						"name": "x-user-id",
-						"in": "header"
 					}
 				],
 				"responses": {
@@ -1263,6 +1233,7 @@
 		},
 		"/tests/{testId}/attempts": {
 			"get": {
+				"security": [],
 				"tags": [
 					"History"
 				],
@@ -1424,6 +1395,7 @@
 		},
 		"/attempts/{attemptId}": {
 			"get": {
+				"security": [],
 				"tags": [
 					"History"
 				],
@@ -1527,6 +1499,7 @@
 		},
 		"/attempts/{attemptId}/answers": {
 			"get": {
+				"security": [],
 				"tags": [
 					"History"
 				],
@@ -1647,6 +1620,11 @@
 		},
 		"/candidate/attempts": {
 			"get": {
+				"security": [
+					{
+						"userId": []
+					}
+				],
 				"tags": [
 					"History"
 				],
@@ -1693,16 +1671,6 @@
 						"required": false,
 						"name": "perPage",
 						"in": "query"
-					},
-					{
-						"schema": {
-							"type": "string",
-							"description": "The user ID",
-							"example": "1"
-						},
-						"required": true,
-						"name": "x-user-id",
-						"in": "header"
 					}
 				],
 				"responses": {
@@ -1807,6 +1775,11 @@
 		},
 		"/candidate/tests/{testId}/attempts": {
 			"get": {
+				"security": [
+					{
+						"userId": []
+					}
+				],
 				"tags": [
 					"History"
 				],
@@ -1864,16 +1837,6 @@
 						"required": false,
 						"name": "perPage",
 						"in": "query"
-					},
-					{
-						"schema": {
-							"type": "string",
-							"description": "The user ID",
-							"example": "1"
-						},
-						"required": true,
-						"name": "x-user-id",
-						"in": "header"
 					}
 				],
 				"responses": {

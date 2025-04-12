@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaChevronDown, FaFilePdf, FaLink, FaRegFileAlt, FaRegImage } from "react-icons/fa";
-import { useGenerateMutation } from "../../../../../features/tests/api/testPrompt.api";
+import { useGenerateMutation } from "../../../../../features/tests/api/prompt.api-custom";
 import { CriteriaRequest } from "../../../../../features/tests/types/crud";
 import { GenerationLoading } from "./GenerationLoading";
 import { useAppDispatch, useAppSelector } from "../../../../../app/hooks";

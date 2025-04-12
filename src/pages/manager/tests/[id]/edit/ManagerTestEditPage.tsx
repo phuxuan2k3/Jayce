@@ -11,7 +11,6 @@ import TestFieldsEditForm from "../../common/TestFieldsEditForm";
 type Tab = "detail" | "questions";
 
 // TODO: handle error and loading states properly
-
 export default function ManagerTestEditPage() {
 	const testId = useGetTestIdParams();
 	const [tab, setTab] = useState<Tab>("detail");

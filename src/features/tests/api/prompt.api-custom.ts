@@ -1,7 +1,7 @@
 import promptApi from "../base/prompt.api";
 import { CriteriaRequest, CriteriaResponse, GeneratedQuestionResponse, QuestionDTO } from "../types/crud";
 
-const questionaiAPI = promptApi.injectEndpoints({
+const promptApiCustom = promptApi.injectEndpoints({
 	endpoints: (builder) => ({
 		criteria: builder.mutation<{ criteriaList: CriteriaResponse[] }, CriteriaRequest>({
 			query: (CriteriaRequest) => ({
@@ -34,4 +34,4 @@ const questionaiAPI = promptApi.injectEndpoints({
 export const {
 	useCriteriaMutation,
 	useGenerateMutation
-} = questionaiAPI;
+} = promptApiCustom;

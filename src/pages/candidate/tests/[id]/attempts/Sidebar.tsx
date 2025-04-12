@@ -21,7 +21,6 @@ export default function Sidebar() {
 	const handleNewAttemptAccept = () => {
 		setOpenNewAttemptModal(false);
 		postNewAttempt({
-			"x-user-id": '1',
 			body: { testId }
 		});
 	};
