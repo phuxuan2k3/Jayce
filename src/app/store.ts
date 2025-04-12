@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import authReducer from '../features/auth/store/authSlice';
+import authReducer from '../features/auth/store/authSlice.ts';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import testApi from '../features/tests/base/test.api';
 import promptApi from '../features/tests/base/prompt.api';
