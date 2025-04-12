@@ -36,9 +36,9 @@ const CandidateScenarioAnswerPage = () => {
 
 	const [isSpeechSupported, setIsSpeechSupported] = React.useState<boolean>(true);
 	const [isListening, setIsListening] = React.useState<boolean>(false);
-	const [isProcessing, setIsProcessing] = React.useState<boolean>(false);
+	const [_, setIsProcessing] = React.useState<boolean>(false);
 
-	const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
+	const { transcript, listening: __, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
 
 	if (!browserSupportsSpeechRecognition) {
 		setIsSpeechSupported(false);

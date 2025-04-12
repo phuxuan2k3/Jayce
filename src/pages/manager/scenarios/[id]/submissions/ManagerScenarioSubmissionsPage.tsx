@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSliders, faMagnifyingGlass, faSquarePollHorizontal, faCalendarMinus, faListCheck } from "@fortawesome/free-solid-svg-icons";
+import { faSliders, faMagnifyingGlass, faSquarePollHorizontal, faCalendarMinus } from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { useListAllSubmissionMutation } from "../../../../../features/scenarios/apis/concrete/ekko.scenario-api";

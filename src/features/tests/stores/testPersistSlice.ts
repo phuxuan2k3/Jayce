@@ -204,11 +204,10 @@ const testPersistSlice = createSlice({
 			return state.data.questions;
 		},
 		selectError: (state: TestPersistState) => state.error,
-		selectCreateTestApiArg: (state: TestPersistState, userId: string): PostTestsApiArg | null => {
+		selectCreateTestApiArg: (state: TestPersistState): PostTestsApiArg | null => {
 			if (state.status === "create") {
 				const { id, ...rest } = state.data;
 				return {
-					"x-user-id": userId,
 					body: rest,
 				};
 			}

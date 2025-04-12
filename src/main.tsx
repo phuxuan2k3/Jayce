@@ -22,17 +22,17 @@ const theme = createTheme({
 });
 
 createRoot(rootElement!).render(
-	// <StrictMode>
-	<GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-		<StyledEngineProvider injectFirst>
-			<ThemeProvider theme={theme}>
-				<Provider store={store}>
-					<PersistGate loading={null} persistor={persistor}>
-						<App />
-					</PersistGate>
-				</Provider>
-			</ThemeProvider>
-		</StyledEngineProvider>
-	</GoogleOAuthProvider>
-	// </StrictMode>
+	<StrictMode>
+		<GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+			<StyledEngineProvider injectFirst>
+				<ThemeProvider theme={theme}>
+					<Provider store={store}>
+						<PersistGate loading={null} persistor={persistor}>
+							<App />
+						</PersistGate>
+					</Provider>
+				</ThemeProvider>
+			</StyledEngineProvider>
+		</GoogleOAuthProvider>
+	</StrictMode>
 );

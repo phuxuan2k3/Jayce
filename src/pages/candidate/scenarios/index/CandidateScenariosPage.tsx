@@ -23,7 +23,7 @@ const CandidateScenariosPage = () => {
 	const location = useLocation();
 	const field: Field = location.state?.field;
 	const [currentPage, setCurrentPage] = React.useState(1);
-	const [totalCount, setTotalCount] = React.useState(0);
+	const [_, setTotalCount] = React.useState(0);
 	const [totalPage, setTotalPage] = React.useState(0);
 	const pageSize = 10;
 

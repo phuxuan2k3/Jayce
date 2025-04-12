@@ -3,13 +3,12 @@ import logo from "/svg/logo.svg";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import GradientBorder from "../../../components/ui/border/GradientBorder";
 import { useResetPasswordMutation, useVerifyResetCodeMutation } from "../../../features/auth/api/auth.api";
-import React from "react";
 
 export default function AuthNewPasswordPage() {
 	const [email, setEmail] = useState("");
 	const [searchParams] = useSearchParams();
 	const resetCodeFromURL = searchParams.get("key") || "";
-	const [resetCode, setResetCode] = useState(resetCodeFromURL);
+	const [resetCode, _] = useState(resetCodeFromURL);
 	const [newPassword, setNewPassword] = useState("");
 	const [verifyResetCode] = useVerifyResetCodeMutation();
 	const [resetPassword] = useResetPasswordMutation();

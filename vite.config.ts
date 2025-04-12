@@ -7,6 +7,14 @@ export default defineConfig(({ mode }) => {
 	console.log('Loaded environment variables:', env);
 
 	return {
+		build: {
+			rollupOptions: {
+				external: (id) => {
+					// Ignore all files in src/dev
+					return id.startsWith('src/dev/');
+				}
+			}
+		},
 		define: {
 			'process.env': env,
 		},

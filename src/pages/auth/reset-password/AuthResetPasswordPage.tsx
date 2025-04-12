@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import logo from "/svg/logo.svg";
 import { useNavigate } from "react-router-dom";
 import GradientBorder from "../../../components/ui/border/GradientBorder";

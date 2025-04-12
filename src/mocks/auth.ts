@@ -1,6 +1,6 @@
 import { AuthResponse, Role } from '../features/auth/types/auth';
 
-
+// @ts-ignore
 const candidateAuthResponse: AuthResponse = {
 	token_info: {
 		access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.mockAccessToken',

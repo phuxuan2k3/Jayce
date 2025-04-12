@@ -29,8 +29,8 @@ const ManagerScenariosPage = () => {
 	const [scenarios, setScenarios] = React.useState<Scenario[]>([]);
 	const [currentPage, setCurrentPage] = React.useState(1);
 	const [totalPage, setTotalPage] = React.useState(1);
-	const [from, setFrom] = React.useState<Timestamp>(new Timestamp());
-	const [to, setTo] = React.useState<Timestamp>(new Timestamp());
+	// const [from, setFrom] = React.useState<Timestamp>(new Timestamp());
+	// const [to, setTo] = React.useState<Timestamp>(new Timestamp());
 	const pageSize = 4;
 
 	const authState = useAppSelector(authSelectors.selectUserInfo);

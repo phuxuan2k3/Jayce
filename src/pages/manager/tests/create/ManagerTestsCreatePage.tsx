@@ -9,11 +9,9 @@ import TestCreateStep4 from "./Steps/TestCreateStep4";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { testPersistActions, testPersistSelectors } from "../../../../features/tests/stores/testPersistSlice";
 import paths from "../../../../router/paths";
-import useGetUserId from "../../../../components/hooks/useGetUserId";
 
 const ManagerTestsCreatePage = () => {
 	const navigate = useNavigate();
-	const userId = useGetUserId();
 	const [step, setStep] = useState(0);
 	const dispatch = useAppDispatch();
 
@@ -54,7 +52,7 @@ const ManagerTestsCreatePage = () => {
 	}, [step]);
 
 	const handleCreateTest = () => {
-		const testCreateParam = useAppSelector((state) => selectCreateTestApiArg(state, userId));
+		const testCreateParam = useAppSelector(selectCreateTestApiArg);
 		if (testCreateParam == null) {
 			// TODO: show snackbar error
 			return;
