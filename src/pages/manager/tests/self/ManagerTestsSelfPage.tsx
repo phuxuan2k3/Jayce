@@ -24,7 +24,6 @@ const ManagerTestsSelfPage = () => {
 	});
 
 	const { data: tests } = useGetManagerTestsQuery({
-		"x-user-id": userId,
 		...filter,
 	}, {
 		refetchOnMountOrArgChange: true
