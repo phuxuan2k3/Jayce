@@ -10,7 +10,7 @@ export default function TestCreateStep3({
 	onNext: () => void
 }) {
 	const dispatch = useAppDispatch();
-	const questions = useAppSelector(testPersistSelectors.selectQuestionsStrict);
+	const questions = useAppSelector(testPersistSelectors.selectQuestions);
 	const {
 		addQuestion,
 	} = testPersistActions;

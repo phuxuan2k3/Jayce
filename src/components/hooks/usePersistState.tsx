@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 export default function usePersistState<T>(storageKey: string, initialState: T) {
 	const [state, setInternalState] = useState<T>(initialState);
+
 	useEffect(() => {
 		const storage = localStorage.getItem(storageKey);
 		if (storage) {
@@ -10,7 +11,8 @@ export default function usePersistState<T>(storageKey: string, initialState: T) 
 				setInternalState(parsedStorage);
 			}
 		}
-	}, []);
+	}, [storageKey]);
+
 	const setState = (newState: T) => {
 		const stringifiedState = JSON.stringify(newState);
 		localStorage.setItem(storageKey, stringifiedState);

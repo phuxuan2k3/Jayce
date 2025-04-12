@@ -6,15 +6,15 @@ import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestId
 import paths from '../../../../../router/paths';
 import FetchState from '../../../../../components/wrapper/FetchState';
 import { curerntAttemptSelects } from '../../../../../features/tests/stores/currentAttemtpSlice';
-import { useGetCurrentAttemptDoQuery, useGetCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
+import { useGetCandidateCurrentAttemptDoQuery, useGetCandidateCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
 import { useAppSelector } from '../../../../../app/hooks';
 
 const CandidateTestDoPage = () => {
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
-	const doQuery = useGetCurrentAttemptDoQuery();
+	const doQuery = useGetCandidateCurrentAttemptDoQuery();
 	const { currentQuestionIndex } = useAppSelector(curerntAttemptSelects.selectCurrentAttempt);
-	const stateQuery = useGetCurrentAttemptStateQuery(undefined, {
+	const stateQuery = useGetCandidateCurrentAttemptStateQuery(undefined, {
 		refetchOnMountOrArgChange: true,
 	});
 

@@ -36,33 +36,36 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
-    getCurrentAttemptState: build.query<
-      GetCurrentAttemptStateApiResponse,
-      GetCurrentAttemptStateApiArg
+    getCandidateCurrentAttemptState: build.query<
+      GetCandidateCurrentAttemptStateApiResponse,
+      GetCandidateCurrentAttemptStateApiArg
     >({
-      query: () => ({ url: `/current-attempt/state` }),
+      query: () => ({ url: `/candidate/current-attempt/state` }),
     }),
-    postCurrentAttemptNew: build.mutation<
-      PostCurrentAttemptNewApiResponse,
-      PostCurrentAttemptNewApiArg
+    postCandidateCurrentAttemptNew: build.mutation<
+      PostCandidateCurrentAttemptNewApiResponse,
+      PostCandidateCurrentAttemptNewApiArg
     >({
       query: (queryArg) => ({
-        url: `/current-attempt/new`,
+        url: `/candidate/current-attempt/new`,
         method: "POST",
         body: queryArg.body,
       }),
     }),
-    getCurrentAttemptDo: build.query<
-      GetCurrentAttemptDoApiResponse,
-      GetCurrentAttemptDoApiArg
+    getCandidateCurrentAttemptDo: build.query<
+      GetCandidateCurrentAttemptDoApiResponse,
+      GetCandidateCurrentAttemptDoApiArg
     >({
-      query: () => ({ url: `/current-attempt/do` }),
+      query: () => ({ url: `/candidate/current-attempt/do` }),
     }),
-    postCurrentAttemptSubmit: build.mutation<
-      PostCurrentAttemptSubmitApiResponse,
-      PostCurrentAttemptSubmitApiArg
+    postCandidateCurrentAttemptSubmit: build.mutation<
+      PostCandidateCurrentAttemptSubmitApiResponse,
+      PostCandidateCurrentAttemptSubmitApiArg
     >({
-      query: () => ({ url: `/current-attempt/submit`, method: "POST" }),
+      query: () => ({
+        url: `/candidate/current-attempt/submit`,
+        method: "POST",
+      }),
     }),
     getTests: build.query<GetTestsApiResponse, GetTestsApiArg>({
       query: (queryArg) => ({
@@ -78,43 +81,19 @@ const injectedRtkApi = api.injectEndpoints({
         },
       }),
     }),
-    postTests: build.mutation<PostTestsApiResponse, PostTestsApiArg>({
-      query: (queryArg) => ({
-        url: `/tests`,
-        method: "POST",
-        body: queryArg.body,
-      }),
-    }),
     getTestsByTestId: build.query<
       GetTestsByTestIdApiResponse,
       GetTestsByTestIdApiArg
     >({
       query: (queryArg) => ({ url: `/tests/${queryArg.testId}` }),
     }),
-    putTestsByTestId: build.mutation<
-      PutTestsByTestIdApiResponse,
-      PutTestsByTestIdApiArg
+    getManagerTestsByTestIdQuestions: build.query<
+      GetManagerTestsByTestIdQuestionsApiResponse,
+      GetManagerTestsByTestIdQuestionsApiArg
     >({
       query: (queryArg) => ({
-        url: `/tests/${queryArg.testId}`,
-        method: "PUT",
-        body: queryArg.body,
+        url: `/manager/tests/${queryArg.testId}/questions`,
       }),
-    }),
-    deleteTestsByTestId: build.mutation<
-      DeleteTestsByTestIdApiResponse,
-      DeleteTestsByTestIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/tests/${queryArg.testId}`,
-        method: "DELETE",
-      }),
-    }),
-    getTestsByTestIdQuestions: build.query<
-      GetTestsByTestIdQuestionsApiResponse,
-      GetTestsByTestIdQuestionsApiArg
-    >({
-      query: (queryArg) => ({ url: `/tests/${queryArg.testId}/questions` }),
     }),
     getManagerTests: build.query<
       GetManagerTestsApiResponse,
@@ -131,6 +110,35 @@ const injectedRtkApi = api.injectEndpoints({
           page: queryArg.page,
           perPage: queryArg.perPage,
         },
+      }),
+    }),
+    postManagerTests: build.mutation<
+      PostManagerTestsApiResponse,
+      PostManagerTestsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/manager/tests`,
+        method: "POST",
+        body: queryArg.body,
+      }),
+    }),
+    putManagerTestsByTestId: build.mutation<
+      PutManagerTestsByTestIdApiResponse,
+      PutManagerTestsByTestIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/manager/tests/${queryArg.testId}`,
+        method: "PUT",
+        body: queryArg.body,
+      }),
+    }),
+    deleteManagerTestsByTestId: build.mutation<
+      DeleteManagerTestsByTestIdApiResponse,
+      DeleteManagerTestsByTestIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/manager/tests/${queryArg.testId}`,
+        method: "DELETE",
       }),
     }),
     getTestsByTestIdAttempts: build.query<
@@ -226,56 +234,58 @@ export type DeleteTagsByTagIdApiResponse = unknown;
 export type DeleteTagsByTagIdApiArg = {
   tagId?: number | null;
 };
-export type GetCurrentAttemptStateApiResponse = /** status 200 Success */ {
-  hasCurrentAttempt: boolean;
-  currentAttempt: {
-    id: number;
-    secondsLeft: number;
-    createdAt: string;
-    endedAt: string;
-    answers: {
-      questionId: number;
-      chosenOption: number;
-    }[];
-    test: {
+export type GetCandidateCurrentAttemptStateApiResponse =
+  /** status 200 Success */ {
+    hasCurrentAttempt: boolean;
+    currentAttempt: {
       id: number;
-      title: string;
-      minutesToAnswer: number;
-    };
-  } | null;
-};
-export type GetCurrentAttemptStateApiArg = void;
-export type PostCurrentAttemptNewApiResponse = unknown;
-export type PostCurrentAttemptNewApiArg = {
+      secondsLeft: number;
+      createdAt: string;
+      endedAt: string;
+      answers: {
+        questionId: number;
+        chosenOption: number;
+      }[];
+      test: {
+        id: number;
+        title: string;
+        minutesToAnswer: number;
+      };
+    } | null;
+  };
+export type GetCandidateCurrentAttemptStateApiArg = void;
+export type PostCandidateCurrentAttemptNewApiResponse = unknown;
+export type PostCandidateCurrentAttemptNewApiArg = {
   body: {
     testId: number | null;
   };
 };
-export type GetCurrentAttemptDoApiResponse = /** status 200 Success */ {
-  id: number;
-  test: {
+export type GetCandidateCurrentAttemptDoApiResponse =
+  /** status 200 Success */ {
     id: number;
-    managerId: string;
-    title: string;
-    description: string;
-    minutesToAnswer: number;
-    difficulty: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-  questions: {
-    id: number;
-    text: string;
-    options: {
+    test: {
+      id: number;
+      managerId: string;
+      title: string;
+      description: string;
+      minutesToAnswer: number;
+      difficulty: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    questions: {
       id: number;
       text: string;
+      options: {
+        id: number;
+        text: string;
+      }[];
+      points: number;
     }[];
-    points: number;
-  }[];
-};
-export type GetCurrentAttemptDoApiArg = void;
-export type PostCurrentAttemptSubmitApiResponse = unknown;
-export type PostCurrentAttemptSubmitApiArg = void;
+  };
+export type GetCandidateCurrentAttemptDoApiArg = void;
+export type PostCandidateCurrentAttemptSubmitApiResponse = unknown;
+export type PostCandidateCurrentAttemptSubmitApiArg = void;
 export type GetTestsApiResponse = /** status 200 Success */ {
   page: number;
   perPage: number;
@@ -305,22 +315,6 @@ export type GetTestsApiArg = {
   page?: number;
   perPage?: number | null;
 };
-export type PostTestsApiResponse = unknown;
-export type PostTestsApiArg = {
-  body: {
-    tagIds: number[];
-    title: string;
-    description: string;
-    difficulty: "easy" | "medium" | "hard";
-    minutesToAnswer: number;
-    questions: {
-      text: string;
-      options: string[];
-      points: number;
-      correctOption: number;
-    }[];
-  };
-};
 export type GetTestsByTestIdApiResponse = /** status 200 Success */ {
   id: number;
   managerId: string;
@@ -339,35 +333,15 @@ export type GetTestsByTestIdApiResponse = /** status 200 Success */ {
 export type GetTestsByTestIdApiArg = {
   testId?: number | null;
 };
-export type PutTestsByTestIdApiResponse = unknown;
-export type PutTestsByTestIdApiArg = {
-  testId?: number | null;
-  body: {
-    tagIds?: number[];
-    title?: string;
-    description?: string;
-    difficulty?: "easy" | "medium" | "hard";
-    minutesToAnswer?: number;
-    questions?: {
-      text: string;
-      options: string[];
-      points: number;
-      correctOption: number;
-    }[];
-  };
-};
-export type DeleteTestsByTestIdApiResponse = unknown;
-export type DeleteTestsByTestIdApiArg = {
-  testId?: number | null;
-};
-export type GetTestsByTestIdQuestionsApiResponse = /** status 200 Success */ {
-  id: number;
-  text: string;
-  options: string[];
-  points: number;
-  correctOption: number;
-}[];
-export type GetTestsByTestIdQuestionsApiArg = {
+export type GetManagerTestsByTestIdQuestionsApiResponse =
+  /** status 200 Success */ {
+    id: number;
+    text: string;
+    options: string[];
+    points: number;
+    correctOption: number;
+  }[];
+export type GetManagerTestsByTestIdQuestionsApiArg = {
   testId?: number | null;
 };
 export type GetManagerTestsApiResponse = /** status 200 Success */ {
@@ -398,6 +372,43 @@ export type GetManagerTestsApiArg = {
   tags?: string[] | string;
   page?: number;
   perPage?: number | null;
+};
+export type PostManagerTestsApiResponse = unknown;
+export type PostManagerTestsApiArg = {
+  body: {
+    tagIds: number[];
+    title: string;
+    description: string;
+    difficulty: "easy" | "medium" | "hard";
+    minutesToAnswer: number;
+    questions: {
+      text: string;
+      options: string[];
+      points: number;
+      correctOption: number;
+    }[];
+  };
+};
+export type PutManagerTestsByTestIdApiResponse = unknown;
+export type PutManagerTestsByTestIdApiArg = {
+  testId?: number | null;
+  body: {
+    tagIds?: number[];
+    title?: string;
+    description?: string;
+    difficulty?: "easy" | "medium" | "hard";
+    minutesToAnswer?: number;
+    questions?: {
+      text: string;
+      options: string[];
+      points: number;
+      correctOption: number;
+    }[];
+  };
+};
+export type DeleteManagerTestsByTestIdApiResponse = unknown;
+export type DeleteManagerTestsByTestIdApiArg = {
+  testId?: number | null;
 };
 export type GetTestsByTestIdAttemptsApiResponse = /** status 200 Success */ {
   page: number;
@@ -534,23 +545,23 @@ export const {
   useLazyGetTagsByTagIdQuery,
   usePutTagsByTagIdMutation,
   useDeleteTagsByTagIdMutation,
-  useGetCurrentAttemptStateQuery,
-  useLazyGetCurrentAttemptStateQuery,
-  usePostCurrentAttemptNewMutation,
-  useGetCurrentAttemptDoQuery,
-  useLazyGetCurrentAttemptDoQuery,
-  usePostCurrentAttemptSubmitMutation,
+  useGetCandidateCurrentAttemptStateQuery,
+  useLazyGetCandidateCurrentAttemptStateQuery,
+  usePostCandidateCurrentAttemptNewMutation,
+  useGetCandidateCurrentAttemptDoQuery,
+  useLazyGetCandidateCurrentAttemptDoQuery,
+  usePostCandidateCurrentAttemptSubmitMutation,
   useGetTestsQuery,
   useLazyGetTestsQuery,
-  usePostTestsMutation,
   useGetTestsByTestIdQuery,
   useLazyGetTestsByTestIdQuery,
-  usePutTestsByTestIdMutation,
-  useDeleteTestsByTestIdMutation,
-  useGetTestsByTestIdQuestionsQuery,
-  useLazyGetTestsByTestIdQuestionsQuery,
+  useGetManagerTestsByTestIdQuestionsQuery,
+  useLazyGetManagerTestsByTestIdQuestionsQuery,
   useGetManagerTestsQuery,
   useLazyGetManagerTestsQuery,
+  usePostManagerTestsMutation,
+  usePutManagerTestsByTestIdMutation,
+  useDeleteManagerTestsByTestIdMutation,
   useGetTestsByTestIdAttemptsQuery,
   useLazyGetTestsByTestIdAttemptsQuery,
   useGetAttemptsByAttemptIdQuery,

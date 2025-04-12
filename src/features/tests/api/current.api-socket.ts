@@ -36,7 +36,7 @@ function clearSocket() {
 const currentAttemptApi = testApiGen.enhanceEndpoints({
 	addTagTypes: ["CurrentAttempt"],
 	endpoints: {
-		postCurrentAttemptNew: {
+		postCandidateCurrentAttemptNew: {
 			invalidatesTags: ["CurrentAttempt"],
 			onQueryStarted: async (_, {
 				dispatch,
@@ -46,7 +46,7 @@ const currentAttemptApi = testApiGen.enhanceEndpoints({
 				dispatch(currentAttemptActions.startTest());
 			}
 		},
-		getCurrentAttemptState: {
+		getCandidateCurrentAttemptState: {
 			providesTags: ["CurrentAttempt"],
 
 			async onQueryStarted(_, {

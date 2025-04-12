@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import TestTimer from "../../common/TestTimer";
 import { currentAttemptActions, curerntAttemptSelects } from "../../../../../features/tests/stores/currentAttemtpSlice";
 import { CurrentAttempt } from "../../../../../features/tests/types/current";
-import { usePostCurrentAttemptSubmitMutation } from "../../../../../features/tests/api/test.api-gen";
+import { usePostCandidateCurrentAttemptSubmitMutation } from "../../../../../features/tests/api/test.api-gen";
 import { useAppDispatch, useAppSelector } from "../../../../../app/hooks";
 
 interface SidebarProps {
@@ -22,7 +22,7 @@ export default function Sidebar({
 	const dispatch = useAppDispatch();
 	const currentAttemptState = useAppSelector(curerntAttemptSelects.selectCurrentAttempt);
 
-	const [submitTest, { isSuccess, isLoading, error }] = usePostCurrentAttemptSubmitMutation();
+	const [submitTest, { isSuccess, isLoading, error }] = usePostCandidateCurrentAttemptSubmitMutation();
 
 	const { secondsLeft, answers } = currentAttempt;
 	const { currentQuestionIndex, flaggedQuestionIndexes, } = currentAttemptState;

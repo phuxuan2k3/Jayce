@@ -1,8 +1,8 @@
-import { PostTestsApiArg, PutTestsByTestIdApiArg } from "../api/test.api-gen";
+import { PostManagerTestsApiArg, PutManagerTestsByTestIdApiArg } from "../api/test.api-gen";
 
-export type CreateTestParam = PostTestsApiArg["body"];
+export type CreateTestParam = PostManagerTestsApiArg["body"];
 
-export type UpdateTestParam = PutTestsByTestIdApiArg["body"] & {
+export type UpdateTestParam = PutManagerTestsByTestIdApiArg["body"] & {
 	id: number;
 };
 

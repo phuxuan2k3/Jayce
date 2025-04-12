@@ -6,7 +6,7 @@ import { testPersistActions, testPersistSelectors } from "../../../../../feature
 
 const EditTestQuestions = () => {
 	const dispatch = useAppDispatch();
-	const questions = useAppSelector(testPersistSelectors.selectQuestionsStrict);
+	const questions = useAppSelector(testPersistSelectors.selectQuestions);
 	const {
 		addQuestion
 	} = testPersistActions;

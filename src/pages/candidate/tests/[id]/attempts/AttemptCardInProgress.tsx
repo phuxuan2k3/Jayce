@@ -7,7 +7,7 @@ import FetchState from '../../../../../components/wrapper/FetchState';
 import paths from '../../../../../router/paths';
 import GradientBorderGood from '../../../../../components/ui/border/GradientBorder.good';
 import TestTimer from '../../common/TestTimer';
-import { useGetCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
+import { useGetCandidateCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
 
 type Props = {
 	company: {
@@ -30,7 +30,7 @@ const AttemptCardInProgress: React.FC<Props> = ({
 	test,
 }) => {
 	const navigate = useNavigate();
-	const { data, isLoading, error } = useGetCurrentAttemptStateQuery(undefined, {
+	const { data, isLoading, error } = useGetCandidateCurrentAttemptStateQuery(undefined, {
 		refetchOnMountOrArgChange: true,
 	});
 

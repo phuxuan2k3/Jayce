@@ -1,12 +1,12 @@
 import TestTimer from "./TestTimer";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../router/paths";
-import { useGetCurrentAttemptStateQuery } from "../../../../features/tests/api/test.api-gen";
+import { useGetCandidateCurrentAttemptStateQuery } from "../../../../features/tests/api/test.api-gen";
 
 export default function CurrentAttemptStatus() {
 	const navigate = useNavigate();
 
-	const { data: currentAttemptData } = useGetCurrentAttemptStateQuery();
+	const { data: currentAttemptData } = useGetCandidateCurrentAttemptStateQuery();
 	if (currentAttemptData == null) return <>Loading...</>;
 	if (currentAttemptData.currentAttempt == null) return <>No Tests is going</>;
 

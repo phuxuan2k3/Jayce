@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import EditTestQuestions from "./EditTestQuestions";
-import { useGetTestsByTestIdQuery, useGetTestsByTestIdQuestionsQuery } from "../../../../../features/tests/api/test.api-gen";
+import { useGetTestsByTestIdQuery, useGetManagerTestsByTestIdQuestionsQuery } from "../../../../../features/tests/api/test.api-gen";
 import { Snackbar, Alert } from "@mui/material";
 import { useAppDispatch } from "../../../../../app/hooks";
 import { toErrorMessage } from "../../../../../helpers/fetchBaseQuery.error";
@@ -31,7 +31,7 @@ export default function ManagerTestEditPage() {
 	} = testPersistActions;
 
 	const testQuery = useGetTestsByTestIdQuery({ testId });
-	const questionsQuery = useGetTestsByTestIdQuestionsQuery({ testId });
+	const questionsQuery = useGetManagerTestsByTestIdQuestionsQuery({ testId });
 
 	useEffect(() => {
 		if (!testQuery.data || !questionsQuery.data) return;

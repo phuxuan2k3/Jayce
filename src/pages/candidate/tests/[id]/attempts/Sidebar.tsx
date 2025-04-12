@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import { useEffect, useState } from "react";
 import ModalBase from "../../../../../components/ui/modal/Modal.base";
-import { usePostCurrentAttemptNewMutation } from "../../../../../features/tests/api/test.api-gen";
+import { usePostCandidateCurrentAttemptNewMutation } from "../../../../../features/tests/api/test.api-gen";
 import paths from "../../../../../router/paths";
 
 export default function Sidebar() {
@@ -10,7 +10,7 @@ export default function Sidebar() {
 	const navigate = useNavigate();
 	const [openNewAttemptModal, setOpenNewAttemptModal] = useState(false);
 
-	const [postNewAttempt, { isLoading, isSuccess, error }] = usePostCurrentAttemptNewMutation();
+	const [postNewAttempt, { isLoading, isSuccess, error }] = usePostCandidateCurrentAttemptNewMutation();
 
 	useEffect(() => {
 		if (isSuccess) {

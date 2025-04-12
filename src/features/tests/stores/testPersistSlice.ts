@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CreateTestParam } from "../types/crud";
-import { GetTestsByTestIdApiResponse, GetTestsByTestIdQuestionsApiResponse, PostTestsApiArg, PutTestsByTestIdApiArg } from "../api/test.api-gen";
+import { GetTestsByTestIdApiResponse, GetManagerTestsByTestIdQuestionsApiResponse, PostManagerTestsApiArg, PutManagerTestsByTestIdApiArg } from "../api/test.api-gen";
 
 type TestPersist = CreateTestParam & {
 	id?: number;
@@ -68,7 +68,7 @@ const testPersistSlice = createSlice({
 		},
 		loadUpdate: (state, action: PayloadAction<{
 			testQueryData: GetTestsByTestIdApiResponse;
-			questionsQueryData: GetTestsByTestIdQuestionsApiResponse;
+			questionsQueryData: GetManagerTestsByTestIdQuestionsApiResponse;
 		}>) => {
 			state.data = {
 				...action.payload.testQueryData,
@@ -200,11 +200,11 @@ const testPersistSlice = createSlice({
 				tagIds: state.data.tagIds,
 			}
 		},
-		selectQuestionsStrict: (state: TestPersistState) => {
+		selectQuestions: (state: TestPersistState) => {
 			return state.data.questions;
 		},
 		selectError: (state: TestPersistState) => state.error,
-		selectCreateTestApiArg: (state: TestPersistState): PostTestsApiArg | null => {
+		selectCreateTestApiArg: (state: TestPersistState): PostManagerTestsApiArg | null => {
 			if (state.status === "create") {
 				const { id, ...rest } = state.data;
 				return {
@@ -213,7 +213,7 @@ const testPersistSlice = createSlice({
 			}
 			return null;
 		},
-		selectUpdateTestApiArg: (state: TestPersistState): PutTestsByTestIdApiArg | null => {
+		selectUpdateTestApiArg: (state: TestPersistState): PutManagerTestsByTestIdApiArg | null => {
 			if (state.status === "update") {
 				const { id, ...rest } = state.data;
 				return {

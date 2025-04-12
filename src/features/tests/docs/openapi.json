@@ -207,11 +207,14 @@
 				}
 			}
 		},
-		"/current-attempt/state": {
+		"/candidate/current-attempt/state": {
 			"get": {
 				"security": [
 					{
 						"userId": []
+					},
+					{
+						"roleId": []
 					}
 				],
 				"tags": [
@@ -305,11 +308,14 @@
 				}
 			}
 		},
-		"/current-attempt/new": {
+		"/candidate/current-attempt/new": {
 			"post": {
 				"security": [
 					{
 						"userId": []
+					},
+					{
+						"roleId": []
 					}
 				],
 				"tags": [
@@ -343,12 +349,15 @@
 				}
 			}
 		},
-		"/current-attempt/do": {
+		"/candidate/current-attempt/do": {
 			"get": {
 				"summary": "Prepare the test for the candidate to do",
 				"security": [
 					{
 						"userId": []
+					},
+					{
+						"roleId": []
 					}
 				],
 				"tags": [
@@ -458,11 +467,14 @@
 				}
 			}
 		},
-		"/current-attempt/submit": {
+		"/candidate/current-attempt/submit": {
 			"post": {
 				"security": [
 					{
 						"userId": []
+					},
+					{
+						"roleId": []
 					}
 				],
 				"tags": [
@@ -670,95 +682,6 @@
 						}
 					}
 				}
-			},
-			"post": {
-				"security": [
-					{
-						"userId": []
-					}
-				],
-				"tags": [
-					"Tests"
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"tagIds": {
-										"type": "array",
-										"items": {
-											"type": "number"
-										}
-									},
-									"title": {
-										"type": "string"
-									},
-									"description": {
-										"type": "string"
-									},
-									"difficulty": {
-										"type": "string",
-										"enum": [
-											"easy",
-											"medium",
-											"hard"
-										]
-									},
-									"minutesToAnswer": {
-										"type": "number",
-										"minimum": 1,
-										"maximum": 10000
-									},
-									"questions": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"text": {
-													"type": "string"
-												},
-												"options": {
-													"type": "array",
-													"items": {
-														"type": "string"
-													}
-												},
-												"points": {
-													"type": "number"
-												},
-												"correctOption": {
-													"type": "number"
-												}
-											},
-											"required": [
-												"text",
-												"options",
-												"points",
-												"correctOption"
-											]
-										}
-									}
-								},
-								"required": [
-									"tagIds",
-									"title",
-									"description",
-									"difficulty",
-									"minutesToAnswer",
-									"questions"
-								]
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Success"
-					}
-				}
 			}
 		},
 		"/tests/{testId}": {
@@ -851,125 +774,16 @@
 						}
 					}
 				}
-			},
-			"put": {
-				"security": [],
-				"tags": [
-					"Tests"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": [
-								"number",
-								"null"
-							]
-						},
-						"required": false,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"tagIds": {
-										"type": "array",
-										"items": {
-											"type": "number"
-										}
-									},
-									"title": {
-										"type": "string"
-									},
-									"description": {
-										"type": "string"
-									},
-									"difficulty": {
-										"type": "string",
-										"enum": [
-											"easy",
-											"medium",
-											"hard"
-										]
-									},
-									"minutesToAnswer": {
-										"type": "number",
-										"minimum": 1,
-										"maximum": 10000
-									},
-									"questions": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"text": {
-													"type": "string"
-												},
-												"options": {
-													"type": "array",
-													"items": {
-														"type": "string"
-													}
-												},
-												"points": {
-													"type": "number"
-												},
-												"correctOption": {
-													"type": "number"
-												}
-											},
-											"required": [
-												"text",
-												"options",
-												"points",
-												"correctOption"
-											]
-										}
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Success"
-					}
-				}
-			},
-			"delete": {
-				"security": [],
-				"tags": [
-					"Tests"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": [
-								"number",
-								"null"
-							]
-						},
-						"required": false,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success"
-					}
-				}
 			}
 		},
-		"/tests/{testId}/questions": {
+		"/manager/tests/{testId}/questions": {
 			"get": {
-				"security": [],
+				"summary": "Get all informations (include correct answer) of all questions of a test.",
+				"security": [
+					{
+						"roleId": []
+					}
+				],
 				"tags": [
 					"Tests"
 				],
@@ -1032,7 +846,11 @@
 		},
 		"/manager/tests": {
 			"get": {
+				"summary": "Get manager's tests",
 				"security": [
+					{
+						"roleId": []
+					},
 					{
 						"userId": []
 					}
@@ -1227,6 +1045,222 @@
 								}
 							}
 						}
+					}
+				}
+			},
+			"post": {
+				"security": [
+					{
+						"roleId": []
+					},
+					{
+						"userId": []
+					}
+				],
+				"tags": [
+					"Tests"
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"tagIds": {
+										"type": "array",
+										"items": {
+											"type": "number"
+										}
+									},
+									"title": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									},
+									"difficulty": {
+										"type": "string",
+										"enum": [
+											"easy",
+											"medium",
+											"hard"
+										]
+									},
+									"minutesToAnswer": {
+										"type": "number",
+										"minimum": 1,
+										"maximum": 10000
+									},
+									"questions": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"text": {
+													"type": "string"
+												},
+												"options": {
+													"type": "array",
+													"items": {
+														"type": "string"
+													}
+												},
+												"points": {
+													"type": "number"
+												},
+												"correctOption": {
+													"type": "number"
+												}
+											},
+											"required": [
+												"text",
+												"options",
+												"points",
+												"correctOption"
+											]
+										}
+									}
+								},
+								"required": [
+									"tagIds",
+									"title",
+									"description",
+									"difficulty",
+									"minutesToAnswer",
+									"questions"
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
+		"/manager/tests/{testId}": {
+			"put": {
+				"security": [
+					{
+						"roleId": []
+					}
+				],
+				"tags": [
+					"Tests"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": [
+								"number",
+								"null"
+							]
+						},
+						"required": false,
+						"name": "testId",
+						"in": "path"
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"tagIds": {
+										"type": "array",
+										"items": {
+											"type": "number"
+										}
+									},
+									"title": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									},
+									"difficulty": {
+										"type": "string",
+										"enum": [
+											"easy",
+											"medium",
+											"hard"
+										]
+									},
+									"minutesToAnswer": {
+										"type": "number",
+										"minimum": 1,
+										"maximum": 10000
+									},
+									"questions": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"text": {
+													"type": "string"
+												},
+												"options": {
+													"type": "array",
+													"items": {
+														"type": "string"
+													}
+												},
+												"points": {
+													"type": "number"
+												},
+												"correctOption": {
+													"type": "number"
+												}
+											},
+											"required": [
+												"text",
+												"options",
+												"points",
+												"correctOption"
+											]
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			},
+			"delete": {
+				"security": [
+					{
+						"roleId": []
+					}
+				],
+				"tags": [
+					"Tests"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": [
+								"number",
+								"null"
+							]
+						},
+						"required": false,
+						"name": "testId",
+						"in": "path"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success"
 					}
 				}
 			}
@@ -1620,9 +1654,13 @@
 		},
 		"/candidate/attempts": {
 			"get": {
+				"summary": "Get all attempts of the candidate",
 				"security": [
 					{
 						"userId": []
+					},
+					{
+						"roleId": []
 					}
 				],
 				"tags": [
@@ -1775,9 +1813,13 @@
 		},
 		"/candidate/tests/{testId}/attempts": {
 			"get": {
+				"summary": "Get all attempts of the candidate in a test",
 				"security": [
 					{
 						"userId": []
+					},
+					{
+						"roleId": []
 					}
 				],
 				"tags": [

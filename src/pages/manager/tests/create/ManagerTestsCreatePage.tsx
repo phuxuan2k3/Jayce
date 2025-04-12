@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { usePostTestsMutation } from "../../../../features/tests/api/test.api-gen";
+import { usePostManagerTestsMutation } from "../../../../features/tests/api/test.api-gen";
 import { useNavigate } from "react-router-dom";
 import TestCreateStepper from "./Steps/TestCreateStepper";
 import TestCreateStep1 from "./Steps/TestCreateStep1";
@@ -26,7 +26,7 @@ const ManagerTestsCreatePage = () => {
 		dispatch(loadCreate());
 	}, []);
 
-	const [createTest, { isSuccess, isLoading }] = usePostTestsMutation();
+	const [createTest, { isSuccess, isLoading }] = usePostManagerTestsMutation();
 	useEffect(() => {
 		if (isSuccess) {
 			navigate(paths.manager.tests.SELF);
