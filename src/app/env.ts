@@ -1,4 +1,7 @@
-const backendEndpoint: string = import.meta.env.VITE_BACKEND_URL as string;
+const backendUrl: string = import.meta.env.VITE_BACKEND_URL as string;
+const backendSocketUrl: string = import.meta.env.VITE_BACKEND_SOCKET_URL as string;
+
+// Configurations
 const noAuth = Boolean(import.meta.env.VITE_NO_AUTH === "true") as boolean ?? false;
 
 // Auth
@@ -23,14 +26,14 @@ const ekkoUrl = import.meta.env.VITE_EKKO_URL as string;
 
 const url = {
 	thresh: {
-		base: threshUrl ?? backendEndpoint + '/thresh',
-		socket: threshSocketUrl ?? backendEndpoint,
+		base: threshUrl ?? backendUrl + '/thresh',
+		socket: threshSocketUrl ?? backendUrl,
 	},
-	ekko: ekkoUrl ?? backendEndpoint + '/ekko',
-	bulbasaur: bulbasaurUrl ?? backendEndpoint + '/bulbasaur',
-	ivysaur: ivysaurUrl ?? backendEndpoint + '/ivysaur',
-	darius: dariusUrl ?? backendEndpoint + '/darius',
-	chronobreak: chronobreakUrl ?? backendEndpoint + '/chronobreak',
+	ekko: ekkoUrl ?? backendUrl + '/ekko',
+	bulbasaur: bulbasaurUrl ?? backendUrl + '/bulbasaur',
+	ivysaur: ivysaurUrl ?? backendUrl + '/ivysaur',
+	darius: dariusUrl ?? backendUrl + '/darius',
+	chronobreak: chronobreakUrl ?? backendUrl + '/chronobreak',
 };
 
 const mock = {
@@ -39,7 +42,8 @@ const mock = {
 }
 
 export {
-	backendEndpoint,
+	backendUrl,
+	backendSocketUrl,
 	noAuth,
 	url,
 	mock,
