@@ -1,7 +1,7 @@
 import { fetchBaseQuery, BaseQueryFn } from "@reduxjs/toolkit/query";
 import { FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { noAuth } from "./env";
-import mockAuthResponse from "../mocks/auth";
+import mockAuthResponse from "../features/auth/mocks/auth";
 import { AuthResponse } from "../features/auth/types/auth";
 
 const serviceBaseQueryNoAuth = (serviceUrl: string) => {

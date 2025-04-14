@@ -4,10 +4,11 @@ Command: npx gltfjsx@6.5.3 public/models/Jenny.glb -o src/pages/candidate/interv
 */
 
 import * as THREE from 'three'
-import React, { useEffect } from 'react'
+import React, { useRef } from 'react'
 import { useGraph } from '@react-three/fiber'
-import { useAnimations, useFBX, useGLTF } from '@react-three/drei'
+import { useGLTF } from '@react-three/drei'
 import { GLTF, SkeletonUtils } from 'three-stdlib'
+import { useConfigModel } from '../../../hooks/useConfigModel'
 
 type GLTFResult = GLTF & {
 	nodes: {
@@ -36,18 +37,19 @@ type GLTFResult = GLTF & {
 
 export function Model(props: JSX.IntrinsicElements['group']) {
 	const { scene } = useGLTF('/models/Jenny.glb');
-
-	const groupRef = React.useRef<THREE.Group>(null);
-	const fbx = useFBX('/animations/Jenny_Idle.fbx');
-	const animations = useAnimations(fbx.animations, groupRef);
-	useEffect(() => {
-		if (animations.actions) {
-			animations.actions[fbx.animations[0].name]?.reset().fadeIn(0.5).play();
-		}
-	}, [animations.actions, fbx.animations]);
-
 	const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])
 	const { nodes, materials } = useGraph(clone) as GLTFResult
+
+	// Self Inject:
+	const groupRef = useRef<THREE.Group>(null);
+	useConfigModel({
+		modelRender: {
+			nodes,
+			materials,
+		},
+		groupRef,
+	});
+
 	return (
 		<group {...props} ref={groupRef} dispose={null}>
 			<primitive object={nodes.Hips} />

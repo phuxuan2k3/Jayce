@@ -1,4 +1,4 @@
-import { AuthResponse, Role } from '../features/auth/types/auth';
+import { AuthResponse, Role } from '../types/auth';
 
 // @ts-ignore
 const candidateAuthResponse: AuthResponse = {

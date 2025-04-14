@@ -1,5 +1,5 @@
 import { useThree } from '@react-three/fiber';
-import { Model } from './Model'
+import { Model } from './Jenny/Model'
 import { Environment, useTexture } from '@react-three/drei';
 
 export default function ModelWithAnimation() {
