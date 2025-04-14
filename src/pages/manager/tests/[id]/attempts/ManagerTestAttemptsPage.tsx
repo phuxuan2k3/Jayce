@@ -12,7 +12,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from "react-router-dom";
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import paths from "../../../../../router/paths";
-import { useGetTestsByTestIdAttemptsQuery, useGetTestsByTestIdQuery } from "../../../../../features/tests/api/test.api-gen";
+import { useGetUserTestsByTestIdAttemptsQuery, useGetTestsByTestIdQuery } from "../../../../../features/tests/api/test.api-gen";
 
 // TODO: add paging
 const ManagerTestAttemptsPage = () => {
@@ -21,7 +21,7 @@ const ManagerTestAttemptsPage = () => {
 	const [open, setOpen] = React.useState(false);
 
 	const { data: test } = useGetTestsByTestIdQuery({ testId });
-	const { data: attempts } = useGetTestsByTestIdAttemptsQuery({
+	const { data: attempts } = useGetUserTestsByTestIdAttemptsQuery({
 		testId,
 		page: 1,
 		perPage: 10,

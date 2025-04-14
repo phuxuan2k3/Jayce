@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import GradientBorderNotGood from "../../../../../../components/ui/border/GradientBorder.notgood";
-import { useGetAttemptsByAttemptIdAnswersQuery, useGetAttemptsByAttemptIdQuery, useGetTestsByTestIdQuery } from "../../../../../../features/tests/api/test.api-gen";
+import { useGetUserAttemptsByAttemptIdAnswersQuery, useGetUserAttemptsByAttemptIdQuery, useGetTestsByTestIdQuery } from "../../../../../../features/tests/api/test.api-gen";
 import useGetTestIdParams from "../../../../../../features/tests/hooks/useGetTestIdParams";
 import useGetAttemptIdParams from "../../../../../../features/tests/hooks/useGetAttemptIdParams";
 import paths from "../../../../../../router/paths";
@@ -13,8 +13,8 @@ const ManagerTestAttemptPage = () => {
 	const attemptId = useGetAttemptIdParams();
 
 	const { data: test } = useGetTestsByTestIdQuery({ testId });
-	const { data: attempt } = useGetAttemptsByAttemptIdQuery({ attemptId });
-	const { data: answers } = useGetAttemptsByAttemptIdAnswersQuery({
+	const { data: attempt } = useGetUserAttemptsByAttemptIdQuery({ attemptId });
+	const { data: answers } = useGetUserAttemptsByAttemptIdAnswersQuery({
 		attemptId,
 		page: 1,
 		perPage: 10,

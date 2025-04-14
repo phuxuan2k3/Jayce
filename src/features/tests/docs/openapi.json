@@ -63,36 +63,6 @@
 						}
 					}
 				}
-			},
-			"post": {
-				"security": [],
-				"tags": [
-					"Tags"
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"name": {
-										"type": "string",
-										"minLength": 1
-									}
-								},
-								"required": [
-									"name"
-								]
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Success"
-					}
-				}
 			}
 		},
 		"/tags/{tagId}": {
@@ -138,9 +108,51 @@
 						}
 					}
 				}
-			},
+			}
+		},
+		"/manager/tags": {
+			"post": {
+				"security": [
+					{
+						"roleId": []
+					}
+				],
+				"tags": [
+					"Tags"
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string",
+										"minLength": 1
+									}
+								},
+								"required": [
+									"name"
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
+		"/manager/tags/{tagId}": {
 			"put": {
-				"security": [],
+				"security": [
+					{
+						"roleId": []
+					}
+				],
 				"tags": [
 					"Tags"
 				],
@@ -183,7 +195,11 @@
 				}
 			},
 			"delete": {
-				"security": [],
+				"security": [
+					{
+						"roleId": []
+					}
+				],
 				"tags": [
 					"Tags"
 				],
@@ -491,7 +507,7 @@
 			"get": {
 				"security": [],
 				"tags": [
-					"Tests"
+					"Manage"
 				],
 				"parameters": [
 					{
@@ -688,7 +704,7 @@
 			"get": {
 				"security": [],
 				"tags": [
-					"Tests"
+					"Manage"
 				],
 				"parameters": [
 					{
@@ -785,7 +801,7 @@
 					}
 				],
 				"tags": [
-					"Tests"
+					"Manage"
 				],
 				"parameters": [
 					{
@@ -856,7 +872,7 @@
 					}
 				],
 				"tags": [
-					"Tests"
+					"Manage"
 				],
 				"parameters": [
 					{
@@ -1058,7 +1074,7 @@
 					}
 				],
 				"tags": [
-					"Tests"
+					"Manage"
 				],
 				"requestBody": {
 					"required": true,
@@ -1149,7 +1165,7 @@
 					}
 				],
 				"tags": [
-					"Tests"
+					"Manage"
 				],
 				"parameters": [
 					{
@@ -1243,7 +1259,7 @@
 					}
 				],
 				"tags": [
-					"Tests"
+					"Manage"
 				],
 				"parameters": [
 					{
@@ -1265,9 +1281,14 @@
 				}
 			}
 		},
-		"/tests/{testId}/attempts": {
+		"/user/tests/{testId}/attempts": {
 			"get": {
-				"security": [],
+				"summary": "Get all attempts of a test",
+				"security": [
+					{
+						"roleId": []
+					}
+				],
 				"tags": [
 					"History"
 				],
@@ -1427,9 +1448,14 @@
 				}
 			}
 		},
-		"/attempts/{attemptId}": {
+		"/user/attempts/{attemptId}": {
 			"get": {
-				"security": [],
+				"summary": "Get detail of an attempt",
+				"security": [
+					{
+						"roleId": []
+					}
+				],
 				"tags": [
 					"History"
 				],
@@ -1531,9 +1557,13 @@
 				}
 			}
 		},
-		"/attempts/{attemptId}/answers": {
+		"/user/attempts/{attemptId}/answers": {
 			"get": {
-				"security": [],
+				"security": [
+					{
+						"roleId": []
+					}
+				],
 				"tags": [
 					"History"
 				],

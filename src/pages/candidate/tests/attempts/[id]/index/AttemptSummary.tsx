@@ -1,12 +1,12 @@
 import FetchState from "../../../../../../components/wrapper/FetchState";
-import { useGetAttemptsByAttemptIdQuery } from "../../../../../../features/tests/api/test.api-gen";
+import { useGetUserAttemptsByAttemptIdQuery } from "../../../../../../features/tests/api/test.api-gen";
 
 type Props = {
 	attemptId: number;
 }
 
 export default function TestInfo({ attemptId }: Props) {
-	const { data, isLoading, error } = useGetAttemptsByAttemptIdQuery({ attemptId });
+	const { data, isLoading, error } = useGetUserAttemptsByAttemptIdQuery({ attemptId });
 
 	return (
 		<FetchState

@@ -3,7 +3,7 @@ import GradientBorderGood from "../../../../../../components/ui/border/GradientB
 import GradientBorderNotGood from "../../../../../../components/ui/border/GradientBorder.notgood";
 import ChoiceIcon from "../../../../../../components/ui/icon/ChoiceIcon";
 import FetchState from "../../../../../../components/wrapper/FetchState";
-import { useGetAttemptsByAttemptIdAnswersQuery } from "../../../../../../features/tests/api/test.api-gen";
+import { useGetUserAttemptsByAttemptIdAnswersQuery } from "../../../../../../features/tests/api/test.api-gen";
 import MyPagination from "../../../../../../components/ui/common/MyPagination";
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 
 export default function AttemptsList({ attemptId }: Props) {
 	const [page, setPage] = useState(1);
-	const { data: answers, isLoading, error } = useGetAttemptsByAttemptIdAnswersQuery({ attemptId, page });
+	const { data: answers, isLoading, error } = useGetUserAttemptsByAttemptIdAnswersQuery({ attemptId, page });
 
 	const handlePageChange = (page: number) => {
 		setPage(page);

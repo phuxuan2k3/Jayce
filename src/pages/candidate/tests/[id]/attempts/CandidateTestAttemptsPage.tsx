@@ -4,7 +4,7 @@ import AttemptCardFinished from './AttemptCardFinished';
 import AttemptCardInProgress from './AttemptCardInProgress';
 import Sidebar from './Sidebar';
 import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
-import { GetTestsByTestIdAttemptsApiArg, useGetTestsByTestIdAttemptsQuery, useGetTestsByTestIdQuery } from '../../../../../features/tests/api/test.api-gen';
+import { GetUserTestsByTestIdAttemptsApiArg, useGetUserTestsByTestIdAttemptsQuery, useGetTestsByTestIdQuery } from '../../../../../features/tests/api/test.api-gen';
 import FetchState from '../../../../../components/wrapper/FetchState';
 import MyPagination from '../../../../../components/ui/common/MyPagination';
 
@@ -16,13 +16,13 @@ const perPage = 5;
 
 const CandidateTestAttemtpsPage: React.FC = () => {
 	const testId = useGetTestIdParams();
-	const [filters, setFilters] = useState<GetTestsByTestIdAttemptsApiArg>({
+	const [filters, setFilters] = useState<GetUserTestsByTestIdAttemptsApiArg>({
 		testId,
 		page: 1,
 		perPage: perPage,
 	});
 	const testQuery = useGetTestsByTestIdQuery({ testId });
-	const attemptsQuery = useGetTestsByTestIdAttemptsQuery(filters);
+	const attemptsQuery = useGetUserTestsByTestIdAttemptsQuery(filters);
 	const highestScore = attemptsQuery.data?.data.reduce((acc, curr) => {
 		if (acc < curr.score) {
 			return curr.score;
