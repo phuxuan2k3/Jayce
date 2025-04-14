@@ -46,6 +46,10 @@ const paths = {
 				}
 			},
 		},
+		interview: {
+			_layout: '/candidate/interviews/',
+			LIVE: '/candidate/interviews/live/',
+		},
 		profile: {
 			_layout: '/candidate/profile/',
 			PRICING: '/candidate/profile/pricing/',

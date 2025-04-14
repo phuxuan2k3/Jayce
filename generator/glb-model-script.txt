@@ -1,0 +1,1 @@
+npx gltfjsx public/models/Jenny.glb --output src/pages/candidate/interviews/live/Model3Ds/Jenny/Avatar.tsx --types --root public

@@ -42,11 +42,18 @@ import HomePage from "../pages/common/HomePage";
 import CandidateInTestLayout from "../pages/candidate/tests/[id]/CandidateInTestLayout";
 import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/ManagerTestEditPage";
 import ManagerTestsSelfPage from "../pages/manager/tests/self/ManagerTestsSelfPage";
+import CandidateInterviewLivePage from "../pages/candidate/interviews/live/CandidateInterviewLivePage";
 
 const router = createBrowserRouter([{
 	path: paths._layout,
 	errorElement: <ErrorPage />,
 	children: [
+
+		// TODO Dev: DEMO
+		{
+			path: "/dev",
+			element: <CandidateInterviewLivePage />,
+		},
 
 		// Authentication pages
 		{
@@ -182,6 +189,18 @@ const router = createBrowserRouter([{
 								},
 							],
 						},
+					]
+				},
+
+				// F3 - Interview
+
+				{
+					path: paths.candidate.interview._layout,
+					children: [
+						{
+							path: paths.candidate.interview.LIVE,
+							element: <CandidateInterviewLivePage />,
+						}
 					]
 				},
 
