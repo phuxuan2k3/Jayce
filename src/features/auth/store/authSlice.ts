@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Role } from "../types/auth.ts";
 import { AuthResponse } from '../types/auth.ts';
 import authApi from '../api/auth.api.ts';
-import accountApi from '../api/account.api.ts';
+import logoutApi from '../api/logout.api.ts';
 
 export type UserInfo = {
 	id: string;
@@ -20,12 +20,14 @@ export type Token = {
 }
 
 export interface AuthState {
+	isAuthenticated: boolean;
 	user: UserInfo | null,
 	tokens: Token | null,
 };
 
 const initialState: AuthState = ((): AuthState => {
 	return {
+		isAuthenticated: false,
 		user: null,
 		tokens: null,
 	}
@@ -33,26 +35,24 @@ const initialState: AuthState = ((): AuthState => {
 
 function _setAuthStateFromResponse(state: AuthState, action: PayloadAction<AuthResponse>) {
 	const data = action.payload;
-	const authState: AuthState = {
-		user: {
-			id: data.user.id.toString(),
-			email: data.user.email,
-			role: data.user.role,
-			username: data.user.username,
-			avatarPath: data.user.metadata?.avatarPath,
-			metadata: data.user.metadata,
-		},
-		tokens: {
-			access_token: data.token_info.access_token,
-			refresh_token: data.token_info.refresh_token,
-			safe_id: data.token_info.safe_id,
-		}
-	}
-	state.user = authState.user;
-	state.tokens = authState.tokens;
+	state.isAuthenticated = true;
+	state.user = {
+		id: data.user.id.toString(),
+		email: data.user.email,
+		role: data.user.role,
+		username: data.user.username,
+		avatarPath: data.user.metadata?.avatarPath,
+		metadata: data.user.metadata,
+	};
+	state.tokens = {
+		access_token: data.token_info.access_token,
+		refresh_token: data.token_info.refresh_token,
+		safe_id: data.token_info.safe_id,
+	};
 }
 
 function _clearAuthState(state: AuthState) {
+	state.isAuthenticated = false;
 	state.user = null;
 	state.tokens = null;
 }
@@ -90,7 +90,10 @@ const authSlice = createSlice({
 				throw new Error('User ID is null');
 			}
 			return state.user.id;
-		}
+		},
+		selectIsAuthenticated: (state: AuthState): boolean => {
+			return state.isAuthenticated;
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -100,7 +103,6 @@ const authSlice = createSlice({
 				(state, action) => {
 					_setAuthStateFromResponse(state, action);
 				})
-
 			// Register
 			.addMatcher(
 				authApi.endpoints.register.matchFulfilled,
@@ -117,8 +119,21 @@ const authSlice = createSlice({
 			// Logout
 			.addMatcher(
 				(action) =>
-					accountApi.endpoints.logout.matchFulfilled(action) ||
-					accountApi.endpoints.logout.matchRejected(action),
+					logoutApi.endpoints.logout.matchFulfilled(action) ||
+					logoutApi.endpoints.logout.matchRejected(action),
+				(state) => {
+					_clearAuthState(state);
+				}
+			)
+			// Refresh Token
+			.addMatcher(
+				authApi.endpoints.refresh.matchFulfilled,
+				(state, action) => {
+					_setAuthStateFromResponse(state, action);
+				}
+			)
+			.addMatcher(
+				authApi.endpoints.refresh.matchRejected,
 				(state) => {
 					_clearAuthState(state);
 				}

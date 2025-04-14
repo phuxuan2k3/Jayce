@@ -10,7 +10,7 @@ import authApi from '../features/auth/api/auth.api';
 import ekkoApi from '../features/scenarios/apis/base/ekko.api';
 import chronobreakApi from '../features/scenarios/apis/base/chronobreak.api';
 import testPersistReducer from '../features/tests/stores/testPersistSlice';
-import accountApi from '../features/auth/api/account.api';
+import logoutApi from '../features/auth/api/logout.api.ts';
 
 const persistConfig = {
 	key: 'root',
@@ -18,17 +18,23 @@ const persistConfig = {
 	whitelist: ['auth'],
 };
 
+const authPersistConfig = {
+	key: 'auth',
+	storage,
+	blacklist: ['isAuthenticated'],
+};
+
 // Create the root reducer so it can be used in configureStore
 const rootReducer = combineReducers({
 	authApi: authApi.reducer,
-	accountApi: accountApi.reducer,
+	logoutApi: logoutApi.reducer,
 	testApi: testApi.reducer,
 	aiApi: promptApi.reducer,
 	ekkoApi: ekkoApi.reducer,
 	chronobreakApi: chronobreakApi.reducer,
 
 	// Custom reducers
-	auth: authReducer,
+	auth: persistReducer(authPersistConfig, authReducer),
 	currentAttempt: currentAttemptReducer,
 	testPersist: testPersistReducer,
 });
@@ -48,7 +54,7 @@ const store = configureStore({
 				.concat(ekkoApi.middleware)
 				.concat(chronobreakApi.middleware)
 				.concat(authApi.middleware)
-				.concat(accountApi.middleware)
+				.concat(logoutApi.middleware)
 	,
 });
 

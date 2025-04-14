@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { url } from "../../../app/env";
 import serviceBaseQueryNoAuth from '../../../app/serviceBaseQueryNoAuth';
-import { AuthResponse } from '../types/auth';
+import { AuthResponse, RefreshRequest } from '../types/auth';
 
 const authApi = createApi({
 	reducerPath: 'authApi',
@@ -28,6 +28,13 @@ const authApi = createApi({
 					role,
 					metadata
 				},
+			}),
+		}),
+		refresh: builder.mutation<AuthResponse, RefreshRequest["toeken_info"]>({
+			query: (request) => ({
+				url: '/refresh',
+				method: 'POST',
+				body: { token_info: request },
 			}),
 		}),
 		google: builder.mutation<AuthResponse, { credential: string }>({
@@ -72,6 +79,7 @@ export const {
 	useLoginMutation,
 	useGoogleMutation,
 	useRegisterMutation,
+	useRefreshMutation,
 	useVerificationEmailMutation,
 	useResetPasswordMutation,
 	useReqResetPasswordMutation,

@@ -6,7 +6,7 @@ import logo from "/svg/logo.svg";
 import skillsharp from "/svg/skillsharp.svg";
 import { useAppSelector } from "../../../app/hooks";
 import paths from "../../../router/paths";
-import { useLogoutMutation } from "../../../features/auth/api/account.api";
+import { useLogoutMutation } from "../../../features/auth/api/logout.api";
 import { authSelectors } from "../../../features/auth/store/authSlice";
 
 const CandidateNavbar = ({ showNav = true }: { showNav?: boolean; }) => {
