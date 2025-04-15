@@ -1,6 +1,6 @@
 import { Mic, StopCircle } from "lucide-react"
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
-import SoundWaveVisualizer2 from "./SoundWaveVisualizer2";
+import SoundWaveVisualizer from "./SoundWaveVisualizer";
 
 export default function Record({
 	onAnswerRecorded,
@@ -67,7 +67,7 @@ export default function Record({
 					</div>
 
 					<div className="flex-1 w-full relative p-2 bg-primary/10 rounded-lg overflow-visible">
-						<SoundWaveVisualizer2 />
+						<SoundWaveVisualizer />
 					</div>
 				</div>
 			)}

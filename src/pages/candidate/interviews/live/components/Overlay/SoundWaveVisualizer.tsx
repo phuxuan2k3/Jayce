@@ -5,7 +5,7 @@ interface SoundWaveVisualizerProps {
 	barCoefficient?: number;
 }
 
-const SoundWaveVisualizer2: React.FC<SoundWaveVisualizerProps> = ({
+const SoundWaveVisualizer: React.FC<SoundWaveVisualizerProps> = ({
 	totalBars = 8,
 	barCoefficient = 5,
 }) => {
@@ -83,4 +83,4 @@ const SoundWaveVisualizer2: React.FC<SoundWaveVisualizerProps> = ({
 	);
 };
 
-export default SoundWaveVisualizer2;
+export default SoundWaveVisualizer;
