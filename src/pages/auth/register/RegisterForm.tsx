@@ -139,6 +139,7 @@ const RegisterForm = () => {
 						code,
 						client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
 						client_secret: import.meta.env.VITE_GOOGLE_CLIENT_SECRET,
+						redirect_uri: 'http://skillsharp.software',
 						grant_type: 'authorization_code',
 					},
 					{
