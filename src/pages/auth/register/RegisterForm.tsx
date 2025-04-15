@@ -8,13 +8,21 @@ import { toErrorMessage } from "../../../helpers/fetchBaseQuery.error";
 import AlertError from "../../../components/ui/error/AlertError";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
-import { useVerificationEmailMutation } from '../../../features/auth/api/auth.api';
+import { useVerificationEmailMutation, useGoogleRegisterMutation, useGoogleLoginMutation } from '../../../features/auth/api/auth.api';
 import SpinnerLoading from "../../../components/ui/loading/SpinnerLoading";
 import paths from "../../../router/paths";
+import { useGoogleLogin } from "@react-oauth/google";
+import { authActions } from "../../../features/auth/store/authSlice";
+import { useDispatch } from "react-redux";
+import axios from "axios";
 
 const RegisterForm = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const [register, { isLoading, error, isSuccess }] = useRegisterMutation();
+	const [ggRegister, { }] = useGoogleRegisterMutation();
+	const [ggLogin, { }] = useGoogleLoginMutation();
+	const [googleError, setGoogleError] = useState<string | null>(null);
 	const errorMessage = toErrorMessage(error as FetchBaseQueryError | SerializedError | undefined);
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const [verificationEmail] = useVerificationEmailMutation();
@@ -77,6 +85,7 @@ const RegisterForm = () => {
 
 	// TODO: Fullfill the data
 	const handleFormSubmit = async () => {
+		setGoogleError(null);
 		register({
 			local: {
 				username,
@@ -118,6 +127,62 @@ const RegisterForm = () => {
 		navigate(paths.auth.LOGIN);
 	}
 
+	const googleRegister = useGoogleLogin({
+		flow: 'auth-code',
+		scope: 'openid email profile',
+		onSuccess: async ({ code }) => {
+			try {
+				setGoogleError(null);
+				const { data } = await axios.post(
+					'https://oauth2.googleapis.com/token',
+					{
+						code,
+						client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+						client_secret: import.meta.env.VITE_GOOGLE_CLIENT_SECRET,
+						redirect_uri: 'http://skillsharp.software',
+						grant_type: 'authorization_code',
+					},
+					{
+						headers: {
+							'Content-Type': 'application/json',
+						},
+					}
+				);
+
+				const idToken = data.id_token;
+				console.log('ID Token:', idToken);
+
+				const response = await ggRegister({ credential: idToken, role: 1, metadata: {} });
+				if (response.data) {
+					dispatch(authActions.setAuthStateFromResponse(response.data));
+					navigate(paths._layout);
+				} else {
+					console.log("Google login failed: No data in response");
+					console.log("error", response.error);
+					if ((response.error as FetchBaseQueryError)?.data && (response.error as { data: { code: number } }).data.code === 2 && (response.error as { data: { message: string } }).data.message === "google account is exist") {
+						const loginResponse = await ggLogin({ credential: idToken });
+						if (loginResponse.data) {
+							dispatch(authActions.setAuthStateFromResponse(loginResponse.data));
+							navigate(paths._layout);
+						} else {
+							setGoogleError("Something went wrong with Google authentication.");
+						}
+					}
+					else {
+						setGoogleError("Something went wrong with Google authentication.");
+					}
+				}
+			} catch (error) {
+				console.error('Failed to get ID token:', error);
+				setGoogleError("Something went wrong with Google authentication.");
+			}
+		},
+		onError: (error) => {
+			console.error('Login Error:', error);
+			setGoogleError("Google authentication failed");
+		},
+	});
+
 	return <div>
 		<div className="w-full flex-col text-center text-[32px] font-bold">
 			<span>Welcome to SkillSharp</span>
@@ -129,6 +194,15 @@ const RegisterForm = () => {
 			<button className="px-3 w-1/2 rounded-e-lg font-bold text-xl py-2  border-2 border-[var(--primary-color)] bg-[var(--primary-color)] text-white">Sign Up</button>
 		</div>
 
+		<GradientBorder className="mt-8 hover:shadow-gradient duration-150 w-full p-[1px] rounded-lg">
+			<div className="flex h-12 justify-center items-center gap-2 text-center z-10 bg-white rounded-lg p-4 cursor-pointer" onClick={() => googleRegister()}>
+				<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 48 48">
+					<path fill="#fbc02d" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12	s5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20	s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#e53935" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039	l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4caf50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36	c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1565c0" d="M43.611,20.083L43.595,20L42,20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571	c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
+				</svg>
+				Sign up with Google
+			</div>
+		</GradientBorder>
+
 		<div className="flex mt-8 items-center space-x-4">
 			<hr className="flex-grow border-t border-gray-300" />
 			<span className="text-gray-500">or</span>
@@ -137,6 +211,7 @@ const RegisterForm = () => {
 
 		{isLoading && <SpinnerLoading />}
 		{errorMessage && <AlertError errorMessage={errorMessage} />}
+		{googleError && <AlertError errorMessage={googleError} />}
 
 		<div className="flex-col ">
 			<GradientBorder className="relative mt-8 w-full p-[1px] rounded-lg">

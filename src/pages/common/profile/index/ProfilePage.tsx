@@ -1,21 +1,24 @@
 import React from "react";
 import UserProfile from "./UserInfo";
-import Activities from "./Activities/Activities";
-import Settings from "./Settings";
 import { useAppSelector } from '../../../../app/hooks';
 import { authSelectors } from '../../../../features/auth/store/authSlice';
 import { EditAbleUserInfo } from "../../../../features/auth/types/profile";
+import Interviews from "./Activities/Interviews";
+import Scenarios from "./Activities/Scenarios";
+import Tests from "./Activities/Tests";
 
 const ProfilePage = () => {
-	const [activeTab, setActiveTab] = React.useState<"Activities" | "Settings">("Activities");
+	const [activeTab, setActiveTab] = React.useState<"Interviews" | "Scenarios" | "Tests">("Interviews");
 	const authData = useAppSelector(authSelectors.selectUserInfo);
+	console.log("Auth data", authData);
+	const [indicatorStyle, setIndicatorStyle] = React.useState({ left: 0, width: 0 });
 
-	const toggleActiveTab = (tab: "Activities" | "Settings") => {
+	const interviewsRef = React.useRef(null);
+	const scenariosRef = React.useRef(null);
+	const testsRef = React.useRef(null);
+
+	const toggleActiveTab = (tab: "Interviews" | "Scenarios" | "Tests") => {
 		setActiveTab(tab);
-	};
-
-	const updateEmail = (email: string) => {
-		console.log("Update email: ", email);
 	};
 
 	const updateProfile = (newUserInfo: EditAbleUserInfo) => {
@@ -26,6 +29,20 @@ const ProfilePage = () => {
 		console.log("Upload resume", resume);
 	};
 
+	React.useEffect(() => {
+		const tabMap = {
+			Interviews: interviewsRef,
+			Scenarios: scenariosRef,
+			Tests: testsRef,
+		};
+
+		const ref = tabMap[activeTab];
+		if (ref.current) {
+			const { offsetLeft, offsetWidth } = ref.current;
+			setIndicatorStyle({ left: offsetLeft, width: offsetWidth });
+		}
+	}, [activeTab]);
+
 	return (
 		<div className="flex p-4 min-h-screen">
 			<UserProfile
@@ -33,46 +50,50 @@ const ProfilePage = () => {
 				updateProfile={updateProfile}
 				uploadResume={uploadResume}
 			/>
-			{/* <div className="w-3/4 p-4 pl-10">
-                <div className="flex border-b-gradient text-lg">
-                    <h2 className={`cursor-pointer ${activeTab === "Activities" ? "border-b-4 border-teal-500 pb-2 text-teal-600" : "text-gray-500"}`} onClick={() => toggleActiveTab("Activities")}>Activities</h2>
-                    <h2 className={`ml-4 cursor-pointer ${activeTab === "Settings" ? "border-b-4 border-teal-500 pb-2 text-teal-600" : "text-gray-500"}`} onClick={() => toggleActiveTab("Settings")}>Settings</h2>
-                </div>
-                {activeTab === "Activities" ?
-                    <Activities />
-                    :
-                    <Settings
-                        authData={authData}
-                        updateEmail={updateEmail}
-                    />
-                }
-            </div> */}
+			
 			<div className="w-3/4 p-4 pl-10">
-				<div className="relative flex border-b-gradient text-lg">
+				<div className="relative flex border-b-gradient text-lg mb-4">
 					<button
-						className={`relative px-4 pb-2 transition-all duration-300 ${activeTab === "Activities" ? "text-teal-600" : "text-gray-500"}`}
-						onClick={() => toggleActiveTab("Activities")}
+						ref={interviewsRef}
+						className={`relative px-4 pb-2 transition-all duration-300 ${activeTab === "Interviews" ? "text-teal-600" : "text-gray-500"
+							}`}
+						onClick={() => toggleActiveTab("Interviews")}
 					>
-						Activities
+						Interviews
 					</button>
 
 					<button
-						className={`relative px-4 pb-2 transition-all duration-300 ${activeTab === "Settings" ? "text-teal-600" : "text-gray-500"}`}
-						onClick={() => toggleActiveTab("Settings")}
+						ref={scenariosRef}
+						className={`relative px-4 pb-2 transition-all duration-300 ${activeTab === "Scenarios" ? "text-teal-600" : "text-gray-500"
+							}`}
+						onClick={() => toggleActiveTab("Scenarios")}
 					>
-						Settings
+						Scenarios
+					</button>
+
+					<button
+						ref={testsRef}
+						className={`relative px-4 pb-2 transition-all duration-300 ${activeTab === "Tests" ? "text-teal-600" : "text-gray-500"
+							}`}
+						onClick={() => toggleActiveTab("Tests")}
+					>
+						Tests
 					</button>
 
 					<div
-						className={`absolute bottom-0 h-1 bg-teal-500 transition-all duration-300`}
+						className="absolute bottom-0 h-1 bg-teal-500 transition-all duration-300"
 						style={{
-							width: "100px",
-							left: activeTab === "Activities" ? "0px" : "100px",
+							left: indicatorStyle.left,
+							width: indicatorStyle.width,
 						}}
 					/>
 				</div>
 
-				{activeTab === "Activities" ? <Activities /> : <Settings authData={authData} updateEmail={updateEmail} />}
+				{activeTab === "Interviews" && <Interviews />}
+
+				{activeTab === "Scenarios" && <Scenarios />}
+
+				{activeTab === "Tests" && <Tests />}
 			</div>
 		</div>
 	);

@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarDays, faList, faPen, faPlus, faStar, faTrash, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarDays, faPlus, faStar, faUser, faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
+import { FeaturedPlayListOutlined, EditOutlined } from "@mui/icons-material";
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -12,6 +13,8 @@ import { Scenario } from "../../../../features/scenarios/types";
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
 import MyPagination from "../../../../components/ui/common/MyPagination";
 import { authSelectors } from "../../../../features/auth/store/authSlice";
+import paths from "../../../../router/paths";
+import GradientBorderNotGood from "../../../../components/ui/border/GradientBorder.notgood";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 	'& .MuiDialogContent-root': {
@@ -57,15 +60,15 @@ const ManagerScenariosPage = () => {
 	}, [authState, currentPage]);
 
 	const handleGoToCreateScenario = () => {
-		navigate("/scenario/create/detail");
+		navigate(paths.manager.scenario.CREATE_DETAIL, { state: { scenarioId: null } });
 	};
 
 	const handleGoToEditScenario = (id: number) => {
-		navigate("/scenario/edit/detail", { state: { scenarioId: id } });
+		navigate(paths.manager.scenario.in(id).EDIT_DETAIL, { state: { scenarioId: id } });
 	};
 
 	const handleGoToScenarioSubmissionListView = (id: number) => {
-		navigate("/scenario/submission", { state: { scenarioId: id } });
+		navigate(paths.manager.scenario.in(id).SUBMISSIONS, { state: { scenarioId: id } });
 	};
 
 	const handleOpenDialog = (scenario: Scenario) => {
@@ -106,13 +109,13 @@ const ManagerScenariosPage = () => {
 				<div className="w-full max-w-7xl py-6">
 					<div className="flex flex-col items-center">
 						<div className="w-4/6 flex flex-row justify-between font-semibold text-[var(--primary-color)] mb-4">
-							<span>Your scenarios ({scenarios.length})</span>
+							<span></span>
 							<div className="h-full w-fit flex items-center cursor-pointer" onClick={() => handleGoToCreateScenario()}>
 								<div className="h-7 w-7 flex items-center justify-center rounded-lg">
 									<FontAwesomeIcon icon={faPlus} rotation={90} />
 								</div>
 
-								Add new test
+								Add new set
 							</div>
 						</div>
 
@@ -127,16 +130,38 @@ const ManagerScenariosPage = () => {
 							}
 
 							return (
-								<div key={index} className="w-4/6 flex-1 flex flex-col bg-white rounded-lg shadow-primary p-6 border-r border-b border-solid border-primary items-between mb-4">
-									<div className="font-bold mb-8 text-xl">
-										<span>{scenario.name}</span>
+								<div key={index} className="group w-4/6 flex-1 flex flex-col bg-white rounded-lg shadow-primary p-6 border-r border-b border-solid border-primary items-between mb-4">
+									<div className="font-bold mb-8 text-xl flex justify-between">
+										<div className="flex items-center">
+											<span className="text-2xl">{scenario.name}</span>
+											<div className="flex ml-2 gap-1 text-sm">
+												{scenario.fields.slice(0, 2).map((field, index: number) => (
+													<GradientBorderNotGood key={index}>
+														{field.name}
+													</GradientBorderNotGood>
+												))}
+												{scenario.fields.length > 2 && (
+													<GradientBorderNotGood key={index}>
+														{`+${scenario.fields.length - 2} more`}
+													</GradientBorderNotGood>
+												)}
+											</div>
+										</div>
+
+										<button
+											className="border border-gray-400 rounded-lg bg-white px-2 py-1 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+											onClick={() => handleOpenDialog(scenario)}
+										>
+											Delete
+										</button>
 									</div>
-									<div className="mb-8">
-										<span>{scenario.description}</span>
+
+									<div className="mb-2">
+										<span>{scenario.total_question} question{scenario.total_question === 1 ? "" : "s"} <FontAwesomeIcon icon={faCircleQuestion} /></span>
 									</div>
 
 									<div className="flex-1 flex justify-around mb-2">
-										<div className="w-1/2 flex items-center justify-start font-semibold opacity-50 space-x-6">
+										<div className="w-1/2 flex items-center justify-start font-semibold space-x-6">
 											<span>
 												{Number.isInteger(scenario.rating) ? scenario.rating : scenario.rating.toFixed(2)} <FontAwesomeIcon icon={faStar} />
 											</span>
@@ -148,15 +173,18 @@ const ManagerScenariosPage = () => {
 											</span>
 										</div>
 										<div className="w-1/2 flex items-center justify-end space-x-5">
-											<div className="flex items-center justify-center border border-primary p-3 rounded-md bg-[#e1c03e] cursor-pointer" onClick={() => handleGoToScenarioSubmissionListView(scenario.id)}>
-												<FontAwesomeIcon className="h-5 w-5" icon={faList} />
+											<div className="cursor-pointer text-primary flex items-center gap-1" onClick={() => handleGoToScenarioSubmissionListView(scenario.id)}>
+												Preview <FeaturedPlayListOutlined></FeaturedPlayListOutlined>
 											</div>
-											<div className="flex items-center justify-center border border-primary p-3 rounded-md bg-[#d5eef1] cursor-pointer" onClick={() => handleGoToEditScenario(scenario.id)}>
+											<div className="cursor-pointer text-primary flex items-center gap-1" onClick={() => handleGoToEditScenario(scenario.id)}>
+												Edit <EditOutlined></EditOutlined>
+											</div>
+											{/* <div className="flex items-center justify-center border border-primary p-3 rounded-md bg-[#d5eef1] cursor-pointer" onClick={() => handleGoToEditScenario(scenario.id)}>
 												<FontAwesomeIcon className="h-5 w-5" icon={faPen} />
 											</div>
 											<div className="flex items-center justify-center border border-primary p-3 rounded-md bg-[#ff807c] cursor-pointer" onClick={() => handleOpenDialog(scenario)}>
 												<FontAwesomeIcon className="h-5 w-5" icon={faTrash} />
-											</div>
+											</div> */}
 										</div>
 									</div>
 								</div>

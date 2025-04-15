@@ -70,6 +70,7 @@ export interface Scenario {
   fields: Field[];
   total_participant: number;
   questions: Question[];
+  total_question: number;
 }
 
 export interface Question {
@@ -87,6 +88,7 @@ export interface ListAllSubmissionRequest {
   sort_method: SortMethod[];
   from?: string;
   to?: string;
+  search_content: string;
 }
 
 export interface ListAllSubmissionResponse {

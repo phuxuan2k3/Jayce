@@ -276,7 +276,11 @@ const router = createBrowserRouter([{
 								{
 									path: paths.manager.scenario.in().EDIT_QUESTIONS,
 									element: <ManagerScenarioEditQuestionsPage />,
-								}
+								},
+								{
+									path: paths.manager.scenario.in().SUBMISSIONS,
+									element: <ManagerScenarioSubmissionsPage />,
+								},
 							]
 						},
 						{

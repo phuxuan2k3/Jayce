@@ -6,7 +6,7 @@ import promptApi from '../features/tests/base/prompt.api';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import currentAttemptReducer from '../features/tests/stores/currentAttemtpSlice';
-import authApi from '../features/auth/api/auth.api';
+import authApi from '../features/auth/api/auth.api.ts';
 import ekkoApi from '../features/scenarios/apis/base/ekko.api';
 import chronobreakApi from '../features/scenarios/apis/base/chronobreak.api';
 import testPersistReducer from '../features/tests/stores/testPersistSlice';

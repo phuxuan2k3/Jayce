@@ -4,6 +4,7 @@ import { Sparkles } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Attempt, Question, Scenario, ScenarioQuestion } from "../../../../../features/scenarios/types";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
+import paths from "../../../../../router/paths";
 
 const CandidateScenarioReviewPage = () => {
 	const navigate = useNavigate();
@@ -12,7 +13,7 @@ const CandidateScenarioReviewPage = () => {
 	const attempt: Attempt = location.state?.attempt;
 
 	if (!scenario || !attempt) {
-		navigate("/ipractice/choose");
+		navigate(paths.candidate.scenarios._layout);
 	}
 
 	console.log("Review:", attempt);
@@ -30,7 +31,7 @@ const CandidateScenarioReviewPage = () => {
 	const [showHint, setShowHint] = React.useState(false);
 
 	const handleBack = () => {
-		navigate("/ipractice/detail", { state: { scenarioId: scenario.id } });
+		navigate(paths.candidate.scenarios.in(scenario.id)._layout, { state: { scenarioId: scenario.id } });
 	};
 
 	const handleQuestionClick = (question: ScenarioQuestion) => {
