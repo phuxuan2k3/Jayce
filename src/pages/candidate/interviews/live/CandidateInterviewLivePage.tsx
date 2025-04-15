@@ -1,6 +1,6 @@
 import { Suspense, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import ModelWithAnimation from './components/Model3Ds/ModelWithAnimation';
+import ModelWithAnimation from './components/Model3Ds/ModelDisplay';
 
 export default function CandidateInterviewLivePage() {
 	const [isShowModel, setIsShowModel] = useState(false);
@@ -23,8 +23,7 @@ export default function CandidateInterviewLivePage() {
 						<ModelWithAnimation />
 					</Canvas>
 				</Suspense>
-			)
-			}
+			)}
 		</>
 	);
 }

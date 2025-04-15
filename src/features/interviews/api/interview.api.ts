@@ -1,16 +1,14 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import serviceBaseQueryWithReauth from "../../../app/serviceBaseQueryAuth";
 import { url } from "../../../app/env";
-import { getInterviewQuestionMock } from "../mocks/mocks";
+import { getInterviewApiMock } from "../mocks/api-mocks";
 
 const interviewApi = createApi({
 	reducerPath: 'interviewApi',
 	// baseQuery: serviceBaseQueryWithReauth(url.thresh.base),
 	baseQuery: async (args, api, extraOptions) => {
-		console.log(api.endpoint);
-		if (api.endpoint === interviewApi.endpoints.getQuestion.name) {
-			return { data: getInterviewQuestionMock };
-		}
+		const mockData = getInterviewApiMock(api.endpoint);
+		if (mockData) return mockData;
 		const baseQuery = serviceBaseQueryWithReauth(url.thresh.base);
 		const result = await baseQuery(args, api, extraOptions);
 		return result;
@@ -27,7 +25,7 @@ const interviewApi = createApi({
 			interviewId: string;
 			questionIndex: number;
 		}>({
-			query: (query) => `/interviews/${query.interviewId}/${query.questionIndex}`,
+			query: (query) => `/interviews/${query.interviewId}/questions/${query.questionIndex}`,
 		}),
 		postAnswer: builder.mutation<void, PostInterviewAnswerRequest>({
 			query: (query) => ({
@@ -48,15 +46,15 @@ export const {
 export default interviewApi;
 
 export type PostInterviewStartRequest = {
-	field: string;
 	position: string;
+	experience: string;
 	language: string;
 	models: string;
 	speed: number;
-	level: string;
+	skills: string[];
 	maxQuestions: number;
 	skipIntro: boolean;
-	coding: boolean;
+	skipCode: boolean;
 };
 
 export type GetInterviewQuestionResponse = {
@@ -74,6 +72,7 @@ export type GetInterviewQuestionResponse = {
 			value: string;
 		}[];
 	};
+	isLastQuestion: boolean;
 }
 
 export type PostInterviewAnswerRequest = {
@@ -81,7 +80,7 @@ export type PostInterviewAnswerRequest = {
 	/**
 	 * The index of the question being answered.
 	 */
-	index: number;
+	questionIndex: number;
 	answer: string;
 	/**
 	 * The audio file in base64 format.

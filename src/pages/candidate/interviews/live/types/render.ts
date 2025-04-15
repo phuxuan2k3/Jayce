@@ -33,5 +33,5 @@ export const LIPSYNC_MAP = {
 	F: "viseme_U",
 	G: "viseme_FF",
 	H: "viseme_TH",
-	X: "viseme_PP",
+	X: "viseme_sil",
 } as const;
