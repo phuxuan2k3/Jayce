@@ -1,27 +1,32 @@
-import { useThree } from '@react-three/fiber';
-import { Model } from './Jenny/Model'
-import { Environment, useTexture } from '@react-three/drei';
+import { Environment } from '@react-three/drei';
+import { lazy, Suspense, useMemo } from 'react';
 
-export default function ModelWithAnimation() {
-	const viewport = useThree((state) => state.viewport);
-	const textture = useTexture('/textures/room1.jpeg');
+export default function ModelDisplay({
+	model = "Alice",
+}: {
+	model?: "Jenny" | "Alice";
+}) {
+	const Model = useMemo(() => {
+		switch (model) {
+			case "Jenny":
+				return lazy(() => import('./Jenny/Model'));
+			case "Alice":
+				return lazy(() => import('./Alice/Model'));
+			default:
+				return lazy(() => import('./Alice/Model'));
+		}
+	}, [model]);
 
 	return (
 		<>
-			{/* Default background */}
-			<color attach="background" args={["#ececec"]} />
-
-			<Model
-				position={[0, -4, 5]}
-				scale={2.5}
-			/>
+			<Suspense fallback={null}>
+				<Model
+					position={[0, -4, 5]}
+					scale={2.5}
+				/>
+			</Suspense>
 
 			<Environment preset="sunset" />
-
-			<mesh>
-				<planeGeometry args={[viewport.width, viewport.height]} />
-				<meshBasicMaterial map={textture} />
-			</mesh>
 		</>
 	)
 }

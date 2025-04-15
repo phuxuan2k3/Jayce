@@ -1,0 +1,1 @@
+npx gltfjsx public/models/*.glb --output src/pages/candidate/interviews/live/components/Model3Ds/*/Model.tsx --types --root public
