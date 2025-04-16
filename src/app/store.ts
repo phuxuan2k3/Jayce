@@ -13,11 +13,6 @@ import testPersistReducer from '../features/tests/stores/testPersistSlice';
 import logoutApi from '../features/auth/api/logout.api.ts';
 import interviewApi from '../features/interviews/api/interview.api.ts';
 
-const persistConfig = {
-	key: 'root',
-	storage,
-	whitelist: ['auth'],
-};
 
 const authPersistConfig = {
 	key: 'auth',
@@ -41,10 +36,8 @@ const rootReducer = combineReducers({
 	testPersist: testPersistReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 const store = configureStore({
-	reducer: persistedReducer,
+	reducer: rootReducer,
 	middleware:
 		(getDefaultMiddleware) =>
 			getDefaultMiddleware({
