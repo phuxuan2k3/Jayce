@@ -1,4 +1,4 @@
-import { useGetQuestionQuery } from "../../../../../features/interviews/api/interview.api";
+import { useAudioContext } from "../contexts/audio.context";
 import { ModelRender } from "../types/render";
 import { useAnimationConfigModel } from "./useAnimationConfigModel";
 import useCommunicationConfigModel from "./useCommunicationConfigModel";
@@ -11,14 +11,12 @@ export function useConfigModel({
 	groupRef: React.MutableRefObject<THREE.Group | null>;
 	modelRender: ModelRender;
 }) {
-	const query = useGetQuestionQuery({
-		interviewId: "1",
-		questionIndex: 1,
-	});
+	const { mouthCues, audio } = useAudioContext();
+
 	useAnimationConfigModel({ groupRef });
 	useCommunicationConfigModel({
-		base64Audio: query.data?.audio || "",
-		mouthCues: query.data?.lipsync.mouthCues || [],
+		audio,
+		mouthCues,
 		modelRender,
 	});
 }

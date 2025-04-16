@@ -3,11 +3,15 @@ import CommonButton from './CommonButton'
 
 export default function TransparentButton({
 	children,
+	onClick = () => { },
 }: {
-	children?: React.ReactNode
+	children?: React.ReactNode;
+	onClick?: () => void;
 }) {
 	return (
-		<CommonButton backgroundColor='transparent' >
+		<CommonButton
+			onClick={onClick}
+			backgroundColor='transparent' >
 			{children}
 		</CommonButton>
 	)

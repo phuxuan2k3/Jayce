@@ -5,6 +5,7 @@ export default function ModelDisplay({
 	model = "Alice",
 }: {
 	model?: "Jenny" | "Alice";
+
 }) {
 	const Model = useMemo(() => {
 		switch (model) {

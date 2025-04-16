@@ -19,8 +19,10 @@ export default function Overlay() {
 				<Record onAnswerRecorded={handleAnswerRecorded} />
 			</div>
 
-			<div className="col-start-5 col-end-8 row-start-5 row-end-5 flex items-end py-4">
-				<BottomMenu />
+			<div className="col-start-5 col-end-9 row-start-5 row-end-5 group">
+				<div className="flex items-end py-4 w-full h-full translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out">
+					<BottomMenu />
+				</div>
 			</div>
 
 		</div>

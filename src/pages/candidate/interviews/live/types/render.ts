@@ -23,7 +23,8 @@ export type ModelRender = {
 		Wolf3D_Skin: THREE.MeshStandardMaterial
 		Wolf3D_Teeth: THREE.MeshStandardMaterial
 	};
-}
+};
+
 export const LIPSYNC_MAP = {
 	A: "viseme_PP",
 	B: "viseme_kk",
@@ -35,3 +36,11 @@ export const LIPSYNC_MAP = {
 	H: "viseme_TH",
 	X: "viseme_sil",
 } as const;
+
+export type Models = "Jenny" | "Alice";
+export type Backgrounds = 1 | 2 | 3 | 4;
+export type MouthCue = {
+	start: number;
+	end: number;
+	value: string;
+};

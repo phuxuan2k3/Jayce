@@ -1,6 +1,6 @@
 import { Mic, StopCircle } from "lucide-react"
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
-import SoundWaveVisualizer from "./SoundWaveVisualizer";
+import SoundWaveVisualizer from "./sub/SoundWaveVisualizer";
 
 export default function Record({
 	onAnswerRecorded,

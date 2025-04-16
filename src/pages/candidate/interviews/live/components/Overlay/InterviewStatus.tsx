@@ -1,4 +1,5 @@
 import { memo, useEffect, useRef } from 'react'
+import { Repeat } from 'lucide-react';
 
 export default memo(function InterviewStatus({
 	currentQuestion,
@@ -18,14 +19,20 @@ export default memo(function InterviewStatus({
 	}, [currentQuestion, totalQuestion, progressBarRef.current, totalBarRef.current]);
 
 	return (
-		<div className='bg-gray-200 rounded-lg shadow-md flex items-center justify-center flex-col w-full h-full px-8 py-4 opacity-30 hover:opacity-100 transition-opacity duration-300 ease-in-out gap-y-4'>
-			<span className='text-gray-700 font-semibold text-lg'>
-				Question {currentQuestion} of {totalQuestion}
-			</span>
+		<div className='bg-transparent text-white border-2 border-white rounded-lg shadow-lg flex items-center justify-center flex-col w-full h-full px-8 py-4 hover:bg-white hover:text-primary-toned-700 hover:shadow-primary/80 hover:border-transparent transition-all duration-300 ease-in-out gap-y-4 group'>
+			<div className='flex items-center w-full'>
+				<span className='font-semibold '>
+					Question {currentQuestion} of {totalQuestion}
+				</span>
+				<button className='ml-auto'>
+					<Repeat size={20} />
+				</button>
+			</div>
+
 			<div ref={totalBarRef}
-				className='w-full h-3 relative bg-gray-300 rounded-full overflow-hidden'>
+				className='w-full h-3 relative bg-transparent border-white hover:border-none group-hover:bg-gray-300 rounded-full overflow-hidden transition-all duration-300 ease-in-out'>
 				<div
-					className='bg-primary rounded-full overflow-hidden h-full z-10 p-1'
+					className='bg-white group-hover:bg-primary rounded-full overflow-hidden h-full z-10 p-1 transition-all duration-300 ease-in-out'
 					ref={progressBarRef}
 				>
 				</div>

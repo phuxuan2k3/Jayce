@@ -16,5 +16,5 @@ export function useAnimationConfigModel({
 				action.reset().fadeIn(0.5).play();
 			}
 		}
-	}, [animations.actions, fbx.animations, groupRef]);
+	}, [animations.actions, fbx.animations]);
 }
