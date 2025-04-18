@@ -1,14 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ScenarioQuestion } from "../../../../../features/scenarios/types";
 import { useUpdateScenarioMutation } from "../../../../../features/scenarios/apis/concrete/ekko.scenario-api";
 import GradientBorderNotGood from "../../../../../components/ui/border/GradientBorder.notgood";
+import paths from "../../../../../router/paths";
 
 const ManagerScenarioEditQuestionsPage = () => {
 	const location = useLocation();
-	const scenarioId = location.state?.scenarioId;
+	// const scenarioId = location.state?.scenarioId;
+	const scenarioId = Number(useParams().scenarioId);
 	const scenarioDetails = location.state?.scenarioDetails || { name: "", description: "", fields: [] };
 	const [questionList, setQuestionList] = React.useState<ScenarioQuestion[]>(location.state?.questionList || []);
 	const [isEditing, setIsEditing] = React.useState(false);
@@ -32,7 +34,7 @@ const ManagerScenarioEditQuestionsPage = () => {
 				questions: questionList,
 			}).unwrap();
 
-			navigate("/scenario/list");
+			navigate(paths.manager.scenario._layout);
 		} catch (error) {
 			setSubmmitError("An error occurred while editing the scenario. Please try again later.");
 			console.error("Error editing scenario:", error);
@@ -85,7 +87,7 @@ const ManagerScenarioEditQuestionsPage = () => {
 	};
 
 	const handleBack = () => {
-		navigate("/scenario/edit/detail", { state: { scenarioId, scenarioDetails, questionList } });
+		navigate(paths.manager.scenario.in(scenarioId).EDIT_DETAIL, { state: { scenarioId, scenarioDetails, questionList } });
 	};
 
 	return (

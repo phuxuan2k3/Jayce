@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { useGetScenarioMutation, useListFieldMutation } from '../../../../../features/scenarios/apis/concrete/chronobreak.scenario-api';
 import { Field, Scenario, ScenarioQuestion } from '../../../../../features/scenarios/types';
+import paths from '../../../../../router/paths';
 
 const ManagerScenarioEditDetailPage = () => {
 	const [scenarioDetails, setScenarioDetails] = React.useState<Scenario | null>(null);
@@ -10,10 +11,10 @@ const ManagerScenarioEditDetailPage = () => {
 
 	const navigate = useNavigate();
 	const location = useLocation();
-	const scenarioId = location.state?.scenarioId;
-
+	// const scenarioId = location.state?.scenarioId;
+	const scenarioId = Number(useParams().scenarioId);
 	if (!scenarioId) {
-		navigate("/scenario/list");
+		navigate(paths.manager.scenario._layout);
 		return null;
 	}
 
@@ -76,12 +77,12 @@ const ManagerScenarioEditDetailPage = () => {
 	};
 
 	const handleCancel = () => {
-		navigate("/scenario/list");
+		navigate(paths.manager.scenario._layout);
 	};
 
 	const handleNext = async () => {
 		try {
-			navigate("/scenario/edit/question", { state: { scenarioId, scenarioDetails, questionList } });
+			navigate(paths.manager.scenario.in(scenarioId).EDIT_QUESTIONS, { state: { scenarioId, scenarioDetails, questionList } });
 		} catch (err) {
 			console.error("Failed to edit test detail:", err);
 		}

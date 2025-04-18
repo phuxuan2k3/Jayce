@@ -1,17 +1,18 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSliders, faMagnifyingGlass, faSquarePollHorizontal, faCalendarMinus } from "@fortawesome/free-solid-svg-icons";
 import * as React from 'react';
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useListAllSubmissionMutation } from "../../../../../features/scenarios/apis/concrete/ekko.scenario-api";
 import { useListUsersMutation } from "../../../../../features/scenarios/apis/concrete/bulbasaur.scenario-api";
 import { Attempt, Scenario } from "../../../../../features/scenarios/types";
 import { useGetScenarioMutation } from "../../../../../features/scenarios/apis/concrete/chronobreak.scenario-api";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
 import { UserInfo } from "../../../../../features/auth/store/authSlice";
+import paths from "../../../../../router/paths";
 
 const ManagerScenarioSubmissionsPage = () => {
 	const navigate = useNavigate();
-	const location = useLocation();
+	// const location = useLocation();
 
 	const [isFilterOpen, setIsFilterOpen] = React.useState(false);
 
@@ -19,13 +20,14 @@ const ManagerScenarioSubmissionsPage = () => {
 	const [_totalCount, setTotalCount] = React.useState(0);
 	const [_totalPage, setTotalPage] = React.useState(0);
 	const pageSize = 1000;
-	const [candidateName, setCandidateName] = React.useState("");
 	const [dates, setDates] = React.useState({ from: new Date("2000-01-01").toISOString().split("T")[0], to: new Date().toISOString().split("T")[0] });
-	const [filterForFetch, setFilterForFetch] = React.useState<{ candidateName: string, dates: { from: string, to: string } }>({ candidateName: "", dates: { from: new Date("2000-01-01").toISOString().split("T")[0], to: new Date().toISOString().split("T")[0] } });
+	const [filterForFetch, setFilterForFetch] = React.useState<{ searchContent: string, dates: { from: string, to: string } }>({ searchContent: "", dates: { from: new Date("2000-01-01").toISOString().split("T")[0], to: new Date().toISOString().split("T")[0] } });
+	const [searchContent, setSearchContent] = React.useState("");
 
-	const scenarioId = location.state?.scenarioId;
+	// const scenarioId = location.state?.scenarioId;
+	const scenarioId = Number(useParams().scenarioId);
 	if (!scenarioId) {
-		navigate("/scenario/list");
+		navigate(paths.manager.scenario._layout);
 		return null;
 	}
 
@@ -54,6 +56,7 @@ const ManagerScenarioSubmissionsPage = () => {
 	React.useEffect(() => {
 		const fetchData = async () => {
 			try {
+				console.log("Fetching data with filter:", filterForFetch);
 				const submissionList = await fetchSubmissionList({
 					scenario_id: scenarioId,
 					page_index: currentPage - 1,
@@ -65,7 +68,9 @@ const ManagerScenarioSubmissionsPage = () => {
 						date.setHours(23, 59, 59, 999);
 						return date.toISOString();
 					})(),
+					search_content: searchContent,
 				}).unwrap();
+				console.log("request", submissionList.request);
 				if (submissionList.submissions) {
 					const allAttempts = submissionList.submissions.flatMap(submission =>
 						submission.attempts.map(attempt => ({
@@ -77,6 +82,8 @@ const ManagerScenarioSubmissionsPage = () => {
 					setTotalCount(submissionList.total_count);
 					setTotalPage(submissionList.total_page);
 
+					console.log(attempts)
+
 					const userIds = [...new Set(allAttempts.map(a => a.candidate_id))];
 					if (userIds.length > 0) {
 						const response = await fetchUsers({ user_ids: userIds }).unwrap();
@@ -87,6 +94,7 @@ const ManagerScenarioSubmissionsPage = () => {
 						setUsers(userMap);
 						console.log(userMap[0])
 					}
+					console.log(users);
 				}
 			} catch (err) {
 				console.error("Error fetching data:", err);
@@ -96,13 +104,22 @@ const ManagerScenarioSubmissionsPage = () => {
 		fetchData();
 	}, [fetchSubmissionList, fetchUsers, currentPage, filterForFetch, scenarioInfo]);
 
+	const handleSearchContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value;
+		setSearchContent(value);
+		setFilterForFetch(prev => ({
+		  ...prev,
+		  searchContent: value
+		}));
+	};
+
 	const handleApplyFilter = () => {
-		setFilterForFetch({ candidateName, dates });
+		setFilterForFetch({ searchContent, dates });
 		setIsFilterOpen(false);
 	};
 
 	function handleGoToSubmissionDetail(attempt: Attempt & { candidate_id: number }): void {
-		navigate("/scenario/submission/detail", { state: { scenarioInfo, attempt, submitter: users[attempt.candidate_id]?.metadata?.fullname || "Unknown" } });
+		navigate(paths.manager.scenario.submissions.in(attempt.id)._layout, { state: { scenarioInfo, attempt, submitter: users[attempt.candidate_id]?.metadata?.fullname || "Unknown" } });
 	}
 
 	return (
@@ -122,7 +139,7 @@ const ManagerScenarioSubmissionsPage = () => {
 								<div className="flex items-center ml-4">
 									<div className="h-7 w-fit bg-[#EAF6F8] flex items-center justify-center rounded-lg p-2">
 										<FontAwesomeIcon className="h-4 w-4 mr-2" icon={faMagnifyingGlass} />
-										<input className="bg-[#EAF6F8]" type="text" placeholder="Search for submitter" onChange={(e) => setCandidateName(e.target.value)} />
+										<input className="bg-[#EAF6F8]" type="text" placeholder="Search for submitter" onChange={(e) => handleSearchContentChange(e)} />
 									</div>
 								</div>
 							</div>

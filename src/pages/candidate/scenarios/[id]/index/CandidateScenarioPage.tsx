@@ -1,18 +1,20 @@
 import * as React from "react";
 import { FaArrowRight, FaCalendarAlt, FaChevronRight, FaHeart, FaStar, FaUser } from "react-icons/fa";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Rating } from "@mui/material";
 import { useListAttemptMutation, useFavoriteScenarioMutation, useRatingScenarioMutation, useGetAttemptMutation } from "../../../../../features/scenarios/apis/concrete/ekko.scenario-api";
 import { useGetScenarioMutation } from "../../../../../features/scenarios/apis/concrete/chronobreak.scenario-api";
 import { Attempt, Scenario } from "../../../../../features/scenarios/types";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
+import paths from "../../../../../router/paths";
 
 const CandidateScenarioPage = () => {
 	const navigate = useNavigate();
-	const location = useLocation();
-	const scenarioId = location.state?.scenarioId;
+	// const location = useLocation();
+	// const scenarioId = location.state?.scenarioId;
+	const scenarioId = Number(useParams().scenarioId);
 	if (!scenarioId) {
-		navigate("/ipractice/pick");
+		navigate(paths.candidate.scenarios._layout);
 		return null;
 	}
 
@@ -84,7 +86,7 @@ const CandidateScenarioPage = () => {
 	};
 
 	const handleAnswer = () => {
-		navigate("/ipractice/answer", { state: { scenarioId } });
+		navigate(paths.candidate.scenarios.in(scenarioId).ANSWER, { state: { scenarioId } });
 	};
 
 	const [useGetAttempt] = useGetAttemptMutation();
@@ -92,7 +94,7 @@ const CandidateScenarioPage = () => {
 		try {
 			const response = await useGetAttempt({ id: attemptId });
 			const attempt = response.data?.attempt;
-			navigate("/ipractice/review", { state: { scenario, attempt } });
+			navigate(paths.candidate.scenarios.in(scenario?.id).REVIEW, { state: { scenario, attempt } });
 		} catch (error) {
 			console.log("Error fetching attempt", error);
 		}

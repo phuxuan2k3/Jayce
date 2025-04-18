@@ -1,13 +1,14 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaFilter, FaStar, FaUser, FaCalendarAlt, FaArrowRight } from "react-icons/fa";
 import * as React from "react";
-import { Field, Scenario, SortType } from "../../../../features/scenarios/types";
+import { Scenario, SortType } from "../../../../features/scenarios/types";
 import { useListAttemptMutation } from "../../../../features/scenarios/apis/concrete/ekko.scenario-api";
 import { useListScenarioMutation } from "../../../../features/scenarios/apis/concrete/ekko.scenario-api";
 import { useAppSelector } from "../../../../app/hooks";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
 import { authSelectors } from "../../../../features/auth/store/authSlice";
 import MyPagination from "../../../../components/ui/common/MyPagination";
+import paths from "../../../../router/paths";
 
 const CandidateScenariosPage = () => {
 	const navigate = useNavigate();
@@ -20,8 +21,8 @@ const CandidateScenariosPage = () => {
 	const [minParticipant, setMinParticipant] = React.useState<number>(0);
 	const [filterForFetch, setFilterForFetch] = React.useState<{ minRating: number, minParticipant: number, dates: { from: string, to: string } }>({ minRating: 0, minParticipant: 0, dates: { from: new Date("2000-01-01").toISOString().split("T")[0], to: new Date().toISOString().split("T")[0] } });
 
-	const location = useLocation();
-	const field: Field = location.state?.field;
+	// const location = useLocation();
+	// const field: Field = location.state?.field;
 	const [currentPage, setCurrentPage] = React.useState(1);
 	const [_, setTotalCount] = React.useState(0);
 	const [totalPage, setTotalPage] = React.useState(0);
@@ -33,7 +34,7 @@ const CandidateScenariosPage = () => {
 	const [scenarios, setScenarios] = React.useState<(Scenario & { attempted: boolean; hasFetched: boolean })[]>([]);
 
 	const handlePractice = (scenarioId: number) => {
-		navigate("/ipractice/detail", { state: { scenarioId } });
+		navigate(paths.candidate.scenarios.in(scenarioId)._layout, { state: { scenarioId } });
 	};
 
 	const [listScenarioMutation] = useListScenarioMutation();
@@ -47,7 +48,7 @@ const CandidateScenariosPage = () => {
 					page_size: pageSize,
 					is_finished: finishFilter,
 					is_favorite: favouriteFilter,
-					field_ids: [field.id],
+					field_ids: [],
 					from: new Date(dates.from).toISOString(),
 					to: (() => {
 						const date = new Date(dates.to);
@@ -75,7 +76,7 @@ const CandidateScenariosPage = () => {
 		}
 
 		fetchScenarios();
-	}, [currentPage, finishFilter, favouriteFilter, field, sortType, filterForFetch]);
+	}, [currentPage, finishFilter, favouriteFilter, sortType, filterForFetch]);
 
 	const [listAttemptMutation] = useListAttemptMutation();
 	React.useEffect(() => {
@@ -117,7 +118,7 @@ const CandidateScenariosPage = () => {
 	return (
 		<>
 			<div className="mx-12 font-arya">
-				<div className="text-3xl font-extrabold">{field.name} Scenarios</div>
+				<div className="text-3xl font-extrabold">Scenarios</div>
 				<div className="mt-2 text-[var(--primary-color)]">You can practice interview skills with multiple situations</div>
 				<div className=" flex justify-between">
 					<div className="flex gap-3 mt-8">

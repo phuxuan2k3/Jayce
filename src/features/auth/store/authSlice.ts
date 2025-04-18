@@ -111,7 +111,14 @@ const authSlice = createSlice({
 				})
 			// Login with Google
 			.addMatcher(
-				authApi.endpoints.google.matchFulfilled,
+				authApi.endpoints.googleLogin.matchFulfilled,
+				(state, action) => {
+					_setAuthStateFromResponse(state, action);
+				}
+			)
+			// Register with Google
+			.addMatcher(
+				authApi.endpoints.googleRegister.matchFulfilled,
 				(state, action) => {
 					_setAuthStateFromResponse(state, action);
 				}
