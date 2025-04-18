@@ -13,6 +13,7 @@ function App() {
 	const [refresh] = useRefreshMutation();
 
 	useEffect(() => {
+		console.log(isAuthenticated);
 		if (isAuthenticated == false) {
 			if (token != null && user != null) {
 				refresh({

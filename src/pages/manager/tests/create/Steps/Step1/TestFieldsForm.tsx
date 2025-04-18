@@ -1,17 +1,15 @@
-import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { testPersistActions, testPersistSelectors } from '../../../../features/tests/stores/testPersistSlice';
+import { TestFields } from "../../contexts/test.reducer";
 
-export default function TestFieldsEditForm() {
-	const testFields = useAppSelector(testPersistSelectors.selectTestFields);
-	const dispatch = useAppDispatch();
-	const {
-		setTestField,
-	} = testPersistActions;
-
-
+export default function TestFieldsForm({
+	testFields,
+	onChange,
+}: {
+	testFields: TestFields;
+	onChange: (field: { key: keyof TestFields, value: string | number }) => void;
+}) {
 
 	return (
-		<div className="font-arya mt-10 mb-20">
+		<div className="font-arya my-10 w-[700px] min-h-fit border border-primary-toned-300 rounded-lg bg-white shadow-md p-4">
 			<div className="flex justify-center items-center space-x-4 my-4">
 				<label className="font-medium text-[var(--primary-color)] text-xl w-1/4">
 					Test title:
@@ -21,10 +19,10 @@ export default function TestFieldsEditForm() {
 					placeholder="Title"
 					className=" w-2/4 px-4 py-2 border border-[var(--primary-color)] rounded-md focus:outline-none focus:ring focus:ring-teal-300"
 					value={testFields.title}
-					onChange={(e) => dispatch(setTestField({
+					onChange={(e) => onChange({
 						key: "title",
 						value: e.target.value,
-					}))}
+					})}
 				/>
 			</div>
 			<div className="flex justify-center items-center space-x-4 my-4">
@@ -35,12 +33,13 @@ export default function TestFieldsEditForm() {
 					placeholder="Descript your test"
 					className="w-2/4 px-4 py-2 border border-[var(--primary-color)] rounded-md focus:outline-none focus:ring focus:ring-teal-300"
 					value={testFields.description}
-					onChange={(e) => dispatch(setTestField({
+					onChange={(e) => onChange({
 						key: "description",
 						value: e.target.value,
-					}))}
+					})}
 				/>
 			</div>
+
 			{/* TODO: set tags later */}
 			<div className="flex justify-center items-center space-x-4 my-4">
 				<label className="font-medium text-[var(--primary-color)] text-xl w-1/4">
@@ -69,10 +68,10 @@ export default function TestFieldsEditForm() {
 						placeholder="Enter duration"
 						className=" px-4 py-2 border border-[var(--primary-color)] rounded-md focus:outline-none focus:ring focus:ring-teal-300"
 						value={testFields.minutesToAnswer}
-						onChange={(e) => dispatch(setTestField({
+						onChange={(e) => onChange({
 							key: "minutesToAnswer",
 							value: Number(e.target.value),
-						}))}
+						})}
 					/>
 					<span> minutes</span>
 				</div>
@@ -85,10 +84,10 @@ export default function TestFieldsEditForm() {
 				<select
 					className="w-2/4 px-4 py-2 border border-[var(--primary-color)] rounded-md focus:outline-none focus:ring focus:ring-teal-300"
 					value={testFields.difficulty}
-					onChange={(e) => dispatch(setTestField({
+					onChange={(e) => onChange({
 						key: "difficulty",
 						value: e.target.value as "easy" | "medium" | "hard",
-					}))}
+					})}
 				>
 					<option value="">Select difficulty</option>
 					<option value="easy">Easy</option>

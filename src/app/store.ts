@@ -12,12 +12,6 @@ import chronobreakApi from '../features/scenarios/apis/base/chronobreak.api';
 import testPersistReducer from '../features/tests/stores/testPersistSlice';
 import logoutApi from '../features/auth/api/logout.api.ts';
 
-const persistConfig = {
-	key: 'root',
-	storage,
-	whitelist: ['auth'],
-};
-
 const authPersistConfig = {
 	key: 'auth',
 	storage,
@@ -39,10 +33,8 @@ const rootReducer = combineReducers({
 	testPersist: testPersistReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 const store = configureStore({
-	reducer: persistedReducer,
+	reducer: rootReducer,
 	middleware:
 		(getDefaultMiddleware) =>
 			getDefaultMiddleware({
