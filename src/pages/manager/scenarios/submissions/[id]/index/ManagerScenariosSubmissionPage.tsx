@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Attempt, Scenario } from "../../../../../../features/scenarios/types";
 import GradientBorderNotGood from "../../../../../../components/ui/border/GradientBorder.notgood";
+import paths from "../../../../../../router/paths";
 
 const ScenarioSubmissionDetail = () => {
 	const location = useLocation();
@@ -17,7 +18,7 @@ const ScenarioSubmissionDetail = () => {
 	console.log("ScenarioSubmissionDetail:", scenarioInfo, attempt);
 
 	const handleGoToSubmissionListView = () => {
-		navigate("/scenario/submission", { state: { scenarioId: scenarioInfo.id } });
+		navigate(paths.manager.scenario.in(scenarioInfo.id).SUBMISSIONS, { state: { scenarioId: scenarioInfo.id } });
 	};
 
 	return (

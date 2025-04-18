@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCreateScenarioMutation } from "../../../../features/scenarios/apis/concrete/ekko.scenario-api";
 import GradientBorderNotGood from "../../../../components/ui/border/GradientBorder.notgood";
+import paths from "../../../../router/paths";
 
 interface ScenarioQuestion {
 	content: string;
@@ -23,7 +24,7 @@ const ScenarioCreateQuestion = () => {
 	const navigate = useNavigate();
 
 	const handleBack = () => {
-		navigate("/scenario/create/detail", { state: { scenarioDetails, questionList } });
+		navigate(paths.manager.scenario.CREATE_DETAIL, { state: { scenarioDetails, questionList } });
 	};
 
 	const [createScenario] = useCreateScenarioMutation();
@@ -39,7 +40,7 @@ const ScenarioCreateQuestion = () => {
 				questions: questionList,
 			}).unwrap();
 
-			navigate("/scenario/list");
+			navigate(paths.manager.scenario._layout);
 		} catch (error) {
 			setSubmmitError("An error occurred while creating the scenario. Please try again later.");
 			console.error("Error while creating the scenario:", error);

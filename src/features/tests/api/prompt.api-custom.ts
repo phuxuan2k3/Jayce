@@ -35,3 +35,5 @@ export const {
 	useCriteriaMutation,
 	useGenerateMutation
 } = promptApiCustom;
+
+export default promptApiCustom;

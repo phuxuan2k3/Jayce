@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { useListFieldMutation } from '../../../../features/scenarios/apis/concrete/chronobreak.scenario-api';
 import { Field } from '../../../../features/scenarios/types';
+import paths from '../../../../router/paths';
 
 interface ScenarioDetails {
 	name: string;
@@ -56,14 +57,14 @@ const ManagerScenariosCreateDetailPage = () => {
 
 	const handleNext = async () => {
 		try {
-			navigate("/scenario/create/question", { state: { scenarioDetails, questionList } });
+			navigate(paths.manager.scenario.CREATE_QUESTIONS, { state: { scenarioDetails, questionList } });
 		} catch (err: any) {
 			console.error("Scenario Create Detail:", err);
 		}
 	};
 
 	const handleCancel = () => {
-		navigate("/scenario/list");
+		navigate(paths.manager.scenario._layout);
 	};
 
 	return (

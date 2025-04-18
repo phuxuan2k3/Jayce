@@ -13,7 +13,7 @@ const bulbasaurAPI = authApi.injectEndpoints({
 	endpoints: (builder) => ({
 		listUsers: builder.mutation<ListUsersResponse, ListUsersRequest>({
 			query: (body) => ({
-				url: '/account/list',
+				url: '/list',
 				method: 'POST',
 				body
 			})

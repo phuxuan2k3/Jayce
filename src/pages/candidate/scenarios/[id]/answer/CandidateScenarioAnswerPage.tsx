@@ -1,15 +1,21 @@
 import * as React from "react";
 import { FaChevronRight, FaKeyboard, FaMicrophone, FaTrash, FaVolumeUp, FaStopCircle } from "react-icons/fa";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import { useSubmitAnswerMutation } from "../../../../../features/scenarios/apis/concrete/ekko.scenario-api";
 import { useGetScenarioMutation } from "../../../../../features/scenarios/apis/concrete/chronobreak.scenario-api";
 import { Question, Scenario, SubmittedAnswer } from "../../../../../features/scenarios/types";
+import paths from "../../../../../router/paths";
 
 const CandidateScenarioAnswerPage = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const scenarioId = location.state?.scenarioId;
+	// const scenarioId = location.state?.scenarioId;
+	const scenarioId = useParams().scenarioId || location.state?.scenarioId;
+	if (!scenarioId) {
+		navigate(paths.candidate.scenarios._layout);
+		return null;
+	}
 
 	const [scenario, setScenario] = React.useState<Scenario | null>(null);
 	const [questions, setQuestions] = React.useState<Question[]>([]);
@@ -63,7 +69,7 @@ const CandidateScenarioAnswerPage = () => {
 				console.error("Error submitting answers:", response.error);
 				return;
 			}
-			navigate("/ipractice/review", { state: { scenario: scenario, attempt: response.data.attempt } });
+			navigate(paths.candidate.scenarios.in(scenario?.id).REVIEW, { state: { scenario: scenario, attempt: response.data.attempt } });
 		} catch (err) {
 			console.error("Error submitting answers:", err);
 		}

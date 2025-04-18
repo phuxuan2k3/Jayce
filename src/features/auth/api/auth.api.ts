@@ -37,11 +37,28 @@ const authApi = createApi({
 				body: { token_info: request },
 			}),
 		}),
-		google: builder.mutation<AuthResponse, { credential: string }>({
+		googleLogin: builder.mutation<AuthResponse, { credential: string }>({
 			query: ({ credential }) => ({
-				url: '/google',
+				url: '/login',
 				method: 'POST',
-				body: { credential },
+				body: {
+					google: {
+						credential
+					}
+				},
+			}),
+		}),
+		googleRegister: builder.mutation<AuthResponse, { credential: string, role: number, metadata: {} }>({
+			query: ({ credential, role, metadata }) => ({
+				url: '/register',
+				method: 'POST',
+				body: {
+					google: {
+						credential
+					},
+					role,
+					metadata
+				},
 			}),
 		}),
 		verificationEmail: builder.mutation<void, { email: string }>({
@@ -77,7 +94,8 @@ const authApi = createApi({
 
 export const {
 	useLoginMutation,
-	useGoogleMutation,
+	useGoogleLoginMutation,
+	useGoogleRegisterMutation,
 	useRegisterMutation,
 	useRefreshMutation,
 	useVerificationEmailMutation,
