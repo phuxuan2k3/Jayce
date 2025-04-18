@@ -43,316 +43,323 @@ import CandidateInTestLayout from "../pages/candidate/tests/[id]/CandidateInTest
 import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/ManagerTestEditPage";
 import ManagerTestsSelfPage from "../pages/manager/tests/self/ManagerTestsSelfPage";
 import CandidateInterviewLivePage from "../pages/candidate/interviews/live/CandidateInterviewLivePage";
+import SetUpPage from "../pages/candidate/interviews/setup/setup";
 
-const router = createBrowserRouter([{
-	path: paths._layout,
-	errorElement: <ErrorPage />,
-	children: [
+const router = createBrowserRouter(
+  [
+    {
+      path: paths._layout,
+      errorElement: <ErrorPage />,
+      children: [
+        // TODO Dev: DEMO
+        {
+          path: "/dev",
+          element: <CandidateInterviewLivePage />,
+        },
 
-		// TODO Dev: DEMO
-		{
-			path: "/dev",
-			element: <CandidateInterviewLivePage />,
-		},
+        // Authentication pages
+        {
+          path: paths.auth._layout,
+          element: <AuthLayout />,
+          children: [
+            {
+              path: paths.auth.LOGIN,
+              element: <AuthLoginPage />,
+            },
+            {
+              path: paths.auth.CHOOSE_ROLE,
+              element: <AuthChooseRolePage />,
+            },
+            {
+              path: paths.auth.BUSINESS_REGISTER,
+              element: <AuthBusinessRegisterPage />,
+            },
+            {
+              path: paths.auth.REGISTER,
+              element: <AuthRegisterPage />,
+            },
+            {
+              path: paths.auth.PROVIDE_SUGGESTION,
+              element: <AuthProvideSuggestionPage />,
+            },
+            {
+              path: paths.auth.PROVIDE_POSITION,
+              element: <AuthProvidePositionPage />,
+            },
+            {
+              path: paths.auth.PROVIDE_COMPANIES,
+              element: <AuthProvideCompaniesPage />,
+            },
+            {
+              path: paths.auth.RESET_PASSWORD,
+              element: <AuthResetPasswordPage />,
+            },
+            {
+              path: paths.auth.NEW_PASSWORD,
+              element: <AuthNewPasswordPage />,
+            },
+          ],
+        },
 
-		// Authentication pages
-		{
-			path: paths.auth._layout,
-			element: <AuthLayout />,
-			children: [
-				{
-					path: paths.auth.LOGIN,
-					element: <AuthLoginPage />
-				},
-				{
-					path: paths.auth.CHOOSE_ROLE,
-					element: <AuthChooseRolePage />
-				},
-				{
-					path: paths.auth.BUSINESS_REGISTER,
-					element: <AuthBusinessRegisterPage />
-				},
-				{
-					path: paths.auth.REGISTER,
-					element: <AuthRegisterPage />
-				},
-				{
-					path: paths.auth.PROVIDE_SUGGESTION,
-					element: <AuthProvideSuggestionPage />
-				},
-				{
-					path: paths.auth.PROVIDE_POSITION,
-					element: <AuthProvidePositionPage />
-				},
-				{
-					path: paths.auth.PROVIDE_COMPANIES,
-					element: <AuthProvideCompaniesPage />
-				},
-				{
-					path: paths.auth.RESET_PASSWORD,
-					element: <AuthResetPasswordPage />
-				},
-				{
-					path: paths.auth.NEW_PASSWORD,
-					element: <AuthNewPasswordPage />
-				},
-			],
-		},
+        // Candidate pages
 
-		// Candidate pages
+        {
+          path: paths.candidate._layout,
+          element: <CandidateLayout />,
+          children: [
+            // Common pages
 
-		{
-			path: paths.candidate._layout,
-			element: <CandidateLayout />,
-			children: [
+            {
+              index: true,
+              element: <HomePage />,
+            },
 
-				// Common pages
+            // F1 - Tests
 
-				{
-					index: true,
-					element: <HomePage />,
-				},
+            {
+              path: paths.candidate.tests._layout,
+              element: <CandidateTestLayout />,
+              children: [
+                {
+                  index: true,
+                  element: <TestsPage />,
+                },
+                {
+                  path: paths.candidate.tests.in().RECOMMENDATION,
+                  element: <CandidateTestRecommendationPage />,
+                },
+                {
+                  path: paths.candidate.tests.in().ASSESSMENT,
+                  element: <CandidateTestAssessmentPage />,
+                },
 
-				// F1 - Tests
+                // In an Attempt
 
-				{
-					path: paths.candidate.tests._layout,
-					element: <CandidateTestLayout />,
-					children: [
-						{
-							index: true,
-							element: <TestsPage />
-						},
-						{
-							path: paths.candidate.tests.in().RECOMMENDATION,
-							element: <CandidateTestRecommendationPage />
-						},
-						{
-							path: paths.candidate.tests.in().ASSESSMENT,
-							element: <CandidateTestAssessmentPage />
-						},
+                {
+                  path: paths.candidate.tests.attempts.in()._layout,
+                  children: [
+                    {
+                      index: true,
+                      element: <CandidateAttemptPage />,
+                    },
+                  ],
+                },
 
-						// In an Attempt
+                // In a Test
 
-						{
-							path: paths.candidate.tests.attempts.in()._layout,
-							children: [
-								{
-									index: true,
-									element: <CandidateAttemptPage />
-								}
-							]
-						},
+                {
+                  path: paths.candidate.tests.in()._layout,
+                  element: <CandidateInTestLayout />,
+                  children: [
+                    {
+                      path: paths.candidate.tests.in().DO,
+                      element: <CandidateTestDoPage />,
+                    },
+                    {
+                      path: paths.candidate.tests.in().ATTEMPTS,
+                      element: <CandidateTestAttemtpsPage />,
+                    },
+                  ],
+                },
+              ],
+            },
 
-						// In a Test
+            // F2 - Scenario
 
-						{
-							path: paths.candidate.tests.in()._layout,
-							element: <CandidateInTestLayout />,
-							children: [
-								{
-									path: paths.candidate.tests.in().DO,
-									element: <CandidateTestDoPage />
-								},
-								{
-									path: paths.candidate.tests.in().ATTEMPTS,
-									element: <CandidateTestAttemtpsPage />
-								},
-							],
-						},
-					]
-				},
+            {
+              path: paths.candidate.scenarios._layout,
+              children: [
+                {
+                  index: true,
+                  element: <CandidateScenariosPage />,
+                },
+                {
+                  path: paths.candidate.scenarios.in()._layout,
+                  children: [
+                    {
+                      index: true,
+                      element: <CandidateScenarioPage />,
+                    },
+                    {
+                      path: paths.candidate.scenarios.in().ANSWER,
+                      element: <CandidateScenarioAnswerPage />,
+                    },
+                    {
+                      path: paths.candidate.scenarios.in().REVIEW,
+                      element: <CandidateScenarioReviewPage />,
+                    },
+                  ],
+                },
+              ],
+            },
 
-				// F2 - Scenario
+            // F3 - Interview
 
-				{
-					path: paths.candidate.scenarios._layout,
-					children: [
-						{
-							index: true,
-							element: <CandidateScenariosPage />,
-						},
-						{
-							path: paths.candidate.scenarios.in()._layout,
-							children: [
-								{
-									index: true,
-									element: <CandidateScenarioPage />,
-								},
-								{
-									path: paths.candidate.scenarios.in().ANSWER,
-									element: <CandidateScenarioAnswerPage />,
-								},
-								{
-									path: paths.candidate.scenarios.in().REVIEW,
-									element: <CandidateScenarioReviewPage />,
-								},
-							],
-						},
-					]
-				},
+            {
+              path: paths.candidate.interview._layout,
+              children: [
+                {
+                  path: paths.candidate.interview.LIVE,
+                  element: <CandidateInterviewLivePage />,
+                },
+                {
+                  path: paths.candidate.interview.SETUP,
+                  element: <SetUpPage />,
+                },
+              ],
+            },
 
-				// F3 - Interview
+            // Profile
+            {
+              path: paths.candidate.profile._layout,
+              children: [
+                {
+                  index: true,
+                  element: <ProfilePage />,
+                },
+                {
+                  path: paths.candidate.profile.PRICING,
+                  element: <PricingPage />,
+                },
+              ],
+            },
+          ],
+        },
 
-				{
-					path: paths.candidate.interview._layout,
-					children: [
-						{
-							path: paths.candidate.interview.LIVE,
-							element: <CandidateInterviewLivePage />,
-						}
-					]
-				},
+        // Manager pages
 
-				// Profile
-				{
-					path: paths.candidate.profile._layout,
-					children: [
-						{
-							index: true,
-							element: <ProfilePage />,
-						},
-						{
-							path: paths.candidate.profile.PRICING,
-							element: <PricingPage />,
-						},
-					]
-				}
-			]
-		},
+        {
+          path: paths.manager._layout,
+          element: <ManagerLayout />,
+          children: [
+            // Common pages
 
-		// Manager pages
+            {
+              element: <HomePage />,
+              index: true,
+            },
 
-		{
-			path: paths.manager._layout,
-			element: <ManagerLayout />,
-			children: [
+            // F1 - Tests
 
-				// Common pages
+            {
+              path: paths.manager.tests._layout,
+              children: [
+                {
+                  index: true,
+                  element: <TestsPage />,
+                },
+                {
+                  path: paths.manager.tests.SELF,
+                  element: <ManagerTestsSelfPage />,
+                },
+                {
+                  path: paths.manager.tests.in()._layout,
+                  children: [
+                    {
+                      path: paths.manager.tests.in().ATTEMPTS,
+                      element: <ManagerTestAttemptsPage />,
+                    },
+                    {
+                      path: paths.manager.tests.in().EDIT,
+                      element: <ManagerTestEditPage />,
+                    },
+                  ],
+                },
+                {
+                  path: paths.manager.tests.attempts.in()._layout,
+                  element: <ManagerTestAttemptPage />,
+                },
+                {
+                  path: paths.manager.tests.CREATE,
+                  element: <ManagerTestsCreatePage />,
+                },
+              ],
+            },
 
-				{
-					element: <HomePage />,
-					index: true
-				},
+            // F2 - Scenario
 
-				// F1 - Tests
+            {
+              path: paths.manager.scenario._layout,
+              children: [
+                {
+                  index: true,
+                  element: <ManagerScenariosPage />,
+                },
+                {
+                  path: paths.manager.scenario.in()._layout,
+                  children: [
+                    {
+                      index: true,
+                      element: <ManagerScenarioSubmissionsPage />,
+                    },
+                    {
+                      path: paths.manager.scenario.in().EDIT_DETAIL,
+                      element: <ManagerScenarioEditDetailPage />,
+                    },
+                    {
+                      path: paths.manager.scenario.in().EDIT_QUESTIONS,
+                      element: <ManagerScenarioEditQuestionsPage />,
+                    },
+                    {
+                      path: paths.manager.scenario.in().SUBMISSIONS,
+                      element: <ManagerScenarioSubmissionsPage />,
+                    },
+                  ],
+                },
+                {
+                  path: paths.manager.scenario.submissions.in()._layout,
+                  children: [
+                    {
+                      index: true,
+                      element: <ScenarioSubmissionDetail />,
+                    },
+                  ],
+                },
+                {
+                  path: paths.manager.scenario.CREATE_DETAIL,
+                  element: <ManagerScenariosCreateDetailPage />,
+                },
+                {
+                  path: paths.manager.scenario.CREATE_QUESTIONS,
+                  element: <ScenarioCreateQuestion />,
+                },
+              ],
+            },
 
-				{
-					path: paths.manager.tests._layout,
-					children: [
-						{
-							index: true,
-							element: <TestsPage />,
-						},
-						{
-							path: paths.manager.tests.SELF,
-							element: <ManagerTestsSelfPage />
-						},
-						{
-							path: paths.manager.tests.in()._layout,
-							children: [
-								{
-									path: paths.manager.tests.in().ATTEMPTS,
-									element: <ManagerTestAttemptsPage />
-								},
-								{
-									path: paths.manager.tests.in().EDIT,
-									element: <ManagerTestEditPage />
-								},
-							],
-						},
-						{
-							path: paths.manager.tests.attempts.in()._layout,
-							element: <ManagerTestAttemptPage />
-						},
-						{
-							path: paths.manager.tests.CREATE,
-							element: <ManagerTestsCreatePage />
-						},
-					],
-				},
+            // Profile
 
-				// F2 - Scenario
+            {
+              path: paths.manager.profile._layout,
+              children: [
+                {
+                  index: true,
+                  element: <ProfilePage />,
+                },
+                {
+                  path: paths.manager.profile.PRICING,
+                  element: <PricingPage />,
+                },
+              ],
+            },
+          ],
+        },
 
-				{
-					path: paths.manager.scenario._layout,
-					children: [
-						{
-							index: true,
-							element: <ManagerScenariosPage />,
-						},
-						{
-							path: paths.manager.scenario.in()._layout,
-							children: [
-								{
-									index: true,
-									element: <ManagerScenarioSubmissionsPage />,
-								},
-								{
-									path: paths.manager.scenario.in().EDIT_DETAIL,
-									element: <ManagerScenarioEditDetailPage />,
-								},
-								{
-									path: paths.manager.scenario.in().EDIT_QUESTIONS,
-									element: <ManagerScenarioEditQuestionsPage />,
-								},
-								{
-									path: paths.manager.scenario.in().SUBMISSIONS,
-									element: <ManagerScenarioSubmissionsPage />,
-								},
-							]
-						},
-						{
-							path: paths.manager.scenario.submissions.in()._layout,
-							children: [
-								{
-									index: true,
-									element: <ScenarioSubmissionDetail />,
-								}
-							],
-						},
-						{
-							path: paths.manager.scenario.CREATE_DETAIL,
-							element: <ManagerScenariosCreateDetailPage />
-						},
-						{
-							path: paths.manager.scenario.CREATE_QUESTIONS,
-							element: <ScenarioCreateQuestion />
-						},
-					],
-				},
-
-				// Profile
-
-				{
-					path: paths.manager.profile._layout,
-					children: [
-						{
-							index: true,
-							element: <ProfilePage />,
-						},
-						{
-							path: paths.manager.profile.PRICING,
-							element: <PricingPage />,
-						},
-					]
-				}
-			]
-		},
-
-		// No authentication pages, for guests, if has role, navigate away
-		{
-			element: <UnauthLayout />,
-			children: [
-				{
-					element: <GuestPage />,
-					index: true
-				}
-			]
-		},
-	]
-}], {
-	basename: '/'
-});
+        // No authentication pages, for guests, if has role, navigate away
+        {
+          element: <UnauthLayout />,
+          children: [
+            {
+              element: <GuestPage />,
+              index: true,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  {
+    basename: "/",
+  }
+);
 
 export default router;
