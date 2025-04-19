@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { GetManagerTestsApiArg, useGetManagerTestsQuery } from "../../../../features/tests/api/test.api-gen";
+import { GetManagerTestsApiArg, useDeleteManagerTestsByTestIdMutation, useGetManagerTestsQuery } from "../../../../features/tests/api/test.api-gen";
 import paths from "../../../../router/paths";
 
 type FilterProps = Omit<GetManagerTestsApiArg, "x-user-id">;
@@ -12,6 +12,8 @@ type FilterProps = Omit<GetManagerTestsApiArg, "x-user-id">;
 const ManagerTestsSelfPage = () => {
 	const [snackbar, setSnackbar] = useState<{ snackOpen: boolean; snackMessage: string; snackSeverity: 'error' | 'info' | 'success' | 'warning' }>({ snackOpen: false, snackMessage: '', snackSeverity: 'info' });
 	const { snackOpen, snackMessage, snackSeverity } = snackbar;
+
+	const [deleteTest] = useDeleteManagerTestsByTestIdMutation();
 
 	const navigate = useNavigate();
 
@@ -37,6 +39,31 @@ const ManagerTestsSelfPage = () => {
 		navigate(paths.manager.tests.in(testId).EDIT);
 	};
 
+	const handleClickDeleteTest = (testId: number) => {
+		deleteTest({ testId })
+			.then((res) => {
+				if (res.error) {
+					setSnackbar({
+						snackOpen: true,
+						snackMessage: "Failed to delete test",
+						snackSeverity: "error"
+					});
+					return;
+				}
+				setSnackbar({
+					snackOpen: true,
+					snackMessage: "Test deleted successfully",
+					snackSeverity: "success"
+				});
+			}).catch((_) => {
+				setSnackbar({
+					snackOpen: true,
+					snackMessage: "Failed to delete test",
+					snackSeverity: "error"
+				});
+			});
+	}
+
 	const handleClickCreateTest = () => {
 		navigate(paths.manager.tests.CREATE);
 	};
@@ -61,7 +88,6 @@ const ManagerTestsSelfPage = () => {
 								<div className="h-7 w-7 flex items-center justify-center rounded-lg">
 									<FontAwesomeIcon icon={faPlus} rotation={90} />
 								</div>
-
 								Add new test
 							</div>
 						</div>
@@ -75,10 +101,16 @@ const ManagerTestsSelfPage = () => {
 									</span>
 									<div className="flex items-center space-x-4">
 
-										<div onClick={() => handleClickEditTest(test.id)}>
+										<div
+											className="cursor-pointer"
+											onClick={() => handleClickEditTest(test.id)}
+										>
 											<FontAwesomeIcon className="h-5 w-5" icon={faPen} />
 										</div>
-										<div >
+										<div
+											className="cursor-pointer"
+											onClick={() => handleClickDeleteTest(test.id)}
+										>
 											<FontAwesomeIcon className="h-5 w-5" icon={faTrash} />
 										</div>
 									</div>
@@ -98,7 +130,6 @@ const ManagerTestsSelfPage = () => {
 										</div>
 										<div className="flex items-center">
 											<FontAwesomeIcon className="h-4 w-4 ml-4" icon={faQuestion} />
-											{/* <span className="ml-2 text-gray-600 text-sm font-medium">{test.type}</span> */}
 										</div>
 									</div>
 									<div>

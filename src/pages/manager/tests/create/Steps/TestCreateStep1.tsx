@@ -1,4 +1,4 @@
-import TestFieldsForm from "./Step1/TestFieldsForm";
+import TestFieldsForm from "../../../../../features/tests/ui/TestFieldsForm";
 import { useTestCreateTab } from "../contexts/test-create-tab.context";
 import { useTestPersistContext } from "../../../../../features/tests/stores/test-persist.context";
 
