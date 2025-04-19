@@ -17,6 +17,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_HOST }} "rm -rf /home/ec2-user/skillsharp-frontend/*"
-          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./dist/* ec2-user@ec2-3-25-117-47.ap-southeast-2.compute.amazonaws.com:/home/ec2-user/skillsharp-frontend
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_HOST }} "sudo rm -rf /var/www/skillsharp-frontend/*"
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./dist/* ${{ secrets.SSH_HOST }}:/var/www/skillsharp-frontend
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_HOST }} "sudo systemctl restart nginx"
+# t
