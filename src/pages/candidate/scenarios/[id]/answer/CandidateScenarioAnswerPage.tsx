@@ -19,6 +19,7 @@ const CandidateScenarioAnswerPage = () => {
 
 	const [scenario, setScenario] = React.useState<Scenario | null>(null);
 	const [questions, setQuestions] = React.useState<Question[]>([]);
+	const [selectedQuestion, setSelectedQuestion] = React.useState<Question | null>(null);
 
 	const [getScenario] = useGetScenarioMutation();
 	React.useEffect(() => {
@@ -27,6 +28,7 @@ const CandidateScenarioAnswerPage = () => {
 				const response = await getScenario({ id: scenarioId });
 				setScenario(response.data?.scenario || null);
 				setQuestions(response.data?.scenario?.questions || []);
+				setSelectedQuestion(response.data?.scenario?.questions[0] || null);
 			} catch (err) {
 				console.error("Error fetching scenario:", err);
 			}
@@ -35,7 +37,6 @@ const CandidateScenarioAnswerPage = () => {
 		fetchScenario();
 	}, []);
 
-	const [selectedQuestion, setSelectedQuestion] = React.useState<Question | null>(null);
 	const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
 	const [showHint, setShowHint] = React.useState(false);
 	const [answers, setAnswers] = React.useState<{ [key: number]: string }>({});
@@ -51,8 +52,11 @@ const CandidateScenarioAnswerPage = () => {
 	}
 
 	const handleSubmit = () => {
+		if (submitting) return;
 		setShowConfirmDialog(true);
 	};
+
+	const [submitting, setSubmitting] = React.useState(false);
 
 	const [submitAnswer] = useSubmitAnswerMutation();
 	const confirmSubmit = async () => {
@@ -63,15 +67,19 @@ const CandidateScenarioAnswerPage = () => {
 		}));
 		console.log("Submitting answers:", answerArray);
 		try {
+			setSubmitting(true);
 			console.log("Submitting answers:", scenarioId, answerArray);
 			const response = await submitAnswer({ scenario_id: scenarioId, answers: answerArray });
 			if (response.error) {
 				console.error("Error submitting answers:", response.error);
+				setSubmitting(false);
 				return;
 			}
 			navigate(paths.candidate.scenarios.in(scenario?.id).REVIEW, { state: { scenario: scenario, attempt: response.data.attempt } });
 		} catch (err) {
 			console.error("Error submitting answers:", err);
+		} finally {
+			setSubmitting(false);
 		}
 	};
 
@@ -128,7 +136,8 @@ const CandidateScenarioAnswerPage = () => {
 						<div className="flex items-center gap-10">
 							<span className="text-3xl font-bold">{scenario?.name}</span>
 						</div>
-						<div className="rounded-lg bg-[var(--primary-color)] py-1 px-4 font-bold text-white flex gap-2 items-center cursor-pointer" onClick={handleSubmit}>Submit</div>
+						{/* bg-[var(--primary-color)] */}
+						<div className={`rounded-lg bg-[var(--primary-color)] py-1 px-4 font-bold text-white flex gap-2 items-center ${submitting ? "opacity-50" : "cursor-pointer" }`} onClick={handleSubmit}>{submitting ? "Submitting..." : "Submit"}</div>
 					</div>
 					{/* <div className="mt-4 text-xl">
                         {field}

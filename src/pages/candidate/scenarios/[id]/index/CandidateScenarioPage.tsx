@@ -192,12 +192,12 @@ const CandidateScenarioPage = () => {
 													<span className="font-bold text-red-600">Attempt {attempt.attempt_number}</span>
 													<span className="text-gray-500 text-sm">Submitted on: {attemptDate.toLocaleDateString()}</span>
 												</div>
-												<div className="mt-2 text-gray-700">
+												{/* <div className="mt-2 text-gray-700">
 													<p>Relevance: {attempt.answers.reduce((sum, answer) => sum + (answer.relevance || 0), 0) / attempt.answers.length}</p>
 													<p>Clarity and Completeness: {attempt.answers.reduce((sum, answer) => sum + (answer.clarity_completeness || 0), 0) / attempt.answers.length}</p>
 													<p>Accuracy: {attempt.answers.reduce((sum, answer) => sum + (answer.accuracy || 0), 0) / attempt.answers.length}</p>
 													<p className="font-bold">Overall: {attempt.answers.reduce((sum, answer) => sum + (answer.overall || 0), 0) / attempt.answers.length}</p>
-												</div>
+												</div> */}
 											</div>
 										);
 									})
