@@ -1,10 +1,11 @@
 import { BaseQueryFn, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { mock, noAuth, url } from "./env";
+import { mock, noAuth } from "./env";
 import { RootState } from "./store";
 import { authActions, authSelectors } from "../features/auth/store/authSlice";
 import { Role } from "../features/auth/types/auth";
-import { AuthResponse, RefreshRequest } from "../features/auth/types/auth";
+import { RefreshRequest } from "../features/auth/types/auth";
 import { Mutex } from 'async-mutex';
+import authApi from "../features/auth/api/auth.api";
 
 const mutex = new Mutex();
 
@@ -59,19 +60,8 @@ const serviceBaseQueryWithReauth: (serviceUrl: string) => BaseQueryFn<
 						safe_id: tokens.safe_id,
 					}
 				}
-
-				const refreshBaseQuery = fetchBaseQuery({
-					baseUrl: url.bulbasaur
-				});
-				const refreshResult = await refreshBaseQuery({
-					url: '/refresh',
-					method: 'POST',
-					body: requestData,
-				}, api, extraOptions);
-
+				const refreshResult = await api.dispatch(authApi.endpoints.refresh.initiate(requestData.toeken_info));
 				if (refreshResult.data) {
-					const data = refreshResult.data as AuthResponse;
-					api.dispatch(authActions.setAuthStateFromResponse(data));
 					result = await baseQuery(args, api, extraOptions);
 				}
 				else {

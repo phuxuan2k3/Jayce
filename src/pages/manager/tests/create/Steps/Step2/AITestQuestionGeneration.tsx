@@ -4,7 +4,7 @@ import { useGenerateMutation } from "../../../../../../features/tests/api/prompt
 import { CriteriaRequest } from "../../../../../../features/tests/types/crud";
 import { GenerationLoading } from "./AITestQuestionGeneration/GenerationLoading";
 import ContextOfTest from "./AITestQuestionGeneration/ContextOfTest";
-import { useTestCreate } from "../../contexts/test-create.context";
+import { useTestPersistContext } from "../../../../../../features/tests/stores/test-persist.context";
 import { createPortal } from "react-dom";
 
 export default function AITestQuestionGeneration({
@@ -12,7 +12,7 @@ export default function AITestQuestionGeneration({
 }: {
 	onGenerated: () => void
 }) {
-	const { dispatch, fields } = useTestCreate();
+	const { dispatch, fields } = useTestPersistContext();
 	const [text, setText] = useState<string>("");
 	const [links, setLinks] = useState<string[]>([]);
 	const [documents, setDocuments] = useState<File[]>([]);

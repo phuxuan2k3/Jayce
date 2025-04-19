@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import TestCreateStepper from "./Steps/TestCreateStepper";
 import paths from "../../../../router/paths";
-import { TestCreateProvider } from "./contexts/test-create.context";
+import { TestPersistProvider } from "../../../../features/tests/stores/test-persist.context";
 import { TestCreateTabProvider } from "./contexts/test-create-tab.context";
 import ManagerTestsCreateMain from "./ManagerTestsCreateMain";
 
@@ -9,7 +9,7 @@ const ManagerTestsCreatePage = () => {
 	const navigate = useNavigate();
 
 	return (
-		<TestCreateProvider>
+		<TestPersistProvider>
 			<TestCreateTabProvider>
 				<div className="relative flex flex-col items-center justify-center w-full min-h-screen">
 					<TestCreateStepper />
@@ -27,7 +27,7 @@ const ManagerTestsCreatePage = () => {
 					</div>
 				</div>
 			</TestCreateTabProvider>
-		</TestCreateProvider>
+		</TestPersistProvider>
 	);
 }
 

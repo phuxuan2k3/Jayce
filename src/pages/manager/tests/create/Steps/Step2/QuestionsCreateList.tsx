@@ -1,11 +1,11 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useTestCreate } from "../../contexts/test-create.context";
+import { useTestPersistContext } from "../../../../../../features/tests/stores/test-persist.context";
 import { useTestCreateTab } from "../../contexts/test-create-tab.context";
 import QuestionCreateCard from "./QuestionCreateCard";
 
 export default function QuestionsCreateList() {
-	const { questions, dispatch } = useTestCreate();
+	const { questions, dispatch } = useTestPersistContext();
 	const { setActiveTab } = useTestCreateTab();
 
 	return (

@@ -1,7 +1,7 @@
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
-import { useTestCreate } from "../contexts/test-create.context";
+import { useTestPersistContext } from "../../../../../features/tests/stores/test-persist.context";
 import { usePostManagerTestsMutation } from "../../../../../features/tests/api/test.api-gen";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../router/paths";
@@ -14,7 +14,7 @@ export default function TestCreateStep3() {
 	const { activeTab, setActiveTab } = useTestCreateTab();
 	const {
 		state: { data },
-	} = useTestCreate();
+	} = useTestPersistContext();
 	const [createTest, { isSuccess, isLoading, error }] = usePostManagerTestsMutation();
 
 	useEffect(() => {

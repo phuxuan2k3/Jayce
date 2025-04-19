@@ -60,6 +60,8 @@ export type CriteriaRequest = {
 	candidate_seniority: string;
 	difficulty: string;
 	context: string;
+	// links: string[];
+	// documents: File[];
 };
 
 export type CriteriaResponse = {

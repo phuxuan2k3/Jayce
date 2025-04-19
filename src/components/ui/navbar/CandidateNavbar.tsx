@@ -61,7 +61,7 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean; }) => {
 							<Link to={paths.candidate.tests._layout} className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
 								Tests
 							</Link>
-							<Link to="#" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
+							<Link to="/dev" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
 								Interview
 							</Link>
 							<Link to="#" className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
