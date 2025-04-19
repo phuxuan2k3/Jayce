@@ -40,9 +40,9 @@ import AuthChooseRolePage from "../pages/auth/choose-role/AuthChooseRolePage";
 import CandidateAttemptPage from "../pages/candidate/tests/attempts/[id]/index/CandidateAttemptPage";
 import HomePage from "../pages/common/HomePage";
 import CandidateInTestLayout from "../pages/candidate/tests/[id]/CandidateInTestLayout";
-import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/ManagerTestEditPage";
 import ManagerTestsSelfPage from "../pages/manager/tests/self/ManagerTestsSelfPage";
 import CandidateInterviewLivePage from "../pages/candidate/interviews/live/CandidateInterviewLivePage";
+import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/ManagerTestEditPage";
 
 const router = createBrowserRouter([{
 	path: paths._layout,

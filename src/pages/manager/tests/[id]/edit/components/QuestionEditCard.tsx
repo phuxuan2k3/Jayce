@@ -1,19 +1,16 @@
-import { useTestPersistContext } from "../../../../../../features/tests/stores/test-persist.context";
-import { testCreateSelectors } from "../../../../../../features/tests/stores/test-persist.reducer";
-import QuestionFormCard from "../../../../../../features/tests/ui/QuestionFormCard";
+import { useTestPersistContext } from '../../../../../../features/tests/stores/test-persist.context';
+import QuestionFormCard from '../../../../../../features/tests/ui/QuestionFormCard';
 
-export default function QuestionCreateCard({
-	index
+export default function QuestionEditCard({
+	index,
 }: {
 	index: number;
 }) {
 	const { state, dispatch } = useTestPersistContext();
 	const { questions } = state.data;
-	const isAiGenerated = testCreateSelectors.isAIQuestion(state, index);
 	return (
 		<QuestionFormCard
 			index={index}
-			isAiGenerated={isAiGenerated}
 			question={questions[index]}
 			onQuestionContentChange={(index, key, value) => dispatch({
 				type: "UPDATE_QUESTION",

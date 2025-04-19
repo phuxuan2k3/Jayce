@@ -1,30 +1,34 @@
-import { QuestionDTO } from '../../../../features/tests/types/crud'
-import GradientBorderNotGood from '../../../../components/ui/border/GradientBorder.notgood';
-import { useAppDispatch } from '../../../../app/hooks';
-import { testPersistActions } from '../../../../features/tests/stores/testPersistSlice';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { QuestionDTO } from '../types/crud';
+import GradientBorderNotGood from '../../../components/ui/border/GradientBorder.notgood';
+import { TestQuestion } from '../stores/test-persist.reducer';
+import { BrainCircuitIcon } from "lucide-react"
 
-export default function QuestionEditCard({
+export default function QuestionFormCard({
 	index,
-	question
+	isAiGenerated = false,
+	question,
+	onQuestionContentChange,
+	onDeleteQuestion,
+	onAddOption,
+	onOptionContentChange,
+	onDeleteOption,
 }: {
 	index: number;
+	isAiGenerated?: boolean;
 	question: Omit<QuestionDTO, "id">;
+	onDeleteQuestion: (index: number) => void;
+	onQuestionContentChange: (index: number, key: keyof TestQuestion, value: string | number) => void;
+	onAddOption: (questionIndex: number, option: string) => void;
+	onOptionContentChange: (questionIndex: number, optionIndex: number, value: string) => void;
+	onDeleteOption: (questionIndex: number, optionIndex: number) => void;
 }) {
-	const dispatch = useAppDispatch();
-	const {
-		addOption,
-		setOptionField,
-		deleteOption,
-		setQuestionField,
-		deleteQuestion,
-	} = testPersistActions;
-
 	return (
-		<div key={index} className="w-4/6 flex-1 flex flex-row bg-white rounded-lg shadow-primary p-6 space-x-4 border-r border-b border-solid border-primary justify-between mb-4">
-			<span className="w-1/5 font-bold mb-2 opacity-50">
-				Question {index + 1}
+		<div className="w-4/6 flex-1 flex flex-row bg-white rounded-lg shadow-primary p-6 space-x-4 border-r border-b border-solid border-primary justify-between mb-4">
+			<span className="min-w-fit w-1/5 font-bold mb-2 opacity-50">
+				{isAiGenerated && <BrainCircuitIcon size={16} />} Question {index + 1}
 			</span>
 
 			{/* Question and Options */}
@@ -36,11 +40,7 @@ export default function QuestionEditCard({
 						<input
 							type="text"
 							value={question.text}
-							onChange={(e) => dispatch(setQuestionField({
-								index,
-								key: "text",
-								value: e.target.value,
-							}))}
+							onChange={(e) => onQuestionContentChange(index, "text", e.target.value)}
 							className="w-full bg-transparent border-none outline-none"
 						/>
 					</GradientBorderNotGood>
@@ -57,11 +57,7 @@ export default function QuestionEditCard({
 								<input
 									type="text"
 									value={option}
-									onChange={(e) => dispatch(setOptionField({
-										index,
-										optionIndex,
-										text: e.target.value,
-									}))}
+									onChange={(e) => onOptionContentChange(index, optionIndex, e.target.value)}
 									className="flex-grow bg-transparent border-none outline-none"
 								/>
 
@@ -69,10 +65,7 @@ export default function QuestionEditCard({
 								<FontAwesomeIcon
 									icon={faXmark}
 									className="w-fit text-gray-500 cursor-pointer ml-2"
-									onClick={() => dispatch(deleteOption({
-										index,
-										optionIndex,
-									}))}
+									onClick={() => onDeleteOption(index, optionIndex)}
 								/>
 							</div>
 						</GradientBorderNotGood>
@@ -83,11 +76,7 @@ export default function QuestionEditCard({
 								type="radio"
 								name={`question-${index}`}
 								checked={optionIndex === question.correctOption}
-								onChange={() => dispatch(setQuestionField({
-									index,
-									key: "correctOption",
-									value: optionIndex,
-								}))}
+								onChange={() => onQuestionContentChange(index, "correctOption", optionIndex)}
 								className="h-4 w-4 border-primary focus:ring-primary accent-primary cursor-pointer"
 							/>
 						</div>
@@ -95,10 +84,7 @@ export default function QuestionEditCard({
 				))}
 
 				{/* Add option button */}
-				<div className="text-sm text-gray-500 mt-4 cursor-pointer" onClick={() => dispatch(addOption({
-					index,
-					text: "",
-				}))}>
+				<div className="text-sm text-gray-500 mt-4 cursor-pointer" onClick={() => onAddOption(index, "")}>
 					<span className="font-semibold text-[var(--primary-color)] underline">+ Add option</span>
 				</div>
 			</div>
@@ -112,16 +98,12 @@ export default function QuestionEditCard({
 						value={question.points}
 						min="0"
 						step="1"
-						onChange={(e) => dispatch(setQuestionField({
-							index,
-							key: "points",
-							value: Number(e.target.value) || 0,
-						}))}
+						onChange={(e) => onQuestionContentChange(index, "points", Number(e.target.value) || 0)}
 					/>
 				</GradientBorderNotGood>
 
 				{/* Delete question button */}
-				<FontAwesomeIcon className="w-5 h-5 cursor-pointer" icon={faTrashCan} onClick={() => dispatch(deleteQuestion({ index }))} />
+				<FontAwesomeIcon className="w-5 h-5 cursor-pointer" icon={faTrashCan} onClick={() => onDeleteQuestion(index)} />
 			</div>
 		</div>
 	)

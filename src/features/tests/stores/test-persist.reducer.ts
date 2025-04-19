@@ -1,17 +1,17 @@
 import { produce } from 'immer';
-import { CreateTestParam } from '../../../../../features/tests/types/crud';
+import { CreateTestParam } from '../types/crud';
 
 export type TestFields = Omit<CreateTestParam, 'questions'>;
 
 export type TestQuestion = CreateTestParam['questions'][number];
 
-export type TestCreateState = {
+export type TestPersistState = {
 	data: CreateTestParam;
 	aiQuestionsThreshold: number;
 }
 
 // Initial state for the test creation
-export const initialState: TestCreateState = {
+export const initialState: TestPersistState = {
 	data: {
 		tagIds: [],
 		title: '',
@@ -24,7 +24,7 @@ export const initialState: TestCreateState = {
 };
 
 // Define action types
-export type TestAction = | {
+export type TestPersistAction = | {
 	type: 'UPDATE_TEST_FIELDS';
 	payload: Partial<TestFields>;
 } | {
@@ -56,12 +56,12 @@ export type TestAction = | {
 };
 
 export const testCreateSelectors = {
-	isAIQuestion: (state: TestCreateState, index: number) => {
+	isAIQuestion: (state: TestPersistState, index: number) => {
 		return index <= state.aiQuestionsThreshold;
 	}
 };
 
-export const testCreateReducer = (state: TestCreateState, action: TestAction): TestCreateState => {
+export const testPersistReducer = (state: TestPersistState, action: TestPersistAction): TestPersistState => {
 	return produce(state, (draft) => {
 		switch (action.type) {
 			case 'UPDATE_TEST_FIELDS':
