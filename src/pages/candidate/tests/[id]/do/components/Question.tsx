@@ -50,7 +50,7 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
 			questionId: question.id,
 			optionId: newOptionId,
 			attemptId: currentAttempt.id,
-		})
+		});
 	};
 
 	const handleFlagQuestionToggle = () => {

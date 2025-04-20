@@ -38,6 +38,7 @@ export default function Sidebar({
 		submitTest();
 	}
 
+	// TODO: clear my choice still has background color
 	return (
 		<div className="flex flex-col w-64 ml-4">
 			<div className="font-bold text-xl flex justify-center mb-4" >
