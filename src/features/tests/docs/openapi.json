@@ -583,6 +583,75 @@
 					},
 					{
 						"schema": {
+							"anyOf": [
+								{
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								},
+								{
+									"type": "string"
+								}
+							]
+						},
+						"required": false,
+						"name": "managerIds",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"anyOf": [
+								{
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"field": {
+												"type": "string",
+												"enum": [
+													"createdAt",
+													"updatedAt",
+													"title"
+												]
+											},
+											"order": {
+												"type": "string",
+												"enum": [
+													"asc",
+													"desc"
+												]
+											}
+										},
+										"required": [
+											"field",
+											"order"
+										]
+									}
+								},
+								{
+									"type": "string"
+								},
+								{
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								}
+							],
+							"default": [
+								{
+									"field": "createdAt",
+									"order": "desc"
+								}
+							]
+						},
+						"required": false,
+						"name": "sortBy",
+						"in": "query"
+					},
+					{
+						"schema": {
 							"type": "number",
 							"minimum": 1,
 							"default": 1
@@ -692,6 +761,86 @@
 										"total",
 										"totalPages",
 										"data"
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/tests/challenge-of-the-day": {
+			"get": {
+				"summary": "Get one Test that is the challenge of the day (current is random by day)",
+				"security": [],
+				"tags": [
+					"Manage"
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "number"
+										},
+										"managerId": {
+											"type": "string"
+										},
+										"title": {
+											"type": "string"
+										},
+										"description": {
+											"type": "string"
+										},
+										"difficulty": {
+											"type": "string"
+										},
+										"minutesToAnswer": {
+											"type": "number"
+										},
+										"answerCount": {
+											"type": "number"
+										},
+										"tags": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "number"
+													},
+													"name": {
+														"type": "string"
+													}
+												},
+												"required": [
+													"id",
+													"name"
+												]
+											}
+										},
+										"createdAt": {
+											"type": "string"
+										},
+										"updatedAt": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"id",
+										"managerId",
+										"title",
+										"description",
+										"difficulty",
+										"minutesToAnswer",
+										"answerCount",
+										"tags",
+										"createdAt",
+										"updatedAt"
 									]
 								}
 							}
@@ -944,6 +1093,75 @@
 						},
 						"required": false,
 						"name": "tags",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"anyOf": [
+								{
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								},
+								{
+									"type": "string"
+								}
+							]
+						},
+						"required": false,
+						"name": "managerIds",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"anyOf": [
+								{
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"field": {
+												"type": "string",
+												"enum": [
+													"createdAt",
+													"updatedAt",
+													"title"
+												]
+											},
+											"order": {
+												"type": "string",
+												"enum": [
+													"asc",
+													"desc"
+												]
+											}
+										},
+										"required": [
+											"field",
+											"order"
+										]
+									}
+								},
+								{
+									"type": "string"
+								},
+								{
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								}
+							],
+							"default": [
+								{
+									"field": "createdAt",
+									"order": "desc"
+								}
+							]
+						},
+						"required": false,
+						"name": "sortBy",
 						"in": "query"
 					},
 					{

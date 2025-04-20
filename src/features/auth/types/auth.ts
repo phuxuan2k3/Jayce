@@ -16,12 +16,22 @@ export type AuthResponse = {
 };
 
 export type RefreshRequest = {
-	toeken_info: {
+	token_info: {
 		access_token: string;
 		refresh_token: string;
 		role: Role;
 		user_id: string;
 		safe_id: string;
+	};
+};
+
+export type RefreshResponse = {
+	token_info: {
+		access_token: string;
+		refresh_token: string;
+		role: Role;
+		safe_id: string;
+		user_id: string;
 	};
 };
 

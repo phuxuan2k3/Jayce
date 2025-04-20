@@ -1,8 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
-import AttemptCardFinished from './AttemptCardFinished';
-import AttemptCardInProgress from './AttemptCardInProgress';
-import Sidebar from './Sidebar';
+import AttemptCardFinished from './components/AttemptCardFinished';
+import AttemptCardInProgress from './components/AttemptCardInProgress';
+import Sidebar from './components/Sidebar';
 import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
 import { GetUserTestsByTestIdAttemptsApiArg, useGetUserTestsByTestIdAttemptsQuery, useGetTestsByTestIdQuery } from '../../../../../features/tests/api/test.api-gen';
 import FetchState from '../../../../../components/wrapper/FetchState';

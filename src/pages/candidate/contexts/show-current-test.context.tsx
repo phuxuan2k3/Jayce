@@ -11,7 +11,9 @@ export const ShowCurrentTestProvider: React.FC<{ children: ReactNode }> = ({ chi
 	const [showCurrentTest, setShowCurrentTest] = useState(false);
 
 	return (
-		<ShowCurrentTestContext.Provider value={{ showCurrentTest, setShowCurrentTest }}>
+		<ShowCurrentTestContext.Provider
+			value={{ showCurrentTest, setShowCurrentTest }}
+		>
 			{children}
 		</ShowCurrentTestContext.Provider>
 	);

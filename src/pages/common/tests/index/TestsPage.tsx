@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import FilterListIcon from '@mui/icons-material/FilterList';
-import FilterModal from "./FilterModal";
-import TestList from "./TestList/TestList";
-import TagsList from "./TagsList";
-import Header from "./Header";
+import FilterModal from "./components/FilterModal";
+import TestList from "./components/TestList/TestList";
+import TagsList from "./components/TagsList";
+import Header from "./components/Header";
 import { GetTestsApiArg } from "../../../../features/tests/api/test.api-gen";
 
 const TestsPage: React.FC = () => {

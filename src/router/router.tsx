@@ -51,11 +51,6 @@ const router = createBrowserRouter(
 			path: paths._layout,
 			errorElement: <ErrorPage />,
 			children: [
-				// TODO Dev: DEMO
-				{
-					path: "/dev",
-					element: <CandidateInterviewLivePage />,
-				},
 
 				// Authentication pages
 				{

@@ -13,7 +13,6 @@ function App() {
 	const [refresh] = useRefreshMutation();
 
 	useEffect(() => {
-		console.log(isAuthenticated);
 		if (isAuthenticated == false) {
 			if (token != null && user != null) {
 				refresh({
@@ -27,7 +26,7 @@ function App() {
 				dispatch(authActions.clearAuthState());
 			}
 		}
-	}, [isAuthenticated, user, token, refresh]);
+	}, []);
 	return (
 		<RouterProvider router={router} />
 	);

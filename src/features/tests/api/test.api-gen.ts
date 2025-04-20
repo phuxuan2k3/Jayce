@@ -79,10 +79,18 @@ const injectedRtkApi = api.injectEndpoints({
           maxMinutesToAnswer: queryArg.maxMinutesToAnswer,
           difficulty: queryArg.difficulty,
           tags: queryArg.tags,
+          managerIds: queryArg.managerIds,
+          sortBy: queryArg.sortBy,
           page: queryArg.page,
           perPage: queryArg.perPage,
         },
       }),
+    }),
+    getTestsChallengeOfTheDay: build.query<
+      GetTestsChallengeOfTheDayApiResponse,
+      GetTestsChallengeOfTheDayApiArg
+    >({
+      query: () => ({ url: `/tests/challenge-of-the-day` }),
     }),
     getTestsByTestId: build.query<
       GetTestsByTestIdApiResponse,
@@ -110,6 +118,8 @@ const injectedRtkApi = api.injectEndpoints({
           maxMinutesToAnswer: queryArg.maxMinutesToAnswer,
           difficulty: queryArg.difficulty,
           tags: queryArg.tags,
+          managerIds: queryArg.managerIds,
+          sortBy: queryArg.sortBy,
           page: queryArg.page,
           perPage: queryArg.perPage,
         },
@@ -315,9 +325,33 @@ export type GetTestsApiArg = {
   maxMinutesToAnswer?: number | null;
   difficulty?: ("easy" | "medium" | "hard")[] | string;
   tags?: string[] | string;
+  managerIds?: string[] | string;
+  sortBy?:
+    | {
+        field: "createdAt" | "updatedAt" | "title";
+        order: "asc" | "desc";
+      }[]
+    | string
+    | string[];
   page?: number;
   perPage?: number | null;
 };
+export type GetTestsChallengeOfTheDayApiResponse = /** status 200 Success */ {
+  id: number;
+  managerId: string;
+  title: string;
+  description: string;
+  difficulty: string;
+  minutesToAnswer: number;
+  answerCount: number;
+  tags: {
+    id: number;
+    name: string;
+  }[];
+  createdAt: string;
+  updatedAt: string;
+};
+export type GetTestsChallengeOfTheDayApiArg = void;
 export type GetTestsByTestIdApiResponse = /** status 200 Success */ {
   id: number;
   managerId: string;
@@ -373,6 +407,14 @@ export type GetManagerTestsApiArg = {
   maxMinutesToAnswer?: number | null;
   difficulty?: ("easy" | "medium" | "hard")[] | string;
   tags?: string[] | string;
+  managerIds?: string[] | string;
+  sortBy?:
+    | {
+        field: "createdAt" | "updatedAt" | "title";
+        order: "asc" | "desc";
+      }[]
+    | string
+    | string[];
   page?: number;
   perPage?: number | null;
 };
@@ -557,6 +599,8 @@ export const {
   usePostCandidateCurrentAttemptSubmitMutation,
   useGetTestsQuery,
   useLazyGetTestsQuery,
+  useGetTestsChallengeOfTheDayQuery,
+  useLazyGetTestsChallengeOfTheDayQuery,
   useGetTestsByTestIdQuery,
   useLazyGetTestsByTestIdQuery,
   useGetManagerTestsByTestIdQuestionsQuery,

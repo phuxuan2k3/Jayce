@@ -27,7 +27,7 @@ const ekkoUrl = import.meta.env.VITE_EKKO_URL as string;
 const url = {
 	thresh: {
 		base: threshUrl ?? backendUrl + '/thresh',
-		socket: threshSocketUrl ?? backendUrl,
+		socket: threshSocketUrl ?? backendSocketUrl,
 	},
 	ekko: ekkoUrl ?? backendUrl + '/ekko',
 	bulbasaur: bulbasaurUrl ?? backendUrl + '/bulbasaur',

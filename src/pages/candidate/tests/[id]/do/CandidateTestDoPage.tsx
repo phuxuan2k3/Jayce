@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import QuestionComponent from './Question';
-import Sidebar from './Sidebar';
+import QuestionComponent from './components/Question';
+import Sidebar from './components/Sidebar';
 import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
 import paths from '../../../../../router/paths';
 import FetchState from '../../../../../components/wrapper/FetchState';
-import { curerntAttemptSelects } from '../../../../../features/tests/stores/currentAttemtpSlice';
+import { testSelectors } from '../../../../../features/tests/stores/testSlice';
 import { useGetCandidateCurrentAttemptDoQuery, useGetCandidateCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
 import { useAppSelector } from '../../../../../app/hooks';
 
@@ -13,11 +13,12 @@ const CandidateTestDoPage = () => {
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
 	const doQuery = useGetCandidateCurrentAttemptDoQuery();
-	const { currentQuestionIndex } = useAppSelector(curerntAttemptSelects.selectCurrentAttempt);
+	const currentQuestionIndex = useAppSelector(testSelectors.selectCurrentQuestionIndex);
 	const stateQuery = useGetCandidateCurrentAttemptStateQuery(undefined, {
 		refetchOnMountOrArgChange: true,
 	});
 
+	// TODO: Prevent re-rendering in <Timer /> component
 	// TODO: Add notification upon test ends.
 	useEffect(() => {
 		// Make sure it has fresh data from server, not cached data

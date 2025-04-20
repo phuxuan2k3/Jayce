@@ -4,12 +4,12 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { toCompanyImagesDir } from "../../../../../helpers/images";
+import { toCompanyImagesDir } from "../../../../../../helpers/images";
 import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import paths from "../../../../../router/paths";
-import GradientBorderGood from "../../../../../components/ui/border/GradientBorder.good";
-import { GetTestsApiResponse } from "../../../../../features/tests/api/test.api-gen";
+import paths from "../../../../../../router/paths";
+import GradientBorderGood from "../../../../../../components/ui/border/GradientBorder.good";
+import { GetTestsApiResponse } from "../../../../../../features/tests/api/test.api-gen";
 
 type Props = GetTestsApiResponse['data'][0] & {
 	company: string;

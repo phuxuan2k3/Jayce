@@ -39,6 +39,9 @@ const serviceBaseQueryWithReauth: (serviceUrl: string) => BaseQueryFn<
 	let result = await baseQuery(args, api, extraOptions);
 
 	if (result.error && result.error.status === 401) {
+		const isAuthenticated = authSelectors.selectIsAuthenticated(rootState);
+		if (!isAuthenticated) return result;
+
 		if (mutex.isLocked()) {
 			const release = await mutex.acquire();
 			try {
@@ -52,7 +55,7 @@ const serviceBaseQueryWithReauth: (serviceUrl: string) => BaseQueryFn<
 				}
 
 				const requestData: RefreshRequest = {
-					toeken_info: {
+					token_info: {
 						access_token: tokens.access_token,
 						refresh_token: tokens.refresh_token,
 						role: role,
@@ -60,7 +63,7 @@ const serviceBaseQueryWithReauth: (serviceUrl: string) => BaseQueryFn<
 						safe_id: tokens.safe_id,
 					}
 				}
-				const refreshResult = await api.dispatch(authApi.endpoints.refresh.initiate(requestData.toeken_info));
+				const refreshResult = await api.dispatch(authApi.endpoints.refresh.initiate(requestData.token_info));
 				if (refreshResult.data) {
 					result = await baseQuery(args, api, extraOptions);
 				}

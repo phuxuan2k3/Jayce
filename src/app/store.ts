@@ -5,11 +5,10 @@ import testApi from '../features/tests/base/test.api';
 import promptApi from '../features/tests/base/prompt.api';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import currentAttemptReducer from '../features/tests/stores/currentAttemtpSlice';
+import testReducer from '../features/tests/stores/testSlice.ts';
 import authApi from '../features/auth/api/auth.api.ts';
 import ekkoApi from '../features/scenarios/apis/base/ekko.api';
 import chronobreakApi from '../features/scenarios/apis/base/chronobreak.api';
-import testPersistReducer from '../features/tests/stores/testPersistSlice';
 import logoutApi from '../features/auth/api/logout.api.ts';
 import interviewApi from '../features/interviews/api/interview.api.ts';
 
@@ -32,8 +31,7 @@ const rootReducer = combineReducers({
 
 	// Custom reducers
 	auth: persistReducer(authPersistConfig, authReducer),
-	currentAttempt: currentAttemptReducer,
-	testPersist: testPersistReducer,
+	test: testReducer,
 });
 
 const store = configureStore({
@@ -41,6 +39,7 @@ const store = configureStore({
 	middleware:
 		(getDefaultMiddleware) =>
 			getDefaultMiddleware({
+				// Disable serializable check for redux-persist
 				serializableCheck: false,
 			})
 				.concat(authApi.middleware)

@@ -3,8 +3,8 @@ import { format, formatDistanceToNow } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import GradientBorderGood from '../../../../../components/ui/border/GradientBorder.good';
-import paths from '../../../../../router/paths';
+import GradientBorderGood from '../../../../../../components/ui/border/GradientBorder.good';
+import paths from '../../../../../../router/paths';
 
 type Props = {
 	company: {

@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import paths from "../../../../../router/paths";
-import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
+import paths from "../../../../../../router/paths";
+import useGetTestIdParams from "../../../../../../features/tests/hooks/useGetTestIdParams";
 import { useEffect } from "react";
-import TestTimer from "../../common/TestTimer";
-import { currentAttemptActions, curerntAttemptSelects } from "../../../../../features/tests/stores/currentAttemtpSlice";
-import { CurrentAttempt } from "../../../../../features/tests/types/current";
-import { usePostCandidateCurrentAttemptSubmitMutation } from "../../../../../features/tests/api/test.api-gen";
-import { useAppDispatch, useAppSelector } from "../../../../../app/hooks";
+import TestTimer from "../../../../../../features/tests/ui/TestTimer";
+import { testActions, testSelectors } from "../../../../../../features/tests/stores/testSlice";
+import { CurrentAttempt } from "../../../../../../features/tests/types/current";
+import { usePostCandidateCurrentAttemptSubmitMutation } from "../../../../../../features/tests/api/test.api-gen";
+import { useAppDispatch, useAppSelector } from "../../../../../../app/hooks";
 
 interface SidebarProps {
 	currentAttempt: CurrentAttempt;
@@ -14,18 +14,15 @@ interface SidebarProps {
 }
 
 export default function Sidebar({
-	currentAttempt,
+	currentAttempt: { secondsLeft, answers },
 	questionIds
 }: SidebarProps) {
 	const testId = useGetTestIdParams();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const currentAttemptState = useAppSelector(curerntAttemptSelects.selectCurrentAttempt);
-
 	const [submitTest, { isSuccess, isLoading, error }] = usePostCandidateCurrentAttemptSubmitMutation();
 
-	const { secondsLeft, answers } = currentAttempt;
-	const { currentQuestionIndex, flaggedQuestionIndexes, } = currentAttemptState;
+	const currentQuestionIndex = useAppSelector(testSelectors.selectCurrentQuestionIndex);
 
 	const handleCancelTest = () => {
 		navigate(paths.candidate.tests.in(testId).ATTEMPTS);
@@ -56,13 +53,13 @@ export default function Sidebar({
 							key={index}
 							className={`w-10 h-10 rounded-full text-sm font-bold text-primary border border-primary cursor-pointer ${currentQuestionIndex === index
 								? "bg-primary-toned-600 text-white"
-								: flaggedQuestionIndexes.has(index)
+								: useAppSelector(state => testSelectors.selectQuestionIdIsFlagged(state, id))
 									? "bg-secondary-toned-200"
 									: answers.find(answer => answer.questionId === id)?.chosenOption != null
 										? "bg-primary-toned-200"
 										: "bg-white"
 								}`}
-							onClick={() => dispatch(currentAttemptActions.setCurrentQuestionIndex(index))}
+							onClick={() => dispatch(testActions.setCurrentQuestionIndex(index))}
 						>
 							{index + 1}
 						</button>

@@ -1,7 +1,7 @@
-import { useAppDispatch, useAppSelector } from "../../../../../app/hooks";
-import { useAnswerTestQuestionMutation } from "../../../../../features/tests/api/current.api-socket";
-import { currentAttemptActions, curerntAttemptSelects } from "../../../../../features/tests/stores/currentAttemtpSlice";
-import { CurrentAttempt } from "../../../../../features/tests/types/current";
+import { useAppDispatch, useAppSelector } from "../../../../../../app/hooks";
+import { useAnswerTestQuestionMutation } from "../../../../../../features/tests/api/current.api-socket";
+import { testActions, testSelectors } from "../../../../../../features/tests/stores/testSlice";
+import { CurrentAttempt } from "../../../../../../features/tests/types/current";
 
 interface QuestionComponentProps {
 	currentAttempt: CurrentAttempt;
@@ -24,10 +24,9 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
 }) => {
 	const dispatch = useAppDispatch();
 	const [answerQuestion] = useAnswerTestQuestionMutation();
-	const currentAttemptState = useAppSelector(curerntAttemptSelects.selectCurrentAttempt);
-	const isFlagged = currentAttemptState.isFlagged();
+	const isFlagged = useAppSelector(testSelectors.selectCurrentQuestionIndexIsFlagged);
+	const currentQuestionIndex = useAppSelector(testSelectors.selectCurrentQuestionIndex);
 
-	const { currentQuestionIndex } = currentAttemptState;
 	const currentAnswer = currentAttempt.answers.find((answer) => answer.questionId === question.id);
 
 	const isFirstQuestion = currentQuestionIndex === 0;
@@ -35,15 +34,15 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
 
 	const handleNextQuestion = () => {
 		if (currentQuestionIndex < totalQuestion) {
-			dispatch(currentAttemptActions.setCurrentQuestionIndex(currentQuestionIndex + 1));
+			dispatch(testActions.setCurrentQuestionIndex(currentQuestionIndex + 1));
 		}
 	};
 
 	const handlePreviousQuestion = () => {
 		if (currentQuestionIndex >= 1) {
-			dispatch(currentAttemptActions.setCurrentQuestionIndex(currentQuestionIndex - 1));
+			dispatch(testActions.setCurrentQuestionIndex(currentQuestionIndex - 1));
 		}
-	}
+	};
 
 	const handleAnswerQuestion = (newOptionId: number) => {
 		if (!currentAttempt) return;
@@ -52,11 +51,11 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
 			optionId: newOptionId,
 			attemptId: currentAttempt.id,
 		})
-	}
+	};
 
 	const handleFlagQuestionToggle = () => {
-		dispatch(currentAttemptActions.toggleFlagCurrentQuestion());
-	}
+		dispatch(testActions.toggleFlagCurrentQuestion());
+	};
 
 	return (
 		<div className="flex-1 flex flex-row bg-white rounded-lg shadow-primary p-6 space-x-4 border-r border-b border-primary">

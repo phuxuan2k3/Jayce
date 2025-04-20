@@ -136,7 +136,12 @@ const authSlice = createSlice({
 			.addMatcher(
 				authApi.endpoints.refresh.matchFulfilled,
 				(state, action) => {
-					_setAuthStateFromResponse(state, action);
+					state.isAuthenticated = true;
+					state.tokens = {
+						access_token: action.payload.token_info.access_token,
+						refresh_token: action.payload.token_info.refresh_token,
+						safe_id: action.payload.token_info.safe_id,
+					};
 				}
 			)
 			.addMatcher(

@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { url } from "../../../app/env";
 import serviceBaseQueryNoAuth from '../../../app/serviceBaseQueryNoAuth';
-import { AuthResponse, RefreshRequest } from '../types/auth';
+import { AuthResponse, RefreshRequest, RefreshResponse } from '../types/auth';
 
 const authApi = createApi({
 	reducerPath: 'authApi',
@@ -30,7 +30,7 @@ const authApi = createApi({
 				},
 			}),
 		}),
-		refresh: builder.mutation<AuthResponse, RefreshRequest["toeken_info"]>({
+		refresh: builder.mutation<RefreshResponse, RefreshRequest["token_info"]>({
 			query: (request) => ({
 				url: '/refresh',
 				method: 'POST',

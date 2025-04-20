@@ -1,9 +1,9 @@
 import { url } from "../../../app/env";
-import { CurrentAttemptSocket } from "../types/socket.schema";
+import { CurrentAttemptSocket } from "./socket.schema";
 import { io } from "socket.io-client";
 import { testApiGen } from "./test.api-gen";
 import { RootState } from "../../../app/store";
-import { currentAttemptActions } from "../stores/currentAttemtpSlice";
+import { testActions } from "../stores/testSlice";
 import { authSelectors } from "../../auth/store/authSlice";
 
 let _socket: CurrentAttemptSocket | null = null;
@@ -11,6 +11,7 @@ let _socket: CurrentAttemptSocket | null = null;
 function connectSocket(getState: () => any) {
 	if (!_socket) {
 		const userId = authSelectors.selectUserId(getState() as RootState);
+		console.log("URL: " + url.thresh.socket);
 		_socket = io(`${url.thresh.socket}/current`, {
 			auth: {
 				userId: userId,
@@ -31,24 +32,33 @@ function clearSocket() {
 	}
 }
 
-// TODO: save flagged questions and current index on the server side: Separate current attempt to a dependent entity, use json or cache storage.
+// TODO: sync flagged questions and current index
 
 const currentAttemptApi = testApiGen.enhanceEndpoints({
 	addTagTypes: ["CurrentAttempt"],
 	endpoints: {
+		getCandidateCurrentAttemptDo: {
+			async onQueryStarted(_, { queryFulfilled, dispatch }) {
+				try {
+					const { data } = await queryFulfilled;
+					dispatch(testActions.initialize({
+						questions: data.questions,
+					}));
+				}
+				// When no current attempt is found, the server will return 400 error
+				catch (error) {
+					clearSocket();
+					dispatch(testActions.endTest());
+				}
+			}
+		},
 		postCandidateCurrentAttemptNew: {
 			invalidatesTags: ["CurrentAttempt"],
-			onQueryStarted: async (_, {
-				dispatch,
-				queryFulfilled,
-			}) => {
-				await queryFulfilled;
-				dispatch(currentAttemptActions.startTest());
-			}
 		},
 		getCandidateCurrentAttemptState: {
 			providesTags: ["CurrentAttempt"],
 
+			// Handle after the query is initiated
 			async onQueryStarted(_, {
 				queryFulfilled,
 				getState,
@@ -58,33 +68,30 @@ const currentAttemptApi = testApiGen.enhanceEndpoints({
 					// Wait for the query to be fulfilled
 					const { data } = await queryFulfilled;
 
-					if (data == null) {
-						console.error("Error: NULL in currentAttemptApi >> postTestsByTestIdCurrentNew >> onQueryStarted");
-						return;
-					}
-
 					const socket = connectSocket(getState);
 					if (data.currentAttempt != null) {
-						socket.emit("REGISTERED", { attemptId: data.currentAttempt.id }, ({ isInprogress }) => {
-							if (isInprogress == false) {
+						socket.emit("REGISTERED", {
+							attemptId: data.currentAttempt.id
+						}, ({ isInprogress }) => {
+							if (isInprogress == false || data.currentAttempt == null) {
 								throw new Error("Candidate do not have test that is in progress");
 							}
 						});
 					}
 					else {
 						// This is the case when: fetch or re-fetch to the server with no current attempts, used for all cases when dispatch(invaildateTags) is called
-						dispatch(currentAttemptActions.endTest());
+
+						dispatch(testActions.endTest());
 					}
 
 				} catch (error) {
-					console.error("Error in currenctTestSocketApi >> onCacheEntryAdded");
 					console.error(error);
-
 					clearSocket();
 					throw error;
 				}
 			},
 
+			// Handle when the cache is created after the query is initiated
 			async onCacheEntryAdded(_, {
 				updateCachedData,
 				cacheDataLoaded,
@@ -112,20 +119,24 @@ const currentAttemptApi = testApiGen.enhanceEndpoints({
 						updateCachedData((draft) => {
 							if (draft.currentAttempt == null) return;
 							if (optionId == null) {
+								// If optionId is null, it means the answer is removed (unanswered) => Remove the answer from the list of answers
 								draft.currentAttempt.answers = draft.currentAttempt.answers.filter((answer) => answer.questionId !== questionId);
 								return;
 							}
+							// Update the answer if it exists, otherwise add a new one
 							const existingAnswer = draft.currentAttempt.answers.find((answer) => answer.questionId === questionId);
 							if (existingAnswer) {
 								existingAnswer.chosenOption = optionId;
 							} else {
-								draft.currentAttempt.answers.push({ questionId, chosenOption: optionId });
+								draft.currentAttempt.answers.push({
+									questionId,
+									chosenOption: optionId
+								});
 							}
 						});
 					});
 
 					socket.on("ENDED", () => {
-						dispatch(currentAttemptActions.endTest()); // Ends the test
 						dispatch(currentAttemptApi.util.invalidateTags(["CurrentAttempt"])); // Re-fetch to make sure it ends
 					});
 
@@ -133,9 +144,7 @@ const currentAttemptApi = testApiGen.enhanceEndpoints({
 					await cacheEntryRemoved;
 					clearSocket();
 				} catch (error) {
-					console.error("Error in currenctTestSocketApi >> onCacheEntryAdded");
 					console.error(error);
-
 					clearSocket();
 					throw error;
 				}
