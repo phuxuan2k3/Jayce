@@ -146,6 +146,11 @@ const ManagerScenarioSubmissionsPage = () => {
 						</div>
 
 						<div className="w-full flex flex-col items-center max-h-[800px] overflow-y-auto pl-4">
+							{attempts.length === 0 && (
+								<div>
+									<span className="text-xl font-semibold text-gray-500">No submissions found.</span>
+								</div>
+							)}
 							{attempts.map((attempt, index) => {
 								const totalScore = attempt.answers.reduce((sum, answer) => sum + answer.overall, 0);
 								const averageScore = attempt.answers.length ? (totalScore / attempt.answers.length).toFixed(2) : "N/A";

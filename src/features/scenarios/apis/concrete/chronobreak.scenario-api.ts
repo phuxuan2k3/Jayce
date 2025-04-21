@@ -28,6 +28,12 @@ const chronobreakAPI = chronobreakApi.injectEndpoints({
 				body,
 			}),
 		}),
+		getRandomScenario: builder.query<GetScenarioResponse, void>({
+			query: () => ({
+				url: '/scenario/random',
+				method: 'GET',
+			}),
+		}),
 	}),
 	overrideExisting: true,
 });
@@ -36,4 +42,5 @@ export const {
 	useListFieldMutation,
 	useListScenarioMutation,
 	useGetScenarioMutation,
+	useGetRandomScenarioQuery,
 } = chronobreakAPI;

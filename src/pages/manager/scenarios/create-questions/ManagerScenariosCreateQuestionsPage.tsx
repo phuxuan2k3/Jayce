@@ -31,6 +31,13 @@ const ScenarioCreateQuestion = () => {
 
 	const handleSave = async () => {
 		setSubmmitError(null);
+		if (questionList.length === 0) {
+			setSubmmitError("Please add at least one question.");
+			return;
+		} else if (questionList.some((question) => question.content.trim() === "")) {
+			setSubmmitError("Please fill in all questions.");
+			return;
+		}
 		setIsCreating(true);
 		try {
 			await createScenario({
@@ -166,7 +173,7 @@ const ScenarioCreateQuestion = () => {
 							Back
 						</button>
 						<button className="w-fit px-12 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={handleSave} disabled={isCreating}>
-							{isCreating ? "Creating..." : "Save"}
+							{isCreating ? "Creating..." : "Create"}
 						</button>
 					</div>
 				</div>

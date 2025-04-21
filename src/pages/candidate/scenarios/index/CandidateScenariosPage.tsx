@@ -122,9 +122,9 @@ const CandidateScenariosPage = () => {
 				<div className="mt-2 text-[var(--primary-color)]">You can practice interview skills with multiple situations</div>
 				<div className=" flex justify-between">
 					<div className="flex gap-3 mt-8">
-						<div className={`rounded-lg bg-[var(--primary-color)] px-4 py-2 font-bold text-white cursor-pointer ${sortType === "participants" ? 'text-secondary' : ''}`} onClick={() => sortType === "participants" ? setSortType(null) : setSortType("participants")}> Most Popular</div>
-						<div className={`rounded-lg bg-[var(--primary-color)] px-4 py-2 font-bold text-white cursor-pointer ${sortType === "rating" ? 'text-secondary' : ''}`} onClick={() => sortType === "rating" ? setSortType(null) : setSortType("rating")}> Top Rated</div>
-						<div className={`rounded-lg bg-[var(--primary-color)] px-4 py-2 font-bold text-white cursor-pointer ${sortType === "created_at" ? 'text-secondary' : ''}`} onClick={() => sortType === "created_at" ? setSortType(null) : setSortType("created_at")}> Newest</div>
+						<div className={`rounded-lg bg-[var(--primary-color)] px-4 py-2 font-bold cursor-pointer ${sortType === "participants" ? 'text-primary-toned-300' : 'text-white'}`} onClick={() => sortType === "participants" ? setSortType(null) : setSortType("participants")}> Most Popular</div>
+						<div className={`rounded-lg bg-[var(--primary-color)] px-4 py-2 font-bold cursor-pointer ${sortType === "rating" ? 'text-primary-toned-300' : 'text-white'}`} onClick={() => sortType === "rating" ? setSortType(null) : setSortType("rating")}> Top Rated</div>
+						<div className={`rounded-lg bg-[var(--primary-color)] px-4 py-2 font-bold cursor-pointer ${sortType === "created_at" ? 'text-primary-toned-300' : 'text-white'}`} onClick={() => sortType === "created_at" ? setSortType(null) : setSortType("created_at")}> Newest</div>
 						<div className="rounded-lg bg-[var(--primary-color)] px-4 py-2 font-bold text-white flex items-center cursor-pointer" onClick={() => setIsFilterOpen(true)}> <FaFilter /></div>
 					</div>
 					<div className="flex gap-6">
@@ -149,15 +149,15 @@ const CandidateScenariosPage = () => {
 						}
 
 						return (
-							<div key={index} className="bg-gray-100 p-4 rounded-lg mb-4 ">
-								<div className="text-xl font-bold mb-3 cursor-pointer hover:text-primary" onClick={() => handlePractice(scenario.id)}>{scenario.name}</div>
+							<div key={index} className="bg-[#FAFAFA] p-4 rounded-lg mb-4 shadow-lg cursor-pointer" onClick={() => handlePractice(scenario.id)}>
+								<div className="text-xl font-bold mb-3 hover:text-primary">{scenario.name}</div>
 								<div className="text-sm text-gray-600">{scenario.description}</div>
 								<div className="mt-4 flex justify-between items-center text-gray-500">
 									<div className="flex gap-10 items-center">
 										<div className="text-sm flex gap-2">{Number.isInteger(scenario.rating) ? scenario.rating : scenario.rating.toFixed(2)} <FaStar className="text-gray-500" /></div>
 										<div className="text-sm flex gap-2">{scenario.total_participant} <FaUser /></div>
 										<div className="text-sm flex gap-2">{date.toLocaleDateString()}<FaCalendarAlt /></div>
-										<div className={`px-3 py-1 rounded-lg text-sm font-medium ${scenario.attempted ? 'bg-[var(--primary-color)] text-white' : 'text-gray-500 border border-gray-500'}`}>
+										<div className={`px-3 py-1 rounded-lg text-sm font-medium ${scenario.attempted ? 'border border-primary text-primary' : 'text-gray-500 border border-gray-500'}`}>
 											{scenario.attempted ? "Attempted" : "Not Attempted"}
 										</div>
 									</div>
@@ -210,13 +210,23 @@ const CandidateScenariosPage = () => {
 									type="date"
 									className="h-6 w-32 border-gray-400 border rounded px-2"
 									value={dates.from}
-									onChange={(e) => setDates({ ...dates, from: new Date(e.target.value).toISOString().split("T")[0] })}
+									onChange={(e) => {
+										const newFromDate = new Date(e.target.value).toISOString().split("T")[0];
+										if (new Date(newFromDate) <= new Date(dates.to)) {
+											setDates({ ...dates, from: newFromDate });
+										}
+									}}
 								/>
 								<input
 									type="date"
 									className="h-6 w-32 border-gray-400 border rounded px-2"
 									value={dates.to}
-									onChange={(e) => setDates({ ...dates, to: new Date(e.target.value).toISOString().split("T")[0] })}
+									onChange={(e) => {
+										const newToDate = new Date(e.target.value).toISOString().split("T")[0];
+										if (new Date(newToDate) >= new Date(dates.from)) {
+											setDates({ ...dates, to: newToDate });
+										}
+									}}
 								/>
 							</label>
 						</div>

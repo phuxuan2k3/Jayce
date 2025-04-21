@@ -20,19 +20,8 @@ const HomePage = () => {
 
 	return <div>
 		<section className="text-center py-16 px-4">
-			<h1 className="text-4xl mb-4">
-				Everything you need
-				<p>
-					to <span className="text-gradient">sharpen</span> your <span className="text-gradient">interview skills</span>
-				</p>
-			</h1>
-			<p className="text-lg text-gray-600 max-w-2xl mx-auto">
-				Get better at technical interviews, communication skills and get detailed feedback on exactly what you need to work on.
-			</p>
-		</section>
-		<section className="text-center py-16 px-4">
 			<div className="text-center py-16 px-4 bg-no-repeat h-[100vh] bg-gradient-to-br from-[#bff3f9] to-[#f4c5b9]">
-				<h1 className="text-4xl font-black   mb-4 my-20">
+				<h1 className="text-4xl font-black mb-4 my-20">
 					Everything you need
 					<p>
 						to <span className="text-gradient">sharpen</span> your <span className="text-gradient">interview skills</span>

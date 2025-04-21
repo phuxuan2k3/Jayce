@@ -1,5 +1,6 @@
 import * as React from "react";
-import { FaChevronRight, FaKeyboard, FaMicrophone, FaTrash, FaVolumeUp, FaStopCircle } from "react-icons/fa";
+import { FaChevronRight, FaMicrophone, FaVolumeUp, FaStopCircle } from "react-icons/fa";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import { useSubmitAnswerMutation } from "../../../../../features/scenarios/apis/concrete/ekko.scenario-api";
@@ -110,17 +111,19 @@ const CandidateScenarioAnswerPage = () => {
 		setAnswers((prev) => ({ ...prev, [questionId]: value }));
 	};
 
-	const handleDiscard = () => {
-		if (selectedQuestion) {
-			setAnswers((prev) => ({
-				...prev,
-				[selectedQuestion.id]: "",
-			}));
+	const handlePreviousQuestion = () => {
+		const currentIndex = questions.findIndex((q) => q === selectedQuestion);
+		if (currentIndex === 0) return;
+		const prevIndex = currentIndex - 1;
+		if (prevIndex >= 0) {
+			setSelectedQuestion(questions[prevIndex]);
+			setAnswers((prev) => ({ ...prev, [questions[prevIndex].id]: answers[questions[prevIndex].id] || "" })); // Initialize answer for previous question if not already set
 		}
-	};
+	}
 
 	const handleNextQuestion = () => {
 		const currentIndex = questions.findIndex((q) => q === selectedQuestion);
+		if (currentIndex === questions.length - 1) return;
 		const nextIndex = currentIndex + 1;
 		if (nextIndex < questions.length) {
 			setSelectedQuestion(questions[nextIndex]);
@@ -136,8 +139,7 @@ const CandidateScenarioAnswerPage = () => {
 						<div className="flex items-center gap-10">
 							<span className="text-3xl font-bold">{scenario?.name}</span>
 						</div>
-						{/* bg-[var(--primary-color)] */}
-						<div className={`rounded-lg bg-[var(--primary-color)] py-1 px-4 font-bold text-white flex gap-2 items-center ${submitting ? "opacity-50" : "cursor-pointer" }`} onClick={handleSubmit}>{submitting ? "Submitting..." : "Submit"}</div>
+						<div className={`rounded-lg bg-[var(--primary-color)] py-1 px-4 font-bold text-white flex gap-2 items-center ${submitting ? "opacity-50" : "cursor-pointer"}`} onClick={handleSubmit}>{submitting ? "Submitting..." : "Submit"}</div>
 					</div>
 					{/* <div className="mt-4 text-xl">
                         {field}
@@ -150,7 +152,10 @@ const CandidateScenarioAnswerPage = () => {
 						<p>{selectedQuestion ? selectedQuestion.content : "Select a question to view its content."}</p>
 					</div>
 					<hr className=" border-gray-400 my-4" />
-					<span className="cursor-pointer text-[var(--primary-color)]" onClick={() => setShowHint(!showHint)}>Hint</span>
+					<span className="cursor-pointer text-[var(--primary-color)] flex items-center gap-1" onClick={() => setShowHint(!showHint)}>
+						Hint
+						<ExpandMoreIcon style={{ transform: showHint ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.3s ease" }} />
+					</span>
 					{showHint && <p className="mt-2">{selectedQuestion ? selectedQuestion.hint : "There is no hint."}</p>}
 					<hr className=" border-gray-400 my-4" />
 					{isSpeechSupported ? (
@@ -172,11 +177,8 @@ const CandidateScenarioAnswerPage = () => {
 					</div>
 
 					<div className="flex justify-between mt-12">
-						<div className="flex gap-4">
-							<div className=" rounded-lg bg-[var(--primary-color)] py-1 px-4 font-bold text-white flex gap-2 items-center cursor-pointer">Edit <FaKeyboard /></div>
-							<div className="rounded-lg bg-red-400 py-1 px-4 font-bold text-white flex gap-2 items-center cursor-pointer" onClick={handleDiscard}>Discard <FaTrash /> </div>
-						</div>
-						<div className=" rounded-lg bg-[var(--primary-color)] py-1 px-4 font-bold text-white flex gap-2 items-center cursor-pointer" onClick={handleNextQuestion}>Next question</div>
+						<div className={`rounded-lg bg-[var(--primary-color)] py-1 px-4 font-bold text-white flex gap-2 items-center ${questions.findIndex(q => q === selectedQuestion) === 0 ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`} onClick={handlePreviousQuestion}>Previous question</div>
+						<div className={`rounded-lg bg-[var(--primary-color)] py-1 px-4 font-bold text-white flex gap-2 items-center ${questions.findIndex(q => q === selectedQuestion) === questions.length - 1 ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`} onClick={handleNextQuestion}>Next question</div>
 					</div>
 				</div>
 

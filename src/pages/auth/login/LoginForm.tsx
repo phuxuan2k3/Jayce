@@ -8,7 +8,7 @@ import { SerializedError } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { toErrorMessage } from "../../../helpers/fetchBaseQuery.error";
 import GradientBorder from "../../../components/ui/border/GradientBorder";
-import { useGoogleLoginMutation, useLoginMutation } from "../../../features/auth/api/auth.api";
+import { useGoogleLoginMutation, useLoginMutation, useGoogleRegisterMutation } from "../../../features/auth/api/auth.api";
 import SpinnerLoading from "../../../components/ui/loading/SpinnerLoading";
 import AlertError from "../../../components/ui/error/AlertError";
 import paths from "../../../router/paths";
@@ -21,6 +21,7 @@ const LoginForm = () => {
 	const dispatch = useDispatch();
 	const [login, { isLoading, error }] = useLoginMutation();
 	const [ggLogin, { }] = useGoogleLoginMutation();
+	const [ggRegister, { }] = useGoogleRegisterMutation();
 	const [googleError, setGoogleError] = useState<string | null>(null);
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("");
@@ -120,7 +121,7 @@ const LoginForm = () => {
 						code,
 						client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
 						client_secret: import.meta.env.VITE_GOOGLE_CLIENT_SECRET,
-						redirect_uri: 'http://skillsharp.software',
+						redirect_uri: import.meta.env.VITE_REDIRECT_URI,
 						grant_type: 'authorization_code',
 					},
 					{
@@ -145,6 +146,15 @@ const LoginForm = () => {
 						const loginResponse = await ggLogin({ credential: idToken });
 						if (loginResponse.data) {
 							dispatch(authActions.setAuthStateFromResponse(loginResponse.data));
+							navigate(paths._layout);
+						} else {
+							setGoogleError("Something went wrong with Google authentication.");
+						}
+					}
+					else if ((response.error as FetchBaseQueryError)?.data && (response.error as { data: { code: number } }).data.code === 2 && (response.error as { data: { message: string } }).data.message === "ent: user not found") {
+						const registerResponse = await ggRegister({ credential: idToken, role: 1, metadata: {} });
+						if (registerResponse.data) {
+							dispatch(authActions.setAuthStateFromResponse(registerResponse.data));
 							navigate(paths._layout);
 						} else {
 							setGoogleError("Something went wrong with Google authentication.");

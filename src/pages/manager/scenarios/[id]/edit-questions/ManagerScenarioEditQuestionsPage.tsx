@@ -23,6 +23,13 @@ const ManagerScenarioEditQuestionsPage = () => {
 	const [updateScenario] = useUpdateScenarioMutation();
 	const handleSave = async () => {
 		setSubmmitError(null);
+		if (questionList.length === 0) {
+			setSubmmitError("Please add at least one question.");
+			return;
+		} else if (questionList.some((question) => question.content.trim() === "")) {
+			setSubmmitError("Please fill in all questions.");
+			return;
+		}
 		setIsEditing(true);
 		try {
 			console.log(questionList)
@@ -173,7 +180,7 @@ const ManagerScenarioEditQuestionsPage = () => {
 							Back
 						</button>
 						<button className="w-fit px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={handleSave} disabled={isEditing}>
-							{isEditing ? "Creating..." : "Save"}
+							{isEditing ? "Saving..." : "Save"}
 						</button>
 					</div>
 				</div>

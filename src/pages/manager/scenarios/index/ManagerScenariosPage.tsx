@@ -149,7 +149,7 @@ const ManagerScenariosPage = () => {
 										</div>
 
 										<button
-											className="border border-gray-400 rounded-lg bg-white px-2 py-1 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+											className="border border-gray-400 rounded-lg bg-white px-2 py-1 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-500 hover:text-white"
 											onClick={() => handleOpenDialog(scenario)}
 										>
 											Delete
@@ -179,12 +179,6 @@ const ManagerScenariosPage = () => {
 											<div className="cursor-pointer text-primary flex items-center gap-1" onClick={() => handleGoToEditScenario(scenario.id)}>
 												Edit <EditOutlined></EditOutlined>
 											</div>
-											{/* <div className="flex items-center justify-center border border-primary p-3 rounded-md bg-[#d5eef1] cursor-pointer" onClick={() => handleGoToEditScenario(scenario.id)}>
-												<FontAwesomeIcon className="h-5 w-5" icon={faPen} />
-											</div>
-											<div className="flex items-center justify-center border border-primary p-3 rounded-md bg-[#ff807c] cursor-pointer" onClick={() => handleOpenDialog(scenario)}>
-												<FontAwesomeIcon className="h-5 w-5" icon={faTrash} />
-											</div> */}
 										</div>
 									</div>
 								</div>

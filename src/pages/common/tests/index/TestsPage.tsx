@@ -5,12 +5,15 @@ import TestList from "./components/TestList/TestList";
 import TagsList from "./components/TagsList";
 import Header from "./components/Header";
 import { GetTestsApiArg } from "../../../../features/tests/api/test.api-gen";
+import { useLocation } from "react-router-dom";
 
 const TestsPage: React.FC = () => {
-	const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-	const [filters, setFilters] = useState<GetTestsApiArg>({
+	const location = useLocation();
+	const initFilters = location.state?.filters as GetTestsApiArg || {
 		perPage: 5
-	});
+	}
+	const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+	const [filters, setFilters] = useState<GetTestsApiArg>(initFilters);
 
 	return (
 		<div className="p-6 max-w-7xl mx-auto">

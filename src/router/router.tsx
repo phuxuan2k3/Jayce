@@ -38,9 +38,10 @@ import ManagerLayout from "../pages/manager/ManagerLayout";
 import AuthBusinessRegisterPage from "../pages/auth/bussiness-register/AuthBusinessRegisterPage";
 import AuthChooseRolePage from "../pages/auth/choose-role/AuthChooseRolePage";
 import CandidateAttemptPage from "../pages/candidate/tests/attempts/[id]/index/CandidateAttemptPage";
-import HomePage from "../pages/common/HomePage";
 import CandidateInTestLayout from "../pages/candidate/tests/[id]/CandidateInTestLayout";
 import ManagerTestsSelfPage from "../pages/manager/tests/self/ManagerTestsSelfPage";
+import CandidateHomePage from "../pages/candidate/index/CandidateHomePage";
+import ManagerHomePage from "../pages/manager/scenarios/index/ManagerHomePage";
 import CandidateInterviewLivePage from "../pages/candidate/interviews/live/CandidateInterviewLivePage";
 import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/ManagerTestEditPage";
 import SetUpPage from "../pages/candidate/interviews/setup/setup";
@@ -104,10 +105,10 @@ const router = createBrowserRouter(
 					children: [
 						// Common pages
 
-						{
-							index: true,
-							element: <HomePage />,
-						},
+				{
+					index: true,
+					element: <CandidateHomePage />,
+				},
 
 						// F1 - Tests
 
@@ -229,10 +230,10 @@ const router = createBrowserRouter(
 					children: [
 						// Common pages
 
-						{
-							element: <HomePage />,
-							index: true,
-						},
+				{
+					element: <ManagerHomePage />,
+					index: true
+				},
 
 						// F1 - Tests
 

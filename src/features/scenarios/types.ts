@@ -71,6 +71,7 @@ export interface Scenario {
   total_participant: number;
   questions: Question[];
   total_question: number;
+  owner_id: number;
 }
 
 export interface Question {

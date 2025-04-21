@@ -227,6 +227,22 @@ export type GetTagsByTagIdApiResponse = /** status 200 Success */ {
   id: number;
   name: string;
 };
+export type GetChallengeApiArg = void;
+export type GetChallengeApiResponse = /** status 200 Success */ {
+  id: number;
+  managerId: string;
+  title: string;
+  description: string;
+  difficulty: string;
+  minutesToAnswer: number;
+  answerCount: number;
+  tags: {
+    id: number;
+    name: string;
+  }[];
+  createdAt: string;
+  updatedAt: string;
+};
 export type GetTagsByTagIdApiArg = {
   tagId?: number | null;
 };
