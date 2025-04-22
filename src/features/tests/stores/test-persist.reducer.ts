@@ -73,6 +73,7 @@ export const testPersistReducer = (state: TestPersistState, action: TestPersistA
 				break;
 
 			case 'ADD_AI_QUESTIONS':
+				console.log('Adding AI questions:', action.payload);
 				draft.data.questions.unshift(...action.payload);
 				draft.aiQuestionsThreshold += action.payload.length;
 				break;

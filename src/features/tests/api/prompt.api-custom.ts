@@ -18,10 +18,12 @@ const promptApiCustom = promptApi.injectEndpoints({
 			}),
 			transformResponse: (response: GeneratedQuestionResponse) => {
 				return response.questionList.map((question) => {
+					const correctOption = question.optionList.findIndex((option) => option.isCorrect);
+					console.log("Correct option index:", correctOption);
 					return {
 						text: question.questionContent,
 						options: question.optionList.map((option) => option.optionContent),
-						correctOption: question.optionList.find((option) => option.isCorrect)?.optionContent || 0,
+						correctOption: correctOption === -1 ? 0 : correctOption,
 						points: question.points || 0,
 					}
 				}) as QuestionDTO[];

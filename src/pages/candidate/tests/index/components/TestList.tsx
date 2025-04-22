@@ -10,7 +10,10 @@ type Props = {
 }
 
 export default function TestList({ filter, setFilters }: Props) {
-	const { data: tests, isLoading, error } = useGetTestsQuery(filter, {
+	const { data: tests, isLoading, error } = useGetTestsQuery({
+		...filter,
+		tags: filter.tags?.length ? filter.tags : undefined,
+	}, {
 		refetchOnMountOrArgChange: true,
 	});
 

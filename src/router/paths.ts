@@ -60,6 +60,7 @@ const paths = {
 		_layout: "/manager",
 		tests: {
 			_layout: "/manager/tests/",
+			ROOT: "/manager/tests/",
 			in(id: number | string = ":testId") {
 				return {
 					_layout: `/manager/tests/${id}/`,

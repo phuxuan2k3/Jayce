@@ -21,7 +21,7 @@ const ManagerTestsCreatePage = () => {
 							className="w-4 cursor-pointer"
 							src="https://cdn-icons-png.flaticon.com/512/566/566013.png"
 							alt="X"
-							onClick={() => navigate(paths.manager.tests.SELF)}
+							onClick={() => navigate(paths.manager.tests.ROOT)}
 							title="Close"
 						/>
 					</div>

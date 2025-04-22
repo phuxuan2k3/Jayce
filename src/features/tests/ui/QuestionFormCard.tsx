@@ -5,6 +5,7 @@ import { QuestionDTO } from '../types/crud';
 import GradientBorderNotGood from '../../../components/ui/border/GradientBorder.notgood';
 import { TestQuestion } from '../stores/test-persist.reducer';
 import { BrainCircuitIcon } from "lucide-react"
+import TextareaAutosize from 'react-textarea-autosize';
 
 export default function QuestionFormCard({
 	index,
@@ -25,6 +26,7 @@ export default function QuestionFormCard({
 	onOptionContentChange: (questionIndex: number, optionIndex: number, value: string) => void;
 	onDeleteOption: (questionIndex: number, optionIndex: number) => void;
 }) {
+	console.log("Question", question);
 	return (
 		<div className="w-4/6 flex-1 flex flex-row bg-white rounded-lg shadow-primary p-6 space-x-4 border-r border-b border-solid border-primary justify-between mb-4">
 			<span className="min-w-fit w-1/5 font-bold mb-2 opacity-50">
@@ -37,11 +39,12 @@ export default function QuestionFormCard({
 				{/* Question */}
 				<div className="w-11/12 mb-4">
 					<GradientBorderNotGood className="w-full h-fit font-semibold">
-						<input
-							type="text"
+						<TextareaAutosize
 							value={question.text}
 							onChange={(e) => onQuestionContentChange(index, "text", e.target.value)}
-							className="w-full bg-transparent border-none outline-none"
+							className="w-full bg-transparent border-none outline-none resize-none overflow-hidden"
+							placeholder="Question text"
+							minRows={1}
 						/>
 					</GradientBorderNotGood>
 				</div>
@@ -54,11 +57,12 @@ export default function QuestionFormCard({
 								<span className="mr-2">{String.fromCharCode(97 + optionIndex)}.</span>
 
 								{/* Option text */}
-								<input
-									type="text"
+								<TextareaAutosize
 									value={option}
 									onChange={(e) => onOptionContentChange(index, optionIndex, e.target.value)}
-									className="flex-grow bg-transparent border-none outline-none"
+									className="flex-grow bg-transparent border-none outline-none resize-none overflow-hidden"
+									placeholder="Option text"
+									minRows={1}
 								/>
 
 								{/* Delete option button */}
