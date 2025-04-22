@@ -62,9 +62,6 @@ const ManagerNavbar = ({ showNav = true }: { showNav?: boolean; }) => {
 							<Link to={paths.manager.tests._layout} className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
 								Tests
 							</Link>
-							<Link to={paths.manager.tests.SELF} className="rounded-md px-3 py-2 text-lg font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
-								Manage Tests
-							</Link>
 						</div>
 					)}
 				</div>

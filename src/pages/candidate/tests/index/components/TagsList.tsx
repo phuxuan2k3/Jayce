@@ -7,30 +7,8 @@ type Props = {
 	setFilters: React.Dispatch<React.SetStateAction<GetTestsApiArg>>;
 }
 
-const addTagToTagsFilter = (filter: GetTestsApiArg["tags"], tag: number): GetTestsApiArg["tags"] => {
-	if (!filter) return tag.toString();
-	if (typeof filter === 'string') return [filter, tag.toString()];
-	if (Array.isArray(filter)) return [...filter, tag.toString()];
-	return filter;
-}
-
-const removeTagFromTagsFilter = (filter: GetTestsApiArg["tags"], tag: number): GetTestsApiArg["tags"] => {
-	if (!filter) return filter;
-	if (typeof filter === 'string') return filter === tag.toString() ? undefined : filter;
-	if (Array.isArray(filter)) return filter.filter((id) => id !== tag.toString());
-	return filter;
-}
-
-const determineTagsFilterHasTag = (filterTags: GetTestsApiArg["tags"], tagId: number): boolean => {
-	if (!filterTags) return false;
-	if (typeof filterTags === 'string') return filterTags === tagId.toString();
-	if (Array.isArray(filterTags)) return filterTags.includes(tagId.toString());
-	return false;
-}
-
 export default function TagsList({ filter, setFilters }: Props) {
 	const { data: tags, isLoading, error } = useGetTagsQuery();
-
 	if (!tags) return null;
 
 	const handleTagsToggle = (tagId: number) => {
@@ -50,7 +28,7 @@ export default function TagsList({ filter, setFilters }: Props) {
 	};
 
 	return (
-		<section className="shadow-primary mb-8 px-6 pt-4 pb-8 rounded-lg">
+		<>
 			<h2 className="text-lg font-semibold mb-4">Tags</h2>
 			<FetchState
 				isLoading={isLoading}
@@ -71,6 +49,27 @@ export default function TagsList({ filter, setFilters }: Props) {
 					})}
 				</div>
 			</FetchState>
-		</section>
+		</>
 	);
+}
+
+const addTagToTagsFilter = (filter: GetTestsApiArg["tags"], tag: number): GetTestsApiArg["tags"] => {
+	if (!filter) return tag.toString();
+	if (typeof filter === 'string') return [filter, tag.toString()];
+	if (Array.isArray(filter)) return [...filter, tag.toString()];
+	return filter;
+}
+
+const removeTagFromTagsFilter = (filter: GetTestsApiArg["tags"], tag: number): GetTestsApiArg["tags"] => {
+	if (!filter) return filter;
+	if (typeof filter === 'string') return filter === tag.toString() ? undefined : filter;
+	if (Array.isArray(filter)) return filter.filter((id) => id !== tag.toString());
+	return filter;
+}
+
+const determineTagsFilterHasTag = (filterTags: GetTestsApiArg["tags"], tagId: number): boolean => {
+	if (!filterTags) return false;
+	if (typeof filterTags === 'string') return filterTags === tagId.toString();
+	if (Array.isArray(filterTags)) return filterTags.includes(tagId.toString());
+	return false;
 }

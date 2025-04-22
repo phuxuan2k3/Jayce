@@ -9,7 +9,7 @@ import paths from "../../../../router/paths";
 
 type FilterProps = Omit<GetManagerTestsApiArg, "x-user-id">;
 
-const ManagerTestsSelfPage = () => {
+const ManagerTestsPage = () => {
 	const [snackbar, setSnackbar] = useState<{ snackOpen: boolean; snackMessage: string; snackSeverity: 'error' | 'info' | 'success' | 'warning' }>({ snackOpen: false, snackMessage: '', snackSeverity: 'info' });
 	const { snackOpen, snackMessage, snackSeverity } = snackbar;
 
@@ -174,4 +174,4 @@ const ManagerTestsSelfPage = () => {
 	);
 }
 
-export default ManagerTestsSelfPage
+export default ManagerTestsPage

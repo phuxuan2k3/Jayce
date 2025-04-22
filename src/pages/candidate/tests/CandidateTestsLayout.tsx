@@ -4,7 +4,7 @@ import CurrentAttemptStatus from "../../../features/tests/ui/CurrentAttemptStatu
 import { useShowCurrentTest } from "../contexts/show-current-test.context";
 import { useGetCandidateCurrentAttemptStateQuery } from "../../../features/tests/api/test.api-gen";
 
-export default function CandidateTestLayout() {
+export default function CandidateTestsLayout() {
 	const { showCurrentTest } = useShowCurrentTest();
 	const { data: currentAttemptState } = useGetCandidateCurrentAttemptStateQuery(undefined, {
 		refetchOnMountOrArgChange: true,

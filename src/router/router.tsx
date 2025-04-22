@@ -30,16 +30,16 @@ import AuthLayout from "../pages/auth/AuthLayout";
 import UnauthLayout from "../pages/unauth/UnauthLayout";
 import CandidateLayout from "../pages/candidate/CandidateLayout";
 import GuestPage from "../pages/unauth/index/GuestPage";
-import TestsPage from "../pages/common/tests/index/TestsPage";
+import CandidateTestsPage from "../pages/candidate/tests/index/CandidateTestsPage";
 import CandidateTestDoPage from "../pages/candidate/tests/[id]/do/CandidateTestDoPage";
 import CandidateTestAttemtpsPage from "../pages/candidate/tests/[id]/attempts/CandidateTestAttemptsPage";
-import CandidateTestLayout from "../pages/candidate/tests/CandidateTestLayout";
+import CandidateTestsLayout from "../pages/candidate/tests/CandidateTestsLayout";
 import ManagerLayout from "../pages/manager/ManagerLayout";
 import AuthBusinessRegisterPage from "../pages/auth/bussiness-register/AuthBusinessRegisterPage";
 import AuthChooseRolePage from "../pages/auth/choose-role/AuthChooseRolePage";
 import CandidateAttemptPage from "../pages/candidate/tests/attempts/[id]/index/CandidateAttemptPage";
 import CandidateInTestLayout from "../pages/candidate/tests/[id]/CandidateInTestLayout";
-import ManagerTestsSelfPage from "../pages/manager/tests/self/ManagerTestsSelfPage";
+import ManagerTestsPage from "../pages/manager/tests/self/ManagerTestsSelfPage";
 import CandidateHomePage from "../pages/candidate/index/CandidateHomePage";
 import ManagerHomePage from "../pages/manager/scenarios/index/ManagerHomePage";
 import CandidateInterviewLivePage from "../pages/candidate/interviews/live/CandidateInterviewLivePage";
@@ -105,20 +105,20 @@ const router = createBrowserRouter(
 					children: [
 						// Common pages
 
-				{
-					index: true,
-					element: <CandidateHomePage />,
-				},
+						{
+							index: true,
+							element: <CandidateHomePage />,
+						},
 
 						// F1 - Tests
 
 						{
 							path: paths.candidate.tests._layout,
-							element: <CandidateTestLayout />,
+							element: <CandidateTestsLayout />,
 							children: [
 								{
 									index: true,
-									element: <TestsPage />,
+									element: <CandidateTestsPage />,
 								},
 								{
 									path: paths.candidate.tests.in().RECOMMENDATION,
@@ -230,10 +230,10 @@ const router = createBrowserRouter(
 					children: [
 						// Common pages
 
-				{
-					element: <ManagerHomePage />,
-					index: true
-				},
+						{
+							element: <ManagerHomePage />,
+							index: true
+						},
 
 						// F1 - Tests
 
@@ -242,11 +242,7 @@ const router = createBrowserRouter(
 							children: [
 								{
 									index: true,
-									element: <TestsPage />,
-								},
-								{
-									path: paths.manager.tests.SELF,
-									element: <ManagerTestsSelfPage />,
+									element: <ManagerTestsPage />,
 								},
 								{
 									path: paths.manager.tests.in()._layout,
