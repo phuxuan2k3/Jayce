@@ -50,7 +50,7 @@ export default function ManagerTestEditMain() {
 				snackMessage: "Test deleted successfully",
 				snackSeverity: "success"
 			});
-			navigate(paths.manager.tests.SELF);
+			navigate(paths.manager.tests.ROOT);
 		} catch (error) {
 			setSnackbar({
 				snackOpen: true,

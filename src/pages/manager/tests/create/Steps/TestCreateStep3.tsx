@@ -18,7 +18,7 @@ export default function TestCreateStep3() {
 	const [createTest, { isSuccess, isLoading, error }] = usePostManagerTestsMutation();
 
 	useEffect(() => {
-		if (isSuccess) navigate(paths.manager.tests.SELF);
+		if (isSuccess) navigate(paths.manager.tests.ROOT);
 	}, [isSuccess]);
 
 	const handlePublish = () => {
