@@ -10,7 +10,7 @@ export default function SearchBar({
 	onTextChange: (text: string) => void;
 }) {
 	return (
-		<div className="flex-1 relative flex border border-gray-300 rounded-md focus-within:border-primary">
+		<div className="flex-1 relative flex border border-gray-300 rounded-md shadow-sm focus-within:border-primary">
 			<input
 				type="text"
 				className="w-full h-full px-4 py-2 rounded-md focus:outline-none"

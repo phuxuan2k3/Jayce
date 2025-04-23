@@ -31,7 +31,7 @@ const paths = {
 				// TODO: add this page: '/candidate/attempts',
 				in(id: number | string = ":attemptId") {
 					return {
-						_layout: `/candidate/tests/attempts/${id}/`,
+						ROOT: `/candidate/tests/attempts/${id}/`,
 					};
 				},
 			},

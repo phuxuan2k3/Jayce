@@ -1,17 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
-import AttemptCardFinished from './components/AttemptCardFinished';
-import AttemptCardInProgress from './components/AttemptCardInProgress';
+import AttemptCard from './components/AttemptCard';
 import Sidebar from './components/Sidebar';
 import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
-import { GetUserTestsByTestIdAttemptsApiArg, useGetUserTestsByTestIdAttemptsQuery, useGetTestsByTestIdQuery } from '../../../../../features/tests/api/test.api-gen';
+import { GetUserTestsByTestIdAttemptsApiArg, useGetUserTestsByTestIdAttemptsQuery, useGetTestsByTestIdQuery, useGetCandidateCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
 import FetchState from '../../../../../components/wrapper/FetchState';
 import MyPagination from '../../../../../components/ui/common/MyPagination';
+import CandidateTestsTemplate from '../../components/CandidateTestsTemplate';
+import { useGetUsersQuery } from '../../../../../features/auth/api/auth-profile.api';
 
-const mockCompany = {
-	name: "Company",
-	imageUrl: "https://cdn.iconscout.com/icon/free/png-256/free-hashtag-icon-download-in-svg-png-gif-file-formats--number-symbol-ui-user-interface-vol-1-pack-icons-2202562.png",
-};
 const perPage = 5;
 
 const CandidateTestAttemtpsPage: React.FC = () => {
@@ -23,65 +20,68 @@ const CandidateTestAttemtpsPage: React.FC = () => {
 	});
 	const testQuery = useGetTestsByTestIdQuery({ testId });
 	const attemptsQuery = useGetUserTestsByTestIdAttemptsQuery(filters);
-	const highestScore = attemptsQuery.data?.data.reduce((acc, curr) => {
-		if (acc < curr.score) {
-			return curr.score;
-		}
-		return acc;
-	}, 0) || 0;
+
+	const currentAttemptQuery = useGetCandidateCurrentAttemptStateQuery(undefined, {
+		refetchOnMountOrArgChange: true,
+	});
+	const managerQuery = useGetUsersQuery({
+		user_ids: [Number(testQuery.data?.managerId) || 0]
+	}, {
+		skip: testQuery.data == null,
+		refetchOnMountOrArgChange: true,
+	})
 
 	const handlePaging = (page: number) => {
 		setFilters((prev) => ({ ...prev, page }));
 	}
 
+	if (testQuery.data == null || attemptsQuery.data == null) return null;
+
 	return (
-		<div className="w-full flex-grow flex flex-col items-center px-4">
-			<div className="w-full max-w-7xl py-6">
-				<h1 className="text-2xl font-bold mb-6">
-					<FetchState
-						isLoading={testQuery.isLoading}
-						error={testQuery.error}
-					>
-						{testQuery.data?.title}
-					</FetchState>
-				</h1>
-				<div className="flex">
-					<div className='flex flex-col flex-1'>
-						<FetchState
-							isLoading={testQuery.isLoading}
-							error={testQuery.error}
-						>
-							{testQuery.data != null && <AttemptCardInProgress
-								company={mockCompany}
-								test={testQuery.data}
-							/>}
-						</FetchState>
-
-						<div className="flex flex-col bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
-							<FetchState isLoading={attemptsQuery.isLoading} error={attemptsQuery.error}>
-								{attemptsQuery.data?.data.map((attempt) => (
-									<AttemptCardFinished
-										key={attempt.id}
-										attempt={attempt}
-										test={testQuery.data!}
-										company={mockCompany}
-									/>
-								))}
-								<div className="w-full text-2xl text-center font-bold text-primary mt-10 mb-6">
-									<span>Highest score: {highestScore}</span>
-								</div>
-								<div className="flex justify-center pt-5">
-									<MyPagination totalPage={attemptsQuery.data?.totalPages || 0} onPageChange={handlePaging} />
-								</div>
-							</FetchState>
+		<CandidateTestsTemplate
+			header={{
+				title: testQuery.data?.title || "",
+				description: testQuery.data?.description || "",
+			}}
+			right={
+				<Sidebar
+					attemptCardInprogressProps={{
+						test: testQuery.data!,
+						currentAttempt: currentAttemptQuery.data?.currentAttempt || null,
+					}}
+				/>
+			}
+		>
+			<div className='flex flex-col'>
+				<FetchState
+					isLoading={attemptsQuery.isLoading || attemptsQuery.isFetching}
+					error={attemptsQuery.error}>
+					{attemptsQuery.data?.total === 0 ? (
+						<div className="flex flex-col items-center justify-center w-full h-full text-gray-500">
+							<p className="text-lg font-semibold">No attempts found</p>
 						</div>
+					) : null}
+					{attemptsQuery.data && (
+						<div className='flex flex-col h-full lg:max-h-[600px] overflow-y-auto'>
+							{attemptsQuery.data.data.map((attempt) => (
+								<AttemptCard
+									key={attempt.id}
+									{...attempt}
+									author={{
+										company: managerQuery.data?.users[0]?.metadata.company || "",
+										avatar: managerQuery.data?.users[0]?.metadata.avatarPath || "",
+									}}
+									testDetail={testQuery.data!}
+								/>
+							))}
+						</div>
+					)}
+					<div className="flex justify-center pt-5">
+						<MyPagination totalPage={attemptsQuery.data?.totalPages || 0} onPageChange={handlePaging} />
 					</div>
-
-					<Sidebar />
-
-				</div>
+				</FetchState>
 			</div>
-		</div>
+		</CandidateTestsTemplate>
 	);
 }
 

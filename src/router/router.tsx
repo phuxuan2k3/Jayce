@@ -132,7 +132,7 @@ const router = createBrowserRouter(
 								// In an Attempt
 
 								{
-									path: paths.candidate.tests.attempts.in()._layout,
+									path: paths.candidate.tests.attempts.in().ROOT,
 									children: [
 										{
 											index: true,

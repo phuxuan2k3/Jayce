@@ -3,27 +3,26 @@ import GradientBorderGood from "../../../../../components/ui/border/GradientBord
 import { GetTestsApiArg, useGetTagsQuery } from "../../../../../features/tests/api/test.api-gen";
 
 type Props = {
-	filter: GetTestsApiArg;
-	setFilters: React.Dispatch<React.SetStateAction<GetTestsApiArg>>;
+	filterTags: GetTestsApiArg["tags"];
+	onTagsChange: (tags: GetTestsApiArg["tags"]) => void;
 }
 
-export default function TagsList({ filter, setFilters }: Props) {
-	const { data: tags, isLoading, error } = useGetTagsQuery();
-	if (!tags) return null;
+export default function TagsList({
+	filterTags,
+	onTagsChange,
+}: Props) {
+	const { data: suggestedTags, isLoading, error } = useGetTagsQuery();
+	if (!suggestedTags) return null;
 
 	const handleTagsToggle = (tagId: number) => {
-		const filterTagsHasTag = determineTagsFilterHasTag(filter.tags, tagId);
+		const filterTagsHasTag = determineTagsFilterHasTag(filterTags, tagId);
 		if (filterTagsHasTag) {
-			setFilters({
-				...filter,
-				tags: addTagToTagsFilter(filter.tags, tagId)
-			});
+			const newTags = removeTagFromTagsFilter(filterTags, tagId);
+			onTagsChange(newTags);
 		}
 		else {
-			setFilters({
-				...filter,
-				tags: removeTagFromTagsFilter(filter.tags, tagId)
-			});
+			const newTags = addTagToTagsFilter(filterTags, tagId);
+			onTagsChange(newTags);
 		}
 	};
 
@@ -35,13 +34,13 @@ export default function TagsList({ filter, setFilters }: Props) {
 				error={error}
 			>
 				<div className="flex flex-wrap gap-2">
-					{tags?.map((tag) => {
-						const isTagSelected = determineTagsFilterHasTag(filter.tags, tag.id);
+					{suggestedTags?.map((tag) => {
+						const isTagSelected = determineTagsFilterHasTag(filterTags, tag.id);
 						return (
 							<GradientBorderGood
 								className={`cursor-pointer select-none ${isTagSelected ? "text-white" : "text-black"}`}
 								onClick={() => handleTagsToggle(tag.id)}
-								bgClass={isTagSelected ? "bg-blue-chill-700" : null}
+								bgClass={isTagSelected ? "bg-primary-toned-600" : null}
 								key={tag.id}>
 								{tag.name}
 							</GradientBorderGood>
@@ -53,18 +52,18 @@ export default function TagsList({ filter, setFilters }: Props) {
 	);
 }
 
-const addTagToTagsFilter = (filter: GetTestsApiArg["tags"], tag: number): GetTestsApiArg["tags"] => {
-	if (!filter) return tag.toString();
-	if (typeof filter === 'string') return [filter, tag.toString()];
-	if (Array.isArray(filter)) return [...filter, tag.toString()];
-	return filter;
+const addTagToTagsFilter = (tagsFilter: GetTestsApiArg["tags"], tagId: number): GetTestsApiArg["tags"] => {
+	if (!tagsFilter) return tagId.toString();
+	if (typeof tagsFilter === 'string') return [tagsFilter, tagId.toString()];
+	if (Array.isArray(tagsFilter)) return [...tagsFilter, tagId.toString()];
+	return tagsFilter;
 }
 
-const removeTagFromTagsFilter = (filter: GetTestsApiArg["tags"], tag: number): GetTestsApiArg["tags"] => {
-	if (!filter) return filter;
-	if (typeof filter === 'string') return filter === tag.toString() ? undefined : filter;
-	if (Array.isArray(filter)) return filter.filter((id) => id !== tag.toString());
-	return filter;
+const removeTagFromTagsFilter = (tagsFilter: GetTestsApiArg["tags"], tagId: number): GetTestsApiArg["tags"] => {
+	if (!tagsFilter) return tagsFilter;
+	if (typeof tagsFilter === 'string') return tagsFilter === tagId.toString() ? undefined : tagsFilter;
+	if (Array.isArray(tagsFilter)) return tagsFilter.filter((id) => id !== tagId.toString());
+	return tagsFilter;
 }
 
 const determineTagsFilterHasTag = (filterTags: GetTestsApiArg["tags"], tagId: number): boolean => {

@@ -1,16 +1,27 @@
 import { useNavigate } from "react-router-dom"
 import useGetTestIdParams from "../../../../../../features/tests/hooks/useGetTestIdParams";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import ModalBase from "../../../../../../components/ui/modal/Modal.base";
 import { usePostCandidateCurrentAttemptNewMutation } from "../../../../../../features/tests/api/test.api-gen";
 import paths from "../../../../../../router/paths";
+import AttemptCardInProgress, { AttemptCardInProgressProps } from "./AttemptCardInProgress";
 
-export default function Sidebar() {
+export default function Sidebar({
+	attemptCardInprogressProps: {
+		test,
+		currentAttempt,
+	},
+}: {
+	attemptCardInprogressProps: {
+		test: AttemptCardInProgressProps["test"];
+		currentAttempt: AttemptCardInProgressProps["currentAttempt"] | null
+	};
+}) {
 	const testId = useGetTestIdParams();
 	const navigate = useNavigate();
 	const [openNewAttemptModal, setOpenNewAttemptModal] = useState(false);
 
-	const [postNewAttempt, { isLoading, isSuccess, error }] = usePostCandidateCurrentAttemptNewMutation();
+	const [postNewAttempt, { isLoading, isSuccess }] = usePostCandidateCurrentAttemptNewMutation();
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -29,12 +40,47 @@ export default function Sidebar() {
 		navigate(paths.candidate.tests._layout);
 	};
 
-	const handleViewAssessment = () => {
-		navigate(paths.candidate.tests.in(testId).ASSESSMENT);
-	};
-
 	return (
-		<>
+		<Fragment>
+			<div className="w-full h-fit flex flex-col gap-8">
+				{currentAttempt && (
+					<AttemptCardInProgress
+						test={test}
+						currentAttempt={currentAttempt}
+					/>
+				)}
+				<div className="flex flex-col bg-white rounded-lg shadow-primary py-6 px-12 border-r border-b border-primary gap-4">
+					<button
+						className="w-full px-3 font-semibold rounded-lg py-2 text-white bg-primary cursor-pointer"
+						onClick={() => {
+							if (currentAttempt != null) {
+								setOpenNewAttemptModal(true);
+							}
+							else {
+								handleNewAttemptAccept();
+							}
+						}}
+						disabled={isLoading}
+					>
+						Start a new quiz
+					</button>
+					<button
+						className="w-full px-3 font-semibold rounded-lg py-2 border-primary text-primary border-2 cursor-pointer"
+						onClick={handleBackToTestLists}>
+						Back to Questions
+					</button>
+				</div>
+
+				<div className="bg-white rounded-lg shadow-secondary px-6 pt-4 pb-8">
+					<h3 className="text-lg font-bold">Notes</h3>
+					<p className="text-sm mt-2">
+						Please read each question carefully and double-check your
+						answers. Manage your time wisely, stay calm, and focus on
+						accuracy rather than speed. Good luck!
+					</p>
+				</div>
+			</div>
+
 			<ModalBase
 				isOpen={openNewAttemptModal}
 				onClose={() => setOpenNewAttemptModal(false)}
@@ -62,34 +108,6 @@ export default function Sidebar() {
 					</div>
 				</div>
 			</ModalBase>
-			<div className="w-64 ml-4">
-				<div>
-					<button
-						className="w-full px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer"
-						onClick={() => setOpenNewAttemptModal(true)}
-						disabled={isLoading}
-					>
-						Start a new quiz
-					</button>
-					<span className="text-sm text-[#39A0AD] mt-2 block">
-						{error && "Failed to start a new quiz. Please try again."}
-					</span>
-				</div>
-				<button className="mt-4 w-full px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleBackToTestLists}>
-					Back to Questions
-				</button>
-				<div className="mt-4 bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
-					<h3 className="text-lg font-bold">Notes</h3>
-					<p className="text-sm text-[#39A0AD] mt-2">
-						Please read each question carefully and double-check your
-						answers. Manage your time wisely, stay calm, and focus on
-						accuracy rather than speed. Good luck!
-					</p>
-				</div>
-				<button className="mt-4 w-full border bg-gradient-text text-md font-bold text-white px-6 py-3 rounded-lg cursor-pointer" onClick={handleViewAssessment}>
-					View Evaluated
-				</button>
-			</div>
-		</>
+		</Fragment>
 	);
 }

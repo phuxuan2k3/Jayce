@@ -6,18 +6,25 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { toCompanyImagesDir } from "../../../../../helpers/images";
 import paths from "../../../../../router/paths";
 import GradientBorderGood from "../../../../../components/ui/border/GradientBorder.good";
-import { GetTestsApiResponse } from "../../../../../features/tests/api/test.api-gen";
+import CardTemplate from "../../components/CardTemplate";
 
-type Props = GetTestsApiResponse['data'][0] & {
+// Define specific Props interface with only the properties being used
+interface TestCardProps {
+	id: number;
+	managerId: string;
 	company: string;
-};
+	avatar: string;
+	minutesToAnswer: number;
+	createdAt: string;
+	title: string;
+	tags: { name: string }[];
+	answerCount: number;
+}
 
-const TestCard: React.FC<Props> = ({ id, managerId, minutesToAnswer, company, createdAt, title, tags, answerCount }: Props) => {
+const TestCard: React.FC<TestCardProps> = ({ id, managerId, minutesToAnswer, company, createdAt, title, tags, avatar, answerCount }: TestCardProps) => {
 	const navigate = useNavigate();
-	const avatar = toCompanyImagesDir(managerId);
 	const minutesToAnswerString = minutesToAnswer === 1 ? "1 minute" : `${minutesToAnswer} minutes`;
 
 	const handleOnCardClick = () => {
@@ -25,7 +32,8 @@ const TestCard: React.FC<Props> = ({ id, managerId, minutesToAnswer, company, cr
 	}
 
 	return (
-		<div className="bg-blue-chill-100 border border-solid border-blue-chill-400 p-4 rounded-2xl shadow-sm mb-4 cursor-pointer" onClick={handleOnCardClick}>
+		<CardTemplate
+			handleOnCardClick={handleOnCardClick}>
 			<div className="flex flex-row items-center gap-3 mb-3 h-fit">
 				<Avatar className="" src={avatar} alt={managerId} />
 				<div className="flex flex-col h-fit">
@@ -34,10 +42,14 @@ const TestCard: React.FC<Props> = ({ id, managerId, minutesToAnswer, company, cr
 						<span className="mx-2">&#8226;</span>
 						<span className="">{formatDistanceToNow(new Date(createdAt))}</span>
 					</div>
-					<h3 className="text-lg font-semibold text-gray-800 my-0">{title}</h3>
+					<h3 className="text-lg font-semibold text-gray-800 my-0">
+						{title}
+					</h3>
 				</div>
 			</div>
+
 			<hr className="my-4 border-blue-chill-200" />
+
 			<div className="flex flex-wrap gap-2 mb-4">
 				{tags.map((tag, index: number) => (
 					<GradientBorderGood key={index}>
@@ -68,7 +80,7 @@ const TestCard: React.FC<Props> = ({ id, managerId, minutesToAnswer, company, cr
 					<ArrowDropDownIcon />
 				</div>
 			</div>
-		</div>
+		</CardTemplate>
 	);
 };
 

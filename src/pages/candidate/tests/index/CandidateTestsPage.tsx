@@ -34,9 +34,9 @@ const CandidateTestsPage: React.FC = () => {
 				title: "Interview Questions",
 				description: "Review this list of interview questions and answers verified by hiring managers and candidates.",
 			}}
-			rightColumn={
-				<div className="h-full overflow-y-auto p-2 flex flex-col gap-8">
-					<div className="flex flex-row justify-between items-stretch gap-4 font-sans py-1">
+			right={
+				<div className="h-full flex flex-col gap-8">
+					<div className="flex flex-row justify-between items-stretch gap-4 font-sans mt-2">
 						<SearchBar
 							text={searchText}
 							onTextChange={(text) => setSearchText(text)}
@@ -52,8 +52,8 @@ const CandidateTestsPage: React.FC = () => {
 
 					<div className="shadow-primary h-fit lg:max-h-[400px] px-6 pt-4 pb-8 rounded-lg overflow-hidden">
 						<TagsList
-							filter={filters}
-							setFilters={setFilters}
+							filterTags={filters.tags}
+							onTagsChange={(tags) => setFilters((prev) => ({ ...prev, tags }))}
 						/>
 					</div>
 
