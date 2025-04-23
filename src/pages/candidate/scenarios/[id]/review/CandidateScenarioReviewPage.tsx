@@ -2,8 +2,9 @@ import * as React from "react";
 import { FaArrowRight, FaChevronRight, FaPaperPlane, FaRegUser } from "react-icons/fa";
 import { Sparkles } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Attempt, Question, Scenario, ScenarioQuestion } from "../../../../../features/scenarios/types";
+import { Attempt, Question, Scenario, ScenarioQuestion, SubmissionStatus } from "../../../../../features/scenarios/types";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
+import { useGetAttemptMutation } from "../../../../../features/scenarios/apis/concrete/ekko.scenario-api";
 import paths from "../../../../../router/paths";
 
 const CandidateScenarioReviewPage = () => {
@@ -16,7 +17,56 @@ const CandidateScenarioReviewPage = () => {
 		navigate(paths.candidate.scenarios._layout);
 	}
 
-	console.log("Review:", attempt);
+	const [getAttempt] = useGetAttemptMutation();
+	const [currentAttempt, setCurrentAttempt] = React.useState<Attempt>(attempt);
+	const [isFetchingStatus, setIsFetchingStatus] = React.useState(false);
+	const [statusCheckComplete, setStatusCheckComplete] = React.useState(false);
+
+	React.useEffect(() => {
+		let intervalId: NodeJS.Timeout;
+		let retries = 0;
+
+		const shouldRefetch = () =>
+			currentAttempt.answers.some((ans) => SubmissionStatus[ans.status as unknown as keyof typeof SubmissionStatus] === SubmissionStatus.SUBMISSION_STATUS_IN_PROGRESS);
+		console.log("Should refetch:", shouldRefetch());
+
+		const refetchAttempt = async () => {
+			try {
+				const updated = await getAttempt({ id: attempt.id }).unwrap();
+				setCurrentAttempt(updated.attempt);
+
+				const allSuccess = updated.attempt.answers.every(
+					(ans) => SubmissionStatus[ans.status as unknown as keyof typeof SubmissionStatus] !== SubmissionStatus.SUBMISSION_STATUS_IN_PROGRESS
+				);
+
+				if (allSuccess || retries >= 5) {
+					clearInterval(intervalId);
+					setIsFetchingStatus(false);
+					setStatusCheckComplete(true);
+				}
+			} catch (err) {
+				console.error("Failed to refetch attempt:", err);
+				clearInterval(intervalId);
+				setIsFetchingStatus(false);
+				setStatusCheckComplete(true);
+			}
+		};
+
+		if (shouldRefetch()) {
+			setIsFetchingStatus(true);
+			intervalId = setInterval(() => {
+				retries += 1;
+				console.log("Refetching attempt status...");
+				refetchAttempt();
+			}, 2000);
+		}
+
+		return () => {
+			if (intervalId) clearInterval(intervalId);
+		};
+	}, []);
+
+	console.log("Review:", currentAttempt);
 
 	let submittedDate;
 
@@ -27,7 +77,7 @@ const CandidateScenarioReviewPage = () => {
 	}
 
 	const [selectedTab, setSelectedTab] = React.useState<"questions" | "history">("questions");
-	const [selectedQuestion, setSelectedQuestion] = React.useState<ScenarioQuestion>();
+	const [selectedQuestion, setSelectedQuestion] = React.useState<ScenarioQuestion>(scenario.questions[0]);
 	const [showHint, setShowHint] = React.useState(false);
 
 	const handleBack = () => {
@@ -39,13 +89,19 @@ const CandidateScenarioReviewPage = () => {
 		setShowHint(false);
 	};
 
+	console.log({
+		isFetchingStatus,
+		statusCheckComplete,
+		inProgress: currentAttempt.answers.some((ans) => SubmissionStatus[ans.status as unknown as keyof typeof SubmissionStatus] === SubmissionStatus.SUBMISSION_STATUS_IN_PROGRESS),
+	});
+
 	return (
 		<>
 			<div className="flex gap-4 mt-10 font-arya">
 				<div className="w-[65%]  mx-12">
 					<div className="flex justify-between mb-8">
 						<div className="flex items-center gap-10">
-							<span className="text-3xl font-bold text-red-600">Attempt #{attempt.id}</span>
+							<span className="text-3xl font-bold text-red-600">Attempt #{currentAttempt.id}</span>
 							<div className={`px-3 py-1 rounded-lg text-sm font-medium font-bold text-[var(--primary-color)] border border-gray-500`}>
 								Submitted on: {submittedDate.toLocaleDateString()}
 							</div>
@@ -79,34 +135,34 @@ const CandidateScenarioReviewPage = () => {
 					</div>
 
 					<hr className=" border-gray-400 my-4" />
-					<span className="text-2xl font-bold text-[var(--primary-color)] flex gap-3">
-						<Sparkles />  Overall assessment
+					<span className="text-2xl font-bold text-[var(--primary-color)] flex items-center gap-3">
+						<Sparkles />  Overall assessment {(isFetchingStatus || (!statusCheckComplete && currentAttempt.answers.some((ans) => SubmissionStatus[ans.status as unknown as keyof typeof SubmissionStatus] === SubmissionStatus.SUBMISSION_STATUS_IN_PROGRESS))) ? <span className="text-secondary-toned-500 text-sm">(We're still processing your answers. Please check back later.)</span> : null}
 					</span>
 					<div className="flex items-center gap-3 mt-3">
 						<span className="text-xl text-[var(--primary-color)] font-bold">Relevance: </span>
 						<div className={`px-3 py-1 rounded-lg text-sm font-bold text-[var(--primary-color)] border-2 border-gray-500`}>
-							{attempt.answers.reduce((sum, answer) => sum + (answer.relevance || 0), 0) / attempt.answers.length}/10
+							{currentAttempt.answers.reduce((sum, answer) => sum + (answer.relevance || 0), 0) / currentAttempt.answers.length}/10
 						</div>
 					</div>
 					{/* <span className="text-[var(--primary-color)]">{history.rel}</span> */}
 					<div className="flex items-center gap-3 mt-3">
 						<span className="text-xl text-[var(--primary-color)] font-bold">Clarity and Completeness: </span>
 						<div className={`px-3 py-1 rounded-lg text-sm font-bold text-[var(--primary-color)] border-2 border-gray-500`}>
-							{attempt.answers.reduce((sum, answer) => sum + (answer.clarity_completeness || 0), 0) / attempt.answers.length}/10
+							{currentAttempt.answers.reduce((sum, answer) => sum + (answer.clarity_completeness || 0), 0) / currentAttempt.answers.length}/10
 						</div>
 					</div>
 					{/* <span className="text-[var(--primary-color)]">{history.cla}</span> */}
 					<div className="flex items-center gap-3 mt-3">
 						<span className="text-xl text-[var(--primary-color)] font-bold">Accuracy: </span>
 						<div className={`px-3 py-1 rounded-lg text-sm font-bold text-[var(--primary-color)] border-2 border-gray-500`}>
-							{attempt.answers.reduce((sum, answer) => sum + (answer.accuracy || 0), 0) / attempt.answers.length}/10
+							{currentAttempt.answers.reduce((sum, answer) => sum + (answer.accuracy || 0), 0) / currentAttempt.answers.length}/10
 						</div>
 					</div>
 					{/* <span className="text-[var(--primary-color)]">{history.acc}</span> */}
 					<div className="flex items-center gap-3 mt-4 ">
 						<span className="text-xl text-[var(--primary-color)] font-bold">Overall: </span>
 						<div className={`px-3 py-1 rounded-lg text-sm font-bold text-[var(--primary-color)] border-2 border-gray-500`}>
-							{attempt.answers.reduce((sum, answer) => sum + (answer.overall || 0), 0) / attempt.answers.length}/10
+							{currentAttempt.answers.reduce((sum, answer) => sum + (answer.overall || 0), 0) / currentAttempt.answers.length}/10
 						</div>
 					</div>
 
