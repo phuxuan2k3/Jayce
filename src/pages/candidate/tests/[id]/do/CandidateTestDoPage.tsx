@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import QuestionComponent from './components/Question';
+import QuestionCard from './components/QuestionCard';
 import Sidebar from './components/Sidebar';
 import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
 import paths from '../../../../../router/paths';
@@ -61,7 +61,7 @@ const CandidateTestDoPage = () => {
 						) : (
 							<>
 								{doQuery.data &&
-									<QuestionComponent
+									<QuestionCard
 										currentAttempt={currentAttempt}
 										question={currentQuestion}
 										totalQuestion={doQuery.data.questions.length}

@@ -17,7 +17,7 @@ interface QuestionComponentProps {
 	};
 }
 
-const QuestionComponent: React.FC<QuestionComponentProps> = ({
+const QuestionCard: React.FC<QuestionComponentProps> = ({
 	currentAttempt,
 	totalQuestion,
 	question
@@ -82,7 +82,7 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
 								>
 									<input
 										type="radio"
-										checked={currentAnswer && currentAnswer.chosenOption === option.id}
+										checked={currentAnswer ? currentAnswer.chosenOption === option.id : false}
 										onChange={() => handleAnswerQuestion(option.id)}
 										className="h-4 w-4 border-primary focus:ring-primary accent-primary cursor-pointer"
 									/>
@@ -112,4 +112,4 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
 	);
 };
 
-export default QuestionComponent;
+export default QuestionCard;

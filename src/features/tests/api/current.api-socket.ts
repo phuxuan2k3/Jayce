@@ -110,7 +110,6 @@ const currentAttemptApi = testApiGen.enhanceEndpoints({
 					socket.on("CLOCK_SYNCED", ({ secondsLeft }) => {
 						updateCachedData((draft) => {
 							if (draft.currentAttempt == null) return;
-							console.log("CLOCK_SYNCED", secondsLeft);
 							draft.currentAttempt.secondsLeft = secondsLeft;
 						});
 					});
@@ -154,7 +153,7 @@ const currentAttemptApi = testApiGen.enhanceEndpoints({
 }).injectEndpoints({
 	endpoints: (builder) => ({
 		answerTestQuestion: builder.mutation<
-			void,
+			null,
 			{
 				attemptId: number,
 				questionId: number,
@@ -168,17 +167,22 @@ const currentAttemptApi = testApiGen.enhanceEndpoints({
 				try {
 					const socket = connectSocket(getState);
 					socket.emit("ANSWERED", { attemptId, questionId, optionId }, (error) => {
-						if (error.error) throw new Error(error.error);
+						console.error(error);
 					});
 					return {
-						data: void 0,
+						data: null,
+						error: undefined,
 					};
 				}
 				catch (error) {
 					clearSocket();
-					console.error("Error in currentTestApi >> answerTestQuestion");
 					console.error(error);
-					throw error;
+					return {
+						error: {
+							status: 500,
+							data: "Error in currentTestApi >> answerTestQuestion",
+						}
+					};
 				}
 			}
 		})
