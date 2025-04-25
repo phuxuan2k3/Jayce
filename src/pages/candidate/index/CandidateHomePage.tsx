@@ -85,12 +85,8 @@ const CandidateHomePage = () => {
         navigate(paths.candidate.scenarios.in(id)._layout);
     }
 
-    const navigateToScenarioChallenge = (id: string) => {
-        navigate(paths.candidate.scenarios.in(id).ANSWER);
-    }
-
-    const navigateToTestChallenge = (id: string) => {
-        navigate(paths.candidate.tests.in(id).DO);
+    const navigateToTest = (id: string) => {
+        navigate(paths.candidate.tests.in(id).ATTEMPTS);
     }
 
     return (
@@ -205,7 +201,7 @@ const CandidateHomePage = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button className="px-10 rounded-lg py-2 font-bold cursor-pointer bg-[var(--primary-color)] text-white" onClick={() => navigateToTestChallenge(challengeData.id.toString())}>
+                                            <button className="px-10 rounded-lg py-2 font-bold cursor-pointer bg-[var(--primary-color)] text-white" onClick={() => navigateToTest(challengeData.id.toString())}>
                                                 Start now
                                             </button>
                                         </div>
@@ -241,7 +237,7 @@ const CandidateHomePage = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button className="px-10 rounded-lg py-2 font-bold cursor-pointer bg-[var(--primary-color)] text-white" onClick={() => navigateToScenarioChallenge(randomScenarioData.scenario.id.toString())}>
+                                            <button className="px-10 rounded-lg py-2 font-bold cursor-pointer bg-[var(--primary-color)] text-white" onClick={() => navigateToScenario(randomScenarioData.scenario.id.toString())}>
                                                 Start now
                                             </button>
                                         </div>
