@@ -7,6 +7,7 @@ import { testActions, testSelectors } from "../../../../../../features/tests/sto
 import { CurrentAttempt } from "../../../../../../features/tests/types/current";
 import { usePostCandidateCurrentAttemptSubmitMutation } from "../../../../../../features/tests/api/test.api-gen";
 import { useAppDispatch, useAppSelector } from "../../../../../../app/hooks";
+import { AlarmClock } from "lucide-react";
 
 interface SidebarProps {
 	currentAttempt: CurrentAttempt;
@@ -20,7 +21,7 @@ export default function Sidebar({
 	const testId = useGetTestIdParams();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const [submitTest, { isSuccess, isLoading, error }] = usePostCandidateCurrentAttemptSubmitMutation();
+	const [submitTest, { isSuccess, isLoading }] = usePostCandidateCurrentAttemptSubmitMutation();
 
 	const currentQuestionIndex = useAppSelector(testSelectors.selectCurrentQuestionIndex);
 
@@ -40,19 +41,20 @@ export default function Sidebar({
 
 	// TODO: clear my choice still has background color
 	return (
-		<div className="flex flex-col w-64 ml-4">
-			<div className="font-bold text-xl flex justify-center mb-4" >
+		<div className="flex flex-col h-full w-full">
+			<div className="flex justify-center items-center gap-1 font-bold text-xl mb-4 shadow-secondary bg-white rounded-lg py-4 text-secondary" >
+				<AlarmClock size={24} strokeWidth={2.5} className="mb-1 mr-1" />
 				<TestTimer
 					timeLeft={secondsLeft}
 				/>
 			</div>
 			<div className="bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
-				<div className="mb-4 font-semibold">Quiz navigation</div>
-				<div className="grid grid-cols-5 gap-2">
+				<div className="mb-4 font-semibold text-primary text-xl">Questions</div>
+				<div className="grid grid-cols-5 gap-4 lg:grid-cols-7 lg:gap-2">
 					{questionIds.map((id, index) => (
 						<button
 							key={index}
-							className={`w-10 h-10 rounded-full text-sm font-bold text-primary border border-primary cursor-pointer ${currentQuestionIndex === index
+							className={`w-full aspect-square rounded-full text-sm font-bold text-primary border border-primary cursor-pointer ${currentQuestionIndex === index
 								? "bg-primary-toned-600 text-white"
 								: useAppSelector(state => testSelectors.selectQuestionIdIsFlagged(state, id))
 									? "bg-secondary-toned-200"
@@ -67,22 +69,20 @@ export default function Sidebar({
 					))}
 				</div>
 			</div>
-			<div>
-				<button
-					disabled={isLoading}
-					className="mt-4 w-full bg-gradient-text text-md font-bold text-white px-6 py-3 rounded-lg"
-					onClick={handleSubmitClick}>
-					Submit
-				</button>
-				{error &&
-					<span className="text-sm text-red-600 block">There was an error.</span>
-				}
-			</div>
+
+			<hr className="mt-auto mb-2 border-primary-toned-700/50" />
+
 			<button
-				className="mt-4 w-full px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer"
+				disabled={isLoading}
+				className="mt-4 w-full font-bold text-white bg-primary py-2 rounded-lg border-2 border-primary"
+				onClick={handleSubmitClick}>
+				Submit
+			</button>
+			<button
+				className="mt-4 w-full font-bold text-secondary bg-white border-2 border-secondary py-2 rounded-lg"
 				onClick={handleCancelTest}>
 				Cancel Test
 			</button>
-		</div>
+		</div >
 	);
 }

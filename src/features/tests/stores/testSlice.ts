@@ -81,7 +81,7 @@ const testSlice = createSlice({
 			const question = state.currentAttempt.questionById[questionId];
 			if (!question) return false;
 			return question.isFlagged;
-		}
+		},
 	},
 });
 
