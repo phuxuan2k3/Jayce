@@ -22,10 +22,7 @@ const CandidateTestDoPage = () => {
 	// TODO: Add notification upon test ends.
 	useEffect(() => {
 		// Make sure it has fresh data from server, not cached data
-		if (stateQuery.isFetching == true) return;
-		if (stateQuery.isError) throw new Error("Failed to get current Attempt");
-		if (stateQuery.data == null) return;
-		if (stateQuery.data.hasCurrentAttempt === false) {
+		if (stateQuery.data?.hasCurrentAttempt === false) {
 			// TODO: Add modal to notify user that the test has ended.
 			navigate(paths.candidate.tests.in(testId).ATTEMPTS);
 		}
