@@ -149,7 +149,7 @@ const CandidateScenariosPage = () => {
 						}
 
 						return (
-							<div key={index} className="bg-[#FAFAFA] p-4 rounded-lg mb-4 shadow-lg cursor-pointer" onClick={() => handlePractice(scenario.id)}>
+							<div key={index} className="bg-[#FAFAFA] p-4 rounded-lg mb-4 border border-r border-b border-primary border-solid shadow-primary cursor-pointer" onClick={() => handlePractice(scenario.id)}>
 								<div className="text-xl font-bold mb-3 hover:text-primary">{scenario.name}</div>
 								<div className="text-sm text-gray-600">{scenario.description}</div>
 								<div className="mt-4 flex justify-between items-center text-gray-500">
