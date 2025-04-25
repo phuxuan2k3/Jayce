@@ -11,18 +11,17 @@ import { AlarmClock } from "lucide-react";
 
 interface SidebarProps {
 	currentAttempt: CurrentAttempt;
-	questionIds: number[];
 }
 
 export default function Sidebar({
 	currentAttempt: { secondsLeft, answers },
-	questionIds
 }: SidebarProps) {
 	const testId = useGetTestIdParams();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const [submitTest, { isSuccess, isLoading }] = usePostCandidateCurrentAttemptSubmitMutation();
 
+	const questions = useAppSelector(testSelectors.selectQuestionsArray);
 	const currentQuestionIndex = useAppSelector(testSelectors.selectCurrentQuestionIndex);
 
 	const handleCancelTest = () => {
@@ -51,22 +50,25 @@ export default function Sidebar({
 			<div className="bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
 				<div className="mb-4 font-semibold text-primary text-xl">Questions</div>
 				<div className="grid grid-cols-5 gap-4 lg:grid-cols-7 lg:gap-2">
-					{questionIds.map((id, index) => (
-						<button
-							key={index}
-							className={`w-full aspect-square rounded-full text-sm font-bold text-primary border border-primary cursor-pointer ${currentQuestionIndex === index
-								? "bg-primary-toned-600 text-white"
-								: useAppSelector(state => testSelectors.selectQuestionIdIsFlagged(state, id))
-									? "bg-secondary-toned-200"
-									: answers.find(answer => answer.questionId === id)?.chosenOption != null
-										? "bg-primary-toned-200"
-										: "bg-white"
-								}`}
-							onClick={() => dispatch(testActions.setCurrentQuestionIndex(index))}
-						>
-							{index + 1}
-						</button>
-					))}
+					{questions == null || questions.length === 0
+						? (
+							<div>No questions found</div>
+						) : (questions.map((question, index) => (
+							<button
+								key={index}
+								className={`w-full aspect-square rounded-full text-sm font-bold text-primary border border-primary cursor-pointer ${currentQuestionIndex === index
+									? "bg-primary-toned-600 text-white"
+									: question.isFlagged
+										? "bg-secondary-toned-200"
+										: answers.find(answer => answer.questionId === question.id)?.chosenOption != null
+											? "bg-primary-toned-200"
+											: "bg-white"
+									}`}
+								onClick={() => dispatch(testActions.setCurrentQuestionIndex(index))}
+							>
+								{index + 1}
+							</button>
+						)))}
 				</div>
 			</div>
 

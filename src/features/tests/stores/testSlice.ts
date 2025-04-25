@@ -82,6 +82,22 @@ const testSlice = createSlice({
 			if (!question) return false;
 			return question.isFlagged;
 		},
+		selectQuestionsArray: (state: TestState): {
+			id: number;
+			isFlagged: boolean;
+			index: number;
+		}[] | null => {
+			if (!state.currentAttempt) return null;
+			return Object.entries(state.currentAttempt.questionById).map(([questionId, question]) => ({
+				id: Number(questionId),
+				...question,
+			} as {
+				id: number;
+				isFlagged: boolean;
+				index: number;
+			}));
+		}
+
 	},
 });
 

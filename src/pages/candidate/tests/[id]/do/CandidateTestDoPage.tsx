@@ -6,7 +6,9 @@ import { useAppSelector } from '../../../../../app/hooks';
 import CandidateTestsTemplate from '../../components/CandidateTestsTemplate';
 
 const CandidateTestDoPage = () => {
-	const doQuery = useGetCandidateCurrentAttemptDoQuery();
+	const doQuery = useGetCandidateCurrentAttemptDoQuery(undefined, {
+		refetchOnMountOrArgChange: true,
+	});
 	const currentQuestionIndex = useAppSelector(testSelectors.selectCurrentQuestionIndex);
 	const stateQuery = useGetCandidateCurrentAttemptStateQuery(undefined, {
 		refetchOnMountOrArgChange: true,
@@ -28,7 +30,6 @@ const CandidateTestDoPage = () => {
 			}}
 			right={
 				<Sidebar
-					questionIds={doQuery.data.questions.map((q) => q.id) ?? []}
 					currentAttempt={currentAttempt}
 				/>
 			}

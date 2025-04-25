@@ -37,7 +37,7 @@ const url = {
 };
 
 const mock = {
-	userId: (import.meta.env.VITE_USER_ID as string) || 'anngo',
+	userId: (import.meta.env.VITE_USER_ID as string) || '1',
 	roleId: (import.meta.env.VITE_ROLE_ID as string) || '1',
 }
 
