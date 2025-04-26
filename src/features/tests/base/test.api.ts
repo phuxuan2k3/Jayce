@@ -4,7 +4,9 @@ import serviceBaseQueryWithReauth from '../../../app/serviceBaseQueryAuth';
 
 export const testApi = createApi({
 	reducerPath: 'testApi',
-	baseQuery: serviceBaseQueryWithReauth(url.thresh.base),
+	baseQuery: async (args, api, extra) => {
+		return await serviceBaseQueryWithReauth(url.thresh.base)(args, api, extra);
+	},
 	endpoints: () => ({}),
 });
 

@@ -1,4 +1,5 @@
 import { AuthResponse, Role } from '../types/auth';
+import { mock } from "../../../app/env"
 
 // @ts-ignore
 const candidateAuthResponse: AuthResponse = {
@@ -7,13 +8,13 @@ const candidateAuthResponse: AuthResponse = {
 		refresh_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.mockRefreshToken',
 		role: Role.Candidate,
 		safe_id: 'safe12345',
-		user_id: 'user12345',
+		user_id: mock.userId,
 	},
 	user: {
 		username: 'johndoe',
 		email: 'johndoe@example.com',
 		role: Role.Candidate,
-		id: 'user12345',
+		id: mock.userId,
 		metadata: {
 			fullname: 'John Doe',
 			company: 'Tech Solutions Inc.',
@@ -24,19 +25,20 @@ const candidateAuthResponse: AuthResponse = {
 	},
 };
 
+// @ts-ignore
 const managerAuthResponse: AuthResponse = {
 	token_info: {
 		access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.mockManagerAccessToken',
 		refresh_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.mockManagerRefreshToken',
 		role: Role.Manager,
 		safe_id: 'safe67890',
-		user_id: 'user67890',
+		user_id: mock.userId,
 	},
 	user: {
 		username: 'janedoe',
 		email: 'janedoe@example.com',
 		role: Role.Manager,
-		id: 'user67890',
+		id: mock.userId,
 		metadata: {
 			fullname: 'Jane Doe',
 			company: 'Business Solutions Ltd.',
@@ -48,7 +50,7 @@ const managerAuthResponse: AuthResponse = {
 };
 
 // Decide which mock response to be used
-// const mockAuthResponse = candidateAuthResponse;
-const mockAuthResponse = managerAuthResponse;
+const mockAuthResponse = candidateAuthResponse;
+// const mockAuthResponse = managerAuthResponse;
 
 export default mockAuthResponse;

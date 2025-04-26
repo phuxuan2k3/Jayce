@@ -1,3 +1,4 @@
+import { GetUserAttemptsByAttemptIdAnswersApiResponse, GetUserAttemptsByAttemptIdApiResponse } from "../api/test.api-gen";
 import { QuestionDTO } from "../types/crud";
 
 export const mockQuestions: QuestionDTO[] = [
@@ -30,3 +31,88 @@ export const mockQuestions: QuestionDTO[] = [
 		points: 1,
 	},
 ]
+
+export const mockGetUserAttemptsByAttemptIdAnswersApiResponse: GetUserAttemptsByAttemptIdAnswersApiResponse = {
+	page: 1,
+	perPage: 10,
+	total: 30,
+	totalPages: 3,
+	data: [
+		{
+			question: {
+				id: 1,
+				text: "Alo alo",
+				options: [
+					"abc",
+					"asd",
+					"adc",
+				],
+				correctOption: 1,
+				points: 10,
+			},
+			chosenOption: 1,
+		},
+		{
+			question: {
+				id: 1,
+				text: "Alo alo",
+				options: [
+					"abc",
+					"asd",
+					"adc",
+				],
+				correctOption: 1,
+				points: 10,
+			},
+			chosenOption: 1,
+		},
+		{
+			question: {
+				id: 1,
+				text: "Alo alo",
+				options: [
+					"abc",
+					"asd",
+					"adc",
+				],
+				correctOption: 1,
+				points: 10,
+			},
+			chosenOption: 1,
+		},
+		{
+			question: {
+				id: 1,
+				text: "Alo alo",
+				options: [
+					"abc",
+					"asd",
+					"adc",
+				],
+				correctOption: 1,
+				points: 10,
+			},
+			chosenOption: 1,
+		}
+	]
+}
+
+export const mockGetUserAttemptsByAttemptIdApiResponse: GetUserAttemptsByAttemptIdApiResponse = {
+	id: 1,
+	test: {
+		id: 1,
+		managerId: "1",
+		title: "This is a test",
+		minutesToAnswer: 20,
+		tags: ["Pro", "Data"],
+	},
+	candidateId: "1",
+	startDate: new Date().toString(),
+	secondsSpent: 1230,
+	score: 15,
+	totalScore: 100,
+	totalCorrectAnswers: 2,
+	totalWrongAnswers: 8,
+	totalQuestions: 10,
+
+}

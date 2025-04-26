@@ -5,7 +5,7 @@ interface ListUsersRequest {
 	user_ids: number[];
 }
 
-interface ListUsersResponse {
+export interface ListUsersResponse {
 	users: UserInfo[];
 }
 

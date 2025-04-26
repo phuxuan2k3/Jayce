@@ -7,6 +7,7 @@ export default function CandidateTestsTemplate({
 	},
 	children,
 	right,
+	aboveMain,
 }: {
 	header: {
 		title: string;
@@ -14,6 +15,7 @@ export default function CandidateTestsTemplate({
 	};
 	children: React.ReactNode;
 	right: React.ReactNode;
+	aboveMain?: React.ReactNode;
 }) {
 	return (
 		<div className="container grid grid-cols-1 lg:grid-cols-[2fr_1fr] grid-rows-[auto_1fr] gap-4 lg:gap-8 h-full mx-auto px-4 py-4 lg:px-12 lg:py-12">
@@ -34,8 +36,13 @@ export default function CandidateTestsTemplate({
 				{right}
 			</aside>
 
-			<main className='h-full w-full px-6 py-8 overflow-y-auto bg-white rounded-xl shadow-primary border-r border-b border-primary'>
-				{children}
+			<main className='w-full h-full flex flex-col items-stretch gap-2'>
+				<div className='w-full flex-shrink'>
+					{aboveMain}
+				</div>
+				<main className='flex-1 w-full px-6 py-8 overflow-y-auto bg-white rounded-xl shadow-primary border-r border-b border-primary'>
+					{children}
+				</main>
 			</main>
 		</div >
 	)

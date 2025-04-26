@@ -4,10 +4,10 @@ import AttemptCard from './components/AttemptCard';
 import Sidebar from './components/Sidebar';
 import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
 import { GetUserTestsByTestIdAttemptsApiArg, useGetUserTestsByTestIdAttemptsQuery, useGetTestsByTestIdQuery, useGetCandidateCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
-import FetchState from '../../../../../components/wrapper/FetchState';
 import MyPagination from '../../../../../components/ui/common/MyPagination';
 import CandidateTestsTemplate from '../../components/CandidateTestsTemplate';
 import { useGetUsersQuery } from '../../../../../features/auth/api/auth-profile.api';
+import { SortAsc, SortDesc } from 'lucide-react';
 
 const perPage = 5;
 
@@ -17,9 +17,13 @@ const CandidateTestAttemtpsPage: React.FC = () => {
 		testId,
 		page: 1,
 		perPage: perPage,
+		sortByStartDate: "desc",
+		sortByScore: "desc",
 	});
 	const testQuery = useGetTestsByTestIdQuery({ testId });
-	const attemptsQuery = useGetUserTestsByTestIdAttemptsQuery(filters);
+	const attemptsQuery = useGetUserTestsByTestIdAttemptsQuery(filters, {
+		refetchOnMountOrArgChange: true,
+	});
 
 	const currentAttemptQuery = useGetCandidateCurrentAttemptStateQuery(undefined, {
 		refetchOnMountOrArgChange: true,
@@ -35,7 +39,21 @@ const CandidateTestAttemtpsPage: React.FC = () => {
 		setFilters((prev) => ({ ...prev, page }));
 	}
 
-	if (testQuery.data == null || attemptsQuery.data == null) return null;
+	const handleToggleSortByStartDate = () => {
+		setFilters((prev) => ({
+			...prev,
+			sortByScore: undefined,
+			sortByStartDate: prev.sortByStartDate === "asc" ? "desc" : "asc",
+		}))
+	}
+
+	const handleToggleSortByScore = () => {
+		setFilters((prev) => ({
+			...prev,
+			sortByStartDate: undefined,
+			sortByScore: prev.sortByScore === "asc" ? "desc" : "asc",
+		}))
+	}
 
 	return (
 		<CandidateTestsTemplate
@@ -51,35 +69,61 @@ const CandidateTestAttemtpsPage: React.FC = () => {
 					}}
 				/>
 			}
+			aboveMain={
+				<div className='w-full flex flex-row items-center justify-start mb-2 gap-2'>
+					<button
+						onClick={handleToggleSortByStartDate}
+						className={`flex items-center gap-1  font-semibold px-4 py-2 rounded-lg border-2 border-primary ${filters.sortByStartDate !== undefined
+							? "bg-primary text-white"
+							: "bg-white text-primary"
+							}`}>
+						<span>Started Date</span>
+						{filters.sortByStartDate === "asc" ? (
+							<SortAsc />
+						) : (
+							<SortDesc />
+						)}
+					</button>
+					<button
+						onClick={handleToggleSortByScore}
+						className={`flex items-center gap-1  font-semibold px-4 py-2 rounded-lg border-2 border-primary ${filters.sortByScore !== undefined
+							? "bg-primary text-white"
+							: "bg-white text-primary"}
+							`}>
+						<span>Score</span>
+						{filters.sortByScore === "asc" ? (
+							<SortAsc />
+						) : (
+							<SortDesc />
+						)}
+					</button>
+				</div>
+			}
 		>
 			<div className='flex flex-col'>
-				<FetchState
-					isLoading={attemptsQuery.isLoading || attemptsQuery.isFetching}
-					error={attemptsQuery.error}>
-					{attemptsQuery.data?.total === 0 ? (
-						<div className="flex flex-col items-center justify-center w-full h-full text-gray-500">
-							<p className="text-lg font-semibold">No attempts found</p>
-						</div>
-					) : null}
-					{attemptsQuery.data && (
-						<div className='flex flex-col h-full lg:max-h-[600px] overflow-y-auto'>
-							{attemptsQuery.data.data.map((attempt) => (
-								<AttemptCard
-									key={attempt.id}
-									{...attempt}
-									author={{
-										company: managerQuery.data?.users[0]?.metadata.company || "",
-										avatar: managerQuery.data?.users[0]?.metadata.avatarPath || "",
-									}}
-									testDetail={testQuery.data!}
-								/>
-							))}
-						</div>
-					)}
-					<div className="flex justify-center pt-5">
-						<MyPagination totalPage={attemptsQuery.data?.totalPages || 0} onPageChange={handlePaging} />
+				{attemptsQuery.data?.total === 0 ? (
+					<div className="flex flex-col items-center justify-center w-full h-full text-gray-500">
+						<p className="text-lg font-semibold">No attempts found</p>
 					</div>
-				</FetchState>
+				) : null}
+				{attemptsQuery.data && (
+					<div className='flex flex-col h-full lg:max-h-[600px] overflow-y-auto'>
+						{attemptsQuery.data.data.map((attempt) => (
+							<AttemptCard
+								key={attempt.id}
+								{...attempt}
+								author={{
+									company: managerQuery.data?.users[0]?.metadata.company || "",
+									avatar: managerQuery.data?.users[0]?.metadata.avatarPath || "",
+								}}
+								testDetail={testQuery.data!}
+							/>
+						))}
+					</div>
+				)}
+				<div className="flex justify-center pt-5">
+					<MyPagination totalPage={attemptsQuery.data?.totalPages || 0} onPageChange={handlePaging} />
+				</div>
 			</div>
 		</CandidateTestsTemplate>
 	);

@@ -1,32 +1,36 @@
-import { useNavigate } from "react-router-dom";
-import AttemptsList from "./AttemptsList";
-import TestInfo from "./AttemptSummary";
+import AttemptsList from "./components/AttemptsList";
 import useGetAttemptIdParams from "../../../../../../features/tests/hooks/useGetAttemptIdParams";
+import CandidateTestsTemplate from "../../../components/CandidateTestsTemplate";
+import { useGetUserAttemptsByAttemptIdQuery } from "../../../../../../features/tests/api/test.api-gen";
+import { useGetUsersQuery } from "../../../../../../features/auth/api/auth-profile.api";
+import Sidebar from "./components/Sidebar";
+
 
 const CandidateAttemptPage = () => {
 	const attemptId = useGetAttemptIdParams();
-	const navigate = useNavigate();
+	const { data: attemptSummary } = useGetUserAttemptsByAttemptIdQuery({ attemptId });
+	const { data: manager } = useGetUsersQuery({
+		user_ids: [Number(attemptSummary?.test.managerId)]
+	}, {
+		skip: !!attemptSummary?.test.managerId,
+	});
 
-	function handleBackClick() {
-		navigate(-1);
-	}
 
 	return (
-		<div className="w-full flex-grow flex flex-col items-center px-4">
-			<div className="w-full max-w-7xl py-6">
-				<TestInfo attemptId={attemptId} />
-
-				<div className="flex flex-col items-center">
-					<AttemptsList attemptId={attemptId} />
-				</div>
-
-				<div className="flex flex-row justify-center">
-					<button className="mt-4 w-fit px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleBackClick}>
-						Back
-					</button>
-				</div>
-			</div>
-		</div>
+		<CandidateTestsTemplate
+			header={{
+				title: attemptSummary?.test.title || "",
+				description: `By: ${manager?.users[0]?.username || "unknown"}`,
+			}}
+			right={
+				<Sidebar
+					attemptSummary={attemptSummary}
+					manager={manager}
+				/>
+			}
+		>
+			<AttemptsList attemptId={attemptId} />
+		</CandidateTestsTemplate>
 	);
 }
 
