@@ -45,6 +45,7 @@ import ManagerHomePage from "../pages/manager/scenarios/index/ManagerHomePage";
 import CandidateInterviewLivePage from "../pages/candidate/interviews/live/CandidateInterviewLivePage";
 import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/ManagerTestEditPage";
 import SetUpPage from "../pages/candidate/interviews/setup/setup";
+import Settings from "../pages/common/profile/index/Settings";
 
 const router = createBrowserRouter(
 	[
@@ -217,6 +218,10 @@ const router = createBrowserRouter(
 									path: paths.candidate.profile.PRICING,
 									element: <PricingPage />,
 								},
+								{
+									path: paths.candidate.profile.SETTINGS,
+									element: <Settings />,
+								}
 							],
 						},
 					],
@@ -331,6 +336,10 @@ const router = createBrowserRouter(
 									path: paths.manager.profile.PRICING,
 									element: <PricingPage />,
 								},
+								{
+									path: paths.manager.profile.SETTINGS,
+									element: <Settings />,
+								}
 							],
 						},
 					],

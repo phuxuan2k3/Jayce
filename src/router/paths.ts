@@ -54,6 +54,7 @@ const paths = {
 		profile: {
 			_layout: "/candidate/profile/",
 			PRICING: "/candidate/profile/pricing/",
+			SETTINGS: "/candidate/profile/settings",
 		},
 	},
 	manager: {
@@ -100,6 +101,7 @@ const paths = {
 		profile: {
 			_layout: "/manager/profile/",
 			PRICING: "/manager/profile/pricing/",
+			SETTINGS: "/manager/profile/settings",
 		},
 	},
 };

@@ -122,7 +122,6 @@ const CandidateHomePage = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        {/* <button className={`px-10 rounded-lg py-2 font-bold cursor-pointer ${item.actionTheme === 'primary' ? 'bg-[var(--primary-color)] text-white' : 'border border-primary text-primary'}`}> */}
                                         <button className={`px-10 rounded-lg py-2 font-bold cursor-pointer border border-primary text-primary`} onClick={() => navigateToScenario(item.id.toString())}>
                                             Try for free
                                         </button>
@@ -137,41 +136,6 @@ const CandidateHomePage = () => {
                                 {/* <a href="#" className="text-sm hover:underline">Shuffle (1)</a> */}
                             </div>
                             <div className="space-y-4">
-                                {/* {challengesData.map((challenge, idx) => (
-                                    <div key={idx} className="p-4 border rounded-lg shadow-md">
-                                        <div className="flex justify-between items-center">
-                                            <div className="flex items-center">
-                                                <div className="mr-4 text-primary">
-                                                    {challenge.type === 'test' ? <FormatListBulletedIcon className="w-10 h-10" /> : <SubjectIcon className="w-10 h-10" />}
-                                                </div>
-                                                <div className="flex flex-col justify-center">
-                                                    <div className="flex items-center gap-4">
-                                                        <h3 className="font-semibold text-xl">{challenge.title}</h3>
-                                                        <div className="flex gap-2 mt-1 flex-wrap">
-                                                            {challenge.tags.slice(0, 2).map((tag, i) => (
-                                                                <GradientBorderNotGood key={i}>
-                                                                    {tag}
-                                                                </GradientBorderNotGood>
-                                                            ))}
-                                                            {challenge.tags.length > 2 && (
-                                                                <GradientBorderNotGood>
-                                                                    +{challenge.tags.length - 2} more
-                                                                </GradientBorderNotGood>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex items-center gap-2 text-sm mt-1">
-                                                        <AccessAlarmIcon />
-                                                        <span>{challenge.duration}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <button className="px-10 rounded-lg py-2 font-bold cursor-pointer bg-[var(--primary-color)] text-white">
-                                                Start now
-                                            </button>
-                                        </div>
-                                    </div>
-                                ))} */}
                                 {challengeData && (
                                     <div className="p-4 border rounded-lg shadow-md">
                                         <div className="flex justify-between items-center">

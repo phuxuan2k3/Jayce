@@ -1,31 +1,31 @@
 import * as React from 'react';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
+import { useNavigate } from 'react-router-dom';
+// import UploadFileIcon from '@mui/icons-material/UploadFile';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import { UserInfo } from '../../../../features/auth/store/authSlice';
-import { styled } from '@mui/material/styles';;
+// import { styled } from '@mui/material/styles';;
 // import { DialogTitle, DialogActions, DialogContent, Dialog } from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import DialogTitle from '@mui/material/DialogTitle';
-import { EditAbleUserInfo } from '../../../../features/auth/types/profile';
+// import Dialog from '@mui/material/Dialog';
+// import DialogContent from '@mui/material/DialogContent';
+// import DialogActions from '@mui/material/DialogActions';
+// import DialogTitle from '@mui/material/DialogTitle';
+import { Role } from '../../../../features/auth/types/auth';
+import paths from '../../../../router/paths';
 
 interface UserProfileProps {
-	userInfo: EditAbleUserInfo | null;
-	updateProfile: (newUserInfo: EditAbleUserInfo) => void;
-	uploadResume: (resume: File | null) => void;
+	userInfo: UserInfo;
 }
 
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-	'& .MuiDialogContent-root': {
-		padding: theme.spacing(2),
-	},
-	'& .MuiDialogActions-root': {
-		padding: theme.spacing(1),
-	},
-}));
+// const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+// 	'& .MuiDialogContent-root': {
+// 		padding: theme.spacing(2),
+// 	},
+// 	'& .MuiDialogActions-root': {
+// 		padding: theme.spacing(1),
+// 	},
+// }));
 
 const initUserStat = [
 	{ name: "Programming", total: 22 },
@@ -38,130 +38,129 @@ const initUserStat = [
 	{ name: "Networking", total: 2 },
 ];
 
-const UserProfile: React.FC<UserProfileProps> = ({ userInfo: authData, updateProfile, uploadResume }) => {
+const UserProfile: React.FC<UserProfileProps> = ({ userInfo: authData }) => {
+	const navigate = useNavigate();
 	const [skillStat, _setSkillStat] = React.useState<{ name: string, total: number }[]>(initUserStat);
 	const [seeMoreSkills, setSeeMoreSkills] = React.useState(false);
-	const [open, setOpen] = React.useState(false);
-	const [resume, setResume] = React.useState<File | null>(null);
-	const fileInputRef = React.useRef<HTMLInputElement | null>(null);
-	const [errorResume, setErrorResume] = React.useState("");
-	const [isEditing, setIsEditing] = React.useState(false);
-	const [formData, setFormData] = React.useState<EditAbleUserInfo>(authData ||
-	{
-		email: '',
-		username: '',
-		avatarPath: '',
-	});
+	// const [open, setOpen] = React.useState(false);
+	// const [resume, setResume] = React.useState<File | null>(null);
+	// const fileInputRef = React.useRef<HTMLInputElement | null>(null);
+	// const [errorResume, setErrorResume] = React.useState("");
 
-	const handleOpenDialog = () => {
-		console.log("Open dialog");
-		setOpen(true);
-	};
+	// const handleOpenDialog = () => {
+	// 	console.log("Open dialog");
+	// 	setOpen(true);
+	// };
 
-	const handleCloseDialog = () => {
-		setOpen(false);
-	};
+	// const handleCloseDialog = () => {
+	// 	setOpen(false);
+	// };
 
-	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		if (event.target.files && event.target.files[0]) {
-			const file = event.target.files[0];
+	// const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	// 	if (event.target.files && event.target.files[0]) {
+	// 		const file = event.target.files[0];
 
-			if (file.type !== "application/pdf") {
-				setErrorResume("Only PDF files are allowed.");
-				return;
-			}
+	// 		if (file.type !== "application/pdf") {
+	// 			setErrorResume("Only PDF files are allowed.");
+	// 			return;
+	// 		}
 
-			setResume(file);
-			setErrorResume("");
-		}
-	};
+	// 		setResume(file);
+	// 		setErrorResume("");
+	// 	}
+	// };
 
-	const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
-		event.preventDefault();
-		if (event.dataTransfer.files && event.dataTransfer.files[0]) {
-			const file = event.dataTransfer.files[0];
+	// const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+	// 	event.preventDefault();
+	// 	if (event.dataTransfer.files && event.dataTransfer.files[0]) {
+	// 		const file = event.dataTransfer.files[0];
 
-			if (file.type !== "application/pdf") {
-				setErrorResume("Only PDF files are allowed.");
-				return;
-			}
+	// 		if (file.type !== "application/pdf") {
+	// 			setErrorResume("Only PDF files are allowed.");
+	// 			return;
+	// 		}
 
-			setResume(file);
-			setErrorResume("");
-		}
-	};
+	// 		setResume(file);
+	// 		setErrorResume("");
+	// 	}
+	// };
 
-	const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-		event.preventDefault();
-		setErrorResume("");
-	};
+	// const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+	// 	event.preventDefault();
+	// 	setErrorResume("");
+	// };
 
-	const handleFileClick = () => {
-		if (fileInputRef.current) {
-			fileInputRef.current.click();
-		}
-	};
+	// const handleFileClick = () => {
+	// 	if (fileInputRef.current) {
+	// 		fileInputRef.current.click();
+	// 	}
+	// };
 
-	const handleSaveResume = () => {
-		setErrorResume("");
-		if (!resume) {
-			setErrorResume("Please select a file to upload.");
-			return;
-		}
+	// const handleSaveResume = () => {
+	// 	setErrorResume("");
+	// 	if (!resume) {
+	// 		setErrorResume("Please select a file to upload.");
+	// 		return;
+	// 	}
 
-		if (resume.type !== "application/pdf") {
-			setErrorResume("Only PDF files are allowed.");
-			return;
-		}
+	// 	if (resume.type !== "application/pdf") {
+	// 		setErrorResume("Only PDF files are allowed.");
+	// 		return;
+	// 	}
 
-		uploadResume(resume);
-		handleCloseDialog();
-	};
-
-	const handleUpdateProfile = () => {
-		updateProfile(formData);
-		setIsEditing(false);
-	};
-
-	const handleProfileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value } as UserInfo);
-	};
+	// 	uploadResume(resume);
+	// 	handleCloseDialog();
+	// };
 
 	const toggleSeeMoreSkills = () => {
 		setSeeMoreSkills((prev) => !prev);
 	};
 
+	const handleGoToSettings = () => {
+		if (authData) {
+			if (authData.role === Role.Candidate) {
+				navigate(paths.candidate.profile.SETTINGS);
+			}
+			else if (authData.role === Role.Manager) {
+				navigate(paths.manager.profile.SETTINGS);
+			}
+			else {
+				alert("???");
+			}
+		}
+	}
+
 	return (
 		<>
 			<div className="w-1/4">
 				<div className="bg-[#eaf6f8] rounded-lg p-4">
-					{/* <div className="flex flex-col">
+					<div className="flex flex-col">
                         <div className="flex items-center justify-start">
-                            <img className="w-20 h-20 bg-gray-300 rounded-full mb-2" src={authData?.avatarPath} alt={authData?.username} />
+                            <img className="w-20 h-20 bg-gray-300 rounded-full mb-2" src={authData.metadata.avatarPath} alt={authData.username} />
                             <div className="flex flex-col ml-4">
-                                <h2 className="text-lg font-semibold">{authData?.username}</h2>
-                                <p className="text-sm text-gray-500">@{authData?.username}</p>
+                                <h2 className="text-lg font-semibold">{authData.metadata.fullname}</h2>
+                                <p className="text-sm text-gray-500">@{authData.username}</p>
                             </div>
                         </div>
-                        <button className="mt-2 px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer">
+                        <button className="mt-2 px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={() => handleGoToSettings()}>
                             Edit Profile
                         </button>
                         <div className="flex flex-col text-gray-500 mt-4 gap-2">
                             <div>
                                 <MailOutlineIcon className="h-4 w-4 mr-2" />
-                                <span>{authData?.email}</span>
+                                <span>{authData.email}</span>
                             </div>
                             <div>
                                 <PhoneOutlinedIcon className="h-4 w-4 mr-2" />
-                                <span>0123456789</span>
+                                <span>{authData.metadata.phone ? authData.metadata.phone : "Unknown"}</span>
                             </div>
                             <div>
                                 <LocationOnOutlinedIcon className="h-4 w-4 mr-2" />
-                                <span>Ho Chi Minh City, Vietnam</span>
+                                <span>{authData.metadata.country ? authData.metadata.country : "Unknown"}</span>
                             </div>
                         </div>
-                    </div> */}
-					<div className="flex flex-col">
+                    </div>
+					{/* <div className="flex flex-col">
 						<div className="flex items-center justify-start">
 							<img className="w-20 h-20 bg-gray-300 rounded-full mb-2" src={formData.avatarPath} alt={formData.username} />
 							<div className="flex flex-col ml-4">
@@ -246,7 +245,6 @@ const UserProfile: React.FC<UserProfileProps> = ({ userInfo: authData, updatePro
 									type="text"
 									name="phone"
 									defaultValue="0123456789"
-									// onChange={handleProfileChange}
 									readOnly={!isEditing}
 									className={`w-5/6 border rounded px-2 py-1 transition-all ${!isEditing ? 'bg-transparent border-none cursor-default outline-none' : 'border-gray-300'}`}
 								/>
@@ -257,13 +255,12 @@ const UserProfile: React.FC<UserProfileProps> = ({ userInfo: authData, updatePro
 									type="text"
 									name="location"
 									defaultValue="Ho Chi Minh City, Vietnam"
-									// onChange={handleProfileChange}
 									readOnly={!isEditing}
 									className={`w-5/6 border rounded px-2 py-1 transition-all ${!isEditing ? 'bg-transparent border-none cursor-default outline-none' : 'border-gray-300'}`}
 								/>
 							</div>
 						</div>
-					</div>
+					</div> */}
 					<div className="mt-4 pt-2 border-t-gradient">
 						<div className="flex items-center justify-between">
 							<span className="font-semibold mb-1">Skills</span>
@@ -283,15 +280,15 @@ const UserProfile: React.FC<UserProfileProps> = ({ userInfo: authData, updatePro
 						</ul>
 					</div>
 				</div>
-				<div className="bg-[#eaf6f8] rounded-lg p-4 mt-4">
+				{/* <div className="bg-[#eaf6f8] rounded-lg p-4 mt-4">
 					<p className="font-semibold">My Resume</p>
 					<div className="flex items-center">
 						<UploadFileIcon className="h-4 w-4 mr-2" />
 						<span className="text-teal-500 cursor-pointer hover:underline" onClick={() => handleOpenDialog()}>Add your resume here</span>
 					</div>
-				</div>
+				</div> */}
 			</div>
-			<BootstrapDialog className="" onClose={handleCloseDialog} open={open}>
+			{/* <BootstrapDialog className="" onClose={handleCloseDialog} open={open}>
 				<div className="bg-[#eaf6f8] rounded-sm shadow-primary p-4 border border-solid border-primary">
 					<DialogTitle className="text-base font-semibold">Add your Resume</DialogTitle>
 					<DialogContent>
@@ -323,7 +320,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userInfo: authData, updatePro
 						</button>
 					</DialogActions>
 				</div>
-			</BootstrapDialog>
+			</BootstrapDialog> */}
 		</>
 	);
 }

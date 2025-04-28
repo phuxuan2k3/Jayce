@@ -88,6 +88,7 @@ export default {
 			addComponents({
 				'.border-gradient': {
 					position: 'relative',
+					zIndex: 0,
 					'&::after': {
 						content: '""',
 						position: 'absolute',
@@ -96,10 +97,12 @@ export default {
 						borderImage: 'linear-gradient(to right, var(--primary-color), var(--secondary-color)) 1',
 						maskImage: 'linear-gradient(to right, #000 100%, transparent)',
 						WebkitMaskImage: 'linear-gradient(to right, #000 100%, transparent)',
+						zIndex: -1,
 					},
 				},
 				'.border-t-gradient': {
 					position: 'relative',
+					zIndex: 0,
 					'&::after': {
 						content: '""',
 						position: 'absolute',
@@ -108,10 +111,12 @@ export default {
 						right: 0,
 						height: '1px',
 						backgroundImage: 'linear-gradient(to right, var(--primary-color), var(--secondary-color))',
+						zIndex: -1,
 					},
 				},
 				'.border-b-gradient': {
 					position: 'relative',
+					zIndex: 0,
 					'&::after': {
 						content: '""',
 						position: 'absolute',
@@ -120,10 +125,12 @@ export default {
 						right: 0,
 						height: '1px',
 						backgroundImage: 'linear-gradient(to right, var(--primary-color), var(--secondary-color))',
+						zIndex: -1,
 					},
 				},
 				'.border-l-gradient': {
 					position: 'relative',
+					zIndex: 0,
 					'&::after': {
 						content: '""',
 						position: 'absolute',
@@ -132,10 +139,12 @@ export default {
 						left: 0,
 						width: '1px',
 						backgroundImage: 'linear-gradient(to bottom, var(--primary-color), var(--secondary-color))',
+						zIndex: -1,
 					},
 				},
 				'.border-r-gradient': {
 					position: 'relative',
+					zIndex: 0,
 					'&::after': {
 						content: '""',
 						position: 'absolute',
@@ -144,6 +153,7 @@ export default {
 						right: 0,
 						width: '1px',
 						backgroundImage: 'linear-gradient(to bottom, var(--primary-color), var(--secondary-color))',
+						zIndex: -1,
 					},
 				},
 			});

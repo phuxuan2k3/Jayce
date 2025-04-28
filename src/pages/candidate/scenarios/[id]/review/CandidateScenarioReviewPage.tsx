@@ -89,12 +89,6 @@ const CandidateScenarioReviewPage = () => {
 		setShowHint(false);
 	};
 
-	console.log({
-		isFetchingStatus,
-		statusCheckComplete,
-		inProgress: currentAttempt.answers.some((ans) => SubmissionStatus[ans.status as unknown as keyof typeof SubmissionStatus] === SubmissionStatus.SUBMISSION_STATUS_IN_PROGRESS),
-	});
-
 	return (
 		<>
 			<div className="flex gap-4 mt-10 font-arya">
