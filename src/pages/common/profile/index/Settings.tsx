@@ -36,6 +36,20 @@ const Settings = () => {
         }
     }
 
+    const handleGoToPricing = () => {
+            if (authData) {
+                if (authData.role === Role.Candidate) {
+                    navigate(paths.candidate.profile.PRICING);
+                }
+                else if (authData.role === Role.Manager) {
+                    navigate(paths.manager.profile.PRICING);
+                }
+                else {
+                    alert("???");
+                }
+            }
+        }
+
     if (!authData) {
         return <div>Loading...</div>;
     }
@@ -110,7 +124,7 @@ const Settings = () => {
                             </div>
 
                             <div
-                                onClick={() => null}
+                                onClick={() => handleGoToPricing()}
                                 className="flex-shrink-0 p-2 rounded cursor-pointer text-center lg:text-start"
                             >
                                 <SubtitlesOutlinedIcon className="h-6 w-6 mr-1 opacity-50" /> <span className="opacity-50">Billing</span> <OpenInNewOutlinedIcon className="text-primary h-4 w-4 ml-1" />

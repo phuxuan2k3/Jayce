@@ -2,8 +2,9 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 // import UploadFileIcon from '@mui/icons-material/UploadFile';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
+import CakeOutlinedIcon from '@mui/icons-material/CakeOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import { UserInfo } from '../../../../features/auth/store/authSlice';
 // import { styled } from '@mui/material/styles';;
 // import { DialogTitle, DialogActions, DialogContent, Dialog } from '@mui/material';
@@ -146,17 +147,21 @@ const UserProfile: React.FC<UserProfileProps> = ({ userInfo: authData }) => {
                             Edit Profile
                         </button>
                         <div className="flex flex-col text-gray-500 mt-4 gap-2">
-                            <div>
+                            <div className="flex items-center">
                                 <MailOutlineIcon className="h-4 w-4 mr-2" />
                                 <span>{authData.email}</span>
                             </div>
-                            <div>
-                                <PhoneOutlinedIcon className="h-4 w-4 mr-2" />
-                                <span>{authData.metadata.phone ? authData.metadata.phone : "Unknown"}</span>
+                            <div className="flex items-center">
+                                <CakeOutlinedIcon className="h-4 w-4 mr-2" />
+                                <span>{authData.metadata.birthday ? (new Date(authData.metadata.birthday.replace(/\//g, "-"))).toLocaleDateString("en-US", {year: "numeric", month: "long", day: "numeric"}) : "Unknown"}</span>
                             </div>
-                            <div>
+                            <div className="flex items-center">
                                 <LocationOnOutlinedIcon className="h-4 w-4 mr-2" />
                                 <span>{authData.metadata.country ? authData.metadata.country : "Unknown"}</span>
+                            </div>
+							<div className="flex items-center">
+                                <SchoolOutlinedIcon className="h-4 w-4 mr-2" />
+                                <span>{authData.metadata.education ? authData.metadata.education : "Unknown"}</span>
                             </div>
                         </div>
                     </div>

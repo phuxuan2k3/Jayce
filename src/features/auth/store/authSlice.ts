@@ -150,6 +150,21 @@ const authSlice = createSlice({
 					_clearAuthState(state);
 				}
 			)
+			// Me
+			.addMatcher(
+				logoutApi.endpoints.me.matchFulfilled,
+				(state, action) => {
+					state.isAuthenticated = true;
+					state.user = {
+						id: action.payload.user.id.toString(),
+						email: action.payload.user.email,
+						role: action.payload.user.role,
+						username: action.payload.user.username,
+						avatarPath: action.payload.user.metadata?.avatarPath,
+						metadata: action.payload.user.metadata,
+					};
+				}
+			)
 	},
 });
 
