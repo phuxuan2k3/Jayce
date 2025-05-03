@@ -7,6 +7,7 @@ import { RefreshRequest } from "../features/auth/types/auth";
 import { Mutex } from 'async-mutex';
 import authApi from "../features/auth/api/auth.api";
 
+// https://github.com/ChisTrun/sysops-skillsharp/blob/main/backend/Bulbasaur/config/config.yaml >> AccessExp
 const mutex = new Mutex();
 
 const serviceBaseQueryAuth = (serviceUrl: string) => fetchBaseQuery({
@@ -42,7 +43,7 @@ const serviceBaseQueryWithReauth: (serviceUrl: string) => BaseQueryFn<
 		const isAuthenticated = authSelectors.selectIsAuthenticated(rootState);
 		if (!isAuthenticated) return result;
 
-		if (mutex.isLocked()) {
+		if (!mutex.isLocked()) {
 			const release = await mutex.acquire();
 			try {
 				const tokens = authSelectors.selectTokens(rootState);

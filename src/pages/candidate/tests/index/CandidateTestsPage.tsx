@@ -4,7 +4,7 @@ import TestList from "./components/TestList";
 import TagsList from "./components/TagsList";
 import { GetTestsApiArg } from "../../../../features/tests/api/test.api-gen";
 import { useLocation } from "react-router-dom";
-import CandidateTestsTemplate from "../components/CandidateTestsTemplate";
+import CandidateTestsTemplate from "../../../../features/tests/ui/CandidateTestsTemplate";
 import { ListFilter } from "lucide-react";
 import SearchBar from "../../../../components/ui/common/SearchBar";
 import { useDebounce } from "../../../../components/hooks/useDebounce";

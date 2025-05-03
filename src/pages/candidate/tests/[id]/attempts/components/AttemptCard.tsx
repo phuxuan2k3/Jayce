@@ -3,7 +3,7 @@ import { format, formatDistanceToNow } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import GradientBorderGood from '../../../../../../components/ui/border/GradientBorder.good';
 import paths from '../../../../../../router/paths';
-import CardTemplate from '../../../components/PrimaryCardTemplate';
+import CardTemplate from '../../../../../../features/tests/ui/PrimaryCardTemplate';
 import { Avatar } from '@mui/material';
 
 type AttemptCardProps = {

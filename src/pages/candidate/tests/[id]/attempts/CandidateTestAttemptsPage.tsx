@@ -5,7 +5,7 @@ import Sidebar from './components/Sidebar';
 import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
 import { GetUserTestsByTestIdAttemptsApiArg, useGetUserTestsByTestIdAttemptsQuery, useGetTestsByTestIdQuery, useGetCandidateCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
 import MyPagination from '../../../../../components/ui/common/MyPagination';
-import CandidateTestsTemplate from '../../components/CandidateTestsTemplate';
+import CandidateTestsTemplate from '../../../../../features/tests/ui/CandidateTestsTemplate';
 import { useGetUsersQuery } from '../../../../../features/auth/api/auth-profile.api';
 import { SortAsc, SortDesc } from 'lucide-react';
 

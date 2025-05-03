@@ -39,7 +39,7 @@ import AuthBusinessRegisterPage from "../pages/auth/bussiness-register/AuthBusin
 import AuthChooseRolePage from "../pages/auth/choose-role/AuthChooseRolePage";
 import CandidateAttemptPage from "../pages/candidate/tests/attempts/[id]/index/CandidateAttemptPage";
 import CandidateInTestLayout from "../pages/candidate/tests/[id]/CandidateInTestLayout";
-import ManagerTestsPage from "../pages/manager/tests/self/ManagerTestsSelfPage";
+import ManagerTestsPage from "../pages/manager/tests/index/ManagerTestsPage";
 import CandidateHomePage from "../pages/candidate/index/CandidateHomePage";
 import ManagerHomePage from "../pages/manager/scenarios/index/ManagerHomePage";
 import CandidateInterviewLivePage from "../pages/candidate/interviews/live/CandidateInterviewLivePage";

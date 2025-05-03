@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { url } from "../../../app/env";
-import serviceBaseQueryWithReauth from "../../../app/serviceBaseQueryAuth";
+import serviceBaseQueryWithReauth from "../../../app/serviceBaseQueryReAuth";
 import { UserInfo } from "../store/authSlice";
 
 const logoutApi = createApi({

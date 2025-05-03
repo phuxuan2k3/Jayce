@@ -8,7 +8,7 @@ import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../router/paths";
 import GradientBorderGood from "../../../../../components/ui/border/GradientBorder.good";
-import CardTemplate from "../../components/PrimaryCardTemplate";
+import CardTemplate from "../../../../../features/tests/ui/PrimaryCardTemplate";
 
 // Define specific Props interface with only the properties being used
 interface TestCardProps {

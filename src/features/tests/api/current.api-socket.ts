@@ -11,7 +11,6 @@ let _socket: CurrentAttemptSocket | null = null;
 function connectSocket(getState: () => any) {
 	if (!_socket) {
 		const userId = authSelectors.selectUserId(getState() as RootState);
-		console.log("URL: " + url.thresh.socket);
 		_socket = io(`${url.thresh.socket}/current`, {
 			auth: {
 				userId: userId,
