@@ -44,6 +44,7 @@ import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/ManagerTestEdi
 import ManagerTestsSelfPage from "../pages/manager/tests/self/ManagerTestsSelfPage";
 import CandidateInterviewLivePage from "../pages/candidate/interviews/live/CandidateInterviewLivePage";
 import SetUpPage from "../pages/candidate/interviews/setup/setup";
+import ResultPage from "../pages/candidate/interviews/result/result";
 
 const router = createBrowserRouter(
   [
@@ -202,10 +203,10 @@ const router = createBrowserRouter(
                   path: paths.candidate.interview.LIVE,
                   element: <CandidateInterviewLivePage />,
                 },
-                {
-                  path: paths.candidate.interview.SETUP,
-                  element: <SetUpPage />,
-                },
+                // {
+                //   path: paths.candidate.interview.SETUP,
+                //   element: <SetUpPage />,
+                // },
               ],
             },
 
@@ -351,6 +352,14 @@ const router = createBrowserRouter(
             {
               element: <GuestPage />,
               index: true,
+            },
+            {
+              path: paths.candidate.interview.RESULT,
+              element: <ResultPage />,
+            },
+            {
+              path: paths.candidate.interview.SETUP,
+              element: <SetUpPage />,
             },
           ],
         },
