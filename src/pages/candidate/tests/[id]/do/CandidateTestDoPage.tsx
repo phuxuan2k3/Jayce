@@ -3,7 +3,7 @@ import Sidebar from './components/Sidebar';
 import { testSelectors } from '../../../../../features/tests/stores/testSlice';
 import { useGetCandidateCurrentAttemptDoQuery, useGetCandidateCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
 import { useAppSelector } from '../../../../../app/hooks';
-import CandidateTestsTemplate from '../../../../../features/tests/ui/CandidateTestsTemplate';
+import CandidateTestsTemplate from '../../../../../features/tests/ui/layouts/CandidateTestsTemplate';
 
 const CandidateTestDoPage = () => {
 	const doQuery = useGetCandidateCurrentAttemptDoQuery(undefined, {

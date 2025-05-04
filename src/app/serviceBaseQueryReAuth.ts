@@ -40,9 +40,6 @@ const serviceBaseQueryWithReauth: (serviceUrl: string) => BaseQueryFn<
 	let result = await baseQuery(args, api, extraOptions);
 
 	if (result.error && result.error.status === 401) {
-		const isAuthenticated = authSelectors.selectIsAuthenticated(rootState);
-		if (!isAuthenticated) return result;
-
 		if (!mutex.isLocked()) {
 			const release = await mutex.acquire();
 			try {

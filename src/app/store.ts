@@ -11,6 +11,7 @@ import ekkoApi from '../features/scenarios/apis/base/ekko.api';
 import chronobreakApi from '../features/scenarios/apis/base/chronobreak.api';
 import logoutApi from '../features/auth/api/logout.api.ts';
 import interviewApi from '../features/interviews/api/interview.api.ts';
+import fetchSlice from './fetchSlice.ts';
 
 
 const authPersistConfig = {
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
 	// Custom reducers
 	auth: persistReducer(authPersistConfig, authReducer),
 	test: testReducer,
+	[fetchSlice.reducerPath]: fetchSlice.reducer,
 });
 
 const store = configureStore({

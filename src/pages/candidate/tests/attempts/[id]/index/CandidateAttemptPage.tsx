@@ -1,6 +1,6 @@
 import AttemptsList from "./components/AttemptsList";
 import useGetAttemptIdParams from "../../../../../../features/tests/hooks/useGetAttemptIdParams";
-import CandidateTestsTemplate from "../../../../../../features/tests/ui/CandidateTestsTemplate";
+import CandidateTestsTemplate from "../../../../../../features/tests/ui/layouts/CandidateTestsTemplate";
 import { useGetUserAttemptsByAttemptIdQuery } from "../../../../../../features/tests/api/test.api-gen";
 import { useGetUsersQuery } from "../../../../../../features/auth/api/auth-profile.api";
 import Sidebar from "./components/Sidebar";

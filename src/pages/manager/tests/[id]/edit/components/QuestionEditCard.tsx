@@ -1,5 +1,5 @@
 import { useTestPersistContext } from '../../../../../../features/tests/stores/test-persist.context';
-import QuestionFormCard from '../../../../../../features/tests/ui/QuestionFormCard';
+import QuestionFormEditCard from './QuestionFormEditCard';
 
 export default function QuestionEditCard({
 	index,
@@ -9,7 +9,7 @@ export default function QuestionEditCard({
 	const { state, dispatch } = useTestPersistContext();
 	const { questions } = state.data;
 	return (
-		<QuestionFormCard
+		<QuestionFormEditCard
 			index={index}
 			question={questions[index]}
 			onQuestionContentChange={(index, key, value) => dispatch({

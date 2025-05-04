@@ -32,11 +32,16 @@ export default function CandidateTestsTemplate({
 				</div>
 			</header>
 
-			<aside className="lg:row-span-2 p-2">
+			{/* <aside className="lg:row-span-2 p-2">
+				{right}
+			</aside> */}
+
+
+			<aside className="lg:row-start-2 lg:col-start-2 p-2">
 				{right}
 			</aside>
 
-			<main className='w-full h-full flex flex-col items-stretch gap-2'>
+			<main className='lg:col-start-1 w-full h-full flex flex-col items-stretch gap-2'>
 				<div className='w-full flex-shrink'>
 					{aboveMain}
 				</div>
