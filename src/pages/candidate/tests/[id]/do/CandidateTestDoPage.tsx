@@ -3,7 +3,7 @@ import Sidebar from './components/Sidebar';
 import { testSelectors } from '../../../../../features/tests/stores/testSlice';
 import { useGetCandidateCurrentAttemptDoQuery, useGetCandidateCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
 import { useAppSelector } from '../../../../../app/hooks';
-import CandidateTestsTemplate from '../../../../../features/tests/ui/layouts/CandidateTestsTemplate';
+import RightLayoutTemplate from '../../../../../components/layouts/RightLayoutTemplate';
 
 const CandidateTestDoPage = () => {
 	const doQuery = useGetCandidateCurrentAttemptDoQuery(undefined, {
@@ -23,7 +23,7 @@ const CandidateTestDoPage = () => {
 	const { currentAttempt } = stateQuery.data;
 
 	return (
-		<CandidateTestsTemplate
+		<RightLayoutTemplate
 			header={{
 				title: doQuery.data.test.title,
 				description: doQuery.data.test.description,
@@ -46,7 +46,7 @@ const CandidateTestDoPage = () => {
 				)}
 
 			</div>
-		</CandidateTestsTemplate>
+		</RightLayoutTemplate>
 	);
 }
 

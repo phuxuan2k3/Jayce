@@ -1,41 +1,64 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import QuestionEditCard from "./QuestionEditCard";
 import { useTestPersistContext } from "../../../../../../features/tests/stores/test-persist.context";
+import { Plus } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 const EditTestQuestions = () => {
 	const { questions, dispatch } = useTestPersistContext();
+	const lastCard = useRef<HTMLDivElement>(null);
+	const [isAdding, setIsAdding] = useState(false);
+
+	useEffect(() => {
+		if (questions.length > 0 && lastCard.current && isAdding) {
+			lastCard.current.scrollIntoView({
+				behavior: "smooth",
+				block: "nearest",
+				inline: "nearest",
+			});
+			setIsAdding(false);
+		}
+	}, [questions.length, lastCard.current]);
 
 	return (
 		<div className="w-full h-full py-4 flex flex-col items-center justify-center">
-			<div className="flex flex-row justify-between font-semibold text-[var(--primary-color)] mb-4">
-				<span>Total questions: {questions.length}	</span>
+			<div className="sticky top-4 w-full">
+				<div
+					className="flex items-center justify-center gap-2 w-full mb-4 text-primary font-semibold bg-white rounded-lg border border-primary shadow-primary px-4 py-2 cursor-pointer hover:bg-primary hover:text-white transition-all duration-200 ease-in-out "
+					onClick={() => {
+						dispatch({
+							type: "ADD_QUESTION",
+							payload: {
+								text: "",
+								options: [""],
+								correctOption: 0,
+								points: 0,
+							},
+						});
+						setIsAdding(true);
+					}}
+				>
+					<Plus size={20} strokeWidth={2.5} />
+					<span>Add Question</span>
+				</div>
 			</div>
+
+			<hr className="w-full border-t border-primary-toned-300 mb-4" />
 
 			<div className="w-full flex-1 flex flex-col items-center justify-center space-y-4 mb-4 overflow-y-auto">
 				{/* Question List */}
 				{questions.map((_, index) => (
-					<QuestionEditCard
+					<div
 						key={index}
-						index={index}
-					/>
+						className="w-full"
+						ref={index === questions.length - 1 ? lastCard : undefined}
+					>
+						<QuestionEditCard
+							index={index}
+						/>
+					</div>
 				))}
 			</div>
 
-			<div
-				className="flex flex-row bg-white rounded-lg shadow-primary p-6 space-x-4 border-r border-b border-solid border-primary justify-center mb-4 cursor-pointer"
-				onClick={() => dispatch({
-					type: "ADD_QUESTION",
-					payload: {
-						text: "",
-						options: [""],
-						correctOption: 0,
-						points: 0,
-					},
-				})}
-			>
-				<FontAwesomeIcon className="w-8 h-8" icon={faPlus} />
-			</div>
 		</div>
 	);
 }

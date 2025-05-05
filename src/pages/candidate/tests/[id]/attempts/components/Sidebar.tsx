@@ -5,16 +5,26 @@ import ModalBase from "../../../../../../components/ui/modal/Modal.base";
 import { usePostCandidateCurrentAttemptNewMutation } from "../../../../../../features/tests/api/test.api-gen";
 import paths from "../../../../../../router/paths";
 import AttemptCardInProgress, { AttemptCardInProgressProps } from "./AttemptCardInProgress";
+import { SortAsc, SortDesc } from "lucide-react";
 
 export default function Sidebar({
 	attemptCardInprogressProps: {
 		test,
 		currentAttempt,
 	},
+	onToggleSortByStartDate,
+	onToggleSortByScore,
+	filters,
 }: {
 	attemptCardInprogressProps: {
 		test: AttemptCardInProgressProps["test"];
 		currentAttempt: AttemptCardInProgressProps["currentAttempt"] | null
+	};
+	onToggleSortByStartDate?: () => void;
+	onToggleSortByScore?: () => void;
+	filters: {
+		sortByStartDate?: "asc" | "desc";
+		sortByScore?: "asc" | "desc";
 	};
 }) {
 	const testId = useGetTestIdParams();
@@ -43,6 +53,35 @@ export default function Sidebar({
 	return (
 		<Fragment>
 			<div className="w-full h-fit flex flex-col gap-8">
+				<div className='w-full flex flex-row items-center justify-start mb-2 gap-2'>
+					<button
+						onClick={onToggleSortByStartDate}
+						className={`flex items-center gap-1  font-semibold px-4 py-2 rounded-lg border-2 border-primary ${filters.sortByStartDate !== undefined
+							? "bg-primary text-white"
+							: "bg-white text-primary"
+							}`}>
+						<span>Started Date</span>
+						{filters.sortByStartDate === "asc" ? (
+							<SortAsc />
+						) : (
+							<SortDesc />
+						)}
+					</button>
+					<button
+						onClick={onToggleSortByScore}
+						className={`flex items-center gap-1  font-semibold px-4 py-2 rounded-lg border-2 border-primary ${filters.sortByScore !== undefined
+							? "bg-primary text-white"
+							: "bg-white text-primary"}
+											`}>
+						<span>Score</span>
+						{filters.sortByScore === "asc" ? (
+							<SortAsc />
+						) : (
+							<SortDesc />
+						)}
+					</button>
+				</div>
+
 				{currentAttempt && (
 					<AttemptCardInProgress
 						test={test}

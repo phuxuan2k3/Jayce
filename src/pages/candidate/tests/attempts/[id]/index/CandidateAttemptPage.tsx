@@ -1,6 +1,6 @@
 import AttemptsList from "./components/AttemptsList";
 import useGetAttemptIdParams from "../../../../../../features/tests/hooks/useGetAttemptIdParams";
-import CandidateTestsTemplate from "../../../../../../features/tests/ui/layouts/CandidateTestsTemplate";
+import RightLayoutTemplate from "../../../../../../components/layouts/RightLayoutTemplate";
 import { useGetUserAttemptsByAttemptIdQuery } from "../../../../../../features/tests/api/test.api-gen";
 import { useGetUsersQuery } from "../../../../../../features/auth/api/auth-profile.api";
 import Sidebar from "./components/Sidebar";
@@ -17,7 +17,7 @@ const CandidateAttemptPage = () => {
 
 
 	return (
-		<CandidateTestsTemplate
+		<RightLayoutTemplate
 			header={{
 				title: attemptSummary?.test.title || "",
 				description: `By: ${manager?.users[0]?.username || "unknown"}`,
@@ -30,7 +30,7 @@ const CandidateAttemptPage = () => {
 			}
 		>
 			<AttemptsList attemptId={attemptId} />
-		</CandidateTestsTemplate>
+		</RightLayoutTemplate>
 	);
 }
 

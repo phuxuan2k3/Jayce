@@ -7,7 +7,7 @@ import { useDeleteManagerTestsByTestIdMutation } from "../../../../../features/t
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../router/paths";
-import LeftTestsTemplate from "../../../../../features/tests/ui/layouts/LeftTestsTemplate";
+import LeftLayoutTemplate from "../../../../../components/layouts/LeftLayoutTemplate";
 import TestEditForm from "./components/TestEditForm";
 
 type Tab = "detail" | "questions";
@@ -62,13 +62,13 @@ export default function ManagerTestEditMain() {
 
 	return (
 		<>
-			<LeftTestsTemplate
+			<LeftLayoutTemplate
 				header={{
 					title: "Edit your test",
 					description: "You can edit your test here!",
 				}}
 				right={
-					<div className="h-[96vh] w-full flex flex-col gap-4 p-6 shadow-primary bg-white rounded-lg">
+					<div className="h-fit lg:h-[96vh] w-full flex flex-col gap-4 p-6 shadow-primary bg-white rounded-lg">
 						<TabButton
 							onClick={() => setTab("detail")}
 							isActive={tab === "detail"}
@@ -91,21 +91,19 @@ export default function ManagerTestEditMain() {
 					</div>
 				}
 			>
-				<div className="w-full flex-1 flex flex-col overflow-y-hidden">
-					{tab === "detail" && (
-						<TestEditForm
-							onChange={({ key, value }) => dispatch({
-								type: "UPDATE_TEST_FIELDS",
-								payload: {
-									[key]: value,
-								}
-							})}
-							testFields={fields}
-						/>
-					)}
-					{tab === "questions" && <EditTestQuestions />}
-				</div>
-			</LeftTestsTemplate>
+				{tab === "detail" && (
+					<TestEditForm
+						onChange={({ key, value }) => dispatch({
+							type: "UPDATE_TEST_FIELDS",
+							payload: {
+								[key]: value,
+							}
+						})}
+						testFields={fields}
+					/>
+				)}
+				{tab === "questions" && <EditTestQuestions />}
+			</LeftLayoutTemplate>
 
 			<Snackbar
 				open={snackOpen}

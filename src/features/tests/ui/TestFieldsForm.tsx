@@ -9,7 +9,7 @@ export default function TestFieldsForm({
 }) {
 
 	return (
-		<div className="font-arya my-10 w-[700px] min-h-fit border border-primary-toned-300 rounded-lg bg-white shadow-md p-4">
+		<div className="font-arya my-10 w-full min-h-fit border border-primary-toned-300 rounded-lg bg-white shadow-md p-4">
 			<div className="flex justify-center items-center space-x-4 my-4">
 				<label className="font-medium text-[var(--primary-color)] text-xl w-1/4">
 					Test title:

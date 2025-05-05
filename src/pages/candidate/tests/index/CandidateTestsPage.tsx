@@ -4,7 +4,7 @@ import TestList from "./components/TestList";
 import TagsList from "./components/TagsList";
 import { GetTestsApiArg } from "../../../../features/tests/api/test.api-gen";
 import { useLocation } from "react-router-dom";
-import CandidateTestsTemplate from "../../../../features/tests/ui/layouts/CandidateTestsTemplate";
+import RightLayoutTemplate from "../../../../components/layouts/RightLayoutTemplate";
 import { ListFilter } from "lucide-react";
 import SearchBar from "../../../../components/ui/common/SearchBar";
 import { useDebounce } from "../../../../components/hooks/useDebounce";
@@ -29,14 +29,14 @@ const CandidateTestsPage: React.FC = () => {
 	}, [deboucedSearchText]);
 
 	return (
-		<CandidateTestsTemplate
+		<RightLayoutTemplate
 			header={{
 				title: "Interview Questions",
 				description: "Review this list of interview questions and answers verified by hiring managers and candidates.",
 			}}
 			right={
-				<div className="h-full flex flex-col gap-8">
-					<div className="flex flex-row justify-between items-stretch gap-4 font-sans mt-2">
+				<div className="max-h-[90vh] sticky top-2 flex flex-col gap-8">
+					<div className="flex flex-row justify-between items-stretch gap-4 font-sans">
 						<SearchBar
 							text={searchText}
 							onTextChange={(text) => setSearchText(text)}
@@ -77,7 +77,7 @@ const CandidateTestsPage: React.FC = () => {
 				filters={filters}
 				setFilters={setFilters}
 			/>
-		</CandidateTestsTemplate>
+		</RightLayoutTemplate>
 	);
 };
 

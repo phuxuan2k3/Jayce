@@ -5,9 +5,8 @@ import Sidebar from './components/Sidebar';
 import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
 import { GetUserTestsByTestIdAttemptsApiArg, useGetUserTestsByTestIdAttemptsQuery, useGetTestsByTestIdQuery, useGetCandidateCurrentAttemptStateQuery } from '../../../../../features/tests/api/test.api-gen';
 import MyPagination from '../../../../../components/ui/common/MyPagination';
-import CandidateTestsTemplate from '../../../../../features/tests/ui/layouts/CandidateTestsTemplate';
+import RightLayoutTemplate from '../../../../../components/layouts/RightLayoutTemplate';
 import { useGetUsersQuery } from '../../../../../features/auth/api/auth-profile.api';
-import { SortAsc, SortDesc } from 'lucide-react';
 
 const perPage = 5;
 
@@ -56,7 +55,7 @@ const CandidateTestAttemtpsPage: React.FC = () => {
 	}
 
 	return (
-		<CandidateTestsTemplate
+		<RightLayoutTemplate
 			header={{
 				title: testQuery.data?.title || "",
 				description: testQuery.data?.description || "",
@@ -67,37 +66,10 @@ const CandidateTestAttemtpsPage: React.FC = () => {
 						test: testQuery.data!,
 						currentAttempt: currentAttemptQuery.data?.currentAttempt || null,
 					}}
+					onToggleSortByStartDate={handleToggleSortByStartDate}
+					onToggleSortByScore={handleToggleSortByScore}
+					filters={filters}
 				/>
-			}
-			aboveMain={
-				<div className='w-full flex flex-row items-center justify-start mb-2 gap-2'>
-					<button
-						onClick={handleToggleSortByStartDate}
-						className={`flex items-center gap-1  font-semibold px-4 py-2 rounded-lg border-2 border-primary ${filters.sortByStartDate !== undefined
-							? "bg-primary text-white"
-							: "bg-white text-primary"
-							}`}>
-						<span>Started Date</span>
-						{filters.sortByStartDate === "asc" ? (
-							<SortAsc />
-						) : (
-							<SortDesc />
-						)}
-					</button>
-					<button
-						onClick={handleToggleSortByScore}
-						className={`flex items-center gap-1  font-semibold px-4 py-2 rounded-lg border-2 border-primary ${filters.sortByScore !== undefined
-							? "bg-primary text-white"
-							: "bg-white text-primary"}
-							`}>
-						<span>Score</span>
-						{filters.sortByScore === "asc" ? (
-							<SortAsc />
-						) : (
-							<SortDesc />
-						)}
-					</button>
-				</div>
 			}
 		>
 			<div className='flex flex-col'>
@@ -125,7 +97,7 @@ const CandidateTestAttemtpsPage: React.FC = () => {
 					<MyPagination totalPage={attemptsQuery.data?.totalPages || 0} onPageChange={handlePaging} />
 				</div>
 			</div>
-		</CandidateTestsTemplate>
+		</RightLayoutTemplate>
 	);
 }
 

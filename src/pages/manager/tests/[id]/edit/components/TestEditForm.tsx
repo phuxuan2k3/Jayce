@@ -30,13 +30,13 @@ export default function TestEditForm({
 				})}
 			/>
 
-			<label htmlFor="test-description">
+			<label htmlFor="test-description" className="self-start mt-2">
 				Description:
 			</label>
 			<TextareaAutosize
 				id="test-description"
 				minRows={1}
-				placeholder="Descript your test"
+				placeholder="Describe your test"
 				className="w-full h-fit border border-primary rounded-md focus:outline-none focus:ring focus:ring-teal-300 px-4 py-2"
 				value={testFields.description}
 				onChange={(e) => onChange({

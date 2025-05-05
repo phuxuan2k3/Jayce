@@ -60,7 +60,7 @@ export default function TestList({ filter, setFilters }: Props) {
 						<SkeletonLoading className="w-full h-48" />
 					</div>
 				}>
-				<div className="flex-1 flex flex-col gap-4 h-fit lg:max-h-[900px] overflow-y-auto">
+				<div className="flex-1 flex flex-col gap-4">
 					{tests?.data.length === 0 ? (
 						<div className="flex flex-col items-center justify-center w-full h-full text-gray-500">
 							<p className="text-lg font-semibold">No tests found</p>

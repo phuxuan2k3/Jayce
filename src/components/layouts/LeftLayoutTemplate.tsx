@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function CandidateTestsTemplate({
+export default function LeftLayoutTemplate({
 	header: {
 		title,
 		description,
@@ -18,8 +18,8 @@ export default function CandidateTestsTemplate({
 	aboveMain?: React.ReactNode;
 }) {
 	return (
-		<div className="container grid grid-cols-1 lg:grid-cols-[2fr_1fr] grid-rows-[auto_1fr] gap-4 lg:gap-8 h-full mx-auto px-4 py-4 lg:px-12 lg:py-12">
-			<header className="flex gap-x-4">
+		<div className="container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-[auto_1fr] gap-4 lg:gap-8 mx-auto mt-8 mb-16 h-full">
+			<header className="flex gap-x-4 lg:col-span-2">
 				<div className='flex-1 flex flex-col'>
 					<div className="flex justify-between items-center">
 						<h1 className="text-2xl md:text-3xl font-bold">{title}</h1>
@@ -32,23 +32,18 @@ export default function CandidateTestsTemplate({
 				</div>
 			</header>
 
-			{/* <aside className="lg:row-span-2 p-2">
-				{right}
-			</aside> */}
-
-
-			<aside className="lg:row-start-2 lg:col-start-2 p-2">
+			<aside className="lg:row-start-2 lg:col-start-1 w-full h-fit lg:sticky lg:top-[2vh]">
 				{right}
 			</aside>
 
-			<main className='lg:col-start-1 w-full h-full flex flex-col items-stretch gap-2'>
-				<div className='w-full flex-shrink'>
+			<main className='lg:row-start-2 lg:col-start-2 w-full h-full flex flex-col items-stretch gap-2'>
+				{aboveMain && <div className='w-full flex-shrink'>
 					{aboveMain}
-				</div>
-				<main className='flex-1 w-full px-6 py-8 overflow-y-auto bg-white rounded-xl shadow-primary border-r border-b border-primary'>
+				</div>}
+				<main className='flex-1 max-h-full w-full px-6 py-8 bg-white rounded-xl shadow-primary border-r border-b border-primary'>
 					{children}
 				</main>
 			</main>
-		</div >
+		</div>
 	)
 }

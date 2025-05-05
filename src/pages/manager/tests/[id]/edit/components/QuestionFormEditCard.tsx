@@ -1,14 +1,12 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons';
-
 import { BrainCircuitIcon } from "lucide-react"
 import TextareaAutosize from 'react-textarea-autosize';
 import { TestQuestion } from '../../../../../../features/tests/stores/test-persist.reducer';
 import { QuestionDTO } from '../../../../../../features/tests/types/crud';
-import GradientBorderNotGood from '../../../../../../components/ui/border/GradientBorder.notgood';
 
-export default function QuestionFormCard({
+export default function QuestionEditFormCard({
 	index,
 	isAiGenerated = false,
 	question,
@@ -28,32 +26,46 @@ export default function QuestionFormCard({
 	onDeleteOption: (questionIndex: number, optionIndex: number) => void;
 }) {
 	return (
-		<div className="w-full flex items-start gap-4 rounded-lg border border-primary justify-between p-4">
-			<span className="min-w-fit w-1/5 font-bold mt-1">
-				{isAiGenerated && <BrainCircuitIcon size={16} />} Question {index + 1}
-			</span>
+		<div className="w-full flex items-start gap-4 rounded-lg border border-primary justify-between px-8 py-6 text-primary bg-white shadow-md">
+			<div className="w-fit flex flex-col gap-4 items-start justify-center">
+				<span className='font-bold text-gray-500 mt-1'>
+					{isAiGenerated && <BrainCircuitIcon size={16} />}
+					Question {index + 1}
+				</span>
+
+				<div className='flex flex-wrap items-center gap-2 w-full'>
+					{/* Points label */}
+					<span className="text-sm text-primary-toned-500">Points:</span>
+					<input
+						className="border border-primary rounded-lg font-semibold px-2 py-1 text-primary focus:outline-none w-[50px]"
+						type="number"
+						value={question.points}
+						min="0"
+						step="1"
+						onChange={(e) => onQuestionContentChange(index, "points", Number(e.target.value) || 0)}
+					/>
+				</div>
+			</div>
 
 			{/* Question and Options */}
-			<div className="w-3/5 flex flex-col">
+			<div className="flex-1 flex flex-col gap-2">
 
 				{/* Question */}
-				<div className="w-11/12 mb-4">
-					<GradientBorderNotGood className="w-full h-fit font-semibold">
-						<TextareaAutosize
-							value={question.text}
-							onChange={(e) => onQuestionContentChange(index, "text", e.target.value)}
-							className="w-full bg-transparent border-none outline-none resize-none overflow-hidden"
-							placeholder="Question text"
-							minRows={1}
-						/>
-					</GradientBorderNotGood>
+				<div className="w-11/12 mb-4 flex items-center border border-primary rounded-lg font-bold text-gray-600 bg-gray-50">
+					<TextareaAutosize
+						value={question.text}
+						onChange={(e) => onQuestionContentChange(index, "text", e.target.value)}
+						className="w-full bg-transparent border-none outline-none resize-none overflow-hidden px-4 py-1"
+						placeholder="Question text"
+						minRows={1}
+					/>
 				</div>
 
-				{/* Options */}
-				{question.options.map((option, optionIndex) => (
-					<div key={optionIndex} className="w-full flex flex-row mt-2" >
-						<GradientBorderNotGood className="w-11/12 h-fit">
-							<div className="flex items-center justify-between">
+				<div className='flex flex-col gap-2 w-full text-gray-600'>
+					{/* Options */}
+					{question.options.map((option, optionIndex) => (
+						<div key={optionIndex} className="w-full flex flex-row" >
+							<div className="w-11/12 h-fit flex items-center justify-between gap-2 border border-primary bg-gray-50 rounded-lg px-4 py-1">
 								<span className="mr-2">{String.fromCharCode(97 + optionIndex)}.</span>
 
 								{/* Option text */}
@@ -72,44 +84,38 @@ export default function QuestionFormCard({
 									onClick={() => onDeleteOption(index, optionIndex)}
 								/>
 							</div>
-						</GradientBorderNotGood>
 
-						{/* Radio button for correct answer */}
-						<div className="w-1/12 flex items-center justify-center">
-							<input
-								type="radio"
-								name={`question-${index}`}
-								checked={optionIndex === question.correctOption}
-								onChange={() => onQuestionContentChange(index, "correctOption", optionIndex)}
-								className="h-4 w-4 border-primary focus:ring-primary accent-primary cursor-pointer"
-							/>
+							{/* Radio button for correct answer */}
+							<div className="w-1/12 flex items-center justify-center">
+								<input
+									type="radio"
+									name={`question-${index}`}
+									checked={optionIndex === question.correctOption}
+									onChange={() => onQuestionContentChange(index, "correctOption", optionIndex)}
+									className="h-4 w-4 border-primary focus:ring-primary accent-primary cursor-pointer"
+								/>
+							</div>
 						</div>
-					</div>
-				))}
+					))}
+				</div>
 
 				{/* Add option button */}
-				<div className="text-sm text-gray-500 mt-4 cursor-pointer" onClick={() => onAddOption(index, "")}>
-					<span className="font-semibold text-[var(--primary-color)] underline">+ Add option</span>
+				<div
+					className="text-sm cursor-pointer font-semibold text-primary underline mt-4"
+					onClick={() => onAddOption(index, "")}
+				>
+					<span>+ Add option</span>
 				</div>
 			</div>
 
 
-			{/* Points and Delete question button */}
-			<div className="w-1/5 h-fit flex justify-end items-center">
-				{/* Points */}
-				<GradientBorderNotGood className="font-bold flex-1 w-fit mr-2">
-					<input
-						className="w-full"
-						type="number"
-						value={question.points}
-						min="0"
-						step="1"
-						onChange={(e) => onQuestionContentChange(index, "points", Number(e.target.value) || 0)}
-					/>
-				</GradientBorderNotGood>
-
-				{/* Delete question button */}
-				<FontAwesomeIcon className="w-5 h-5 cursor-pointer" icon={faTrashCan} onClick={() => onDeleteQuestion(index)} />
+			{/* Delete question */}
+			<div className="w-fit h-fit flex justify-center items-center">
+				<FontAwesomeIcon
+					className="w-5 h-5 cursor-pointer text-red-500 mt-2"
+					icon={faTrashCan}
+					onClick={() => onDeleteQuestion(index)}
+				/>
 			</div>
 		</div>
 	)

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDeleteManagerTestsByTestIdMutation, useGetManagerTestsQuery } from "../../../../features/tests/api/test.api-gen";
 import paths from "../../../../router/paths";
-import CandidateTestsTemplate from "../../../../features/tests/ui/layouts/CandidateTestsTemplate";
+import RightLayoutTemplate from "../../../../components/layouts/RightLayoutTemplate";
 import TestList from "./components/TestList";
 import { FilterProps } from "../../../../features/tests/types/filter";
 
@@ -40,7 +40,7 @@ const ManagerTestsPage = () => {
 	};
 
 	return (
-		<CandidateTestsTemplate
+		<RightLayoutTemplate
 			header={{
 				title: "Welcome to your Test Manager",
 				description: "You can manage all your test here!",
@@ -69,7 +69,7 @@ const ManagerTestsPage = () => {
 					}));
 				}}
 			/>
-		</CandidateTestsTemplate>
+		</RightLayoutTemplate>
 	);
 }
 
