@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime';
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./assets/styles/index.css";
@@ -6,7 +7,6 @@ import { createTheme, StyledEngineProvider, ThemeProvider } from "@mui/material"
 import { Provider } from "react-redux";
 import store, { persistor } from "./app/store.ts";
 import { PersistGate } from 'redux-persist/integration/react';
-
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import FilterModal from "./components/FilterModal";
 import TestList from "./components/TestList";
 import TagsList from "./components/TagsList";
-import { GetTestsApiArg } from "../../../../features/tests/api/test.api-gen";
+import { GetTestsApiArg } from "../../../../features/tests/legacy/test.api-gen";
 import { useLocation } from "react-router-dom";
 import RightLayoutTemplate from "../../../../components/layouts/RightLayoutTemplate";
 import { ListFilter } from "lucide-react";

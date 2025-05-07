@@ -1,7 +1,7 @@
 import { url } from "../../../app/env";
 import { CurrentAttemptSocket } from "./socket.schema";
 import { io } from "socket.io-client";
-import { testApiGen } from "./test.api-gen";
+import { testApiGen } from "../legacy/test.api-gen";
 import { RootState } from "../../../app/store";
 import { testActions } from "../stores/testSlice";
 import { authSelectors } from "../../auth/store/authSlice";

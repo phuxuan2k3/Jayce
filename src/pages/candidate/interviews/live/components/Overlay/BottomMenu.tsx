@@ -1,7 +1,5 @@
-import CommonButton from '../../../../../../components/ui/buttons/CommonButton'
+import CommonButton from '../../../../../../components/ui/CommonButton'
 import { ArrowRight, DoorOpen, AlarmClock, LayoutGrid, ArrowLeftRight } from "lucide-react"
-import DangerButton from '../../../../../../components/ui/buttons/DangerButton'
-import TransparentButton from '../../../../../../components/ui/buttons/TransparentButton'
 import { useState } from 'react'
 import BackgroundContainer from './sub/BackgroundContainer'
 import { Models } from '../../types/render'
@@ -34,17 +32,19 @@ export default function BottomMenu() {
 				<div className="w-[2px] h-6 bg-gray-400"></div>
 
 				<div className='w-full flex items-center gap-x-2'>
-					<TransparentButton
+					<CommonButton
+						variant="transparent"
 						onClick={() => setIsSelectingBackground(!isSelectingBackground)}
 					>
 						<LayoutGrid size={20} color='black' />
-					</TransparentButton>
+					</CommonButton>
 
-					<TransparentButton
+					<CommonButton
+						variant="transparent"
 						onClick={handleModelChange}
 					>
 						<ArrowLeftRight size={20} color='black' />
-					</TransparentButton>
+					</CommonButton>
 				</div>
 
 				{/* Background selector */}
@@ -63,9 +63,11 @@ export default function BottomMenu() {
 			</div>
 
 			<div className='h-full w-fit shadow-lg'>
-				<DangerButton>
+				<CommonButton
+					variant="danger"
+				>
 					<DoorOpen size={20} className='my-1' />
-				</DangerButton>
+				</CommonButton>
 			</div>
 		</div>
 	)

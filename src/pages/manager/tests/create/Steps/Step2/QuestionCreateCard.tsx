@@ -1,5 +1,5 @@
-import { useTestPersistContext } from "../../../../../../features/tests/stores/test-persist.context";
-import { testCreateSelectors } from "../../../../../../features/tests/stores/test-persist.reducer";
+import { useTestPersistContext } from "../../../../../../features/tests/reducers/test-persist.context";
+import { testCreateSelectors } from "../../../../../../features/tests/reducers/test-persist.reducer";
 import QuestionFormCard from "../../../../../../features/tests/ui/QuestionFormCard";
 
 export default function QuestionCreateCard({

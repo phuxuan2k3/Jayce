@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import TestCreateStepper from "./Steps/TestCreateStepper";
 import paths from "../../../../router/paths";
-import { TestPersistProvider } from "../../../../features/tests/stores/test-persist.context";
+import { TestPersistProvider } from "../../../../features/tests/reducers/test-persist.context";
 import { TestCreateTabProvider } from "./contexts/test-create-tab.context";
 import ManagerTestsCreateMain from "./ManagerTestsCreateMain";
 

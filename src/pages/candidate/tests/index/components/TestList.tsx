@@ -1,7 +1,7 @@
 import FetchState from "../../../../../components/wrapper/FetchState";
 import MyPagination from "../../../../../components/ui/common/MyPagination";
 import SkeletonLoading from "../../../../../components/ui/loading/SkeletonLoading";
-import { GetTestsApiArg, useGetTestsQuery } from "../../../../../features/tests/api/test.api-gen";
+import { GetTestsApiArg, useGetTestsQuery } from "../../../../../features/tests/legacy/test.api-gen";
 import TestCard from "./TestCard";
 import { useGetUsersQuery } from "../../../../../features/auth/api/auth-profile.api";
 import { useMemo } from "react";

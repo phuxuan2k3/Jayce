@@ -1,4 +1,4 @@
-import { GetUserAttemptsByAttemptIdAnswersApiResponse, GetUserAttemptsByAttemptIdApiResponse } from "../api/test.api-gen";
+import { GetUserAttemptsByAttemptIdAnswersApiResponse, GetUserAttemptsByAttemptIdApiResponse } from "../legacy/test.api-gen";
 import { QuestionDTO } from "../types/crud";
 
 export const mockQuestions: QuestionDTO[] = [

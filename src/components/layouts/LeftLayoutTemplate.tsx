@@ -6,7 +6,7 @@ export default function LeftLayoutTemplate({
 		description,
 	},
 	children,
-	right,
+	left: right,
 	aboveMain,
 }: {
 	header: {
@@ -14,7 +14,7 @@ export default function LeftLayoutTemplate({
 		description?: string;
 	};
 	children: React.ReactNode;
-	right: React.ReactNode;
+	left: React.ReactNode;
 	aboveMain?: React.ReactNode;
 }) {
 	return (
@@ -32,7 +32,7 @@ export default function LeftLayoutTemplate({
 				</div>
 			</header>
 
-			<aside className="lg:row-start-2 lg:col-start-1 w-full h-fit lg:sticky lg:top-[2vh]">
+			<aside className="lg:row-start-2 lg:col-start-1 w-full h-full">
 				{right}
 			</aside>
 

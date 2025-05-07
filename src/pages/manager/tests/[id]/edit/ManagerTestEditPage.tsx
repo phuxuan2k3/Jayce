@@ -1,7 +1,7 @@
-import { useGetManagerTestsByTestIdQuestionsQuery, useGetTestsByTestIdQuery } from '../../../../../features/tests/api/test.api-gen';
+import { useGetManagerTestsByTestIdQuestionsQuery, useGetTestsByTestIdQuery } from '../../../../../features/tests/legacy/test.api-gen';
 import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
-import { TestPersistProvider } from '../../../../../features/tests/stores/test-persist.context'
-import { TestPersistState } from '../../../../../features/tests/stores/test-persist.reducer';
+import { TestPersistProvider } from '../../../../../features/tests/reducers/test-persist.context'
+import { TestPersistState } from '../../../../../features/tests/reducers/test-persist.reducer';
 import ManagerTestEditMain from './ManagerTestEditMain'
 
 export default function ManagerTestEditPage() {

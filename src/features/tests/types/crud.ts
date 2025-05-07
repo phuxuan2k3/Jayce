@@ -1,4 +1,4 @@
-import { PostManagerTestsApiArg, PutManagerTestsByTestIdApiArg } from "../api/test.api-gen";
+import { PostManagerTestsApiArg, PutManagerTestsByTestIdApiArg } from "../legacy/test.api-gen";
 
 export type CreateTestParam = PostManagerTestsApiArg["body"];
 

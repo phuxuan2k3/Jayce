@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { BrainCircuitIcon } from "lucide-react"
 import TextareaAutosize from 'react-textarea-autosize';
-import { TestQuestion } from '../../../../../../features/tests/stores/test-persist.reducer';
+import { TestQuestion } from '../../../../../../features/tests/reducers/test-persist.reducer';
 import { QuestionDTO } from '../../../../../../features/tests/types/crud';
 
 export default function QuestionEditFormCard({

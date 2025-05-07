@@ -1,9 +1,9 @@
 import { useState } from "react";
 import EditTestQuestions from "./components/EditTestQuestions";
 import { Snackbar, Alert } from "@mui/material";
-import { useTestPersistContext } from "../../../../../features/tests/stores/test-persist.context";
+import { useTestPersistContext } from "../../../../../features/tests/reducers/test-persist.context";
 import { Trash2 } from "lucide-react";
-import { useDeleteManagerTestsByTestIdMutation } from "../../../../../features/tests/api/test.api-gen";
+import { useDeleteManagerTestsByTestIdMutation } from "../../../../../features/tests/legacy/test.api-gen";
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../router/paths";
@@ -67,7 +67,7 @@ export default function ManagerTestEditMain() {
 					title: "Edit your test",
 					description: "You can edit your test here!",
 				}}
-				right={
+				left={
 					<div className="h-fit lg:h-[96vh] w-full flex flex-col gap-4 p-6 shadow-primary bg-white rounded-lg">
 						<TabButton
 							onClick={() => setTab("detail")}

@@ -1,4 +1,4 @@
-import { useTestPersistContext } from '../../../../../../features/tests/stores/test-persist.context';
+import { useTestPersistContext } from '../../../../../../features/tests/reducers/test-persist.context';
 import QuestionFormEditCard from './QuestionFormEditCard';
 
 export default function QuestionEditCard({

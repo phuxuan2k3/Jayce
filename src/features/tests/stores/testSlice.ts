@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GetCandidateCurrentAttemptDoApiResponse } from '../api/test.api-gen';
+import { GetCandidateCurrentAttemptDoApiResponse } from '../legacy/test.api-gen';
 
 export interface TestState {
 	currentAttempt: {

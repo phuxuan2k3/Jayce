@@ -25,6 +25,10 @@ const paths = {
 					DO: `/candidate/tests/${id}/do/`,
 					ASSESSMENT: `/candidate/tests/${id}/assessment/`,
 					RECOMMENDATION: `/candidate/tests/${id}/recommendation/`,
+					practice: {
+						ROOT: `/candidate/tests/${id}/practice/`,
+						DO: `/candidate/tests/${id}/practice/do/`,
+					},
 				};
 			},
 			attempts: {
@@ -35,6 +39,8 @@ const paths = {
 					};
 				},
 			},
+			TEMPLATES: `/candidate/tests/templates/`,
+			GENERATE: `/candidate/tests/generate/`,
 		},
 		scenarios: {
 			_layout: "/candidate/scenarios/",

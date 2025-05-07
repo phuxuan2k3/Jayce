@@ -7,7 +7,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import GradientBorderNotGood from "../../../../components/ui/border/GradientBorder.notgood";
 import { useListScenarioMutation } from "../../../../features/scenarios/apis/concrete/ekko.scenario-api";
 import { useListUsersMutation, useFindUsersByMetadataMutation } from "../../../../features/scenarios/apis/concrete/bulbasaur.scenario-api";
-import { GetTestsApiResponse, useGetTestsQuery } from "../../../../features/tests/api/test.api-gen";
+import { GetTestsApiResponse, useGetTestsQuery } from "../../../../features/tests/legacy/test.api-gen";
 import { authSelectors, UserInfo } from "../../../../features/auth/store/authSlice";
 import { useAppSelector } from "../../../../app/hooks";
 import { SortType } from "../../../../features/scenarios/types";

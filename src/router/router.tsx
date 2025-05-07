@@ -1,9 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import AuthLoginPage from "../pages/auth/login/AuthLoginPage";
 import AuthRegisterPage from "../pages/auth/register/AuthRegisterPage";
-import CandidateTestAssessmentPage from "../pages/candidate/tests/[id]/assessment/CandidateTestAssessmentPage";
 import ErrorPage from "../components/pages/ErrorPage";
-import CandidateTestRecommendationPage from "../pages/candidate/tests/[id]/recommendation/CandidateTestRecommendationPage";
 import ManagerTestAttemptsPage from "../pages/manager/tests/[id]/attempts/ManagerTestAttemptsPage";
 import ManagerTestAttemptPage from "../pages/manager/tests/attempts/[id]/index/ManagerTestAttemptPage";
 import ManagerTestsCreatePage from "../pages/manager/tests/create/ManagerTestsCreatePage";
@@ -30,7 +28,7 @@ import AuthLayout from "../pages/auth/AuthLayout";
 import UnauthLayout from "../pages/unauth/UnauthLayout";
 import CandidateLayout from "../pages/candidate/CandidateLayout";
 import GuestPage from "../pages/unauth/index/GuestPage";
-import CandidateTestsPage from "../pages/candidate/tests/index/CandidateTestsPage";
+import CandidateTestsPage from "../pages/candidate/tests_v2/index/CandidateTestsPage";
 import CandidateTestDoPage from "../pages/candidate/tests/[id]/do/CandidateTestDoPage";
 import CandidateTestAttemtpsPage from "../pages/candidate/tests/[id]/attempts/CandidateTestAttemptsPage";
 import CandidateTestsLayout from "../pages/candidate/tests/CandidateTestsLayout";
@@ -46,6 +44,10 @@ import CandidateInterviewLivePage from "../pages/candidate/interviews/live/Candi
 import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/ManagerTestEditPage";
 import SetUpPage from "../pages/candidate/interviews/setup/setup";
 import Settings from "../pages/common/profile/index/Settings";
+import CandidateTestsTemplatesPage from "../pages/candidate/tests/templates/page";
+import CandidateTestsPracticePage from "../pages/candidate/tests/generate/index/page";
+import CandidateTestPracticePage from "../pages/candidate/tests/[id]/practice/index/page";
+import CandidateTestPracticeDoPage from "../pages/candidate/tests/[id]/practice/do/page";
 
 const router = createBrowserRouter(
 	[
@@ -122,12 +124,12 @@ const router = createBrowserRouter(
 									element: <CandidateTestsPage />,
 								},
 								{
-									path: paths.candidate.tests.in().RECOMMENDATION,
-									element: <CandidateTestRecommendationPage />,
+									path: paths.candidate.tests.TEMPLATES,
+									element: <CandidateTestsTemplatesPage />,
 								},
 								{
-									path: paths.candidate.tests.in().ASSESSMENT,
-									element: <CandidateTestAssessmentPage />,
+									path: paths.candidate.tests.GENERATE,
+									element: <CandidateTestsPracticePage />,
 								},
 
 								// In an Attempt
@@ -156,6 +158,19 @@ const router = createBrowserRouter(
 											path: paths.candidate.tests.in().ATTEMPTS,
 											element: <CandidateTestAttemtpsPage />,
 										},
+										{
+											path: paths.candidate.tests.in().practice.ROOT,
+											children: [
+												{
+													index: true,
+													element: <CandidateTestPracticePage />,
+												},
+												{
+													path: paths.candidate.tests.in().practice.DO,
+													element: <CandidateTestPracticeDoPage />,
+												}
+											]
+										}
 									],
 								},
 							],

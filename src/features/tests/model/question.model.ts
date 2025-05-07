@@ -6,3 +6,10 @@ export type QuestionCore = {
 	points: number;
 	correctOption: number;
 };
+
+export type QuestionHideAnswer = Omit<QuestionCore, "correctOption">;
+
+export type QuestionDo = QuestionHideAnswer & {
+	isFlagged: boolean;
+	chosenOption?: number;
+};

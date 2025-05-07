@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TestFields } from "../../../../../../features/tests/stores/test-persist.reducer";
+import { TestFields } from "../../../../../../features/tests/reducers/test-persist.reducer";
 import TextareaAutosize from "react-textarea-autosize";
 
 export default function TestEditForm({

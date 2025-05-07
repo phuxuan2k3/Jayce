@@ -1,6 +1,6 @@
 import TestFieldsForm from "../../../../../features/tests/ui/TestFieldsForm";
 import { useTestCreateTab } from "../contexts/test-create-tab.context";
-import { useTestPersistContext } from "../../../../../features/tests/stores/test-persist.context";
+import { useTestPersistContext } from "../../../../../features/tests/reducers/test-persist.context";
 
 export default function TestCreateStep1() {
 	const {

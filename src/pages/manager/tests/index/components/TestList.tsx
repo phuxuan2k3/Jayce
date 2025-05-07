@@ -29,7 +29,7 @@ const TestList: React.FC<TestListProps> = ({
 }) => {
 	return (
 		<div className="flex flex-col gap-8 mt-4 mb-4 items-center">
-			<div className="w-full flex flex-col gap-4 px-4 lg:max-h-[600px] overflow-y-auto">
+			<div className="w-full flex flex-col gap-4 px-4">
 				{tests.data.map((test, index) => (
 					<TestItem
 						key={index}

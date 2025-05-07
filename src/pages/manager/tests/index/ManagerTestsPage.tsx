@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useDeleteManagerTestsByTestIdMutation, useGetManagerTestsQuery } from "../../../../features/tests/api/test.api-gen";
+import { useDeleteManagerTestsByTestIdMutation, useGetManagerTestsQuery } from "../../../../features/tests/legacy/test.api-gen";
 import paths from "../../../../router/paths";
-import RightLayoutTemplate from "../../../../components/layouts/RightLayoutTemplate";
 import TestList from "./components/TestList";
 import { FilterProps } from "../../../../features/tests/types/filter";
+import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
+import CommonButton from "../../../../components/ui/CommonButton";
 
 const ManagerTestsPage = () => {
 	const navigate = useNavigate();
@@ -40,19 +41,27 @@ const ManagerTestsPage = () => {
 	};
 
 	return (
-		<RightLayoutTemplate
+		<LeftLayoutTemplate
 			header={{
 				title: "Welcome to your Test Manager",
 				description: "You can manage all your test here!",
 			}}
-			right={
-				<div className="flex flex-col gap-4">
-					<button
-						className="w-full bg-primary text-white font-bold px-4 py-2 rounded-lg shadow-md hover:bg-primary-toned-800 transition-colors duration-200"
+			left={
+				<div className="lg:sticky lg:top-[2vh] flex flex-col gap-4 shadow-primary rounded-lg p-4 bg-white">
+					<div className="flex flex-col gap-2 mb-4">
+						<h2 className="text-lg font-bold">Actions</h2>
+						<p className="text-sm text-primary-toned-500">You can create, edit or delete your tests.</p>
+					</div>
+					<CommonButton
+						variant="secondary"
+					>
+						Avtive Tests
+					</CommonButton>
+					<CommonButton
 						onClick={handleClickCreateTest}
 					>
 						Create Test
-					</button>
+					</CommonButton>
 				</div>
 			}
 		>
@@ -69,7 +78,7 @@ const ManagerTestsPage = () => {
 					}));
 				}}
 			/>
-		</RightLayoutTemplate>
+		</LeftLayoutTemplate>
 	);
 }
 
