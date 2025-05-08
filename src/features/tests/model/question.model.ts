@@ -7,9 +7,9 @@ export type QuestionCore = {
 	correctOption: number;
 };
 
-export type QuestionHideAnswer = Omit<QuestionCore, "correctOption">;
+export type QuestionNoAnswer = Omit<QuestionCore, "correctOption">;
 
-export type QuestionDo = QuestionHideAnswer & {
+export type QuestionDo = QuestionNoAnswer & {
 	isFlagged: boolean;
 	chosenOption?: number;
 };

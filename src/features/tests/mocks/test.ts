@@ -1,4 +1,4 @@
-import { TestCore, TestCoreDo } from "../model/test/test-core";
+import { PromptTemplate, TestCore, TestCoreDo, TestPractice } from "../model/test.model";
 
 export const mockTestCoreDos: TestCoreDo[] = [
 	{
@@ -98,5 +98,54 @@ export const mockTestCores: TestCore[] = [
 		language: "SQL",
 		mode: "exam",
 		createdAt: "2023-08-05T16:45:00Z"
+	}
+];
+
+export const promptTemplates: PromptTemplate[] = [
+	{
+		id: 1,
+		name: "React Basics",
+		title: "React Fundamentals Test",
+		description: "Basic concepts of React including components, hooks, and state management",
+		difficulty: 2,
+		tags: ["React", "Frontend", "JavaScript"],
+		numberOfQuestions: 10,
+		numberOfOptions: 4,
+		outlines: ["Components", "Hooks", "Props", "State", "Context"]
+	},
+	{
+		id: 2,
+		name: "TypeScript Advanced",
+		title: "TypeScript Advanced Concepts",
+		description: "Advanced TypeScript features including generics, utility types, and type inference",
+		difficulty: 3,
+		tags: ["TypeScript", "Frontend", "Programming"],
+		numberOfQuestions: 15,
+		numberOfOptions: 4,
+		outlines: ["Generics", "Utility Types", "Type Inference", "Type Guards", "Decorators"]
+	}
+];
+
+export const userGeneratedTests: TestPractice[] = [
+	{
+		id: 101,
+		author: {
+			id: "user-1",
+			name: "Current User",
+		},
+		title: "My JavaScript Test",
+		description: "Custom JavaScript test generated from prompt",
+		minutesToAnswer: 30,
+		language: "en",
+		mode: "practice",
+		createdAt: "2025-04-25T12:00:00Z",
+		difficulty: 2,
+		tags: ["JavaScript", "Frontend"],
+		numberOfQuestions: 10,
+		numberOfOptions: 4,
+		outlines: ["ES6 Features", "Async/Await", "Closures"],
+		feedback: {
+			rating: 4,
+		}
 	}
 ];

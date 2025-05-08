@@ -28,9 +28,7 @@ import AuthLayout from "../pages/auth/AuthLayout";
 import UnauthLayout from "../pages/unauth/UnauthLayout";
 import CandidateLayout from "../pages/candidate/CandidateLayout";
 import GuestPage from "../pages/unauth/index/GuestPage";
-import CandidateTestsPage from "../pages/candidate/tests_v2/index/CandidateTestsPage";
-import CandidateTestDoPage from "../pages/candidate/tests/[id]/do/CandidateTestDoPage";
-import CandidateTestAttemtpsPage from "../pages/candidate/tests/[id]/attempts/CandidateTestAttemptsPage";
+import CandidateTestsPage from "../pages/candidate/tests/index/CandidateTestsPage";
 import CandidateTestsLayout from "../pages/candidate/tests/CandidateTestsLayout";
 import ManagerLayout from "../pages/manager/ManagerLayout";
 import AuthBusinessRegisterPage from "../pages/auth/bussiness-register/AuthBusinessRegisterPage";
@@ -45,9 +43,9 @@ import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/ManagerTestEdi
 import SetUpPage from "../pages/candidate/interviews/setup/setup";
 import Settings from "../pages/common/profile/index/Settings";
 import CandidateTestsTemplatesPage from "../pages/candidate/tests/templates/page";
-import CandidateTestsPracticePage from "../pages/candidate/tests/generate/index/page";
-import CandidateTestPracticePage from "../pages/candidate/tests/[id]/practice/index/page";
-import CandidateTestPracticeDoPage from "../pages/candidate/tests/[id]/practice/do/page";
+import CandidateTestsPracticePage from "../pages/candidate/tests/generate/page";
+import CandidateTestDoPage from "../pages/candidate/tests/[id]/do/page";
+import CandidateTestPage from "../pages/candidate/tests/[id]/index/CandidateTestPage";
 
 const router = createBrowserRouter(
 	[
@@ -147,30 +145,17 @@ const router = createBrowserRouter(
 								// In a Test
 
 								{
-									path: paths.candidate.tests.in()._layout,
+									path: paths.candidate.tests.in().ROOT,
 									element: <CandidateInTestLayout />,
 									children: [
+										{
+											index: true,
+											element: <CandidateTestPage />,
+										},
 										{
 											path: paths.candidate.tests.in().DO,
 											element: <CandidateTestDoPage />,
 										},
-										{
-											path: paths.candidate.tests.in().ATTEMPTS,
-											element: <CandidateTestAttemtpsPage />,
-										},
-										{
-											path: paths.candidate.tests.in().practice.ROOT,
-											children: [
-												{
-													index: true,
-													element: <CandidateTestPracticePage />,
-												},
-												{
-													path: paths.candidate.tests.in().practice.DO,
-													element: <CandidateTestPracticeDoPage />,
-												}
-											]
-										}
 									],
 								},
 							],

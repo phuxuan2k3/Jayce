@@ -86,7 +86,7 @@ const CandidateHomePage = () => {
 	}
 
 	const navigateToTest = (id: string) => {
-		navigate(paths.candidate.tests.in(id).ATTEMPTS);
+		navigate(paths.candidate.tests.in(id).ROOT);
 	}
 
 	return (

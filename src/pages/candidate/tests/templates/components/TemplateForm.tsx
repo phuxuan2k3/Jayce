@@ -1,5 +1,5 @@
 import React from 'react';
-import { PromptTemplate } from '../../../../../features/tests/model/test/test-practice';
+import { PromptTemplate } from "../../../../../features/tests/model/test.model";
 import { TemplateFormData } from './types';
 import TagInput from './TagInput';
 import ContextInput from './ContextInput';
@@ -39,7 +39,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 				<p className="text-xl mb-2">Select a template to edit or create a new one</p>
 				<button
 					onClick={onCreateNew}
-					className="px-4 py-2 mt-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition"
+					className="px-4 py-2 mt-4 bg-primary text-white rounded-md hover:bg-primary-dark transition"
 				>
 					Create New Template
 				</button>
@@ -56,6 +56,20 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 			<div className="space-y-4">
 				<div>
 					<label className="block text-sm font-medium text-gray-700 mb-1">
+						Template Name
+					</label>
+					<input
+						type="text"
+						name="name"
+						value={formData.name}
+						onChange={handleInputChange}
+						className="w-full p-2 border border-primary-toned-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
+						placeholder="Enter internal template name"
+					/>
+				</div>
+
+				<div>
+					<label className="block text-sm font-medium text-gray-700 mb-1">
 						Title
 					</label>
 					<input
@@ -63,7 +77,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 						name="title"
 						value={formData.title}
 						onChange={handleInputChange}
-						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+						className="w-full p-2 border border-primary-toned-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
 						placeholder="Enter template title"
 					/>
 				</div>
@@ -77,7 +91,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 						name="description"
 						value={formData.description}
 						onChange={handleInputChange}
-						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+						className="w-full p-2 border border-primary-toned-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
 						placeholder="Enter template description"
 					/>
 				</div>
@@ -93,7 +107,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 							value={formData.numberOfQuestions}
 							onChange={handleInputChange}
 							min="1"
-							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+							className="w-full p-2 border border-primary-toned-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
 						/>
 					</div>
 
@@ -108,7 +122,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 							onChange={handleInputChange}
 							min="1"
 							max="5"
-							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+							className="w-full p-2 border border-primary-toned-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
 						/>
 					</div>
 				</div>
@@ -123,7 +137,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 						value={formData.numberOfOptions}
 						onChange={handleInputChange}
 						min="2"
-						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+						className="w-full p-2 border border-primary-toned-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
 					/>
 				</div>
 
@@ -141,14 +155,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 					<button
 						type="button"
 						onClick={onCancel}
-						className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50"
+						className="px-4 py-2 border border-primary-toned-300 text-gray-700 rounded-md hover:bg-primary-toned-50"
 					>
 						Cancel
 					</button>
 					<button
 						type="button"
 						onClick={onSave}
-						className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+						className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark"
 					>
 						Save Template
 					</button>

@@ -41,7 +41,7 @@ const Header = ({
 	description?: string;
 }) => {
 	return (
-		<div className='flex-1 flex flex-col'>
+		<div className='mt-2 flex-1 flex flex-col'>
 			<div className="flex justify-between items-center">
 				<h1 className="text-2xl md:text-3xl font-bold">{title}</h1>
 			</div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { mockTestCoreDos } from "../mocks/test";
-import { TestCoreDo } from "../model/test/test-core";
+import { TestCoreDo } from "../model/test.model";
 
 export default function useTestDo() {
 	const [testDo, setTestDo] = useState<TestCoreDo>(mockTestCoreDos[0]);

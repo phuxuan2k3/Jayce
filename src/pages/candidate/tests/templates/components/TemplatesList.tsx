@@ -1,5 +1,6 @@
-import React from 'react';
-import { PromptTemplate } from '../../../../../features/tests/model/test/test-practice';
+import React, { useState, useEffect } from 'react';
+import { PromptTemplate } from "../../../../../features/tests/model/test.model";
+import MyPagination from "../../../../../components/ui/common/MyPagination";
 
 interface TemplatesListProps {
 	templates: PromptTemplate[];
@@ -26,6 +27,26 @@ const TemplatesList: React.FC<TemplatesListProps> = ({
 		template.id.toString().includes(searchTerm)
 	);
 
+	// Pagination state
+	const [currentPage, setCurrentPage] = useState(1);
+	const templatesPerPage = 5;
+	const totalPages = Math.ceil(filteredTemplates.length / templatesPerPage);
+
+	// Reset to first page when search term changes
+	useEffect(() => {
+		setCurrentPage(1);
+	}, [searchTerm]);
+
+	// Get current templates for pagination
+	const indexOfLastTemplate = currentPage * templatesPerPage;
+	const indexOfFirstTemplate = indexOfLastTemplate - templatesPerPage;
+	const currentTemplates = filteredTemplates.slice(indexOfFirstTemplate, indexOfLastTemplate);
+
+	// Handle page change
+	const handlePageChange = (page: number) => {
+		setCurrentPage(page);
+	};
+
 	return (
 		<div className="lg:col-span-1 bg-white rounded-lg shadow p-6">
 			<div className="flex justify-between items-center mb-4">
@@ -48,8 +69,8 @@ const TemplatesList: React.FC<TemplatesListProps> = ({
 				/>
 			</div>
 
-			<div className="space-y-3 max-h-[calc(100vh-240px)] overflow-y-auto">
-				{filteredTemplates.map(template => (
+			<div className="space-y-3 max-h-[calc(100vh-300px)] overflow-y-auto mb-4">
+				{currentTemplates.map(template => (
 					<div
 						key={template.id}
 						className={`p-3 border rounded-md cursor-pointer hover:bg-gray-50 transition ${selectedTemplate?.id === template.id ? 'border-indigo-500 bg-indigo-50' : 'border-gray-200'
@@ -91,6 +112,17 @@ const TemplatesList: React.FC<TemplatesListProps> = ({
 					</div>
 				)}
 			</div>
+
+			{/* Pagination */}
+			{filteredTemplates.length > 0 && (
+				<div className="flex justify-center mt-4">
+					<MyPagination
+						totalPage={totalPages}
+						initialPage={currentPage}
+						onPageChange={handlePageChange}
+					/>
+				</div>
+			)}
 		</div>
 	);
 };

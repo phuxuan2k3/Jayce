@@ -1,4 +1,4 @@
-import { PromptTemplate } from '../../../../../features/tests/model/test/test-practice';
+import { PromptTemplate } from "../../../../../features/tests/model/test.model";
 
 // Sample data for demonstration purposes
 export const sampleTemplates: PromptTemplate[] = [
