@@ -40,7 +40,12 @@ export function toErrorMessage(error: FetchBaseQueryError | SerializedError | un
 				return 'Unauthorized';
 			}
 			else if (error.status === 500) {
-				return 'Internal Server Error';
+				let message = "Unknown error";
+				const data = error.data as any;
+				if ("message" in data) {
+					message = data.message;
+				}
+				return 'Error: ' + message;
 			}
 			else if (error.status === 400) {
 				let message = "Unknown error";

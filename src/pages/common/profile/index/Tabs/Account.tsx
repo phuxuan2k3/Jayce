@@ -108,12 +108,12 @@ const Account: React.FC<AccountProps> = ({ authData }) => {
                     <tbody>
                         <tr className="border-b border-black w-full">
                             <td className="w-[20%]">SkillSharp ID</td>
-                            <td className="w-[70%] p-2 opacity-70">Bang</td>
+                            <td className="w-[70%] p-2 opacity-70">{authData.username || "No info"}</td>
                             <td className="w-[10%] text-end"></td>
                         </tr>
                         <tr className="border-b border-black w-full">
                             <td className="w-[20%]">Email</td>
-                            <td className="w-[70%] p-2 opacity-70">phamcongbang03@gmail.com</td>
+                            <td className="w-[70%] p-2 opacity-70">{authData.email || "No info"}</td>
                             <td className="w-[10%] text-end"></td>
                         </tr>
                         <tr className="border-b border-black w-full">
