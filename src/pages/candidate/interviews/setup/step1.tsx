@@ -63,7 +63,7 @@ const SetUpStep1: FC<{
       />
       <div
         onClick={onNext}
-        className="mt-24 bg-primary text-center text-white px-24 py-1.5 rounded-lg"
+        className="my-24 bg-primary text-center text-white px-24 py-1.5 rounded-lg"
       >
         Next
       </div>
