@@ -11,6 +11,7 @@ import { useAppSelector } from "../../../app/hooks";
 import paths from "../../../router/paths";
 import { useLogoutMutation } from "../../../features/auth/api/logout.api";
 import { authSelectors } from "../../../features/auth/store/authSlice";
+import { Alarm } from "@mui/icons-material";
 
 const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -129,7 +130,10 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                     icon={faChevronDown}
                   />
                   {openPractice && (
-                    <div className="absolute px-6 py-4 left-10 top-[70px] mt-1 bg-white shadow-lg rounded w-[360px] z-10 text-lg font-medium">
+                    <div
+                      ref={dropdownRef}
+                      className="z-[100] absolute px-6 py-4 left-10 top-[70px] mt-1 bg-white shadow-lg rounded w-[360px]  text-lg font-medium"
+                    >
                       <div className="flex items-center">
                         <svg
                           width="40"
@@ -151,7 +155,10 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                         </div>
                       </div>
 
-                      <div className="flex items-center py-4">
+                      <Link
+                        to="/candidate/scenarios"
+                        className="flex items-center py-4"
+                      >
                         <svg
                           width="40"
                           height="40"
@@ -166,12 +173,37 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                         </svg>
 
                         <div className="ps-3">
-                          <div className="font-bold">Daily Challenges</div>
+                          <div className="font-bold">Daily Quiz</div>
                           <div className="text-sm text-gray-600">
-                            Quizzes and assessments everyday
+                            Quizzes everyday
                           </div>
                         </div>
-                      </div>
+                      </Link>
+
+                      <Link
+                        to="/candidate/tests"
+                        className="flex items-center py-4"
+                      >
+                        <svg
+                          width="40"
+                          height="40"
+                          viewBox="0 0 40 40"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M20.8333 17.0835C20.8333 16.3931 21.393 15.8335 22.0833 15.8335H27.9167C28.607 15.8335 29.1667 16.3931 29.1667 17.0835C29.1667 17.7738 28.607 18.3335 27.9167 18.3335H22.0833C21.393 18.3335 20.8333 17.7738 20.8333 17.0835ZM22.0835 25.0002C21.393 25.0002 20.8335 25.5598 20.8335 26.2502C20.8335 26.9405 21.393 27.5002 22.0835 27.5002H27.9165C28.607 27.5002 29.1665 26.9405 29.1665 26.2502C29.1665 25.5598 28.607 25.0002 27.9165 25.0002H22.0835ZM17.9672 16.3007C18.4553 15.8126 18.4553 15.0211 17.9672 14.5329C17.479 14.0448 16.6877 14.0448 16.1994 14.5329L13.75 16.9823L12.9672 16.1996C12.4791 15.7115 11.6876 15.7115 11.1994 16.1996C10.7113 16.6878 10.7113 17.4792 11.1994 17.9673L12.8661 19.634C13.3543 20.1222 14.1457 20.1222 14.6339 19.634L17.9672 16.3007ZM17.9672 23.6997C18.4553 24.1878 18.4553 24.9792 17.9672 25.4673L14.6339 28.8007C14.1457 29.2888 13.3543 29.2888 12.8661 28.8007L11.1994 27.134C10.7113 26.6458 10.7113 25.8545 11.1994 25.3663C11.6876 24.8782 12.4791 24.8782 12.9672 25.3663L13.75 26.149L16.1994 23.6997C16.6877 23.2115 17.479 23.2115 17.9672 23.6997ZM26.6567 6.80765C26.5155 4.86538 24.895 3.3335 22.9167 3.3335H17.0833C15.1534 3.3335 13.564 4.79136 13.3563 6.6659L10.4167 6.66683C8.34559 6.66683 6.66666 8.34576 6.66666 10.4168V32.9168C6.66666 34.9878 8.34559 36.6668 10.4167 36.6668H29.5833C31.6543 36.6668 33.3333 34.9878 33.3333 32.9168V10.4168C33.3333 8.34576 31.6543 6.66683 29.5833 6.66683L26.6437 6.6659C26.6488 6.7129 26.6532 6.76015 26.6567 6.80765ZM26.658 6.82675L26.6667 7.0835C26.6667 6.9972 26.6638 6.91158 26.658 6.82675ZM17.0833 10.8335H22.9167C24.2167 10.8335 25.3623 10.1719 26.035 9.1671L29.5833 9.16683C30.2737 9.16683 30.8333 9.72648 30.8333 10.4168V32.9168C30.8333 33.6072 30.2737 34.1668 29.5833 34.1668H10.4167C9.72631 34.1668 9.16666 33.6072 9.16666 32.9168V10.4168C9.16666 9.72648 9.72631 9.16683 10.4167 9.16683L13.965 9.16716C14.6378 10.172 15.7833 10.8335 17.0833 10.8335ZM17.0833 5.8335H22.9167C23.607 5.8335 24.1667 6.39315 24.1667 7.0835C24.1667 7.77385 23.607 8.3335 22.9167 8.3335H17.0833C16.393 8.3335 15.8333 7.77385 15.8333 7.0835C15.8333 6.39315 16.393 5.8335 17.0833 5.8335Z"
+                            fill="#212121"
+                          />
+                        </svg>
+
+                        <div className="ps-3">
+                          <div className="font-bold">Daily Assessment</div>
+                          <div className="text-sm text-gray-600">
+                            Assessments everyday
+                          </div>
+                        </div>
+                      </Link>
                     </div>
                   )}
                 </div>
@@ -186,7 +218,10 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                     icon={faChevronDown}
                   />
                   {openResource && (
-                    <div className="absolute px-6 py-4 left-0 top-[70px] mt-1 bg-white shadow-lg rounded w-[360px] z-10 text-lg font-medium">
+                    <div
+                      ref={dropdownRef}
+                      className="absolute px-6 py-4 left-0 top-[70px] mt-1 bg-white shadow-lg rounded w-[360px] z-10 text-lg font-medium"
+                    >
                       <div className="flex items-center">
                         <svg
                           width="40"
