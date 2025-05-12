@@ -1,7 +1,7 @@
-import { PromptTemplate } from "../../../../../features/tests/model/test.model";
+import { TemplateCore } from "../../../../../features/tests/model/test.model";
 
 // Sample data for demonstration purposes
-export const sampleTemplates: PromptTemplate[] = [
+export const sampleTemplates: TemplateCore[] = [
 	{
 		id: 1,
 		name: "React technical skills",

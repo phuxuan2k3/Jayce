@@ -19,12 +19,12 @@ export type TestCoreDo = TestCore & {
 	questions: QuestionDo[];
 };
 
-export type PromptTemplate = {
-	id: number;
+export type TemplateCore = {
+	id: string;
 	name: string;
 	title: string;
 	description: string;
-	difficulty: number;
+	difficulty: string;
 	tags: string[];
 	numberOfQuestions: number;
 	numberOfOptions: number;
@@ -41,11 +41,11 @@ export type ExamConfig = {
 	closeDate: string;
 };
 
-export type TestPractice = TestCore & Omit<PromptTemplate, "id" | "name" | "title" | "description"> & {
+export type TestPractice = TestCore & Omit<TemplateCore, "id" | "name" | "title" | "description"> & {
 	feedback: {
 		rating: number;
 		comment?: string;
-		problems?: "inaccurate" | "un-related" | "poor content" | "incomplete" | "repeated" | "error" | "other";
+		problems?: ("inaccurate" | "un-related" | "poor content" | "incomplete" | "repeated" | "error" | "other")[];
 	};
 };
 

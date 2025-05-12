@@ -1,7 +1,7 @@
 import { url } from "../../../app/env";
 import { CurrentAttemptSocket } from "./socket.schema";
 import { io } from "socket.io-client";
-import { testApiGen } from "../legacy/test.api-gen";
+import { testApiGenOld } from "../legacy/test.api-gen";
 import { RootState } from "../../../app/store";
 import { testActions } from "../stores/testSlice";
 import { authSelectors } from "../../auth/store/authSlice";
@@ -33,7 +33,7 @@ function clearSocket() {
 
 // TODO: sync flagged questions and current index
 
-const currentAttemptApi = testApiGen.enhanceEndpoints({
+const currentAttemptApi = testApiGenOld.enhanceEndpoints({
 	addTagTypes: ["CurrentAttempt"],
 	endpoints: {
 		getCandidateCurrentAttemptDo: {

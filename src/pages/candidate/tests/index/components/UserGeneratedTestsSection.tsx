@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { TestPractice } from "../../../../../features/tests/model/test.model";
 import paths from "../../../../../router/paths";
 import { DefaultTestPracticeCard } from "../../../../../features/tests/ui2/TestCard";
+import MyPagination from "../../../../../components/ui/common/MyPagination";
 
 type UserGeneratedTestsProps = {
 	tests: TestPractice[];
@@ -17,7 +18,7 @@ const UserGeneratedTestsSection = ({ tests, onManageTest }: UserGeneratedTestsPr
 			<p className="text-primary-toned-700 mb-4">View and manage the practice tests you've generated.</p>
 
 			{tests.length > 0 ? (
-				<div className="space-y-4">
+				<div className="flex flex-col gap-4">
 					{tests.map(test => (
 						<DefaultTestPracticeCard
 							key={test.id}
@@ -25,6 +26,16 @@ const UserGeneratedTestsSection = ({ tests, onManageTest }: UserGeneratedTestsPr
 							onTestClicked={onManageTest}
 						/>
 					))}
+
+					<div className="self-center mt-4">
+						<MyPagination
+							totalPage={Math.ceil(tests.length / 10)}
+							initialPage={1}
+							onPageChange={(page) => {
+								console.log(`Page changed to: ${page}`);
+							}}
+						/>
+					</div>
 				</div>
 			) : (
 				<div className="text-center p-8 bg-gray-50 rounded-lg">

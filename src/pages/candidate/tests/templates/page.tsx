@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
-import { PromptTemplate } from "../../../../features/tests/model/test.model";
+import { TemplateCore } from "../../../../features/tests/model/test.model";
 import { TemplateFormData } from './components/types';
 import TemplateForm from './components/TemplateForm';
 import TemplatesSidebar from './components/TemplatesSidebar';
-import { sampleTemplates } from './components/sampleData';
 import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
+import useTemplateServerQuery from './hooks/useTemplateServerQuery';
+import TemplateCard from './components/TemplateCard';
+import useTemplateServerMutate from './hooks/useTemplateServerMutate';
+import DeleteTemplateModal from './components/DeleteTemplateModal';
 
 const CandidateTestsTemplatesPage: React.FC = () => {
-	const [templates, setTemplates] = useState<PromptTemplate[]>(sampleTemplates);
-	const [selectedTemplate, setSelectedTemplate] = useState<PromptTemplate | null>(null);
+	const query = useTemplateServerQuery();
+	const mutate = useTemplateServerMutate();
+
+	const [selectedTemplate, setSelectedTemplate] = useState<TemplateCore | null>(null);
 	const [isEditing, setIsEditing] = useState(false);
-	const [searchTerm, setSearchTerm] = useState('');
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
+	const [templateToDelete, setTemplateToDelete] = useState<TemplateCore | null>(null);
+
 
 	// Template form state
 	const [formData, setFormData] = useState<TemplateFormData>({
@@ -18,14 +25,14 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 		title: '',
 		description: '',
 		numberOfQuestions: 5,
-		difficulty: 3,
+		difficulty: "Easy",
 		tags: [],
 		numberOfOptions: 4,
 		outlines: []
 	});
 
 	// Handle template selection
-	const handleSelectTemplate = (template: PromptTemplate) => {
+	const handleSelectTemplate = (template: TemplateCore) => {
 		setSelectedTemplate(template);
 		setFormData({
 			name: template.name,
@@ -48,7 +55,7 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 			title: '',
 			description: '',
 			numberOfQuestions: 5,
-			difficulty: 3,
+			difficulty: "easy",
 			tags: [],
 			numberOfOptions: 4,
 			outlines: []
@@ -59,35 +66,35 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 	// Handle save template
 	const handleSaveTemplate = () => {
 		if (selectedTemplate) {
-			// Update existing template
-			setTemplates(templates.map(template =>
-				template.id === selectedTemplate.id
-					? { ...formData, id: template.id }
-					: template
-			));
+			mutate.editTemplate({
+				body: {
+					...formData,
+					id: selectedTemplate.id,
+				}
+			});
 		} else {
-			// Create new template
-			const newId = Math.max(0, ...templates.map(t => t.id)) + 1;
-			setTemplates([...templates, { ...formData, id: newId }]);
+			mutate.createTemplate({
+				body: {
+					...formData,
+				}
+			});
 		}
 		setIsEditing(false);
 	};
 
 	// Handle delete template
-	const handleDeleteTemplate = (id: number) => {
-		setTemplates(templates.filter(template => template.id !== id));
-		if (selectedTemplate?.id === id) {
-			setSelectedTemplate(null);
-			setIsEditing(false);
-		}
+	const handleDeleteTemplate = (template: TemplateCore) => {
+		setTemplateToDelete(template);
+		setShowDeleteModal(true);
 	};
 
-	// Filter templates based on search term
-	const filteredTemplates = templates.filter(template =>
-		template.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-		template.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-		template.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-	);
+	const confirmDelete = () => {
+		if (templateToDelete) {
+			mutate.deleteTemplate({ templateId: templateToDelete.id });
+			setShowDeleteModal(false);
+			setTemplateToDelete(null);
+		}
+	};
 
 	return (
 		<NewLeftLayoutTemplate
@@ -99,8 +106,11 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 			}
 			left={
 				<TemplatesSidebar
-					searchTerm={searchTerm}
-					onSearchChange={setSearchTerm}
+					searchTerm={query.filters.searchName}
+					onSearchChange={(value) => query.setFilters(prev => ({
+						...prev,
+						searchName: value,
+					}))}
 					onCreateNew={handleCreateNew}
 				/>
 			}
@@ -128,54 +138,30 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 							</button>
 						</div>
 
-						{filteredTemplates.length > 0 ? (
+						{query.data.data.length > 0 ? (
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-								{filteredTemplates.map(template => (
-									<div
+								{query.data.data.map(template => (
+									<TemplateCard
 										key={template.id}
-										className="border border-primary-toned-200 rounded-lg p-4 hover:shadow-md transition cursor-pointer"
-										onClick={() => handleSelectTemplate(template)}
-									>
-										<div className="flex justify-between items-start mb-2">
-											<h4 className="font-semibold text-primary-dark">{template.title}</h4>
-											<button
-												onClick={(e) => {
-													e.stopPropagation();
-													handleDeleteTemplate(template.id);
-												}}
-												className="p-1 text-red-500 hover:text-red-700"
-											>
-												<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-													<path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
-												</svg>
-											</button>
-										</div>
-										<p className="text-sm text-gray-600 mb-2">{template.description}</p>
-										<div className="flex items-center text-sm text-gray-500 mb-2">
-											<span className="mr-4">Questions: {template.numberOfQuestions}</span>
-											<span>Difficulty: {template.difficulty}/5</span>
-										</div>
-										<div className="flex flex-wrap gap-1">
-											{template.tags.map((tag, index) => (
-												<span
-													key={index}
-													className="px-2 py-0.5 bg-primary-toned-100 text-primary-toned-800 rounded-full text-xs"
-												>
-													{tag}
-												</span>
-											))}
-										</div>
-									</div>
+										data={template}
+										onSelectTemplate={handleSelectTemplate}
+										onDeleteTemplate={handleDeleteTemplate}
+									/>
 								))}
 							</div>
 						) : (
 							<div className="text-center py-8 text-gray-500">
-								{searchTerm ? "No templates match your search" : "No templates available"}
+								{query.filters.searchName ? "No templates match your search" : "No templates available"}
 							</div>
 						)}
 					</div>
 				)}
-			</div>
+			</div>			<DeleteTemplateModal
+				isOpen={showDeleteModal}
+				template={templateToDelete}
+				onClose={() => setShowDeleteModal(false)}
+				onConfirm={confirmDelete}
+			/>
 		</NewLeftLayoutTemplate>
 	);
 };

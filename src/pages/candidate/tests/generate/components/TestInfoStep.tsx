@@ -1,24 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TestCore } from '../../../../../features/tests/model/test.model';
-import { PromptTemplate } from "../../../../../features/tests/model/test.model";
+import { TemplateCore } from "../../../../../features/tests/model/test.model";
+import { ListFilter } from 'lucide-react';
 
 interface TestInfoStepProps {
 	testData: TestCore;
 	onTestDataChange: (data: TestCore) => void;
-	templates: PromptTemplate[];
-	selectedTemplate: PromptTemplate | null;
-	onSelectTemplate: (template: PromptTemplate) => void;
+	selectedTemplate: TemplateCore | null;
+	onSelectTemplateClick: () => void;
 }
 
 const TestInfoStep: React.FC<TestInfoStepProps> = ({
 	testData,
 	onTestDataChange,
-	templates,
 	selectedTemplate,
-	onSelectTemplate
+	onSelectTemplateClick
 }) => {
-	const [searchTerm, setSearchTerm] = useState('');
-
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
 		const { name, value } = e.target;
 		onTestDataChange({
@@ -27,69 +24,36 @@ const TestInfoStep: React.FC<TestInfoStepProps> = ({
 		});
 	};
 
-	// Filter templates based on search term
-	const filteredTemplates = templates.filter(template =>
-		template.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())) ||
-		template.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-		template.id.toString().includes(searchTerm)
-	);
-
 	return (
 		<div className="space-y-6">
 			<h2 className="text-xl font-semibold text-gray-800">Test Information</h2>
 			<p className="text-gray-600">Start by selecting a template or filling in your test information.</p>
 
 			{/* Template Selection Section */}
-			<div className="bg-indigo-50 p-5 rounded-md border border-indigo-200 mb-6">
-				<h3 className="text-lg font-medium text-indigo-800 mb-3">Choose a Template (Optional)</h3>
-				<p className="text-sm text-indigo-600 mb-4">
+			<div className="bg-primary-toned-50 p-5 rounded-md border border-primary-toned-200 mb-6">
+				<h3 className="text-lg font-medium text-primary-toned-800 mb-3">Choose a Template (Optional)</h3>
+				<p className="text-sm text-primary-toned-600 mb-4">
 					Select a template to automatically fill in test information and prompt settings.
 				</p>
 
-				<div className="mb-4">
-					<input
-						type="text"
-						placeholder="Search templates by title, tag, or ID..."
-						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-						value={searchTerm}
-						onChange={(e) => setSearchTerm(e.target.value)}
-					/>
-				</div>
+				<button
+					onClick={onSelectTemplateClick}
+					className="w-full flex justify-center items-center gap-2 px-4 py-3 bg-white border border-primary-toned-300 text-primary rounded-md hover:bg-primary-toned-50 transition-colors"
+				>
+					<ListFilter size={18} />
+					<span>Browse Available Templates</span>
+				</button>
 
-				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-h-60 overflow-y-auto">
-					{filteredTemplates.map(template => (
-						<div
-							key={template.id}
-							className={`p-3 border rounded-md cursor-pointer hover:bg-indigo-100 transition ${selectedTemplate?.id === template.id ? 'border-indigo-500 bg-indigo-100' : 'border-gray-200'
-								}`}
-							onClick={() => onSelectTemplate(template)}
-						>
-							<h4 className="font-medium text-gray-800">{template.title}</h4>
-							<p className="text-xs text-gray-500 mt-1">Template #{template.id}</p>
-							<div className="mt-2 flex flex-wrap gap-1">
-								{template.tags.slice(0, 2).map((tag, idx) => (
-									<span
-										key={idx}
-										className="px-2 py-0.5 bg-indigo-100 text-indigo-800 text-xs rounded-full"
-									>
-										{tag}
-									</span>
-								))}
-								{template.tags.length > 2 && (
-									<span className="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded-full">
-										+{template.tags.length - 2}
-									</span>
-								)}
-							</div>
-						</div>
-					))}
-
-					{filteredTemplates.length === 0 && (
-						<div className="col-span-full text-center py-6 text-gray-500">
-							No templates found with that search term.
-						</div>
-					)}
-				</div>
+				{selectedTemplate && (
+					<div className="mt-4 bg-green-50 p-4 rounded-md border border-green-200">
+						<p className="text-sm text-green-800 flex items-center">
+							<svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+							<span>Using template: <strong>{selectedTemplate.name || selectedTemplate.title}</strong>. Prompt settings will be pre-filled in the next steps.</span>
+						</p>
+					</div>
+				)}
 			</div>
 
 			{/* Form Fields */}
@@ -104,7 +68,7 @@ const TestInfoStep: React.FC<TestInfoStepProps> = ({
 						name="title"
 						value={testData.title}
 						onChange={handleInputChange}
-						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						placeholder="E.g., React Fundamentals Practice Test"
 						required
 					/>
@@ -120,7 +84,7 @@ const TestInfoStep: React.FC<TestInfoStepProps> = ({
 						value={testData.description}
 						onChange={handleInputChange}
 						rows={3}
-						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						placeholder="Describe what this test covers and its purpose"
 						required
 					/>
@@ -136,7 +100,7 @@ const TestInfoStep: React.FC<TestInfoStepProps> = ({
 							name="language"
 							value={testData.language}
 							onChange={handleInputChange}
-							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						>
 							<option value="English">English</option>
 							<option value="Spanish">Spanish</option>
@@ -159,21 +123,10 @@ const TestInfoStep: React.FC<TestInfoStepProps> = ({
 							onChange={handleInputChange}
 							min={5}
 							max={180}
-							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						/>
 					</div>
 				</div>
-
-				{selectedTemplate && (
-					<div className="bg-green-50 p-4 rounded-md border border-green-200">
-						<p className="text-sm text-green-800 flex items-center">
-							<svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-							</svg>
-							<span>Using template: <strong>{selectedTemplate.name}</strong>. Prompt settings will be pre-filled in the next steps.</span>
-						</p>
-					</div>
-				)}
 
 				<div className="bg-yellow-50 p-4 rounded-md border border-yellow-200">
 					<p className="text-sm text-yellow-800">

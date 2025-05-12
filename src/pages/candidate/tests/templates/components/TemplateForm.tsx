@@ -1,12 +1,12 @@
 import React from 'react';
-import { PromptTemplate } from "../../../../../features/tests/model/test.model";
+import { TemplateCore } from "../../../../../features/tests/model/test.model";
 import { TemplateFormData } from './types';
 import TagInput from './TagInput';
-import ContextInput from './ContextInput';
+import OutlinesInput from './OutlinesInput';
 
 interface TemplateFormProps {
 	isEditing: boolean;
-	selectedTemplate: PromptTemplate | null;
+	selectedTemplate: TemplateCore | null;
 	formData: TemplateFormData;
 	onFormDataChange: (data: TemplateFormData) => void;
 	onSave: () => void;
@@ -27,7 +27,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 		const { name, value } = e.target;
 		onFormDataChange({
 			...formData,
-			[name]: name === 'numberOfQuestions' || name === 'difficulty' || name === 'numberOfOptions'
+			[name]: name === 'numberOfQuestions' || name === 'numberOfOptions'
 				? parseInt(value, 10)
 				: value
 		});
@@ -50,7 +50,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 	return (
 		<div>
 			<h2 className="text-xl font-semibold text-gray-700 mb-4">
-				{selectedTemplate ? `Edit Template #${selectedTemplate.id}` : 'Create New Template'}
+				{selectedTemplate ? `Edit Template: ${selectedTemplate.name}` : 'Create New Template'}
 			</h2>
 
 			<div className="space-y-4">
@@ -68,9 +68,13 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 					/>
 				</div>
 
+				<hr className="border-primary-toned-300 my-4" />
+
+				<h3 className='text-primary'>Saved information</h3>
+
 				<div>
 					<label className="block text-sm font-medium text-gray-700 mb-1">
-						Title
+						Test Title
 					</label>
 					<input
 						type="text"
@@ -113,17 +117,19 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 
 					<div>
 						<label className="block text-sm font-medium text-gray-700 mb-1">
-							Difficulty (1-5)
+							Difficulty
 						</label>
-						<input
-							type="number"
+						<select
 							name="difficulty"
 							value={formData.difficulty}
 							onChange={handleInputChange}
-							min="1"
-							max="5"
 							className="w-full p-2 border border-primary-toned-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
-						/>
+						>
+							<option value="Easy">Easy</option>
+							<option value="Medium">Medium</option>
+							<option value="Hard">Hard</option>
+							<option value="Mixed">Mixed</option>
+						</select>
 					</div>
 				</div>
 
@@ -146,7 +152,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 					onTagsChange={(newTags) => onFormDataChange({ ...formData, tags: newTags })}
 				/>
 
-				<ContextInput
+				<OutlinesInput
 					outlines={formData.outlines}
 					onOutlinesChange={(newOutlines) => onFormDataChange({ ...formData, outlines: newOutlines })}
 				/>

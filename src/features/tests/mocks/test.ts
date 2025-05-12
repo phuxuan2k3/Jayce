@@ -1,4 +1,4 @@
-import { PromptTemplate, TestCore, TestCoreDo, TestPractice } from "../model/test.model";
+import { TemplateCore, TestCore, TestCoreDo, TestPractice } from "../model/test.model";
 
 export const mockTestCoreDos: TestCoreDo[] = [
 	{
@@ -101,7 +101,7 @@ export const mockTestCores: TestCore[] = [
 	}
 ];
 
-export const promptTemplates: PromptTemplate[] = [
+export const promptTemplates: TemplateCore[] = [
 	{
 		id: 1,
 		name: "React Basics",
@@ -127,6 +127,27 @@ export const promptTemplates: PromptTemplate[] = [
 ];
 
 export const userGeneratedTests: TestPractice[] = [
+	{
+		id: 101,
+		author: {
+			id: "user-1",
+			name: "Current User",
+		},
+		title: "My JavaScript Test",
+		description: "Custom JavaScript test generated from prompt",
+		minutesToAnswer: 30,
+		language: "en",
+		mode: "practice",
+		createdAt: "2025-04-25T12:00:00Z",
+		difficulty: 2,
+		tags: ["JavaScript", "Frontend"],
+		numberOfQuestions: 10,
+		numberOfOptions: 4,
+		outlines: ["ES6 Features", "Async/Await", "Closures"],
+		feedback: {
+			rating: 4,
+		}
+	},
 	{
 		id: 101,
 		author: {

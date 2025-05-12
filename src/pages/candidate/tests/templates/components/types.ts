@@ -1,3 +1,3 @@
-import { PromptTemplate } from "../../../../../features/tests/model/test.model";
+import { TemplateCore } from "../../../../../features/tests/model/test.model";
 
-export type TemplateFormData = Omit<PromptTemplate, 'id'>;
+export type TemplateFormData = Omit<TemplateCore, 'id'>;

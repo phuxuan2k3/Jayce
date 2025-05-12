@@ -67,11 +67,9 @@ const CandidateHomePage = () => {
 	}, []);
 
 	const { data: randomScenarioData } = useGetRandomScenarioQuery();
-	const { data: challengeData } = useGetTestsChallengeOfTheDayQuery();
-	const { data: tagsData } = useGetTagsQuery();
 
 	const navigateToTestList = (tag: string) => {
-		navigate(paths.candidate.tests._layout, {
+		navigate(paths.candidate.tests.ROOT, {
 			state: {
 				filters: {
 					tags: [tag],
@@ -136,41 +134,7 @@ const CandidateHomePage = () => {
 								{/* <a href="#" className="text-sm hover:underline">Shuffle (1)</a> */}
 							</div>
 							<div className="space-y-4">
-								{challengeData && (
-									<div className="p-4 border rounded-lg shadow-md">
-										<div className="flex justify-between items-center">
-											<div className="flex items-center">
-												<div className="mr-4 text-primary">
-													<FormatListBulletedIcon className="w-10 h-10" />
-												</div>
-												<div className="flex flex-col justify-center">
-													<div className="flex items-center gap-4">
-														<h3 className="font-semibold text-xl">{challengeData.title}</h3>
-														<div className="flex gap-2 mt-1 flex-wrap">
-															{challengeData.tags.slice(0, 2).map((tag, i) => (
-																<GradientBorderNotGood key={i}>
-																	{tag.name}
-																</GradientBorderNotGood>
-															))}
-															{challengeData.tags.length > 2 && (
-																<GradientBorderNotGood>
-																	+{challengeData.tags.length - 2} more
-																</GradientBorderNotGood>
-															)}
-														</div>
-													</div>
-													<div className="flex items-center gap-2 text-sm mt-1">
-														<AccessAlarmIcon />
-														<span>{challengeData.minutesToAnswer} minutes</span>
-													</div>
-												</div>
-											</div>
-											<button className="px-10 rounded-lg py-2 font-bold cursor-pointer bg-[var(--primary-color)] text-white" onClick={() => navigateToTest(challengeData.id.toString())}>
-												Start now
-											</button>
-										</div>
-									</div>
-								)}
+
 								<div className="text-center text-gray-500 text-sm">or</div>
 								{randomScenarioData && (
 									<div className="p-4 border rounded-lg shadow-md">
@@ -213,15 +177,6 @@ const CandidateHomePage = () => {
 						<div className="mb-8">
 							<div className="flex justify-between items-center text-primary mb-4">
 								<h2 className="text-2xl font-semibold">Prepare by most learned topics</h2>
-								<a className="text-sm hover:underline cursor-pointer" onClick={() => navigateToTestList(tagsData?.[Math.floor(Math.random() * tagsData.length)]?.name || "")}>Pick one randomly</a>
-							</div>
-							<div className="grid grid-cols-3">
-								{tagsData?.slice(0, 9).map((tag, idx) => (
-									<div key={idx} className="flex items-center border border-primary px-1 py-2 text-center text-sm font-medium bg-white shadow-sm cursor-pointer" onClick={() => navigateToTestList(tag.name)}>
-										<NumbersIcon className="w-1/6 text-primary" />
-										<span className="w-5/6 font-bold">{tag.name}</span>
-									</div>
-								))}
 							</div>
 						</div>
 					</div>

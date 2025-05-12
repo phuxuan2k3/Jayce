@@ -3,16 +3,13 @@ import { useAppSelector } from "../../../../../app/hooks";
 import NewLeftLayoutTemplate from "../../../../../components/layouts/NewLeftLayoutTemplate";
 import { authSelectors } from "../../../../../features/auth/store/authSlice";
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
-import SidebarActions from "../../../../../features/tests/ui2/SidebarActions";
+import SidebarActions from "../../../../../features/tests/ui2/sidebar/SidebarActions";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../router/paths";
 import { QuestionCore } from "../../../../../features/tests/model/question.model";
 import { TestPractice } from "../../../../../features/tests/model/test.model";
 import {
 	TestInfoCard,
-	OngoingAttemptCard,
-	CompletedAttemptsList,
-	AttemptPagination,
 	TabsComponent,
 	AttemptsTabContent,
 	QuestionsTabContent,

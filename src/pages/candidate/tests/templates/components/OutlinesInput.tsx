@@ -14,12 +14,12 @@ const mockSuggestions = [
 	'Add questions about testing methodologies',
 ];
 
-interface ContextInputProps {
+interface Props {
 	outlines: string[];
 	onOutlinesChange: (newOutlines: string[]) => void;
 }
 
-const ContextInput: React.FC<ContextInputProps> = ({
+const OutlinesInput: React.FC<Props> = ({
 	outlines,
 	onOutlinesChange,
 }) => {
@@ -79,7 +79,7 @@ const ContextInput: React.FC<ContextInputProps> = ({
 				{outlines.map((outline, idx) => (
 					<div
 						key={idx}
-						className="p-3 border border-gray-200 rounded-md bg-gray-50 relative"
+						className="p-3 border border-primary-toned-300 rounded-md bg-primary-toned-50 relative text-primary-toned-700"
 					>
 						<button
 							type="button"
@@ -98,13 +98,13 @@ const ContextInput: React.FC<ContextInputProps> = ({
 					placeholder="Enter outline text..."
 					value={newOutline}
 					onChange={(e) => setNewOutline(e.target.value)}
-					className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+					className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-toned-500"
 				/>
 				<div className="flex gap-2">
 					<button
 						type="button"
 						onClick={handleAddOutline}
-						className="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+						className="flex-1 px-4 py-2 bg-primary-toned-600 text-white rounded-md hover:bg-primary-toned-700"
 					>
 						Add Outline
 					</button>
@@ -112,11 +112,10 @@ const ContextInput: React.FC<ContextInputProps> = ({
 						type="button"
 						onClick={handleGenerateSuggestions}
 						disabled={isGeneratingSuggestions}
-						className={`flex-1 px-4 py-2 rounded-md ${
-							isGeneratingSuggestions
-								? 'bg-gray-400 cursor-not-allowed'
-								: 'bg-green-600 hover:bg-green-700 text-white'
-						}`}
+						className={`flex-1 px-4 py-2 rounded-md ${isGeneratingSuggestions
+							? 'bg-gray-400 cursor-not-allowed'
+							: 'bg-green-600 hover:bg-green-700 text-white'
+							}`}
 					>
 						{isGeneratingSuggestions
 							? 'Generating...'
@@ -135,7 +134,7 @@ const ContextInput: React.FC<ContextInputProps> = ({
 							<button
 								type="button"
 								onClick={handleAddAllSuggestions}
-								className="text-xs px-2 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700"
+								className="text-xs px-2 py-1 bg-primary-toned-600 text-white rounded hover:bg-primary-toned-700"
 							>
 								Add All
 							</button>
@@ -171,4 +170,4 @@ const ContextInput: React.FC<ContextInputProps> = ({
 	);
 };
 
-export default ContextInput;
+export default OutlinesInput;

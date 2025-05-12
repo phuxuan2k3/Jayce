@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { PromptTemplate } from "../../../../../features/tests/model/test.model";
+import { TemplateCore } from "../../../../../features/tests/model/test.model";
 import MyPagination from "../../../../../components/ui/common/MyPagination";
 
 interface TemplatesListProps {
-	templates: PromptTemplate[];
-	selectedTemplate: PromptTemplate | null;
+	templates: TemplateCore[];
+	selectedTemplate: TemplateCore | null;
 	searchTerm: string;
 	onSearchChange: (term: string) => void;
-	onSelectTemplate: (template: PromptTemplate) => void;
+	onSelectTemplate: (template: TemplateCore) => void;
 	onCreateNew: () => void;
 	onDeleteTemplate: (id: number) => void;
 }

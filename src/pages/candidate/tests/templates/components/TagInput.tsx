@@ -26,11 +26,11 @@ const TagInput: React.FC<TagInputProps> = ({ tags, onTagsChange }) => {
 			</label>
 			<div className="flex flex-wrap gap-2 mb-2">
 				{tags.map((tag, idx) => (
-					<div key={idx} className="flex items-center bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full">
+					<div key={idx} className="flex items-center bg-primary-toned-100 text-primary-toned-800 px-3 py-1 rounded-full">
 						{tag}
 						<button
 							type="button"
-							className="ml-2 text-indigo-500 hover:text-indigo-700"
+							className="ml-2 text-primary-toned-500 hover:text-primary-toned-700"
 							onClick={() => handleRemoveTag(tag)}
 						>
 							×
@@ -44,7 +44,7 @@ const TagInput: React.FC<TagInputProps> = ({ tags, onTagsChange }) => {
 					placeholder="Add a tag..."
 					value={newTag}
 					onChange={(e) => setNewTag(e.target.value)}
-					className="flex-1 p-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+					className="flex-1 p-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary-toned-500"
 					onKeyPress={(e) => {
 						if (e.key === 'Enter') {
 							e.preventDefault();
@@ -55,7 +55,7 @@ const TagInput: React.FC<TagInputProps> = ({ tags, onTagsChange }) => {
 				<button
 					type="button"
 					onClick={handleAddTag}
-					className="px-4 py-2 bg-indigo-600 text-white rounded-r-md hover:bg-indigo-700"
+					className="px-4 py-2 bg-primary-toned-600 text-white rounded-r-md hover:bg-primary-toned-700"
 				>
 					Add
 				</button>

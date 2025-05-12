@@ -17,11 +17,12 @@ const paths = {
 	candidate: {
 		_layout: "/candidate/",
 		tests: {
-			_layout: "/candidate/tests/",
+			ROOT: "/candidate/tests/",
 			in(id: number | string = ":testId") {
 				return {
 					ROOT: `/candidate/tests/${id}/`,
 					DO: `/candidate/tests/${id}/do/`,
+					EXAM: `/candidate/tests/${id}/exam/`,
 				};
 			},
 			attempts: {
@@ -34,6 +35,7 @@ const paths = {
 			},
 			TEMPLATES: `/candidate/tests/templates/`,
 			GENERATE: `/candidate/tests/generate/`,
+			JOIN: `/candidate/tests/join/`,
 		},
 		scenarios: {
 			_layout: "/candidate/scenarios/",

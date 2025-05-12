@@ -3,7 +3,7 @@ import TestDoSidebar from "../../../../../features/tests/ui/TestDoSidebar";
 import useTestDo from "../../../../../features/tests/hooks/useTestDo";
 import QuestionDoCard from "../../../../../features/tests/ui/QuestionDoCard";
 
-const CandidateTestDoPage = () => {
+const CandidateTestPraticePage = () => {
 	const {
 		testDo,
 		secondsLeft,
@@ -50,4 +50,4 @@ const CandidateTestDoPage = () => {
 	);
 }
 
-export default CandidateTestDoPage
+export default CandidateTestPraticePage

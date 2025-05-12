@@ -1,15 +1,19 @@
 import React from 'react';
-import { PromptTemplate } from "../../../../../features/tests/model/test.model";
+import { TemplateCore } from "../../../../../features/tests/model/test.model";
 import TagInput from '../../templates/components/TagInput';
 
 interface PromptInfoStepProps {
-	promptData: Omit<PromptTemplate, 'id' | 'name'>;
-	onPromptDataChange: (data: Omit<PromptTemplate, 'id' | 'name'>) => void;
+	promptData: Omit<TemplateCore, 'id' | 'name'>;
+	onPromptDataChange: (data: Omit<TemplateCore, 'id' | 'name'>) => void;
+	testTitle: string;
+	testDescription: string;
 }
 
 const PromptInfoStep: React.FC<PromptInfoStepProps> = ({
 	promptData,
-	onPromptDataChange
+	onPromptDataChange,
+	testTitle,
+	testDescription
 }) => {
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
@@ -28,43 +32,25 @@ const PromptInfoStep: React.FC<PromptInfoStepProps> = ({
 				Configure how the AI will generate questions for your test.
 			</p>
 
+			<div className="bg-primary-toned-50 p-4 rounded-md border border-primary-toned-200 mb-4">
+				<h3 className="font-medium text-primary-toned-800 mb-1">Test Information</h3>
+				<div className="space-y-2">
+					<div>
+						<span className="text-sm font-medium text-gray-500">Title:</span>
+						<p className="text-gray-800">{testTitle}</p>
+					</div>
+					<div>
+						<span className="text-sm font-medium text-gray-500">Description:</span>
+						<p className="text-gray-800">{testDescription}</p>
+					</div>
+				</div>
+				<p className="mt-3 text-xs text-primary-toned-600">
+					These details will be used to guide the AI in generating relevant questions.
+				</p>
+			</div>
+
 			{/* Form Fields */}
 			<div className="space-y-4">
-				<div>
-					<label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-						Prompt Title*
-					</label>
-					<input
-						type="text"
-						id="title"
-						name="title"
-						value={promptData.title}
-						onChange={handleInputChange}
-						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-						placeholder="E.g., React Fundamentals Questions"
-						required
-					/>
-					<p className="mt-1 text-xs text-gray-500">
-						This title helps the AI understand what kind of questions to generate.
-					</p>
-				</div>
-
-				<div>
-					<label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
-						Prompt Description*
-					</label>
-					<textarea
-						id="description"
-						name="description"
-						value={promptData.description}
-						onChange={handleInputChange}
-						rows={2}
-						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-						placeholder="Describe what topics this prompt should cover"
-						required
-					/>
-				</div>
-
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 					<div>
 						<label htmlFor="numberOfQuestions" className="block text-sm font-medium text-gray-700 mb-1">
@@ -78,7 +64,7 @@ const PromptInfoStep: React.FC<PromptInfoStepProps> = ({
 							onChange={handleInputChange}
 							min={1}
 							max={50}
-							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						/>
 					</div>
 
@@ -94,7 +80,7 @@ const PromptInfoStep: React.FC<PromptInfoStepProps> = ({
 							onChange={handleInputChange}
 							min={1}
 							max={5}
-							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						/>
 					</div>
 
@@ -110,7 +96,7 @@ const PromptInfoStep: React.FC<PromptInfoStepProps> = ({
 							onChange={handleInputChange}
 							min={2}
 							max={6}
-							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						/>
 					</div>
 				</div>

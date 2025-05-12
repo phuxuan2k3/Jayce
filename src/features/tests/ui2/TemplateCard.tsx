@@ -1,7 +1,7 @@
-import { PromptTemplate } from "../../../../../features/tests/model/test.model";
+import { TemplateCore } from "../model/test.model";
 
 type TemplateCardProps = {
-	template: PromptTemplate;
+	template: TemplateCore;
 	onGenerate: (templateId: number) => void;
 };
 

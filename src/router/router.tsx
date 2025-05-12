@@ -44,8 +44,9 @@ import SetUpPage from "../pages/candidate/interviews/setup/setup";
 import Settings from "../pages/common/profile/index/Settings";
 import CandidateTestsTemplatesPage from "../pages/candidate/tests/templates/page";
 import CandidateTestsPracticePage from "../pages/candidate/tests/generate/page";
-import CandidateTestDoPage from "../pages/candidate/tests/[id]/do/page";
+import CandidateTestPraticePage from "../pages/candidate/tests/[id]/pratice/page";
 import CandidateTestPage from "../pages/candidate/tests/[id]/index/CandidateTestPage";
+import CandidateTestsJoinPage from "../pages/candidate/tests/join/CandidateTestsJoinPage";
 
 const router = createBrowserRouter(
 	[
@@ -114,7 +115,7 @@ const router = createBrowserRouter(
 						// F1 - Tests
 
 						{
-							path: paths.candidate.tests._layout,
+							path: paths.candidate.tests.ROOT,
 							element: <CandidateTestsLayout />,
 							children: [
 								{
@@ -128,6 +129,10 @@ const router = createBrowserRouter(
 								{
 									path: paths.candidate.tests.GENERATE,
 									element: <CandidateTestsPracticePage />,
+								},
+								{
+									path: paths.candidate.tests.JOIN,
+									element: <CandidateTestsJoinPage />,
 								},
 
 								// In an Attempt
@@ -154,7 +159,7 @@ const router = createBrowserRouter(
 										},
 										{
 											path: paths.candidate.tests.in().DO,
-											element: <CandidateTestDoPage />,
+											element: <CandidateTestPraticePage />,
 										},
 									],
 								},

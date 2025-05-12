@@ -105,7 +105,7 @@ const FeedbackTabContent: React.FC<FeedbackTabContentProps> = ({ isLoading, test
 				</div>
 
 				<div className="mb-4">
-					<label htmlFor="comment" className="block mb-2 text-sm font-medium text-gray-700 flex items-center">
+					<label htmlFor="comment" className="mb-2 text-sm font-medium text-gray-700 flex items-center">
 						<MessageSquare className="mr-2 text-primary" size={16} />
 						Your Comments
 					</label>
@@ -120,7 +120,7 @@ const FeedbackTabContent: React.FC<FeedbackTabContentProps> = ({ isLoading, test
 				</div>
 
 				<div>
-					<label className="block mb-2 text-sm font-medium text-gray-700 flex items-center">
+					<label className="mb-2 text-sm font-medium text-gray-700 flex items-center">
 						<AlertCircle className="mr-2 text-red-500" size={16} />
 						Report a Problem
 					</label>

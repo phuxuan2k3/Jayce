@@ -34,7 +34,7 @@
 			"get": {
 				"security": [],
 				"tags": [
-					"Practice"
+					"Test"
 				],
 				"parameters": [
 					{
@@ -181,150 +181,6 @@
 						}
 					}
 				}
-			},
-			"post": {
-				"security": [],
-				"tags": [
-					"Practice"
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"title": {
-										"type": "string"
-									},
-									"description": {
-										"type": "string"
-									},
-									"minutesToAnswer": {
-										"type": "number",
-										"minimum": 1,
-										"maximum": 10000
-									},
-									"language": {
-										"type": "string"
-									},
-									"mode": {
-										"type": "string"
-									},
-									"author": {
-										"type": "object",
-										"properties": {
-											"id": {
-												"type": "string"
-											},
-											"name": {
-												"type": "string"
-											},
-											"avatar": {
-												"type": "string"
-											}
-										},
-										"required": [
-											"id",
-											"name"
-										]
-									},
-									"questions": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"text": {
-													"type": "string"
-												},
-												"options": {
-													"type": "array",
-													"items": {
-														"type": "string"
-													}
-												},
-												"points": {
-													"type": "number"
-												},
-												"correctOption": {
-													"type": "number"
-												}
-											},
-											"required": [
-												"text",
-												"options",
-												"points",
-												"correctOption"
-											]
-										}
-									},
-									"difficulty": {
-										"type": "string",
-										"enum": [
-											"easy",
-											"medium",
-											"hard"
-										]
-									},
-									"tags": {
-										"type": "array",
-										"items": {
-											"type": "string"
-										}
-									},
-									"numberOfQuestions": {
-										"type": "integer",
-										"exclusiveMinimum": 0
-									},
-									"numberOfOptions": {
-										"type": "integer",
-										"exclusiveMinimum": 0
-									},
-									"outlines": {
-										"type": "array",
-										"items": {
-											"type": "string"
-										}
-									}
-								},
-								"required": [
-									"title",
-									"description",
-									"minutesToAnswer",
-									"language",
-									"mode",
-									"author",
-									"questions",
-									"difficulty",
-									"tags",
-									"numberOfQuestions",
-									"numberOfOptions",
-									"outlines"
-								]
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"id": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"id"
-									]
-								}
-							}
-						}
-					}
-				}
 			}
 		},
 		"/tests/challenge-of-the-day": {
@@ -332,7 +188,7 @@
 				"summary": "Get one Test that is the challenge of the day (current is random by day)",
 				"security": [],
 				"tags": [
-					"Practice"
+					"Test"
 				],
 				"responses": {
 					"200": {
@@ -409,7 +265,7 @@
 			"get": {
 				"security": [],
 				"tags": [
-					"Practice"
+					"Test"
 				],
 				"parameters": [
 					{
@@ -490,27 +346,6 @@
 						}
 					}
 				}
-			},
-			"delete": {
-				"security": [],
-				"tags": [
-					"Practice"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success"
-					}
-				}
 			}
 		},
 		"/tests/{testId}/questions": {
@@ -518,7 +353,7 @@
 				"summary": "Return questions with answers.",
 				"security": [],
 				"tags": [
-					"Practice"
+					"Test"
 				],
 				"parameters": [
 					{
@@ -583,7 +418,7 @@
 				"summary": "Return questions without answers.",
 				"security": [],
 				"tags": [
-					"Practice"
+					"Test"
 				],
 				"parameters": [
 					{
@@ -643,7 +478,7 @@
 			"get": {
 				"security": [],
 				"tags": [
-					"Practice"
+					"Test"
 				],
 				"parameters": [
 					{
@@ -708,7 +543,7 @@
 				"summary": "Return question (full) by questionId.",
 				"security": [],
 				"tags": [
-					"Practice"
+					"Test"
 				],
 				"parameters": [
 					{
@@ -862,6 +697,12 @@
 														"type": "integer",
 														"minimum": 0
 													},
+													"createdAt": {
+														"type": "string"
+													},
+													"updatedAt": {
+														"type": "string"
+													},
 													"candidate": {
 														"type": "object",
 														"properties": {
@@ -939,12 +780,6 @@
 															"createdAt",
 															"updatedAt"
 														]
-													},
-													"createdAt": {
-														"type": "string"
-													},
-													"updatedAt": {
-														"type": "string"
 													}
 												},
 												"required": [
@@ -952,10 +787,10 @@
 													"order",
 													"hasEnded",
 													"secondsSpent",
-													"candidate",
-													"test",
 													"createdAt",
-													"updatedAt"
+													"updatedAt",
+													"candidate",
+													"test"
 												]
 											}
 										}
@@ -966,54 +801,6 @@
 										"total",
 										"totalPages",
 										"data"
-									]
-								}
-							}
-						}
-					}
-				}
-			},
-			"post": {
-				"security": [],
-				"tags": [
-					"Attempts"
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"testId": {
-										"type": "string"
-									},
-									"candidateId": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"testId",
-									"candidateId"
-								]
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"attemptId": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"attemptId"
 									]
 								}
 							}
@@ -1068,6 +855,12 @@
 											"type": "integer",
 											"minimum": 0
 										},
+										"createdAt": {
+											"type": "string"
+										},
+										"updatedAt": {
+											"type": "string"
+										},
 										"candidate": {
 											"type": "object",
 											"properties": {
@@ -1145,12 +938,6 @@
 												"createdAt",
 												"updatedAt"
 											]
-										},
-										"createdAt": {
-											"type": "string"
-										},
-										"updatedAt": {
-											"type": "string"
 										}
 									},
 									"required": [
@@ -1158,10 +945,10 @@
 										"order",
 										"hasEnded",
 										"secondsSpent",
-										"candidate",
-										"test",
 										"createdAt",
-										"updatedAt"
+										"updatedAt",
+										"candidate",
+										"test"
 									]
 								}
 							}
@@ -1208,6 +995,12 @@
 											"type": "integer",
 											"minimum": 0
 										},
+										"createdAt": {
+											"type": "string"
+										},
+										"updatedAt": {
+											"type": "string"
+										},
 										"candidate": {
 											"type": "object",
 											"properties": {
@@ -1285,12 +1078,6 @@
 												"createdAt",
 												"updatedAt"
 											]
-										},
-										"createdAt": {
-											"type": "string"
-										},
-										"updatedAt": {
-											"type": "string"
 										}
 									},
 									"required": [
@@ -1298,10 +1085,10 @@
 										"order",
 										"hasEnded",
 										"secondsSpent",
-										"candidate",
-										"test",
 										"createdAt",
-										"updatedAt"
+										"updatedAt",
+										"candidate",
+										"test"
 									]
 								}
 							}
@@ -1487,11 +1274,97 @@
 				}
 			}
 		},
-		"/attempts/{attemptId}/answer": {
+		"/current-attempts/answer/": {
 			"patch": {
+				"summary": "Answer question in current attempt",
 				"security": [],
 				"tags": [
-					"Attempts"
+					"Current"
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"testId": {
+										"type": "string"
+									},
+									"candidateId": {
+										"type": "string"
+									},
+									"questionId": {
+										"type": [
+											"number",
+											"null"
+										]
+									},
+									"chosenOption": {
+										"type": [
+											"number",
+											"null"
+										]
+									}
+								},
+								"required": [
+									"testId",
+									"candidateId",
+									"questionId"
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
+		"/current-attempts/submit/": {
+			"patch": {
+				"summary": "Submit current attempt",
+				"security": [],
+				"tags": [
+					"Current"
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"testId": {
+										"type": "string"
+									},
+									"candidateId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"testId",
+									"candidateId"
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
+		"/exam-test/find": {
+			"get": {
+				"summary": "Find exam",
+				"security": [],
+				"tags": [
+					"Exam"
 				],
 				"parameters": [
 					{
@@ -1499,29 +1372,7 @@
 							"type": "string"
 						},
 						"required": true,
-						"name": "attemptId",
-						"in": "path"
-					},
-					{
-						"schema": {
-							"type": [
-								"number",
-								"null"
-							]
-						},
-						"required": false,
-						"name": "questionId",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": [
-								"number",
-								"null"
-							]
-						},
-						"required": false,
-						"name": "chosenOption",
+						"name": "roomId",
 						"in": "query"
 					}
 				],
@@ -1532,11 +1383,298 @@
 				}
 			}
 		},
-		"/attempts/{attemptId}/submit": {
-			"patch": {
+		"/exam-test/join": {
+			"post": {
+				"summary": "Join exam with password (optional)",
 				"security": [],
 				"tags": [
-					"Attempts"
+					"Exam"
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"testId": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string"
+									},
+									"candidateId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"testId",
+									"password",
+									"candidateId"
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
+		"/templates": {
+			"get": {
+				"security": [],
+				"tags": [
+					"Template"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": false,
+						"name": "searchName",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "number",
+							"minimum": 1,
+							"default": 1
+						},
+						"required": false,
+						"name": "page",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": [
+								"number",
+								"null"
+							],
+							"default": 5
+						},
+						"required": false,
+						"name": "perPage",
+						"in": "query"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"page": {
+											"type": "number"
+										},
+										"perPage": {
+											"type": "number"
+										},
+										"total": {
+											"type": "number"
+										},
+										"totalPages": {
+											"type": "number"
+										},
+										"data": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"title": {
+														"type": "string"
+													},
+													"description": {
+														"type": "string"
+													},
+													"difficulty": {
+														"type": "string"
+													},
+													"tags": {
+														"type": "array",
+														"items": {
+															"type": "string"
+														}
+													},
+													"numberOfQuestions": {
+														"type": "number"
+													},
+													"numberOfOptions": {
+														"type": "number"
+													},
+													"outlines": {
+														"type": "array",
+														"items": {
+															"type": "string"
+														}
+													}
+												},
+												"required": [
+													"id",
+													"name",
+													"title",
+													"description",
+													"difficulty",
+													"tags",
+													"numberOfQuestions",
+													"numberOfOptions",
+													"outlines"
+												]
+											}
+										}
+									},
+									"required": [
+										"page",
+										"perPage",
+										"total",
+										"totalPages",
+										"data"
+									]
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"security": [],
+				"tags": [
+					"Template"
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"title": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									},
+									"difficulty": {
+										"type": "string"
+									},
+									"tags": {
+										"type": "array",
+										"items": {
+											"type": "string"
+										}
+									},
+									"numberOfQuestions": {
+										"type": "number"
+									},
+									"numberOfOptions": {
+										"type": "number"
+									},
+									"outlines": {
+										"type": "array",
+										"items": {
+											"type": "string"
+										}
+									}
+								},
+								"required": [
+									"name",
+									"title",
+									"description",
+									"difficulty",
+									"tags",
+									"numberOfQuestions",
+									"numberOfOptions",
+									"outlines"
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			},
+			"put": {
+				"security": [],
+				"tags": [
+					"Template"
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "string"
+									},
+									"name": {
+										"type": "string"
+									},
+									"title": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									},
+									"difficulty": {
+										"type": "string"
+									},
+									"tags": {
+										"type": "array",
+										"items": {
+											"type": "string"
+										}
+									},
+									"numberOfQuestions": {
+										"type": "number"
+									},
+									"numberOfOptions": {
+										"type": "number"
+									},
+									"outlines": {
+										"type": "array",
+										"items": {
+											"type": "string"
+										}
+									}
+								},
+								"required": [
+									"id"
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
+		"/templates/{templateId}": {
+			"delete": {
+				"security": [],
+				"tags": [
+					"Template"
 				],
 				"parameters": [
 					{
@@ -1544,7 +1682,394 @@
 							"type": "string"
 						},
 						"required": true,
-						"name": "attemptId",
+						"name": "templateId",
+						"in": "path"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
+		"/practice-tests": {
+			"post": {
+				"security": [],
+				"tags": [
+					"Practice"
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"title": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									},
+									"minutesToAnswer": {
+										"type": "number",
+										"minimum": 1,
+										"maximum": 10000
+									},
+									"language": {
+										"type": "string"
+									},
+									"mode": {
+										"type": "string"
+									},
+									"author": {
+										"type": "object",
+										"properties": {
+											"id": {
+												"type": "string"
+											},
+											"name": {
+												"type": "string"
+											},
+											"avatar": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"id",
+											"name"
+										]
+									},
+									"questions": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"text": {
+													"type": "string"
+												},
+												"options": {
+													"type": "array",
+													"items": {
+														"type": "string"
+													}
+												},
+												"points": {
+													"type": "number"
+												},
+												"correctOption": {
+													"type": "number"
+												}
+											},
+											"required": [
+												"text",
+												"options",
+												"points",
+												"correctOption"
+											]
+										}
+									},
+									"difficulty": {
+										"type": "string",
+										"enum": [
+											"easy",
+											"medium",
+											"hard"
+										]
+									},
+									"tags": {
+										"type": "array",
+										"items": {
+											"type": "string"
+										}
+									},
+									"numberOfQuestions": {
+										"type": "integer",
+										"exclusiveMinimum": 0
+									},
+									"numberOfOptions": {
+										"type": "integer",
+										"exclusiveMinimum": 0
+									},
+									"outlines": {
+										"type": "array",
+										"items": {
+											"type": "string"
+										}
+									}
+								},
+								"required": [
+									"title",
+									"description",
+									"minutesToAnswer",
+									"language",
+									"mode",
+									"author",
+									"questions",
+									"difficulty",
+									"tags",
+									"numberOfQuestions",
+									"numberOfOptions",
+									"outlines"
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"testId": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"testId"
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/practice-tests/{testId}": {
+			"delete": {
+				"security": [],
+				"tags": [
+					"Practice"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
+						"in": "path"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
+		"/practice-tests/{testId}/feedback": {
+			"get": {
+				"security": [],
+				"tags": [
+					"Feedback"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
+						"in": "path"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": [
+										"object",
+										"null"
+									],
+									"properties": {
+										"practiceTestId": {
+											"type": "string"
+										},
+										"rating": {
+											"type": "number",
+											"minimum": 1,
+											"maximum": 10
+										},
+										"problems": {
+											"type": "array",
+											"items": {
+												"type": "string",
+												"enum": [
+													"inaccurate",
+													"un-related",
+													"poor content",
+													"incomplete",
+													"repeated",
+													"error",
+													"other"
+												]
+											}
+										},
+										"comment": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"practiceTestId",
+										"rating",
+										"problems",
+										"comment"
+									]
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"security": [],
+				"tags": [
+					"Feedback"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
+						"in": "path"
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"rating": {
+										"type": "number",
+										"minimum": 1,
+										"maximum": 10
+									},
+									"problems": {
+										"type": "array",
+										"items": {
+											"type": "string",
+											"enum": [
+												"inaccurate",
+												"un-related",
+												"poor content",
+												"incomplete",
+												"repeated",
+												"error",
+												"other"
+											]
+										},
+										"default": []
+									},
+									"comment": {
+										"type": "string",
+										"default": ""
+									}
+								},
+								"required": [
+									"rating"
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			},
+			"put": {
+				"security": [],
+				"tags": [
+					"Feedback"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
+						"in": "path"
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "string"
+									},
+									"name": {
+										"type": "string"
+									},
+									"title": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									},
+									"difficulty": {
+										"type": "string"
+									},
+									"tags": {
+										"type": "array",
+										"items": {
+											"type": "string"
+										}
+									},
+									"numberOfQuestions": {
+										"type": "number"
+									},
+									"numberOfOptions": {
+										"type": "number"
+									},
+									"outlines": {
+										"type": "array",
+										"items": {
+											"type": "string"
+										}
+									}
+								},
+								"required": [
+									"id"
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			},
+			"delete": {
+				"security": [],
+				"tags": [
+					"Feedback"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
 						"in": "path"
 					}
 				],

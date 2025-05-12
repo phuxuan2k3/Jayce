@@ -4,20 +4,13 @@ import React, { useState } from 'react';
 const OutlinesStep: React.FC<{
 	outlines: string[];
 	onOutlinesChange: (newOutlines: string[]) => void;
-	templateName: string;
-	onTemplateNameChange: (name: string) => void;
-	onSaveTemplate: () => void;
 }> = ({
 	outlines,
-	onOutlinesChange,
-	templateName,
-	onTemplateNameChange,
-	onSaveTemplate
+	onOutlinesChange
 }) => {
 		const [newOutline, setNewOutline] = useState<string>('');
 		const [isGeneratingSuggestions, setIsGeneratingSuggestions] = useState<boolean>(false);
 		const [suggestions, setSuggestions] = useState<string[]>([]);
-		const [showSaveTemplate, setShowSaveTemplate] = useState<boolean>(false);
 
 		// Mock data for AI suggestions - similar to what's in ContextInput
 		const mockSuggestions = [
@@ -126,7 +119,7 @@ const OutlinesStep: React.FC<{
 									placeholder="Enter outline text..."
 									value={newOutline}
 									onChange={(e) => setNewOutline(e.target.value)}
-									className="flex-1 p-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+									className="flex-1 p-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary"
 									onKeyPress={(e) => {
 										if (e.key === 'Enter') {
 											e.preventDefault();
@@ -137,7 +130,7 @@ const OutlinesStep: React.FC<{
 								<button
 									type="button"
 									onClick={handleAddOutline}
-									className="px-4 py-2 bg-indigo-600 text-white rounded-r-md hover:bg-indigo-700"
+									className="px-4 py-2 bg-primary text-white rounded-r-md hover:bg-primary-toned-700"
 								>
 									Add
 								</button>
@@ -148,8 +141,8 @@ const OutlinesStep: React.FC<{
 								onClick={handleGenerateSuggestions}
 								disabled={isGeneratingSuggestions}
 								className={`w-full px-4 py-2 rounded-md flex items-center justify-center ${isGeneratingSuggestions
-										? 'bg-gray-400 cursor-not-allowed'
-										: 'bg-green-600 hover:bg-green-700 text-white'
+									? 'bg-gray-400 cursor-not-allowed'
+									: 'bg-green-600 hover:bg-green-700 text-white'
 									}`}
 							>
 								{isGeneratingSuggestions ? (
@@ -183,7 +176,7 @@ const OutlinesStep: React.FC<{
 									<button
 										type="button"
 										onClick={handleAddAllSuggestions}
-										className="text-xs px-2 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700"
+										className="text-xs px-2 py-1 bg-primary text-white rounded hover:bg-primary-toned-700"
 									>
 										Add All
 									</button>
@@ -216,55 +209,17 @@ const OutlinesStep: React.FC<{
 						</div>
 					)}
 
-					{/* Save as template option */}
-					<div className="mt-6">
-						<button
-							type="button"
-							onClick={() => setShowSaveTemplate(!showSaveTemplate)}
-							className="flex items-center text-indigo-600 hover:text-indigo-800"
-						>
-							<svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
-							</svg>
-							{showSaveTemplate ? 'Cancel Saving Template' : 'Save as Template for Future Use'}
-						</button>
-
-						{showSaveTemplate && (
-							<div className="mt-3 p-4 bg-indigo-50 border border-indigo-200 rounded-md">
-								<div className="space-y-3">
-									<div>
-										<label htmlFor="templateName" className="block text-sm font-medium text-gray-700 mb-1">
-											Template Name*
-										</label>
-										<input
-											type="text"
-											id="templateName"
-											value={templateName}
-											onChange={(e) => onTemplateNameChange(e.target.value)}
-											className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-											placeholder="Give your template a name"
-											required
-										/>
-									</div>
-									<button
-										type="button"
-										onClick={onSaveTemplate}
-										disabled={!templateName.trim()}
-										className={`w-full px-4 py-2 rounded-md ${!templateName.trim()
-												? 'bg-indigo-300 cursor-not-allowed'
-												: 'bg-indigo-600 hover:bg-indigo-700 text-white'
-											}`}
-									>
-										Save Template
-									</button>
-								</div>
-							</div>
-						)}
+					<div className="mt-2">
+						<div className="bg-yellow-50 p-4 rounded-md border border-yellow-200">
+							<p className="text-sm text-yellow-800">
+								<span className="font-medium">Ready to generate?</span> Click the "Generate Test" button below to create your practice test based on these settings.
+							</p>
+						</div>
 					</div>
 
-					<div className="bg-yellow-50 p-4 rounded-md border border-yellow-200 mt-6">
-						<p className="text-sm text-yellow-800">
-							<span className="font-medium">Ready to generate?</span> Click the "Generate Test" button below to create your practice test based on these settings.
+					<div className="bg-primary-toned-50 p-4 rounded-md border border-primary-toned-200">
+						<p className="text-sm text-primary-toned-800">
+							<span className="font-medium">Tip:</span> Want to save this template for future use? Click the "Save as Template" button in the sidebar.
 						</p>
 					</div>
 				</div>
