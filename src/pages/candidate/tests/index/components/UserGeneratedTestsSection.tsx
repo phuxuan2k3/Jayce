@@ -1,15 +1,24 @@
 import { useNavigate } from "react-router-dom";
-import { TestPractice } from "../../../../../features/tests/model/test.model";
+import { TestPracticeCore } from "../../../../../features/tests/model/test.model";
 import paths from "../../../../../router/paths";
-import { DefaultTestPracticeCard } from "../../../../../features/tests/ui2/TestCard";
+import { DefaultTestPracticeCard } from "../../../../../features/tests/ui2/TestPracticeCard";
 import MyPagination from "../../../../../components/ui/common/MyPagination";
 
 type UserGeneratedTestsProps = {
-	tests: TestPractice[];
-	onManageTest: (testId: number) => void;
+	totalPages: number;
+	total: number;
+	tests: TestPracticeCore[];
+	onManageTest: (testId: string) => void;
+	onPageChange: (page: number) => void;
 };
 
-const UserGeneratedTestsSection = ({ tests, onManageTest }: UserGeneratedTestsProps) => {
+const UserGeneratedTestsSection = ({
+	tests,
+	totalPages,
+	total,
+	onManageTest,
+	onPageChange,
+}: UserGeneratedTestsProps) => {
 	const navigate = useNavigate();
 
 	return (
@@ -29,12 +38,14 @@ const UserGeneratedTestsSection = ({ tests, onManageTest }: UserGeneratedTestsPr
 
 					<div className="self-center mt-4">
 						<MyPagination
-							totalPage={Math.ceil(tests.length / 10)}
+							totalPage={totalPages}
 							initialPage={1}
-							onPageChange={(page) => {
-								console.log(`Page changed to: ${page}`);
-							}}
+							onPageChange={onPageChange}
 						/>
+					</div>
+
+					<div className="italic text-gray-500 text-center mt-4">
+						Showing {tests.length} of {total} tests
 					</div>
 				</div>
 			) : (

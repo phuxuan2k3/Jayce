@@ -43,7 +43,7 @@ import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/ManagerTestEdi
 import SetUpPage from "../pages/candidate/interviews/setup/setup";
 import Settings from "../pages/common/profile/index/Settings";
 import CandidateTestsTemplatesPage from "../pages/candidate/tests/templates/page";
-import CandidateTestsPracticePage from "../pages/candidate/tests/generate/page";
+import CandidateTestsGeneratePage from "../pages/candidate/tests/generate/page";
 import CandidateTestPraticePage from "../pages/candidate/tests/[id]/pratice/page";
 import CandidateTestPage from "../pages/candidate/tests/[id]/index/CandidateTestPage";
 import CandidateTestsJoinPage from "../pages/candidate/tests/join/CandidateTestsJoinPage";
@@ -128,7 +128,7 @@ const router = createBrowserRouter(
 								},
 								{
 									path: paths.candidate.tests.GENERATE,
-									element: <CandidateTestsPracticePage />,
+									element: <CandidateTestsGeneratePage />,
 								},
 								{
 									path: paths.candidate.tests.JOIN,

@@ -1,4 +1,4 @@
-import { TemplateCore, TestCore, TestCoreDo, TestPractice } from "../model/test.model";
+import { TemplateCore, TestCore, TestCoreDo, TestPracticeCore } from "../model/test.model";
 
 export const mockTestCoreDos: TestCoreDo[] = [
 	{
@@ -126,7 +126,7 @@ export const promptTemplates: TemplateCore[] = [
 	}
 ];
 
-export const userGeneratedTests: TestPractice[] = [
+export const userGeneratedTests: TestPracticeCore[] = [
 	{
 		id: 101,
 		author: {

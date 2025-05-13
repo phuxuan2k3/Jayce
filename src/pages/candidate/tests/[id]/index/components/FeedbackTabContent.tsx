@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { TestPractice } from '../../../../../../features/tests/model/test.model';
+import { TestPracticeCore } from '../../../../../../features/tests/model/test.model';
 import { StarIcon, AlertCircle, Sparkles, MessageSquare } from 'lucide-react';
 
 interface FeedbackTabContentProps {
 	isLoading: boolean;
-	test: TestPractice | null;
-	onFeedbackChange?: (feedback: TestPractice['feedback']) => void;
+	test: TestPracticeCore | null;
+	onFeedbackChange?: (feedback: TestPracticeCore['feedback']) => void;
 }
 
 // Problem report options
@@ -21,7 +21,7 @@ const PROBLEM_OPTIONS = [
 
 const FeedbackTabContent: React.FC<FeedbackTabContentProps> = ({ isLoading, test, onFeedbackChange }) => {
 	// Initialize feedback state from test or default values
-	const [feedback, setFeedback] = useState<TestPractice['feedback']>(
+	const [feedback, setFeedback] = useState<TestPracticeCore['feedback']>(
 		test?.feedback || { rating: 0 }
 	);
 
@@ -43,7 +43,7 @@ const FeedbackTabContent: React.FC<FeedbackTabContentProps> = ({ isLoading, test
 	const handleProblemChange = (problem: string) => {
 		const updatedFeedback = {
 			...feedback,
-			problems: problem as TestPractice['feedback']['problems']
+			problems: problem as TestPracticeCore['feedback']['problems']
 		};
 		setFeedback(updatedFeedback);
 		if (onFeedbackChange) onFeedbackChange(updatedFeedback);

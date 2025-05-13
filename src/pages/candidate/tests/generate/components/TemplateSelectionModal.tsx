@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TemplateCore } from '../../../../../features/tests/model/test.model';
-import { XCircle, Settings } from 'lucide-react';
+import { XCircle, Settings, Search } from 'lucide-react';
+import paths from '../../../../../router/paths';
 import { useNavigate } from 'react-router-dom';
+import MyPagination from '../../../../../components/ui/common/MyPagination';
+import TemplateCard from '../../templates/components/TemplateCard';
 
 interface TemplateSelectionModalProps {
 	isOpen: boolean;
 	onClose: () => void;
+	filters: {
+		searchName: string;
+		page: number;
+	};
+	setFilters: (filters: {
+		searchName: string;
+		page: number;
+	}) => void;
+	totalPages: number;
 	templates: TemplateCore[];
 	onSelectTemplate: (template: TemplateCore) => void;
 }
@@ -13,16 +25,41 @@ interface TemplateSelectionModalProps {
 const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 	isOpen,
 	onClose,
+	filters,
+	setFilters,
+	totalPages,
 	templates,
 	onSelectTemplate,
 }) => {
 	const navigate = useNavigate();
+	const [searchInput, setSearchInput] = useState(filters.searchName);
 
 	if (!isOpen) return null;
 
 	const handleManageTemplates = () => {
 		onClose();
-		navigate('/candidate/tests/templates/');
+		navigate(paths.candidate.tests.TEMPLATES);
+	};
+
+	const handleSearch = () => {
+		setFilters({
+			...filters,
+			searchName: searchInput,
+			page: 1, // Reset to first page when searching
+		});
+	};
+
+	const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') {
+			handleSearch();
+		}
+	};
+
+	const handlePageChange = (newPage: number) => {
+		setFilters({
+			...filters,
+			page: newPage,
+		});
 	};
 
 	return (
@@ -62,39 +99,40 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 									Manage Templates
 								</button>
 							</div>
+							<div className="mb-4">
+								<div className="relative">
+									<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+									<input
+										type="text"
+										value={searchInput}
+										onChange={(e) => setSearchInput(e.target.value)}
+										onKeyDown={handleKeyPress}
+										className="pl-10 pr-4 py-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-1 focus:ring-primary"
+										placeholder="Search templates..."
+									/>
+								</div>
+							</div>
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 								{templates.map((template) => (
-									<div
+									<TemplateCard
 										key={template.id}
-										className="border border-primary-toned-200 rounded-lg p-4 hover:bg-primary-toned-50 cursor-pointer transition-colors"
-										onClick={() => {
+										data={template}
+										onSelectTemplate={(template) => {
 											onSelectTemplate(template);
 											onClose();
 										}}
-									>
-										<div className="flex justify-between items-start mb-2">
-											<h3 className="font-bold text-primary">{template.name || template.title}</h3>
-											<span className="text-xs bg-primary-toned-100 text-primary-toned-700 px-2 py-1 rounded-full">
-												{template.difficulty === 1 ? 'Easy' : template.difficulty === 2 ? 'Medium' : 'Hard'}
-											</span>
-										</div>
-										<p className="text-sm text-gray-600 mb-2">{template.description}</p>
-										<div className="flex flex-wrap gap-1 mt-2">
-											{template.tags.map((tag, index) => (
-												<span
-													key={index}
-													className="text-xs bg-primary-toned-100 text-primary px-2 py-1 rounded-full"
-												>
-													{tag}
-												</span>
-											))}
-										</div>
-										<div className="mt-2 text-sm text-gray-500">
-											{template.numberOfQuestions} questions • {template.numberOfOptions} options per question
-										</div>
-									</div>
+									/>
 								))}
 							</div>
+							{templates.length > 0 && (
+								<div className="flex justify-center mt-6">
+									<MyPagination
+										totalPage={totalPages}
+										initialPage={filters.page}
+										onPageChange={handlePageChange}
+									/>
+								</div>
+							)}
 						</>
 					)}
 				</div>

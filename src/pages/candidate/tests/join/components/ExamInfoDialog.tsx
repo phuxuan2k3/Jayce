@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TestExam } from '../../../../../features/tests/model/test.model';
+import { TestExamCore } from '../../../../../features/tests/model/test.model';
 import { useNavigate } from 'react-router-dom';
 import paths from '../../../../../router/paths';
 import { AlarmClock, AlertCircle, LockIcon, CheckCircle, X, Eye, EyeOff } from 'lucide-react';
@@ -10,7 +10,7 @@ interface ExamInfoDialogProps {
 	onClose: () => void;
 	code: string;
 	isLoading: boolean;
-	examData: TestExam | null;
+	examData: TestExamCore | null;
 	error: string | null;
 }
 

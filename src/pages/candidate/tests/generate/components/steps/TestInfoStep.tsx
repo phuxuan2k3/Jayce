@@ -1,25 +1,25 @@
 import React from 'react';
-import { TestCore } from '../../../../../features/tests/model/test.model';
-import { TemplateCore } from "../../../../../features/tests/model/test.model";
+import { TemplateCore } from "../../../../../../features/tests/model/test.model";
 import { ListFilter } from 'lucide-react';
+import { TestCoreCreate } from '../../../../../../features/tests/types/create';
 
 interface TestInfoStepProps {
-	testData: TestCore;
-	onTestDataChange: (data: TestCore) => void;
+	testCoreData: TestCoreCreate;
+	onTestCoreDataChange: (data: TestCoreCreate) => void;
 	selectedTemplate: TemplateCore | null;
 	onSelectTemplateClick: () => void;
 }
 
 const TestInfoStep: React.FC<TestInfoStepProps> = ({
-	testData,
-	onTestDataChange,
+	testCoreData,
+	onTestCoreDataChange,
 	selectedTemplate,
 	onSelectTemplateClick
 }) => {
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
 		const { name, value } = e.target;
-		onTestDataChange({
-			...testData,
+		onTestCoreDataChange({
+			...testCoreData,
 			[name]: name === 'minutesToAnswer' ? parseInt(value, 10) : value,
 		});
 	};
@@ -66,7 +66,7 @@ const TestInfoStep: React.FC<TestInfoStepProps> = ({
 						type="text"
 						id="title"
 						name="title"
-						value={testData.title}
+						value={testCoreData.title}
 						onChange={handleInputChange}
 						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						placeholder="E.g., React Fundamentals Practice Test"
@@ -81,7 +81,7 @@ const TestInfoStep: React.FC<TestInfoStepProps> = ({
 					<textarea
 						id="description"
 						name="description"
-						value={testData.description}
+						value={testCoreData.description}
 						onChange={handleInputChange}
 						rows={3}
 						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
@@ -98,7 +98,7 @@ const TestInfoStep: React.FC<TestInfoStepProps> = ({
 						<select
 							id="language"
 							name="language"
-							value={testData.language}
+							value={testCoreData.language}
 							onChange={handleInputChange}
 							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						>
@@ -119,7 +119,7 @@ const TestInfoStep: React.FC<TestInfoStepProps> = ({
 							type="number"
 							id="minutesToAnswer"
 							name="minutesToAnswer"
-							value={testData.minutesToAnswer}
+							value={testCoreData.minutesToAnswer}
 							onChange={handleInputChange}
 							min={5}
 							max={180}

@@ -25,7 +25,7 @@ function isErrorWithMessage(
 	)
 }
 
-export function toErrorMessage(error: FetchBaseQueryError | SerializedError | undefined | unknown): string | null {
+export function parseQueryError(error: FetchBaseQueryError | SerializedError | undefined | unknown): string | null {
 	if (error) {
 		if (isFetchBaseQueryError(error)) {
 			// The request couldn't reach the server (e.g., the server is down, DNS issues, etc.). 

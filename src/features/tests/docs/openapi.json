@@ -30,324 +30,6 @@
 		"parameters": {}
 	},
 	"paths": {
-		"/tests": {
-			"get": {
-				"security": [],
-				"tags": [
-					"Test"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "number",
-							"minimum": 1,
-							"default": 1
-						},
-						"required": false,
-						"name": "page",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": [
-								"number",
-								"null"
-							],
-							"default": 5
-						},
-						"required": false,
-						"name": "perPage",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": false,
-						"name": "authorId",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": false,
-						"name": "searchTitle",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": "string",
-							"default": "-createdAt"
-						},
-						"required": false,
-						"name": "sort",
-						"in": "query"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"page": {
-											"type": "number"
-										},
-										"perPage": {
-											"type": "number"
-										},
-										"total": {
-											"type": "number"
-										},
-										"totalPages": {
-											"type": "number"
-										},
-										"data": {
-											"type": "array",
-											"items": {
-												"type": "object",
-												"properties": {
-													"id": {
-														"type": "string"
-													},
-													"title": {
-														"type": "string"
-													},
-													"description": {
-														"type": "string"
-													},
-													"minutesToAnswer": {
-														"type": "number",
-														"minimum": 1,
-														"maximum": 10000
-													},
-													"language": {
-														"type": "string"
-													},
-													"mode": {
-														"type": "string"
-													},
-													"author": {
-														"type": "object",
-														"properties": {
-															"id": {
-																"type": "string"
-															},
-															"name": {
-																"type": "string"
-															},
-															"avatar": {
-																"type": "string"
-															}
-														},
-														"required": [
-															"id",
-															"name"
-														]
-													},
-													"createdAt": {
-														"type": "string"
-													},
-													"updatedAt": {
-														"type": "string"
-													}
-												},
-												"required": [
-													"id",
-													"title",
-													"description",
-													"minutesToAnswer",
-													"language",
-													"mode",
-													"author",
-													"createdAt",
-													"updatedAt"
-												]
-											}
-										}
-									},
-									"required": [
-										"page",
-										"perPage",
-										"total",
-										"totalPages",
-										"data"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/tests/challenge-of-the-day": {
-			"get": {
-				"summary": "Get one Test that is the challenge of the day (current is random by day)",
-				"security": [],
-				"tags": [
-					"Test"
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"id": {
-											"type": "string"
-										},
-										"title": {
-											"type": "string"
-										},
-										"description": {
-											"type": "string"
-										},
-										"minutesToAnswer": {
-											"type": "number",
-											"minimum": 1,
-											"maximum": 10000
-										},
-										"language": {
-											"type": "string"
-										},
-										"mode": {
-											"type": "string"
-										},
-										"author": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "string"
-												},
-												"name": {
-													"type": "string"
-												},
-												"avatar": {
-													"type": "string"
-												}
-											},
-											"required": [
-												"id",
-												"name"
-											]
-										},
-										"createdAt": {
-											"type": "string"
-										},
-										"updatedAt": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"id",
-										"title",
-										"description",
-										"minutesToAnswer",
-										"language",
-										"mode",
-										"author",
-										"createdAt",
-										"updatedAt"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/tests/{testId}": {
-			"get": {
-				"security": [],
-				"tags": [
-					"Test"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"id": {
-											"type": "string"
-										},
-										"title": {
-											"type": "string"
-										},
-										"description": {
-											"type": "string"
-										},
-										"minutesToAnswer": {
-											"type": "number",
-											"minimum": 1,
-											"maximum": 10000
-										},
-										"language": {
-											"type": "string"
-										},
-										"mode": {
-											"type": "string"
-										},
-										"author": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "string"
-												},
-												"name": {
-													"type": "string"
-												},
-												"avatar": {
-													"type": "string"
-												}
-											},
-											"required": [
-												"id",
-												"name"
-											]
-										},
-										"createdAt": {
-											"type": "string"
-										},
-										"updatedAt": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"id",
-										"title",
-										"description",
-										"minutesToAnswer",
-										"language",
-										"mode",
-										"author",
-										"createdAt",
-										"updatedAt"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
 		"/tests/{testId}/questions": {
 			"get": {
 				"summary": "Return questions with answers.",
@@ -690,6 +372,9 @@
 														"type": "integer",
 														"exclusiveMinimum": 0
 													},
+													"candidateId": {
+														"type": "string"
+													},
 													"hasEnded": {
 														"type": "boolean"
 													},
@@ -703,28 +388,13 @@
 													"updatedAt": {
 														"type": "string"
 													},
-													"candidate": {
-														"type": "object",
-														"properties": {
-															"id": {
-																"type": "string"
-															},
-															"name": {
-																"type": "string"
-															},
-															"avatar": {
-																"type": "string"
-															}
-														},
-														"required": [
-															"id",
-															"name"
-														]
-													},
 													"test": {
 														"type": "object",
 														"properties": {
 															"id": {
+																"type": "string"
+															},
+															"authorId": {
 																"type": "string"
 															},
 															"title": {
@@ -744,24 +414,6 @@
 															"mode": {
 																"type": "string"
 															},
-															"author": {
-																"type": "object",
-																"properties": {
-																	"id": {
-																		"type": "string"
-																	},
-																	"name": {
-																		"type": "string"
-																	},
-																	"avatar": {
-																		"type": "string"
-																	}
-																},
-																"required": [
-																	"id",
-																	"name"
-																]
-															},
 															"createdAt": {
 																"type": "string"
 															},
@@ -771,12 +423,12 @@
 														},
 														"required": [
 															"id",
+															"authorId",
 															"title",
 															"description",
 															"minutesToAnswer",
 															"language",
 															"mode",
-															"author",
 															"createdAt",
 															"updatedAt"
 														]
@@ -785,11 +437,11 @@
 												"required": [
 													"id",
 													"order",
+													"candidateId",
 													"hasEnded",
 													"secondsSpent",
 													"createdAt",
 													"updatedAt",
-													"candidate",
 													"test"
 												]
 											}
@@ -848,6 +500,9 @@
 											"type": "integer",
 											"exclusiveMinimum": 0
 										},
+										"candidateId": {
+											"type": "string"
+										},
 										"hasEnded": {
 											"type": "boolean"
 										},
@@ -861,28 +516,13 @@
 										"updatedAt": {
 											"type": "string"
 										},
-										"candidate": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "string"
-												},
-												"name": {
-													"type": "string"
-												},
-												"avatar": {
-													"type": "string"
-												}
-											},
-											"required": [
-												"id",
-												"name"
-											]
-										},
 										"test": {
 											"type": "object",
 											"properties": {
 												"id": {
+													"type": "string"
+												},
+												"authorId": {
 													"type": "string"
 												},
 												"title": {
@@ -902,24 +542,6 @@
 												"mode": {
 													"type": "string"
 												},
-												"author": {
-													"type": "object",
-													"properties": {
-														"id": {
-															"type": "string"
-														},
-														"name": {
-															"type": "string"
-														},
-														"avatar": {
-															"type": "string"
-														}
-													},
-													"required": [
-														"id",
-														"name"
-													]
-												},
 												"createdAt": {
 													"type": "string"
 												},
@@ -929,12 +551,12 @@
 											},
 											"required": [
 												"id",
+												"authorId",
 												"title",
 												"description",
 												"minutesToAnswer",
 												"language",
 												"mode",
-												"author",
 												"createdAt",
 												"updatedAt"
 											]
@@ -943,11 +565,11 @@
 									"required": [
 										"id",
 										"order",
+										"candidateId",
 										"hasEnded",
 										"secondsSpent",
 										"createdAt",
 										"updatedAt",
-										"candidate",
 										"test"
 									]
 								}
@@ -988,6 +610,9 @@
 											"type": "integer",
 											"exclusiveMinimum": 0
 										},
+										"candidateId": {
+											"type": "string"
+										},
 										"hasEnded": {
 											"type": "boolean"
 										},
@@ -1001,28 +626,13 @@
 										"updatedAt": {
 											"type": "string"
 										},
-										"candidate": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "string"
-												},
-												"name": {
-													"type": "string"
-												},
-												"avatar": {
-													"type": "string"
-												}
-											},
-											"required": [
-												"id",
-												"name"
-											]
-										},
 										"test": {
 											"type": "object",
 											"properties": {
 												"id": {
+													"type": "string"
+												},
+												"authorId": {
 													"type": "string"
 												},
 												"title": {
@@ -1042,24 +652,6 @@
 												"mode": {
 													"type": "string"
 												},
-												"author": {
-													"type": "object",
-													"properties": {
-														"id": {
-															"type": "string"
-														},
-														"name": {
-															"type": "string"
-														},
-														"avatar": {
-															"type": "string"
-														}
-													},
-													"required": [
-														"id",
-														"name"
-													]
-												},
 												"createdAt": {
 													"type": "string"
 												},
@@ -1069,12 +661,12 @@
 											},
 											"required": [
 												"id",
+												"authorId",
 												"title",
 												"description",
 												"minutesToAnswer",
 												"language",
 												"mode",
-												"author",
 												"createdAt",
 												"updatedAt"
 											]
@@ -1083,11 +675,11 @@
 									"required": [
 										"id",
 										"order",
+										"candidateId",
 										"hasEnded",
 										"secondsSpent",
 										"createdAt",
 										"updatedAt",
-										"candidate",
 										"test"
 									]
 								}
@@ -1434,6 +1026,14 @@
 						"schema": {
 							"type": "string"
 						},
+						"required": true,
+						"name": "userId",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
 						"required": false,
 						"name": "searchName",
 						"in": "query"
@@ -1489,6 +1089,9 @@
 													"id": {
 														"type": "string"
 													},
+													"userId": {
+														"type": "string"
+													},
 													"name": {
 														"type": "string"
 													},
@@ -1518,10 +1121,17 @@
 														"items": {
 															"type": "string"
 														}
+													},
+													"createdAt": {
+														"type": "string"
+													},
+													"updatedAt": {
+														"type": "string"
 													}
 												},
 												"required": [
 													"id",
+													"userId",
 													"name",
 													"title",
 													"description",
@@ -1529,7 +1139,9 @@
 													"tags",
 													"numberOfQuestions",
 													"numberOfOptions",
-													"outlines"
+													"outlines",
+													"createdAt",
+													"updatedAt"
 												]
 											}
 										}
@@ -1562,6 +1174,9 @@
 									"name": {
 										"type": "string"
 									},
+									"userId": {
+										"type": "string"
+									},
 									"title": {
 										"type": "string"
 									},
@@ -1592,6 +1207,7 @@
 								},
 								"required": [
 									"name",
+									"userId",
 									"title",
 									"description",
 									"difficulty",
@@ -1694,6 +1310,208 @@
 			}
 		},
 		"/practice-tests": {
+			"get": {
+				"security": [],
+				"tags": [
+					"Practice"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "number",
+							"minimum": 1,
+							"default": 1
+						},
+						"required": false,
+						"name": "page",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": [
+								"number",
+								"null"
+							],
+							"default": 5
+						},
+						"required": false,
+						"name": "perPage",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": false,
+						"name": "authorId",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": false,
+						"name": "searchTitle",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"default": "-createdAt"
+						},
+						"required": false,
+						"name": "sort",
+						"in": "query"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"page": {
+											"type": "number"
+										},
+										"perPage": {
+											"type": "number"
+										},
+										"total": {
+											"type": "number"
+										},
+										"totalPages": {
+											"type": "number"
+										},
+										"data": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"authorId": {
+														"type": "string"
+													},
+													"title": {
+														"type": "string"
+													},
+													"description": {
+														"type": "string"
+													},
+													"minutesToAnswer": {
+														"type": "number",
+														"minimum": 1,
+														"maximum": 10000
+													},
+													"language": {
+														"type": "string"
+													},
+													"mode": {
+														"type": "string"
+													},
+													"createdAt": {
+														"type": "string"
+													},
+													"updatedAt": {
+														"type": "string"
+													},
+													"difficulty": {
+														"type": "string",
+														"enum": [
+															"easy",
+															"medium",
+															"hard"
+														]
+													},
+													"tags": {
+														"type": "array",
+														"items": {
+															"type": "string"
+														}
+													},
+													"numberOfQuestions": {
+														"type": "integer",
+														"exclusiveMinimum": 0
+													},
+													"numberOfOptions": {
+														"type": "integer",
+														"exclusiveMinimum": 0
+													},
+													"outlines": {
+														"type": "array",
+														"items": {
+															"type": "string"
+														}
+													},
+													"feedback": {
+														"type": "object",
+														"properties": {
+															"rating": {
+																"type": "number",
+																"minimum": 1,
+																"maximum": 10
+															},
+															"problems": {
+																"type": "array",
+																"items": {
+																	"type": "string",
+																	"enum": [
+																		"inaccurate",
+																		"un-related",
+																		"poor content",
+																		"incomplete",
+																		"repeated",
+																		"error",
+																		"other"
+																	]
+																}
+															},
+															"comment": {
+																"type": "string"
+															}
+														},
+														"required": [
+															"rating",
+															"problems",
+															"comment"
+														]
+													}
+												},
+												"required": [
+													"id",
+													"authorId",
+													"title",
+													"description",
+													"minutesToAnswer",
+													"language",
+													"mode",
+													"createdAt",
+													"updatedAt",
+													"difficulty",
+													"tags",
+													"numberOfQuestions",
+													"numberOfOptions",
+													"outlines"
+												]
+											}
+										}
+									},
+									"required": [
+										"page",
+										"perPage",
+										"total",
+										"totalPages",
+										"data"
+									]
+								}
+							}
+						}
+					}
+				}
+			},
 			"post": {
 				"security": [],
 				"tags": [
@@ -1706,39 +1524,37 @@
 							"schema": {
 								"type": "object",
 								"properties": {
-									"title": {
-										"type": "string"
-									},
-									"description": {
-										"type": "string"
-									},
-									"minutesToAnswer": {
-										"type": "number",
-										"minimum": 1,
-										"maximum": 10000
-									},
-									"language": {
-										"type": "string"
-									},
-									"mode": {
-										"type": "string"
-									},
-									"author": {
+									"test": {
 										"type": "object",
 										"properties": {
-											"id": {
+											"authorId": {
 												"type": "string"
 											},
-											"name": {
+											"title": {
 												"type": "string"
 											},
-											"avatar": {
+											"description": {
+												"type": "string"
+											},
+											"minutesToAnswer": {
+												"type": "number",
+												"minimum": 1,
+												"maximum": 10000
+											},
+											"language": {
+												"type": "string"
+											},
+											"mode": {
 												"type": "string"
 											}
 										},
 										"required": [
-											"id",
-											"name"
+											"authorId",
+											"title",
+											"description",
+											"minutesToAnswer",
+											"language",
+											"mode"
 										]
 									},
 									"questions": {
@@ -1770,48 +1586,51 @@
 											]
 										}
 									},
-									"difficulty": {
-										"type": "string",
-										"enum": [
-											"easy",
-											"medium",
-											"hard"
+									"practice": {
+										"type": "object",
+										"properties": {
+											"difficulty": {
+												"type": "string",
+												"enum": [
+													"easy",
+													"medium",
+													"hard"
+												]
+											},
+											"tags": {
+												"type": "array",
+												"items": {
+													"type": "string"
+												}
+											},
+											"numberOfQuestions": {
+												"type": "integer",
+												"exclusiveMinimum": 0
+											},
+											"numberOfOptions": {
+												"type": "integer",
+												"exclusiveMinimum": 0
+											},
+											"outlines": {
+												"type": "array",
+												"items": {
+													"type": "string"
+												}
+											}
+										},
+										"required": [
+											"difficulty",
+											"tags",
+											"numberOfQuestions",
+											"numberOfOptions",
+											"outlines"
 										]
-									},
-									"tags": {
-										"type": "array",
-										"items": {
-											"type": "string"
-										}
-									},
-									"numberOfQuestions": {
-										"type": "integer",
-										"exclusiveMinimum": 0
-									},
-									"numberOfOptions": {
-										"type": "integer",
-										"exclusiveMinimum": 0
-									},
-									"outlines": {
-										"type": "array",
-										"items": {
-											"type": "string"
-										}
 									}
 								},
 								"required": [
-									"title",
-									"description",
-									"minutesToAnswer",
-									"language",
-									"mode",
-									"author",
+									"test",
 									"questions",
-									"difficulty",
-									"tags",
-									"numberOfQuestions",
-									"numberOfOptions",
-									"outlines"
+									"practice"
 								]
 							}
 						}
@@ -1840,6 +1659,142 @@
 			}
 		},
 		"/practice-tests/{testId}": {
+			"get": {
+				"security": [],
+				"tags": [
+					"Practice"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
+						"in": "path"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string"
+										},
+										"authorId": {
+											"type": "string"
+										},
+										"title": {
+											"type": "string"
+										},
+										"description": {
+											"type": "string"
+										},
+										"minutesToAnswer": {
+											"type": "number",
+											"minimum": 1,
+											"maximum": 10000
+										},
+										"language": {
+											"type": "string"
+										},
+										"mode": {
+											"type": "string"
+										},
+										"createdAt": {
+											"type": "string"
+										},
+										"updatedAt": {
+											"type": "string"
+										},
+										"difficulty": {
+											"type": "string",
+											"enum": [
+												"easy",
+												"medium",
+												"hard"
+											]
+										},
+										"tags": {
+											"type": "array",
+											"items": {
+												"type": "string"
+											}
+										},
+										"numberOfQuestions": {
+											"type": "integer",
+											"exclusiveMinimum": 0
+										},
+										"numberOfOptions": {
+											"type": "integer",
+											"exclusiveMinimum": 0
+										},
+										"outlines": {
+											"type": "array",
+											"items": {
+												"type": "string"
+											}
+										},
+										"feedback": {
+											"type": "object",
+											"properties": {
+												"rating": {
+													"type": "number",
+													"minimum": 1,
+													"maximum": 10
+												},
+												"problems": {
+													"type": "array",
+													"items": {
+														"type": "string",
+														"enum": [
+															"inaccurate",
+															"un-related",
+															"poor content",
+															"incomplete",
+															"repeated",
+															"error",
+															"other"
+														]
+													}
+												},
+												"comment": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"rating",
+												"problems",
+												"comment"
+											]
+										}
+									},
+									"required": [
+										"id",
+										"authorId",
+										"title",
+										"description",
+										"minutesToAnswer",
+										"language",
+										"mode",
+										"createdAt",
+										"updatedAt",
+										"difficulty",
+										"tags",
+										"numberOfQuestions",
+										"numberOfOptions",
+										"outlines"
+									]
+								}
+							}
+						}
+					}
+				}
+			},
 			"delete": {
 				"security": [],
 				"tags": [

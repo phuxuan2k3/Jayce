@@ -9,7 +9,7 @@ interface TemplatesListProps {
 	onSearchChange: (term: string) => void;
 	onSelectTemplate: (template: TemplateCore) => void;
 	onCreateNew: () => void;
-	onDeleteTemplate: (id: number) => void;
+	onDeleteTemplate: (id: string) => void;
 }
 
 const TemplatesList: React.FC<TemplatesListProps> = ({

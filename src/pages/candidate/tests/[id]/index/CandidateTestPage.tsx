@@ -7,7 +7,7 @@ import SidebarActions from "../../../../../features/tests/ui2/sidebar/SidebarAct
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../router/paths";
 import { QuestionCore } from "../../../../../features/tests/model/question.model";
-import { TestPractice } from "../../../../../features/tests/model/test.model";
+import { TestPracticeCore } from "../../../../../features/tests/model/test.model";
 import {
 	TestInfoCard,
 	TabsComponent,
@@ -240,7 +240,7 @@ export default function CandidateTestPage() {
 	const perPage = 10;
 
 	// Use mock data instead of API fetching
-	const test = mockTest as unknown as TestPractice;
+	const test = mockTest as unknown as TestPracticeCore;
 	const attempts = mockAttempts;
 	const questions = mockQuestions;
 	const isLoading = false;
@@ -273,7 +273,7 @@ export default function CandidateTestPage() {
 	};
 
 	// Handle feedback changes
-	const handleFeedbackChange = (feedback: TestPractice['feedback']) => {
+	const handleFeedbackChange = (feedback: TestPracticeCore['feedback']) => {
 		console.log('Feedback updated:', feedback);
 		// In a real app, you would call an API to save the feedback
 		// For now, we'll just log it to the console

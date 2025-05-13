@@ -6,7 +6,7 @@ import { usePostManagerTestsMutation } from "../../../../../features/tests/legac
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../router/paths";
 import { useTestCreateTab } from "../contexts/test-create-tab.context";
-import { toErrorMessage } from "../../../../../helpers/fetchBaseQuery.error";
+import { parseQueryError } from "../../../../../helpers/fetchBaseQuery.error";
 import { QuestionDTO } from "../../../../../features/tests/types/crud";
 
 export default function TestCreateStep3() {
@@ -84,7 +84,7 @@ export default function TestCreateStep3() {
 			{/* Message */}
 			<div className="w-full flex justify-center items-center  text-sm mt-2">
 				{isLoading && <span className="italic">Publishing...</span>}
-				{error && <span className="text-red-500 font-semibold">{toErrorMessage(error)}</span>}
+				{error && <span className="text-red-500 font-semibold">{parseQueryError(error)}</span>}
 			</div>
 
 			{/* Bottom buttons */}

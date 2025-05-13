@@ -1,17 +1,13 @@
 import { QuestionDo } from "./question.model";
 
 export type TestCore = {
-	id: number;
-	author: {
-		id: string;
-		name: string;
-		avatar?: string;
-	};
+	id: string;
+	authorId: string;
 	title: string;
 	description: string;
 	minutesToAnswer: number;
 	language: string;
-	mode: "practice" | "exam";
+	mode: string;
 	createdAt: string;
 };
 
@@ -31,7 +27,17 @@ export type TemplateCore = {
 	outlines: string[];
 };
 
-export type ExamConfig = {
+export type FeedbackCore = {
+	rating: number;
+	comment?: string;
+	problems?: string[];
+}
+
+export type PracticeAddon = Omit<TemplateCore, "id" | "name" | "title" | "description"> & {
+	feedback?: FeedbackCore;
+};
+
+export type ExamAddon = {
 	roomId: string;
 	password?: string;
 	numberOfAttemptsAllowed: number;
@@ -41,12 +47,8 @@ export type ExamConfig = {
 	closeDate: string;
 };
 
-export type TestPractice = TestCore & Omit<TemplateCore, "id" | "name" | "title" | "description"> & {
-	feedback: {
-		rating: number;
-		comment?: string;
-		problems?: ("inaccurate" | "un-related" | "poor content" | "incomplete" | "repeated" | "error" | "other")[];
-	};
-};
+export type FeedbackProblems = "inaccurate" | "un-related" | "poor content" | "incomplete" | "repeated" | "error" | "other";
 
-export type TestExam = TestCore & ExamConfig;
+export type TestPracticeCore = TestCore & PracticeAddon;
+
+export type TestExamCore = TestCore & ExamAddon;

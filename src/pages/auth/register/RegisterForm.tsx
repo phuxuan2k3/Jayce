@@ -4,7 +4,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../../../features/auth/api/auth.api";
 import { useEffect, useState } from "react";
-import { toErrorMessage } from "../../../helpers/fetchBaseQuery.error";
+import { parseQueryError } from "../../../helpers/fetchBaseQuery.error";
 import AlertError from "../../../components/ui/error/AlertError";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
@@ -23,7 +23,7 @@ const RegisterForm = () => {
 	const [ggRegister, { }] = useGoogleRegisterMutation();
 	const [ggLogin, { }] = useGoogleLoginMutation();
 	const [googleError, setGoogleError] = useState<string | null>(null);
-	const errorMessage = toErrorMessage(error as FetchBaseQueryError | SerializedError | undefined);
+	const errorMessage = parseQueryError(error as FetchBaseQueryError | SerializedError | undefined);
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const [verificationEmail] = useVerificationEmailMutation();
 	const [otp, setOtp] = useState("");

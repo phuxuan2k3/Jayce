@@ -1,6 +1,6 @@
 import React from 'react';
-import { TemplateCore } from "../../../../../features/tests/model/test.model";
-import TagInput from '../../templates/components/TagInput';
+import { TemplateCore } from "../../../../../../features/tests/model/test.model";
+import TagInput from '../../../templates/components/TagInput';
 
 interface PromptInfoStepProps {
 	promptData: Omit<TemplateCore, 'id' | 'name'>;
@@ -15,11 +15,11 @@ const PromptInfoStep: React.FC<PromptInfoStepProps> = ({
 	testTitle,
 	testDescription
 }) => {
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
 		const { name, value } = e.target;
 		onPromptDataChange({
 			...promptData,
-			[name]: ['numberOfQuestions', 'difficulty', 'numberOfOptions'].includes(name)
+			[name]: ['numberOfQuestions', 'numberOfOptions'].includes(name)
 				? parseInt(value, 10)
 				: value,
 		});
@@ -66,22 +66,21 @@ const PromptInfoStep: React.FC<PromptInfoStepProps> = ({
 							max={50}
 							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						/>
-					</div>
-
-					<div>
+					</div>					<div>
 						<label htmlFor="difficulty" className="block text-sm font-medium text-gray-700 mb-1">
-							Difficulty (1-5)
+							Difficulty Level
 						</label>
-						<input
-							type="number"
+						<select
 							id="difficulty"
 							name="difficulty"
 							value={promptData.difficulty}
 							onChange={handleInputChange}
-							min={1}
-							max={5}
 							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-						/>
+						>
+							<option value="Easy">Easy</option>
+							<option value="Medium">Medium</option>
+							<option value="Hard">Hard</option>
+						</select>
 					</div>
 
 					<div>

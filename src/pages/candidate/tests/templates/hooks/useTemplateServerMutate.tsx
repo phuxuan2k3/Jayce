@@ -1,5 +1,8 @@
-import { useEffect, useState } from "react";
-import { useDeleteTemplatesByTemplateIdMutation, usePostTemplatesMutation, usePutTemplatesMutation } from "../apis/enhance";
+import { useCallback, useEffect, useState } from "react";
+import { useDeleteTemplatesByTemplateIdMutation, usePostTemplatesMutation, usePutTemplatesMutation } from "../../../../../features/tests/api/test.api-enhance";
+import { useAppSelector } from "../../../../../app/hooks";
+import { authSelectors } from "../../../../../features/auth/store/authSlice";
+import { TemplateCore } from "../../../../../features/tests/model/test.model";
 
 type MutationState = {
 	isLoading: boolean;
@@ -8,13 +11,14 @@ type MutationState = {
 };
 
 export default function useTemplateServerMutate() {
+	const userId = useAppSelector(authSelectors.selectUserId);
 	const [mutationState, setMutationState] = useState<MutationState>({
 		isLoading: false,
 		isSuccess: false,
 		error: null,
 	});
-	const [createTemplate, createState] = usePostTemplatesMutation();
-	const [editTemplate, editState] = usePutTemplatesMutation();
+	const [_createTemplate, createState] = usePostTemplatesMutation();
+	const [_editTemplate, editState] = usePutTemplatesMutation();
 	const [deleteTemplate, deleteState] = useDeleteTemplatesByTemplateIdMutation();
 
 	useEffect(() => {
@@ -29,6 +33,23 @@ export default function useTemplateServerMutate() {
 		if (mutationState.isSuccess) {
 		}
 	}, [mutationState.isSuccess]);
+
+	const createTemplate = useCallback((template: Omit<TemplateCore, "id">) => {
+		if (!userId) return;
+		_createTemplate({
+			body: {
+				userId: userId || "",
+				...template,
+			}
+		});
+	}, [userId, _createTemplate]);
+
+	const editTemplate = useCallback((template: TemplateCore) => {
+		if (!userId) return;
+		editTemplate({
+			...template,
+		});
+	}, [userId, _editTemplate]);
 
 	return {
 		mutationState,

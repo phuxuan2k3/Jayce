@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { TemplateCore } from "../../../../features/tests/model/test.model";
-import { TemplateFormData } from './components/types';
 import TemplateForm from './components/TemplateForm';
 import TemplatesSidebar from './components/TemplatesSidebar';
 import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
-import useTemplateServerQuery from './hooks/useTemplateServerQuery';
 import TemplateCard from './components/TemplateCard';
 import useTemplateServerMutate from './hooks/useTemplateServerMutate';
 import DeleteTemplateModal from './components/DeleteTemplateModal';
+import useTemplateServerQuery from '../../../../features/tests/hooks/templates/useTemplateServerQuery';
 
 const CandidateTestsTemplatesPage: React.FC = () => {
 	const query = useTemplateServerQuery();
@@ -20,7 +19,7 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 
 
 	// Template form state
-	const [formData, setFormData] = useState<TemplateFormData>({
+	const [formData, setFormData] = useState<Omit<TemplateCore, "id">>({
 		name: '',
 		title: '',
 		description: '',
@@ -67,16 +66,12 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 	const handleSaveTemplate = () => {
 		if (selectedTemplate) {
 			mutate.editTemplate({
-				body: {
-					...formData,
-					id: selectedTemplate.id,
-				}
+				...formData,
+				id: selectedTemplate.id,
 			});
 		} else {
 			mutate.createTemplate({
-				body: {
-					...formData,
-				}
+				...formData,
 			});
 		}
 		setIsEditing(false);

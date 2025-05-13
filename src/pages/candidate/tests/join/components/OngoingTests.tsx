@@ -1,12 +1,12 @@
 import React from 'react';
-import { TestExam } from '../../../../../features/tests/model/test.model';
+import { TestExamCore } from '../../../../../features/tests/model/test.model';
 import { useNavigate } from 'react-router-dom';
 import paths from '../../../../../router/paths';
 import { AlarmClock, Clock } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
 
 interface OngoingTestsProps {
-	ongoingExams: TestExam[];
+	ongoingExams: TestExamCore[];
 	isLoading: boolean;
 }
 

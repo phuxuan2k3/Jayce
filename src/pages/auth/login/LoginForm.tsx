@@ -6,7 +6,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { toErrorMessage } from "../../../helpers/fetchBaseQuery.error";
+import { parseQueryError } from "../../../helpers/fetchBaseQuery.error";
 import GradientBorder from "../../../components/ui/border/GradientBorder";
 import { useGoogleLoginMutation, useLoginMutation, useGoogleRegisterMutation } from "../../../features/auth/api/auth.api";
 import SpinnerLoading from "../../../components/ui/loading/SpinnerLoading";
@@ -25,7 +25,7 @@ const LoginForm = () => {
 	const [googleError, setGoogleError] = useState<string | null>(null);
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("");
-	const errorMessage = toErrorMessage(error as FetchBaseQueryError | SerializedError | undefined);
+	const errorMessage = parseQueryError(error as FetchBaseQueryError | SerializedError | undefined);
 	const [errors, setErrors] = useState({ email: "", password: "" });
 
 	const validateForm = () => {

@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
 import Alert from '@mui/material/Alert';
 import React from "react";
-import { toErrorMessage } from "../../helpers/fetchBaseQuery.error";
+import { parseQueryError } from "../../helpers/fetchBaseQuery.error";
 import SkeletonLoading from "../ui/loading/SkeletonLoading";
 
 // Type for components that can receive an error message
@@ -16,7 +16,7 @@ type Props = {
 }
 
 export default function FetchState({ isLoading, error, children, loadingNode, errorNode }: Props) {
-	const errorMessage = toErrorMessage(error);
+	const errorMessage = parseQueryError(error);
 	if (isLoading) {
 		return <>
 			{loadingNode || (

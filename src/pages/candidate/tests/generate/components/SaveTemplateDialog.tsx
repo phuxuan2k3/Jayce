@@ -10,6 +10,7 @@ interface SaveTemplateDialogProps {
 	onTemplateNameChange: (name: string) => void;
 	promptData: Omit<TemplateCore, 'id' | 'name'>;
 	onPromptDataChange: (data: Omit<TemplateCore, 'id' | 'name'>) => void;
+	isSaving: boolean;
 }
 
 const SaveTemplateDialog: React.FC<SaveTemplateDialogProps> = ({
@@ -19,7 +20,8 @@ const SaveTemplateDialog: React.FC<SaveTemplateDialogProps> = ({
 	templateName,
 	onTemplateNameChange,
 	promptData,
-	onPromptDataChange
+	onPromptDataChange,
+	isSaving,
 }) => {
 	if (!isOpen) return null;
 
@@ -90,7 +92,23 @@ const SaveTemplateDialog: React.FC<SaveTemplateDialogProps> = ({
 					</button>
 				</div>
 
-				<form onSubmit={handleSubmit} className="flex-1 overflow-auto">
+				{isSaving && (
+					<div className="flex items-center justify-center p-4">
+						<svg className="animate-spin h-5 w-5 text-primary" viewBox="0 0 24 24">
+							<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+							<path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 1 1 16 0A8 8 0 0 1 4 12zm2.5-1h9a2.5 2.5 0 1 1-5 0h-4a2.5 2.5 0 0 1-4.5-1z"></path>
+						</svg>
+						<span className="ml-2 text-gray-500">Saving...</span>
+					</div>
+				)}
+
+				<form
+					onSubmit={handleSubmit}
+					className={`flex-1 overflow-auto ${isSaving
+						? 'opacity-50 pointer-events-none'
+						: ''
+						}`}
+				>
 					<div className="p-4 space-y-4">
 						<div>
 							<label htmlFor="templateName" className="block text-sm font-medium text-gray-700 mb-1">

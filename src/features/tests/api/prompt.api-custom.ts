@@ -29,13 +29,63 @@ const promptApiCustom = promptApi.injectEndpoints({
 				}) as QuestionDTO[];
 			}
 		}),
+		getOutlinesSuggestions: builder.query<GetOutlinesSuggestionsResponse, GetOutlinesSuggestionsRequest>({
+			query: (request) => ({
+				url: `/v1/suggest-outlines`,
+				method: "POST",
+				body: request
+			}),
+		}),
+		getGeneratedQuestions: builder.query<GetGeneratedQuestionsResponse, GetGeneratedQuestionsRequest>({
+			query: (request) => ({
+				url: `/v1/generate-questions`,
+				method: "POST",
+				body: request
+			})
+		}),
 	}),
 	overrideExisting: false,
 });
 
 export const {
 	useCriteriaMutation,
-	useGenerateMutation
+	useGenerateMutation,
+
+	useLazyGetGeneratedQuestionsQuery,
+	useLazyGetOutlinesSuggestionsQuery,
 } = promptApiCustom;
 
 export default promptApiCustom;
+
+export type GetOutlinesSuggestionsRequest = {
+	title: string;
+	description: string;
+	difficulty: string;
+	tags: string[];
+	outlines: string[]; // Những gợi ý đã điềns
+}
+
+export type GetOutlinesSuggestionsResponse = {
+	outlines: string[];
+}
+
+export type GetGeneratedQuestionsRequest = {
+	title: string;
+	description: string;
+	minutesToAnswer: number;
+	language: string;
+	difficulty: string;
+	tags: string[];
+	outlines: string[];
+	numberOfQuestions: number;
+	numberOfOptions: number;
+}
+
+export type GetGeneratedQuestionsResponse = {
+	questions: {
+		text: string;
+		options: string[];
+		points: number;
+		correctOption: number;
+	}[];
+}

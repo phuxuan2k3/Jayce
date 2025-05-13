@@ -1,10 +1,10 @@
 import { ReactNode, createContext, useContext } from 'react';
-import { TestPractice } from "../model/test.model";
+import { TestPracticeCore } from "../model/test.model";
 
 // Create Context
 type TestCardContextType = {
-	test: TestPractice;
-	onManageTest: (testId: number) => void;
+	test: TestPracticeCore;
+	onTestClicked: (testId: string) => void;
 } | null;
 
 const TestCardContext = createContext<TestCardContextType>(null);
@@ -20,14 +20,14 @@ const useTestCard = () => {
 
 // Main component
 type Props = {
-	test: TestPractice;
-	onTestClicked: (testId: number) => void;
+	test: TestPracticeCore;
+	onTestClicked: (testId: string) => void;
 	children: ReactNode;
 };
 
 const TestPracticeCard = ({ test, onTestClicked, children }: Props) => {
 	return (
-		<TestCardContext.Provider value={{ test, onManageTest: onTestClicked }}>
+		<TestCardContext.Provider value={{ test, onTestClicked }}>
 			<div className="border border-primary-toned-300 rounded-lg p-4 hover:shadow-md transition-shadow">
 				{children}
 			</div>
@@ -42,7 +42,7 @@ const Header = () => {
 		<div className="flex justify-between">
 			<h3 className="font-bold text-lg">{test.title}</h3>
 			<span className="text-sm bg-primary-toned-100 text-primary-toned-700 px-2 py-1 rounded-full">
-				{test.difficulty === 1 ? 'Easy' : test.difficulty === 2 ? 'Medium' : 'Hard'}
+				{test.difficulty}
 			</span>
 		</div>
 	);
@@ -67,7 +67,7 @@ const Tags = () => {
 };
 
 const Footer = () => {
-	const { test, onManageTest } = useTestCard();
+	const { test, onTestClicked: onManageTest } = useTestCard();
 	return (
 		<div className="flex justify-between items-center mt-4">
 			<MetaInfo />
@@ -90,7 +90,11 @@ const MetaInfo = () => {
 			</span>
 			<div className="flex items-center mt-1">
 				<span className="text-sm text-primary-toned-500 mr-2">Rating:</span>
-				<Rating value={test.feedback.rating} />
+				{test.feedback ? (
+					<Rating value={test.feedback.rating} />
+				) : (
+					<span className="text-sm text-gray-400">No ratings yet</span>
+				)}
 			</div>
 		</div>
 	);
@@ -119,8 +123,8 @@ export const DefaultTestPracticeCard = ({
 	test,
 	onTestClicked,
 }: {
-	test: TestPractice;
-	onTestClicked: (testId: number) => void;
+	test: TestPracticeCore;
+	onTestClicked: (testId: string) => void;
 }) => {
 	return (
 		<TestPracticeCard test={test} onTestClicked={onTestClicked}>

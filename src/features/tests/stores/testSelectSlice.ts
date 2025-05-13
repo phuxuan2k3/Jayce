@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TestCore, TestPractice } from '../model/test.model';
+import { TestCore, TestPracticeCore } from '../model/test.model';
 import { AttemptCore } from '../model/attempt.model';
 
 interface TestSelectState {
-	practiceTest?: TestPractice;
+	practiceTest?: TestPracticeCore;
 	attempt?: AttemptCore;
 };
 
@@ -15,7 +15,7 @@ const testSelectSlice = createSlice({
 	reducerPath: 'testSelect',
 	initialState,
 	reducers: {
-		selectPracticeTest: (state, action: PayloadAction<TestPractice>) => {
+		selectPracticeTest: (state, action: PayloadAction<TestPracticeCore>) => {
 			state.practiceTest = action.payload;
 		},
 		deselectPracticeTest: (state) => {

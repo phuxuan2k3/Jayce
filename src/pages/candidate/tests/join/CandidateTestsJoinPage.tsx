@@ -4,15 +4,15 @@ import SidebarActions from "../../../../features/tests/ui2/sidebar/SidebarAction
 import JoinTestSection from "./components/JoinTestSection";
 import ExamInfoDialog from "./components/ExamInfoDialog";
 import OngoingTests from "./components/OngoingTests";
-import { TestExam } from "../../../../features/tests/model/test.model";
+import { TestExamCore } from "../../../../features/tests/model/test.model";
 
 export default function CandidateTestsJoinPage() {
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [currentExamCode, setCurrentExamCode] = useState("");
-	const [examData, setExamData] = useState<TestExam | null>(null);
+	const [examData, setExamData] = useState<TestExamCore | null>(null);
 	const [error, setError] = useState<string | null>(null);
-	const [ongoingExams, setOngoingExams] = useState<TestExam[]>([]);
+	const [ongoingExams, setOngoingExams] = useState<TestExamCore[]>([]);
 	const [loadingOngoingExams, setLoadingOngoingExams] = useState(false);
 
 	// Mock data for templates and tests - in real implementation these would come from API calls
@@ -28,7 +28,7 @@ export default function CandidateTestsJoinPage() {
 		// Simulate API call with a timeout
 		setTimeout(() => {
 			// Mock data for ongoing exams - in real implementation this would come from an API call
-			const mockOngoingExams: TestExam[] = [
+			const mockOngoingExams: TestExamCore[] = [
 				{
 					id: 789,
 					author: {

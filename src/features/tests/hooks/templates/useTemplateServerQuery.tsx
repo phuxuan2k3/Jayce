@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { useGetTemplatesQuery } from "../apis/enhance";
+import { useAppSelector } from "../../../../app/hooks";
+import { authSelectors } from "../../../auth/store/authSlice";
+import { useGetTemplatesQuery } from "../../api/test.api-gen";
 
 type QueryFilters = {
 	searchName: string;
@@ -7,16 +9,18 @@ type QueryFilters = {
 };
 
 export default function useTemplateServerQuery() {
+	const userId = useAppSelector(authSelectors.selectUserId);
 	const [filters, setFilters] = useState<QueryFilters>({
 		searchName: "",
 		page: 1,
 	});
 
 	const state = useGetTemplatesQuery({
+		userId: userId || "",
 		perPage: 10,
 		...filters,
 	}, {
-
+		skip: !userId,
 	});
 
 	const data: typeof state.data = state.data ? state.data : {
