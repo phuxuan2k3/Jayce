@@ -1,24 +1,16 @@
 import { useState } from "react";
-import { useGetPracticeTestsQuery } from "../../../../../features/tests/api/test.api-gen";
-import { useAppSelector } from "../../../../../app/hooks";
-import { authSelectors } from "../../../../../features/auth/store/authSlice";
-import { TestPracticeCore } from "../../../../../features/tests/model/test.model";
+import { PracticeCore } from "../../../../../features/tests/model/test.model";
+import { useGetPracticesQuery } from "../../../../../features/tests/api/test.api-gen";
 
-export default function useTestServerState() {
-	const user = useAppSelector(authSelectors.selectUserInfo);
+export default function useTestsPage() {
 	const [filters, setFilters] = useState({
 		searchTitle: "",
 		page: 1,
 	});
 
-	const state = useGetPracticeTestsQuery({
+	const state = useGetPracticesQuery({
 		...filters,
-		...(user && {
-			authorId: user?.id,
-		}),
 		perPage: 10,
-	}, {
-		skip: !user,
 	});
 
 	const paging: typeof state.data = state.data || {
@@ -29,7 +21,7 @@ export default function useTestServerState() {
 		data: [],
 	};
 
-	const data: TestPracticeCore[] = state.data?.data.map(test => ({
+	const data: PracticeCore[] = state.data?.data.map(test => ({
 		...test,
 	})) || [];
 

@@ -28,7 +28,7 @@ interface QuestionCardProps {
 }
 
 // Root component
-const QuestionCard = ({
+const QuestionCoreCard = ({
 	question,
 	showAnswer,
 	onToggleAnswer,
@@ -44,7 +44,7 @@ const QuestionCard = ({
 };
 
 // Sub-components
-QuestionCard.Header = () => {
+QuestionCoreCard.Header = () => {
 	const { question } = useQuestionCard();
 	return (
 		<div className="flex justify-between items-start mb-3">
@@ -56,7 +56,7 @@ QuestionCard.Header = () => {
 	);
 };
 
-QuestionCard.Options = () => {
+QuestionCoreCard.Options = () => {
 	const { question, showAnswer } = useQuestionCard();
 	return (
 		<div className="space-y-2 mb-4">
@@ -83,7 +83,7 @@ QuestionCard.Options = () => {
 	);
 };
 
-QuestionCard.Footer = () => {
+QuestionCoreCard.Footer = () => {
 	const { showAnswer, onToggleAnswer } = useQuestionCard();
 	return (
 		<div className="flex justify-end">
@@ -100,14 +100,14 @@ QuestionCard.Footer = () => {
 	);
 };
 
-export const QuestionCardDefault = ({ question, showAnswer, onToggleAnswer }: QuestionCardProps) => {
+export const QuestionCoreCardDefault = ({ question, showAnswer, onToggleAnswer }: QuestionCardProps) => {
 	return (
-		<QuestionCard question={question} showAnswer={showAnswer} onToggleAnswer={onToggleAnswer}>
-			<QuestionCard.Header />
-			<QuestionCard.Options />
-			<QuestionCard.Footer />
-		</QuestionCard>
+		<QuestionCoreCard question={question} showAnswer={showAnswer} onToggleAnswer={onToggleAnswer}>
+			<QuestionCoreCard.Header />
+			<QuestionCoreCard.Options />
+			<QuestionCoreCard.Footer />
+		</QuestionCoreCard>
 	);
 };
 
-export default QuestionCard;
+export default QuestionCoreCard;

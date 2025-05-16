@@ -1,135 +1,289 @@
 import { testApi as api } from "../base/test.api";
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getTestsByTestIdQuestions: build.query<
-      GetTestsByTestIdQuestionsApiResponse,
-      GetTestsByTestIdQuestionsApiArg
+    getCurrentAttemptsByAttemptId: build.query<
+      GetCurrentAttemptsByAttemptIdApiResponse,
+      GetCurrentAttemptsByAttemptIdApiArg
     >({
-      query: (queryArg) => ({ url: `/tests/${queryArg.testId}/questions` }),
+      query: (queryArg) => ({ url: `/current/attempts/${queryArg.attemptId}` }),
     }),
-    getTestsByTestIdQuestionsNoAnswer: build.query<
-      GetTestsByTestIdQuestionsNoAnswerApiResponse,
-      GetTestsByTestIdQuestionsNoAnswerApiArg
+    getCurrentTestsByTestId: build.query<
+      GetCurrentTestsByTestIdApiResponse,
+      GetCurrentTestsByTestIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/current/tests/${queryArg.testId}` }),
+    }),
+    getCurrentAttemptsByAttemptIdAnswers: build.query<
+      GetCurrentAttemptsByAttemptIdAnswersApiResponse,
+      GetCurrentAttemptsByAttemptIdAnswersApiArg
     >({
       query: (queryArg) => ({
-        url: `/tests/${queryArg.testId}/questions-no-answer`,
+        url: `/current/attempts/${queryArg.attemptId}/answers`,
       }),
     }),
-    getTestsByTestIdAggregate: build.query<
-      GetTestsByTestIdAggregateApiResponse,
-      GetTestsByTestIdAggregateApiArg
+    patchCurrentAttemptsByAttemptIdAnswers: build.mutation<
+      PatchCurrentAttemptsByAttemptIdAnswersApiResponse,
+      PatchCurrentAttemptsByAttemptIdAnswersApiArg
     >({
       query: (queryArg) => ({
-        url: `/tests/${queryArg.testId}/aggregate`,
-        params: {
-          numberOfQuestions: queryArg.numberOfQuestions,
-          totalPoints: queryArg.totalPoints,
-        },
+        url: `/current/attempts/${queryArg.attemptId}/answers`,
+        method: "PATCH",
+        body: queryArg.body,
       }),
     }),
-    getQuestionsByQuestionId: build.query<
-      GetQuestionsByQuestionIdApiResponse,
-      GetQuestionsByQuestionIdApiArg
+    patchCurrentAttemptsByAttemptIdSubmit: build.mutation<
+      PatchCurrentAttemptsByAttemptIdSubmitApiResponse,
+      PatchCurrentAttemptsByAttemptIdSubmitApiArg
     >({
-      query: (queryArg) => ({ url: `/questions/${queryArg.questionId}` }),
-    }),
-    getAttempts: build.query<GetAttemptsApiResponse, GetAttemptsApiArg>({
       query: (queryArg) => ({
-        url: `/attempts`,
+        url: `/current/attempts/${queryArg.attemptId}/submit`,
+        method: "PATCH",
+      }),
+    }),
+    getExamsByTestIdAttempts: build.query<
+      GetExamsByTestIdAttemptsApiResponse,
+      GetExamsByTestIdAttemptsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/exams/${queryArg.testId}/attempts`,
         params: {
-          sort: queryArg.sort,
-          candidateId: queryArg.candidateId,
-          testId: queryArg.testId,
           page: queryArg.page,
           perPage: queryArg.perPage,
+          sort: queryArg.sort,
         },
       }),
     }),
-    getAttemptsCurrent: build.query<
-      GetAttemptsCurrentApiResponse,
-      GetAttemptsCurrentApiArg
+    getExamsByTestIdAttemptsSelf: build.query<
+      GetExamsByTestIdAttemptsSelfApiResponse,
+      GetExamsByTestIdAttemptsSelfApiArg
     >({
       query: (queryArg) => ({
-        url: `/attempts/current`,
+        url: `/exams/${queryArg.testId}/attempts/self`,
         params: {
-          testId: queryArg.testId,
+          page: queryArg.page,
+          perPage: queryArg.perPage,
+          sort: queryArg.sort,
+        },
+      }),
+    }),
+    getExamsByTestIdAttemptsAggregate: build.query<
+      GetExamsByTestIdAttemptsAggregateApiResponse,
+      GetExamsByTestIdAttemptsAggregateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/exams/${queryArg.testId}/attempts/aggregate`,
+        params: {
           candidateId: queryArg.candidateId,
         },
       }),
     }),
-    getAttemptsByAttemptId: build.query<
-      GetAttemptsByAttemptIdApiResponse,
-      GetAttemptsByAttemptIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/attempts/${queryArg.attemptId}` }),
-    }),
-    getAttemptsByAttemptIdAnswers: build.query<
-      GetAttemptsByAttemptIdAnswersApiResponse,
-      GetAttemptsByAttemptIdAnswersApiArg
-    >({
-      query: (queryArg) => ({ url: `/attempts/${queryArg.attemptId}/answers` }),
-    }),
-    getAttemptsByAttemptIdAggregate: build.query<
-      GetAttemptsByAttemptIdAggregateApiResponse,
-      GetAttemptsByAttemptIdAggregateApiArg
+    getExamsByTestIdCandidateAndCandidateIdAttemptsAggregate: build.query<
+      GetExamsByTestIdCandidateAndCandidateIdAttemptsAggregateApiResponse,
+      GetExamsByTestIdCandidateAndCandidateIdAttemptsAggregateApiArg
     >({
       query: (queryArg) => ({
-        url: `/attempts/${queryArg.attemptId}/aggregate`,
+        url: `/exams/${queryArg.testId}/candidate/${queryArg.pathCandidateId}/attempts/aggregate`,
         params: {
-          score: queryArg.score,
-          answered: queryArg.answered,
-          answeredCorrect: queryArg.answeredCorrect,
+          candidateId: queryArg.queryCandidateId,
         },
       }),
     }),
-    getAttemptsByAttemptIdCompute: build.query<
-      GetAttemptsByAttemptIdComputeApiResponse,
-      GetAttemptsByAttemptIdComputeApiArg
+    getExamsAttemptsByAttemptId: build.query<
+      GetExamsAttemptsByAttemptIdApiResponse,
+      GetExamsAttemptsByAttemptIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/exams/attempts/${queryArg.attemptId}` }),
+    }),
+    getExamsAttemptsByAttemptIdAggregate: build.query<
+      GetExamsAttemptsByAttemptIdAggregateApiResponse,
+      GetExamsAttemptsByAttemptIdAggregateApiArg
     >({
       query: (queryArg) => ({
-        url: `/attempts/${queryArg.attemptId}/compute`,
+        url: `/exams/attempts/${queryArg.attemptId}/aggregate`,
+      }),
+    }),
+    getExamsAttemptsByAttemptIdAnswers: build.query<
+      GetExamsAttemptsByAttemptIdAnswersApiResponse,
+      GetExamsAttemptsByAttemptIdAnswersApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/exams/attempts/${queryArg.attemptId}/answers`,
+      }),
+    }),
+    postExamsByTestIdAttemptsStart: build.mutation<
+      PostExamsByTestIdAttemptsStartApiResponse,
+      PostExamsByTestIdAttemptsStartApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/exams/${queryArg.testId}/attempts/start`,
+        method: "POST",
+      }),
+    }),
+    getHistoryAttempts: build.query<
+      GetHistoryAttemptsApiResponse,
+      GetHistoryAttemptsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/history/attempts`,
         params: {
-          secondsLeft: queryArg.secondsLeft,
+          page: queryArg.page,
+          perPage: queryArg.perPage,
+          sort: queryArg.sort,
+          testId: queryArg.testId,
         },
       }),
     }),
-    patchCurrentAttemptsAnswer: build.mutation<
-      PatchCurrentAttemptsAnswerApiResponse,
-      PatchCurrentAttemptsAnswerApiArg
+    getHistoryAttemptsByAttemptId: build.query<
+      GetHistoryAttemptsByAttemptIdApiResponse,
+      GetHistoryAttemptsByAttemptIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/history/attempts/${queryArg.attemptId}` }),
+    }),
+    getPracticesByTestIdAttempts: build.query<
+      GetPracticesByTestIdAttemptsApiResponse,
+      GetPracticesByTestIdAttemptsApiArg
     >({
       query: (queryArg) => ({
-        url: `/current-attempts/answer/`,
-        method: "PATCH",
+        url: `/practices/${queryArg.testId}/attempts`,
+        params: {
+          page: queryArg.page,
+          perPage: queryArg.perPage,
+          sort: queryArg.sort,
+        },
+      }),
+    }),
+    getPracticesByTestIdAttemptsAggregate: build.query<
+      GetPracticesByTestIdAttemptsAggregateApiResponse,
+      GetPracticesByTestIdAttemptsAggregateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/practices/${queryArg.testId}/attempts/aggregate`,
+      }),
+    }),
+    getPracticesAttemptsByAttemptId: build.query<
+      GetPracticesAttemptsByAttemptIdApiResponse,
+      GetPracticesAttemptsByAttemptIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/practices/attempts/${queryArg.attemptId}`,
+      }),
+    }),
+    getPracticesAttemptsByAttemptIdAggregate: build.query<
+      GetPracticesAttemptsByAttemptIdAggregateApiResponse,
+      GetPracticesAttemptsByAttemptIdAggregateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/practices/attempts/${queryArg.attemptId}/aggregate`,
+      }),
+    }),
+    getPracticesAttemptsByAttemptIdAnswers: build.query<
+      GetPracticesAttemptsByAttemptIdAnswersApiResponse,
+      GetPracticesAttemptsByAttemptIdAnswersApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/practices/attempts/${queryArg.attemptId}/answers`,
+      }),
+    }),
+    postPracticesByTestIdAttemptsStart: build.mutation<
+      PostPracticesByTestIdAttemptsStartApiResponse,
+      PostPracticesByTestIdAttemptsStartApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/practices/${queryArg.testId}/attempts/start`,
+        method: "POST",
+      }),
+    }),
+    getExams: build.query<GetExamsApiResponse, GetExamsApiArg>({
+      query: (queryArg) => ({
+        url: `/exams`,
+        params: {
+          page: queryArg.page,
+          perPage: queryArg.perPage,
+          searchTitle: queryArg.searchTitle,
+          sort: queryArg.sort,
+        },
+      }),
+    }),
+    postExams: build.mutation<PostExamsApiResponse, PostExamsApiArg>({
+      query: (queryArg) => ({
+        url: `/exams`,
+        method: "POST",
         body: queryArg.body,
       }),
     }),
-    patchCurrentAttemptsSubmit: build.mutation<
-      PatchCurrentAttemptsSubmitApiResponse,
-      PatchCurrentAttemptsSubmitApiArg
-    >({
+    getExamsFind: build.query<GetExamsFindApiResponse, GetExamsFindApiArg>({
       query: (queryArg) => ({
-        url: `/current-attempts/submit/`,
-        method: "PATCH",
-        body: queryArg.body,
-      }),
-    }),
-    getExamTestFind: build.query<
-      GetExamTestFindApiResponse,
-      GetExamTestFindApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/exam-test/find`,
+        url: `/exams/find`,
         params: {
           roomId: queryArg.roomId,
         },
       }),
     }),
-    postExamTestJoin: build.mutation<
-      PostExamTestJoinApiResponse,
-      PostExamTestJoinApiArg
+    getExamsByTestId: build.query<
+      GetExamsByTestIdApiResponse,
+      GetExamsByTestIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/exams/${queryArg.testId}` }),
+    }),
+    putExamsByTestId: build.mutation<
+      PutExamsByTestIdApiResponse,
+      PutExamsByTestIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/exam-test/join`,
+        url: `/exams/${queryArg.testId}`,
+        method: "PUT",
+        body: queryArg.body,
+      }),
+    }),
+    deleteExamsByTestId: build.mutation<
+      DeleteExamsByTestIdApiResponse,
+      DeleteExamsByTestIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/exams/${queryArg.testId}`,
+        method: "DELETE",
+      }),
+    }),
+    getExamsByTestIdAggregate: build.query<
+      GetExamsByTestIdAggregateApiResponse,
+      GetExamsByTestIdAggregateApiArg
+    >({
+      query: (queryArg) => ({ url: `/exams/${queryArg.testId}/aggregate` }),
+    }),
+    getExamsByTestIdParticipants: build.query<
+      GetExamsByTestIdParticipantsApiResponse,
+      GetExamsByTestIdParticipantsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/exams/${queryArg.testId}/participants`,
+        params: {
+          page: queryArg.page,
+          perPage: queryArg.perPage,
+        },
+      }),
+    }),
+    getExamsByTestIdQuestionsToDo: build.query<
+      GetExamsByTestIdQuestionsToDoApiResponse,
+      GetExamsByTestIdQuestionsToDoApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/exams/${queryArg.testId}/questions-to-do`,
+      }),
+    }),
+    getExamsByTestIdQuestionsWithAnswer: build.query<
+      GetExamsByTestIdQuestionsWithAnswerApiResponse,
+      GetExamsByTestIdQuestionsWithAnswerApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/exams/${queryArg.testId}/questions-with-answer`,
+      }),
+    }),
+    postExamsJoin: build.mutation<
+      PostExamsJoinApiResponse,
+      PostExamsJoinApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/exams/join`,
         method: "POST",
         body: queryArg.body,
       }),
@@ -138,7 +292,6 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/templates`,
         params: {
-          userId: queryArg.userId,
           searchName: queryArg.searchName,
           page: queryArg.page,
           perPage: queryArg.perPage,
@@ -155,9 +308,18 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.body,
       }),
     }),
-    putTemplates: build.mutation<PutTemplatesApiResponse, PutTemplatesApiArg>({
+    getTemplatesByTemplateId: build.query<
+      GetTemplatesByTemplateIdApiResponse,
+      GetTemplatesByTemplateIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/templates/${queryArg.templateId}` }),
+    }),
+    putTemplatesByTemplateId: build.mutation<
+      PutTemplatesByTemplateIdApiResponse,
+      PutTemplatesByTemplateIdApiArg
+    >({
       query: (queryArg) => ({
-        url: `/templates`,
+        url: `/templates/${queryArg.templateId}`,
         method: "PUT",
         body: queryArg.body,
       }),
@@ -171,80 +333,86 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
-    getPracticeTests: build.query<
-      GetPracticeTestsApiResponse,
-      GetPracticeTestsApiArg
-    >({
+    getPractices: build.query<GetPracticesApiResponse, GetPracticesApiArg>({
       query: (queryArg) => ({
-        url: `/practice-tests`,
+        url: `/practices`,
         params: {
           page: queryArg.page,
           perPage: queryArg.perPage,
-          authorId: queryArg.authorId,
           searchTitle: queryArg.searchTitle,
           sort: queryArg.sort,
         },
       }),
     }),
-    postPracticeTests: build.mutation<
-      PostPracticeTestsApiResponse,
-      PostPracticeTestsApiArg
+    postPractices: build.mutation<
+      PostPracticesApiResponse,
+      PostPracticesApiArg
     >({
       query: (queryArg) => ({
-        url: `/practice-tests`,
+        url: `/practices`,
         method: "POST",
         body: queryArg.body,
       }),
     }),
-    getPracticeTestsByTestId: build.query<
-      GetPracticeTestsByTestIdApiResponse,
-      GetPracticeTestsByTestIdApiArg
+    getPracticesByTestId: build.query<
+      GetPracticesByTestIdApiResponse,
+      GetPracticesByTestIdApiArg
     >({
-      query: (queryArg) => ({ url: `/practice-tests/${queryArg.testId}` }),
+      query: (queryArg) => ({ url: `/practices/${queryArg.testId}` }),
     }),
-    deletePracticeTestsByTestId: build.mutation<
-      DeletePracticeTestsByTestIdApiResponse,
-      DeletePracticeTestsByTestIdApiArg
+    deletePracticesByTestId: build.mutation<
+      DeletePracticesByTestIdApiResponse,
+      DeletePracticesByTestIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/practice-tests/${queryArg.testId}`,
+        url: `/practices/${queryArg.testId}`,
         method: "DELETE",
       }),
     }),
-    getPracticeTestsByTestIdFeedback: build.query<
-      GetPracticeTestsByTestIdFeedbackApiResponse,
-      GetPracticeTestsByTestIdFeedbackApiArg
+    getPracticesByTestIdAggregate: build.query<
+      GetPracticesByTestIdAggregateApiResponse,
+      GetPracticesByTestIdAggregateApiArg
+    >({
+      query: (queryArg) => ({ url: `/practices/${queryArg.testId}/aggregate` }),
+    }),
+    getPracticesByTestIdQuestionsToDo: build.query<
+      GetPracticesByTestIdQuestionsToDoApiResponse,
+      GetPracticesByTestIdQuestionsToDoApiArg
     >({
       query: (queryArg) => ({
-        url: `/practice-tests/${queryArg.testId}/feedback`,
+        url: `/practices/${queryArg.testId}/questions-to-do`,
       }),
     }),
-    postPracticeTestsByTestIdFeedback: build.mutation<
-      PostPracticeTestsByTestIdFeedbackApiResponse,
-      PostPracticeTestsByTestIdFeedbackApiArg
+    getPracticesByTestIdQuestionsWithAnswer: build.query<
+      GetPracticesByTestIdQuestionsWithAnswerApiResponse,
+      GetPracticesByTestIdQuestionsWithAnswerApiArg
     >({
       query: (queryArg) => ({
-        url: `/practice-tests/${queryArg.testId}/feedback`,
+        url: `/practices/${queryArg.testId}/questions-with-answer`,
+      }),
+    }),
+    getPracticesByTestIdFeedback: build.query<
+      GetPracticesByTestIdFeedbackApiResponse,
+      GetPracticesByTestIdFeedbackApiArg
+    >({
+      query: (queryArg) => ({ url: `/practices/${queryArg.testId}/feedback` }),
+    }),
+    postPracticesByTestIdFeedback: build.mutation<
+      PostPracticesByTestIdFeedbackApiResponse,
+      PostPracticesByTestIdFeedbackApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/practices/${queryArg.testId}/feedback`,
         method: "POST",
         body: queryArg.body,
       }),
     }),
-    putPracticeTestsByTestIdFeedback: build.mutation<
-      PutPracticeTestsByTestIdFeedbackApiResponse,
-      PutPracticeTestsByTestIdFeedbackApiArg
+    deletePracticesByTestIdFeedback: build.mutation<
+      DeletePracticesByTestIdFeedbackApiResponse,
+      DeletePracticesByTestIdFeedbackApiArg
     >({
       query: (queryArg) => ({
-        url: `/practice-tests/${queryArg.testId}/feedback`,
-        method: "PUT",
-        body: queryArg.body,
-      }),
-    }),
-    deletePracticeTestsByTestIdFeedback: build.mutation<
-      DeletePracticeTestsByTestIdFeedbackApiResponse,
-      DeletePracticeTestsByTestIdFeedbackApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/practice-tests/${queryArg.testId}/feedback`,
+        url: `/practices/${queryArg.testId}/feedback`,
         method: "DELETE",
       }),
     }),
@@ -252,49 +420,77 @@ const injectedRtkApi = api.injectEndpoints({
   overrideExisting: false,
 });
 export { injectedRtkApi as testApiGen };
-export type GetTestsByTestIdQuestionsApiResponse = /** status 200 Success */ {
-  id: number;
-  testId: string;
-  text: string;
-  options: string[];
-  points: number;
-  correctOption: number;
-}[];
-export type GetTestsByTestIdQuestionsApiArg = {
-  testId: string;
-};
-export type GetTestsByTestIdQuestionsNoAnswerApiResponse =
+export type GetCurrentAttemptsByAttemptIdApiResponse =
   /** status 200 Success */ {
-    id: number;
-    testId: string;
-    text: string;
-    options: string[];
-    points: number;
+    id: string;
+    order: number;
+    candidateId: string;
+    hasEnded: boolean;
+    secondsSpent: number;
+    score: number;
+    createdAt: string;
+    updatedAt: string;
+    test: {
+      id: string;
+      authorId: string;
+      title: string;
+      description: string;
+      minutesToAnswer: number;
+      language: string;
+      mode: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
+export type GetCurrentAttemptsByAttemptIdApiArg = {
+  attemptId: string;
+};
+export type GetCurrentTestsByTestIdApiResponse = /** status 200 Success */ {
+  id: string;
+  order: number;
+  candidateId: string;
+  hasEnded: boolean;
+  secondsSpent: number;
+  score: number;
+  createdAt: string;
+  updatedAt: string;
+  test: {
+    id: string;
+    authorId: string;
+    title: string;
+    description: string;
+    minutesToAnswer: number;
+    language: string;
+    mode: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+} | null;
+export type GetCurrentTestsByTestIdApiArg = {
+  testId: string;
+};
+export type GetCurrentAttemptsByAttemptIdAnswersApiResponse =
+  /** status 200 Success */ {
+    attemptId: string;
+    questionId: number;
+    chosenOption: number;
   }[];
-export type GetTestsByTestIdQuestionsNoAnswerApiArg = {
-  testId: string;
+export type GetCurrentAttemptsByAttemptIdAnswersApiArg = {
+  attemptId: string;
 };
-export type GetTestsByTestIdAggregateApiResponse = /** status 200 Success */ {
-  numberOfQuestions?: number;
-  totalPoints?: number;
+export type PatchCurrentAttemptsByAttemptIdAnswersApiResponse = unknown;
+export type PatchCurrentAttemptsByAttemptIdAnswersApiArg = {
+  attemptId: string;
+  body: {
+    questionId: number | null;
+    chosenOption?: number | null;
+  };
 };
-export type GetTestsByTestIdAggregateApiArg = {
-  testId: string;
-  numberOfQuestions?: "true" | "false";
-  totalPoints?: "true" | "false";
+export type PatchCurrentAttemptsByAttemptIdSubmitApiResponse = unknown;
+export type PatchCurrentAttemptsByAttemptIdSubmitApiArg = {
+  attemptId: string;
 };
-export type GetQuestionsByQuestionIdApiResponse = /** status 200 Success */ {
-  id: number;
-  testId: string;
-  text: string;
-  options: string[];
-  points: number;
-  correctOption: number;
-};
-export type GetQuestionsByQuestionIdApiArg = {
-  questionId?: number | null;
-};
-export type GetAttemptsApiResponse = /** status 200 Success */ {
+export type GetExamsByTestIdAttemptsApiResponse = /** status 200 Success */ {
   page: number;
   perPage: number;
   total: number;
@@ -305,6 +501,113 @@ export type GetAttemptsApiResponse = /** status 200 Success */ {
     candidateId: string;
     hasEnded: boolean;
     secondsSpent: number;
+    score: number;
+    createdAt: string;
+    updatedAt: string;
+  }[];
+};
+export type GetExamsByTestIdAttemptsApiArg = {
+  testId: string;
+  page?: number;
+  perPage?: number | null;
+  sort: string;
+};
+export type GetExamsByTestIdAttemptsSelfApiResponse =
+  /** status 200 Success */ {
+    page: number;
+    perPage: number;
+    total: number;
+    totalPages: number;
+    data: {
+      id: string;
+      order: number;
+      candidateId: string;
+      hasEnded: boolean;
+      secondsSpent: number;
+      score: number;
+      createdAt: string;
+      updatedAt: string;
+    }[];
+  };
+export type GetExamsByTestIdAttemptsSelfApiArg = {
+  testId: string;
+  page?: number;
+  perPage?: number | null;
+  sort: string;
+};
+export type GetExamsByTestIdAttemptsAggregateApiResponse =
+  /** status 200 Success */ {
+    totalParticipants: number;
+    totalAttempts: number;
+    averageScore: number;
+    highestScore: number;
+    lowestScore: number;
+    averageTime: number;
+  };
+export type GetExamsByTestIdAttemptsAggregateApiArg = {
+  testId: string;
+  candidateId?: string;
+};
+export type GetExamsByTestIdCandidateAndCandidateIdAttemptsAggregateApiResponse =
+  /** status 200 Success */ {
+    rank: number;
+    totalAttempts: number;
+    averageScore: number;
+    highestScore: number;
+    lowestScore: number;
+    averageTime: number;
+  };
+export type GetExamsByTestIdCandidateAndCandidateIdAttemptsAggregateApiArg = {
+  testId: string;
+  pathCandidateId: string;
+  queryCandidateId?: string;
+};
+export type GetExamsAttemptsByAttemptIdApiResponse = /** status 200 Success */ {
+  id: string;
+  order: number;
+  candidateId: string;
+  hasEnded: boolean;
+  secondsSpent: number;
+  score: number;
+  createdAt: string;
+  updatedAt: string;
+};
+export type GetExamsAttemptsByAttemptIdApiArg = {
+  attemptId: string;
+};
+export type GetExamsAttemptsByAttemptIdAggregateApiResponse =
+  /** status 200 Success */ {
+    answered: number;
+    answeredCorrect: number;
+  };
+export type GetExamsAttemptsByAttemptIdAggregateApiArg = {
+  attemptId: string;
+};
+export type GetExamsAttemptsByAttemptIdAnswersApiResponse =
+  /** status 200 Success */ {
+    attemptId: string;
+    questionId: number;
+    chosenOption: number;
+  }[];
+export type GetExamsAttemptsByAttemptIdAnswersApiArg = {
+  attemptId: string;
+};
+export type PostExamsByTestIdAttemptsStartApiResponse = unknown;
+export type PostExamsByTestIdAttemptsStartApiArg = {
+  testId: string;
+};
+export type GetHistoryAttemptsApiResponse = /** status 200 Success */ {
+  page: number;
+  perPage: number;
+  total: number;
+  totalPages: number;
+  data: {
+    id: string;
+    order: number;
+    candidateId: string;
+    hasEnded: boolean;
+    secondsSpent: number;
+    score: number;
     createdAt: string;
     updatedAt: string;
     test: {
@@ -320,115 +623,289 @@ export type GetAttemptsApiResponse = /** status 200 Success */ {
     };
   }[];
 };
-export type GetAttemptsApiArg = {
-  sort?: string;
-  candidateId?: string;
-  testId?: string;
+export type GetHistoryAttemptsApiArg = {
   page?: number;
   perPage?: number | null;
+  sort: string;
+  testId?: string;
 };
-export type GetAttemptsCurrentApiResponse = /** status 200 Success */ {
-  id: string;
-  order: number;
-  candidateId: string;
-  hasEnded: boolean;
-  secondsSpent: number;
-  createdAt: string;
-  updatedAt: string;
-  test: {
+export type GetHistoryAttemptsByAttemptIdApiResponse =
+  /** status 200 Success */ {
     id: string;
-    authorId: string;
-    title: string;
-    description: string;
-    minutesToAnswer: number;
-    language: string;
-    mode: string;
+    order: number;
+    candidateId: string;
+    hasEnded: boolean;
+    secondsSpent: number;
+    score: number;
     createdAt: string;
     updatedAt: string;
+    test: {
+      id: string;
+      authorId: string;
+      title: string;
+      description: string;
+      minutesToAnswer: number;
+      language: string;
+      mode: string;
+      createdAt: string;
+      updatedAt: string;
+    };
   };
-};
-export type GetAttemptsCurrentApiArg = {
-  testId: string;
-  candidateId: string;
-};
-export type GetAttemptsByAttemptIdApiResponse = /** status 200 Success */ {
-  id: string;
-  order: number;
-  candidateId: string;
-  hasEnded: boolean;
-  secondsSpent: number;
-  createdAt: string;
-  updatedAt: string;
-  test: {
-    id: string;
-    authorId: string;
-    title: string;
-    description: string;
-    minutesToAnswer: number;
-    language: string;
-    mode: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-};
-export type GetAttemptsByAttemptIdApiArg = {
+export type GetHistoryAttemptsByAttemptIdApiArg = {
   attemptId: string;
 };
-export type GetAttemptsByAttemptIdAnswersApiResponse =
+export type GetPracticesByTestIdAttemptsApiResponse =
+  /** status 200 Success */ {
+    page: number;
+    perPage: number;
+    total: number;
+    totalPages: number;
+    data: {
+      id: string;
+      order: number;
+      candidateId: string;
+      hasEnded: boolean;
+      secondsSpent: number;
+      score: number;
+      createdAt: string;
+      updatedAt: string;
+    }[];
+  };
+export type GetPracticesByTestIdAttemptsApiArg = {
+  testId: string;
+  page?: number;
+  perPage?: number | null;
+  sort: string;
+};
+export type GetPracticesByTestIdAttemptsAggregateApiResponse =
+  /** status 200 Success */ {
+    totalParticipants: number;
+    totalAttempts: number;
+    averageScore: number;
+    highestScore: number;
+    lowestScore: number;
+    averageTime: number;
+  };
+export type GetPracticesByTestIdAttemptsAggregateApiArg = {
+  testId: string;
+};
+export type GetPracticesAttemptsByAttemptIdApiResponse =
+  /** status 200 Success */ {
+    id: string;
+    order: number;
+    candidateId: string;
+    hasEnded: boolean;
+    secondsSpent: number;
+    score: number;
+    createdAt: string;
+    updatedAt: string;
+  };
+export type GetPracticesAttemptsByAttemptIdApiArg = {
+  attemptId: string;
+};
+export type GetPracticesAttemptsByAttemptIdAggregateApiResponse =
+  /** status 200 Success */ {
+    answered: number;
+    answeredCorrect: number;
+  };
+export type GetPracticesAttemptsByAttemptIdAggregateApiArg = {
+  attemptId: string;
+};
+export type GetPracticesAttemptsByAttemptIdAnswersApiResponse =
   /** status 200 Success */ {
     attemptId: string;
     questionId: number;
     chosenOption: number;
   }[];
-export type GetAttemptsByAttemptIdAnswersApiArg = {
+export type GetPracticesAttemptsByAttemptIdAnswersApiArg = {
   attemptId: string;
 };
-export type GetAttemptsByAttemptIdAggregateApiResponse =
-  /** status 200 Success */ {
-    score?: number;
-    answered?: number;
-    answeredCorrect?: number;
-  };
-export type GetAttemptsByAttemptIdAggregateApiArg = {
-  attemptId: string;
-  score?: "true" | "false";
-  answered?: "true" | "false";
-  answeredCorrect?: "true" | "false";
+export type PostPracticesByTestIdAttemptsStartApiResponse = unknown;
+export type PostPracticesByTestIdAttemptsStartApiArg = {
+  testId: string;
 };
-export type GetAttemptsByAttemptIdComputeApiResponse =
-  /** status 200 Success */ {
-    secondsLeft?: number;
-  };
-export type GetAttemptsByAttemptIdComputeApiArg = {
-  attemptId: string;
-  secondsLeft?: "true" | "false";
+export type GetExamsApiResponse = /** status 200 Success */ {
+  page: number;
+  perPage: number;
+  total: number;
+  totalPages: number;
+  data: {
+    id: string;
+    authorId: string;
+    title: string;
+    description: string;
+    minutesToAnswer: number;
+    language: string;
+    mode: string;
+    createdAt: string;
+    updatedAt: string;
+    hasPassword: boolean;
+    roomId: string;
+    numberOfAttemptsAllowed: number;
+    isAnswerVisible: boolean;
+    isAllowedToSeeOtherResults: boolean;
+    openDate: string;
+    closeDate: string;
+  }[];
 };
-export type PatchCurrentAttemptsAnswerApiResponse = unknown;
-export type PatchCurrentAttemptsAnswerApiArg = {
+export type GetExamsApiArg = {
+  page?: number;
+  perPage?: number | null;
+  searchTitle?: string;
+  sort?: string;
+};
+export type PostExamsApiResponse = /** status 200 Success */ {
+  testId: string;
+};
+export type PostExamsApiArg = {
   body: {
-    testId: string;
-    candidateId: string;
-    questionId: number | null;
-    chosenOption?: number | null;
+    test: {
+      title: string;
+      description: string;
+      minutesToAnswer: number;
+      language: string;
+      mode: string;
+    };
+    questions: {
+      text: string;
+      options: string[];
+      points: number;
+      correctOption: number;
+    }[];
+    exam: {
+      hasPassword: boolean;
+      roomId: string;
+      numberOfAttemptsAllowed: number;
+      isAnswerVisible: boolean;
+      isAllowedToSeeOtherResults: boolean;
+      openDate: string;
+      closeDate: string;
+    };
   };
 };
-export type PatchCurrentAttemptsSubmitApiResponse = unknown;
-export type PatchCurrentAttemptsSubmitApiArg = {
-  body: {
-    testId: string;
-    candidateId: string;
-  };
+export type GetExamsFindApiResponse = /** status 200 Success */ {
+  id: string;
+  authorId: string;
+  title: string;
+  description: string;
+  minutesToAnswer: number;
+  language: string;
+  mode: string;
+  createdAt: string;
+  updatedAt: string;
+  hasPassword: boolean;
+  roomId: string;
+  numberOfAttemptsAllowed: number;
+  isAnswerVisible: boolean;
+  isAllowedToSeeOtherResults: boolean;
+  openDate: string;
+  closeDate: string;
 };
-export type GetExamTestFindApiResponse = unknown;
-export type GetExamTestFindApiArg = {
+export type GetExamsFindApiArg = {
   roomId: string;
 };
-export type PostExamTestJoinApiResponse = unknown;
-export type PostExamTestJoinApiArg = {
+export type GetExamsByTestIdApiResponse = /** status 200 Success */ {
+  id: string;
+  authorId: string;
+  title: string;
+  description: string;
+  minutesToAnswer: number;
+  language: string;
+  mode: string;
+  createdAt: string;
+  updatedAt: string;
+  hasPassword: boolean;
+  roomId: string;
+  numberOfAttemptsAllowed: number;
+  isAnswerVisible: boolean;
+  isAllowedToSeeOtherResults: boolean;
+  openDate: string;
+  closeDate: string;
+};
+export type GetExamsByTestIdApiArg = {
+  testId: string;
+};
+export type PutExamsByTestIdApiResponse = unknown;
+export type PutExamsByTestIdApiArg = {
+  testId: string;
+  body: {
+    test: {
+      title: string;
+      description: string;
+      minutesToAnswer: number;
+      language: string;
+      mode: string;
+    };
+    questions: {
+      text: string;
+      options: string[];
+      points: number;
+      correctOption: number;
+    }[];
+    exam: {
+      hasPassword: boolean;
+      roomId: string;
+      numberOfAttemptsAllowed: number;
+      isAnswerVisible: boolean;
+      isAllowedToSeeOtherResults: boolean;
+      openDate: string;
+      closeDate: string;
+    };
+    testId: string;
+  };
+};
+export type DeleteExamsByTestIdApiResponse = unknown;
+export type DeleteExamsByTestIdApiArg = {
+  testId: string;
+};
+export type GetExamsByTestIdAggregateApiResponse = /** status 200 Success */ {
+  numberOfQuestions: number;
+  totalPoints: number;
+};
+export type GetExamsByTestIdAggregateApiArg = {
+  testId: string;
+};
+export type GetExamsByTestIdParticipantsApiResponse =
+  /** status 200 Success */ {
+    page: number;
+    perPage: number;
+    total: number;
+    totalPages: number;
+    data: string[];
+  };
+export type GetExamsByTestIdParticipantsApiArg = {
+  testId: string;
+  page?: number;
+  perPage?: number;
+};
+export type GetExamsByTestIdQuestionsToDoApiResponse =
+  /** status 200 Success */ {
+    id: number;
+    testId: string;
+    text: string;
+    options: string[];
+    points: number;
+  }[];
+export type GetExamsByTestIdQuestionsToDoApiArg = {
+  testId: string;
+};
+export type GetExamsByTestIdQuestionsWithAnswerApiResponse =
+  /** status 200 Success */ {
+    id: number;
+    testId: string;
+    text: string;
+    options: string[];
+    points: number;
+    correctOption: number;
+  }[];
+export type GetExamsByTestIdQuestionsWithAnswerApiArg = {
+  testId: string;
+};
+export type PostExamsJoinApiResponse = unknown;
+export type PostExamsJoinApiArg = {
   body: {
     testId: string;
-    password: string;
-    candidateId: string;
+    password?: string;
   };
 };
 export type GetTemplatesApiResponse = /** status 200 Success */ {
@@ -452,16 +929,16 @@ export type GetTemplatesApiResponse = /** status 200 Success */ {
   }[];
 };
 export type GetTemplatesApiArg = {
-  userId: string;
   searchName?: string;
   page?: number;
   perPage?: number | null;
 };
-export type PostTemplatesApiResponse = unknown;
+export type PostTemplatesApiResponse = /** status 200 Success */ {
+  templateId: string;
+};
 export type PostTemplatesApiArg = {
   body: {
     name: string;
-    userId: string;
     title: string;
     description: string;
     difficulty: string;
@@ -471,10 +948,27 @@ export type PostTemplatesApiArg = {
     outlines: string[];
   };
 };
-export type PutTemplatesApiResponse = unknown;
-export type PutTemplatesApiArg = {
+export type GetTemplatesByTemplateIdApiResponse = /** status 200 Success */ {
+  id: string;
+  userId: string;
+  name: string;
+  title: string;
+  description: string;
+  difficulty: string;
+  tags: string[];
+  numberOfQuestions: number;
+  numberOfOptions: number;
+  outlines: string[];
+  createdAt: string;
+  updatedAt: string;
+};
+export type GetTemplatesByTemplateIdApiArg = {
+  templateId: string;
+};
+export type PutTemplatesByTemplateIdApiResponse = unknown;
+export type PutTemplatesByTemplateIdApiArg = {
+  templateId: string;
   body: {
-    id: string;
     name?: string;
     title?: string;
     description?: string;
@@ -489,7 +983,7 @@ export type DeleteTemplatesByTemplateIdApiResponse = unknown;
 export type DeleteTemplatesByTemplateIdApiArg = {
   templateId: string;
 };
-export type GetPracticeTestsApiResponse = /** status 200 Success */ {
+export type GetPracticesApiResponse = /** status 200 Success */ {
   page: number;
   perPage: number;
   total: number;
@@ -509,35 +1003,20 @@ export type GetPracticeTestsApiResponse = /** status 200 Success */ {
     numberOfQuestions: number;
     numberOfOptions: number;
     outlines: string[];
-    feedback?: {
-      rating: number;
-      problems: (
-        | "inaccurate"
-        | "un-related"
-        | "poor content"
-        | "incomplete"
-        | "repeated"
-        | "error"
-        | "other"
-      )[];
-      comment: string;
-    };
   }[];
 };
-export type GetPracticeTestsApiArg = {
+export type GetPracticesApiArg = {
   page?: number;
   perPage?: number | null;
-  authorId?: string;
   searchTitle?: string;
   sort?: string;
 };
-export type PostPracticeTestsApiResponse = /** status 200 Success */ {
+export type PostPracticesApiResponse = /** status 200 Success */ {
   testId: string;
 };
-export type PostPracticeTestsApiArg = {
+export type PostPracticesApiArg = {
   body: {
     test: {
-      authorId: string;
       title: string;
       description: string;
       minutesToAnswer: number;
@@ -559,7 +1038,7 @@ export type PostPracticeTestsApiArg = {
     };
   };
 };
-export type GetPracticeTestsByTestIdApiResponse = /** status 200 Success */ {
+export type GetPracticesByTestIdApiResponse = /** status 200 Success */ {
   id: string;
   authorId: string;
   title: string;
@@ -574,28 +1053,46 @@ export type GetPracticeTestsByTestIdApiResponse = /** status 200 Success */ {
   numberOfQuestions: number;
   numberOfOptions: number;
   outlines: string[];
-  feedback?: {
-    rating: number;
-    problems: (
-      | "inaccurate"
-      | "un-related"
-      | "poor content"
-      | "incomplete"
-      | "repeated"
-      | "error"
-      | "other"
-    )[];
-    comment: string;
+};
+export type GetPracticesByTestIdApiArg = {
+  testId: string;
+};
+export type DeletePracticesByTestIdApiResponse = unknown;
+export type DeletePracticesByTestIdApiArg = {
+  testId: string;
+};
+export type GetPracticesByTestIdAggregateApiResponse =
+  /** status 200 Success */ {
+    numberOfQuestions: number;
+    totalPoints: number;
   };
-};
-export type GetPracticeTestsByTestIdApiArg = {
+export type GetPracticesByTestIdAggregateApiArg = {
   testId: string;
 };
-export type DeletePracticeTestsByTestIdApiResponse = unknown;
-export type DeletePracticeTestsByTestIdApiArg = {
+export type GetPracticesByTestIdQuestionsToDoApiResponse =
+  /** status 200 Success */ {
+    id: number;
+    testId: string;
+    text: string;
+    options: string[];
+    points: number;
+  }[];
+export type GetPracticesByTestIdQuestionsToDoApiArg = {
   testId: string;
 };
-export type GetPracticeTestsByTestIdFeedbackApiResponse =
+export type GetPracticesByTestIdQuestionsWithAnswerApiResponse =
+  /** status 200 Success */ {
+    id: number;
+    testId: string;
+    text: string;
+    options: string[];
+    points: number;
+    correctOption: number;
+  }[];
+export type GetPracticesByTestIdQuestionsWithAnswerApiArg = {
+  testId: string;
+};
+export type GetPracticesByTestIdFeedbackApiResponse =
   /** status 200 Success */ {
     practiceTestId: string;
     rating: number;
@@ -610,11 +1107,11 @@ export type GetPracticeTestsByTestIdFeedbackApiResponse =
     )[];
     comment: string;
   } | null;
-export type GetPracticeTestsByTestIdFeedbackApiArg = {
+export type GetPracticesByTestIdFeedbackApiArg = {
   testId: string;
 };
-export type PostPracticeTestsByTestIdFeedbackApiResponse = unknown;
-export type PostPracticeTestsByTestIdFeedbackApiArg = {
+export type PostPracticesByTestIdFeedbackApiResponse = unknown;
+export type PostPracticesByTestIdFeedbackApiArg = {
   testId: string;
   body: {
     rating: number;
@@ -630,65 +1127,88 @@ export type PostPracticeTestsByTestIdFeedbackApiArg = {
     comment?: string;
   };
 };
-export type PutPracticeTestsByTestIdFeedbackApiResponse = unknown;
-export type PutPracticeTestsByTestIdFeedbackApiArg = {
-  testId: string;
-  body: {
-    id: string;
-    name?: string;
-    title?: string;
-    description?: string;
-    difficulty?: string;
-    tags?: string[];
-    numberOfQuestions?: number;
-    numberOfOptions?: number;
-    outlines?: string[];
-  };
-};
-export type DeletePracticeTestsByTestIdFeedbackApiResponse = unknown;
-export type DeletePracticeTestsByTestIdFeedbackApiArg = {
+export type DeletePracticesByTestIdFeedbackApiResponse = unknown;
+export type DeletePracticesByTestIdFeedbackApiArg = {
   testId: string;
 };
 export const {
-  useGetTestsByTestIdQuestionsQuery,
-  useLazyGetTestsByTestIdQuestionsQuery,
-  useGetTestsByTestIdQuestionsNoAnswerQuery,
-  useLazyGetTestsByTestIdQuestionsNoAnswerQuery,
-  useGetTestsByTestIdAggregateQuery,
-  useLazyGetTestsByTestIdAggregateQuery,
-  useGetQuestionsByQuestionIdQuery,
-  useLazyGetQuestionsByQuestionIdQuery,
-  useGetAttemptsQuery,
-  useLazyGetAttemptsQuery,
-  useGetAttemptsCurrentQuery,
-  useLazyGetAttemptsCurrentQuery,
-  useGetAttemptsByAttemptIdQuery,
-  useLazyGetAttemptsByAttemptIdQuery,
-  useGetAttemptsByAttemptIdAnswersQuery,
-  useLazyGetAttemptsByAttemptIdAnswersQuery,
-  useGetAttemptsByAttemptIdAggregateQuery,
-  useLazyGetAttemptsByAttemptIdAggregateQuery,
-  useGetAttemptsByAttemptIdComputeQuery,
-  useLazyGetAttemptsByAttemptIdComputeQuery,
-  usePatchCurrentAttemptsAnswerMutation,
-  usePatchCurrentAttemptsSubmitMutation,
-  useGetExamTestFindQuery,
-  useLazyGetExamTestFindQuery,
-  usePostExamTestJoinMutation,
+  useGetCurrentAttemptsByAttemptIdQuery,
+  useLazyGetCurrentAttemptsByAttemptIdQuery,
+  useGetCurrentTestsByTestIdQuery,
+  useLazyGetCurrentTestsByTestIdQuery,
+  useGetCurrentAttemptsByAttemptIdAnswersQuery,
+  useLazyGetCurrentAttemptsByAttemptIdAnswersQuery,
+  usePatchCurrentAttemptsByAttemptIdAnswersMutation,
+  usePatchCurrentAttemptsByAttemptIdSubmitMutation,
+  useGetExamsByTestIdAttemptsQuery,
+  useLazyGetExamsByTestIdAttemptsQuery,
+  useGetExamsByTestIdAttemptsSelfQuery,
+  useLazyGetExamsByTestIdAttemptsSelfQuery,
+  useGetExamsByTestIdAttemptsAggregateQuery,
+  useLazyGetExamsByTestIdAttemptsAggregateQuery,
+  useGetExamsByTestIdCandidateAndCandidateIdAttemptsAggregateQuery,
+  useLazyGetExamsByTestIdCandidateAndCandidateIdAttemptsAggregateQuery,
+  useGetExamsAttemptsByAttemptIdQuery,
+  useLazyGetExamsAttemptsByAttemptIdQuery,
+  useGetExamsAttemptsByAttemptIdAggregateQuery,
+  useLazyGetExamsAttemptsByAttemptIdAggregateQuery,
+  useGetExamsAttemptsByAttemptIdAnswersQuery,
+  useLazyGetExamsAttemptsByAttemptIdAnswersQuery,
+  usePostExamsByTestIdAttemptsStartMutation,
+  useGetHistoryAttemptsQuery,
+  useLazyGetHistoryAttemptsQuery,
+  useGetHistoryAttemptsByAttemptIdQuery,
+  useLazyGetHistoryAttemptsByAttemptIdQuery,
+  useGetPracticesByTestIdAttemptsQuery,
+  useLazyGetPracticesByTestIdAttemptsQuery,
+  useGetPracticesByTestIdAttemptsAggregateQuery,
+  useLazyGetPracticesByTestIdAttemptsAggregateQuery,
+  useGetPracticesAttemptsByAttemptIdQuery,
+  useLazyGetPracticesAttemptsByAttemptIdQuery,
+  useGetPracticesAttemptsByAttemptIdAggregateQuery,
+  useLazyGetPracticesAttemptsByAttemptIdAggregateQuery,
+  useGetPracticesAttemptsByAttemptIdAnswersQuery,
+  useLazyGetPracticesAttemptsByAttemptIdAnswersQuery,
+  usePostPracticesByTestIdAttemptsStartMutation,
+  useGetExamsQuery,
+  useLazyGetExamsQuery,
+  usePostExamsMutation,
+  useGetExamsFindQuery,
+  useLazyGetExamsFindQuery,
+  useGetExamsByTestIdQuery,
+  useLazyGetExamsByTestIdQuery,
+  usePutExamsByTestIdMutation,
+  useDeleteExamsByTestIdMutation,
+  useGetExamsByTestIdAggregateQuery,
+  useLazyGetExamsByTestIdAggregateQuery,
+  useGetExamsByTestIdParticipantsQuery,
+  useLazyGetExamsByTestIdParticipantsQuery,
+  useGetExamsByTestIdQuestionsToDoQuery,
+  useLazyGetExamsByTestIdQuestionsToDoQuery,
+  useGetExamsByTestIdQuestionsWithAnswerQuery,
+  useLazyGetExamsByTestIdQuestionsWithAnswerQuery,
+  usePostExamsJoinMutation,
   useGetTemplatesQuery,
   useLazyGetTemplatesQuery,
   usePostTemplatesMutation,
-  usePutTemplatesMutation,
+  useGetTemplatesByTemplateIdQuery,
+  useLazyGetTemplatesByTemplateIdQuery,
+  usePutTemplatesByTemplateIdMutation,
   useDeleteTemplatesByTemplateIdMutation,
-  useGetPracticeTestsQuery,
-  useLazyGetPracticeTestsQuery,
-  usePostPracticeTestsMutation,
-  useGetPracticeTestsByTestIdQuery,
-  useLazyGetPracticeTestsByTestIdQuery,
-  useDeletePracticeTestsByTestIdMutation,
-  useGetPracticeTestsByTestIdFeedbackQuery,
-  useLazyGetPracticeTestsByTestIdFeedbackQuery,
-  usePostPracticeTestsByTestIdFeedbackMutation,
-  usePutPracticeTestsByTestIdFeedbackMutation,
-  useDeletePracticeTestsByTestIdFeedbackMutation,
+  useGetPracticesQuery,
+  useLazyGetPracticesQuery,
+  usePostPracticesMutation,
+  useGetPracticesByTestIdQuery,
+  useLazyGetPracticesByTestIdQuery,
+  useDeletePracticesByTestIdMutation,
+  useGetPracticesByTestIdAggregateQuery,
+  useLazyGetPracticesByTestIdAggregateQuery,
+  useGetPracticesByTestIdQuestionsToDoQuery,
+  useLazyGetPracticesByTestIdQuestionsToDoQuery,
+  useGetPracticesByTestIdQuestionsWithAnswerQuery,
+  useLazyGetPracticesByTestIdQuestionsWithAnswerQuery,
+  useGetPracticesByTestIdFeedbackQuery,
+  useLazyGetPracticesByTestIdFeedbackQuery,
+  usePostPracticesByTestIdFeedbackMutation,
+  useDeletePracticesByTestIdFeedbackMutation,
 } = injectedRtkApi;

@@ -1,33 +1,30 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
-import TestGenerationSidebar from "./components/TestGenerationSidebar";
-import TemplateSelectionModal from "./components/TemplateSelectionModal";
-import SaveTemplateDialog from "./components/SaveTemplateDialog";
+import TestGenerationSidebar from "./components/ui/TestGenerationSidebar";
+import TemplateSelectionModal from "./components/ui/TemplateSelectionModal";
+import SaveTemplateDialog from "./components/ui/SaveTemplateDialog";
 import { TemplateCore } from "../../../../features/tests/model/test.model";
-import TestGenerationStepper from './components/TestGenerationStepper';
+import TestGenerationStepper from './components/ui/TestGenerationStepper';
 import TestInfoStep from './components/steps/TestInfoStep';
 import PromptInfoStep from './components/steps/PromptInfoStep';
 import OutlinesStep from './components/steps/OutlinesStep';
 import paths from '../../../../router/paths';
-import { LoadingScreen } from './components/LoadingScreen';
+import { LoadingScreen } from './components/ui/LoadingScreen';
 import { EMPTY_TEMPLATE_CORE_CREATE, EMPTY_TEST_PRACTICE_CORE_CREATE, TemplateCoreCreate, TestPracticeCoreCreate } from '../../../../features/tests/types/create';
 import useTemplateServerQuery from '../../../../features/tests/hooks/templates/useTemplateServerQuery';
 import useCreatePracticeTest from './hooks/useCreatePracticeTest';
 import { usePostTemplatesMutation } from '../../../../features/tests/api/test.api-gen';
 import { useLazyGetGeneratedQuestionsQuery } from '../../../../features/tests/api/prompt.api-custom';
-import { useAppSelector } from '../../../../app/hooks';
-import { authSelectors } from '../../../../features/auth/store/authSlice';
 
 const CandidateTestsGeneratePage: React.FC = () => {
-	const userId = useAppSelector(authSelectors.selectUserId);
 	const {
 		filters,
 		setFilters,
 		data,
 	} = useTemplateServerQuery();
 	const {
-		handleCreatePracticeTest
+		createPractice: handleCreatePracticeTest
 	} = useCreatePracticeTest();
 	const [getGeneratedQuestions] = useLazyGetGeneratedQuestionsQuery();
 
@@ -103,14 +100,9 @@ const CandidateTestsGeneratePage: React.FC = () => {
 				alert('Please provide a template name');
 				return;
 			}
-			if (!userId) {
-				alert('User ID is not available');
-				return;
-			}
 			await createTemplate({
 				body: {
 					...templateCreate,
-					userId: userId || "",
 				}
 			}).unwrap();
 			setShowSaveTemplateDialog(false);

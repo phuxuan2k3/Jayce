@@ -1,5 +1,5 @@
 import React from 'react';
-import { TemplateCore } from '../../../../../features/tests/model/test.model';
+import { TemplateCore } from '../../../../../../features/tests/model/test.model';
 import { XCircle, Save, Plus, X } from 'lucide-react';
 
 interface SaveTemplateDialogProps {

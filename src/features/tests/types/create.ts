@@ -1,8 +1,8 @@
 import { QuestionCore } from "../model/question.model";
-import { TemplateCore, TestCore, TestPracticeCore } from "../model/test.model";
+import { TemplateCore, TestCore, PracticeCore } from "../model/test.model";
 
 export type TestCoreCreate = Omit<TestCore, "id" | 'authorId' | 'createdAt'>;
-export type TestPracticeCoreCreate = Omit<TestPracticeCore, 'id' | 'authorId' | 'createdAt' | "feedback">;
+export type TestPracticeCoreCreate = Omit<PracticeCore, 'id' | 'authorId' | 'createdAt' | "feedback">;
 export type QuestionCoreCreate = Omit<QuestionCore, 'id' | 'testId'>;
 export type TemplateCoreCreate = Omit<TemplateCore, 'id'>;
 

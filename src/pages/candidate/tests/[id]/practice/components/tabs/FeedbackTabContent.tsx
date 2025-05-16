@@ -1,52 +1,42 @@
-import React, { useState } from 'react';
-import { TestPracticeCore } from '../../../../../../features/tests/model/test.model';
+import React from 'react';
 import { StarIcon, AlertCircle, Sparkles, MessageSquare } from 'lucide-react';
+import useFeedbackTab from '../../hooks/feedback/useFeedbackTab';
 
-interface FeedbackTabContentProps {
-	isLoading: boolean;
-	test: TestPracticeCore | null;
-	onFeedbackChange?: (feedback: TestPracticeCore['feedback']) => void;
-}
+const FeedbackTabContent: React.FC = () => {
+	const {
+		data: { practice },
+		isLoading,
+		feedback,
+		setFeedback,
+		submitFeedback,
+	} = useFeedbackTab();
 
-// Problem report options
-const PROBLEM_OPTIONS = [
-	{ value: 'inaccurate', label: 'Inaccurate Content' },
-	{ value: 'un-related', label: 'Unrelated to Topic' },
-	{ value: 'poor content', label: 'Poor Quality Content' },
-	{ value: 'incomplete', label: 'Incomplete Content' },
-	{ value: 'repeated', label: 'Repeated Questions' },
-	{ value: 'error', label: 'Technical Error' },
-	{ value: 'other', label: 'Other' }
-];
 
-const FeedbackTabContent: React.FC<FeedbackTabContentProps> = ({ isLoading, test, onFeedbackChange }) => {
 	// Initialize feedback state from test or default values
-	const [feedback, setFeedback] = useState<TestPracticeCore['feedback']>(
-		test?.feedback || { rating: 0 }
-	);
+
 
 	// Handle rating change
 	const handleRatingChange = (rating: number) => {
 		const updatedFeedback = { ...feedback, rating };
 		setFeedback(updatedFeedback);
-		if (onFeedbackChange) onFeedbackChange(updatedFeedback);
 	};
 
 	// Handle comment change
 	const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const updatedFeedback = { ...feedback, comment: e.target.value };
 		setFeedback(updatedFeedback);
-		if (onFeedbackChange) onFeedbackChange(updatedFeedback);
 	};
 
 	// Handle problem selection
 	const handleProblemChange = (problem: string) => {
+		const updatedProblems = feedback.problems.includes(problem)
+			? feedback.problems.filter(p => p !== problem)
+			: [...feedback.problems, problem];
 		const updatedFeedback = {
 			...feedback,
-			problems: problem as TestPracticeCore['feedback']['problems']
+			problems: updatedProblems,
 		};
 		setFeedback(updatedFeedback);
-		if (onFeedbackChange) onFeedbackChange(updatedFeedback);
 	};
 
 	if (isLoading) {
@@ -58,7 +48,7 @@ const FeedbackTabContent: React.FC<FeedbackTabContentProps> = ({ isLoading, test
 		);
 	}
 
-	if (!test) {
+	if (!practice) {
 		return (
 			<div className="bg-white rounded-lg shadow-md p-6">
 				<p className="text-gray-600">No test information available.</p>
@@ -67,7 +57,7 @@ const FeedbackTabContent: React.FC<FeedbackTabContentProps> = ({ isLoading, test
 	}
 
 	// Check if this is not a practice test (no feedback can be provided)
-	if (test.mode !== 'practice') {
+	if (practice.mode !== 'practice') {
 		return (
 			<div className="bg-white rounded-lg shadow-md p-6">
 				<p className="text-gray-600 italic">Feedback is only available for practice tests.</p>
@@ -126,13 +116,16 @@ const FeedbackTabContent: React.FC<FeedbackTabContentProps> = ({ isLoading, test
 					</label>
 					<div className="grid grid-cols-2 gap-2">
 						{PROBLEM_OPTIONS.map(option => (
-							<div key={option.value} className="flex items-center">
+							<div
+								key={option.value}
+								className="flex items-center"
+							>
 								<input
-									type="radio"
+									type="checkbox"
 									id={`problem-${option.value}`}
 									name="problem"
 									value={option.value}
-									checked={feedback.problems === option.value}
+									checked={feedback.problems.findIndex(problem => problem === option.value) !== -1}
 									onChange={() => handleProblemChange(option.value)}
 									className="h-4 w-4 border-gray-300 focus:ring-primary accent-primary"
 								/>
@@ -158,19 +151,19 @@ const FeedbackTabContent: React.FC<FeedbackTabContentProps> = ({ isLoading, test
 						<ul className="space-y-2 text-gray-600">
 							<li className="flex items-center">
 								<span className="font-semibold mr-2">Difficulty:</span>
-								{test.difficulty}/5
+								{practice.difficulty}/5
 							</li>
 							<li className="flex items-center">
 								<span className="font-semibold mr-2">Questions:</span>
-								{test.numberOfQuestions}
+								{practice.numberOfQuestions}
 							</li>
 							<li className="flex items-center">
 								<span className="font-semibold mr-2">Options per Question:</span>
-								{test.numberOfOptions}
+								{practice.numberOfOptions}
 							</li>
 							<li className="flex items-center">
 								<span className="font-semibold mr-2">Duration:</span>
-								{test.minutesToAnswer} minutes
+								{practice.minutesToAnswer} minutes
 							</li>
 						</ul>
 					</div>
@@ -178,7 +171,7 @@ const FeedbackTabContent: React.FC<FeedbackTabContentProps> = ({ isLoading, test
 					<div>
 						<h4 className="font-medium text-gray-700 mb-2">Topics</h4>
 						<div className="flex flex-wrap gap-2 mb-4">
-							{test.tags.map((tag, index) => (
+							{practice.tags.map((tag, index) => (
 								<span
 									key={index}
 									className="px-2 py-1 bg-primary-toned-100 text-primary-toned-700 rounded-full text-sm"
@@ -190,7 +183,7 @@ const FeedbackTabContent: React.FC<FeedbackTabContentProps> = ({ isLoading, test
 
 						<h4 className="font-medium text-gray-700 mb-2 mt-4">Outlines</h4>
 						<ul className="list-disc list-inside space-y-1 text-gray-600">
-							{test.outlines.map((outline, index) => (
+							{practice.outlines.map((outline, index) => (
 								<li key={index}>{outline}</li>
 							))}
 						</ul>
@@ -202,7 +195,7 @@ const FeedbackTabContent: React.FC<FeedbackTabContentProps> = ({ isLoading, test
 			<div className="flex justify-end">
 				<button
 					className="px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-toned-600 transition-colors"
-					onClick={() => onFeedbackChange && onFeedbackChange(feedback)}
+					onClick={submitFeedback}
 				>
 					Submit Feedback
 				</button>
@@ -212,3 +205,13 @@ const FeedbackTabContent: React.FC<FeedbackTabContentProps> = ({ isLoading, test
 };
 
 export default FeedbackTabContent;
+
+const PROBLEM_OPTIONS = [
+	{ value: 'inaccurate', label: 'Inaccurate Content' },
+	{ value: 'un-related', label: 'Unrelated to Topic' },
+	{ value: 'poor content', label: 'Poor Quality Content' },
+	{ value: 'incomplete', label: 'Incomplete Content' },
+	{ value: 'repeated', label: 'Repeated Questions' },
+	{ value: 'error', label: 'Technical Error' },
+	{ value: 'other', label: 'Other' }
+];

@@ -39,16 +39,16 @@ export type PracticeAddon = Omit<TemplateCore, "id" | "name" | "title" | "descri
 
 export type ExamAddon = {
 	roomId: string;
-	password?: string;
+	hasPassword: boolean;
 	numberOfAttemptsAllowed: number;
 	isAnswerVisible: boolean;
-	isAllowedToSeeOthersResults: boolean;
+	isAllowedToSeeOtherResults: boolean;
 	openDate: string;
 	closeDate: string;
 };
 
 export type FeedbackProblems = "inaccurate" | "un-related" | "poor content" | "incomplete" | "repeated" | "error" | "other";
 
-export type TestPracticeCore = TestCore & PracticeAddon;
+export type PracticeCore = TestCore & PracticeAddon;
 
-export type TestExamCore = TestCore & ExamAddon;
+export type ExamCore = TestCore & ExamAddon;

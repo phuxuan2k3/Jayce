@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import QuickAction from '../../../../../features/tests/ui2/sidebar/QuickAction';
-import paths from '../../../../../router/paths';
+import QuickAction from '../../../../../../features/tests/ui2/sidebar/QuickAction';
+import paths from '../../../../../../router/paths';
 import { ArrowLeft, Save, List } from 'lucide-react';
 
 type TestGenerationSidebarProps = {

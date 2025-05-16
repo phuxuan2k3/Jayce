@@ -1,39 +1,32 @@
 import React, { useState } from "react";
-import { QuestionCore } from "../../../../../../features/tests/model/question.model";
-import MyPagination from "../../../../../../components/ui/common/MyPagination";
-import { QuestionCardDefault } from "../../../../../../features/tests/ui2/QuestionCard";
+import MyPagination from "../../../../../../../components/ui/common/MyPagination";
+import useQuestionsTab from "../../hooks/questions/useQuestionsTab";
+import useShowQuestions from "../../hooks/questions/useShowQuestions";
+import useArrayPagination from "../../../../../../../components/hooks/useArrayPagination";
 
 interface QuestionsTabContentProps {
-	isLoading: boolean;
-	questions: QuestionCore[] | null;
 	testTitle: string;
-	hasAttempts: boolean; // New prop to indicate if user has attempts
 }
 
 const QuestionsTabContent: React.FC<QuestionsTabContentProps> = ({
-	isLoading,
-	questions,
 	testTitle,
-	hasAttempts,
 }) => {
-	const [showQuestions, setShowQuestions] = useState(hasAttempts); // Auto-show questions if user has attempts
-	const [showAllAnswers, setShowAllAnswers] = useState(false);
-	const [visibleAnswers, setVisibleAnswers] = useState<Record<number, boolean>>({});
-	const [currentPage, setCurrentPage] = useState(1);
-	const questionsPerPage = 5;
+	const {
+		data: {
+			questionsWithAnswers,
+			practiceAggregate: { totalPoints, numberOfQuestions },
+		},
+		isLoading,
+		hasAttempts,
+	} = useQuestionsTab();
 
-	// Calculate total points
-	const totalPoints = questions?.reduce((sum, q) => sum + q.points, 0) || 0;
-
-	// Pagination logic
-	const indexOfLastQuestion = currentPage * questionsPerPage;
-	const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
-	const currentQuestions = questions?.slice(indexOfFirstQuestion, indexOfLastQuestion) || [];
-	const totalPages = Math.ceil((questions?.length || 0) / questionsPerPage);
-
-	const handlePageChange = (page: number) => {
-		setCurrentPage(page);
-	};
+	const {
+		page,
+		pageItems,
+		perPage,
+		setPage,
+		totalPages,
+	} = useArrayPagination(questionsWithAnswers || [], 10);
 
 	const handleToggleAnswer = (questionId: number) => {
 		setVisibleAnswers(prev => ({
@@ -65,7 +58,7 @@ const QuestionsTabContent: React.FC<QuestionsTabContentProps> = ({
 				<div className="flex justify-center items-center h-40">
 					<div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
 				</div>
-			) : !questions || questions.length === 0 ? (
+			) : !questionsWithAnswers || questionsWithAnswers.length === 0 ? (
 				<div className="bg-white rounded-lg shadow-md p-6 text-center">
 					<p className="text-gray-600">No questions available for this test.</p>
 				</div>
@@ -76,7 +69,7 @@ const QuestionsTabContent: React.FC<QuestionsTabContentProps> = ({
 						<h3 className="text-lg font-semibold mb-3">Questions Summary</h3>
 						<div className="flex flex-col gap-2 mb-4">
 							<p><span className="font-medium">Test Name:</span> {testTitle}</p>
-							<p><span className="font-medium">Total Questions:</span> {questions.length}</p>
+							<p><span className="font-medium">Number of Questions:</span> {numberOfQuestions}</p>
 							<p><span className="font-medium">Total Points:</span> {totalPoints}</p>
 						</div>
 
@@ -111,11 +104,9 @@ const QuestionsTabContent: React.FC<QuestionsTabContentProps> = ({
 
 							<div className="space-y-4">
 								{currentQuestions.map((question) => (
-									<QuestionCardDefault
+									<QuestionCardNoAnswer
 										key={question.id}
 										question={question}
-										showAnswer={visibleAnswers[question.id] || false}
-										onToggleAnswer={() => handleToggleAnswer(question.id)}
 									/>
 								))}
 							</div>

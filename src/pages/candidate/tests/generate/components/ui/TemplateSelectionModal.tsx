@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { TemplateCore } from '../../../../../features/tests/model/test.model';
+import { TemplateCore } from '../../../../../../features/tests/model/test.model';
 import { XCircle, Settings, Search } from 'lucide-react';
-import paths from '../../../../../router/paths';
+import paths from '../../../../../../router/paths';
 import { useNavigate } from 'react-router-dom';
-import MyPagination from '../../../../../components/ui/common/MyPagination';
-import TemplateCard from '../../templates/components/TemplateCard';
+import MyPagination from '../../../../../../components/ui/common/MyPagination';
+import TemplateCard from '../../../templates/components/TemplateCard';
 
 interface TemplateSelectionModalProps {
 	isOpen: boolean;

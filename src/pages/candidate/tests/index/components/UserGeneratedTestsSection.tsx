@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { TestPracticeCore } from "../../../../../features/tests/model/test.model";
+import { PracticeCore } from "../../../../../features/tests/model/test.model";
 import paths from "../../../../../router/paths";
 import { DefaultTestPracticeCard } from "../../../../../features/tests/ui2/TestPracticeCard";
 import MyPagination from "../../../../../components/ui/common/MyPagination";
@@ -7,7 +7,7 @@ import MyPagination from "../../../../../components/ui/common/MyPagination";
 type UserGeneratedTestsProps = {
 	totalPages: number;
 	total: number;
-	tests: TestPracticeCore[];
+	tests: PracticeCore[];
 	onManageTest: (testId: string) => void;
 	onPageChange: (page: number) => void;
 };

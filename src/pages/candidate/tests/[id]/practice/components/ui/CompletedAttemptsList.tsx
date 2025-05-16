@@ -11,7 +11,6 @@ interface CompletedAttemptsListProps {
 	attempts: Attempt[];
 	page: number;
 	perPage: number;
-	formatSeconds: (seconds: number) => string;
 	onViewAttempt: (attemptId: string) => void;
 }
 
@@ -19,7 +18,6 @@ const CompletedAttemptsList: React.FC<CompletedAttemptsListProps> = ({
 	attempts,
 	page,
 	perPage,
-	formatSeconds,
 	onViewAttempt,
 }) => {
 	if (attempts.length === 0) {
@@ -68,3 +66,9 @@ const CompletedAttemptsList: React.FC<CompletedAttemptsListProps> = ({
 };
 
 export default CompletedAttemptsList;
+
+const formatSeconds = (seconds: number) => {
+	const minutes = Math.floor(seconds / 60);
+	const remainingSeconds = seconds % 60;
+	return `${minutes}m ${remainingSeconds}s`;
+};

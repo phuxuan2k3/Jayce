@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useDeleteTemplatesByTemplateIdMutation, usePostTemplatesMutation, usePutTemplatesMutation } from "../../../../../features/tests/api/test.api-enhance";
+import { useDeleteTemplatesByTemplateIdMutation, usePostTemplatesMutation, usePutTemplatesByTemplateIdMutation } from "../../../../../features/tests/api/test.api-enhance";
 import { useAppSelector } from "../../../../../app/hooks";
 import { authSelectors } from "../../../../../features/auth/store/authSlice";
 import { TemplateCore } from "../../../../../features/tests/model/test.model";
@@ -18,7 +18,7 @@ export default function useTemplateServerMutate() {
 		error: null,
 	});
 	const [_createTemplate, createState] = usePostTemplatesMutation();
-	const [_editTemplate, editState] = usePutTemplatesMutation();
+	const [_editTemplate, editState] = usePutTemplatesByTemplateIdMutation();
 	const [deleteTemplate, deleteState] = useDeleteTemplatesByTemplateIdMutation();
 
 	useEffect(() => {
@@ -38,7 +38,6 @@ export default function useTemplateServerMutate() {
 		if (!userId) return;
 		_createTemplate({
 			body: {
-				userId: userId || "",
 				...template,
 			}
 		});

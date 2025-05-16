@@ -4,6 +4,7 @@ export type AttemptCore = {
 	testId: number;
 	hasEnded: boolean;
 	secondsSpent: number;
+	score: number;
 	createdAt: string;
 	updatedAt: string;
 };

@@ -1,31 +1,42 @@
-import React, { useState } from 'react';
-import { TestExamCore } from '../../../../../features/tests/model/test.model';
+import React, { useEffect, useState } from 'react';
+import { ExamCore } from '../../../../../features/tests/model/test.model';
 import { useNavigate } from 'react-router-dom';
 import paths from '../../../../../router/paths';
 import { AlarmClock, AlertCircle, LockIcon, CheckCircle, X, Eye, EyeOff } from 'lucide-react';
 import { format } from 'date-fns';
+import { usePostExamsJoinMutation } from '../../../../../features/tests/api/test.api-gen';
+import { useAppSelector } from '../../../../../app/hooks';
+import { authSelectors } from '../../../../../features/auth/store/authSlice';
 
 interface ExamInfoDialogProps {
 	isOpen: boolean;
 	onClose: () => void;
-	code: string;
+	roomId: string;
 	isLoading: boolean;
-	examData: TestExamCore | null;
+	examData: ExamCore | null;
 	error: string | null;
 }
 
 const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 	isOpen,
 	onClose,
-	code,
+	roomId,
 	isLoading,
 	examData,
 	error
 }) => {
+	const [join, joinState] = usePostExamsJoinMutation();
+	const userId = useAppSelector(authSelectors.selectUserId);
 	const navigate = useNavigate();
 	const [password, setPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
 	const [passwordError, setPasswordError] = useState<string | null>(null);
+
+	useEffect(() => {
+		if (examData && joinState.isSuccess) {
+			navigate(paths.candidate.tests.in(examData.id).DO);
+		}
+	}, [joinState.isSuccess, examData, navigate]);
 
 	if (!isOpen) return null;
 
@@ -34,23 +45,29 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 		setPasswordError(null);
 	};
 
-	const handleJoinTest = () => {
+	const handleJoinTest = async () => {
+		if (!examData || userId == null) return;
+
 		// If the test requires a password but none was provided
-		if (examData?.password && !password) {
-			setPasswordError('Please enter the password to join this test');
-			return;
+		if (examData.hasPassword) {
+			if (!password) {
+				setPasswordError('Please enter the password to join this test');
+			} else {
+				join({
+					body: {
+						password,
+						testId: examData.id,
+					}
+				});
+			}
 		}
-
-		// If the test requires a password and it was provided
-		if (examData?.password && password !== examData.password) {
-			setPasswordError('Incorrect password');
-			return;
-		}
-
-		// If we get here, either no password is required or the correct password was provided
-		if (examData) {
-			// Navigate to the test practice page
-			navigate(paths.candidate.tests.in(examData.id).DO);
+		else {
+			join({
+				body: {
+					testId: examData.id,
+					password: "",
+				}
+			});
 		}
 	};
 
@@ -78,7 +95,7 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 					<div className="p-8 flex flex-col items-center justify-center">
 						<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary mb-4"></div>
 						<h3 className="text-xl font-semibold text-gray-800 mb-2">Searching for test...</h3>
-						<p className="text-gray-600 text-center">Looking for test with code: {code}</p>
+						<p className="text-gray-600 text-center">Looking for test with roomId: {roomId}</p>
 					</div>
 				)}
 
@@ -143,7 +160,7 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 							</div>
 
 							{/* Password input if required */}
-							{examData.password && (
+							{examData.hasPassword && (
 								<div className="mt-4">
 									<label className="block text-sm font-medium text-gray-700 mb-1">
 										This test is password protected
@@ -190,7 +207,14 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 								onClick={handleJoinTest}
 								className="px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-toned-600 transition-colors"
 							>
-								Start Test
+								{
+									joinState.isLoading ? (
+										<span className="flex items-center">
+											<span className="mr-2 h-4 w-4 border-2 border-t-transparent border-white rounded-full animate-spin"></span>
+											Joining...
+										</span>
+									) : "Start Test"
+								}
 							</button>
 						</div>
 					</div>

@@ -1,9 +1,9 @@
 import RightLayoutTemplate from "../../../../../components/layouts/RightLayoutTemplate";
 import TestDoSidebar from "../../../../../features/tests/ui/TestDoSidebar";
-import useTestDo from "../../../../../features/tests/hooks/useTestDo";
+import useTestDo from "./hooks/useTestDo";
 import QuestionDoCard from "../../../../../features/tests/ui/QuestionDoCard";
 
-const CandidateTestPraticePage = () => {
+const CandidateTestDoPage = () => {
 	const {
 		testDo,
 		secondsLeft,
@@ -50,4 +50,4 @@ const CandidateTestPraticePage = () => {
 	);
 }
 
-export default CandidateTestPraticePage
+export default CandidateTestDoPage

@@ -20,8 +20,8 @@ const enhancedTestGenApi = testApiGen.enhanceEndpoints({
 		postTemplates: {
 			invalidatesTags: [{ type: 'Templates', id: 'LIST' }],
 		},
-		putTemplates: {
-			invalidatesTags: (_, __, arg) => [{ type: 'Templates', id: arg.body.id }],
+		putTemplatesByTemplateId: {
+			invalidatesTags: (_, __, arg) => [{ type: 'Templates', id: arg.templateId }],
 		},
 		deleteTemplatesByTemplateId: {
 			invalidatesTags: (_, __, arg) => [{ type: 'Templates', id: arg.templateId }],
@@ -32,6 +32,6 @@ const enhancedTestGenApi = testApiGen.enhanceEndpoints({
 export const {
 	useGetTemplatesQuery,
 	usePostTemplatesMutation,
-	usePutTemplatesMutation,
+	usePutTemplatesByTemplateIdMutation,
 	useDeleteTemplatesByTemplateIdMutation,
 } = enhancedTestGenApi;

@@ -1,9 +1,9 @@
 import { ReactNode, createContext, useContext } from 'react';
-import { TestPracticeCore } from "../model/test.model";
+import { PracticeCore } from "../model/test.model";
 
 // Create Context
 type TestCardContextType = {
-	test: TestPracticeCore;
+	test: PracticeCore;
 	onTestClicked: (testId: string) => void;
 } | null;
 
@@ -20,7 +20,7 @@ const useTestCard = () => {
 
 // Main component
 type Props = {
-	test: TestPracticeCore;
+	test: PracticeCore;
 	onTestClicked: (testId: string) => void;
 	children: ReactNode;
 };
@@ -123,7 +123,7 @@ export const DefaultTestPracticeCard = ({
 	test,
 	onTestClicked,
 }: {
-	test: TestPracticeCore;
+	test: PracticeCore;
 	onTestClicked: (testId: string) => void;
 }) => {
 	return (

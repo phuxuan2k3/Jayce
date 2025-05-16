@@ -28,13 +28,13 @@ import AuthLayout from "../pages/auth/AuthLayout";
 import UnauthLayout from "../pages/unauth/UnauthLayout";
 import CandidateLayout from "../pages/candidate/CandidateLayout";
 import GuestPage from "../pages/unauth/index/GuestPage";
-import CandidateTestsPage from "../pages/candidate/tests/index/CandidateTestsPage";
+import CandidateTestsPage from "../pages/candidate/tests/index/page";
 import CandidateTestsLayout from "../pages/candidate/tests/CandidateTestsLayout";
 import ManagerLayout from "../pages/manager/ManagerLayout";
 import AuthBusinessRegisterPage from "../pages/auth/bussiness-register/AuthBusinessRegisterPage";
 import AuthChooseRolePage from "../pages/auth/choose-role/AuthChooseRolePage";
-import CandidateAttemptPage from "../pages/candidate/tests/attempts/[id]/index/CandidateAttemptPage";
-import CandidateInTestLayout from "../pages/candidate/tests/[id]/CandidateInTestLayout";
+import CandidateAttemptPage from "../pages/candidate/tests/attempts/[id]/index/page";
+import CandidateInTestLayout from "../pages/candidate/tests/[id]/layout";
 import ManagerTestsPage from "../pages/manager/tests/index/ManagerTestsPage";
 import CandidateHomePage from "../pages/candidate/index/CandidateHomePage";
 import ManagerHomePage from "../pages/manager/scenarios/index/ManagerHomePage";
@@ -44,9 +44,9 @@ import SetUpPage from "../pages/candidate/interviews/setup/setup";
 import Settings from "../pages/common/profile/index/Settings";
 import CandidateTestsTemplatesPage from "../pages/candidate/tests/templates/page";
 import CandidateTestsGeneratePage from "../pages/candidate/tests/generate/page";
-import CandidateTestPraticePage from "../pages/candidate/tests/[id]/pratice/page";
-import CandidateTestPage from "../pages/candidate/tests/[id]/index/CandidateTestPage";
-import CandidateTestsJoinPage from "../pages/candidate/tests/join/CandidateTestsJoinPage";
+import CandidateTestDoPage from "../pages/candidate/tests/[id]/do/page";
+import CandidateTestPage from "../pages/candidate/tests/[id]/practice/page";
+import CandidateTestsJoinPage from "../pages/candidate/tests/join/page";
 
 const router = createBrowserRouter(
 	[
@@ -159,7 +159,7 @@ const router = createBrowserRouter(
 										},
 										{
 											path: paths.candidate.tests.in().DO,
-											element: <CandidateTestPraticePage />,
+											element: <CandidateTestDoPage />,
 										},
 									],
 								},
