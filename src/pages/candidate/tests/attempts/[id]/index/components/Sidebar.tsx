@@ -22,7 +22,7 @@ export default function Sidebar({
 	const navigate = useNavigate();
 
 	function handleBackClick() {
-		navigate(paths.candidate.tests.in(attemptSummary?.test.id || "").ROOT);
+		navigate(paths.candidate.tests.in(attemptSummary?.test.id || "").PRACTICE);
 	}
 
 	return (

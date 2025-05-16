@@ -11,7 +11,7 @@ type Filter = {
 export default function useAttemptsTab() {
 	const testId = useGetTestIdParams();
 	const [filter, setFilter] = useState<Filter>({
-		sort: '+createdAt',
+		sort: '-createdAt',
 		page: 1,
 		perPage: 10,
 	});

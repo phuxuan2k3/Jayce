@@ -1,16 +1,19 @@
 import { Flag, Trash2 } from "lucide-react";
-import { QuestionDo } from "../model/question.model";
+import { QuestionToDo } from "../../../../../../features/tests/model/question.model";
+import { QuestionDoingState } from "../type";
 
 export default function QuestionDoCard({
-	questionDoInTest,
-	currentQuestionIndex,
 	totalQuestion,
+	questionToDo,
+	questionDoingState,
+	currentQuestionIndex,
 	onQuestionIndexChange,
 	onQuestionAnswered,
 	onQuestionFlagToggled,
 }: {
 	totalQuestion: number;
-	questionDoInTest: QuestionDo;
+	questionToDo: QuestionToDo;
+	questionDoingState: QuestionDoingState;
 	currentQuestionIndex: number;
 	onQuestionIndexChange: (index: number) => void;
 	onQuestionAnswered: (questionId: number, optionIndex?: number) => void;
@@ -32,18 +35,18 @@ export default function QuestionDoCard({
 	};
 
 	const handleAnswerQuestion = (newOptionIndex?: number) => {
-		onQuestionAnswered(questionDoInTest.id, newOptionIndex);
+		onQuestionAnswered(questionToDo.id, newOptionIndex);
 	};
 
 	const handleFlagQuestionToggle = () => {
-		onQuestionFlagToggled(questionDoInTest.id);
+		onQuestionFlagToggled(questionToDo.id);
 	};
 
 	return (
 		<div className="w-full flex flex-col justify-between">
 			<div className="w-full flex items-center gap-2">
 				<div className="font-bold rounded-full text-primary-toned-700 px-4 bg-primary-toned-100 ">
-					{questionDoInTest.points} points
+					{questionToDo.points} points
 				</div>
 
 				<div className="text-primary-toned-600 font-semibold">Question {currentQuestionIndex + 1} of {totalQuestion}</div>
@@ -52,7 +55,7 @@ export default function QuestionDoCard({
 					className={`ml-auto font-semibold cursor-pointer text-primary`}
 					onClick={handleFlagQuestionToggle}
 				>
-					{questionDoInTest.isFlagged ? (
+					{questionDoingState.isFlagged ? (
 						<div className="flex items-center gap-1 text-secondary">
 							<span>Flagged</span>
 							<Flag size={20} strokeWidth={2.5} className="inline" />
@@ -68,11 +71,11 @@ export default function QuestionDoCard({
 			<hr className="mt-4 mb-8 border-primary-toned-700/50" />
 
 			<div className="font-semibold">
-				{questionDoInTest.text}
+				{questionToDo.text}
 			</div>
 
 			<div className="flex flex-col mt-4 gap-2">
-				{questionDoInTest.options.map((option, index) => {
+				{questionToDo.options.map((option, index) => {
 					const label = String.fromCharCode(97 + index);
 					return (
 						<label
@@ -81,7 +84,7 @@ export default function QuestionDoCard({
 						>
 							<input
 								type="radio"
-								checked={questionDoInTest.chosenOption === index}
+								checked={questionDoingState.chosenOption === index}
 								onChange={() => handleAnswerQuestion(index)}
 								className="h-4 w-4 border-primary mt-1 focus:ring-primary accent-primary cursor-pointer"
 							/>
@@ -103,7 +106,7 @@ export default function QuestionDoCard({
 				</button>
 				<button
 					className="flex-shrink flex items-center gap-1 text-secondary-toned-500 font-semibold bg-secondary-toned-100 rounded-full px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed"
-					disabled={!questionDoInTest.chosenOption}
+					disabled={questionDoingState.chosenOption == null}
 					onClick={() => handleAnswerQuestion(undefined)}
 				>
 					<Trash2 size={18} strokeWidth={2.5} />

@@ -34,7 +34,7 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 
 	useEffect(() => {
 		if (examData && joinState.isSuccess) {
-			navigate(paths.candidate.tests.in(examData.id).DO);
+			navigate(paths.candidate.tests.in(examData.id).TAKE_PRACTICE);
 		}
 	}, [joinState.isSuccess, examData, navigate]);
 

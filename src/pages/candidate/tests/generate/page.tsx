@@ -73,7 +73,7 @@ const CandidateTestsGeneratePage: React.FC = () => {
 
 			setCreateLoadingState("none");
 
-			navigate(paths.candidate.tests.in(createdTest.testId).ROOT);
+			navigate(paths.candidate.tests.in(createdTest.testId).PRACTICE);
 		} catch (error: any) {
 			setCreateLoadingState("none");
 			if ("message" in error && typeof error.message === "string") {

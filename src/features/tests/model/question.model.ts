@@ -1,6 +1,6 @@
 export type QuestionCore = {
 	id: number;
-	testId: number;
+	testId: string;
 	text: string;
 	options: string[];
 	points: number;

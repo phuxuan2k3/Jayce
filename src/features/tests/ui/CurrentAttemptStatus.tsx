@@ -13,7 +13,7 @@ export default function CurrentAttemptStatus({
 }) {
 	const navigate = useNavigate();
 	const handleNavigateToDo = () => {
-		navigate(paths.candidate.tests.in(testId).DO);
+		navigate(paths.candidate.tests.in(testId).TAKE_PRACTICE);
 	}
 
 	return <>

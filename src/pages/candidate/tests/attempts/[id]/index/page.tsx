@@ -136,7 +136,7 @@ const AttemptSidebar = ({
 	};
 
 	const handleBackToAttempts = () => {
-		navigate(paths.candidate.tests.in(attempt.test.id).ROOT);
+		navigate(paths.candidate.tests.in(attempt.test.id).PRACTICE);
 	};
 
 	return (

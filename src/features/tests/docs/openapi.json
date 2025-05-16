@@ -3647,6 +3647,28 @@
 					}
 				}
 			}
+		},
+		"/tests/{testId}": {
+			"get": {
+				"tags": [
+					"Test"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
+						"in": "path"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
 		}
 	},
 	"webhooks": {}

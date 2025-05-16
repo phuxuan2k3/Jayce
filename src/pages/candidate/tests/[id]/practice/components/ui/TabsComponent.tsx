@@ -82,15 +82,14 @@ const TabsComponent = ({ tabs, defaultTabId }: TabsComponentProps) => {
                   ${activeTabId === tab.id
 										? "text-primary bg-white shadow-sm"
 										: "border-transparent text-gray-500 hover:text-primary-toned-700 hover:bg-gray-50"
-									}
-                `}
+									}`}
 								onClick={() => handleTabClick(tab.id)}
 							>
 								<span
-									className={`
-                    relative z-10 transition-all duration-300
-                    ${activeTabId === tab.id ? "font-semibold" : ""}
-                  `}
+									className={`relative z-10 transition-all duration-300 ${activeTabId === tab.id
+										? "font-semibold"
+										: ""
+										}`}
 								>
 									{tab.label}
 								</span>

@@ -9,7 +9,7 @@ export type AttemptCore = {
 	updatedAt: string;
 };
 
-export type Answer = {
+export type AnswerCore = {
 	questionId: number;
 	chosenOption: number;
 };

@@ -1,29 +1,50 @@
-import { useGetPracticesByTestIdQuestionsWithAnswerQuery } from '../../../../../../../features/tests/api/test.api-gen';
-import useGetTestIdParams from '../../../../../../../features/tests/hooks/useGetTestIdParams';
-import usePracticePage from '../usePracticePage';
-import useQuestionDisplay from './useQuestionDisplay';
+import useArrayPagination from "../../../../../../../components/hooks/useArrayPagination";
+import usePracticePage from "../usePracticePage";
+import useGetQuestionsWithAnswers from "./useGetQuestionsWithAnswers";
+import useShowAnswers from "./useShowAnswers";
+import useShowQuestions from "./useShowQuestions";
 
 export default function useQuestionsTab() {
-	const testId = useGetTestIdParams();
-
-	const { isShowingQuestions } = useQuestionDisplay();
 	const { data: {
-		attemptAggregate,
 		practiceAggregate,
+		practice,
 	} } = usePracticePage();
+	const {
+		showQuestions,
+		showWarning,
+		handleShowQuestions,
+	} = useShowQuestions();
 
-	const questionsWithAnswersQuery = useGetPracticesByTestIdQuestionsWithAnswerQuery({
-		testId,
-	}, {
-		skip: !isShowingQuestions,
+	const {
+		data: { questionsWithAnswers },
+		isLoading,
+	} = useGetQuestionsWithAnswers({
+		showQuestions,
 	});
 
+	const {
+		showAllAnswers,
+		isQuesionAnswerVisible,
+		handleToggleAllAnswers,
+		handleToggleAnswer,
+	} = useShowAnswers(questionsWithAnswers);
+
+	const paging = useArrayPagination(questionsWithAnswers, 10);
+
 	return {
-		data: {
-			questionsWithAnswers: questionsWithAnswersQuery.data || [],
-			practiceAggregate,
-		},
-		isLoading: questionsWithAnswersQuery.isLoading,
-		hasAttempts: attemptAggregate.totalAttempts > 0,
-	};
+		isLoading,
+		practice,
+		practiceAggregate,
+		showQuestions,
+		showWarning,
+		showAllAnswers,
+		isQuesionAnswerVisible,
+		handleShowQuestions,
+		handleToggleAllAnswers,
+		handleToggleAnswer,
+		page: paging.page,
+		setPage: paging.setPage,
+		totalPages: paging.totalPages,
+		pageItems: paging.pageItems,
+	}
 }

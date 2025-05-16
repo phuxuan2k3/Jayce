@@ -1,17 +1,17 @@
-import TestTimer from "./TestTimer";
+import TestTimer from "../../../../../../features/tests/ui/TestTimer";
 import { AlarmClock } from "lucide-react";
-import { QuestionDo } from "../model/question.model";
+import { QuestionDoingState } from "../type";
 
 export default function TestDoSidebar({
 	secondsLeft,
-	questions,
+	questionDoState,
 	currentQuestionIndex,
 	onTestCancel,
 	onTestSubmit,
 	onCurrentQuestionIndexChange,
 }: {
 	secondsLeft: number;
-	questions: QuestionDo[];
+	questionDoState: QuestionDoingState[];
 	currentQuestionIndex: number;
 	onTestCancel: () => void;
 	onTestSubmit: () => void;
@@ -35,15 +35,15 @@ export default function TestDoSidebar({
 			<div className="bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
 				<div className="mb-4 font-semibold text-primary text-xl">Questions</div>
 				<div className="grid grid-cols-5 gap-4 lg:grid-cols-7 lg:gap-2">
-					{questions == null || questions.length === 0
+					{questionDoState == null || questionDoState.length === 0
 						? (
 							<div>No questions found</div>
-						) : (questions.map((question, index) => (
+						) : (questionDoState.map((question, index) => (
 							<button
 								key={index}
 								className={`w-full aspect-square rounded-full text-sm font-bold text-primary border border-primary cursor-pointer ${currentQuestionIndex === index
 									? "bg-primary-toned-600 text-white"
-									: question.isFlagged
+									: question.isFlagged === true
 										? "bg-secondary-toned-200"
 										: question.chosenOption != null
 											? "bg-primary-toned-200"

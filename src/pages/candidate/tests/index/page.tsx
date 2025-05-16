@@ -18,7 +18,7 @@ export default function CandidateTestsPage() {
 	} = useQueryPracticeTestsServer();
 
 	const handleManageTest = (testId: string) => {
-		navigate(paths.candidate.tests.in(testId).ROOT);
+		navigate(paths.candidate.tests.in(testId).PRACTICE);
 	};
 
 	return (

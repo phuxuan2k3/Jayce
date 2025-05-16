@@ -20,9 +20,10 @@ const paths = {
 			ROOT: "/candidate/tests/",
 			in(id: number | string = ":testId") {
 				return {
-					ROOT: `/candidate/tests/${id}/`,
-					DO: `/candidate/tests/${id}/do/`,
+					PRACTICE: `/candidate/tests/${id}/practice/`,
+					TAKE_PRACTICE: `/candidate/tests/${id}/take-practice/`,
 					EXAM: `/candidate/tests/${id}/exam/`,
+					TAKE_EXAM: `/candidate/tests/${id}/exam/take-exam/`,
 				};
 			},
 			attempts: {

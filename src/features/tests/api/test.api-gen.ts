@@ -416,6 +416,12 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    getTestsByTestId: build.query<
+      GetTestsByTestIdApiResponse,
+      GetTestsByTestIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/tests/${queryArg.testId}` }),
+    }),
   }),
   overrideExisting: false,
 });
@@ -1131,6 +1137,10 @@ export type DeletePracticesByTestIdFeedbackApiResponse = unknown;
 export type DeletePracticesByTestIdFeedbackApiArg = {
   testId: string;
 };
+export type GetTestsByTestIdApiResponse = unknown;
+export type GetTestsByTestIdApiArg = {
+  testId: string;
+};
 export const {
   useGetCurrentAttemptsByAttemptIdQuery,
   useLazyGetCurrentAttemptsByAttemptIdQuery,
@@ -1211,4 +1221,6 @@ export const {
   useLazyGetPracticesByTestIdFeedbackQuery,
   usePostPracticesByTestIdFeedbackMutation,
   useDeletePracticesByTestIdFeedbackMutation,
+  useGetTestsByTestIdQuery,
+  useLazyGetTestsByTestIdQuery,
 } = injectedRtkApi;
