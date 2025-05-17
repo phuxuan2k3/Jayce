@@ -1,14 +1,16 @@
 import { ExamCore } from '../../../../../../features/tests/model/test.model';
-import { AttemptsOfTestAggregate } from '../../../../../../features/tests/model/attempt.model';
+import { AttemptsOfTestAggregateCore } from '../../../../../../features/tests/model/attempt.model';
 import { format } from 'date-fns';
 
 interface ConfigurationTabContentProps {
 	examData?: ExamCore;
-	attemptsAggregate?: AttemptsOfTestAggregate;
+	attemptsAggregate?: AttemptsOfTestAggregateCore;
 }
 
-export default function ConfigurationTabContent({ examData, attemptsAggregate }: ConfigurationTabContentProps) {
-
+export default function ConfigurationTabContent({
+	examData,
+	attemptsAggregate,
+}: ConfigurationTabContentProps) {
 	return (
 		<div className="space-y-8">
 			{/* Exam Configuration Section */}

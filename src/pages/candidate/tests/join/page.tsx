@@ -52,14 +52,16 @@ export default function CandidateTestsJoinPage() {
 				<JoinTestSection onJoinTest={handleJoinTest} />
 
 				{/* Exam Info Dialog */}
-				{roomId && <ExamInfoDialog
-					isOpen={isDialogOpen}
-					onClose={handleCloseDialog}
-					roomId={roomId}
-					isLoading={examTestFindQuery.isLoading}
-					examData={examTestFindQuery.data || null}
-					error={parseQueryError(examTestFindQuery.error)}
-				/>}
+				{roomId &&
+					<ExamInfoDialog
+						isOpen={isDialogOpen}
+						onClose={handleCloseDialog}
+						roomId={roomId}
+						isLoading={examTestFindQuery.isLoading}
+						examData={examTestFindQuery.data}
+						error={parseQueryError(examTestFindQuery.error)}
+					/>
+				}
 			</div>
 		</NewLeftLayoutTemplate>
 	);

@@ -74,6 +74,31 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/exams/${queryArg.testId}/attempts/aggregate`,
       }),
     }),
+    getExamsByTestIdParticipantsAggregate: build.query<
+      GetExamsByTestIdParticipantsAggregateApiResponse,
+      GetExamsByTestIdParticipantsAggregateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/exams/${queryArg.testId}/participants/aggregate`,
+        params: {
+          page: queryArg.page,
+          perPage: queryArg.perPage,
+        },
+      }),
+    }),
+    getExamsByTestIdCandidateAndCandidateIdAttempts: build.query<
+      GetExamsByTestIdCandidateAndCandidateIdAttemptsApiResponse,
+      GetExamsByTestIdCandidateAndCandidateIdAttemptsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/exams/${queryArg.testId}/candidate/${queryArg.candidateId}/attempts/`,
+        params: {
+          page: queryArg.page,
+          perPage: queryArg.perPage,
+          sort: queryArg.sort,
+        },
+      }),
+    }),
     getExamsByTestIdCandidateAndCandidateIdAttemptsAggregate: build.query<
       GetExamsByTestIdCandidateAndCandidateIdAttemptsAggregateApiResponse,
       GetExamsByTestIdCandidateAndCandidateIdAttemptsAggregateApiArg
@@ -551,8 +576,55 @@ export type GetExamsByTestIdAttemptsAggregateApiResponse =
 export type GetExamsByTestIdAttemptsAggregateApiArg = {
   testId: string;
 };
+export type GetExamsByTestIdParticipantsAggregateApiResponse =
+  /** status 200 Success */ {
+    page: number;
+    perPage: number;
+    total: number;
+    totalPages: number;
+    data: {
+      candidateId: string;
+      rank: number;
+      totalAttempts: number;
+      averageScore: number;
+      highestScore: number;
+      lowestScore: number;
+      averageTime: number;
+    }[];
+  };
+export type GetExamsByTestIdParticipantsAggregateApiArg = {
+  testId: string;
+  page?: number;
+  perPage?: number | null;
+};
+export type GetExamsByTestIdCandidateAndCandidateIdAttemptsApiResponse =
+  /** status 200 Success */ {
+    page: number;
+    perPage: number;
+    total: number;
+    totalPages: number;
+    data: {
+      id: string;
+      order: number;
+      testId: string;
+      candidateId: string;
+      hasEnded: boolean;
+      secondsSpent: number;
+      score: number;
+      createdAt: string;
+      updatedAt: string;
+    }[];
+  };
+export type GetExamsByTestIdCandidateAndCandidateIdAttemptsApiArg = {
+  testId: string;
+  candidateId: string;
+  page?: number;
+  perPage?: number | null;
+  sort: string;
+};
 export type GetExamsByTestIdCandidateAndCandidateIdAttemptsAggregateApiResponse =
   /** status 200 Success */ {
+    candidateId: string;
     rank: number;
     totalAttempts: number;
     averageScore: number;
@@ -1158,6 +1230,10 @@ export const {
   useLazyGetExamsByTestIdAttemptsSelfQuery,
   useGetExamsByTestIdAttemptsAggregateQuery,
   useLazyGetExamsByTestIdAttemptsAggregateQuery,
+  useGetExamsByTestIdParticipantsAggregateQuery,
+  useLazyGetExamsByTestIdParticipantsAggregateQuery,
+  useGetExamsByTestIdCandidateAndCandidateIdAttemptsQuery,
+  useLazyGetExamsByTestIdCandidateAndCandidateIdAttemptsQuery,
   useGetExamsByTestIdCandidateAndCandidateIdAttemptsAggregateQuery,
   useLazyGetExamsByTestIdCandidateAndCandidateIdAttemptsAggregateQuery,
   useGetExamsAttemptsByAttemptIdQuery,

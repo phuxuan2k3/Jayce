@@ -721,6 +721,253 @@
 				}
 			}
 		},
+		"/exams/{testId}/participants/aggregate": {
+			"get": {
+				"tags": [
+					"Attempts of Exam"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
+						"in": "path"
+					},
+					{
+						"schema": {
+							"type": "number",
+							"minimum": 1,
+							"default": 1
+						},
+						"required": false,
+						"name": "page",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": [
+								"number",
+								"null"
+							],
+							"default": 5
+						},
+						"required": false,
+						"name": "perPage",
+						"in": "query"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"page": {
+											"type": "number"
+										},
+										"perPage": {
+											"type": "number"
+										},
+										"total": {
+											"type": "number"
+										},
+										"totalPages": {
+											"type": "number"
+										},
+										"data": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"candidateId": {
+														"type": "string"
+													},
+													"rank": {
+														"type": "number"
+													},
+													"totalAttempts": {
+														"type": "number"
+													},
+													"averageScore": {
+														"type": "number"
+													},
+													"highestScore": {
+														"type": "number"
+													},
+													"lowestScore": {
+														"type": "number"
+													},
+													"averageTime": {
+														"type": "number"
+													}
+												},
+												"required": [
+													"candidateId",
+													"rank",
+													"totalAttempts",
+													"averageScore",
+													"highestScore",
+													"lowestScore",
+													"averageTime"
+												]
+											}
+										}
+									},
+									"required": [
+										"page",
+										"perPage",
+										"total",
+										"totalPages",
+										"data"
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/exams/{testId}/candidate/{candidateId}/attempts/": {
+			"get": {
+				"tags": [
+					"Attempts of Exam"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
+						"in": "path"
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "candidateId",
+						"in": "path"
+					},
+					{
+						"schema": {
+							"type": "number",
+							"minimum": 1,
+							"default": 1
+						},
+						"required": false,
+						"name": "page",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": [
+								"number",
+								"null"
+							],
+							"default": 5
+						},
+						"required": false,
+						"name": "perPage",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "sort",
+						"in": "query"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"page": {
+											"type": "number"
+										},
+										"perPage": {
+											"type": "number"
+										},
+										"total": {
+											"type": "number"
+										},
+										"totalPages": {
+											"type": "number"
+										},
+										"data": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"order": {
+														"type": "integer",
+														"exclusiveMinimum": 0
+													},
+													"testId": {
+														"type": "string"
+													},
+													"candidateId": {
+														"type": "string"
+													},
+													"hasEnded": {
+														"type": "boolean"
+													},
+													"secondsSpent": {
+														"type": "integer",
+														"minimum": 0
+													},
+													"score": {
+														"type": "integer",
+														"minimum": 0
+													},
+													"createdAt": {
+														"type": "string"
+													},
+													"updatedAt": {
+														"type": "string"
+													}
+												},
+												"required": [
+													"id",
+													"order",
+													"testId",
+													"candidateId",
+													"hasEnded",
+													"secondsSpent",
+													"score",
+													"createdAt",
+													"updatedAt"
+												]
+											}
+										}
+									},
+									"required": [
+										"page",
+										"perPage",
+										"total",
+										"totalPages",
+										"data"
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
 		"/exams/{testId}/candidate/{candidateId}/attempts/aggregate": {
 			"get": {
 				"tags": [
@@ -752,6 +999,9 @@
 								"schema": {
 									"type": "object",
 									"properties": {
+										"candidateId": {
+											"type": "string"
+										},
 										"rank": {
 											"type": "number"
 										},
@@ -772,6 +1022,7 @@
 										}
 									},
 									"required": [
+										"candidateId",
 										"rank",
 										"totalAttempts",
 										"averageScore",

@@ -1,27 +1,27 @@
-import TestTimer from "../../../../../../features/tests/ui/TestTimer";
+import TestTimer from "../../../../../../../features/tests/ui/TestTimer";
 import { AlarmClock } from "lucide-react";
-import { QuestionDoingState } from "../type";
+import { QuestionDoingState } from "../../type";
 
 export default function TestDoSidebar({
 	secondsLeft,
 	questionDoState,
 	currentQuestionIndex,
-	onTestCancel,
-	onTestSubmit,
+	onCancel,
+	onSubmit,
 	onCurrentQuestionIndexChange,
 }: {
 	secondsLeft: number;
 	questionDoState: QuestionDoingState[];
 	currentQuestionIndex: number;
-	onTestCancel: () => void;
-	onTestSubmit: () => void;
+	onCancel: () => void;
+	onSubmit: () => void;
 	onCurrentQuestionIndexChange: (index: number) => void;
 }) {
 	const handleCancelTest = () => {
-		onTestCancel();
+		onCancel();
 	};
 	const handleSubmitClick = () => {
-		onTestSubmit();
+		onSubmit();
 	};
 
 	return (

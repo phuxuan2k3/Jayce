@@ -1,5 +1,5 @@
-import { UserInfo } from '../../../../../../features/auth/store/authSlice';
-import { TestCore } from '../../../../../../features/tests/model/test.model';
+import { UserInfo } from '../../../../../../../features/auth/store/authSlice';
+import { TestCore } from '../../../../../../../features/tests/model/test.model';
 
 const TestInfoCard = ({
 	test,

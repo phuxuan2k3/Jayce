@@ -2,7 +2,7 @@ import { UserInfo } from "../store/authSlice";
 import authApi from "./auth.api";
 
 interface ListUsersRequest {
-	user_ids: number[];
+	user_ids: number[] | string[];
 }
 
 export interface ListUsersResponse {

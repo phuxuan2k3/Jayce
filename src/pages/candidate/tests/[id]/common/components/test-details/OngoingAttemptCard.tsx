@@ -1,6 +1,6 @@
 import React from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import { AttemptCore } from '../../../../../../features/tests/model/attempt.model';
+import { AttemptCore } from '../../../../../../../features/tests/model/attempt.model';
 
 interface OngoingAttemptCardProps {
 	attempt: AttemptCore;

@@ -1,9 +1,9 @@
-import MyPagination from "../../../../../../components/ui/common/MyPagination";
-import useStartAttempt from "../../practice/hooks/useStartPracticeAttempt";
+import MyPagination from "../../../../../../../components/ui/common/MyPagination";
+import useStartAttempt from "../../../practice/hooks/useStartPracticeAttempt";
 import AttemptList from "./AttemptsList";
 import { useNavigate } from "react-router-dom";
-import paths from "../../../../../../router/paths";
-import { AttemptCore } from "../../../../../../features/tests/model/attempt.model";
+import paths from "../../../../../../../router/paths";
+import { AttemptCore } from "../../../../../../../features/tests/model/attempt.model";
 
 type Filter = {
 	page: number;

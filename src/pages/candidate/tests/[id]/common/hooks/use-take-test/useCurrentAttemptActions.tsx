@@ -1,19 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { usePatchCurrentAttemptsByAttemptIdSubmitMutation } from "../../../../../../features/tests/api/test.api-gen";
-import { usePatchCurrentAttemptsByAttemptIdAnswersMutation } from "../apis/take-test.api";
-import paths from "../../../../../../router/paths";
+import paths from "../../../../../../../router/paths";
+import { usePatchCurrentAttemptsByAttemptIdAnswersMutation } from "../../apis/take-test.api";
+import { usePatchCurrentAttemptsByAttemptIdSubmitMutation } from "../../../../../../../features/tests/api/test.api-gen";
 
-export default function useTakePracticeActions({
-	testId,
+export default function useCurrentAttemptActions({
 	attemptId,
 }: {
-	testId?: string;
 	attemptId?: string;
 }) {
 	const navigate = useNavigate();
 	const [answer] = usePatchCurrentAttemptsByAttemptIdAnswersMutation();
 	const [submit] = usePatchCurrentAttemptsByAttemptIdSubmitMutation();
-	const handleQuestionAnswered = async (questionId: number, optionIndex?: number) => {
+	const handleAnswer = async (questionId: number, optionIndex?: number) => {
 		if (!attemptId) {
 			console.error("Attempt ID is not defined");
 			return;
@@ -27,11 +25,7 @@ export default function useTakePracticeActions({
 		});
 	}
 
-	const handleTestCancel = () => {
-		navigate(paths.candidate.tests.in(testId).PRACTICE);
-	};
-
-	const handleTestSubmit = async () => {
+	const handleSubmit = async () => {
 		try {
 			if (!attemptId) {
 				console.error("Attempt ID is not defined");
@@ -48,8 +42,7 @@ export default function useTakePracticeActions({
 	};
 
 	return {
-		handleTestCancel,
-		handleTestSubmit,
-		handleQuestionAnswered,
+		handleSubmit,
+		handleAnswer,
 	}
 }

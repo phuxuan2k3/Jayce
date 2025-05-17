@@ -22,13 +22,13 @@ export default function ExamInfoBottom({
 
 	useEffect(() => {
 		if (joinState.isSuccess) {
-			navigate(paths.candidate.tests.in(examData.id).TAKE_EXAM);
+			navigate(paths.candidate.tests.in(examData.id).EXAM);
 		}
 	}, [joinState.isSuccess, examData, navigate]);
 
 	const handleJoin = async () => {
 		if (hasJoined) {
-			navigate(paths.candidate.tests.in(examData.id).TAKE_EXAM);
+			navigate(paths.candidate.tests.in(examData.id).EXAM);
 			return;
 		}
 		// If the test requires a password but none was provided

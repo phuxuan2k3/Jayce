@@ -19,7 +19,7 @@ export type AttemptAggregate = {
 	answeredCorrect: number;
 };
 
-export type AttemptsOfTestAggregate = {
+export type AttemptsOfTestAggregateCore = {
 	totalParticipants: number;
 	totalAttempts: number;
 	averageScore: number;
@@ -28,12 +28,13 @@ export type AttemptsOfTestAggregate = {
 	averageTime: number;
 };
 
-export type AttemptsOfCandidateInTestAggregate = {
+export type AttemptsOfCandidateInTestAggregateCore = {
 	totalAttempts: number;
 	averageScore: number;
 	highestScore: number;
 	lowestScore: number;
 	averageTime: number;
 	rank: number;
+	candidateId: string;
 };
 

@@ -1,15 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import NewLeftLayoutTemplate from "../../../../../components/layouts/NewLeftLayoutTemplate";
 import DefaultSidebarActions from "../../../../../features/tests/ui2/sidebar/DefaultSidebar";
-import AttemptsTabContent from "../common/components/AttemptsTabContent";
-import TabsComponent from "../common/components/TestTabsComponent";
+import AttemptsTabContent from "../common/components/test-details/AttemptsTabContent";
+import TabsComponent from "../common/components/test-details/TestTabsComponent";
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import useExamSelfAttempts from "./hooks/useExamSelfAttempts";
 import useExam from "./hooks/useExam";
-import TestInfoCard from "../common/components/TestInfoCard";
-import OngoingAttemptCard from "../common/components/OngoingAttemptCard";
+import TestInfoCard from "../common/components/test-details/TestInfoCard";
+import OngoingAttemptCard from "../common/components/test-details/OngoingAttemptCard";
 import paths from "../../../../../router/paths";
 import ConfigurationTabContent from "./components/ConfigurationTabContent";
+import ParticipantsTabContent from "./components/ParticipantsTabContent";
 
 export default function CandidateTestExamPage() {
 	const navigate = useNavigate();
@@ -61,13 +62,14 @@ export default function CandidateTestExamPage() {
 				attemptsAggregate={attemptsAggregate}
 			/>
 		},
-		...(isAllowedToSeeOtherResults ? [
-			{
-				id: "others",
-				label: "Others' Attempts",
-				content: <div>Others</div>
-			}
-		] : []),
+		{
+			id: "participants",
+			label: "Participants",
+			content: <ParticipantsTabContent
+				testId={testId}
+				isAllowedToSeeOtherResults={isAllowedToSeeOtherResults}
+			/>
+		},
 	];
 
 	return (

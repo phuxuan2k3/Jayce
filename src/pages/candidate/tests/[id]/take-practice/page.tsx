@@ -1,26 +1,33 @@
 import RightLayoutTemplate from "../../../../../components/layouts/RightLayoutTemplate";
-import TestDoSidebar from "../common/components/TestDoSidebar";
-import QuestionDoCard from "../common/components/QuestionDoCard";
+import TestDoSidebar from "../common/components/take-test/TestDoSidebar";
+import QuestionDoCard from "../common/components/take-test/QuestionDoCard";
 import useTakeTest from "../common/hooks/use-take-test/useTakeTest";
-import useTakePracticeData from "./hooks/useTakePracticeData";
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
-import useTakePracticeActions from "./hooks/useTakePracticeActions";
+import { useNavigate } from "react-router-dom";
+import { useGetPracticesByTestIdQuery, useGetPracticesByTestIdQuestionsToDoQuery } from "../../../../../features/tests/api/test.api-gen";
+import useCurrentAttemptWithAnswers from "../common/hooks/use-take-test/useCurrentAttemptWithAnswers";
+import useCurrentAttemptActions from "../common/hooks/use-take-test/useCurrentAttemptActions";
+import paths from "../../../../../router/paths";
 
 const CandidateTestDoPage = () => {
 	const testId = useGetTestIdParams();
+	const navigate = useNavigate();
+
+	const practiceQuery = useGetPracticesByTestIdQuery({ testId });
+	const practice = practiceQuery.data;
+
+	const questionsToDoQuery = useGetPracticesByTestIdQuestionsToDoQuery({ testId });
+	const questionsToDo = questionsToDoQuery.data || [];
+
 	const { data: {
-		practice,
 		currentAttempt,
 		answers,
-		questionsToDo,
-	}, isLoading } = useTakePracticeData(testId);
+	}, isLoading } = useCurrentAttemptWithAnswers(testId);
 
 	const {
-		handleQuestionAnswered,
-		handleTestCancel,
-		handleTestSubmit,
-	} = useTakePracticeActions({
-		testId: practice?.id,
+		handleAnswer,
+		handleSubmit,
+	} = useCurrentAttemptActions({
 		attemptId: currentAttempt?.id,
 	});
 
@@ -49,8 +56,8 @@ const CandidateTestDoPage = () => {
 					currentQuestionIndex={currentQuestionIndex}
 					onCurrentQuestionIndexChange={handleCurrentQuestionIndexChange}
 					secondsLeft={secondsLeft}
-					onTestCancel={handleTestCancel}
-					onTestSubmit={handleTestSubmit}
+					onCancel={() => navigate(paths.candidate.tests.in(testId).PRACTICE)}
+					onSubmit={handleSubmit}
 					questionDoState={questionDoings}
 				/>
 			}
@@ -70,7 +77,7 @@ const CandidateTestDoPage = () => {
 							questionDoingState={currentQuestion.state}
 							totalQuestion={questionsToDo.length}
 							onQuestionIndexChange={handleCurrentQuestionIndexChange}
-							onQuestionAnswered={handleQuestionAnswered}
+							onQuestionAnswered={handleAnswer}
 							onQuestionFlagToggled={handleFlagQuestionToggle}
 						/>
 					)

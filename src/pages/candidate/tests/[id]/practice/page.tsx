@@ -1,16 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import NewLeftLayoutTemplate from "../../../../../components/layouts/NewLeftLayoutTemplate";
 import DefaultSidebarActions from "../../../../../features/tests/ui2/sidebar/DefaultSidebar";
-import AttemptsContent from "../common/components/AttemptsTabContent";
-import TestInfoCard from "../common/components/TestInfoCard";
-import TabsComponent from "../common/components/TestTabsComponent";
+import AttemptsContent from "../common/components/test-details/AttemptsTabContent";
+import TestInfoCard from "../common/components/test-details/TestInfoCard";
+import TabsComponent from "../common/components/test-details/TestTabsComponent";
 import FeedbackTabContent from "./components/FeedbackTabContent";
 import QuestionsTabContent from "./components/QuestionsTabContent";
 import usePracticeAttempts from "./hooks/usePracticeAttempts";
 import usePracticePage from "./hooks/usePracticePage";
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import paths from "../../../../../router/paths";
-import OngoingAttemptCard from "../common/components/OngoingAttemptCard";
+import OngoingAttemptCard from "../common/components/test-details/OngoingAttemptCard";
 
 export default function CandidatePracticePage() {
 	const navigate = useNavigate();

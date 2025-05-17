@@ -109,23 +109,28 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 								</div>
 							</div>
 						</div>
-
-						<PasswordInput
-							password={password}
-							onPasswordChange={setPassword}
-							passwordError={passwordError}
-							onPasswordErrorChange={setPasswordError}
-						/>
+						{(examData.hasJoined === false && examData.hasPassword === true) ? (
+							<PasswordInput
+								password={password}
+								onPasswordChange={setPassword}
+								passwordError={passwordError}
+								onPasswordErrorChange={setPasswordError}
+							/>
+						) : (
+							<div></div>
+						)}
 					</div>
 				)}
 
-				{examData && <ExamInfoBottom
-					examData={examData}
-					hasJoined={examData.hasJoined}
-					onCancel={onClose}
-					onJoinError={setPasswordError}
-					password={password}
-				/>}
+				{examData && <div className='pb-4 px-4'>
+					<ExamInfoBottom
+						examData={examData}
+						hasJoined={examData.hasJoined}
+						onCancel={onClose}
+						onJoinError={setPasswordError}
+						password={password}
+					/>
+				</div>}
 			</div>
 		</div>
 	);
