@@ -1,7 +1,7 @@
-import { UserInfo } from '../../../../../../../features/auth/store/authSlice';
-import { TestCore } from '../../../../../../../features/tests/model/test.model';
+import { UserInfo } from '../../../../../../features/auth/store/authSlice';
+import { TestCore } from '../../../../../../features/tests/model/test.model';
 
-const PracticeInfoCard = ({
+const TestInfoCard = ({
 	test,
 	author,
 	isLoading,
@@ -39,4 +39,4 @@ const PracticeInfoCard = ({
 	);
 };
 
-export default PracticeInfoCard;
+export default TestInfoCard;

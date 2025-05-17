@@ -80,6 +80,9 @@
 											"type": "integer",
 											"exclusiveMinimum": 0
 										},
+										"testId": {
+											"type": "string"
+										},
 										"candidateId": {
 											"type": "string"
 										},
@@ -149,6 +152,7 @@
 									"required": [
 										"id",
 										"order",
+										"testId",
 										"candidateId",
 										"hasEnded",
 										"secondsSpent",
@@ -197,6 +201,9 @@
 											"type": "integer",
 											"exclusiveMinimum": 0
 										},
+										"testId": {
+											"type": "string"
+										},
 										"candidateId": {
 											"type": "string"
 										},
@@ -266,6 +273,7 @@
 									"required": [
 										"id",
 										"order",
+										"testId",
 										"candidateId",
 										"hasEnded",
 										"secondsSpent",
@@ -475,6 +483,9 @@
 														"type": "integer",
 														"exclusiveMinimum": 0
 													},
+													"testId": {
+														"type": "string"
+													},
 													"candidateId": {
 														"type": "string"
 													},
@@ -499,6 +510,7 @@
 												"required": [
 													"id",
 													"order",
+													"testId",
 													"candidateId",
 													"hasEnded",
 													"secondsSpent",
@@ -600,6 +612,9 @@
 														"type": "integer",
 														"exclusiveMinimum": 0
 													},
+													"testId": {
+														"type": "string"
+													},
 													"candidateId": {
 														"type": "string"
 													},
@@ -624,6 +639,7 @@
 												"required": [
 													"id",
 													"order",
+													"testId",
 													"candidateId",
 													"hasEnded",
 													"secondsSpent",
@@ -661,14 +677,6 @@
 						"required": true,
 						"name": "testId",
 						"in": "path"
-					},
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": false,
-						"name": "candidateId",
-						"in": "query"
 					}
 				],
 				"responses": {
@@ -734,14 +742,6 @@
 						"required": true,
 						"name": "candidateId",
 						"in": "path"
-					},
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": false,
-						"name": "candidateId",
-						"in": "query"
 					}
 				],
 				"responses": {
@@ -816,6 +816,9 @@
 											"type": "integer",
 											"exclusiveMinimum": 0
 										},
+										"testId": {
+											"type": "string"
+										},
 										"candidateId": {
 											"type": "string"
 										},
@@ -840,6 +843,7 @@
 									"required": [
 										"id",
 										"order",
+										"testId",
 										"candidateId",
 										"hasEnded",
 										"secondsSpent",
@@ -1042,6 +1046,9 @@
 														"type": "integer",
 														"exclusiveMinimum": 0
 													},
+													"testId": {
+														"type": "string"
+													},
 													"candidateId": {
 														"type": "string"
 													},
@@ -1111,6 +1118,7 @@
 												"required": [
 													"id",
 													"order",
+													"testId",
 													"candidateId",
 													"hasEnded",
 													"secondsSpent",
@@ -1165,6 +1173,9 @@
 										"order": {
 											"type": "integer",
 											"exclusiveMinimum": 0
+										},
+										"testId": {
+											"type": "string"
 										},
 										"candidateId": {
 											"type": "string"
@@ -1235,6 +1246,7 @@
 									"required": [
 										"id",
 										"order",
+										"testId",
 										"candidateId",
 										"hasEnded",
 										"secondsSpent",
@@ -1327,6 +1339,9 @@
 														"type": "integer",
 														"exclusiveMinimum": 0
 													},
+													"testId": {
+														"type": "string"
+													},
 													"candidateId": {
 														"type": "string"
 													},
@@ -1351,6 +1366,7 @@
 												"required": [
 													"id",
 													"order",
+													"testId",
 													"candidateId",
 													"hasEnded",
 													"secondsSpent",
@@ -1462,6 +1478,9 @@
 											"type": "integer",
 											"exclusiveMinimum": 0
 										},
+										"testId": {
+											"type": "string"
+										},
 										"candidateId": {
 											"type": "string"
 										},
@@ -1486,6 +1505,7 @@
 									"required": [
 										"id",
 										"order",
+										"testId",
 										"candidateId",
 										"hasEnded",
 										"secondsSpent",
@@ -1978,6 +1998,9 @@
 										},
 										"closeDate": {
 											"type": "string"
+										},
+										"hasJoined": {
+											"type": "boolean"
 										}
 									},
 									"required": [
@@ -1996,7 +2019,8 @@
 										"isAnswerVisible",
 										"isAllowedToSeeOtherResults",
 										"openDate",
-										"closeDate"
+										"closeDate",
+										"hasJoined"
 									]
 								}
 							}

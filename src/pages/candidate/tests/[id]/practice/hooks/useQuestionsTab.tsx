@@ -1,5 +1,5 @@
-import useArrayPagination from "../../../../../../../components/hooks/useArrayPagination";
-import usePracticePage from "../usePracticePage";
+import useArrayPagination from "../../../../../../components/hooks/useArrayPagination";
+import usePracticePage from "./usePracticePage";
 import useGetQuestionsWithAnswers from "./useGetQuestionsWithAnswers";
 import useShowAnswers from "./useShowAnswers";
 import useShowQuestions from "./useShowQuestions";

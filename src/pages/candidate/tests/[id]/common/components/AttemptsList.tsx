@@ -1,20 +1,15 @@
 import React from 'react';
 import { format, formatDistanceToNow } from 'date-fns';
+import { AttemptCore } from '../../../../../../features/tests/model/attempt.model';
 
-interface Attempt {
-	id: string;
-	createdAt: string;
-	secondsSpent: number;
-}
-
-interface CompletedAttemptsListProps {
-	attempts: Attempt[];
+interface Props {
+	attempts: AttemptCore[];
 	page: number;
 	perPage: number;
 	onViewAttempt: (attemptId: string) => void;
 }
 
-const CompletedAttemptsList: React.FC<CompletedAttemptsListProps> = ({
+const AttemptList: React.FC<Props> = ({
 	attempts,
 	page,
 	perPage,
@@ -65,7 +60,7 @@ const CompletedAttemptsList: React.FC<CompletedAttemptsListProps> = ({
 	);
 };
 
-export default CompletedAttemptsList;
+export default AttemptList;
 
 const formatSeconds = (seconds: number) => {
 	const minutes = Math.floor(seconds / 60);

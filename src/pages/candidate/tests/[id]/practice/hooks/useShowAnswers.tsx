@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react'
-import { QuestionCore } from '../../../../../../../features/tests/model/question.model';
+import { QuestionCore } from '../../../../../../features/tests/model/question.model';
 
 export default function useShowAnswers(questions: Array<QuestionCore>) {
 	const [visibleAnswerIndices, setVisibleAnswerIndices] = useState<Array<boolean>>(questions.map(() => false));

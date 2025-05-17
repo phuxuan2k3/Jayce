@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import usePracticePage from '../usePracticePage';
+import usePracticePage from './usePracticePage';
 
 export default function useShowQuestions() {
 	const [showQuestions, setShowQuestions] = useState(false);

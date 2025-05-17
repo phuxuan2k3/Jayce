@@ -1,6 +1,6 @@
 import React from 'react';
 import { StarIcon, AlertCircle, Sparkles, MessageSquare } from 'lucide-react';
-import useFeedbackTab from '../../hooks/feedback/useFeedbackTab';
+import useFeedbackTab from '../hooks/useFeedbackTab';
 
 const FeedbackTabContent: React.FC = () => {
 	const {

@@ -72,9 +72,6 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/exams/${queryArg.testId}/attempts/aggregate`,
-        params: {
-          candidateId: queryArg.candidateId,
-        },
       }),
     }),
     getExamsByTestIdCandidateAndCandidateIdAttemptsAggregate: build.query<
@@ -82,10 +79,7 @@ const injectedRtkApi = api.injectEndpoints({
       GetExamsByTestIdCandidateAndCandidateIdAttemptsAggregateApiArg
     >({
       query: (queryArg) => ({
-        url: `/exams/${queryArg.testId}/candidate/${queryArg.pathCandidateId}/attempts/aggregate`,
-        params: {
-          candidateId: queryArg.queryCandidateId,
-        },
+        url: `/exams/${queryArg.testId}/candidate/${queryArg.candidateId}/attempts/aggregate`,
       }),
     }),
     getExamsAttemptsByAttemptId: build.query<
@@ -430,6 +424,7 @@ export type GetCurrentAttemptsByAttemptIdApiResponse =
   /** status 200 Success */ {
     id: string;
     order: number;
+    testId: string;
     candidateId: string;
     hasEnded: boolean;
     secondsSpent: number;
@@ -454,6 +449,7 @@ export type GetCurrentAttemptsByAttemptIdApiArg = {
 export type GetCurrentTestsByTestIdApiResponse = /** status 200 Success */ {
   id: string;
   order: number;
+  testId: string;
   candidateId: string;
   hasEnded: boolean;
   secondsSpent: number;
@@ -504,6 +500,7 @@ export type GetExamsByTestIdAttemptsApiResponse = /** status 200 Success */ {
   data: {
     id: string;
     order: number;
+    testId: string;
     candidateId: string;
     hasEnded: boolean;
     secondsSpent: number;
@@ -527,6 +524,7 @@ export type GetExamsByTestIdAttemptsSelfApiResponse =
     data: {
       id: string;
       order: number;
+      testId: string;
       candidateId: string;
       hasEnded: boolean;
       secondsSpent: number;
@@ -552,7 +550,6 @@ export type GetExamsByTestIdAttemptsAggregateApiResponse =
   };
 export type GetExamsByTestIdAttemptsAggregateApiArg = {
   testId: string;
-  candidateId?: string;
 };
 export type GetExamsByTestIdCandidateAndCandidateIdAttemptsAggregateApiResponse =
   /** status 200 Success */ {
@@ -565,12 +562,12 @@ export type GetExamsByTestIdCandidateAndCandidateIdAttemptsAggregateApiResponse 
   };
 export type GetExamsByTestIdCandidateAndCandidateIdAttemptsAggregateApiArg = {
   testId: string;
-  pathCandidateId: string;
-  queryCandidateId?: string;
+  candidateId: string;
 };
 export type GetExamsAttemptsByAttemptIdApiResponse = /** status 200 Success */ {
   id: string;
   order: number;
+  testId: string;
   candidateId: string;
   hasEnded: boolean;
   secondsSpent: number;
@@ -610,6 +607,7 @@ export type GetHistoryAttemptsApiResponse = /** status 200 Success */ {
   data: {
     id: string;
     order: number;
+    testId: string;
     candidateId: string;
     hasEnded: boolean;
     secondsSpent: number;
@@ -639,6 +637,7 @@ export type GetHistoryAttemptsByAttemptIdApiResponse =
   /** status 200 Success */ {
     id: string;
     order: number;
+    testId: string;
     candidateId: string;
     hasEnded: boolean;
     secondsSpent: number;
@@ -669,6 +668,7 @@ export type GetPracticesByTestIdAttemptsApiResponse =
     data: {
       id: string;
       order: number;
+      testId: string;
       candidateId: string;
       hasEnded: boolean;
       secondsSpent: number;
@@ -699,6 +699,7 @@ export type GetPracticesAttemptsByAttemptIdApiResponse =
   /** status 200 Success */ {
     id: string;
     order: number;
+    testId: string;
     candidateId: string;
     hasEnded: boolean;
     secondsSpent: number;
@@ -806,6 +807,7 @@ export type GetExamsFindApiResponse = /** status 200 Success */ {
   isAllowedToSeeOtherResults: boolean;
   openDate: string;
   closeDate: string;
+  hasJoined: boolean;
 };
 export type GetExamsFindApiArg = {
   roomId: string;

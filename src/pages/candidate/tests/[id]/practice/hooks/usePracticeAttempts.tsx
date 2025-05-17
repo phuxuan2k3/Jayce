@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useGetPracticesByTestIdAttemptsQuery } from '../../../../../../../features/tests/api/test.api-gen'
-import useGetTestIdParams from '../../../../../../../features/tests/hooks/useGetTestIdParams';
+import { useGetPracticesByTestIdAttemptsQuery } from '../../../../../../features/tests/api/test.api-gen'
+import useGetTestIdParams from '../../../../../../features/tests/hooks/useGetTestIdParams';
 
 type Filter = {
 	page: number;
@@ -8,7 +8,7 @@ type Filter = {
 	sort: string;
 }
 
-export default function useAttemptsTab() {
+export default function usePracticeAttempts() {
 	const testId = useGetTestIdParams();
 	const [filter, setFilter] = useState<Filter>({
 		sort: '-createdAt',
@@ -22,7 +22,8 @@ export default function useAttemptsTab() {
 	});
 
 	return {
-		data,
+		totalPages: data?.totalPages || 0,
+		attempts: data?.data,
 		isLoading,
 		filter,
 		setFilter,

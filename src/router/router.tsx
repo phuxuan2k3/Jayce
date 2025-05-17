@@ -47,6 +47,7 @@ import CandidateTestsGeneratePage from "../pages/candidate/tests/generate/page";
 import CandidateTestDoPage from "../pages/candidate/tests/[id]/take-practice/page";
 import CandidatePracticePage from "../pages/candidate/tests/[id]/practice/page";
 import CandidateTestsJoinPage from "../pages/candidate/tests/join/page";
+import CandidateTestExamPage from "../pages/candidate/tests/[id]/exam/page";
 
 const router = createBrowserRouter(
 	[
@@ -150,17 +151,22 @@ const router = createBrowserRouter(
 								// In a Test
 
 								{
-									path: paths.candidate.tests.in().PRACTICE,
+									path: paths.candidate.tests.in()._layout,
 									element: <CandidateInTestLayout />,
 									children: [
 										{
 											index: true,
+											path: paths.candidate.tests.in().PRACTICE,
 											element: <CandidatePracticePage />,
 										},
 										{
 											path: paths.candidate.tests.in().TAKE_PRACTICE,
 											element: <CandidateTestDoPage />,
 										},
+										{
+											path: paths.candidate.tests.in().EXAM,
+											element: <CandidateTestExamPage />,
+										}
 									],
 								},
 							],
