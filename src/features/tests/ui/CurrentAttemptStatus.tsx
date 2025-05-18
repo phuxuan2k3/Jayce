@@ -1,4 +1,4 @@
-import TestTimer from "./TestTimer";
+import TestTimer from "../ui2/TestTimer";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../router/paths";
 

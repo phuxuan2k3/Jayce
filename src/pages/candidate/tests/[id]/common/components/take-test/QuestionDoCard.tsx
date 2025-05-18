@@ -76,7 +76,7 @@ export default function QuestionDoCard({
 
 			<div className="flex flex-col mt-4 gap-2">
 				{questionToDo.options.map((option, index) => {
-					const label = String.fromCharCode(97 + index);
+					const label = String.fromCharCode(65 + index);
 					return (
 						<label
 							key={index}

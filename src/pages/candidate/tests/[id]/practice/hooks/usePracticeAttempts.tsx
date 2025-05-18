@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useGetPracticesByTestIdAttemptsQuery } from '../../../../../../features/tests/api/test.api-gen'
 import useGetTestIdParams from '../../../../../../features/tests/hooks/useGetTestIdParams';
+import { useGetPracticesByTestIdAttemptsQuery } from '../../common/apis/attempts.api-enhance';
 
 type Filter = {
 	page: number;

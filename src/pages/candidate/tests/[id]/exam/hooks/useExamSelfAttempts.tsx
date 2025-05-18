@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useGetExamsByTestIdAttemptsSelfQuery } from '../../../../../../features/tests/api/test.api-gen';
+import { useGetExamsByTestIdAttemptsSelfQuery } from '../../common/apis/attempts.api-enhance';
 
 type Filter = {
 	page: number;

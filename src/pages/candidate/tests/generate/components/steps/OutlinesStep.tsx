@@ -1,77 +1,91 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLazyGetSuggestOutlinesQuery } from '../../../../../../features/tests/api/prompt.api-custom';
+import { PracticeGenerationActionTypes, PracticeGenerationReducer } from '../../reducers/reducer-types';
 
-// Similar to the existing ContextInput component but modified for our needs
 const OutlinesStep: React.FC<{
-	outlines: string[];
-	onOutlinesChange: (newOutlines: string[]) => void;
+	reducer: PracticeGenerationReducer;
 }> = ({
-	outlines,
-	onOutlinesChange
+	reducer: {
+		state,
+		dispatch,
+	},
 }) => {
 		const [newOutline, setNewOutline] = useState<string>('');
-		const [isGeneratingSuggestions, setIsGeneratingSuggestions] = useState<boolean>(false);
+		const [getSuggestions, { data, isLoading: isGeneratingSuggestions, isSuccess }] = useLazyGetSuggestOutlinesQuery();
 		const [suggestions, setSuggestions] = useState<string[]>([]);
 
-		// Mock data for AI suggestions - similar to what's in ContextInput
-		const mockSuggestions = [
-			'Cover fundamental concepts and principles',
-			'Include questions about best practices',
-			'Focus on performance optimization techniques',
-			'Add questions about error handling strategies',
-			'Include real-world scenarios and problem-solving',
-			'Test knowledge of related tools and frameworks',
-			'Cover security considerations and practices',
-			'Include questions about scalability approaches',
-			'Test understanding of design patterns',
-			'Add questions about testing methodologies',
-			'Include questions on data structures',
-			'Focus on algorithm complexity and efficiency',
-			'Test knowledge of proper syntax and language features',
-			'Cover state management approaches',
-			'Include questions about API design'
-		];
-
-		const handleAddOutline = () => {
-			if (newOutline.trim()) {
-				onOutlinesChange([...outlines, newOutline]);
-				setNewOutline('');
+		useEffect(() => {
+			if (data && isSuccess) {
+				setSuggestions(data.outlines || []);
 			}
+		}, [data]);
+
+		const handleAddOutlines = (outlines: string[]) => {
+			for (const outline of outlines) {
+				if (state.data.outlines.includes(outline)) {
+					dispatch({
+						type: PracticeGenerationActionTypes.SET_ERROR,
+						payload: 'Duplicated outline: ' + outline,
+					});
+					return;
+				}
+				if (!outline.trim()) {
+					dispatch({
+						type: PracticeGenerationActionTypes.SET_ERROR,
+						payload: 'Outline cannot be empty.',
+					});
+				}
+			}
+			dispatch({
+				type: PracticeGenerationActionTypes.SET_DATA,
+				payload: {
+					...state.data,
+					outlines: [
+						...state.data.outlines,
+						...outlines,
+					],
+				},
+			});
+			setNewOutline('');
 		};
 
-		const handleRemoveOutline = (index: number) => {
-			onOutlinesChange(outlines.filter((_, i) => i !== index));
+		const handleRemoveOutline = (index?: number) => {
+			const updatedOutlines = state.data.outlines.filter((_, idx) => idx !== index);
+			dispatch({
+				type: PracticeGenerationActionTypes.SET_DATA,
+				payload: {
+					...state.data,
+					outlines: updatedOutlines,
+				},
+			});
 		};
 
 		const handleGenerateSuggestions = () => {
-			setIsGeneratingSuggestions(true);
-
-			// Simulate API call with timeout
-			setTimeout(() => {
-				// Get random suggestions (3-5) from the mock data
-				const count = Math.floor(Math.random() * 3) + 3; // 3 to 5 suggestions
-				const randomSuggestions = [...mockSuggestions]
-					.sort(() => 0.5 - Math.random())
-					.slice(0, count);
-
-				setSuggestions(randomSuggestions);
-				setIsGeneratingSuggestions(false);
-			}, 1000);
+			if (state.data.outlines.length > 0) {
+				getSuggestions(state.data);
+			} else {
+				dispatch({
+					type: PracticeGenerationActionTypes.SET_ERROR,
+					payload: 'Please add at least one outline before generating suggestions.',
+				});
+			}
 		};
 
 		const handleAddSuggestion = (suggestion: string) => {
-			onOutlinesChange([...outlines, suggestion]);
-			// Remove the suggestion from the list
+			handleAddOutlines([suggestion]);
 			setSuggestions(suggestions.filter((s) => s !== suggestion));
 		};
 
 		const handleAddAllSuggestions = () => {
-			onOutlinesChange([...outlines, ...suggestions]);
+			handleAddOutlines(suggestions);
 			setSuggestions([]);
 		};
 
 		const handleClearSuggestions = () => {
 			setSuggestions([]);
 		};
+
+
 
 		return (
 			<div className="space-y-6">
@@ -88,12 +102,12 @@ const OutlinesStep: React.FC<{
 
 						{/* Existing outlines */}
 						<div className="space-y-2 mb-3">
-							{outlines.length === 0 ? (
+							{state.data.outlines.length === 0 ? (
 								<div className="p-4 bg-gray-50 border border-gray-200 rounded-md text-gray-500 text-center">
 									No outlines added yet. Add some below or use AI suggestions.
 								</div>
 							) : (
-								outlines.map((outline, idx) => (
+								state.data.outlines.map((outline, idx) => (
 									<div
 										key={idx}
 										className="p-3 border border-gray-200 rounded-md bg-gray-50 relative"
@@ -120,16 +134,16 @@ const OutlinesStep: React.FC<{
 									value={newOutline}
 									onChange={(e) => setNewOutline(e.target.value)}
 									className="flex-1 p-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary"
-									onKeyPress={(e) => {
+									onKeyDown={(e) => {
 										if (e.key === 'Enter') {
 											e.preventDefault();
-											handleAddOutline();
+											handleAddOutlines([newOutline]);
 										}
 									}}
 								/>
 								<button
 									type="button"
-									onClick={handleAddOutline}
+									onClick={() => handleAddOutlines([newOutline])}
 									className="px-4 py-2 bg-primary text-white rounded-r-md hover:bg-primary-toned-700"
 								>
 									Add
@@ -142,7 +156,7 @@ const OutlinesStep: React.FC<{
 								disabled={isGeneratingSuggestions}
 								className={`w-full px-4 py-2 rounded-md flex items-center justify-center ${isGeneratingSuggestions
 									? 'bg-gray-400 cursor-not-allowed'
-									: 'bg-green-600 hover:bg-green-700 text-white'
+									: 'bg-primary-toned-600 hover:bg-primary-toned-700 text-white'
 									}`}
 							>
 								{isGeneratingSuggestions ? (
@@ -193,13 +207,13 @@ const OutlinesStep: React.FC<{
 								{suggestions.map((suggestion, idx) => (
 									<div
 										key={idx}
-										className="p-2 border border-green-200 rounded-md bg-green-50 flex justify-between items-center"
+										className="p-2 border border-primary-toned-200 rounded-md bg-primary-toned-50 flex justify-between items-center"
 									>
 										<p className="text-sm text-gray-800">{suggestion}</p>
 										<button
 											type="button"
 											onClick={() => handleAddSuggestion(suggestion)}
-											className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+											className="text-xs px-2 py-1 bg-primary-toned-600 text-white rounded hover:bg-primary-toned-700"
 										>
 											Add
 										</button>

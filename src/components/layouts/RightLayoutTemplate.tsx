@@ -40,7 +40,7 @@ export default function RightLayoutTemplate({
 				<div className='w-full flex-shrink'>
 					{aboveMain}
 				</div>
-				<main className='flex-1 w-full px-6 py-8 overflow-y-auto bg-white rounded-xl shadow-primary border-r border-b border-primary'>
+				<main className='flex-1 w-full px-6 py-8 bg-white rounded-xl shadow-primary border-r border-b border-primary'>
 					{children}
 				</main>
 			</main>

@@ -20,6 +20,8 @@ export type TemplateCore = {
 	name: string;
 	title: string;
 	description: string;
+	language: string;
+	minutesToAnswer: number;
 	difficulty: string;
 	tags: string[];
 	numberOfQuestions: number;
@@ -53,7 +55,7 @@ export type PracticeCore = TestCore & PracticeAddon;
 
 export type ExamCore = TestCore & ExamAddon;
 
-export type TestAggregateResponse = {
+export type TestAggregateCore = {
 	numberOfQuestions: number;
 	totalPoints: number;
 }

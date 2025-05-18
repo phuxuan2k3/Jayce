@@ -1,8 +1,8 @@
 import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import React from 'react'
-import SpinnerLoading from '../../../../../../components/ui/loading/SpinnerLoading';
-import { FetchError } from '../../../../../../app/server-error';
+import SpinnerLoading from '../ui/loading/SpinnerLoading';
+import { FetchError } from '../../app/server-error';
 
 export default function useQueryState({
 	queries,

@@ -1,6 +1,8 @@
 import React from 'react';
 import { format, formatDistanceToNow } from 'date-fns';
 import { AttemptCore } from '../../../../../../../features/tests/model/attempt.model';
+import { useNavigate } from 'react-router-dom';
+import paths from '../../../../../../../router/paths';
 
 interface Props {
 	attempts: AttemptCore[];
@@ -13,8 +15,18 @@ const AttemptList: React.FC<Props> = ({
 	attempts,
 	page,
 	perPage,
-	onViewAttempt = () => { },
+	onViewAttempt,
 }) => {
+	const navigate = useNavigate();
+	const handleAttemptClick = (attemptId: string) => {
+		if (onViewAttempt) {
+			onViewAttempt(attemptId);
+		}
+		else {
+			navigate(paths.candidate.tests.attempts.in(attemptId).ROOT);
+		}
+	}
+
 	if (attempts.length === 0) {
 		return (
 			<div className="bg-white rounded-lg shadow-md p-6 text-center">
@@ -35,7 +47,11 @@ const AttemptList: React.FC<Props> = ({
 			</thead>
 			<tbody className="divide-y divide-gray-200">
 				{attempts.map((attempt, idx) => (
-					<tr key={attempt.id} className="hover:bg-gray-50 cursor-pointer" onClick={() => onViewAttempt(attempt.id)}>
+					<tr
+						key={attempt.id}
+						className="hover:bg-gray-50 cursor-pointer"
+						onClick={() => handleAttemptClick(attempt.id)}
+					>
 						<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
 							{idx + 1 + (page - 1) * perPage}
 						</td>

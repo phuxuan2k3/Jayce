@@ -29,16 +29,19 @@ const promptApiCustom = promptApi.injectEndpoints({
 				}) as QuestionDTO[];
 			}
 		}),
-		getOutlinesSuggestions: builder.query<GetOutlinesSuggestionsResponse, GetOutlinesSuggestionsRequest>({
+
+		// New
+
+		getSuggestOutlines: builder.query<GetSuggestOutlinesResponse, GetSuggestOutlinesRequest>({
 			query: (request) => ({
-				url: `/v1/suggest-outlines`,
+				url: `/v1/suggest_outlines`,
 				method: "POST",
 				body: request
 			}),
 		}),
-		getGeneratedQuestions: builder.query<GetGeneratedQuestionsResponse, GetGeneratedQuestionsRequest>({
+		getSuggestQuestions: builder.query<GetSuggestQuestionsResponse, GetSuggestQuestionsRequest>({
 			query: (request) => ({
-				url: `/v1/generate-questions`,
+				url: `/v1/suggest_questions`,
 				method: "POST",
 				body: request
 			})
@@ -51,13 +54,13 @@ export const {
 	useCriteriaMutation,
 	useGenerateMutation,
 
-	useLazyGetGeneratedQuestionsQuery,
-	useLazyGetOutlinesSuggestionsQuery,
+	useLazyGetSuggestQuestionsQuery,
+	useLazyGetSuggestOutlinesQuery,
 } = promptApiCustom;
 
 export default promptApiCustom;
 
-export type GetOutlinesSuggestionsRequest = {
+export type GetSuggestOutlinesRequest = {
 	title: string;
 	description: string;
 	difficulty: string;
@@ -65,11 +68,11 @@ export type GetOutlinesSuggestionsRequest = {
 	outlines: string[]; // Những gợi ý đã điềns
 }
 
-export type GetOutlinesSuggestionsResponse = {
+export type GetSuggestOutlinesResponse = {
 	outlines: string[];
 }
 
-export type GetGeneratedQuestionsRequest = {
+export type GetSuggestQuestionsRequest = {
 	title: string;
 	description: string;
 	minutesToAnswer: number;
@@ -81,7 +84,7 @@ export type GetGeneratedQuestionsRequest = {
 	numberOfOptions: number;
 }
 
-export type GetGeneratedQuestionsResponse = {
+export type GetSuggestQuestionsResponse = {
 	questions: {
 		text: string;
 		options: string[];

@@ -1,6 +1,6 @@
-import { testApiGen } from "./test.api-gen";
+import { testApiGen } from "../../../../../features/tests/api/test.api-gen";
 
-const enhancedTestGenApi = testApiGen.enhanceEndpoints({
+const templateApiEnhance = testApiGen.enhanceEndpoints({
 	addTagTypes: ['Templates'],
 	endpoints: {
 		getTemplates: {
@@ -34,4 +34,4 @@ export const {
 	usePostTemplatesMutation,
 	usePutTemplatesByTemplateIdMutation,
 	useDeleteTemplatesByTemplateIdMutation,
-} = enhancedTestGenApi;
+} = templateApiEnhance;

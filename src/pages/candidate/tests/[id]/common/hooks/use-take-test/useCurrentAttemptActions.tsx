@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../../../router/paths";
-import { usePatchCurrentAttemptsByAttemptIdAnswersMutation } from "../../apis/take-test.api";
+import { usePatchCurrentAttemptsByAttemptIdAnswersMutation } from "../../apis/answer.api-enhance";
 import { usePatchCurrentAttemptsByAttemptIdSubmitMutation } from "../../../../../../../features/tests/api/test.api-gen";
 
 export default function useCurrentAttemptActions({
@@ -12,7 +12,7 @@ export default function useCurrentAttemptActions({
 	const [answer] = usePatchCurrentAttemptsByAttemptIdAnswersMutation();
 	const [submit] = usePatchCurrentAttemptsByAttemptIdSubmitMutation();
 	const handleAnswer = async (questionId: number, optionIndex?: number) => {
-		if (!attemptId) {
+		if (attemptId == null) {
 			console.error("Attempt ID is not defined");
 			return;
 		}
@@ -27,7 +27,7 @@ export default function useCurrentAttemptActions({
 
 	const handleSubmit = async () => {
 		try {
-			if (!attemptId) {
+			if (attemptId == null) {
 				console.error("Attempt ID is not defined");
 				return;
 			}

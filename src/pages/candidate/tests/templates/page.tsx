@@ -24,24 +24,19 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 		title: '',
 		description: '',
 		numberOfQuestions: 5,
-		difficulty: "Easy",
+		difficulty: "easy",
 		tags: [],
 		numberOfOptions: 4,
-		outlines: []
+		outlines: [],
+		minutesToAnswer: 10,
+		language: "English",
 	});
 
 	// Handle template selection
 	const handleSelectTemplate = (template: TemplateCore) => {
 		setSelectedTemplate(template);
 		setFormData({
-			name: template.name,
-			title: template.title,
-			description: template.description,
-			numberOfQuestions: template.numberOfQuestions,
-			difficulty: template.difficulty,
-			tags: [...template.tags],
-			numberOfOptions: template.numberOfOptions,
-			outlines: [...template.outlines]
+			...template,
 		});
 		setIsEditing(true);
 	};
@@ -57,7 +52,9 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 			difficulty: "easy",
 			tags: [],
 			numberOfOptions: 4,
-			outlines: []
+			outlines: [],
+			minutesToAnswer: 10,
+			language: "English",
 		});
 		setIsEditing(true);
 	};
@@ -151,12 +148,15 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 						)}
 					</div>
 				)}
-			</div>			<DeleteTemplateModal
+			</div>
+
+			<DeleteTemplateModal
 				isOpen={showDeleteModal}
 				template={templateToDelete}
 				onClose={() => setShowDeleteModal(false)}
 				onConfirm={confirmDelete}
 			/>
+
 		</NewLeftLayoutTemplate>
 	);
 };

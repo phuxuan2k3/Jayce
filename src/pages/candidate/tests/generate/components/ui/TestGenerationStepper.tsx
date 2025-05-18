@@ -24,7 +24,8 @@ const TestGenerationStepper: React.FC<TestGenerationStepperProps> = ({
 	];
 
 	return (
-		<div className="w-full">
+		<div className="w-full font-arya">
+
 			{/* Stepper Header */}
 			<div className="flex items-center justify-between mb-8">
 				{steps.map((label, index) => (
@@ -32,9 +33,9 @@ const TestGenerationStepper: React.FC<TestGenerationStepperProps> = ({
 						<div
 							className={`w-10 h-10 rounded-full flex items-center justify-center 
                 ${activeStep === index
-									? 'bg-indigo-600 text-white'
+									? 'bg-primary-toned-600 text-white'
 									: activeStep > index
-										? 'bg-green-500 text-white'
+										? 'bg-secondary-toned-500 text-white'
 										: 'bg-gray-200 text-gray-600'}`}
 						>
 							{activeStep > index ? (
@@ -45,13 +46,9 @@ const TestGenerationStepper: React.FC<TestGenerationStepperProps> = ({
 								index + 1
 							)}
 						</div>
-						<p className={`mt-2 text-sm font-medium ${activeStep === index ? 'text-indigo-600' : 'text-gray-500'}`}>
+						<p className={`mt-2 text-sm font-medium ${activeStep === index ? 'text-primary-toned-600' : 'text-gray-500'}`}>
 							{label}
 						</p>
-
-						{index < steps.length - 1 && (
-							<div className="hidden sm:block absolute left-0 right-0 h-0.5 bg-gray-200" style={{ width: '100%' }} />
-						)}
 					</div>
 				))}
 			</div>
@@ -74,8 +71,8 @@ const TestGenerationStepper: React.FC<TestGenerationStepperProps> = ({
 					disabled={isNextDisabled}
 					className={`px-4 py-2 rounded-md 
             ${isNextDisabled
-							? 'bg-indigo-300 cursor-not-allowed'
-							: 'bg-indigo-600 hover:bg-indigo-700 text-white'}`}
+							? 'bg-primary-toned-300 cursor-not-allowed'
+							: 'bg-primary-toned-600 hover:bg-primary-toned-700 text-white'}`}
 				>
 					{activeStep === steps.length - 1 ? 'Generate Test' : 'Next'}
 				</button>

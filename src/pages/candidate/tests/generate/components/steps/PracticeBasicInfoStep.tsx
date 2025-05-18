@@ -1,25 +1,31 @@
 import React from 'react';
 import { TemplateCore } from "../../../../../../features/tests/model/test.model";
 import { ListFilter } from 'lucide-react';
-import { TestCoreCreate } from '../../../../../../features/tests/types/create';
 
-interface TestInfoStepProps {
-	testCoreData: TestCoreCreate;
-	onTestCoreDataChange: (data: TestCoreCreate) => void;
+type PracticeInfo = {
+	title: string;
+	description: string;
+	language: string;
+	minutesToAnswer: number;
+};
+
+interface Props {
+	info: PracticeInfo;
+	onInfoChange: (info: PracticeInfo) => void;
 	selectedTemplate: TemplateCore | null;
 	onSelectTemplateClick: () => void;
 }
 
-const TestInfoStep: React.FC<TestInfoStepProps> = ({
-	testCoreData,
-	onTestCoreDataChange,
+const PracticeBasicInfoStep: React.FC<Props> = ({
+	info,
+	onInfoChange,
 	selectedTemplate,
-	onSelectTemplateClick
+	onSelectTemplateClick,
 }) => {
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
 		const { name, value } = e.target;
-		onTestCoreDataChange({
-			...testCoreData,
+		onInfoChange({
+			...info,
 			[name]: name === 'minutesToAnswer' ? parseInt(value, 10) : value,
 		});
 	};
@@ -60,13 +66,13 @@ const TestInfoStep: React.FC<TestInfoStepProps> = ({
 			<div className="space-y-4">
 				<div>
 					<label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-						Test Title*
+						Test Title <span className="text-red-500">*</span>
 					</label>
 					<input
 						type="text"
 						id="title"
 						name="title"
-						value={testCoreData.title}
+						value={info.title}
 						onChange={handleInputChange}
 						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						placeholder="E.g., React Fundamentals Practice Test"
@@ -76,12 +82,12 @@ const TestInfoStep: React.FC<TestInfoStepProps> = ({
 
 				<div>
 					<label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
-						Description*
+						Description <span className="text-red-500">*</span>
 					</label>
 					<textarea
 						id="description"
 						name="description"
-						value={testCoreData.description}
+						value={info.description}
 						onChange={handleInputChange}
 						rows={3}
 						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
@@ -98,7 +104,7 @@ const TestInfoStep: React.FC<TestInfoStepProps> = ({
 						<select
 							id="language"
 							name="language"
-							value={testCoreData.language}
+							value={info.language}
 							onChange={handleInputChange}
 							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						>
@@ -119,7 +125,7 @@ const TestInfoStep: React.FC<TestInfoStepProps> = ({
 							type="number"
 							id="minutesToAnswer"
 							name="minutesToAnswer"
-							value={testCoreData.minutesToAnswer}
+							value={info.minutesToAnswer}
 							onChange={handleInputChange}
 							min={5}
 							max={180}
@@ -139,4 +145,4 @@ const TestInfoStep: React.FC<TestInfoStepProps> = ({
 	);
 };
 
-export default TestInfoStep;
+export default PracticeBasicInfoStep;

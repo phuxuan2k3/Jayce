@@ -1,48 +1,71 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
 import TestGenerationSidebar from "./components/ui/TestGenerationSidebar";
 import TemplateSelectionModal from "./components/ui/TemplateSelectionModal";
 import SaveTemplateDialog from "./components/ui/SaveTemplateDialog";
 import { TemplateCore } from "../../../../features/tests/model/test.model";
 import TestGenerationStepper from './components/ui/TestGenerationStepper';
-import TestInfoStep from './components/steps/TestInfoStep';
-import PromptInfoStep from './components/steps/PromptInfoStep';
+import PracticeBasicInfoStep from './components/steps/PracticeBasicInfoStep';
+import PracticePromptConfigStep from './components/steps/PracticePromptConfigStep';
 import OutlinesStep from './components/steps/OutlinesStep';
-import paths from '../../../../router/paths';
 import { LoadingScreen } from './components/ui/LoadingScreen';
-import { EMPTY_TEMPLATE_CORE_CREATE, EMPTY_TEST_PRACTICE_CORE_CREATE, TemplateCoreCreate, TestPracticeCoreCreate } from '../../../../features/tests/types/create';
-import useTemplateServerQuery from '../../../../features/tests/hooks/templates/useTemplateServerQuery';
-import useCreatePracticeTest from './hooks/useCreatePracticeTest';
-import { usePostTemplatesMutation } from '../../../../features/tests/api/test.api-gen';
-import { useLazyGetGeneratedQuestionsQuery } from '../../../../features/tests/api/prompt.api-custom';
+import useGeneratePractice from './hooks/useGeneratePractice';
+import { initialState, practiceGenerationReducer } from './reducers/practice-generation.reducer';
+import ApiErrorDialog from './components/ui/ApiErrorDialog';
+import { PracticeGenerationActionTypes } from './reducers/reducer-types';
+import { PracticeGenerationData } from './types';
+import usePracticeGenerationSelectors from './reducers/practice-generation.selector';
 
 const CandidateTestsGeneratePage: React.FC = () => {
-	const {
-		filters,
-		setFilters,
-		data,
-	} = useTemplateServerQuery();
-	const {
-		createPractice: handleCreatePracticeTest
-	} = useCreatePracticeTest();
-	const [getGeneratedQuestions] = useLazyGetGeneratedQuestionsQuery();
+	const [state, dispatch] = useReducer(practiceGenerationReducer, initialState);
 
-	const [createTemplate, createTemplateState] = usePostTemplatesMutation();
-	const [createLoadingState, setCreateLoadingState] = useState<"none" | "generating" | "saving">("none");
-	const [error, setError] = useState<string | null>(null);
+	const {
+		handleGeneratePractice,
+	} = useGeneratePractice({
+		state,
+		dispatch,
+	});
+
+	const { verifyData } = usePracticeGenerationSelectors({ state });
+
+	const [showApiErrorDialog, setShowApiErrorDialog] = useState(false);
+	useEffect(() => {
+		if (state.apiError) {
+			setShowApiErrorDialog(true);
+		}
+	}, [state.apiError]);
 
 	const [activeStep, setActiveStep] = useState(0);
-	const [selectedTemplate, setSelectedTemplate] = useState<TemplateCore | null>(null);
-	const navigate = useNavigate();
 	const [showSaveTemplateDialog, setShowSaveTemplateDialog] = useState(false);
 	const [showTemplatesModal, setShowTemplatesModal] = useState(false);
-	const [templateName, setTemplateName] = useState('');
 
-	const [templateCreate, setTemplateCreate] = useState<TemplateCoreCreate>(EMPTY_TEMPLATE_CORE_CREATE);
-	const [testPracticeData, setTestPracticeData] = useState<TestPracticeCoreCreate>(EMPTY_TEST_PRACTICE_CORE_CREATE);
+	const setData = useCallback((data: Partial<PracticeGenerationData>) => {
+		dispatch({
+			type: PracticeGenerationActionTypes.SET_DATA,
+			payload: {
+				...state.data,
+				...data,
+			},
+		});
+		dispatch({
+			type: PracticeGenerationActionTypes.SET_ERROR,
+			payload: null,
+		});
+	}, [state.data]);
 
 	const handleNext = () => {
+		const { isValid, message } = verifyData(activeStep);
+		if (!isValid) {
+			dispatch({
+				type: PracticeGenerationActionTypes.SET_ERROR,
+				payload: message,
+			});
+			return;
+		}
+		dispatch({
+			type: PracticeGenerationActionTypes.SET_ERROR,
+			payload: null,
+		});
 		setActiveStep((prev) => prev + 1);
 	};
 
@@ -51,105 +74,43 @@ const CandidateTestsGeneratePage: React.FC = () => {
 	};
 
 	const handleSelectTemplate = (template: TemplateCore) => {
-		setSelectedTemplate(template);
-	};
-
-	const handleGenerateTest = async () => {
-		try {
-			setError(null);
-			setCreateLoadingState("generating");
-
-			const generatedQuestions = await getGeneratedQuestions({
-				...testPracticeData,
-				...(selectedTemplate ? selectedTemplate : {}),
-			}).unwrap();
-
-			setCreateLoadingState("saving");
-
-			const createdTest = await handleCreatePracticeTest({
-				...testPracticeData,
-				...(selectedTemplate ? selectedTemplate : {}),
-			}, generatedQuestions.questions);
-
-			setCreateLoadingState("none");
-
-			navigate(paths.candidate.tests.in(createdTest.testId).PRACTICE);
-		} catch (error: any) {
-			setCreateLoadingState("none");
-			if ("message" in error && typeof error.message === "string") {
-				setError(error.message);
-			} else {
-				setError("An unknown error occurred");
-			}
-			console.error(error);
-		}
+		dispatch({
+			type: PracticeGenerationActionTypes.APPLY_TEMPLATE,
+			payload: template,
+		});
 	};
 
 	const handleSaveAsTemplateClick = () => {
-		setTemplateCreate(prev => ({
-			...prev,
-			...testPracticeData,
-			name: "",
-		}));
 		setShowSaveTemplateDialog(true);
-	};
-
-	const handleSaveTemplateConfirm = async () => {
-		try {
-			if (!templateCreate.name.trim()) {
-				alert('Please provide a template name');
-				return;
-			}
-			await createTemplate({
-				body: {
-					...templateCreate,
-				}
-			}).unwrap();
-			setShowSaveTemplateDialog(false);
-		} catch (error: any) {
-			if ("message" in error && typeof error.message === "string") {
-				setError(error.message);
-			} else {
-				setError("An unknown error occurred");
-			}
-			console.error(error);
-		}
 	};
 
 	const getStepContent = (step: number) => {
 		switch (step) {
 			case 0:
 				return (
-					<TestInfoStep
-						testCoreData={testPracticeData}
-						onTestCoreDataChange={(testCoreCreate) => setTestPracticeData({
-							...testPracticeData,
-							...testCoreCreate,
-						})}
-						selectedTemplate={selectedTemplate}
+					<PracticeBasicInfoStep
+						info={state.data}
+						onInfoChange={(info) => setData(info)}
+						selectedTemplate={state.template}
 						onSelectTemplateClick={() => setShowTemplatesModal(true)}
 					/>
 				);
 			case 1:
 				return (
-					<PromptInfoStep
-						promptData={testPracticeData}
-						onPromptDataChange={(setPromptData) => setTestPracticeData({
-							...testPracticeData,
-							...setPromptData,
-						})}
-						testTitle={testPracticeData.title}
-						testDescription={testPracticeData.description}
+					<PracticePromptConfigStep
+						promptConfig={state.data}
+						onPromptConfigChange={(promptConfig) => setData(promptConfig)}
+						testTitle={state.data.title}
+						testDescription={state.data.description}
 					/>
 				);
 			case 2:
 				return (
 					<OutlinesStep
-						outlines={testPracticeData.outlines}
-						onOutlinesChange={(newOutlines) => setTestPracticeData({
-							...testPracticeData,
-							outlines: newOutlines,
-						})}
+						reducer={{
+							state,
+							dispatch,
+						}}
 					/>
 				);
 			default:
@@ -163,7 +124,7 @@ const CandidateTestsGeneratePage: React.FC = () => {
 				header={
 					<NewLeftLayoutTemplate.Header
 						title="Generate Practice Test"
-						description="Create a customized test using templates and AI"
+						description="Create a customized test using AI."
 					/>
 				}
 				left={
@@ -178,25 +139,21 @@ const CandidateTestsGeneratePage: React.FC = () => {
 						activeStep={activeStep}
 						onNext={handleNext}
 						onBack={handleBack}
-						onFinish={handleGenerateTest}
-						isNextDisabled={
-							(activeStep === 0 && (!testPracticeData.title || !testPracticeData.description)) ||
-							(activeStep === 1 && testPracticeData.tags.length === 0) ||
-							(activeStep === 2 && testPracticeData.outlines.length === 0)
-						}
+						onFinish={handleGeneratePractice}
+						isNextDisabled={state.error != null || activeStep === 3}
 						isBackDisabled={activeStep === 0}
 					/>
 
-					{error && (
+					{state.error && (
 						<div className="mt-4 text-red-500">
-							{error}
+							{state.error}
 						</div>
 					)}
 
 					<div className="mt-8">
-						{createLoadingState !== "none" ? (
+						{state.loadingState !== "none" ? (
 							<LoadingScreen
-								state={createLoadingState} />
+								state={state.loadingState} />
 						) : (
 							getStepContent(activeStep)
 						)}
@@ -208,10 +165,6 @@ const CandidateTestsGeneratePage: React.FC = () => {
 			<TemplateSelectionModal
 				isOpen={showTemplatesModal}
 				onClose={() => setShowTemplatesModal(false)}
-				filters={filters}
-				setFilters={setFilters}
-				totalPages={data.totalPages}
-				templates={data.data}
 				onSelectTemplate={handleSelectTemplate}
 			/>
 
@@ -219,15 +172,15 @@ const CandidateTestsGeneratePage: React.FC = () => {
 			<SaveTemplateDialog
 				isOpen={showSaveTemplateDialog}
 				onClose={() => setShowSaveTemplateDialog(false)}
-				templateName={templateName}
-				onTemplateNameChange={setTemplateName}
-				onSave={handleSaveTemplateConfirm}
-				promptData={templateCreate}
-				onPromptDataChange={(setPromptData) => setTemplateCreate({
-					...templateCreate,
-					...setPromptData,
-				})}
-				isSaving={createTemplateState.isLoading}
+				initializeTemplateCreateData={state.data}
+				onTemplateSaved={(templateData) => setData(templateData)}
+			/>
+
+			<ApiErrorDialog
+				error={state.apiError}
+				onClose={() => setShowApiErrorDialog(false)}
+				onRetry={() => handleGeneratePractice()}
+				isOpen={showApiErrorDialog}
 			/>
 		</>
 	);

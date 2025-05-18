@@ -13,7 +13,7 @@ const testApi: ConfigFile = {
 		queries: true,
 		mutations: true,
 		lazyQueries: true,
-	}
+	},
 }
 
 // Export what API we want to generate

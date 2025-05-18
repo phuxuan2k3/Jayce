@@ -26,6 +26,12 @@ function isErrorWithMessage(
 }
 
 export function parseQueryError(error: FetchBaseQueryError | SerializedError | undefined | unknown): string | null {
+	if (error instanceof Error) {
+		return error.message;
+	}
+	if (typeof error === 'string') {
+		return error;
+	}
 	if (error) {
 		if (isFetchBaseQueryError(error)) {
 			// The request couldn't reach the server (e.g., the server is down, DNS issues, etc.). 

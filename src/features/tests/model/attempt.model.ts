@@ -14,7 +14,7 @@ export type AnswerCore = {
 	chosenOption: number;
 };
 
-export type AttemptAggregate = {
+export type AttemptAggregateCore = {
 	answered: number;
 	answeredCorrect: number;
 };

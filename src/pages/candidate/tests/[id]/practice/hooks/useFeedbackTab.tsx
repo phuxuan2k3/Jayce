@@ -11,7 +11,7 @@ export default function useFeedbackTab() {
 		problems: [],
 	});
 
-	const [postFeedback] = usePostPracticesByTestIdFeedbackMutation();
+	const [postFeedback, postFeedbackState] = usePostPracticesByTestIdFeedbackMutation();
 
 	const practicQuery = useGetPracticesByTestIdQuery({ testId });
 	const feedbackQuery = useGetPracticesByTestIdFeedbackQuery({ testId });
@@ -43,5 +43,6 @@ export default function useFeedbackTab() {
 		setFeedback,
 		isLoading: practicQuery.isLoading || feedbackQuery.isLoading,
 		submitFeedback,
+		postFeedbackState,
 	}
 }

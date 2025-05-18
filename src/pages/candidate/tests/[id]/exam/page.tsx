@@ -11,16 +11,19 @@ import OngoingAttemptCard from "../common/components/test-details/OngoingAttempt
 import paths from "../../../../../router/paths";
 import ConfigurationTabContent from "./components/ConfigurationTabContent";
 import ParticipantsTabContent from "./components/ParticipantsTabContent";
+import { useGetCurrentTestsByTestIdQuery, usePostExamsByTestIdAttemptsStartMutation } from "../common/apis/attempts.api-enhance";
+import { useCallback } from "react";
 
 export default function CandidateTestExamPage() {
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
+	const [startAttempt] = usePostExamsByTestIdAttemptsStartMutation();
+	const { data: currentAttempt } = useGetCurrentTestsByTestIdQuery({ testId });
 
 	const {
 		data: {
 			exam,
 			author,
-			currentAttempt,
 			attemptsAggregate,
 			isAllowedToSeeOtherResults,
 		},
@@ -37,11 +40,17 @@ export default function CandidateTestExamPage() {
 		isLoading: isLoadingAttempts,
 	} = useExamSelfAttempts(testId);
 
-	const handleStartNewAttempt = () => {
-		navigate(paths.candidate.tests.in(testId).TAKE_EXAM);
-	}
+	const handleStartNewAttempt = useCallback(async () => {
+		try {
+			await startAttempt({ testId }).unwrap();
+			navigate(paths.candidate.tests.in(testId).TAKE_EXAM);
+		}
+		catch (error) {
+			console.error("Error starting attempt:", error);
+			throw error;
+		}
+	}, [startAttempt, testId, navigate]);
 
-	// Define tabs
 	const tabs = [
 		{
 			id: "attempts",
@@ -52,6 +61,7 @@ export default function CandidateTestExamPage() {
 				totalPages={totalPages}
 				filter={filter}
 				setFilter={setFilter}
+				onStartAttempt={handleStartNewAttempt}
 			/>
 		},
 		{

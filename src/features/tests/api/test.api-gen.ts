@@ -138,26 +138,6 @@ const injectedRtkApi = api.injectEndpoints({
         method: "POST",
       }),
     }),
-    getHistoryAttempts: build.query<
-      GetHistoryAttemptsApiResponse,
-      GetHistoryAttemptsApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/history/attempts`,
-        params: {
-          page: queryArg.page,
-          perPage: queryArg.perPage,
-          sort: queryArg.sort,
-          testId: queryArg.testId,
-        },
-      }),
-    }),
-    getHistoryAttemptsByAttemptId: build.query<
-      GetHistoryAttemptsByAttemptIdApiResponse,
-      GetHistoryAttemptsByAttemptIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/history/attempts/${queryArg.attemptId}` }),
-    }),
     getPracticesByTestIdAttempts: build.query<
       GetPracticesByTestIdAttemptsApiResponse,
       GetPracticesByTestIdAttemptsApiArg
@@ -435,11 +415,71 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
-    getTestsByTestId: build.query<
-      GetTestsByTestIdApiResponse,
-      GetTestsByTestIdApiArg
+    getSelfTestsByTestId: build.query<
+      GetSelfTestsByTestIdApiResponse,
+      GetSelfTestsByTestIdApiArg
     >({
-      query: (queryArg) => ({ url: `/tests/${queryArg.testId}` }),
+      query: (queryArg) => ({ url: `/self/tests/${queryArg.testId}` }),
+    }),
+    getSelfTestsByTestIdAggregate: build.query<
+      GetSelfTestsByTestIdAggregateApiResponse,
+      GetSelfTestsByTestIdAggregateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/self/tests/${queryArg.testId}/aggregate`,
+      }),
+    }),
+    getSelfTestsByTestIdQuestionsToDo: build.query<
+      GetSelfTestsByTestIdQuestionsToDoApiResponse,
+      GetSelfTestsByTestIdQuestionsToDoApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/self/tests/${queryArg.testId}/questions-to-do`,
+      }),
+    }),
+    getSelfTestsByTestIdQuestionsWithAnswers: build.query<
+      GetSelfTestsByTestIdQuestionsWithAnswersApiResponse,
+      GetSelfTestsByTestIdQuestionsWithAnswersApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/self/tests/${queryArg.testId}/questions-with-answers`,
+      }),
+    }),
+    getSelfAttempts: build.query<
+      GetSelfAttemptsApiResponse,
+      GetSelfAttemptsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/self/attempts`,
+        params: {
+          page: queryArg.page,
+          perPage: queryArg.perPage,
+          sort: queryArg.sort,
+          testId: queryArg.testId,
+        },
+      }),
+    }),
+    getSelfAttemptsByAttemptId: build.query<
+      GetSelfAttemptsByAttemptIdApiResponse,
+      GetSelfAttemptsByAttemptIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/self/attempts/${queryArg.attemptId}` }),
+    }),
+    getSelfAttemptsByAttemptIdAggregate: build.query<
+      GetSelfAttemptsByAttemptIdAggregateApiResponse,
+      GetSelfAttemptsByAttemptIdAggregateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/self/attempts/${queryArg.attemptId}/aggregate`,
+      }),
+    }),
+    getSelfAttemptsByAttemptIdAnswers: build.query<
+      GetSelfAttemptsByAttemptIdAnswersApiResponse,
+      GetSelfAttemptsByAttemptIdAnswersApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/self/attempts/${queryArg.attemptId}/answers`,
+      }),
     }),
   }),
   overrideExisting: false,
@@ -670,66 +710,6 @@ export type GetExamsAttemptsByAttemptIdAnswersApiArg = {
 export type PostExamsByTestIdAttemptsStartApiResponse = unknown;
 export type PostExamsByTestIdAttemptsStartApiArg = {
   testId: string;
-};
-export type GetHistoryAttemptsApiResponse = /** status 200 Success */ {
-  page: number;
-  perPage: number;
-  total: number;
-  totalPages: number;
-  data: {
-    id: string;
-    order: number;
-    testId: string;
-    candidateId: string;
-    hasEnded: boolean;
-    secondsSpent: number;
-    score: number;
-    createdAt: string;
-    updatedAt: string;
-    test: {
-      id: string;
-      authorId: string;
-      title: string;
-      description: string;
-      minutesToAnswer: number;
-      language: string;
-      mode: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-  }[];
-};
-export type GetHistoryAttemptsApiArg = {
-  page?: number;
-  perPage?: number | null;
-  sort: string;
-  testId?: string;
-};
-export type GetHistoryAttemptsByAttemptIdApiResponse =
-  /** status 200 Success */ {
-    id: string;
-    order: number;
-    testId: string;
-    candidateId: string;
-    hasEnded: boolean;
-    secondsSpent: number;
-    score: number;
-    createdAt: string;
-    updatedAt: string;
-    test: {
-      id: string;
-      authorId: string;
-      title: string;
-      description: string;
-      minutesToAnswer: number;
-      language: string;
-      mode: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-  };
-export type GetHistoryAttemptsByAttemptIdApiArg = {
-  attemptId: string;
 };
 export type GetPracticesByTestIdAttemptsApiResponse =
   /** status 200 Success */ {
@@ -999,6 +979,8 @@ export type GetTemplatesApiResponse = /** status 200 Success */ {
     name: string;
     title: string;
     description: string;
+    language: string;
+    minutesToAnswer: number;
     difficulty: string;
     tags: string[];
     numberOfQuestions: number;
@@ -1021,6 +1003,8 @@ export type PostTemplatesApiArg = {
     name: string;
     title: string;
     description: string;
+    language: string;
+    minutesToAnswer: number;
     difficulty: string;
     tags: string[];
     numberOfQuestions: number;
@@ -1034,6 +1018,8 @@ export type GetTemplatesByTemplateIdApiResponse = /** status 200 Success */ {
   name: string;
   title: string;
   description: string;
+  language: string;
+  minutesToAnswer: number;
   difficulty: string;
   tags: string[];
   numberOfQuestions: number;
@@ -1052,6 +1038,8 @@ export type PutTemplatesByTemplateIdApiArg = {
     name?: string;
     title?: string;
     description?: string;
+    language?: string;
+    minutesToAnswer?: number;
     difficulty?: string;
     tags?: string[];
     numberOfQuestions?: number;
@@ -1211,9 +1199,116 @@ export type DeletePracticesByTestIdFeedbackApiResponse = unknown;
 export type DeletePracticesByTestIdFeedbackApiArg = {
   testId: string;
 };
-export type GetTestsByTestIdApiResponse = unknown;
-export type GetTestsByTestIdApiArg = {
+export type GetSelfTestsByTestIdApiResponse = unknown;
+export type GetSelfTestsByTestIdApiArg = {
   testId: string;
+};
+export type GetSelfTestsByTestIdAggregateApiResponse =
+  /** status 200 Success */ {
+    numberOfQuestions: number;
+    totalPoints: number;
+  };
+export type GetSelfTestsByTestIdAggregateApiArg = {
+  testId: string;
+};
+export type GetSelfTestsByTestIdQuestionsToDoApiResponse =
+  /** status 200 Success */ {
+    id: number;
+    testId: string;
+    text: string;
+    options: string[];
+    points: number;
+  }[];
+export type GetSelfTestsByTestIdQuestionsToDoApiArg = {
+  testId: string;
+};
+export type GetSelfTestsByTestIdQuestionsWithAnswersApiResponse =
+  /** status 200 Success */ {
+    id: number;
+    testId: string;
+    text: string;
+    options: string[];
+    points: number;
+    correctOption: number;
+  }[];
+export type GetSelfTestsByTestIdQuestionsWithAnswersApiArg = {
+  testId: string;
+};
+export type GetSelfAttemptsApiResponse = /** status 200 Success */ {
+  page: number;
+  perPage: number;
+  total: number;
+  totalPages: number;
+  data: {
+    id: string;
+    order: number;
+    testId: string;
+    candidateId: string;
+    hasEnded: boolean;
+    secondsSpent: number;
+    score: number;
+    createdAt: string;
+    updatedAt: string;
+    test: {
+      id: string;
+      authorId: string;
+      title: string;
+      description: string;
+      minutesToAnswer: number;
+      language: string;
+      mode: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+  }[];
+};
+export type GetSelfAttemptsApiArg = {
+  page?: number;
+  perPage?: number | null;
+  sort: string;
+  testId?: string;
+};
+export type GetSelfAttemptsByAttemptIdApiResponse = /** status 200 Success */ {
+  id: string;
+  order: number;
+  testId: string;
+  candidateId: string;
+  hasEnded: boolean;
+  secondsSpent: number;
+  score: number;
+  createdAt: string;
+  updatedAt: string;
+  test: {
+    id: string;
+    authorId: string;
+    title: string;
+    description: string;
+    minutesToAnswer: number;
+    language: string;
+    mode: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+};
+export type GetSelfAttemptsByAttemptIdApiArg = {
+  attemptId: string;
+};
+export type GetSelfAttemptsByAttemptIdAggregateApiResponse =
+  /** status 200 Success */ {
+    answered: number;
+    answeredCorrect: number;
+  };
+export type GetSelfAttemptsByAttemptIdAggregateApiArg = {
+  attemptId: string;
+};
+export type GetSelfAttemptsByAttemptIdAnswersApiResponse =
+  /** status 200 Success */ {
+    attemptId: string;
+    questionId: number;
+    chosenOption: number;
+  }[];
+export type GetSelfAttemptsByAttemptIdAnswersApiArg = {
+  attemptId: string;
 };
 export const {
   useGetCurrentAttemptsByAttemptIdQuery,
@@ -1243,10 +1338,6 @@ export const {
   useGetExamsAttemptsByAttemptIdAnswersQuery,
   useLazyGetExamsAttemptsByAttemptIdAnswersQuery,
   usePostExamsByTestIdAttemptsStartMutation,
-  useGetHistoryAttemptsQuery,
-  useLazyGetHistoryAttemptsQuery,
-  useGetHistoryAttemptsByAttemptIdQuery,
-  useLazyGetHistoryAttemptsByAttemptIdQuery,
   useGetPracticesByTestIdAttemptsQuery,
   useLazyGetPracticesByTestIdAttemptsQuery,
   useGetPracticesByTestIdAttemptsAggregateQuery,
@@ -1299,6 +1390,20 @@ export const {
   useLazyGetPracticesByTestIdFeedbackQuery,
   usePostPracticesByTestIdFeedbackMutation,
   useDeletePracticesByTestIdFeedbackMutation,
-  useGetTestsByTestIdQuery,
-  useLazyGetTestsByTestIdQuery,
+  useGetSelfTestsByTestIdQuery,
+  useLazyGetSelfTestsByTestIdQuery,
+  useGetSelfTestsByTestIdAggregateQuery,
+  useLazyGetSelfTestsByTestIdAggregateQuery,
+  useGetSelfTestsByTestIdQuestionsToDoQuery,
+  useLazyGetSelfTestsByTestIdQuestionsToDoQuery,
+  useGetSelfTestsByTestIdQuestionsWithAnswersQuery,
+  useLazyGetSelfTestsByTestIdQuestionsWithAnswersQuery,
+  useGetSelfAttemptsQuery,
+  useLazyGetSelfAttemptsQuery,
+  useGetSelfAttemptsByAttemptIdQuery,
+  useLazyGetSelfAttemptsByAttemptIdQuery,
+  useGetSelfAttemptsByAttemptIdAggregateQuery,
+  useLazyGetSelfAttemptsByAttemptIdAggregateQuery,
+  useGetSelfAttemptsByAttemptIdAnswersQuery,
+  useLazyGetSelfAttemptsByAttemptIdAnswersQuery,
 } = injectedRtkApi;

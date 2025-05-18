@@ -26,15 +26,13 @@ import AuthNewPasswordPage from "../pages/auth/new-password/AuthNewPasswordPage"
 import paths from "./paths";
 import AuthLayout from "../pages/auth/AuthLayout";
 import UnauthLayout from "../pages/unauth/UnauthLayout";
-import CandidateLayout from "../pages/candidate/CandidateLayout";
+import CandidateLayout from "../pages/candidate/layout";
 import GuestPage from "../pages/unauth/index/GuestPage";
 import CandidateTestsPage from "../pages/candidate/tests/index/page";
-import CandidateTestsLayout from "../pages/candidate/tests/CandidateTestsLayout";
 import ManagerLayout from "../pages/manager/ManagerLayout";
 import AuthBusinessRegisterPage from "../pages/auth/bussiness-register/AuthBusinessRegisterPage";
 import AuthChooseRolePage from "../pages/auth/choose-role/AuthChooseRolePage";
-import CandidateAttemptPage from "../pages/candidate/tests/attempts/[id]/index/page";
-import CandidateInTestLayout from "../pages/candidate/tests/[id]/layout";
+import CandidateTestsAttemptPage from "../pages/candidate/tests/attempts/[id]/index/page";
 import ManagerTestsPage from "../pages/manager/tests/index/ManagerTestsPage";
 import CandidateHomePage from "../pages/candidate/index/CandidateHomePage";
 import ManagerHomePage from "../pages/manager/scenarios/index/ManagerHomePage";
@@ -44,10 +42,11 @@ import SetUpPage from "../pages/candidate/interviews/setup/setup";
 import Settings from "../pages/common/profile/index/Settings";
 import CandidateTestsTemplatesPage from "../pages/candidate/tests/templates/page";
 import CandidateTestsGeneratePage from "../pages/candidate/tests/generate/page";
-import CandidateTestDoPage from "../pages/candidate/tests/[id]/take-practice/page";
+import CandidateTestTakePracticePage from "../pages/candidate/tests/[id]/take-practice/page";
 import CandidatePracticePage from "../pages/candidate/tests/[id]/practice/page";
 import CandidateTestsJoinPage from "../pages/candidate/tests/join/page";
 import CandidateTestExamPage from "../pages/candidate/tests/[id]/exam/page";
+import CandidateTestTakeExamPage from "../pages/candidate/tests/[id]/take-exam/page";
 
 const router = createBrowserRouter(
 	[
@@ -117,7 +116,6 @@ const router = createBrowserRouter(
 
 						{
 							path: paths.candidate.tests.ROOT,
-							element: <CandidateTestsLayout />,
 							children: [
 								{
 									index: true,
@@ -143,16 +141,14 @@ const router = createBrowserRouter(
 									children: [
 										{
 											index: true,
-											element: <CandidateAttemptPage />,
+											element: <CandidateTestsAttemptPage />,
 										},
 									],
 								},
 
 								// In a Test
-
 								{
 									path: paths.candidate.tests.in()._layout,
-									element: <CandidateInTestLayout />,
 									children: [
 										{
 											index: true,
@@ -161,11 +157,15 @@ const router = createBrowserRouter(
 										},
 										{
 											path: paths.candidate.tests.in().TAKE_PRACTICE,
-											element: <CandidateTestDoPage />,
+											element: <CandidateTestTakePracticePage />,
 										},
 										{
 											path: paths.candidate.tests.in().EXAM,
 											element: <CandidateTestExamPage />,
+										},
+										{
+											path: paths.candidate.tests.in().TAKE_EXAM,
+											element: <CandidateTestTakeExamPage />,
 										}
 									],
 								},

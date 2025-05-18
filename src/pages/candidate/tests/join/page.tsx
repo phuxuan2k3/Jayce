@@ -44,7 +44,7 @@ export default function CandidateTestsJoinPage() {
 				<SidebarActions>
 					<SidebarActions.BrowseTemplates />
 					<SidebarActions.GenerateTest />
-					<SidebarActions.TestsHistory />
+					<SidebarActions.YourTests />
 				</SidebarActions>
 			}
 		>			<div className="flex flex-col gap-8">

@@ -5,34 +5,31 @@ import paths from '../../../../../../router/paths';
 import { useNavigate } from 'react-router-dom';
 import MyPagination from '../../../../../../components/ui/common/MyPagination';
 import TemplateCard from '../../../templates/components/TemplateCard';
+import { useGetTemplatesQuery } from '../../../../../../features/tests/api/test.api-gen';
+
+type Filter = {
+	searchName: string;
+	page: number;
+}
 
 interface TemplateSelectionModalProps {
 	isOpen: boolean;
 	onClose: () => void;
-	filters: {
-		searchName: string;
-		page: number;
-	};
-	setFilters: (filters: {
-		searchName: string;
-		page: number;
-	}) => void;
-	totalPages: number;
-	templates: TemplateCore[];
 	onSelectTemplate: (template: TemplateCore) => void;
 }
 
 const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 	isOpen,
 	onClose,
-	filters,
-	setFilters,
-	totalPages,
-	templates,
 	onSelectTemplate,
 }) => {
 	const navigate = useNavigate();
-	const [searchInput, setSearchInput] = useState(filters.searchName);
+	const [filters, setFilters] = useState<Filter>({
+		searchName: '',
+		page: 1,
+	});
+
+	const { data: pagedTemplates, isLoading } = useGetTemplatesQuery(filters);
 
 	if (!isOpen) return null;
 
@@ -41,17 +38,17 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 		navigate(paths.candidate.tests.TEMPLATES);
 	};
 
-	const handleSearch = () => {
+	const handleSearch = (searchKey: string) => {
 		setFilters({
 			...filters,
-			searchName: searchInput,
+			searchName: searchKey,
 			page: 1, // Reset to first page when searching
 		});
 	};
 
 	const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
-			handleSearch();
+			handleSearch(e.currentTarget.value);
 		}
 	};
 
@@ -76,7 +73,11 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 				</div>
 
 				<div className="p-4 overflow-y-auto flex-1">
-					{templates.length === 0 ? (
+					{isLoading === true ? (
+						<div className="flex items-center justify-center h-full">
+							<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+						</div>
+					) : pagedTemplates == null || pagedTemplates.data.length === 0 ? (
 						<div className="text-center py-8">
 							<p className="text-gray-500 mb-4">No templates available</p>
 							<button
@@ -104,8 +105,8 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 									<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
 									<input
 										type="text"
-										value={searchInput}
-										onChange={(e) => setSearchInput(e.target.value)}
+										value={filters.searchName}
+										onChange={(e) => handleSearch(e.target.value)}
 										onKeyDown={handleKeyPress}
 										className="pl-10 pr-4 py-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-1 focus:ring-primary"
 										placeholder="Search templates..."
@@ -113,7 +114,7 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 								</div>
 							</div>
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-								{templates.map((template) => (
+								{pagedTemplates.data.map((template) => (
 									<TemplateCard
 										key={template.id}
 										data={template}
@@ -124,10 +125,10 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 									/>
 								))}
 							</div>
-							{templates.length > 0 && (
+							{pagedTemplates.data.length > 0 && (
 								<div className="flex justify-center mt-6">
 									<MyPagination
-										totalPage={totalPages}
+										totalPage={pagedTemplates.totalPages}
 										initialPage={filters.page}
 										onPageChange={handlePageChange}
 									/>

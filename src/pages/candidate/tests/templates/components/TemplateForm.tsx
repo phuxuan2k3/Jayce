@@ -27,7 +27,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 		const { name, value } = e.target;
 		onFormDataChange({
 			...formData,
-			[name]: name === 'numberOfQuestions' || name === 'numberOfOptions'
+			[name]: name === 'numberOfQuestions' || name === 'numberOfOptions' || name === 'minutesToAnswer'
 				? parseInt(value, 10)
 				: value
 		});
@@ -70,7 +70,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 
 				<hr className="border-primary-toned-300 my-4" />
 
-				<h3 className='text-primary'>Saved information</h3>
+				<h3 className='text-primary'>Template Information</h3>
 
 				<div>
 					<label className="block text-sm font-medium text-gray-700 mb-1">
@@ -103,6 +103,34 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 					<div>
 						<label className="block text-sm font-medium text-gray-700 mb-1">
+							Minutes to answer
+						</label>
+						<input
+							type="number"
+							name="minutesToAnswer"
+							value={formData.minutesToAnswer}
+							onChange={handleInputChange}
+							min="1"
+							className="w-full p-2 border border-primary-toned-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
+						/>
+					</div>
+					<div>
+						<label className="block text-sm font-medium text-gray-700 mb-1">
+							Language
+						</label>
+						<select
+							name="language"
+							value={formData.language}
+							onChange={handleInputChange}
+							className="w-full p-2 border border-primary-toned-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
+						>
+							<option value="Vietnamese">Vietnamese</option>
+							<option value="English">English</option>
+							<option value="German">German</option>
+						</select>
+					</div>
+					<div>
+						<label className="block text-sm font-medium text-gray-700 mb-1">
 							Number of Questions
 						</label>
 						<input
@@ -114,7 +142,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 							className="w-full p-2 border border-primary-toned-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
 						/>
 					</div>
-
 					<div>
 						<label className="block text-sm font-medium text-gray-700 mb-1">
 							Difficulty
@@ -125,10 +152,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 							onChange={handleInputChange}
 							className="w-full p-2 border border-primary-toned-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
 						>
-							<option value="Easy">Easy</option>
-							<option value="Medium">Medium</option>
-							<option value="Hard">Hard</option>
-							<option value="Mixed">Mixed</option>
+							<option value="easy">Easy</option>
+							<option value="medium">Medium</option>
+							<option value="hard">Hard</option>
 						</select>
 					</div>
 				</div>
@@ -153,6 +179,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 				/>
 
 				<OutlinesInput
+					template={formData}
 					outlines={formData.outlines}
 					onOutlinesChange={(newOutlines) => onFormDataChange({ ...formData, outlines: newOutlines })}
 				/>

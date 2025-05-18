@@ -1220,299 +1220,6 @@
 				}
 			}
 		},
-		"/history/attempts": {
-			"get": {
-				"tags": [
-					"History Attempt"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "number",
-							"minimum": 1,
-							"default": 1
-						},
-						"required": false,
-						"name": "page",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": [
-								"number",
-								"null"
-							],
-							"default": 5
-						},
-						"required": false,
-						"name": "perPage",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "sort",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": false,
-						"name": "testId",
-						"in": "query"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"page": {
-											"type": "number"
-										},
-										"perPage": {
-											"type": "number"
-										},
-										"total": {
-											"type": "number"
-										},
-										"totalPages": {
-											"type": "number"
-										},
-										"data": {
-											"type": "array",
-											"items": {
-												"type": "object",
-												"properties": {
-													"id": {
-														"type": "string"
-													},
-													"order": {
-														"type": "integer",
-														"exclusiveMinimum": 0
-													},
-													"testId": {
-														"type": "string"
-													},
-													"candidateId": {
-														"type": "string"
-													},
-													"hasEnded": {
-														"type": "boolean"
-													},
-													"secondsSpent": {
-														"type": "integer",
-														"minimum": 0
-													},
-													"score": {
-														"type": "integer",
-														"minimum": 0
-													},
-													"createdAt": {
-														"type": "string"
-													},
-													"updatedAt": {
-														"type": "string"
-													},
-													"test": {
-														"type": "object",
-														"properties": {
-															"id": {
-																"type": "string"
-															},
-															"authorId": {
-																"type": "string"
-															},
-															"title": {
-																"type": "string"
-															},
-															"description": {
-																"type": "string"
-															},
-															"minutesToAnswer": {
-																"type": "number",
-																"minimum": 1,
-																"maximum": 10000
-															},
-															"language": {
-																"type": "string"
-															},
-															"mode": {
-																"type": "string"
-															},
-															"createdAt": {
-																"type": "string"
-															},
-															"updatedAt": {
-																"type": "string"
-															}
-														},
-														"required": [
-															"id",
-															"authorId",
-															"title",
-															"description",
-															"minutesToAnswer",
-															"language",
-															"mode",
-															"createdAt",
-															"updatedAt"
-														]
-													}
-												},
-												"required": [
-													"id",
-													"order",
-													"testId",
-													"candidateId",
-													"hasEnded",
-													"secondsSpent",
-													"score",
-													"createdAt",
-													"updatedAt",
-													"test"
-												]
-											}
-										}
-									},
-									"required": [
-										"page",
-										"perPage",
-										"total",
-										"totalPages",
-										"data"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/history/attempts/{attemptId}": {
-			"get": {
-				"tags": [
-					"History Attempt"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "attemptId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"id": {
-											"type": "string"
-										},
-										"order": {
-											"type": "integer",
-											"exclusiveMinimum": 0
-										},
-										"testId": {
-											"type": "string"
-										},
-										"candidateId": {
-											"type": "string"
-										},
-										"hasEnded": {
-											"type": "boolean"
-										},
-										"secondsSpent": {
-											"type": "integer",
-											"minimum": 0
-										},
-										"score": {
-											"type": "integer",
-											"minimum": 0
-										},
-										"createdAt": {
-											"type": "string"
-										},
-										"updatedAt": {
-											"type": "string"
-										},
-										"test": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "string"
-												},
-												"authorId": {
-													"type": "string"
-												},
-												"title": {
-													"type": "string"
-												},
-												"description": {
-													"type": "string"
-												},
-												"minutesToAnswer": {
-													"type": "number",
-													"minimum": 1,
-													"maximum": 10000
-												},
-												"language": {
-													"type": "string"
-												},
-												"mode": {
-													"type": "string"
-												},
-												"createdAt": {
-													"type": "string"
-												},
-												"updatedAt": {
-													"type": "string"
-												}
-											},
-											"required": [
-												"id",
-												"authorId",
-												"title",
-												"description",
-												"minutesToAnswer",
-												"language",
-												"mode",
-												"createdAt",
-												"updatedAt"
-											]
-										}
-									},
-									"required": [
-										"id",
-										"order",
-										"testId",
-										"candidateId",
-										"hasEnded",
-										"secondsSpent",
-										"score",
-										"createdAt",
-										"updatedAt",
-										"test"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
 		"/practices/{testId}/attempts": {
 			"get": {
 				"tags": [
@@ -2883,6 +2590,14 @@
 													"description": {
 														"type": "string"
 													},
+													"language": {
+														"type": "string"
+													},
+													"minutesToAnswer": {
+														"type": "number",
+														"minimum": 1,
+														"maximum": 10000
+													},
 													"difficulty": {
 														"type": "string"
 													},
@@ -2917,6 +2632,8 @@
 													"name",
 													"title",
 													"description",
+													"language",
+													"minutesToAnswer",
 													"difficulty",
 													"tags",
 													"numberOfQuestions",
@@ -2961,6 +2678,14 @@
 									"description": {
 										"type": "string"
 									},
+									"language": {
+										"type": "string"
+									},
+									"minutesToAnswer": {
+										"type": "number",
+										"minimum": 1,
+										"maximum": 10000
+									},
 									"difficulty": {
 										"type": "string"
 									},
@@ -2987,6 +2712,8 @@
 									"name",
 									"title",
 									"description",
+									"language",
+									"minutesToAnswer",
 									"difficulty",
 									"tags",
 									"numberOfQuestions",
@@ -3057,6 +2784,14 @@
 										"description": {
 											"type": "string"
 										},
+										"language": {
+											"type": "string"
+										},
+										"minutesToAnswer": {
+											"type": "number",
+											"minimum": 1,
+											"maximum": 10000
+										},
 										"difficulty": {
 											"type": "string"
 										},
@@ -3091,6 +2826,8 @@
 										"name",
 										"title",
 										"description",
+										"language",
+										"minutesToAnswer",
 										"difficulty",
 										"tags",
 										"numberOfQuestions",
@@ -3134,6 +2871,14 @@
 									},
 									"description": {
 										"type": "string"
+									},
+									"language": {
+										"type": "string"
+									},
+									"minutesToAnswer": {
+										"type": "number",
+										"minimum": 1,
+										"maximum": 10000
 									},
 									"difficulty": {
 										"type": "string"
@@ -3923,10 +3668,10 @@
 				}
 			}
 		},
-		"/tests/{testId}": {
+		"/self/tests/{testId}": {
 			"get": {
 				"tags": [
-					"Test"
+					"Self"
 				],
 				"parameters": [
 					{
@@ -3941,6 +3686,551 @@
 				"responses": {
 					"200": {
 						"description": "Success"
+					}
+				}
+			}
+		},
+		"/self/tests/{testId}/aggregate": {
+			"get": {
+				"tags": [
+					"Self"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
+						"in": "path"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"numberOfQuestions": {
+											"type": "number"
+										},
+										"totalPoints": {
+											"type": "number"
+										}
+									},
+									"required": [
+										"numberOfQuestions",
+										"totalPoints"
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/self/tests/{testId}/questions-to-do": {
+			"get": {
+				"tags": [
+					"Self"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
+						"in": "path"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"id": {
+												"type": "number"
+											},
+											"testId": {
+												"type": "string"
+											},
+											"text": {
+												"type": "string"
+											},
+											"options": {
+												"type": "array",
+												"items": {
+													"type": "string"
+												}
+											},
+											"points": {
+												"type": "number"
+											}
+										},
+										"required": [
+											"id",
+											"testId",
+											"text",
+											"options",
+											"points"
+										]
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/self/tests/{testId}/questions-with-answers": {
+			"get": {
+				"tags": [
+					"Self"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
+						"in": "path"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"id": {
+												"type": "number"
+											},
+											"testId": {
+												"type": "string"
+											},
+											"text": {
+												"type": "string"
+											},
+											"options": {
+												"type": "array",
+												"items": {
+													"type": "string"
+												}
+											},
+											"points": {
+												"type": "number"
+											},
+											"correctOption": {
+												"type": "number"
+											}
+										},
+										"required": [
+											"id",
+											"testId",
+											"text",
+											"options",
+											"points",
+											"correctOption"
+										]
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/self/attempts": {
+			"get": {
+				"tags": [
+					"Self"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "number",
+							"minimum": 1,
+							"default": 1
+						},
+						"required": false,
+						"name": "page",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": [
+								"number",
+								"null"
+							],
+							"default": 5
+						},
+						"required": false,
+						"name": "perPage",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "sort",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": false,
+						"name": "testId",
+						"in": "query"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"page": {
+											"type": "number"
+										},
+										"perPage": {
+											"type": "number"
+										},
+										"total": {
+											"type": "number"
+										},
+										"totalPages": {
+											"type": "number"
+										},
+										"data": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"order": {
+														"type": "integer",
+														"exclusiveMinimum": 0
+													},
+													"testId": {
+														"type": "string"
+													},
+													"candidateId": {
+														"type": "string"
+													},
+													"hasEnded": {
+														"type": "boolean"
+													},
+													"secondsSpent": {
+														"type": "integer",
+														"minimum": 0
+													},
+													"score": {
+														"type": "integer",
+														"minimum": 0
+													},
+													"createdAt": {
+														"type": "string"
+													},
+													"updatedAt": {
+														"type": "string"
+													},
+													"test": {
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string"
+															},
+															"authorId": {
+																"type": "string"
+															},
+															"title": {
+																"type": "string"
+															},
+															"description": {
+																"type": "string"
+															},
+															"minutesToAnswer": {
+																"type": "number",
+																"minimum": 1,
+																"maximum": 10000
+															},
+															"language": {
+																"type": "string"
+															},
+															"mode": {
+																"type": "string"
+															},
+															"createdAt": {
+																"type": "string"
+															},
+															"updatedAt": {
+																"type": "string"
+															}
+														},
+														"required": [
+															"id",
+															"authorId",
+															"title",
+															"description",
+															"minutesToAnswer",
+															"language",
+															"mode",
+															"createdAt",
+															"updatedAt"
+														]
+													}
+												},
+												"required": [
+													"id",
+													"order",
+													"testId",
+													"candidateId",
+													"hasEnded",
+													"secondsSpent",
+													"score",
+													"createdAt",
+													"updatedAt",
+													"test"
+												]
+											}
+										}
+									},
+									"required": [
+										"page",
+										"perPage",
+										"total",
+										"totalPages",
+										"data"
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/self/attempts/{attemptId}": {
+			"get": {
+				"tags": [
+					"Self"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "attemptId",
+						"in": "path"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string"
+										},
+										"order": {
+											"type": "integer",
+											"exclusiveMinimum": 0
+										},
+										"testId": {
+											"type": "string"
+										},
+										"candidateId": {
+											"type": "string"
+										},
+										"hasEnded": {
+											"type": "boolean"
+										},
+										"secondsSpent": {
+											"type": "integer",
+											"minimum": 0
+										},
+										"score": {
+											"type": "integer",
+											"minimum": 0
+										},
+										"createdAt": {
+											"type": "string"
+										},
+										"updatedAt": {
+											"type": "string"
+										},
+										"test": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "string"
+												},
+												"authorId": {
+													"type": "string"
+												},
+												"title": {
+													"type": "string"
+												},
+												"description": {
+													"type": "string"
+												},
+												"minutesToAnswer": {
+													"type": "number",
+													"minimum": 1,
+													"maximum": 10000
+												},
+												"language": {
+													"type": "string"
+												},
+												"mode": {
+													"type": "string"
+												},
+												"createdAt": {
+													"type": "string"
+												},
+												"updatedAt": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"id",
+												"authorId",
+												"title",
+												"description",
+												"minutesToAnswer",
+												"language",
+												"mode",
+												"createdAt",
+												"updatedAt"
+											]
+										}
+									},
+									"required": [
+										"id",
+										"order",
+										"testId",
+										"candidateId",
+										"hasEnded",
+										"secondsSpent",
+										"score",
+										"createdAt",
+										"updatedAt",
+										"test"
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/self/attempts/{attemptId}/aggregate": {
+			"get": {
+				"tags": [
+					"Self"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "attemptId",
+						"in": "path"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"answered": {
+											"type": "number"
+										},
+										"answeredCorrect": {
+											"type": "number"
+										}
+									},
+									"required": [
+										"answered",
+										"answeredCorrect"
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/self/attempts/{attemptId}/answers": {
+			"get": {
+				"tags": [
+					"Self"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "attemptId",
+						"in": "path"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"attemptId": {
+												"type": "string"
+											},
+											"questionId": {
+												"type": "number"
+											},
+											"chosenOption": {
+												"type": "number"
+											}
+										},
+										"required": [
+											"attemptId",
+											"questionId",
+											"chosenOption"
+										]
+									}
+								}
+							}
+						}
 					}
 				}
 			}

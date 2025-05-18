@@ -3,25 +3,46 @@ import { QuestionToDo } from "../../../../../../../features/tests/model/question
 import { AnswerCore } from "../../../../../../../features/tests/model/attempt.model";
 import useCurrentQuestionIndex from "./useCurrentQuestionIndex";
 import useFlagQuestions from "./useFlagQuestions";
-import useSecondsLeft from "./useTimeLeft";
 import { QuestionDoingState } from "../../type";
+import useCurrentAttemptWithAnswers from "./useCurrentAttemptWithAnswers";
+import useCurrentAttemptActions from "./useCurrentAttemptActions";
 
 export default function useTakeTest({
+	testId,
 	questionsToDo,
-	questionsAnswers,
-	startedAt,
 	minutes,
+	onNotFoundCurrentAttempt,
 }: {
+	testId: string;
 	questionsToDo: Array<QuestionToDo>;
-	questionsAnswers: Array<AnswerCore>;
-	startedAt?: string | Date | null;
 	minutes?: number | null;
+	onNotFoundCurrentAttempt?: () => void;
 }) {
+	const { data: {
+		currentAttempt,
+		answers,
+	}, isLoading } = useCurrentAttemptWithAnswers({
+		testId,
+		onNotFoundCurrentAttempt,
+	});
+
+	const startedAt = currentAttempt?.createdAt;
+	const questionsAnswers = useMemo(() => {
+		return answers.filter((answer) => {
+			return questionsToDo.some((question) => question.id === answer.questionId);
+		});
+	}, [answers, questionsToDo]);
+
+	const {
+		handleAnswer,
+		handleSubmit,
+	} = useCurrentAttemptActions({
+		attemptId: currentAttempt?.id,
+	});
+
 	const {
 		currentQuestionIndex,
 		handleCurrentQuestionIndexChange,
-		handleNextQuestion,
-		handlePreviousQuestion,
 	} = useCurrentQuestionIndex(questionsToDo.length);
 
 	const {
@@ -29,10 +50,19 @@ export default function useTakeTest({
 		isQuestionFlagged,
 	} = useFlagQuestions();
 
-	const secondsLeft = useSecondsLeft({
-		startedAt: startedAt ? new Date(startedAt) : new Date(),
-		minutes: minutes || 0,
-	});
+	const secondsLeft = useMemo(() => {
+		if (startedAt == null || minutes == null) {
+			return 0;
+		}
+		const now = new Date();
+		const startedAtDate = new Date(startedAt);
+		const timeElapsed = Math.floor(
+			(now.getTime() - startedAtDate.getTime()) / 1000 // Seconds
+		);
+		const totalTime = minutes * 60; // Convert minutes to seconds
+		const remainingTime = totalTime - timeElapsed;
+		return Math.max(remainingTime, 0);
+	}, [startedAt, minutes]);
 
 	const questionAnswersMap = useMemo(() => {
 		return new Map<number, AnswerCore>(
@@ -41,12 +71,12 @@ export default function useTakeTest({
 	}, [questionsAnswers]);
 
 	const questionDoings: QuestionDoingState[] = useMemo(() => {
-		return questionsToDo.map((question, index) => {
+		return questionsToDo.map((question, index): QuestionDoingState => {
 			return {
 				questionId: question.id,
 				isFlagged: isQuestionFlagged(question.id),
-				isAnswered: questionAnswersMap.has(question.id),
 				isCurrent: index === currentQuestionIndex,
+				chosenOption: questionAnswersMap.get(question.id)?.chosenOption,
 			};
 		});
 	}, [
@@ -68,13 +98,14 @@ export default function useTakeTest({
 	])
 
 	return {
+		isLoading,
 		secondsLeft,
 		questionDoings,
 		currentQuestionIndex,
 		currentQuestion,
+		handleAnswer,
+		handleSubmit,
 		handleCurrentQuestionIndexChange,
-		handleNextQuestion,
-		handlePreviousQuestion,
 		handleFlagQuestionToggle,
 	}
 }

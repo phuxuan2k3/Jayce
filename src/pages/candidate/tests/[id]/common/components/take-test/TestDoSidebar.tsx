@@ -1,4 +1,4 @@
-import TestTimer from "../../../../../../../features/tests/ui/TestTimer";
+import TestTimer from "../../../../../../../features/tests/ui2/TestTimer";
 import { AlarmClock } from "lucide-react";
 import { QuestionDoingState } from "../../type";
 

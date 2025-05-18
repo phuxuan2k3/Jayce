@@ -1,5 +1,6 @@
 import { UserInfo } from '../../../../../../../features/auth/store/authSlice';
 import { TestCore } from '../../../../../../../features/tests/model/test.model';
+import { getUserCore } from '../../../../../../../features/tests/model/user.model';
 
 const TestInfoCard = ({
 	test,
@@ -10,6 +11,7 @@ const TestInfoCard = ({
 	author?: UserInfo;
 	isLoading: boolean;
 }) => {
+	const userCore = author ? getUserCore(author) : undefined;
 	return (
 		<div className="bg-[#eaf6f8] p-6 rounded-lg mb-6 flex justify-between">
 			<div className="w-full flex flex-col items-center h-[200px]">
@@ -20,7 +22,7 @@ const TestInfoCard = ({
 					) : (test && (
 						<>
 							<p className="text-gray-700 mb-2">
-								<span className="font-semibold">By:</span> {author?.username}
+								<span className="font-semibold">By:</span> {userCore?.fullname}
 							</p>
 							<p className="text-gray-700 mb-2">
 								<span className="font-semibold">Time Limit:</span> {test.minutesToAnswer} minutes

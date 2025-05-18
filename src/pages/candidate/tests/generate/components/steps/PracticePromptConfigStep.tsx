@@ -1,27 +1,36 @@
 import React from 'react';
-import { TemplateCore } from "../../../../../../features/tests/model/test.model";
 import TagInput from '../../../templates/components/TagInput';
+import { PracticeDifficulty } from '../../types';
 
-interface PromptInfoStepProps {
-	promptData: Omit<TemplateCore, 'id' | 'name'>;
-	onPromptDataChange: (data: Omit<TemplateCore, 'id' | 'name'>) => void;
+type PromptConfig = {
+	difficulty: PracticeDifficulty;
+	numberOfQuestions: number;
+	numberOfOptions: number;
+	tags: string[];
+};
+
+interface Props {
+	promptConfig: PromptConfig;
+	onPromptConfigChange: (data: PromptConfig) => void;
 	testTitle: string;
 	testDescription: string;
 }
 
-const PromptInfoStep: React.FC<PromptInfoStepProps> = ({
-	promptData,
-	onPromptDataChange,
+const PracticePromptConfigStep: React.FC<Props> = ({
+	promptConfig,
+	onPromptConfigChange,
 	testTitle,
 	testDescription
 }) => {
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
 		const { name, value } = e.target;
-		onPromptDataChange({
-			...promptData,
+		onPromptConfigChange({
+			...promptConfig,
 			[name]: ['numberOfQuestions', 'numberOfOptions'].includes(name)
 				? parseInt(value, 10)
-				: value,
+				: name === 'difficulty'
+					? value.toLowerCase() as "easy" | "medium" | "hard"
+					: value,
 		});
 	};
 
@@ -60,7 +69,7 @@ const PromptInfoStep: React.FC<PromptInfoStepProps> = ({
 							type="number"
 							id="numberOfQuestions"
 							name="numberOfQuestions"
-							value={promptData.numberOfQuestions}
+							value={promptConfig.numberOfQuestions}
 							onChange={handleInputChange}
 							min={1}
 							max={50}
@@ -73,13 +82,13 @@ const PromptInfoStep: React.FC<PromptInfoStepProps> = ({
 						<select
 							id="difficulty"
 							name="difficulty"
-							value={promptData.difficulty}
+							value={promptConfig.difficulty}
 							onChange={handleInputChange}
 							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						>
-							<option value="Easy">Easy</option>
-							<option value="Medium">Medium</option>
-							<option value="Hard">Hard</option>
+							<option value="easy">Easy</option>
+							<option value="medium">Medium</option>
+							<option value="hard">Hard</option>
 						</select>
 					</div>
 
@@ -91,7 +100,7 @@ const PromptInfoStep: React.FC<PromptInfoStepProps> = ({
 							type="number"
 							id="numberOfOptions"
 							name="numberOfOptions"
-							value={promptData.numberOfOptions}
+							value={promptConfig.numberOfOptions}
 							onChange={handleInputChange}
 							min={2}
 							max={6}
@@ -101,12 +110,12 @@ const PromptInfoStep: React.FC<PromptInfoStepProps> = ({
 				</div>
 
 				<TagInput
-					tags={promptData.tags}
-					onTagsChange={(newTags) => onPromptDataChange({ ...promptData, tags: newTags })}
+					tags={promptConfig.tags}
+					onTagsChange={(newTags) => onPromptConfigChange({ ...promptConfig, tags: newTags })}
 				/>
 
-				<div className="bg-blue-50 p-4 rounded-md border border-blue-200">
-					<p className="text-sm text-blue-800">
+				<div className="bg-primary-toned-50 p-4 rounded-md border border-primary-toned-200">
+					<p className="text-sm text-primary-toned-800">
 						<span className="font-medium">Tip:</span> Add specific tags related to the technologies or
 						concepts you want to be tested on. Tags help the AI generate more relevant questions.
 					</p>
@@ -116,4 +125,4 @@ const PromptInfoStep: React.FC<PromptInfoStepProps> = ({
 	);
 };
 
-export default PromptInfoStep;
+export default PracticePromptConfigStep;

@@ -22,18 +22,21 @@ export default function ParticipantsTabContent({
 
 	return (
 		<div className="border border-gray-200 rounded-lg p-4">
-			<ParticipantsList
-				testId={testId}
-				onParticipantClicked={(participantId) => {
-					setCurrentCandidateId(participantId);
-				}}
-			/>
-
-			<ParticipantsResult
-				testId={testId}
-				candidateId={currentCandidateId}
-				onBack={() => setCurrentCandidateId(null)}
-			/>
+			<div className={`${currentCandidateId ? "hidden" : ""}`}>
+				<ParticipantsList
+					testId={testId}
+					onParticipantClicked={(participantId) => {
+						setCurrentCandidateId(participantId);
+					}}
+				/>
+			</div>
+			<div className={`${currentCandidateId ? "" : "hidden"}`}>
+				<ParticipantsResult
+					testId={testId}
+					candidateId={currentCandidateId}
+					onBack={() => setCurrentCandidateId(null)}
+				/>
+			</div>
 		</div>
 	)
 }

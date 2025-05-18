@@ -1,25 +1,15 @@
 import React, { useState } from 'react';
-
-// Mock data for AI suggestions
-const mockSuggestions = [
-	'Cover fundamental concepts and principles',
-	'Include questions about best practices',
-	'Focus on performance optimization techniques',
-	'Add questions about error handling strategies',
-	'Include real-world scenarios and problem-solving',
-	'Test knowledge of related tools and frameworks',
-	'Cover security considerations and practices',
-	'Include questions about scalability approaches',
-	'Test understanding of design patterns',
-	'Add questions about testing methodologies',
-];
+import { useLazyGetSuggestOutlinesQuery } from '../../../../../features/tests/api/prompt.api-custom';
+import { TemplateFormData } from './types';
 
 interface Props {
+	template: TemplateFormData;
 	outlines: string[];
 	onOutlinesChange: (newOutlines: string[]) => void;
 }
 
 const OutlinesInput: React.FC<Props> = ({
+	template,
 	outlines,
 	onOutlinesChange,
 }) => {
@@ -27,6 +17,7 @@ const OutlinesInput: React.FC<Props> = ({
 	const [isGeneratingSuggestions, setIsGeneratingSuggestions] =
 		useState<boolean>(false);
 	const [suggestions, setSuggestions] = useState<string[]>([]);
+	const [getOutlineSuggestions] = useLazyGetSuggestOutlinesQuery();
 
 	const handleAddOutline = () => {
 		if (newOutline.trim()) {
@@ -39,20 +30,21 @@ const OutlinesInput: React.FC<Props> = ({
 		onOutlinesChange(outlines.filter((_, i) => i !== index));
 	};
 
-	const handleGenerateSuggestions = () => {
+	const handleGenerateSuggestions = async () => {
+		if (isGeneratingSuggestions) return;
+
 		setIsGeneratingSuggestions(true);
+		try {
+			const response = await getOutlineSuggestions({
+				...template,
+			}).unwrap();
 
-		// Simulate API call with timeout
-		setTimeout(() => {
-			// Get random suggestions (3-5) from the mock data
-			const count = Math.floor(Math.random() * 3) + 3; // 3 to 5 suggestions
-			const randomSuggestions = [...mockSuggestions]
-				.sort(() => 0.5 - Math.random())
-				.slice(0, count);
-
-			setSuggestions(randomSuggestions);
+			setSuggestions(response.outlines);
+		} catch (error) {
+			console.error('Error generating suggestions:', error);
+		} finally {
 			setIsGeneratingSuggestions(false);
-		}, 1000);
+		}
 	};
 
 	const handleAddSuggestion = (suggestion: string) => {

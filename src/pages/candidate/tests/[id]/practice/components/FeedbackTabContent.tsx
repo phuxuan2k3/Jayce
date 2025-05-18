@@ -1,6 +1,7 @@
 import React from 'react';
 import { StarIcon, AlertCircle, Sparkles, MessageSquare } from 'lucide-react';
 import useFeedbackTab from '../hooks/useFeedbackTab';
+import { parseQueryError } from '../../../../../../helpers/fetchBaseQuery.error';
 
 const FeedbackTabContent: React.FC = () => {
 	const {
@@ -9,11 +10,8 @@ const FeedbackTabContent: React.FC = () => {
 		feedback,
 		setFeedback,
 		submitFeedback,
+		postFeedbackState,
 	} = useFeedbackTab();
-
-
-	// Initialize feedback state from test or default values
-
 
 	// Handle rating change
 	const handleRatingChange = (rating: number) => {
@@ -192,15 +190,37 @@ const FeedbackTabContent: React.FC = () => {
 			</div>
 
 			{/* Submit Button */}
-			<div className="flex justify-end">
+			<div className="flex justify-between items-center">
+				<p className="text-sm text-gray-500">
+					Your feedback helps us improve the test experience.
+				</p>
+				{postFeedbackState.isSuccess && (
+					<p className="text-sm text-green-500">
+						Feedback submitted successfully!
+					</p>
+				)}
 				<button
-					className="px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-toned-600 transition-colors"
+					className={`px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-toned-600 transition-colors ${postFeedbackState.isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
 					onClick={submitFeedback}
 				>
-					Submit Feedback
+					{postFeedbackState.isLoading ? "Loading..." : "Submit Feedback"}
 				</button>
 			</div>
-		</div>
+
+			{postFeedbackState.error != null && (
+				<div className="fixed bottom-0 left-0 right-0 p-4 bg-red-500 text-white text-center">
+					<p className="text-sm">
+						{parseQueryError(postFeedbackState.error) || 'An error occurred while submitting feedback.'}
+					</p>
+					<button
+						className="mt-2 px-4 py-2 bg-red-700 rounded-lg text-sm font-semibold hover:bg-red-800 transition-colors"
+						onClick={() => postFeedbackState.reset()}
+					>
+						Try Again
+					</button>
+				</div>
+			)}
+		</div >
 	);
 };
 

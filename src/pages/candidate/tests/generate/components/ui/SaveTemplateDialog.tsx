@@ -1,81 +1,111 @@
 import React from 'react';
-import { TemplateCore } from '../../../../../../features/tests/model/test.model';
 import { XCircle, Save, Plus, X } from 'lucide-react';
+import { usePostTemplatesMutation } from '../../../templates/apis/template.api-enhance';
+import { PracticeDifficulty, TemplateCreateData } from '../../types';
+import { parseQueryError } from '../../../../../../helpers/fetchBaseQuery.error';
 
 interface SaveTemplateDialogProps {
 	isOpen: boolean;
 	onClose: () => void;
-	onSave: (name: string, promptData: Omit<TemplateCore, 'id' | 'name'>) => void;
-	templateName: string;
-	onTemplateNameChange: (name: string) => void;
-	promptData: Omit<TemplateCore, 'id' | 'name'>;
-	onPromptDataChange: (data: Omit<TemplateCore, 'id' | 'name'>) => void;
-	isSaving: boolean;
+	initializeTemplateCreateData: Omit<TemplateCreateData, "name">;
+	onTemplateSaved: (data: TemplateCreateData) => void;
 }
 
 const SaveTemplateDialog: React.FC<SaveTemplateDialogProps> = ({
 	isOpen,
 	onClose,
-	onSave,
-	templateName,
-	onTemplateNameChange,
-	promptData,
-	onPromptDataChange,
-	isSaving,
+	initializeTemplateCreateData,
+	onTemplateSaved,
 }) => {
-	if (!isOpen) return null;
+	const [templateCreateData, setTemplateCreateData] = React.useState<TemplateCreateData>({
+		...initializeTemplateCreateData,
+		name: '',
+	});
+
+	const [error, setError] = React.useState<string | null>(null);
+	const [isSaving, setIsSaving] = React.useState(false);
+	const [createTemplate] = usePostTemplatesMutation();
 
 	const [newTag, setNewTag] = React.useState<string>('');
 	const [newOutline, setNewOutline] = React.useState<string>('');
 
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
-		onSave(templateName, promptData);
+	const handleSaveTemplateConfirm = async () => {
+		try {
+			setIsSaving(true);
+			if (!templateCreateData.name.trim()) {
+				setError("Template name is required");
+				return;
+			}
+			await createTemplate({
+				body: {
+					...templateCreateData,
+				}
+			}).unwrap();
+			setIsSaving(false);
+			onTemplateSaved(templateCreateData);
+			onClose();
+		} catch (error: any) {
+			const errorMessage = parseQueryError(error);
+			setError(errorMessage);
+		}
 	};
+
+	if (!isOpen) return null;
+
 
 	const handleInputChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
 	) => {
 		const { name, value } = e.target;
-		onPromptDataChange({
-			...promptData,
-			[name]: name === 'numberOfQuestions' || name === 'numberOfOptions' || name === 'difficulty'
+		setTemplateCreateData({
+			...templateCreateData,
+			[name]: name === 'numberOfQuestions' || name === 'numberOfOptions'
 				? parseInt(value, 10)
-				: value,
+				: name === 'difficulty'
+					? value as PracticeDifficulty || "easy"
+					: value,
 		});
 	};
 
 	const handleAddTag = () => {
-		if (newTag.trim() && !promptData.tags.includes(newTag.trim())) {
-			onPromptDataChange({
-				...promptData,
-				tags: [...promptData.tags, newTag.trim()]
-			});
-			setNewTag('');
+		if (!newTag.trim()) {
+			setError("Tag cannot be empty");
+			return;
 		}
+		if (templateCreateData.tags.includes(newTag.trim())) {
+			setError("Tag already exists");
+			return;
+		}
+		setTemplateCreateData({
+			...templateCreateData,
+			tags: [...templateCreateData.tags, newTag.trim()]
+		});
+		setNewTag('');
 	};
 
 	const handleRemoveTag = (tag: string) => {
-		onPromptDataChange({
-			...promptData,
-			tags: promptData.tags.filter(t => t !== tag)
+		setTemplateCreateData({
+			...templateCreateData,
+			tags: templateCreateData.tags.filter(t => t !== tag)
 		});
 	};
 
 	const handleAddOutline = () => {
-		if (newOutline.trim()) {
-			onPromptDataChange({
-				...promptData,
-				outlines: [...promptData.outlines, newOutline.trim()]
-			});
-			setNewOutline('');
+		if (!newOutline.trim()) {
+			setError("Outline cannot be empty");
+			return;
 		}
+		setTemplateCreateData({
+			...templateCreateData,
+			outlines: [...templateCreateData.outlines, newOutline.trim()]
+		});
+		setNewOutline('');
 	};
 
 	const handleRemoveOutline = (index: number) => {
-		onPromptDataChange({
-			...promptData,
-			outlines: promptData.outlines.filter((_, i) => i !== index)
+		setTemplateCreateData({
+			...templateCreateData,
+			outlines: templateCreateData.outlines.filter((_, i) => i !== index)
 		});
 	};
 
@@ -103,7 +133,7 @@ const SaveTemplateDialog: React.FC<SaveTemplateDialogProps> = ({
 				)}
 
 				<form
-					onSubmit={handleSubmit}
+					onSubmit={handleSaveTemplateConfirm}
 					className={`flex-1 overflow-auto ${isSaving
 						? 'opacity-50 pointer-events-none'
 						: ''
@@ -117,8 +147,11 @@ const SaveTemplateDialog: React.FC<SaveTemplateDialogProps> = ({
 							<input
 								type="text"
 								id="templateName"
-								value={templateName}
-								onChange={(e) => onTemplateNameChange(e.target.value)}
+								value={templateCreateData.name}
+								onChange={(e) => setTemplateCreateData({
+									...templateCreateData,
+									name: e.target.value
+								})}
 								className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 								placeholder="Enter a name for this template"
 								required
@@ -131,11 +164,11 @@ const SaveTemplateDialog: React.FC<SaveTemplateDialogProps> = ({
 							<div className="space-y-2">
 								<div>
 									<span className="text-sm font-medium text-gray-500">Title:</span>
-									<p className="text-gray-800">{promptData.title}</p>
+									<p className="text-gray-800">{initializeTemplateCreateData.title}</p>
 								</div>
 								<div>
 									<span className="text-sm font-medium text-gray-500">Description:</span>
-									<p className="text-gray-800">{promptData.description}</p>
+									<p className="text-gray-800">{initializeTemplateCreateData.description}</p>
 								</div>
 							</div>
 							<p className="mt-2 text-xs text-primary-toned-600">
@@ -151,13 +184,13 @@ const SaveTemplateDialog: React.FC<SaveTemplateDialogProps> = ({
 								<select
 									id="difficulty"
 									name="difficulty"
-									value={promptData.difficulty}
+									value={initializeTemplateCreateData.difficulty}
 									onChange={handleInputChange}
 									className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 								>
-									<option value={1}>Easy</option>
-									<option value={2}>Medium</option>
-									<option value={3}>Hard</option>
+									<option value={"easy"}>Easy</option>
+									<option value={"medium"}>Medium</option>
+									<option value={"hard"}>Hard</option>
 								</select>
 							</div>
 
@@ -169,7 +202,7 @@ const SaveTemplateDialog: React.FC<SaveTemplateDialogProps> = ({
 									type="number"
 									id="numberOfQuestions"
 									name="numberOfQuestions"
-									value={promptData.numberOfQuestions}
+									value={initializeTemplateCreateData.numberOfQuestions}
 									onChange={handleInputChange}
 									min={1}
 									max={100}
@@ -185,7 +218,7 @@ const SaveTemplateDialog: React.FC<SaveTemplateDialogProps> = ({
 									type="number"
 									id="numberOfOptions"
 									name="numberOfOptions"
-									value={promptData.numberOfOptions}
+									value={initializeTemplateCreateData.numberOfOptions}
 									onChange={handleInputChange}
 									min={2}
 									max={6}
@@ -199,7 +232,7 @@ const SaveTemplateDialog: React.FC<SaveTemplateDialogProps> = ({
 								Tags
 							</label>
 							<div className="flex flex-wrap gap-1 mb-2">
-								{promptData.tags.map((tag, index) => (
+								{initializeTemplateCreateData.tags.map((tag, index) => (
 									<span
 										key={index}
 										className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-primary-toned-100 text-primary"
@@ -244,12 +277,12 @@ const SaveTemplateDialog: React.FC<SaveTemplateDialogProps> = ({
 								Topics/Outlines
 							</label>
 							<div className="space-y-2 mb-2">
-								{promptData.outlines.length === 0 ? (
+								{initializeTemplateCreateData.outlines.length === 0 ? (
 									<div className="p-2 bg-gray-50 text-gray-500 text-sm text-center rounded-md border border-gray-200">
 										No outlines added yet
 									</div>
 								) : (
-									promptData.outlines.map((outline, index) => (
+									initializeTemplateCreateData.outlines.map((outline, index) => (
 										<div
 											key={index}
 											className="p-2 border border-gray-200 rounded-md bg-gray-50 relative pr-8"
@@ -273,7 +306,7 @@ const SaveTemplateDialog: React.FC<SaveTemplateDialogProps> = ({
 									onChange={(e) => setNewOutline(e.target.value)}
 									className="flex-1 p-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary"
 									placeholder="Add an outline..."
-									onKeyPress={(e) => {
+									onKeyDown={(e) => {
 										if (e.key === 'Enter') {
 											e.preventDefault();
 											handleAddOutline();
@@ -291,6 +324,22 @@ const SaveTemplateDialog: React.FC<SaveTemplateDialogProps> = ({
 						</div>
 					</div>
 
+					<div className="p-4 bg-gray-50 border-t">
+						<p className="text-sm text-gray-500">
+							* All fields are required. Please ensure that the template name is unique.
+						</p>
+						<p className="text-xs text-gray-400 mt-1">
+							Note: The template will be saved with the current test details.
+							You can edit the template later.
+						</p>
+						{error && (
+							<div className="text-red-500 text-sm mb-2">
+								<X size={16} className="inline mr-1" />
+								{error}
+							</div>
+						)}
+					</div>
+
 					<div className="p-4 border-t flex justify-end gap-2">
 						<button
 							type="button"
@@ -302,7 +351,7 @@ const SaveTemplateDialog: React.FC<SaveTemplateDialogProps> = ({
 						<button
 							type="submit"
 							className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-toned-700 flex items-center gap-2"
-							disabled={!templateName.trim() || !promptData.title.trim() || !promptData.description.trim()}
+							disabled={error !== null || isSaving}
 						>
 							<Save size={18} />
 							Save Template

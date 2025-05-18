@@ -1,6 +1,7 @@
-import { useGetCurrentTestsByTestIdQuery, useGetPracticesByTestIdAggregateQuery, useGetPracticesByTestIdAttemptsAggregateQuery, useGetPracticesByTestIdQuery } from '../../../../../../features/tests/api/test.api-gen';
+import { useGetPracticesByTestIdAggregateQuery, useGetPracticesByTestIdQuery } from '../../../../../../features/tests/api/test.api-gen';
 import useGetTestIdParams from '../../../../../../features/tests/hooks/useGetTestIdParams';
 import useGetUsers from '../../../../../../features/tests/hooks/user/useGetUsers';
+import { useGetPracticesByTestIdAttemptsAggregateQuery } from '../../common/apis/attempts.api-enhance';
 
 export default function usePracticePage() {
 	const testId = useGetTestIdParams();
@@ -17,10 +18,6 @@ export default function usePracticePage() {
 		testId,
 	});
 
-	const currentAttemptOfTestQuery = useGetCurrentTestsByTestIdQuery({
-		testId,
-	});
-
 	const user = useGetUsers(practiceQuery.data ? [practiceQuery.data.authorId] : undefined);
 
 	return {
@@ -30,7 +27,6 @@ export default function usePracticePage() {
 				numberOfQuestions: 0,
 				totalPoints: 0,
 			},
-			currentAttempt: currentAttemptOfTestQuery.data || null,
 			attemptAggregate: attemptsAggregateQuery.data || {
 				averageScore: 0,
 				averageTime: 0,
