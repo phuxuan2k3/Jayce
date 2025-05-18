@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import { JobSetupData } from "./setup";
 import { usePostStartInterviewMutation } from "../../../../features/interviews/api/interview.api";
+import ModalCheckSound from "./ModalCheckSound";
 
 const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
   const [speechRate, setSpeechRate] = useState(40);
@@ -33,6 +34,7 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
     }
   };
 
+  const [isOpen, setIsopen] = useState<boolean>(false);
   return (
     <>
       <div className="fotn-back text-[48px] font-arya w-full text-center mt-6">
@@ -54,7 +56,7 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
               <option value="English">English</option>
               <option value="VietNamese">VietNamese</option>
             </select>
-            <div>Models (English)</div>
+            <div className="mt-10 mb-2">Models (English)</div>
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
               <div className="size-[200px] rounded-lg bg-gray-300" />
               <div className="size-[200px] rounded-lg bg-gray-300" />
@@ -71,8 +73,12 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
             max="100"
             value={speechRate}
             onChange={(e) => setSpeechRate(Number(e.target.value))}
-            className="range  [--range-thumb:white] text-primary "
+            className="mt-2 range  [--range-thumb:white] text-primary "
           />
+          <div className="flex justify-between  mb-10 font-medium text-black">
+            <div>Low</div>
+            <div>Fast</div>
+          </div>
           <div>Number of questions</div>
 
           <input
@@ -81,8 +87,13 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
             max="16"
             value={numQuestion}
             onChange={(e) => setNumQuestion(Number(e.target.value))}
-            className="range  [--range-thumb:white] text-primary "
+            className="range mt-2 [--range-thumb:white] text-primary "
           />
+          <div className="flex justify-between  mb-10 font-medium text-black">
+            <div>8</div>
+            <div>16</div>
+          </div>
+
           <div className="flex justify-between">
             <span> Skip intro question</span>
             <input
@@ -92,7 +103,7 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
               className="checkbox   checked:bg-primary checked:text-white size-8"
             />
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between my-10">
             <div className="w-3/5">
               <div> Skip coding question</div>
               <div className="text-[12px] font-medium">
@@ -109,13 +120,16 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
           </div>
         </div>
       </div>
-
       <div
-        onClick={() => handleStartInterview()}
-        className="mt-24 bg-primary text-center text-white px-24 py-1.5 rounded-lg"
+        onClick={() => {
+          handleStartInterview();
+          setIsopen(true);
+        }}
+        className="my-8 bg-primary text-center text-white px-24 py-1.5 rounded-lg"
       >
         Start
       </div>
+      <ModalCheckSound isOpen={isOpen} onClose={() => setIsopen(false)} />
     </>
   );
 };

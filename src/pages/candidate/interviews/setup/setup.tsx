@@ -22,10 +22,28 @@ const SetUpPage = () => {
   };
 
   return (
-    <div className="bg-primary bg-opacity-5 h-[100vh]">
+    <div className="bg-primary bg-opacity-5 h-[100%]">
       <div className=" font-asap flex-wrap flex justify-center w-[800px] mx-auto gap-1.5">
-        <div onClick={() => setStep(1)}>1</div>
-        <div onClick={() => setStep(2)}>2</div>
+        <div className="flex font-arya items-center font-bold text-[28px] w-full mt-6">
+          <div
+            onClick={() => setStep(1)}
+            className="size-10 text-white bg-primary text-center items-center flex justify-center text-2xl font-bold rounded-3xl"
+          >
+            <span>1</span>
+          </div>
+          <span className="ms-4">Job description</span>
+          <hr className="flex-1" />
+          <div
+            onClick={() => setStep(2)}
+            className={`size-10 text-white ${
+              step === 1 ? "bg-gray-300" : "bg-primary"
+            } text-center items-center flex justify-center text-2xl font-bold rounded-3xl`}
+          >
+            2
+          </div>
+          <span className="ms-4">Interview context & models</span>
+        </div>
+
         {step === 1 && (
           <SetUpStep1
             onNext={() => setStep(2)}

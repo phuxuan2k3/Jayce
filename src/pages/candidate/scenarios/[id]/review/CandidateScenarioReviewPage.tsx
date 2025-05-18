@@ -39,10 +39,14 @@ const CandidateScenarioReviewPage = () => {
 					(ans) => SubmissionStatus[ans.status as unknown as keyof typeof SubmissionStatus] !== SubmissionStatus.SUBMISSION_STATUS_IN_PROGRESS
 				);
 
-				if (allSuccess || retries >= 5) {
+				if (allSuccess) {
 					clearInterval(intervalId);
 					setIsFetchingStatus(false);
 					setStatusCheckComplete(true);
+				} else if (retries >= 5) {
+					clearInterval(intervalId);
+					setIsFetchingStatus(false);
+					setStatusCheckComplete(false);
 				}
 			} catch (err) {
 				console.error("Failed to refetch attempt:", err);
@@ -55,6 +59,11 @@ const CandidateScenarioReviewPage = () => {
 		if (shouldRefetch()) {
 			setIsFetchingStatus(true);
 			intervalId = setInterval(() => {
+				if (retries >= 5) {
+					clearInterval(intervalId);
+					setIsFetchingStatus(false);
+					return;
+				}
 				retries += 1;
 				console.log("Refetching attempt status...");
 				refetchAttempt();
@@ -70,10 +79,10 @@ const CandidateScenarioReviewPage = () => {
 
 	let submittedDate;
 
-	if (attempt.base_data.created_at instanceof Timestamp) {
-		submittedDate = attempt.base_data.created_at.toDate();
+	if (currentAttempt.base_data.created_at instanceof Timestamp) {
+		submittedDate = currentAttempt.base_data.created_at.toDate();
 	} else {
-		submittedDate = new Date(attempt.base_data.created_at ?? Date.now());
+		submittedDate = new Date(currentAttempt.base_data.created_at ?? Date.now());
 	}
 
 	const [selectedTab, setSelectedTab] = React.useState<"questions" | "history">("questions");

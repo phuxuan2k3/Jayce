@@ -54,7 +54,6 @@ const router = createBrowserRouter(
 			path: paths._layout,
 			errorElement: <ErrorPage />,
 			children: [
-
 				// Authentication pages
 				{
 					path: paths.auth._layout,
@@ -232,7 +231,7 @@ const router = createBrowserRouter(
 								{
 									path: paths.candidate.profile.SETTINGS,
 									element: <Settings />,
-								}
+								},
 							],
 						},
 					],
@@ -248,7 +247,7 @@ const router = createBrowserRouter(
 
 						{
 							element: <ManagerHomePage />,
-							index: true
+							index: true,
 						},
 
 						// F1 - Tests
@@ -350,7 +349,7 @@ const router = createBrowserRouter(
 								{
 									path: paths.manager.profile.SETTINGS,
 									element: <Settings />,
-								}
+								},
 							],
 						},
 					],
