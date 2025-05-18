@@ -18,14 +18,3 @@ export const EMPTY_TEST_PRACTICE_CORE_CREATE: TestPracticeCoreCreate = {
 	tags: [],
 	outlines: [],
 };
-
-export const EMPTY_TEMPLATE_CORE_CREATE: TemplateCoreCreate = {
-	name: '',
-	title: '',
-	description: '',
-	numberOfQuestions: 10,
-	difficulty: "Easy",
-	numberOfOptions: 4,
-	tags: [],
-	outlines: [],
-}

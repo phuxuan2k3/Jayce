@@ -1,13 +1,11 @@
 import { useGetManagerTestsByTestIdQuestionsQuery, useGetTestsByTestIdQuery } from '../../../../../features/tests/legacy/test.api-gen';
-import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
 import { TestPersistProvider } from '../../../../../features/tests/reducers/test-persist.context'
 import { TestPersistState } from '../../../../../features/tests/reducers/test-persist.reducer';
 import ManagerTestEditMain from './ManagerTestEditMain'
 
 export default function ManagerTestEditPage() {
-	const testId = useGetTestIdParams();
-	const { data: fields } = useGetTestsByTestIdQuery({ testId });
-	const { data: questions } = useGetManagerTestsByTestIdQuestionsQuery({ testId });
+	const { data: fields } = useGetTestsByTestIdQuery({ testId: 1 });
+	const { data: questions } = useGetManagerTestsByTestIdQuestionsQuery({ testId: 1 });
 
 	if (!fields || !questions) {
 		return null;

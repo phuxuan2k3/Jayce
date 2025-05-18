@@ -10,19 +10,17 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from "react-router-dom";
-import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import paths from "../../../../../router/paths";
 import { useGetUserTestsByTestIdAttemptsQuery, useGetTestsByTestIdQuery } from "../../../../../features/tests/legacy/test.api-gen";
 
 // TODO: add paging
 const ManagerTestAttemptsPage = () => {
 	const navigate = useNavigate();
-	const testId = useGetTestIdParams();
 	const [open, setOpen] = React.useState(false);
 
-	const { data: test } = useGetTestsByTestIdQuery({ testId });
+	const { data: test } = useGetTestsByTestIdQuery({ testId: 1 });
 	const { data: attempts } = useGetUserTestsByTestIdAttemptsQuery({
-		testId,
+		testId: 1,
 		page: 1,
 		perPage: 10,
 	});

@@ -2,7 +2,7 @@ import { TemplateCore } from "../model/test.model";
 
 type TemplateCardProps = {
 	template: TemplateCore;
-	onGenerate: (templateId: number) => void;
+	onGenerate: (templateId: string) => void;
 };
 
 const TemplateCard = ({ template, onGenerate }: TemplateCardProps) => (
@@ -10,7 +10,7 @@ const TemplateCard = ({ template, onGenerate }: TemplateCardProps) => (
 		<div className="flex justify-between">
 			<h3 className="font-bold text-lg">{template.title}</h3>
 			<span className="text-sm bg-primary-toned-100 text-primary-toned-700 px-2 py-1 rounded-full">
-				{template.difficulty === 1 ? 'Easy' : template.difficulty === 2 ? 'Medium' : 'Hard'}
+				{template.difficulty}
 			</span>
 		</div>
 		<p className="text-primary-toned-600 text-sm mt-2">{template.description}</p>

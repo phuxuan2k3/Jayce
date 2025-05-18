@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TestCore, PracticeCore } from '../model/test.model';
+import { PracticeCore } from '../model/test.model';
 import { AttemptCore } from '../model/attempt.model';
 
 interface TestSelectState {

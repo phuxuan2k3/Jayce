@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { FetchError } from "../../../../../../../app/server-error";
 import { useGetSelfAttemptsByAttemptIdAnswersQuery, useGetSelfTestsByTestIdQuestionsToDoQuery, useGetSelfTestsByTestIdQuestionsWithAnswersQuery } from "../../../../../../../features/tests/api/test.api-gen"
 import { AttemptCore } from "../../../../../../../features/tests/model/attempt.model";

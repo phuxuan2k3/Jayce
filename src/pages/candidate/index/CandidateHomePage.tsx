@@ -3,17 +3,14 @@ import { useNavigate } from "react-router-dom";
 import paths from "../../../router/paths";
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
-import NumbersIcon from '@mui/icons-material/Numbers';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import LocalFireDepartmentOutlinedIcon from '@mui/icons-material/LocalFireDepartmentOutlined';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import SubjectIcon from '@mui/icons-material/Subject';
 import GradientBorderNotGood from "../../../components/ui/border/GradientBorder.notgood";
 import GradientBorderNotSoGood from "../../../components/ui/border/GradientBorder.notsogood";
 import { useListUsersMutation } from "../../../features/scenarios/apis/concrete/bulbasaur.scenario-api";
 import { useListScenarioMutation, useGetRandomScenarioQuery } from "../../../features/scenarios/apis/concrete/chronobreak.scenario-api";
-import { useGetTestsChallengeOfTheDayQuery, useGetTagsQuery } from "../../../features/tests/legacy/test.api-gen";
 import { Scenario, SortType } from "../../../features/scenarios/types";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
 
@@ -68,23 +65,8 @@ const CandidateHomePage = () => {
 
 	const { data: randomScenarioData } = useGetRandomScenarioQuery();
 
-	const navigateToTestList = (tag: string) => {
-		navigate(paths.candidate.tests.ROOT, {
-			state: {
-				filters: {
-					tags: [tag],
-					perPage: 5,
-				},
-			},
-		});
-	}
-
 	const navigateToScenario = (id: string) => {
 		navigate(paths.candidate.scenarios.in(id)._layout);
-	}
-
-	const navigateToTest = (id: string) => {
-		navigate(paths.candidate.tests.in(id).PRACTICE);
 	}
 
 	return (

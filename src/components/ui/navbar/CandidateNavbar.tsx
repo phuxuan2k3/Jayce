@@ -11,7 +11,6 @@ import { useAppSelector } from "../../../app/hooks";
 import paths from "../../../router/paths";
 import { useLogoutMutation } from "../../../features/auth/api/logout.api";
 import { authSelectors } from "../../../features/auth/store/authSlice";
-import { Alarm } from "@mui/icons-material";
 
 const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

@@ -4,7 +4,6 @@ import { Snackbar, Alert } from "@mui/material";
 import { useTestPersistContext } from "../../../../../features/tests/reducers/test-persist.context";
 import { Trash2 } from "lucide-react";
 import { useDeleteManagerTestsByTestIdMutation } from "../../../../../features/tests/legacy/test.api-gen";
-import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../router/paths";
 import LeftLayoutTemplate from "../../../../../components/layouts/LeftLayoutTemplate";
@@ -14,7 +13,6 @@ type Tab = "detail" | "questions";
 
 export default function ManagerTestEditMain() {
 	const navigate = useNavigate();
-	const testId = useGetTestIdParams();
 	const [tab, setTab] = useState<Tab>("detail");
 	const [snackbar, setSnackbar] = useState<{
 		snackOpen: boolean;
@@ -36,7 +34,7 @@ export default function ManagerTestEditMain() {
 	const [deleteTest] = useDeleteManagerTestsByTestIdMutation();
 	const handleDeleteTest = async () => {
 		try {
-			const res = await deleteTest({ testId });
+			const res = await deleteTest({ testId: 1 });
 			if (res.error) {
 				setSnackbar({
 					snackOpen: true,

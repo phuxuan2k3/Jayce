@@ -1,21 +1,20 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import GradientBorderNotGood from "../../../../../../components/ui/border/GradientBorder.notgood";
 import { useGetUserAttemptsByAttemptIdAnswersQuery, useGetUserAttemptsByAttemptIdQuery, useGetTestsByTestIdQuery } from "../../../../../../features/tests/legacy/test.api-gen";
 import useGetTestIdParams from "../../../../../../features/tests/hooks/useGetTestIdParams";
-import useGetAttemptIdParams from "../../../../../../features/tests/hooks/useGetAttemptIdParams";
 import paths from "../../../../../../router/paths";
+import GradientBorderNotGood from "../../../../../../components/ui/border/GradientBorder.notgood";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
+// TODO: mock data
 const ManagerTestAttemptPage = () => {
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
-	const attemptId = useGetAttemptIdParams();
 
-	const { data: test } = useGetTestsByTestIdQuery({ testId });
-	const { data: attempt } = useGetUserAttemptsByAttemptIdQuery({ attemptId });
+	const { data: test } = useGetTestsByTestIdQuery({ testId: 1 });
+	const { data: attempt } = useGetUserAttemptsByAttemptIdQuery({ attemptId: 1 });
 	const { data: answers } = useGetUserAttemptsByAttemptIdAnswersQuery({
-		attemptId,
+		attemptId: 1,
 		page: 1,
 		perPage: 10,
 	});
