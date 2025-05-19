@@ -18,6 +18,9 @@ export default defineConfig(({ mode }) => {
 		define: {
 			'process.env': env,
 		},
+		server: {
+			host: "0.0.0.0",
+		},
 		plugins: [react()]
 	};
 });
