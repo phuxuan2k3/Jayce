@@ -27,7 +27,7 @@ export const EMPTY_PRACTICE_GENERATION: PracticeGenerationData = {
 	title: '',
 	description: '',
 	minutesToAnswer: 0,
-	language: '',
+	language: 'English',
 	difficulty: "easy",
 	tags: [],
 	outlines: [],

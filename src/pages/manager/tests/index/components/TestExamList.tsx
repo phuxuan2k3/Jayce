@@ -1,42 +1,35 @@
 import React from "react";
-import TestItem from "./TestItem";
+import TestExamCard from "./TestExamCard";
 import MyPagination from "../../../../../components/ui/common/MyPagination";
+import { ExamCore } from "../../../../../features/tests/model/test.model";
 
-interface TestListProps {
-	tests: {
-		data: {
-			id: number;
-			title: string;
-			answerCount: number;
-			minutesToAnswer: number;
-			description?: string;
-		}[];
-	};
+interface Props {
+	tests: ExamCore[];
 	totalPages: number;
-	onEdit: (testId: number) => void;
-	onDelete: (testId: number) => void;
-	onViewSubmissions: (testId: number) => void;
+	onEdit: (testId: string) => void;
+	onDelete: (testId: string) => void;
+	onTestClick: (testId: string) => void;
 	onPageChange: (page: number) => void;
 }
 
-const TestList: React.FC<TestListProps> = ({
+const TestExamList: React.FC<Props> = ({
 	tests,
 	onEdit,
 	onDelete,
-	onViewSubmissions,
+	onTestClick,
 	onPageChange,
 	totalPages,
 }) => {
 	return (
 		<div className="flex flex-col gap-8 mt-4 mb-4 items-center">
 			<div className="w-full flex flex-col gap-4 px-4">
-				{tests.data.map((test, index) => (
-					<TestItem
+				{tests.map((test, index) => (
+					<TestExamCard
 						key={index}
 						test={test}
 						onEdit={onEdit}
 						onDelete={onDelete}
-						onViewSubmissions={onViewSubmissions}
+						onTestClick={onTestClick}
 					/>
 				))}
 			</div>
@@ -49,4 +42,4 @@ const TestList: React.FC<TestListProps> = ({
 	);
 };
 
-export default TestList;
+export default TestExamList;

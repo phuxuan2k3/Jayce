@@ -29,11 +29,11 @@ import UnauthLayout from "../pages/unauth/UnauthLayout";
 import CandidateLayout from "../pages/candidate/layout";
 import GuestPage from "../pages/unauth/index/GuestPage";
 import CandidateTestsPage from "../pages/candidate/tests/index/page";
-import ManagerLayout from "../pages/manager/ManagerLayout";
+import ManagerLayout from "../pages/manager/layout";
 import AuthBusinessRegisterPage from "../pages/auth/bussiness-register/AuthBusinessRegisterPage";
 import AuthChooseRolePage from "../pages/auth/choose-role/AuthChooseRolePage";
 import CandidateTestsAttemptPage from "../pages/candidate/tests/attempts/[id]/index/page";
-import ManagerTestsPage from "../pages/manager/tests/index/ManagerTestsPage";
+import ManagerTestsPage from "../pages/manager/tests/index/page";
 import CandidateHomePage from "../pages/candidate/index/CandidateHomePage";
 import ManagerHomePage from "../pages/manager/scenarios/index/ManagerHomePage";
 import CandidateInterviewLivePage from "../pages/candidate/interviews/live/CandidateInterviewLivePage";
@@ -47,6 +47,7 @@ import CandidatePracticePage from "../pages/candidate/tests/[id]/practice/page";
 import CandidateTestsJoinPage from "../pages/candidate/tests/join/page";
 import CandidateTestExamPage from "../pages/candidate/tests/[id]/exam/page";
 import CandidateTestTakeExamPage from "../pages/candidate/tests/[id]/take-exam/page";
+import ManagerTestPage from "../pages/manager/tests/[id]/index/page";
 
 const router = createBrowserRouter(
 	[
@@ -260,8 +261,12 @@ const router = createBrowserRouter(
 									element: <ManagerTestsPage />,
 								},
 								{
-									path: paths.manager.tests.in()._layout,
+									path: paths.manager.tests.in().ROOT,
 									children: [
+										{
+											index: true,
+											element: <ManagerTestPage />,
+										},
 										{
 											path: paths.manager.tests.in().ATTEMPTS,
 											element: <ManagerTestAttemptsPage />,

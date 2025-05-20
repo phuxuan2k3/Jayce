@@ -100,7 +100,7 @@ QuestionCoreCard.Footer = () => {
 	);
 };
 
-export const QuestionCoreCardDefault = ({ question, showAnswer, onToggleAnswer }: QuestionCardProps) => {
+export const QuestionCoreCardDefault = ({ question, showAnswer, onToggleAnswer }: Omit<QuestionCardProps, "children">) => {
 	return (
 		<QuestionCoreCard question={question} showAnswer={showAnswer} onToggleAnswer={onToggleAnswer}>
 			<QuestionCoreCard.Header />

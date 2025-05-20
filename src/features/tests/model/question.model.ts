@@ -13,3 +13,11 @@ export type QuestionDo = QuestionToDo & {
 	isFlagged: boolean;
 	chosenOption?: number;
 };
+
+export type QuestionAggregate = {
+	questionId: number;
+	numberOfAnswers: number;
+	numberOfCorrectAnswers: number;
+	averagePoints: number;
+};
+
