@@ -14,12 +14,12 @@ export type AnswerCore = {
 	chosenOption: number;
 };
 
-export type AttemptAggregateCore = {
+export type AttemptAggregate = {
 	answered: number;
 	answeredCorrect: number;
 };
 
-export type AttemptsOfTestAggregateCore = {
+export type AttemptsOfTestAggregate = {
 	totalParticipants: number;
 	totalAttempts: number;
 	averageScore: number;
@@ -28,7 +28,7 @@ export type AttemptsOfTestAggregateCore = {
 	averageTime: number;
 };
 
-export type AttemptsOfCandidateInTestAggregateCore = {
+export type AttemptsOfCandidateInTestAggregate = {
 	totalAttempts: number;
 	averageScore: number;
 	highestScore: number;

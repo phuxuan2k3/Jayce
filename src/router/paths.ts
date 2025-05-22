@@ -76,7 +76,7 @@ const paths = {
 			attempts: {
 				in(id: number | string = ":attemptId") {
 					return {
-						_layout: `/manager/tests/attempts/${id}/`,
+						ROOT: `/manager/tests/attempts/${id}/`,
 					};
 				},
 			},

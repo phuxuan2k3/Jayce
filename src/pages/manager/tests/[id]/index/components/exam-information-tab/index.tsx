@@ -1,5 +1,5 @@
 import { ExamCore, TestAggregateCore } from '../../../../../../../features/tests/model/test.model';
-import { AttemptsOfTestAggregateCore } from '../../../../../../../features/tests/model/attempt.model';
+import { AttemptsOfTestAggregate } from '../../../../../../../features/tests/model/attempt.model';
 import { ExamHeader } from './ExamHeader';
 import { ExamDetails } from './ExamDetailsCard';
 import { ScheduleAccess } from './ScheduleAccess';
@@ -17,7 +17,7 @@ export default function ExamInformationTab({
 }: {
 	exam: ExamCore;
 	testAggregate: TestAggregateCore;
-	attemptOfTestAggregate: AttemptsOfTestAggregateCore;
+	attemptOfTestAggregate: AttemptsOfTestAggregate;
 }) {
 	return (
 		<div className="w-full flex flex-col gap-6">

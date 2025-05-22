@@ -1,4 +1,5 @@
 import NewLeftLayoutTemplate from '../../../../../components/layouts/NewLeftLayoutTemplate'
+import AttemptsSection from './components/attempts-tab/AttemptsSection';
 import QuestionsList from './components/questions-tab';
 
 export default function ManagerTestPage() {
@@ -33,7 +34,9 @@ export default function ManagerTestPage() {
 				{...mockFullExamInformation}
 			/> */}
 
-			<QuestionsList />
+			{/* <QuestionsList /> */}
+
+			<AttemptsSection />
 
 
 		</NewLeftLayoutTemplate>

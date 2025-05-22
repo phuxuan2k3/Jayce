@@ -278,7 +278,7 @@ const router = createBrowserRouter(
 									],
 								},
 								{
-									path: paths.manager.tests.attempts.in()._layout,
+									path: paths.manager.tests.attempts.in().ROOT,
 									element: <ManagerTestAttemptPage />,
 								},
 								{

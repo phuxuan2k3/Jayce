@@ -1,5 +1,5 @@
 import { ExamCore, TestAggregateCore } from "../../../../../features/tests/model/test.model";
-import { AttemptsOfTestAggregateCore } from "../../../../../features/tests/model/attempt.model";
+import { AttemptsOfTestAggregate } from "../../../../../features/tests/model/attempt.model";
 
 export const mockExamData: ExamCore = {
 	id: "exam001",
@@ -24,7 +24,7 @@ export const mockTestAggregateData: TestAggregateCore = {
 	totalPoints: 100,
 };
 
-export const mockAttemptOfTestAggregateData: AttemptsOfTestAggregateCore = {
+export const mockAttemptOfTestAggregateData: AttemptsOfTestAggregate = {
 	totalParticipants: 150,
 	totalAttempts: 165,
 	averageScore: 72.5,

@@ -50,7 +50,7 @@ const managerAuthResponse: AuthResponse = {
 };
 
 // Decide which mock response to be used
-const mockAuthResponse = candidateAuthResponse;
-// const mockAuthResponse = managerAuthResponse;
+// const mockAuthResponse = candidateAuthResponse;
+const mockAuthResponse = import.meta.env.VITE_NO_AUTH_ROLE === "manager" ? managerAuthResponse : candidateAuthResponse;
 
 export default mockAuthResponse;

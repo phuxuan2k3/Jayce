@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTrophy, faHourglassHalf } from '@fortawesome/free-solid-svg-icons';
-import { AttemptsOfTestAggregateCore } from '../../../../../../../features/tests/model/attempt.model';
+import { AttemptsOfTestAggregate } from '../../../../../../../features/tests/model/attempt.model';
 import { formatTime } from './utils';
 import Card from './Card';
 
 interface PerformanceMetricCardProps {
-	attemptOfTestAggregate: AttemptsOfTestAggregateCore;
+	attemptOfTestAggregate: AttemptsOfTestAggregate;
 }
 
 export const PerformanceMetricCard = ({ attemptOfTestAggregate }: PerformanceMetricCardProps) => {

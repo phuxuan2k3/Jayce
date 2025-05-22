@@ -28,7 +28,7 @@ const ManagerTestAttemptsPage = () => {
 	if (!attempts || !test) return null;
 
 	const handleGoToSubmissionDetail = (attemptId: number) => {
-		navigate(paths.manager.tests.attempts.in(attemptId)._layout);
+		navigate(paths.manager.tests.attempts.in(attemptId).ROOT);
 	};
 	const handleClickOpen = () => {
 		setOpen(true);

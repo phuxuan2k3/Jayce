@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartBar, faUsers, faRepeat } from '@fortawesome/free-solid-svg-icons';
-import { AttemptsOfTestAggregateCore } from '../../../../../../../features/tests/model/attempt.model';
+import { AttemptsOfTestAggregate } from '../../../../../../../features/tests/model/attempt.model';
 import Card from './Card';
 
 interface ParticipantsStatisticCardProps {
-	attemptOfTestAggregate: AttemptsOfTestAggregateCore;
+	attemptOfTestAggregate: AttemptsOfTestAggregate;
 }
 
 export const ParticipantsStatisticCard = ({ attemptOfTestAggregate }: ParticipantsStatisticCardProps) => {
