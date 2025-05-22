@@ -9,7 +9,7 @@ const interviewApi = createApi({
   baseQuery: async (args, api, extraOptions) => {
     const mockData = getInterviewApiMock(api.endpoint);
     if (mockData) return mockData;
-    const baseQuery = serviceBaseQueryWithReauth(url.thresh.base);
+    const baseQuery = serviceBaseQueryWithReauth(url.irelia);
     const result = await baseQuery(args, api, extraOptions);
     return result;
   },

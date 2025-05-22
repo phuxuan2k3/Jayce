@@ -1,4 +1,5 @@
 import { FC, MouseEvent } from "react";
+import { useNavigate } from "react-router-dom";
 
 type ModalCheckSoundProps = {
   isOpen: boolean;
@@ -6,6 +7,8 @@ type ModalCheckSoundProps = {
 };
 
 const ModalCheckSound: FC<ModalCheckSoundProps> = ({ isOpen, onClose }) => {
+  const navigate = useNavigate();
+
   if (!isOpen) return null;
   const handleModalClick = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -41,12 +44,20 @@ const ModalCheckSound: FC<ModalCheckSoundProps> = ({ isOpen, onClose }) => {
           <li>Please don’t refresh the page or you’ll lose the data.</li>
         </div>
         <div className="flex text-center gap-2 my-8">
-          <div className="w-1/2 p-1 border border-primary rounded-lg">Back</div>
-          <div className="w-1/2 bg-gradient-1 text-white font-semibold p-1 rounded-lg">
+          <div
+            onClick={onClose}
+            className="w-1/2 p-1 border border-primary rounded-lg"
+          >
+            Back
+          </div>
+          <div
+            onClick={() => navigate("/candidate/interviews/live/")}
+            className="w-1/2 bg-gradient-1 text-white font-semibold p-1 rounded-lg"
+          >
             Let's start
           </div>
         </div>
-        <hr />
+        {/* <hr />
         <div className="flex mt-6 mb-3 justify-between text-center ">
           <div className="w-3/7">Microphone</div>
           <div className="flex-1 text-gray-500 text-sm">
@@ -58,7 +69,7 @@ const ModalCheckSound: FC<ModalCheckSoundProps> = ({ isOpen, onClose }) => {
             Record
           </div>
           <div className="flex-1"></div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

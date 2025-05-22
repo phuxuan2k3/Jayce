@@ -58,10 +58,27 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
             </select>
             <div className="mt-10 mb-2">Models (English)</div>
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
-              <div className="size-[200px] rounded-lg bg-gray-300" />
-              <div className="size-[200px] rounded-lg bg-gray-300" />
-              <div className="size-[200px] rounded-lg bg-gray-300" />
-              <div className="size-[200px] rounded-lg bg-gray-300" />
+              <img
+                className="size-[200px] rounded-lg bg-gray-300"
+                src="https://cdn2.futurepedia.io/2024-11-26T18-51-51.356Z-MtXWJEI4O08DkXhcFo8z7VXOEe00XPWLb.webp?w=1920"
+                alt=""
+              />
+              <img
+                className="size-[200px] rounded-lg bg-gray-300"
+                src="https://animegenius-global.live3d.io/vtuber/ai_product/anime_genius/static/imgs/bc6966a47d013453c2f83a295eec4fb9.webp"
+                alt=""
+              />
+
+              <img
+                className="size-[200px] rounded-lg bg-gray-300"
+                src="https://www.aidemos.info/wp-content/uploads/2023/05/avatar_for_social_app_realistic_female_98944746-c433-464d-8e6c-e44ee6b6c03e.webp"
+                alt=""
+              />
+              <img
+                className="size-[200px] rounded-lg bg-gray-300"
+                src="https://www.aiavatar.cc/_next/static/media/4-RealisticOilPainting.9b11ae44.webp"
+                alt=""
+              />
             </div>
           </div>
         </div>
@@ -73,9 +90,9 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
             max="100"
             value={speechRate}
             onChange={(e) => setSpeechRate(Number(e.target.value))}
-            className="mt-2 range  [--range-thumb:white] text-primary "
+            className="mt-2 range  h-5 [--range-thumb-size:40px]  [--range-p:3px]   [--range-thumb:#2e808a] text-primary "
           />
-          <div className="flex justify-between  mb-10 font-medium text-black">
+          <div className="flex  justify-between  mb-10 font-medium text-black">
             <div>Low</div>
             <div>Fast</div>
           </div>
@@ -87,7 +104,7 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
             max="16"
             value={numQuestion}
             onChange={(e) => setNumQuestion(Number(e.target.value))}
-            className="range mt-2 [--range-thumb:white] text-primary "
+            className="range mt-2 h-5 [--range-thumb-size:40px]  [--range-p:3px] [--range-thumb:#2e808a] text-primary "
           />
           <div className="flex justify-between  mb-10 font-medium text-black">
             <div>8</div>

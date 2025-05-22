@@ -13,6 +13,7 @@ const ResultPage = () => {
     { id: "summary", label: "Summary", icon: "📊" },
     { id: "script", label: "Scripts", icon: "📜" },
     { id: "strength", label: "Strengths & Weaknesses", icon: "📈" },
+    { id: "", label: "", icon: "" },
   ];
 
   const [scoreData, setScoreData] = useState<GetInterviewScoreResponse | null>(
@@ -66,12 +67,13 @@ const ResultPage = () => {
         <p>Lets take a look at the result!</p>
       </div>
       <div className="flex ">
-        <div className="rounded-tr-xl ps-4  bg-gradient-to-t from-[rgba(193,101,77,0.6)] to-[rgba(57,160,173,0.6)] h-[100vh] w-2/10">
-          <div className="h-14 items-center flex justify-end px-4">a</div>
+        <div className="rounded-tr-xl ps-4  bg-[rgba(57,160,173,0.6)] h-[100vh] w-2/10">
+          <div className="h-14 items-center flex justify-end px-4"></div>
           {navItems.map((item, index) => {
             const isSelected = tab === item.id;
             const isAboveSelected = tab === navItems[index + 1]?.id;
             const isBelowSelected = tab === navItems[index - 1]?.id;
+            const isLast = index === navItems.length - 1;
 
             return (
               <div
@@ -79,7 +81,8 @@ const ResultPage = () => {
                 onClick={() => setTab(item.id)}
                 className={`
                     ${isAboveSelected ? "bg-white " : ""} 
-                    ${isBelowSelected ? "bg-white" : ""}`}
+                    ${isBelowSelected ? "bg-white" : ""}
+                    ${isLast ? " cursor-not-allowed pointer-events-none" : ""}`}
               >
                 <div
                   className={` w-full h-14 ps-4 pe-4  flex items-center text-base font-semibold cursor-pointer  ${isSelected ? "bg-white text-black rounded-l-full shadow" : "text-white  "}  
