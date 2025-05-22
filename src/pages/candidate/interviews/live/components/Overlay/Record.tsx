@@ -1,6 +1,7 @@
 import { Mic, StopCircle } from "lucide-react"
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 import SoundWaveVisualizer from "./sub/SoundWaveVisualizer";
+import { useEffect } from "react";
 
 export default function Record({
 	onAnswerRecorded,
@@ -14,7 +15,15 @@ export default function Record({
 		browserSupportsSpeechRecognition,
 		browserSupportsContinuousListening,
 		isMicrophoneAvailable,
+		transcript,
 	} = useSpeechRecognition();
+
+	useEffect(() => {
+		if (listening === false && finalTranscript != "" && transcript === finalTranscript) {
+			onAnswerRecorded(finalTranscript);
+			resetTranscript();
+		}
+	}, [listening, finalTranscript, transcript, onAnswerRecorded, resetTranscript]);
 
 	const startListening = () => {
 		if (listening == false && browserSupportsContinuousListening && isMicrophoneAvailable) {
@@ -27,14 +36,9 @@ export default function Record({
 		}
 	}
 
-	const stopListening = () => {
+	const stopListening = async () => {
 		if (listening == true) {
-			SpeechRecognition.stopListening().then(() => {
-				if (finalTranscript) {
-					onAnswerRecorded(finalTranscript);
-					resetTranscript();
-				}
-			}).catch((error) => {
+			SpeechRecognition.stopListening().catch((error) => {
 				console.error("Error stopping speech recognition:", error);
 			});
 		}
