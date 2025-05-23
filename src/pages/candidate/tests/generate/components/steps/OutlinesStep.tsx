@@ -61,14 +61,7 @@ const OutlinesStep: React.FC<{
 		};
 
 		const handleGenerateSuggestions = () => {
-			if (state.data.outlines.length > 0) {
-				getSuggestions(state.data);
-			} else {
-				dispatch({
-					type: PracticeGenerationActionTypes.SET_ERROR,
-					payload: 'Please add at least one outline before generating suggestions.',
-				});
-			}
+			getSuggestions(state.data);
 		};
 
 		const handleAddSuggestion = (suggestion: string) => {

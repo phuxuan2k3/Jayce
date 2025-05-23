@@ -32,11 +32,12 @@ const TestGenerationStepper: React.FC<TestGenerationStepperProps> = ({
 					<div key={index} className="flex-1 flex flex-col items-center">
 						<div
 							className={`w-10 h-10 rounded-full flex items-center justify-center 
-                ${activeStep === index
+								${activeStep === index
 									? 'bg-primary-toned-600 text-white'
 									: activeStep > index
 										? 'bg-secondary-toned-500 text-white'
-										: 'bg-gray-200 text-gray-600'}`}
+										: 'bg-gray-200 text-gray-600'
+								}`}
 						>
 							{activeStep > index ? (
 								<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -58,10 +59,9 @@ const TestGenerationStepper: React.FC<TestGenerationStepperProps> = ({
 				<button
 					onClick={onBack}
 					disabled={isBackDisabled}
-					className={`px-4 py-2 border border-gray-300 rounded-md 
-            ${isBackDisabled
-							? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-							: 'bg-white text-gray-700 hover:bg-gray-50'}`}
+					className={`px-4 py-2 border border-gray-300 rounded-md ${isBackDisabled
+						? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+						: 'bg-white text-gray-700 hover:bg-gray-50'}`}
 				>
 					Back
 				</button>

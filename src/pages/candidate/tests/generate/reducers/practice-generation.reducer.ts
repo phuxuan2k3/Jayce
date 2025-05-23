@@ -18,6 +18,7 @@ export const practiceGenerationReducer = (
 			return {
 				...state,
 				data: action.payload,
+				error: null,
 			};
 		case PracticeGenerationActionTypes.SET_ERROR:
 			return {
@@ -35,7 +36,6 @@ export const practiceGenerationReducer = (
 				apiError: action.payload,
 			};
 		case PracticeGenerationActionTypes.APPLY_TEMPLATE:
-			console.log("apply template", action.payload);
 			return {
 				...state,
 				template: action.payload,
