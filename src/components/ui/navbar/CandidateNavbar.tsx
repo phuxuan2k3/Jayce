@@ -131,7 +131,7 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                   {openPractice && (
                     <div
                       ref={dropdownRef}
-                      className="z-[100] absolute px-6 py-4 left-10 top-[70px] mt-1 bg-white shadow-lg rounded w-[360px]  text-lg font-medium"
+                      className="z-[9999099999999999999999999999] absolute px-6 py-4 left-10 top-[70px] mt-1 bg-white shadow-lg rounded w-[360px]  text-lg font-medium"
                     >
                       <div className="flex items-center">
                         <svg
