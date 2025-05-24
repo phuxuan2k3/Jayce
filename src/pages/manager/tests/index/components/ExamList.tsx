@@ -1,20 +1,18 @@
 import React from "react";
-import TestExamCard from "./TestExamCard";
+import ExamCard from "./ExamCard";
 import MyPagination from "../../../../../components/ui/common/MyPagination";
 import { ExamCore } from "../../../../../features/tests/model/test.model";
 
 interface Props {
 	tests: ExamCore[];
 	totalPages: number;
-	onEdit: (testId: string) => void;
-	onDelete: (testId: string) => void;
+	onDelete: (exam: ExamCore) => void;
 	onTestClick: (testId: string) => void;
 	onPageChange: (page: number) => void;
 }
 
-const TestExamList: React.FC<Props> = ({
+const ExamList: React.FC<Props> = ({
 	tests,
-	onEdit,
 	onDelete,
 	onTestClick,
 	onPageChange,
@@ -24,11 +22,10 @@ const TestExamList: React.FC<Props> = ({
 		<div className="flex flex-col gap-8 mt-4 mb-4 items-center">
 			<div className="w-full flex flex-col gap-4 px-4">
 				{tests.map((test, index) => (
-					<TestExamCard
+					<ExamCard
 						key={index}
 						test={test}
-						onEdit={onEdit}
-						onDelete={onDelete}
+						onDelete={() => onDelete(test)}
 						onTestClick={onTestClick}
 					/>
 				))}
@@ -42,4 +39,4 @@ const TestExamList: React.FC<Props> = ({
 	);
 };
 
-export default TestExamList;
+export default ExamList;

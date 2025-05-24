@@ -1,7 +1,7 @@
 import { mockQuestionAggregate, mockQuestions } from "./mockData";
 import QuestionManageCard from "./QuestionManageCard";
 
-export default function QuestionsList() {
+export default function QuestionsTab() {
 	return <>
 		<div className="flex flex-col gap-4">
 			{mockQuestions.map((question, index) => (

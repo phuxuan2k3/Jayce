@@ -1,8 +1,15 @@
+import { useState } from 'react';
 import NewLeftLayoutTemplate from '../../../../../components/layouts/NewLeftLayoutTemplate'
-import AttemptsSection from './components/attempts-tab/AttemptsSection';
-import QuestionsList from './components/questions-tab';
+import AttemptsTab from './components/attempts-tab';
+import Sidebar from './components/Sidebar';
+import { mockFullExamInformation } from './mockExamInformationData';
+import QuestionsTab from './components/questions-tab';
+import ExamInformationTab from './components/exam-information-tab';
+import { TabMode } from './types/tab-mode';
 
 export default function ManagerTestPage() {
+	const [mode, setMode] = useState<TabMode>('info');
+
 	return (
 		<NewLeftLayoutTemplate
 			header={
@@ -11,34 +18,22 @@ export default function ManagerTestPage() {
 					description="Manage all your exams."
 				/>
 			}
-			left={
-				<div className="lg:sticky lg:top-[2vh] flex flex-col gap-4 shadow-primary rounded-lg p-4 bg-white">
-					<div className="flex flex-col gap-2 mb-4">
-						<h2 className="text-lg font-bold">Actions</h2>
-						<p className="text-sm text-primary-toned-500">You can create, edit or delete your tests.</p>
-					</div>
-					{/* <CommonButton
-						variant="secondary"
-					>
-						Avtive Tests
-					</CommonButton> */}
-					{/* <CommonButton
-						onClick={handleClickCreateTest}
-					>
-						Create Test
-					</CommonButton> */}
-				</div>
-			}
+			left={<Sidebar
+				onModeChange={(mode) => setMode(mode)}
+			/>}
 		>
-			{/* <ExamInformationSection
-				{...mockFullExamInformation}
-			/> */}
-
-			{/* <QuestionsList /> */}
-
-			<AttemptsSection />
-
-
+			{getTab(mode)}
 		</NewLeftLayoutTemplate>
 	);
+}
+
+const getTab = (mode: TabMode) => {
+	switch (mode) {
+		case 'info':
+			return <ExamInformationTab {...mockFullExamInformation} />;
+		case 'questions':
+			return <QuestionsTab />;
+		case 'attempts':
+			return <AttemptsTab />;
+	}
 }
