@@ -109,7 +109,7 @@ const UnauthNavbar = () => {
                 icon={faChevronDown}
               />
               {open && (
-                <div className="absolute px-6 pt-2 pb-4 flex left-10 top-[70px] mt-1 bg-white shadow-lg rounded w-[630px] z-10 text-lg font-medium">
+                <div className=" z-[9999] overflow-visible absolute px-6 pt-2 pb-4 flex left-10 top-[70px] mt-1 bg-white shadow-lg rounded w-[630px] text-lg font-medium">
                   <div className="w-full">
                     <div className="py-2 text-gray-600">For candidates</div>
                     <div className="flex items-center">
@@ -258,10 +258,10 @@ const UnauthNavbar = () => {
                 </div>
               )}
             </div>
-            <div className="pe-6 py-2 text-xl font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
+            <div className="pe-6 py-2 text-xl font-semibold text-black">
               Pricing
             </div>
-            <div className="pe-6 py-2 text-xl font-semibold text-black hover:bg-[var(--primary-color)] hover:text-white">
+            <div className="pe-6 py-2 text-xl font-semibold text-black">
               Feedback
             </div>
           </div>

@@ -48,6 +48,7 @@ import CandidateTestsJoinPage from "../pages/candidate/tests/join/page";
 import CandidateTestExamPage from "../pages/candidate/tests/[id]/exam/page";
 import CandidateTestTakeExamPage from "../pages/candidate/tests/[id]/take-exam/page";
 import ManagerTestPage from "../pages/manager/tests/[id]/index/page";
+import ResultPage from "../pages/candidate/interviews/result/result";
 
 const router = createBrowserRouter(
 	[
@@ -166,7 +167,7 @@ const router = createBrowserRouter(
 										{
 											path: paths.candidate.tests.in().TAKE_EXAM,
 											element: <CandidateTestTakeExamPage />,
-										}
+										},
 									],
 								},
 							],
@@ -213,6 +214,10 @@ const router = createBrowserRouter(
 								{
 									path: paths.candidate.interview.SETUP,
 									element: <SetUpPage />,
+								},
+								{
+									path: paths.candidate.interview.RESULT,
+									element: <ResultPage />,
 								},
 							],
 						},
