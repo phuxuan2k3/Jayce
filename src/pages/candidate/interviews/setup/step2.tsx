@@ -4,15 +4,17 @@ import { usePostStartInterviewMutation } from "../../../../features/interviews/a
 import ModalCheckSound from "./ModalCheckSound";
 
 const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
-  const [speechRate, setSpeechRate] = useState(40);
-  const [numQuestion, setNumQuestion] = useState(12);
+  const [speechRate, setSpeechRate] = useState(10);
+  const [numQuestion, setNumQuestion] = useState(2);
   const [skipIntro, setSkipIntro] = useState(false);
   const [skipCode, setSkipCode] = useState(false);
   const [language, setLanguage] = useState<string>("English");
 
   const [postStartInterview] = usePostStartInterviewMutation();
-
+  const [loading, setLoading] = useState<boolean>(false);
   const handleStartInterview = async () => {
+    setIsopen(true);
+    setLoading(true);
     const interviewData = {
       position: data.position,
       experience: data.experience,
@@ -20,7 +22,7 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
       models: "en-GB-RyanNeural",
       speed: speechRate,
       skills: [data?.skills],
-      maxQuestions: numQuestion,
+      totalQuestions: numQuestion,
       skipIntro,
       skipCode,
     };
@@ -29,6 +31,8 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
       const response = await postStartInterview(interviewData).unwrap();
       console.log("interview data", interviewData);
       console.log("Interview started: ", response);
+      localStorage.setItem("interviewInfo", JSON.stringify(response));
+      setLoading(false);
     } catch (err) {
       console.error("Error starting interview: ", err);
     }
@@ -146,7 +150,11 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
       >
         Start
       </div>
-      <ModalCheckSound isOpen={isOpen} onClose={() => setIsopen(false)} />
+      <ModalCheckSound
+        loading={loading}
+        isOpen={isOpen}
+        onClose={() => setIsopen(false)}
+      />
     </>
   );
 };

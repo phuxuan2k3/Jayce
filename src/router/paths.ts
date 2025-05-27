@@ -50,9 +50,9 @@ const paths = {
       },
     },
     interview: {
-      _layout: "/candidate/interviews/",
+      _layout: "/candidate/interviews",
       LIVE: "/candidate/interviews/live/",
-      SETUP: "/candidate/interviews/setup",
+      SETUP: "/candidate/interviews",
       RESULT: "/candidate/interviews/result",
     },
     profile: {

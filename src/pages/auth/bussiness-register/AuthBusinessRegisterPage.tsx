@@ -19,7 +19,7 @@ export default function AuthBusinessRegisterPage() {
         <Carousel className="bg-[#D5EEF1] h-full text-3xl font-bold col-span-12 lg:col-span-5 text-black " />
         <div
           ref={mainRef}
-          className="col-span-12 lg:col-span-7 mx-8 lg:mx-32 xl:mx-32 2xl:mx-64 py-12"
+          className="col-span-12 lg:col-span-7 mx-8 lg:mx-24 xl:mx-24 2xl:mx-32 py-12"
         >
           <BusinessRegisterForm />
         </div>

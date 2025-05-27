@@ -55,7 +55,7 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
   return (
-    <nav className="bg-white drop-shadow-lg">
+    <nav className="bg-white drop-shadow-lg z-[100]">
       <div className=" lg:mx-12 px-6   ">
         <div className="relative h-[100px] flex items-center justify-between">
           {showNav && (
@@ -131,7 +131,7 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                   {openPractice && (
                     <div
                       ref={dropdownRef}
-                      className="z-[9999099999999999999999999999] absolute px-6 py-4 left-10 top-[70px] mt-1 bg-white shadow-lg rounded w-[360px]  text-lg font-medium"
+                      className=" absolute px-6 py-4 left-10 top-[70px] mt-1 bg-white shadow-lg rounded w-[360px]  text-lg font-medium"
                     >
                       <div className="flex items-center">
                         <svg

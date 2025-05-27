@@ -13,13 +13,25 @@ const AudioContext = createContext<AudioContextType | undefined>(undefined);
 interface ProviderProps {
   children: ReactNode;
 }
-
+const interviewInfo = JSON.parse(localStorage.getItem("interviewInfo") || "{}");
+const interviewId = interviewInfo.interviewId || "1";
 export const AudioContextProvider: React.FC<ProviderProps> = ({ children }) => {
   const { questionIndex } = useQuestionContext();
-  const { data } = useGetQuestionQuery({
-    interviewId: "1",
+  console.log("interviewId", interviewId);
+
+  const { data, error } = useGetQuestionQuery({
+    interviewId,
     questionIndex,
   });
+
+  if (error) {
+    return (
+      <div className="text-red-500 p-4">
+        <strong>Lỗi khi tải câu hỏi:</strong>
+        <pre>{JSON.stringify(error, null, 2)}</pre>
+      </div>
+    );
+  }
 
   const audio = useMemo(() => {
     if (!data?.audio) {

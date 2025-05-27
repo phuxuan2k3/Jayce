@@ -1,18 +1,19 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import serviceBaseQueryWithReauth from "../../../app/serviceBaseQueryReAuth";
 import { url } from "../../../app/env";
-import { getInterviewApiMock } from "../mocks/api-mocks";
 
 const interviewApi = createApi({
   reducerPath: "interviewApi",
   // baseQuery: serviceBaseQueryWithReauth(url.thresh.base),
-  baseQuery: async (args, api, extraOptions) => {
-    const mockData = getInterviewApiMock(api.endpoint);
-    if (mockData) return mockData;
-    const baseQuery = serviceBaseQueryWithReauth(url.irelia);
-    const result = await baseQuery(args, api, extraOptions);
-    return result;
-  },
+  // baseQuery: async (args, api, extraOptions) => {
+  //   // const mockData = getInterviewApiMock(api.endpoint);
+  //   // if (mockData) return mockData;
+  //   // const baseQuery = serviceBaseQueryWithReauth(url.irelia);
+  //   // const result = await baseQuery(args, api, extraOptions);
+  //   // return result;
+
+  // },
+  baseQuery: serviceBaseQueryWithReauth(url.irelia),
   endpoints: (builder) => ({
     postStartInterview: builder.mutation<
       { interviewId: string },
@@ -57,6 +58,13 @@ const interviewApi = createApi({
     >({
       query: ({ interviewId }) => `/interviews/history/${interviewId}`,
     }),
+
+    getInterviewOutro: builder.query<
+      InterviewOutroResponse,
+      { interviewId: string }
+    >({
+      query: ({ interviewId }) => `/interviews/${interviewId}/submit`,
+    }),
   }),
 });
 
@@ -66,6 +74,7 @@ export const {
   usePostStartInterviewMutation,
   usePostGetScoreMutation,
   useGetInterviewHistoryQuery,
+  useLazyGetInterviewOutroQuery,
 } = interviewApi;
 
 export default interviewApi;
@@ -77,7 +86,7 @@ export type PostInterviewStartRequest = {
   models: string;
   speed: number;
   skills: string[];
-  maxQuestions: number;
+  totalQuestions: number;
   skipIntro: boolean;
   skipCode: boolean;
 };
@@ -161,12 +170,29 @@ export type GetInterviewListResponse = {
   }[];
 };
 
+export type InterviewOutroResponse = {
+  outro: {
+    audio: string;
+    lipsync: {
+      metadata: {
+        soundFile: string;
+        duration: number;
+      };
+      mouthCues: {
+        start: number;
+        end: number;
+        value: string;
+      }[];
+    };
+  };
+};
+
 export type PostInterviewAnswerRequest = {
   interviewId: string;
   /**
    * The index of the question being answered.
    */
-  questionIndex: number;
+  index: number;
   answer: string;
   /**
    * The audio file in base64 format.

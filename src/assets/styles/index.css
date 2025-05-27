@@ -159,3 +159,54 @@ h6 {
     transform: translateY(0);
   }
 }
+.text-gradient-animated {
+  background: linear-gradient(90deg, #39a0ad, #f4c5b9, #39a0ad 80%);
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradientMove 3s ease-in-out infinite;
+}
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.animate-pulse-slow {
+  animation: pulseGlow 3.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.animate-pulse-fast {
+  animation: pulseGlow 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes pulseGlow {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+.animate-fade-in {
+  opacity: 0;
+  animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

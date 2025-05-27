@@ -4,6 +4,7 @@ import Summary from "./sumary";
 import Strength from "./strength";
 import {
   GetInterviewScoreResponse,
+  useGetInterviewHistoryQuery,
   usePostGetScoreMutation,
 } from "../../../../features/interviews/api/interview.api";
 
@@ -16,44 +17,58 @@ const ResultPage = () => {
     { id: "", label: "", icon: "" },
   ];
 
-  const [scoreData, setScoreData] = useState<GetInterviewScoreResponse | null>(
-    null
+  // const [scoreData, setScoreData] = useState<GetInterviewScoreResponse | null>(
+  //   null
+  // );
+
+  // const [postGetScore] = usePostGetScoreMutation();
+
+  // useEffect(() => {
+  //   const fetchScore = async () => {
+  //     try {
+  //       const submissions = [
+  //         { index: 0, question: "Tell me about yourself", answer: "I am..." },
+  //         {
+  //           index: 1,
+  //           question: "Why do you want this job?",
+  //           answer: "Because...",
+  //         },
+  //       ];
+
+  //       const response = await postGetScore({ submissions }).unwrap();
+  //       setScoreData(response);
+  //     } catch (err) {
+  //       console.error("Failed to fetch score:", err);
+  //     }
+  //   };
+
+  //   fetchScore();
+  // }, [postGetScore]);
+  const interviewInfo = JSON.parse(
+    localStorage.getItem("interviewInfo") || "{}"
   );
+  const interviewId = interviewInfo.interviewId || "1";
+  const { data, isLoading, error } = useGetInterviewHistoryQuery({
+    interviewId,
+  });
 
-  const [postGetScore] = usePostGetScoreMutation();
+  if (isLoading) return <div>Đang tải kết quả...</div>;
+  if (error) return <div>Lỗi khi tải dữ liệu!</div>;
+  if (!data) return <div>Không có dữ liệu.</div>;
 
-  useEffect(() => {
-    const fetchScore = async () => {
-      try {
-        const submissions = [
-          { index: 0, question: "Tell me about yourself", answer: "I am..." },
-          {
-            index: 1,
-            question: "Why do you want this job?",
-            answer: "Because...",
-          },
-        ];
-
-        const response = await postGetScore({ submissions }).unwrap();
-        setScoreData(response);
-      } catch (err) {
-        console.error("Failed to fetch score:", err);
-      }
-    };
-
-    fetchScore();
-  }, [postGetScore]);
-
+  console.log("data", data);
   const renderTabContent = () => {
-    switch (tab) {
-      case "summary":
-        return scoreData ? <Summary scoreData={scoreData} /> : null;
-      case "script":
-        return scoreData ? <Script scoreData={scoreData} /> : null;
-      case "strength":
-        return scoreData ? <Strength scoreData={scoreData} /> : null;
-      default:
-        return scoreData ? <Summary scoreData={scoreData} /> : null;
+    switch (
+      tab
+      // case "summary":
+      //   return scoreData ? <Summary scoreData={scoreData} /> : null;
+      // case "script":
+      //   return scoreData ? <Script scoreData={scoreData} /> : null;
+      // case "strength":
+      //   return scoreData ? <Strength scoreData={scoreData} /> : null;
+      // default:
+      //   return scoreData ? <Summary scoreData={scoreData} /> : null;
+    ) {
     }
   };
 
@@ -98,7 +113,7 @@ const ResultPage = () => {
             );
           })}
         </div>
-        <div className="flex-1">{renderTabContent()}</div>
+        {/* <div className="flex-1">{renderTabContent()}</div> */}
       </div>
     </div>
   );
