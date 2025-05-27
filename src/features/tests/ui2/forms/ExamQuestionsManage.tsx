@@ -1,10 +1,19 @@
-import QuestionEditCard from "./QuestionEditCard";
-import { useTestPersistContext } from "../../../../../../features/tests/reducers/test-persist.context";
+import QuestionEditCard from "../question/QuestionPersistCard";
 import { Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { QuestionPersistOfTest } from "../../model/question.model";
 
-const EditTestQuestions = () => {
-	const { questions, dispatch } = useTestPersistContext();
+const ExamQuestionsManage = ({
+	questions,
+	onQuuestionAdd,
+	onQuestionUpdate,
+	onQuestionDelete,
+}: {
+	questions: QuestionPersistOfTest[];
+	onQuuestionAdd: (question: QuestionPersistOfTest) => void;
+	onQuestionUpdate: (index: number, question: Partial<QuestionPersistOfTest>) => void;
+	onQuestionDelete: (index: number) => void;
+}) => {
 	const lastCard = useRef<HTMLDivElement>(null);
 	const [isAdding, setIsAdding] = useState(false);
 
@@ -25,14 +34,11 @@ const EditTestQuestions = () => {
 				<div
 					className="flex items-center justify-center gap-2 w-full mb-4 text-primary font-semibold bg-white rounded-lg border border-primary shadow-primary px-4 py-2 cursor-pointer hover:bg-primary hover:text-white transition-all duration-200 ease-in-out "
 					onClick={() => {
-						dispatch({
-							type: "ADD_QUESTION",
-							payload: {
-								text: "",
-								options: [""],
-								correctOption: 0,
-								points: 0,
-							},
+						onQuuestionAdd({
+							text: "",
+							points: 1,
+							options: ["", "", "", ""],
+							correctOption: 0,
 						});
 						setIsAdding(true);
 					}}
@@ -54,6 +60,13 @@ const EditTestQuestions = () => {
 					>
 						<QuestionEditCard
 							index={index}
+							question={questions[index]}
+							onQuestionChange={(question) => {
+								onQuestionUpdate(index, question);
+							}}
+							onDeleteQuestion={() => {
+								onQuestionDelete(index);
+							}}
 						/>
 					</div>
 				))}
@@ -63,4 +76,4 @@ const EditTestQuestions = () => {
 	);
 }
 
-export default EditTestQuestions;
+export default ExamQuestionsManage;

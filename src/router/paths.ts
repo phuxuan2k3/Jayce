@@ -53,6 +53,7 @@ const paths = {
 			_layout: "/candidate/interviews/",
 			LIVE: "/candidate/interviews/live/",
 			SETUP: "/candidate/interviews/setup",
+			RESULT: "/candidate/interviews/result/",
 		},
 		profile: {
 			_layout: "/candidate/profile/",
@@ -81,6 +82,7 @@ const paths = {
 				},
 			},
 			CREATE: `/manager/tests/create/`,
+			NEW: `/manager/tests/new/`,
 		},
 		scenario: {
 			_layout: "/manager/scenarios/",

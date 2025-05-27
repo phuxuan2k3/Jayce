@@ -1,5 +1,5 @@
 import { produce } from 'immer';
-import { CreateTestParam } from '../types/crud';
+import { CreateTestParam } from '../../../../../../features/tests/types/crud';
 
 export type TestFields = Omit<CreateTestParam, 'questions'>;
 

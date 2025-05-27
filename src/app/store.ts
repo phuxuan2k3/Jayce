@@ -12,6 +12,8 @@ import chronobreakApi from '../features/scenarios/apis/base/chronobreak.api';
 import logoutApi from '../features/auth/api/logout.api.ts';
 import interviewApi from '../features/interviews/api/interview.api.ts';
 import fetchSlice from './fetchSlice.ts';
+import dialogSlice from '../features/tests/stores/dialogSlice.ts';
+import wizardSlice from '../pages/manager/tests/new/components/builder-wizzard-tab/state/wizardSlice.ts';
 
 
 const authPersistConfig = {
@@ -34,6 +36,8 @@ const rootReducer = combineReducers({
 	auth: persistReducer(authPersistConfig, authReducer),
 	test: testReducer,
 	[fetchSlice.reducerPath]: fetchSlice.reducer,
+	[dialogSlice.reducerPath]: dialogSlice.reducer,
+	[wizardSlice.reducerPath]: wizardSlice.reducer,
 });
 
 const store = configureStore({
@@ -64,6 +68,3 @@ export type AppStore = typeof store;
 setupListeners(store.dispatch);
 
 export default store;
-
-// TODO: global error display / page navigation middleware
-// https://owensiu.medium.com/rtk-query-how-to-centralize-error-handling-40c28bb48d5d

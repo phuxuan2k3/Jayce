@@ -4,7 +4,6 @@ import AuthRegisterPage from "../pages/auth/register/AuthRegisterPage";
 import ErrorPage from "../components/pages/ErrorPage";
 import ManagerTestAttemptsPage from "../pages/manager/tests/[id]/attempts/ManagerTestAttemptsPage";
 import ManagerTestAttemptPage from "../pages/manager/tests/attempts/[id]/index/ManagerTestAttemptPage";
-import ManagerTestsCreatePage from "../pages/manager/tests/create/ManagerTestsCreatePage";
 import ManagerScenariosPage from "../pages/manager/scenarios/index/ManagerScenariosPage";
 import ManagerScenarioSubmissionsPage from "../pages/manager/scenarios/[id]/submissions/ManagerScenarioSubmissionsPage";
 import ScenarioSubmissionDetail from "../pages/manager/scenarios/submissions/[id]/index/ManagerScenariosSubmissionPage";
@@ -37,7 +36,6 @@ import ManagerTestsPage from "../pages/manager/tests/index/page";
 import CandidateHomePage from "../pages/candidate/index/CandidateHomePage";
 import ManagerHomePage from "../pages/manager/scenarios/index/ManagerHomePage";
 import CandidateInterviewLivePage from "../pages/candidate/interviews/live/CandidateInterviewLivePage";
-import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/ManagerTestEditPage";
 import SetUpPage from "../pages/candidate/interviews/setup/setup";
 import Settings from "../pages/common/profile/index/Settings";
 import CandidateTestsTemplatesPage from "../pages/candidate/tests/templates/page";
@@ -49,6 +47,8 @@ import CandidateTestExamPage from "../pages/candidate/tests/[id]/exam/page";
 import CandidateTestTakeExamPage from "../pages/candidate/tests/[id]/take-exam/page";
 import ManagerTestPage from "../pages/manager/tests/[id]/index/page";
 import ResultPage from "../pages/candidate/interviews/result/result";
+import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/page";
+import ManagerTestsNewPage from "../pages/manager/tests/new/page";
 
 const router = createBrowserRouter(
 	[
@@ -266,6 +266,10 @@ const router = createBrowserRouter(
 									element: <ManagerTestsPage />,
 								},
 								{
+									path: paths.manager.tests.NEW,
+									element: <ManagerTestsNewPage />,
+								},
+								{
 									path: paths.manager.tests.in().ROOT,
 									children: [
 										{
@@ -285,10 +289,6 @@ const router = createBrowserRouter(
 								{
 									path: paths.manager.tests.attempts.in().ROOT,
 									element: <ManagerTestAttemptPage />,
-								},
-								{
-									path: paths.manager.tests.CREATE,
-									element: <ManagerTestsCreatePage />,
 								},
 							],
 						},

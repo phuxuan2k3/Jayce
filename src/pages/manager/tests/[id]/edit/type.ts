@@ -1,0 +1,1 @@
+export type EditTabs = "configuration" | "questions";

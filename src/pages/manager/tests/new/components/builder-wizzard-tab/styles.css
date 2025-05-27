@@ -1,0 +1,38 @@
+/** Additional styles for BuilderWizzardTab components */
+
+/* Override Tailwind circular-chart styling */
+.circular-chart {
+	width: 100%;
+	height: 100%;
+	transform: rotate(-90deg);
+}
+
+/* Custom styles for difficulty sliders */
+input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: #3b82f6;
+	cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: #3b82f6;
+	cursor: pointer;
+}
+
+/* Animation for accordion transitions */
+.transition-max-height {
+	transition-property: max-height, opacity, visibility;
+}
+
+/* Draggable item styles */
+.dragging {
+	opacity: 0.5;
+	border: 2px dashed #3b82f6;
+}

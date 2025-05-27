@@ -4,19 +4,12 @@ import ExamList from "./components/ExamList";
 import { mockExams } from "./components/mockExams";
 import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
 import Sidebar from "./components/Sidebar";
-import React from "react";
-import { ExamCore } from "../../../../features/tests/model/test.model";
-import DeleteConfirmDialog from "./components/DeleteConfirmDialog";
+import { useAppDispatch } from "../../../../app/hooks";
+import dialogSlice from "../../../../features/tests/stores/dialogSlice";
 
 const ManagerTestsPage = () => {
 	const navigate = useNavigate();
-	const [examToDelete, setExamToDelete] = React.useState<ExamCore | null>(null);
-
-	const handleClickDeleteTest = (exam: ExamCore) => {
-		// TODO: Implement delete test logic
-		console.log("Deleting test:", exam);
-		setExamToDelete(null);
-	};
+	const dispatch = useAppDispatch();
 
 	const handleExamView = (testId: string) => {
 		navigate(paths.manager.tests.in(testId).ROOT);
@@ -39,17 +32,12 @@ const ManagerTestsPage = () => {
 			<ExamList
 				tests={tests}
 				totalPages={10}
-				onDelete={(exam) => setExamToDelete(exam)}
+				onDelete={(exam) => dispatch(dialogSlice.actions.setDeleteExam(exam))}
 				onTestClick={handleExamView}
 				onPageChange={(_) => {
 				}}
 			/>
 
-			<DeleteConfirmDialog
-				examToDelete={examToDelete}
-				onCancel={() => setExamToDelete(null)}
-				onDelete={(exam) => handleClickDeleteTest(exam)}
-			/>
 		</NewLeftLayoutTemplate>
 	);
 }

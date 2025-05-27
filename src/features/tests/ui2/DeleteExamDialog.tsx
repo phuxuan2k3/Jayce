@@ -1,6 +1,6 @@
-import { ExamCore } from '../../../../../features/tests/model/test.model'
+import { ExamCore } from '../model/test.model'
 
-export default function DeleteConfirmDialog({
+export default function DeleteExamDialog({
 	examToDelete,
 	onDelete,
 	onCancel,

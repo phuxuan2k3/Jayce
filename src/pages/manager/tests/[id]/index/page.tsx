@@ -6,9 +6,16 @@ import { mockFullExamInformation } from './mockExamInformationData';
 import QuestionsTab from './components/questions-tab';
 import ExamInformationTab from './components/exam-information-tab';
 import { TabMode } from './types/tab-mode';
+import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
+import { useAppDispatch } from '../../../../../app/hooks';
+import dialogSlice from '../../../../../features/tests/stores/dialogSlice';
 
 export default function ManagerTestPage() {
+	const tesId = useGetTestIdParams();
+	const dispatch = useAppDispatch();
 	const [mode, setMode] = useState<TabMode>('info');
+
+	const examInfo = mockFullExamInformation;
 
 	return (
 		<NewLeftLayoutTemplate
@@ -19,7 +26,9 @@ export default function ManagerTestPage() {
 				/>
 			}
 			left={<Sidebar
+				testId={tesId}
 				onModeChange={(mode) => setMode(mode)}
+				onDelete={() => dispatch(dialogSlice.actions.setDeleteExam(examInfo.exam))}
 			/>}
 		>
 			{getTab(mode)}

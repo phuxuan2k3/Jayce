@@ -2,12 +2,20 @@ import { ClipboardList, HelpCircle, Info, Trash2 } from 'lucide-react';
 import QuickAction from '../../../../../../features/tests/ui2/sidebar/QuickAction'
 import SidebarActions from '../../../../../../features/tests/ui2/sidebar/SidebarActions'
 import { TabMode } from '../types/tab-mode';
+import { useNavigate } from 'react-router-dom';
+import paths from '../../../../../../router/paths';
 
 export default function Sidebar({
+	testId,
 	onModeChange,
+	onDelete,
 }: {
+	testId: string;
 	onModeChange: (mode: TabMode) => void;
+	onDelete: () => void;
 }) {
+	const navigate = useNavigate();
+
 	return (
 		<SidebarActions
 			title='Exam Actions'
@@ -35,10 +43,16 @@ export default function Sidebar({
 			<hr className="my-2 border-t border-primary-toned-300" />
 
 			<QuickAction
+				icon={<HelpCircle />}
+				title="Edit"
+				description="Edit the exam."
+				onClick={() => navigate(paths.manager.tests.in(testId).EDIT)}
+			/>
+			<QuickAction
 				icon={<Trash2 />}
 				title="Delete"
 				description="Delete the exam permanently."
-				onClick={() => { }}
+				onClick={() => onDelete()}
 				variant='alert'
 			/>
 		</SidebarActions>

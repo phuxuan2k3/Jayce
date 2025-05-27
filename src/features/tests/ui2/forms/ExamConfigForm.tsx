@@ -1,16 +1,13 @@
-import { useState } from "react";
-import { TestFields } from "../../../../../../features/tests/reducers/test-persist.reducer";
 import TextareaAutosize from "react-textarea-autosize";
+import { ExamConfigPersist } from "../../model/test.model";
 
-export default function TestEditForm({
-	testFields,
-	onChange,
+export default function ExamConfigForm({
+	configEdit,
+	onConfigEditChange,
 }: {
-	testFields: TestFields;
-	onChange: (field: { key: keyof TestFields, value: string | number }) => void;
+	configEdit: ExamConfigPersist;
+	onConfigEditChange: (configEdit: Partial<ExamConfigPersist>) => void;
 }) {
-	const [password, setPassword] = useState<string | null>(null);
-
 	return (
 		<div className="text-base [&>label]:text-primary [&>label]:font-semibold w-full h-full overflow-y-auto grid grid-cols-[auto_1fr] items-center place-items-end gap-y-6 gap-x-8 p-6 ">
 			<div className="col-span-2 border-b border-primary-toned-300 w-full" />
@@ -23,10 +20,9 @@ export default function TestEditForm({
 				type="text"
 				placeholder="Title"
 				className="w-full h-fit border border-primary rounded-md focus:outline-none focus:ring focus:ring-teal-300 px-4 py-2"
-				value={testFields.title}
-				onChange={(e) => onChange({
-					key: "title",
-					value: e.target.value,
+				value={configEdit.title}
+				onChange={(e) => onConfigEditChange({
+					title: e.target.value,
 				})}
 			/>
 
@@ -38,10 +34,9 @@ export default function TestEditForm({
 				minRows={1}
 				placeholder="Describe your test"
 				className="w-full h-fit border border-primary rounded-md focus:outline-none focus:ring focus:ring-teal-300 px-4 py-2"
-				value={testFields.description}
-				onChange={(e) => onChange({
-					key: "description",
-					value: e.target.value,
+				value={configEdit.description}
+				onChange={(e) => onConfigEditChange({
+					description: e.target.value,
 				})}
 			/>
 
@@ -54,10 +49,9 @@ export default function TestEditForm({
 					type="text"
 					placeholder="Enter duration"
 					className="w-1/6 h-fit border border-primary rounded-md focus:outline-none focus:ring focus:ring-teal-300 px-4 py-2"
-					value={testFields.minutesToAnswer}
-					onChange={(e) => onChange({
-						key: "minutesToAnswer",
-						value: Number(e.target.value),
+					value={configEdit.minutesToAnswer}
+					onChange={(e) => onConfigEditChange({
+						minutesToAnswer: Number(e.target.value) || 1,
 					})}
 				/>
 				<span className="text-sm text-primary-toned-500 text-ellipsis">
@@ -77,6 +71,13 @@ export default function TestEditForm({
 						id="test-open-at"
 						type="datetime-local"
 						className="w-full h-fit border border-primary rounded-md focus:outline-none focus:ring focus:ring-teal-300 px-4 py-2"
+						value={configEdit.openDate.toISOString().slice(0, 16)}
+						onChange={(e) => {
+							const date = new Date(e.target.value);
+							onConfigEditChange({
+								openDate: date,
+							});
+						}}
 					/>
 				</div>
 				<div className="flex items-center gap-x-2">
@@ -85,6 +86,13 @@ export default function TestEditForm({
 						id="test-close-at"
 						type="datetime-local"
 						className="w-full h-fit border border-primary rounded-md focus:outline-none focus:ring focus:ring-teal-300 px-4 py-2"
+						value={configEdit.closeDate.toISOString().slice(0, 16)}
+						onChange={(e) => {
+							const date = new Date(e.target.value);
+							onConfigEditChange({
+								closeDate: date,
+							});
+						}}
 					/>
 				</div>
 			</div>
@@ -98,9 +106,11 @@ export default function TestEditForm({
 						type="checkbox"
 						id="use-password"
 						className="mr-2"
-						checked={password !== null}
+						checked={configEdit.password !== null}
 						onChange={(e) => {
-							setPassword(e.target.checked ? "" : null);
+							onConfigEditChange({
+								password: e.target.checked ? "" : null,
+							});
 						}}
 					/>
 					<span className="text-sm text-primary-toned-500">Require password</span>
@@ -109,13 +119,15 @@ export default function TestEditForm({
 				<input
 					id="test-password"
 					type="text"
-					disabled={password === null}
+					disabled={configEdit.password !== null}
 					placeholder="Enter password"
-					className={`w-1/3 h-fit border border-primary rounded-md focus:outline-none focus:ring focus:ring-teal-300 px-4 py-2 ${password === null ? "bg-gray-200 cursor-not-allowed" : ""}`}
-					value={password || ""}
+					className={`w-1/3 h-fit border border-primary rounded-md focus:outline-none focus:ring focus:ring-teal-300 px-4 py-2 ${configEdit.password === null ? "bg-gray-200 cursor-not-allowed" : ""}`}
+					value={configEdit.password || ""}
 					onChange={(e) => {
-						if (password !== null) {
-							setPassword(e.target.value);
+						if (configEdit.password !== null) {
+							onConfigEditChange({
+								password: e.target.value,
+							});
 						}
 					}}
 				/>
@@ -132,6 +144,10 @@ export default function TestEditForm({
 					min="1"
 					placeholder="Number of attempts"
 					className="w-1/2 h-fit border border-primary rounded-md focus:outline-none focus:ring focus:ring-teal-300 px-4 py-2"
+					value={configEdit.numberOfAttemptsAllowed || 0}
+					onChange={(e) => onConfigEditChange({
+						numberOfAttemptsAllowed: Number(e.target.value),
+					})}
 				/>
 				<span className="text-sm text-primary-toned-500 text-ellipsis">
 					Maximum attempts allowed per participant
@@ -144,6 +160,10 @@ export default function TestEditForm({
 						type="checkbox"
 						id="show-results"
 						className="mr-2"
+						checked={configEdit.isAnswerVisible}
+						onChange={(e) => onConfigEditChange({
+							isAnswerVisible: e.target.checked,
+						})}
 					/>
 					<span className="text-sm text-primary-toned-500">Allow participants to see their results after completion</span>
 				</div>
@@ -152,6 +172,10 @@ export default function TestEditForm({
 						type="checkbox"
 						id="show-results-others"
 						className="mr-2"
+						checked={configEdit.isAllowedToSeeOtherResults}
+						onChange={(e) => onConfigEditChange({
+							isAllowedToSeeOtherResults: e.target.checked,
+						})}
 					/>
 					<span className="text-sm text-primary-toned-500">Allow participants to see results of other participants</span>
 				</div>

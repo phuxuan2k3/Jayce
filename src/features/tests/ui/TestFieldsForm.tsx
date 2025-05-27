@@ -1,4 +1,4 @@
-import { TestFields } from "../reducers/test-persist.reducer";
+import { TestFields } from "../reducers/exam-persist.reducer";
 
 export default function TestFieldsForm({
 	testFields,

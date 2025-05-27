@@ -4,7 +4,7 @@ import { useGenerateMutation } from "../../../../../../features/tests/api/prompt
 import { CriteriaRequest } from "../../../../../../features/tests/types/crud";
 import { GenerationLoading } from "./AITestQuestionGeneration/GenerationLoading";
 import ContextOfTest from "./AITestQuestionGeneration/ContextOfTest";
-import { useTestPersistContext } from "../../../../../../features/tests/reducers/test-persist.context";
+import { useTestPersistContext } from "../../../[id]/edit/reducers/test-persist.context";
 import { createPortal } from "react-dom";
 
 export default function AITestQuestionGeneration({
