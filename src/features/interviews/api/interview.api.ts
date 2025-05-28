@@ -138,20 +138,33 @@ export type GetInterviewScoreResponse = {
   finalComment: string;
 };
 
+export type InterviewStatus = "Full" | "Partial" | "None";
+
+export type InterviewSubmission = {
+  question: string;
+  answer: string;
+  comment: string;
+  status: InterviewStatus;
+  score: string;
+};
+
+export type InterviewTotalScore = {
+  full: number;
+  partial: number;
+  none: number;
+};
+
+export type InterviewSkillScore = {
+  [skill: string]: string;
+};
 export type GetInterviewHistoryResponse = {
-  submissions: {
-    question: string;
-    answer: string;
-    comment: string;
-    status: "Full" | "Partial" | "None";
-  }[];
-  totalScore: {
-    full: number;
-    partial: number;
-    none: number;
-  };
-  areasOfImprovement: string;
+  interviewId?: string;
+  submissions: InterviewSubmission[];
+  totalScore: InterviewTotalScore;
   finalComment: string;
+  positiveFeedback: string;
+  skillsScore: InterviewSkillScore;
+  actionableFeedback: string;
 };
 
 export type GetInterviewListResponse = {

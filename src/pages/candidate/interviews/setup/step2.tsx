@@ -15,6 +15,7 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
   const handleStartInterview = async () => {
     setIsopen(true);
     setLoading(true);
+    localStorage.setItem("totalQuestion", numQuestion.toString());
     const interviewData = {
       position: data.position,
       experience: data.experience,

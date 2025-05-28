@@ -1,63 +1,157 @@
 import { FC } from "react";
 import { Pie } from "react-chartjs-2";
-import { GetInterviewScoreResponse } from "../../../../features/interviews/api/interview.api";
+import { GetInterviewHistoryResponse } from "../../../../features/interviews/api/interview.api";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChartPie, faStar } from "@fortawesome/free-solid-svg-icons";
 
-const acceptanceRateData = {
-  labels: ["Excellent", "Good", "Fair", "Below Average", "Not Experienced"],
-  datasets: [
-    {
-      data: [20, 20, 20, 20, 30],
-      backgroundColor: ["#527853", "#8DBDE2", "#E1C03E", "#DA772C", "#D85353"],
-    },
-  ],
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
+ChartJS.register(ArcElement, Tooltip, Legend, Title);
+
+const getPieData = (totalScore: GetInterviewHistoryResponse["totalScore"]) => {
+  // This expects keys like "A", "B", "C", "D", "F"
+  const labels = ["A", "B", "C", "D", "F"];
+  const colors = [
+    "#527853", // Green
+    "#8DBDE2", // Blue
+    "#E1C03E", // Yellow
+    "#DA772C", // Orange
+    "#D85353", // Red
+  ];
+  const order = ["A", "B", "C", "D", "F"];
+  const data = order.map((grade) =>
+    totalScore && totalScore[grade as keyof typeof totalScore]
+      ? totalScore[grade as keyof typeof totalScore]
+      : 0
+  );
+  return {
+    labels,
+    datasets: [
+      {
+        data,
+        backgroundColor: colors,
+        borderWidth: 2,
+        borderColor: "#fff",
+        hoverOffset: 10,
+      },
+    ],
+  };
 };
 
-const Summary: FC<{ scoreData: GetInterviewScoreResponse }> = ({
+const pieOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      display: true,
+      position: "bottom" as const,
+      labels: {
+        font: {
+          size: 16,
+          family: "var(--font-arya, Arial, sans-serif)",
+          weight: "bold" as const,
+        },
+        color: "#2E808A",
+        padding: 24,
+        boxWidth: 22,
+      },
+    },
+    title: {
+      display: false,
+    },
+  },
+};
+
+const Summary: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
   scoreData,
 }) => {
   return (
-    <div className=" w-full h-full p-16 flex  gap-10">
-      <div className="border w-3/5 shadow-md rounded-lg h-[60vh] bg-primary-toned-50 p-4">
-        <div>Overall feedback</div>
-        <div className="h-[90%] mt-5 rounded-lg w-full p-4 bg-white">
-          {scoreData.finalComment}
-        </div>
-      </div>
-      <div className="flex-1">
-        <div className="border shadow-md rounded-lg  h-[20vh]"></div>
-        <div className=" border mt-10 shadow-md rounded-lg  h-[35vh] flex flex-wrap justify-center items-center">
-          <h4 className="font-semibold mb-2 text-center w-full">
-            Acceptance rate of scenarios responses
-          </h4>
-          <div className="w-[180px] h-[180px] ">
-            <Pie
-              data={acceptanceRateData}
-              options={{
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-              }}
+    <div className="w-full h-full p-0 md:p-8 flex flex-col md:flex-row gap-8">
+      {/* Feedback Card */}
+      <Card className="md:w-3/5 w-full shadow-2xl rounded-3xl bg-white/90 border border-gray-100">
+        <CardContent>
+          <div className="flex items-center gap-3 mb-2">
+            <FontAwesomeIcon
+              icon={faChartPie}
+              className="text-primary-toned-600 text-2xl"
             />
+            <Typography
+              variant="h5"
+              className="font-black text-primary-toned-600 tracking-tight font-arya"
+            >
+              Overall Feedback
+            </Typography>
           </div>
-          <div className="ml-6">
-            <ul className="space-y-2">
-              {acceptanceRateData.labels.map((label, index) => (
-                <li key={label} className="flex items-center">
+          <Divider />
+          <div className="mt-4 min-h-[120px] whitespace-pre-line bg-gray-50 rounded-lg p-4 text-lg font-asap text-gray-800">
+            {scoreData.finalComment}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Pie Chart + Skill Score */}
+      <div className="flex-1 flex flex-col gap-8">
+        <Card className="shadow-2xl rounded-3xl bg-white/90 border border-gray-100">
+          <CardContent>
+            <div className="flex items-center gap-2 mb-2">
+              <FontAwesomeIcon
+                icon={faChartPie}
+                className="text-primary-toned-600 text-xl"
+              />
+              <Typography
+                variant="subtitle1"
+                className="font-bold text-primary-toned-600 font-arya"
+              >
+                Grade Distribution
+              </Typography>
+            </div>
+            <Divider />
+            <div className="flex items-center justify-center h-[220px] w-full mt-4">
+              <div className="w-[170px] h-[170px] mx-auto relative">
+                <Pie
+                  data={getPieData(scoreData.totalScore)}
+                  options={pieOptions}
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        {/* Skill Score */}
+        <Card className="shadow-2xl rounded-3xl bg-white/90 border border-gray-100">
+          <CardContent>
+            <div className="flex items-center gap-2 mb-2">
+              <FontAwesomeIcon
+                icon={faStar}
+                className="text-primary-toned-600 text-xl"
+              />
+              <Typography
+                variant="subtitle1"
+                className="font-bold text-primary-toned-600 font-arya"
+              >
+                Skill Scores
+              </Typography>
+            </div>
+            <Divider />
+            <div className="flex flex-wrap gap-4 mt-4">
+              {scoreData.skillsScore &&
+                Object.entries(scoreData.skillsScore).map(([skill, grade]) => (
                   <div
-                    className="w-4 h-4 mr-2"
-                    style={{
-                      backgroundColor:
-                        acceptanceRateData.datasets[0].backgroundColor[index],
-                    }}
-                  ></div>
-                  <span className="text-lg font-medium">{label}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+                    key={skill}
+                    className="bg-primary-toned-50 text-primary-toned-700 px-4 py-2 rounded-lg font-semibold shadow border border-primary-toned-100 text-base font-asap min-w-[120px] flex items-center gap-2"
+                  >
+                    <span className="font-bold">{skill}:</span>
+                    <span>{grade}</span>
+                  </div>
+                ))}
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
 };
+
 export default Summary;

@@ -20,6 +20,8 @@ export default function Overlay() {
   const [triggerSubmit] = useLazyGetInterviewOutroQuery();
 
   const navigate = useNavigate();
+  const totalQuestion = localStorage.getItem("totalQuestion") || "5";
+
   const handleAnswerRecorded = async (transcript: string) => {
     const interviewInfo = JSON.parse(
       localStorage.getItem("interviewInfo") || "{}"
@@ -38,11 +40,10 @@ export default function Overlay() {
         answer: transcript,
         recordProof: "",
       }).unwrap();
-      if (questionIndex + 1 >= 3) {
+      if (questionIndex + 1 >= parseInt(totalQuestion)) {
         await triggerSubmit({ interviewId }).unwrap();
         navigate("/candidate/interviews/result");
       } else {
-        // Nếu chưa phải cuối thì chỉ chuyển câu hỏi
         goToNextQuestion();
       }
     } catch (e) {
@@ -53,7 +54,10 @@ export default function Overlay() {
   return (
     <div className="grid grid-cols-12 grid-rows-5 w-full h-full">
       <div className="col-start-2 col-end-4 row-start-3 row-end-3 flex items-center justify-center p-4">
-        <InterviewStatus currentQuestion={2} totalQuestion={5} />
+        <InterviewStatus
+          currentQuestion={questionIndex}
+          totalQuestion={parseInt(totalQuestion) || 5}
+        />
       </div>
 
       <div className="col-start-10 col-end-10 row-start-3 row-end-3 flex items-center justify-center">
