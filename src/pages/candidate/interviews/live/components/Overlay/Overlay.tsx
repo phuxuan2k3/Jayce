@@ -22,6 +22,8 @@ export default function Overlay() {
   const navigate = useNavigate();
   const totalQuestion = localStorage.getItem("totalQuestion") || "5";
 
+  console.log("totalQuestion", totalQuestion);
+  console.log("questionIndex", questionIndex);
   const handleAnswerRecorded = async (transcript: string) => {
     const interviewInfo = JSON.parse(
       localStorage.getItem("interviewInfo") || "{}"
@@ -40,7 +42,7 @@ export default function Overlay() {
         answer: transcript,
         recordProof: "",
       }).unwrap();
-      if (questionIndex + 1 >= parseInt(totalQuestion)) {
+      if (questionIndex >= parseInt(totalQuestion)) {
         await triggerSubmit({ interviewId }).unwrap();
         navigate("/candidate/interviews/result");
       } else {
