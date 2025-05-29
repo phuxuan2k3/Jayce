@@ -5,7 +5,7 @@ import ModalCheckSound from "./ModalCheckSound";
 
 const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
   const [speechRate, setSpeechRate] = useState(3);
-  const [numQuestion, setNumQuestion] = useState(2);
+  const [numQuestion, setNumQuestion] = useState(4);
   const [skipIntro, setSkipIntro] = useState(false);
   const [skipCode, setSkipCode] = useState(false);
   const [language, setLanguage] = useState<string>("English");
