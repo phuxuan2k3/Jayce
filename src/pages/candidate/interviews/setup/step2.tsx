@@ -4,7 +4,7 @@ import { usePostStartInterviewMutation } from "../../../../features/interviews/a
 import ModalCheckSound from "./ModalCheckSound";
 
 const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
-  const [speechRate, setSpeechRate] = useState(10);
+  const [speechRate, setSpeechRate] = useState(3);
   const [numQuestion, setNumQuestion] = useState(2);
   const [skipIntro, setSkipIntro] = useState(false);
   const [skipCode, setSkipCode] = useState(false);
