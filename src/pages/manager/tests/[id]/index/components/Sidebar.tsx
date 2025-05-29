@@ -1,4 +1,4 @@
-import { ClipboardList, HelpCircle, Info, Trash2 } from 'lucide-react';
+import { ClipboardList, HelpCircle, Info, Trash2, Users } from 'lucide-react';
 import QuickAction from '../../../../../../features/tests/ui2/sidebar/QuickAction'
 import SidebarActions from '../../../../../../features/tests/ui2/sidebar/SidebarActions'
 import { TabMode } from '../types/tab-mode';
@@ -38,6 +38,12 @@ export default function Sidebar({
 				title="Attempts"
 				description="Attempts made by candidates."
 				onClick={() => onModeChange('attempts')}
+			/>
+			<QuickAction
+				icon={<Users />}
+				title="Participants"
+				description="Candidates who participated in this exam."
+				onClick={() => onModeChange('participants')}
 			/>
 
 			<hr className="my-2 border-t border-primary-toned-300" />

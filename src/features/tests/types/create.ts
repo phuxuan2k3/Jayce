@@ -1,5 +1,5 @@
-import { QuestionCore } from "../model/question.model";
-import { TemplateCore, TestCore, PracticeCore } from "../model/test.model";
+import { QuestionCore } from "../../../infra-test/core/question.model";
+import { TemplateCore, TestCore, PracticeCore } from "../../../infra-test/core/test.model";
 
 export type TestCoreCreate = Omit<TestCore, "id" | 'authorId' | 'createdAt'>;
 export type TestPracticeCoreCreate = Omit<PracticeCore, 'id' | 'authorId' | 'createdAt' | "feedback">;

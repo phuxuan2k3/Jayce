@@ -1,5 +1,5 @@
 import ManagerSidebar from '../../../../../../features/tests/ui2/sidebar/ManagerSidebar'
-import { ExamCore } from '../../../../../../features/tests/model/test.model'
+import { ExamCore } from '../../../../../../infra-test/core/test.model'
 import QuickAction from '../../../../../../features/tests/ui2/sidebar/QuickAction';
 import { EditTabs } from '../type';
 

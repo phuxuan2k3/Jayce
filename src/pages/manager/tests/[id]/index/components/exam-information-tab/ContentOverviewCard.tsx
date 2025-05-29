@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle, faBullseye } from '@fortawesome/free-solid-svg-icons';
-import { TestAggregateCore } from '../../../../../../../features/tests/model/test.model';
+import { TestAggregateCore } from '../../../../../../../infra-test/core/test.model';
 import Card from './Card';
 
 interface ContentOverviewCardProps {

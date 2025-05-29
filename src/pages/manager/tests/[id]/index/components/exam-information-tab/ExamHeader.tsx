@@ -1,4 +1,4 @@
-import { ExamCore } from '../../../../../../../features/tests/model/test.model';
+import { ExamCore } from '../../../../../../../infra-test/core/test.model';
 
 interface ExamHeaderProps {
 	exam: ExamCore;

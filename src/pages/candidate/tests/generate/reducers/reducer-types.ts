@@ -1,4 +1,4 @@
-import { TemplateCore } from "../../../../../features/tests/model/test.model";
+import { TemplateCore } from "../../../../../infra-test/core/test.model";
 import { PracticeGenerationData, PracticeGenerationLoadingState } from "../types";
 
 export type PracticeGenerationReducer = {

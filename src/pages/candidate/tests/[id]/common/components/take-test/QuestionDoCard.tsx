@@ -1,5 +1,5 @@
 import { Flag, Trash2 } from "lucide-react";
-import { QuestionToDo } from "../../../../../../../features/tests/model/question.model";
+import { QuestionToDo } from "../../../../../../../infra-test/core/question.model";
 import { QuestionDoingState } from "../../type";
 
 export default function QuestionDoCard({

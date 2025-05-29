@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock, faCalendarAlt, faTasks, faKey, faGlobe, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import { ExamCore } from "../../../../../features/tests/model/test.model";
+import { ExamCore } from "../../../../../infra-test/core/test.model";
 import { Trash2 } from "lucide-react";
 
 interface Props {

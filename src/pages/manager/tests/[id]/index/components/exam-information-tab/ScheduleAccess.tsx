@@ -3,7 +3,7 @@ import {
 	faCalendarCheck, faCalendarAlt, faCalendarTimes,
 	faEye, faEyeSlash, faUsers, faRepeat
 } from '@fortawesome/free-solid-svg-icons';
-import { ExamCore } from '../../../../../../../features/tests/model/test.model';
+import { ExamCore } from '../../../../../../../infra-test/core/test.model';
 import { formatDate } from './utils';
 import Card from './Card';
 

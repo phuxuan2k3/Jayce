@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { PracticeCore } from "../../../../../features/tests/model/test.model";
+import { PracticeCore } from "../../../../../infra-test/core/test.model";
 import paths from "../../../../../router/paths";
 import { DefaultTestPracticeCard } from "../../../../../features/tests/ui2/TestPracticeCard";
 import MyPagination from "../../../../../components/ui/common/MyPagination";

@@ -2,7 +2,7 @@ import MyPagination from "../../../../../../../components/ui/common/MyPagination
 import AttemptList from "./AttemptsList";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../../../router/paths";
-import { AttemptCore } from "../../../../../../../features/tests/model/attempt.model";
+import { AttemptCore } from "../../../../../../../infra-test/core/attempt.model";
 
 type Filter = {
 	page: number;

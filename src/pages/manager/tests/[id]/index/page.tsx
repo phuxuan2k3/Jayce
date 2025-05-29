@@ -9,6 +9,7 @@ import { TabMode } from './types/tab-mode';
 import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
 import { useAppDispatch } from '../../../../../app/hooks';
 import dialogSlice from '../../../../../features/tests/stores/dialogSlice';
+import ParticipantsTab from './components/participants-tab';
 
 export default function ManagerTestPage() {
 	const tesId = useGetTestIdParams();
@@ -44,5 +45,7 @@ const getTab = (mode: TabMode) => {
 			return <QuestionsTab />;
 		case 'attempts':
 			return <AttemptsTab />;
+		case 'participants':
+			return <ParticipantsTab />;
 	}
 }

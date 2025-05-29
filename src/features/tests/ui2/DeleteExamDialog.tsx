@@ -1,4 +1,4 @@
-import { ExamCore } from '../model/test.model'
+import { ExamCore } from '../../../infra-test/core/test.model'
 
 export default function DeleteExamDialog({
 	examToDelete,

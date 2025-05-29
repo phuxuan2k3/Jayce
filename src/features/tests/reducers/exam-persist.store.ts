@@ -1,5 +1,5 @@
-import { QuestionCore, QuestionPersistOfTest } from "../model/question.model";
-import { ExamConfigPersist, ExamCore } from "../model/test.model";
+import { QuestionCore, QuestionPersistOfTest } from "../../../infra-test/core/question.model";
+import { ExamConfigPersist, ExamCore } from "../../../infra-test/core/test.model";
 
 const EMPTY_EXAM_CONFIG: ExamConfigPersist = {
 	title: "",

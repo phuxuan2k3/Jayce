@@ -1,9 +1,9 @@
-import { AttemptsOfCandidateInTestAggregateCore } from '../../../../../../features/tests/model/attempt.model'
+import { AttemptsOfCandidateInTestAggregate } from '../../../../../../infra-test/core/attempt.model'
 
 export default function ParticipantStatisticCard({
 	attemptAggregate,
 }: {
-	attemptAggregate: AttemptsOfCandidateInTestAggregateCore
+	attemptAggregate: AttemptsOfCandidateInTestAggregate
 }) {
 	return (
 		<div className='rounded-lg px-6 py-8 bg-primary-toned-50 shadow-md max-h-full overflow-y-auto'>

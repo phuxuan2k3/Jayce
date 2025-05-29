@@ -1,5 +1,5 @@
-import { QuestionPersistOfTest } from "../model/question.model";
-import { ExamConfigPersist } from "../model/test.model";
+import { QuestionPersistOfTest } from "../../../infra-test/core/question.model";
+import { ExamConfigPersist } from "../../../infra-test/core/test.model";
 import { ExamPersistState } from "./exam-persist.store";
 
 const questionEditConstraint = (value: QuestionPersistOfTest): string[] => {

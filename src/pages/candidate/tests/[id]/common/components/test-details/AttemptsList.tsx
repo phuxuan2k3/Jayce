@@ -1,6 +1,6 @@
 import React from 'react';
 import { format, formatDistanceToNow } from 'date-fns';
-import { AttemptCore } from '../../../../../../../features/tests/model/attempt.model';
+import { AttemptCore } from '../../../../../../../infra-test/core/attempt.model';
 import { useNavigate } from 'react-router-dom';
 import paths from '../../../../../../../router/paths';
 

@@ -1,7 +1,7 @@
 import React from "react";
 import ExamCard from "./ExamCard";
 import MyPagination from "../../../../../components/ui/common/MyPagination";
-import { ExamCore } from "../../../../../features/tests/model/test.model";
+import { ExamCore } from "../../../../../infra-test/core/test.model";
 
 interface Props {
 	tests: ExamCore[];

@@ -1,1 +1,1 @@
-export type TabMode = 'info' | 'questions' | 'attempts';
+export type TabMode = 'info' | 'questions' | 'attempts' | 'participants';

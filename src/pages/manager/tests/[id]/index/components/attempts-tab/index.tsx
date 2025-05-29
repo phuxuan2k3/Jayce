@@ -1,9 +1,11 @@
 import MyPagination from "../../../../../../../components/ui/common/MyPagination";
-import AttemptList from "./AttemptsList";
+import AttemptList from "./attmempts-list/AttemptsList";
+import AttemptsAggregateSection from "./attmempts-list/AttemptsAggregateSection";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../../../router/paths";
 import { useState } from "react";
 import { mockAttemptCandidates } from "../../mockAttemptsData";
+import { mockAttemptOfTestAggregateData } from "../../mockExamInformationData";
 
 type Filter = {
 	page: number;
@@ -36,25 +38,29 @@ const AttemptsTab = () => {
 			) : (data == null ? (
 				<div className="bg-white rounded-lg shadow-md p-6 text-center">
 					<p className="text-gray-600 mb-4">Not availible.</p>
-				</div>
-			) : (data.length === 0 ? (
-				<div className="bg-white rounded-lg shadow-md p-6 text-center">
-					<p className="text-gray-600 mb-4">No attempts found.</p>
-				</div>
-			) : (
-				<>
-					{/* Completed Attempts Section */}
-					<div>
-						<h3 className="text-lg font-semibold mb-3">Completed Attempts</h3>
-						<AttemptList
-							data={data}
-							page={filter.page}
-							perPage={filter.perPage}
-							onViewAttempt={(id) => navigateToAttempt(id)}
-						/>
+				</div>) : (data.length === 0 ? (
+					<div className="bg-white rounded-lg shadow-md p-6 text-center">
+						<p className="text-gray-600 mb-4">No attempts found.</p>
 					</div>
-				</>
-			)))}
+				) : (
+					<>					{/* Attempts Summary Section */}
+						<div>
+							<h3 className="text-lg font-semibold mb-4">Test Attempts Overview</h3>
+							<AttemptsAggregateSection aggregate={mockAttemptOfTestAggregateData} />
+						</div>
+
+						{/* Completed Attempts Section */}
+						<div>
+							<h3 className="text-lg font-semibold mb-3">Completed Attempts</h3>
+							<AttemptList
+								data={data}
+								page={filter.page}
+								perPage={filter.perPage}
+								onViewAttempt={(id) => navigateToAttempt(id)}
+							/>
+						</div>
+					</>
+				)))}
 
 			{/* Pagination */}
 			{totalPages > 1 && (

@@ -1,6 +1,0 @@
-{
-    "/test/list": "/testlist",
-    "/test/:id/attempts": "/testlist/:id",
-    "/test/:id/do": "/testlist/:id",
-    "/test/:testId/attempt?attemptId=:attemptId": "/testattempt?testId=:testId&attemptId=:attemptId"
-}

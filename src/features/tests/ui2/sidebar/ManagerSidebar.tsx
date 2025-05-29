@@ -1,6 +1,6 @@
 import { Trash2 } from 'lucide-react';
 import { useAppDispatch } from '../../../../app/hooks';
-import { ExamCore } from '../../model/test.model';
+import { ExamCore } from '../../../../infra-test/core/test.model';
 import dialogSlice from '../../stores/dialogSlice';
 import QuickAction from './QuickAction';
 import SidebarActions from './SidebarActions'

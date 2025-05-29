@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ExamCore } from '../model/test.model';
+import { ExamCore } from '../../../infra-test/core/test.model';
 
 interface DialogState {
 	manager: {

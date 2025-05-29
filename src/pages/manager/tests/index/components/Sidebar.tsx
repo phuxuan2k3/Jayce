@@ -13,7 +13,7 @@ export default function Sidebar() {
 				title='Create exam'
 				icon={<ClipboardPlus size={20} />}
 				description='Create a new exam'
-				onClick={() => navigate(paths.manager.tests.CREATE)}
+				onClick={() => navigate(paths.manager.tests.NEW)}
 			/>
 			<QuickAction
 				title='Manage exams'

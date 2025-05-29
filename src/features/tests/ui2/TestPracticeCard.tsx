@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useContext } from 'react';
-import { PracticeCore } from "../model/test.model";
+import { PracticeCore } from "../../../infra-test/core/test.model";
 
 // Create Context
 type TestCardContextType = {

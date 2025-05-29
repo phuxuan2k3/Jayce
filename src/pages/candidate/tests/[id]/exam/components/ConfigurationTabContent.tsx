@@ -1,5 +1,5 @@
-import { ExamCore } from '../../../../../../features/tests/model/test.model';
-import { AttemptsOfTestAggregate } from '../../../../../../features/tests/model/attempt.model';
+import { ExamCore } from '../../../../../../infra-test/core/test.model';
+import { AttemptsOfTestAggregate } from '../../../../../../infra-test/core/attempt.model';
 import { format } from 'date-fns';
 
 interface ConfigurationTabContentProps {

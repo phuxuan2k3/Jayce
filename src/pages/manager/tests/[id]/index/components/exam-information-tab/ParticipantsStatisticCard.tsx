@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartBar, faUsers, faRepeat } from '@fortawesome/free-solid-svg-icons';
-import { AttemptsOfTestAggregate } from '../../../../../../../features/tests/model/attempt.model';
+import { AttemptsOfTestAggregate } from '../../../../../../../infra-test/core/attempt.model';
 import Card from './Card';
 
 interface ParticipantsStatisticCardProps {

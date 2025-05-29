@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { QuestionToDo } from "../../../../../../../features/tests/model/question.model";
-import { AnswerCore } from "../../../../../../../features/tests/model/attempt.model";
+import { QuestionToDo } from "../../../../../../../infra-test/core/question.model";
+import { AnswerCore } from "../../../../../../../infra-test/core/attempt.model";
 import useCurrentQuestionIndex from "./useCurrentQuestionIndex";
 import useFlagQuestions from "./useFlagQuestions";
 import { QuestionDoingState } from "../../type";

@@ -1,5 +1,5 @@
-import { ExamCore, TestAggregateCore } from '../../../../../../../features/tests/model/test.model';
-import { AttemptsOfTestAggregate } from '../../../../../../../features/tests/model/attempt.model';
+import { ExamCore, TestAggregateCore } from '../../../../../../../infra-test/core/test.model';
+import { AttemptsOfTestAggregate } from '../../../../../../../infra-test/core/attempt.model';
 import { ExamHeader } from './ExamHeader';
 import { ExamDetails } from './ExamDetailsCard';
 import { ScheduleAccess } from './ScheduleAccess';
