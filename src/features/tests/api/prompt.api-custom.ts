@@ -66,11 +66,11 @@ export type GetSuggestOutlinesRequest = {
 	difficulty: string;
 	tags: string[];
 	outlines: string[]; // Những gợi ý đã điềns
-}
+};
 
 export type GetSuggestOutlinesResponse = {
 	outlines: string[];
-}
+};
 
 export type GetSuggestQuestionsRequest = {
 	title: string;
@@ -82,7 +82,7 @@ export type GetSuggestQuestionsRequest = {
 	outlines: string[];
 	numberOfQuestions: number;
 	numberOfOptions: number;
-}
+};
 
 export type GetSuggestQuestionsResponse = {
 	questions: {
@@ -91,4 +91,22 @@ export type GetSuggestQuestionsResponse = {
 		points: number;
 		correctOption: number;
 	}[];
-}
+};
+
+export type GetSuggestNewQuestionRequest = {
+	title: string;
+	description: string;
+	tags: string[];
+	estimatedMinutesToAnswer: number; // Estimated time to answer the question
+	language: string;
+	difficulty: string; // Difficulty level of the question, ex: "easy", "medium", "hard"
+	context: string; // Extra context for the question, ex: "This question is about the history of Vietnam"
+};
+
+export type GetSuggestNewQuestionResponse = {
+	text: string;
+	options: string[];
+	points: number;
+	correctOption: number;
+};
+
