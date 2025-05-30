@@ -58,9 +58,6 @@ export type FeedbackProblems = "inaccurate" | "un-related" | "poor content" | "i
 
 export type PracticeCore = TestCore & PracticeAddon;
 
-
-
-
 export type ExamCore = TestCore & ExamAddon;
 
 export type ExamConfigPersist = {

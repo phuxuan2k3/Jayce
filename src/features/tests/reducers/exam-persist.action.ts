@@ -18,4 +18,14 @@ export type ExamPersistAction = {
 } | {
 	type: 'REMOVE_QUESTION';
 	payload: { index: number; };
+} | {
+	type: 'BULK_ADD_QUESTIONS';
+	payload: {
+		questions: QuestionPersistOfTest[];
+	};
+} | {
+	type: 'REPLACE_QUESTIONS';
+	payload: {
+		questions: QuestionPersistOfTest[];
+	};
 };

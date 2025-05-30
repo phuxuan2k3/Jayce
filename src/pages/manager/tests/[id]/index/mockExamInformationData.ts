@@ -1,5 +1,6 @@
-import { ExamCore, TestAggregateCore } from "../../../../../infra-test/core/test.model";
-import { AttemptsOfTestAggregate } from "../../../../../infra-test/core/attempt.model";
+import { ExamCore } from "../../../../../infra-test/core/test.model";
+import { mockTestAggregateData } from "../../../../../infra-test/mocks/mockTests";
+import { mockAttemptOfTestAggregateData } from "../../../../../infra-test/mocks/mockAttempts";
 
 export const mockExamData: ExamCore = {
 	id: "exam001",
@@ -17,20 +18,6 @@ export const mockExamData: ExamCore = {
 	isAllowedToSeeOtherResults: false,
 	openDate: "2025-06-01T00:00:00Z",
 	closeDate: "2025-06-07T23:59:59Z",
-};
-
-export const mockTestAggregateData: TestAggregateCore = {
-	numberOfQuestions: 50,
-	totalPoints: 100,
-};
-
-export const mockAttemptOfTestAggregateData: AttemptsOfTestAggregate = {
-	totalParticipants: 150,
-	totalAttempts: 165,
-	averageScore: 72.5,
-	highestScore: 98.0,
-	lowestScore: 35.5,
-	averageTime: 5400, // 90 minutes in seconds
 };
 
 export const mockFullExamInformation = {

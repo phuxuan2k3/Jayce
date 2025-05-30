@@ -1,13 +1,14 @@
 import ParticipantCard from './ParticipantCard'
 import { mockParticipants } from '../mocks/mockParticipants';
-import { mockCandidates } from '../../../../../../../../infra-test/mocks/mockUsers';
-import { mockAttetmptsOfCandidateInTestAggregate } from '../../../../../../../../infra-test/mocks/mockAttempts';
+import { Participant } from '../types/participants';
 
-export default function ParticipantsList() {
-	const candidates = mockCandidates;
-	const candidateAttemptsAggregates = mockAttetmptsOfCandidateInTestAggregate;
-
-
+export default function ParticipantsList({
+	participants,
+	onParticipantSelect,
+}: {
+	participants: Participant[];
+	onParticipantSelect: (candidateId: string) => void;
+}) {
 	return (
 		<div className="space-y-4">
 			<div className="mb-6">
@@ -18,14 +19,19 @@ export default function ParticipantsList() {
 			</div>
 
 			<div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-				{mockParticipants.map((participant) => (
-					<ParticipantCard
+				{participants.map((participant) => (
+					<div
 						key={participant.user.id}
-						user={participant.user}
-						highestScore={participant.userAttemptsAggregate.highestScore}
-						totalAttempts={participant.userAttemptsAggregate.totalAttempts}
-						rank={participant.userAttemptsAggregate.rank}
-					/>
+						className="cursor-pointer hover:shadow-lg transition-shadow duration-200"
+						onClick={() => onParticipantSelect(participant.user.id)}
+					>
+						<ParticipantCard
+							user={participant.user}
+							highestScore={participant.attemptsAggregate.highestScore}
+							totalAttempts={participant.attemptsAggregate.totalAttempts}
+							rank={participant.attemptsAggregate.rank}
+						/>
+					</div>
 				))}
 			</div>
 

@@ -21,6 +21,24 @@ export const examPersistReducer = (state: ExamPersistState, action: ExamPersistA
 				},
 			};
 
+		case 'BULK_ADD_QUESTIONS':
+			return {
+				...state,
+				questions: {
+					...state.questions,
+					questions: [...state.questions.questions, ...action.payload.questions],
+				},
+			};
+
+		case 'REPLACE_QUESTIONS':
+			return {
+				...state,
+				questions: {
+					...state.questions,
+					questions: action.payload.questions,
+				},
+			};
+
 		case 'UPDATE_QUESTION':
 			const { index, question } = action.payload;
 			const updatedQuestions = state.questions.questions.map((q, i) => (i === index

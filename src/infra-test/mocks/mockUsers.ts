@@ -1,4 +1,5 @@
-import { CandidateCore } from "../core/user.model";
+import { Role } from "../../features/auth/types/auth";
+import { CandidateCore, UserCore } from "../core/user.model";
 
 export const mockCandidates: CandidateCore[] = [
 	{
@@ -42,3 +43,52 @@ export const mockCandidates: CandidateCore[] = [
 		avatarPath: "/avatars/charlie_davis.jpg"
 	}
 ]
+
+
+export const mockUsers: UserCore[] = [
+	{
+		id: "5",
+		username: "charlie_davis",
+		email: "charlie.davis@example.com",
+		metadata: { joinDate: "2023-02-28", department: "Sales" },
+		fullname: "Charlie Davis",
+		avatarPath: "/avatars/charlie_davis.jpg",
+		role: Role.Candidate,
+	},
+	{
+		id: "6",
+		username: "diana_martinez",
+		email: "diana.martinez@example.com",
+		metadata: { joinDate: "2023-05-12", department: "HR" },
+		fullname: "Diana Martinez",
+		avatarPath: "/avatars/diana_martinez.jpg",
+		role: Role.Candidate,
+	},
+	{
+		id: "7",
+		username: "frank_johnson",
+		email: "frank.johnson@example.com",
+		metadata: { joinDate: "2022-11-18", department: "Finance" },
+		fullname: "Frank Johnson",
+		avatarPath: "/avatars/frank_johnson.jpg",
+		role: Role.Candidate,
+	},
+	{
+		id: "8",
+		username: "grace_lee",
+		email: "grace.lee@example.com",
+		metadata: { joinDate: "2023-01-30", department: "Design" },
+		fullname: "Grace Lee",
+		avatarPath: "/avatars/grace_lee.jpg",
+		role: Role.Manager,
+	},
+	{
+		id: "9",
+		username: "henry_clark",
+		email: "henry.clark@example.com",
+		metadata: { joinDate: "2022-09-14", department: "Operations" },
+		fullname: "Henry Clark",
+		avatarPath: "/avatars/henry_clark.jpg",
+		role: Role.Manager,
+	}
+];

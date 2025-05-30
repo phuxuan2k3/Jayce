@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../router/paths";
 import ExamList from "./components/ExamList";
-import { mockExams } from "./components/mockExams";
 import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
 import Sidebar from "./components/Sidebar";
 import { useAppDispatch } from "../../../../app/hooks";
 import dialogSlice from "../../../../features/tests/stores/dialogSlice";
+import { mockExams } from "../../../../infra-test/mocks/mockExams";
 
 const ManagerTestsPage = () => {
 	const navigate = useNavigate();

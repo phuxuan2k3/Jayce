@@ -1,4 +1,4 @@
-import { AttemptCore, AttemptsOfCandidateInTestAggregate } from "../core/attempt.model";
+import { AttemptAggregate, AttemptCore, AttemptsOfTestAggregate } from "../core/attempt.model";
 
 export const mockAttempts: AttemptCore[] = [
 	{
@@ -53,51 +53,30 @@ export const mockAttempts: AttemptCore[] = [
 	}
 ];
 
+export const mockAttemptAggregate: AttemptAggregate = {
+	answered: 3,
+	answeredCorrect: 2
+}
 
-export const mockAttetmptsOfCandidateInTestAggregate: AttemptsOfCandidateInTestAggregate[] = [
+export const mockAnswers = [
 	{
-		candidateId: "candidate_001",
-		totalAttempts: 3,
-		averageScore: 82.1,
-		highestScore: 90.5,
-		lowestScore: 75.0,
-		averageTime: 4200, // 70 minutes
-		rank: 2
+		questionId: 1,
+		chosenOption: 2
 	},
 	{
-		candidateId: "candidate_002",
-		totalAttempts: 2,
-		averageScore: 88.5,
-		highestScore: 92.0,
-		lowestScore: 85.0,
-		averageTime: 3900, // 65 minutes
-		rank: 1
+		questionId: 2,
+		chosenOption: 1
 	},
 	{
-		candidateId: "candidate_003",
-		totalAttempts: 1,
-		averageScore: 76.8,
-		highestScore: 76.8,
-		lowestScore: 76.8,
-		averageTime: 5100, // 85 minutes
-		rank: 4
-	},
-	{
-		candidateId: "candidate_004",
-		totalAttempts: 4,
-		averageScore: 79.3,
-		highestScore: 96.7,
-		lowestScore: 58.2,
-		averageTime: 4500, // 75 minutes
-		rank: 3
-	},
-	{
-		candidateId: "candidate_005",
-		totalAttempts: 2,
-		averageScore: 71.5,
-		highestScore: 84.0,
-		lowestScore: 59.0,
-		averageTime: 5400, // 90 minutes
-		rank: 5
+		questionId: 3,
+		chosenOption: 3
 	}
-]
+];
+export const mockAttemptOfTestAggregateData: AttemptsOfTestAggregate = {
+	totalParticipants: 150,
+	totalAttempts: 165,
+	averageScore: 72.5,
+	highestScore: 98.0,
+	lowestScore: 35.5,
+	averageTime: 5400, // 90 minutes in seconds
+};

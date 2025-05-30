@@ -1,6 +1,4 @@
-import React from 'react'
-import { UserCore } from '../../../../../../../../infra-test/core/user.model'
-import { AttemptsOfCandidateInTestAggregate } from '../../../../../../../../infra-test/core/attempt.model';
+import { CandidateCore } from '../../../../../../../../infra-test/core/user.model'
 
 export default function ParticipantCard({
 	user,
@@ -8,24 +6,11 @@ export default function ParticipantCard({
 	totalAttempts,
 	rank,
 }: {
-	user: UserCore;
+	user: CandidateCore;
 	highestScore: number;
 	totalAttempts: number;
 	rank: number;
 }) {
-	const formatSeconds = (seconds: number) => {
-		const hours = Math.floor(seconds / 3600);
-		const minutes = Math.floor((seconds % 3600) / 60);
-		const secs = seconds % 60;
-		if (hours > 0) {
-			return `${hours}h ${minutes}m ${secs}s`;
-		}
-		if (minutes > 0) {
-			return `${minutes}m ${secs}s`;
-		}
-		return `${secs}s`;
-	};
-
 	return (
 		<div className='rounded-lg p-6 bg-primary-toned-50 shadow-md'>
 			{/* User Profile Section */}

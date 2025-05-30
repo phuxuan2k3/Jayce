@@ -4,14 +4,29 @@ import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplat
 import ExamConfigForm from "../../../../features/tests/ui2/forms/ExamConfigForm";
 import { examPersistReducer } from "../../../../features/tests/reducers/exam-persist.reducer";
 import { examPersistStateFactory } from "../../../../features/tests/reducers/exam-persist.store";
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./components/sidbar";
 import ExamQuestionsManage from "../../../../features/tests/ui2/forms/ExamQuestionsManage";
+import PublishTab from "./components/sidbar/PublishTab";
 import BuilderWizzardTab from "./components/builder-wizzard-tab";
-import PublishTab from "./components/PublishTab";
+import { QuestionPersistOfTest } from "../../../../infra-test/core/question.model";
 
 export default function ManagerTestEditPage() {
 	const [tab, setTab] = useState<CreateTab>("configuration");
 	const [state, dispatch] = useReducer(examPersistReducer, examPersistStateFactory({}));
+
+	const handleBulkAddQuestions = (questions: QuestionPersistOfTest[]) => {
+		dispatch({
+			type: "BULK_ADD_QUESTIONS",
+			payload: { questions },
+		});
+	}
+
+	const handleReplaceQuestions = (questions: QuestionPersistOfTest[]) => {
+		dispatch({
+			type: "REPLACE_QUESTIONS",
+			payload: { questions },
+		});
+	}
 
 	const getTab = (tab: CreateTab) => {
 		switch (tab) {
@@ -39,7 +54,12 @@ export default function ManagerTestEditPage() {
 					})}
 				/>;
 			case "generate":
-				return <BuilderWizzardTab />;
+				return <BuilderWizzardTab
+					examInitialConfig={state.config}
+					onExamConfigChange={(config) => {
+						dispatch({ type: "UPDATE_CONFIG", payload: config });
+					}}
+				/>;
 			case "publish":
 				return <PublishTab />
 			default:

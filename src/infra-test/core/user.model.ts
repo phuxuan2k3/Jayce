@@ -14,3 +14,4 @@ export function getUserCore(user: UserInfo): UserCore {
 }
 
 export type CandidateCore = Omit<UserCore, "role">;
+export type ManagerCore = Omit<UserCore, "role">;

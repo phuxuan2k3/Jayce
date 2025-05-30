@@ -13,7 +13,6 @@ import logoutApi from '../features/auth/api/logout.api.ts';
 import interviewApi from '../features/interviews/api/interview.api.ts';
 import fetchSlice from './fetchSlice.ts';
 import dialogSlice from '../features/tests/stores/dialogSlice.ts';
-import wizardSlice from '../pages/manager/tests/new/components/builder-wizzard-tab/state/wizardSlice.ts';
 
 
 const authPersistConfig = {
@@ -37,7 +36,6 @@ const rootReducer = combineReducers({
 	test: testReducer,
 	[fetchSlice.reducerPath]: fetchSlice.reducer,
 	[dialogSlice.reducerPath]: dialogSlice.reducer,
-	[wizardSlice.reducerPath]: wizardSlice.reducer,
 });
 
 const store = configureStore({

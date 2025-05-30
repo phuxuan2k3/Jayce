@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import paths from "../../../../../../../router/paths";
 import { useState } from "react";
 import { mockAttemptCandidates } from "../../mockAttemptsData";
-import { mockAttemptOfTestAggregateData } from "../../mockExamInformationData";
+import { mockAttemptOfTestAggregateData } from "../../../../../../../infra-test/mocks/mockAttempts";
 
 type Filter = {
 	page: number;

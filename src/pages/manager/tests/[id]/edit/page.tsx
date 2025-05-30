@@ -2,12 +2,12 @@ import { useReducer, useState } from "react";
 import ExamQuestionsManage from "../../../../../features/tests/ui2/forms/ExamQuestionsManage";
 import LeftLayoutTemplate from "../../../../../components/layouts/LeftLayoutTemplate";
 import ExamConfigForm from "../../../../../features/tests/ui2/forms/ExamConfigForm";
-import { mockExams } from "../../index/components/mockExams";
 import Sidebar from "./components/Sidebar";
 import { EditTabs } from "./type";
 import { examPersistReducer } from "../../../../../features/tests/reducers/exam-persist.reducer";
 import { examPersistStateFactory } from "../../../../../features/tests/reducers/exam-persist.store";
 import { mockQuestions } from "../index/components/questions-tab/mockData";
+import { mockExams } from "../../../../../infra-test/mocks/mockExams";
 
 export default function ManagerTestEditPage() {
 	const exam = mockExams[0];

@@ -1,9 +1,7 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import AuthLoginPage from "../pages/auth/login/AuthLoginPage";
 import AuthRegisterPage from "../pages/auth/register/AuthRegisterPage";
 import ErrorPage from "../components/pages/ErrorPage";
-import ManagerTestAttemptsPage from "../pages/manager/tests/[id]/attempts/ManagerTestAttemptsPage";
-import ManagerTestAttemptPage from "../pages/manager/tests/attempts/[id]/index/ManagerTestAttemptPage";
 import ManagerScenariosPage from "../pages/manager/scenarios/index/ManagerScenariosPage";
 import ManagerScenarioSubmissionsPage from "../pages/manager/scenarios/[id]/submissions/ManagerScenarioSubmissionsPage";
 import ScenarioSubmissionDetail from "../pages/manager/scenarios/submissions/[id]/index/ManagerScenariosSubmissionPage";
@@ -34,7 +32,6 @@ import AuthChooseRolePage from "../pages/auth/choose-role/AuthChooseRolePage";
 import CandidateTestsAttemptPage from "../pages/candidate/tests/attempts/[id]/index/page";
 import ManagerTestsPage from "../pages/manager/tests/index/page";
 import CandidateHomePage from "../pages/candidate/index/CandidateHomePage";
-import ManagerHomePage from "../pages/manager/scenarios/index/ManagerHomePage";
 import CandidateInterviewLivePage from "../pages/candidate/interviews/live/CandidateInterviewLivePage";
 import SetUpPage from "../pages/candidate/interviews/setup/setup";
 import Settings from "../pages/common/profile/index/Settings";
@@ -49,6 +46,7 @@ import ManagerTestPage from "../pages/manager/tests/[id]/index/page";
 import ResultPage from "../pages/candidate/interviews/result/result";
 import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/page";
 import ManagerTestsNewPage from "../pages/manager/tests/new/page";
+import ManagerTestsAttemptPage from "../pages/manager/tests/attempts/[id]/index/page";
 
 const router = createBrowserRouter(
 	[
@@ -252,7 +250,7 @@ const router = createBrowserRouter(
 						// Common pages
 
 						{
-							element: <ManagerHomePage />,
+							element: <Navigate to={paths.manager.tests.ROOT} replace />,
 							index: true,
 						},
 
@@ -277,10 +275,6 @@ const router = createBrowserRouter(
 											element: <ManagerTestPage />,
 										},
 										{
-											path: paths.manager.tests.in().ATTEMPTS,
-											element: <ManagerTestAttemptsPage />,
-										},
-										{
 											path: paths.manager.tests.in().EDIT,
 											element: <ManagerTestEditPage />,
 										},
@@ -288,7 +282,7 @@ const router = createBrowserRouter(
 								},
 								{
 									path: paths.manager.tests.attempts.in().ROOT,
-									element: <ManagerTestAttemptPage />,
+									element: <ManagerTestsAttemptPage />,
 								},
 							],
 						},

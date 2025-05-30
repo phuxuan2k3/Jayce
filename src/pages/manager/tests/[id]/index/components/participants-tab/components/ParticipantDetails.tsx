@@ -1,18 +1,30 @@
 import { format } from 'date-fns'
-import { UserCore } from '../../../../../../../../infra-test/core/user.model'
-import { AttemptCore, AttemptsOfCandidateInTestAggregate } from '../../../../../../../../infra-test/core/attempt.model';
+import { AttemptCore } from '../../../../../../../../infra-test/core/attempt.model';
+import { Participant } from '../types/participants';
 
 export default function ParticipantDetails({
-	userAttempts,
-	userAttemptsAggregate,
-	user,
+	participant,
+	attempts,
+	onBack,
 }: {
-	user: UserCore;
-	userAttemptsAggregate: AttemptsOfCandidateInTestAggregate;
-	userAttempts: AttemptCore[];
+	participant: Participant;
+	attempts: AttemptCore[];
+	onBack: () => void;
 }) {
+	const { user, attemptsAggregate } = participant;
+
 	return (
 		<div className="space-y-6">
+			{/* Back Button */}
+			<div className="flex justify-between items-center mb-4">
+				<button
+					className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+					onClick={onBack}
+				>
+					Back to Participants List
+				</button>
+			</div>
+
 			{/* User Profile Section */}
 			<div className="bg-white rounded-lg shadow-md p-6">
 				<div className="flex items-start space-x-4">
@@ -35,10 +47,10 @@ export default function ParticipantDetails({
 						<p className="text-sm text-gray-500">{user.email}</p>
 						<div className="mt-2 flex items-center space-x-4">
 							<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-								Rank #{userAttemptsAggregate.rank}
+								Rank #{attemptsAggregate.rank}
 							</span>
 							<span className="text-sm text-gray-500">
-								{userAttemptsAggregate.totalAttempts} attempt(s)
+								{attemptsAggregate.totalAttempts} attempt(s)
 							</span>
 						</div>
 					</div>
@@ -51,25 +63,25 @@ export default function ParticipantDetails({
 				<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 					<div className="text-center p-4 bg-green-50 rounded-lg">
 						<div className="text-2xl font-bold text-green-600">
-							{userAttemptsAggregate.highestScore}%
+							{attemptsAggregate.highestScore}%
 						</div>
 						<div className="text-sm text-gray-500">Highest Score</div>
 					</div>
 					<div className="text-center p-4 bg-orange-50 rounded-lg">
 						<div className="text-2xl font-bold text-orange-600">
-							{userAttemptsAggregate.lowestScore}%
+							{attemptsAggregate.lowestScore}%
 						</div>
 						<div className="text-sm text-gray-500">Lowest Score</div>
 					</div>
 					<div className="text-center p-4 bg-blue-50 rounded-lg">
 						<div className="text-2xl font-bold text-blue-600">
-							{userAttemptsAggregate.averageScore.toFixed(1)}%
+							{attemptsAggregate.averageScore.toFixed(1)}%
 						</div>
 						<div className="text-sm text-gray-500">Average Score</div>
 					</div>
 					<div className="text-center p-4 bg-purple-50 rounded-lg">
 						<div className="text-2xl font-bold text-purple-600">
-							{formatTime(userAttemptsAggregate.averageTime)}
+							{formatTime(attemptsAggregate.averageTime)}
 						</div>
 						<div className="text-sm text-gray-500">Average Time</div>
 					</div>
@@ -82,23 +94,23 @@ export default function ParticipantDetails({
 				<div className="space-y-3">
 					<div className="flex justify-between items-center py-2 border-b border-gray-100">
 						<span className="text-sm font-medium text-gray-700">Total Attempts</span>
-						<span className="text-sm text-gray-900">{userAttemptsAggregate.totalAttempts}</span>
+						<span className="text-sm text-gray-900">{attemptsAggregate.totalAttempts}</span>
 					</div>
 					<div className="flex justify-between items-center py-2 border-b border-gray-100">
 						<span className="text-sm font-medium text-gray-700">Current Rank</span>
-						<span className="text-sm text-gray-900">#{userAttemptsAggregate.rank}</span>
+						<span className="text-sm text-gray-900">#{attemptsAggregate.rank}</span>
 					</div>
 					<div className="flex justify-between items-center py-2 border-b border-gray-100">
 						<span className="text-sm font-medium text-gray-700">Score Range</span>
 						<span className="text-sm text-gray-900">
-							{userAttemptsAggregate.lowestScore}% - {userAttemptsAggregate.highestScore}%
+							{attemptsAggregate.lowestScore}% - {attemptsAggregate.highestScore}%
 						</span>
 					</div>
 					<div className="flex justify-between items-center py-2 border-b border-gray-100">
 						<span className="text-sm font-medium text-gray-700">Improvement</span>
 						<span className="text-sm text-gray-900">
-							{userAttemptsAggregate.highestScore - userAttemptsAggregate.lowestScore > 0 ? '+' : ''}
-							{(userAttemptsAggregate.highestScore - userAttemptsAggregate.lowestScore).toFixed(1)}%
+							{attemptsAggregate.highestScore - attemptsAggregate.lowestScore > 0 ? '+' : ''}
+							{(attemptsAggregate.highestScore - attemptsAggregate.lowestScore).toFixed(1)}%
 						</span>
 					</div>
 				</div>
@@ -107,9 +119,9 @@ export default function ParticipantDetails({
 			{/* Attempts History */}
 			<div className="bg-white rounded-lg shadow-md p-6">
 				<h3 className="text-lg font-semibold text-gray-900 mb-4">
-					Attempts History ({userAttempts.length})
+					Attempts History ({attempts.length})
 				</h3>
-				{userAttempts.length === 0 ? (
+				{attempts.length === 0 ? (
 					<div className="text-center py-8 text-gray-500">
 						No attempts recorded yet.
 					</div>
@@ -136,7 +148,7 @@ export default function ParticipantDetails({
 								</tr>
 							</thead>
 							<tbody className="bg-white divide-y divide-gray-200">
-								{userAttempts.map((attempt, index) => (
+								{attempts.map((attempt, index) => (
 									<tr key={attempt.id} className="hover:bg-gray-50">
 										<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
 											#{index + 1}
@@ -195,36 +207,36 @@ export default function ParticipantDetails({
 			</div>
 
 			{/* Performance Trend */}
-			{userAttempts.length > 1 && (
+			{attempts.length > 1 && (
 				<div className="bg-white rounded-lg shadow-md p-6">
 					<h3 className="text-lg font-semibold text-gray-900 mb-4">Performance Trend</h3>
 					<div className="space-y-3">
 						{/* Simple trend visualization */}
 						<div className="flex items-center justify-between">
 							<span className="text-sm text-gray-600">Latest vs Previous:</span>
-							{userAttempts.length >= 2 && (
-								<span className={`text-sm font-semibold ${userAttempts[userAttempts.length - 1].score > userAttempts[userAttempts.length - 2].score
+							{attempts.length >= 2 && (
+								<span className={`text-sm font-semibold ${attempts[attempts.length - 1].score > attempts[attempts.length - 2].score
 									? 'text-green-600' :
-									userAttempts[userAttempts.length - 1].score < userAttempts[userAttempts.length - 2].score
+									attempts[attempts.length - 1].score < attempts[attempts.length - 2].score
 										? 'text-red-600' : 'text-gray-600'
 									}`}>
-									{userAttempts[userAttempts.length - 1].score > userAttempts[userAttempts.length - 2].score && '+'}
-									{(userAttempts[userAttempts.length - 1].score - userAttempts[userAttempts.length - 2].score).toFixed(1)}%
+									{attempts[attempts.length - 1].score > attempts[attempts.length - 2].score && '+'}
+									{(attempts[attempts.length - 1].score - attempts[attempts.length - 2].score).toFixed(1)}%
 								</span>
 							)}
 						</div>
 						<div className="flex items-center justify-between">
 							<span className="text-sm text-gray-600">Best Improvement:</span>
 							<span className="text-sm font-semibold text-green-600">
-								+{(userAttemptsAggregate.highestScore - userAttemptsAggregate.lowestScore).toFixed(1)}%
+								+{(attemptsAggregate.highestScore - attemptsAggregate.lowestScore).toFixed(1)}%
 							</span>
 						</div>
 						<div className="flex items-center justify-between">
 							<span className="text-sm text-gray-600">Consistency:</span>
 							<span className="text-sm font-semibold text-blue-600">
-								{userAttemptsAggregate.totalAttempts > 1 ?
-									Math.abs(userAttemptsAggregate.highestScore - userAttemptsAggregate.lowestScore) < 20 ? 'High' :
-										Math.abs(userAttemptsAggregate.highestScore - userAttemptsAggregate.lowestScore) < 40 ? 'Medium' : 'Low'
+								{attemptsAggregate.totalAttempts > 1 ?
+									Math.abs(attemptsAggregate.highestScore - attemptsAggregate.lowestScore) < 20 ? 'High' :
+										Math.abs(attemptsAggregate.highestScore - attemptsAggregate.lowestScore) < 40 ? 'Medium' : 'Low'
 									: 'N/A'
 								}
 							</span>

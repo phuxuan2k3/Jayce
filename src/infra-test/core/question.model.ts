@@ -14,6 +14,8 @@ export type QuestionDo = QuestionToDo & {
 	chosenOption?: number;
 };
 
+// New
+
 export type QuestionAggregate = {
 	questionId: number;
 	numberOfAnswers: number;
@@ -27,4 +29,3 @@ export type QuestionPersistOfTest = {
 	points: number;
 	correctOption: number;
 };
-

@@ -31,7 +31,6 @@ Requirements:
    - Show skeleton loaders during AI calls.
    - Inline validation errors.
    - Tooltips on hover for help texts.
-   - Save-as-draft functionality (e.g. “Save & Resume” button).
 
 4. **Styling**
 
