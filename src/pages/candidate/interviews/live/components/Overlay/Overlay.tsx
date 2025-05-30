@@ -8,14 +8,14 @@ import BottomMenu from "./BottomMenu";
 import InterviewStatus from "./InterviewStatus";
 import Record from "./Record";
 
-type AnswerData = {
-  questionIndex: number;
-  answer: string;
-  recordProof: string;
-};
+// type AnswerData = {
+//   questionIndex: number;
+//   answer: string;
+//   recordProof: string;
+// };
 export default function Overlay() {
   const { goToNextQuestion, questionIndex } = useQuestionContext();
-  const [postAnswer, { isLoading: isPosting }] = usePostAnswerMutation();
+  const [postAnswer] = usePostAnswerMutation();
 
   const [triggerSubmit] = useLazyGetInterviewOutroQuery();
 

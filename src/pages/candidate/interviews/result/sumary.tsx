@@ -71,7 +71,7 @@ const Summary: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
   return (
     <div className="w-full h-full p-0 md:p-8 flex flex-col md:flex-row gap-8">
       {/* Feedback Card */}
-      <Card className="md:w-3/5 w-full shadow-2xl rounded-3xl bg-white/90 border border-gray-100">
+      <Card className="md:w-3/5 w-full shadow rounded-3xl bg-white/90 border border-gray-100">
         <CardContent>
           <div className="flex items-center gap-3 mb-2">
             <FontAwesomeIcon
@@ -94,7 +94,7 @@ const Summary: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
 
       {/* Pie Chart + Skill Score */}
       <div className="flex-1 flex flex-col gap-8">
-        <Card className="shadow-2xl rounded-3xl bg-white/90 border border-gray-100">
+        <Card className="shadow rounded-3xl bg-white/90 border border-gray-100">
           <CardContent>
             <div className="flex items-center gap-2 mb-2">
               <FontAwesomeIcon
@@ -120,7 +120,7 @@ const Summary: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
           </CardContent>
         </Card>
         {/* Skill Score */}
-        <Card className="shadow-2xl rounded-3xl bg-white/90 border border-gray-100">
+        <Card className="shadow rounded-3xl bg-white/90 border border-gray-100">
           <CardContent>
             <div className="flex items-center gap-2 mb-2">
               <FontAwesomeIcon

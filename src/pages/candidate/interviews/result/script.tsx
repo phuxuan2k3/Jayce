@@ -34,20 +34,9 @@ const Script: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
   scoreData,
 }) => {
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="w-full ">
+    <div className="max-w-4xl mx-auto overflow-auto">
+      <div className="w-full h-[500px]">
         <CardContent>
-          <Typography
-            variant="h4"
-            className="font-extrabold mb-8 text-primary-toned-600 text-center tracking-tight font-arya"
-          >
-            <FontAwesomeIcon
-              icon={faCommentDots}
-              className="mr-2 text-primary-toned-600"
-            />
-            Interview Scripts & Comments
-          </Typography>
-          <Divider />
           <div className="mt-8 flex flex-col gap-8">
             {scoreData.submissions?.map((res, index) => (
               <Card

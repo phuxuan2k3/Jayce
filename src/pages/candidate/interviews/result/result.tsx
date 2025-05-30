@@ -53,16 +53,16 @@ const ResultPage = () => {
   if (!data) return <div>Không có dữ liệu.</div>;
 
   return (
-    <div className="bg-[#f7fafc] min-h-screen pb-20">
-      <div className="text-[40px] font-black font-arya text-center mt-10 text-primary-toned-600 drop-shadow-lg">
+    <div className="bg-white h-fit pb-20 mx-12">
+      <div className="text-[40px] font-black font-arya text-center mt-10 text-primary-toned-600 drop-shadow">
         Interview Result
       </div>
       <div className="text-center text-[20px] font-arya mb-10 text-gray-700">
         <p>Congratulations on completing the interview!</p>
         <p>Let's take a look at the result!</p>
       </div>
-      <Box className="w-full flex justify-center">
-        <div className="w-[340px] bg-white/90 rounded-3xl shadow-2xl p-6 flex flex-col gap-2 items-center mr-10">
+      <Box className="w-full flex justify-center ">
+        <div className="w-[340px] h-[500px] bg-white/90 rounded-3xl shadow p-6 flex flex-col gap-2 items-center mr-10">
           {navItems.map((item) => {
             const isSelected = tab === item.id;
             return (
@@ -93,8 +93,8 @@ const ResultPage = () => {
             );
           })}
         </div>
-        <Box className="flex-1 bg-transparent min-h-[90vh] ml-4">
-          <div className="rounded-3xl shadow-2xl bg-white/80 p-8 h-full">
+        <Box className="flex-1 bg-transparent h-fit  ">
+          <div className="rounded-3xl shadow-lg bg-white/80 p-8 h-full">
             {renderTabContent()}
           </div>
         </Box>
