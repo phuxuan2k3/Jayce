@@ -2,9 +2,10 @@ import { useCallback, useState } from "react";
 import { ExamConfigPersist } from "../../../../../../infra-test/core/test.model";
 import StepsBar from "./components/StepsBar";
 import Step1 from "./step-1";
-import Step2, { type TopicBlueprintData } from "./step-2";
+import Step2 from "./step-2";
 import Step3 from "./step-3";
 import Step4 from "./step-4";
+import { TopicBlueprintData } from "../../models/generate.types";
 
 export default function BuilderWizzardTab({
 	examInitialConfig,

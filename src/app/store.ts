@@ -13,6 +13,7 @@ import logoutApi from '../features/auth/api/logout.api.ts';
 import interviewApi from '../features/interviews/api/interview.api.ts';
 import fetchSlice from './fetchSlice.ts';
 import dialogSlice from '../features/tests/stores/dialogSlice.ts';
+import promptTuningApi from '../features/tests/base/prompt-tuning.api.ts';
 
 
 const authPersistConfig = {
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
 	ekkoApi: ekkoApi.reducer,
 	chronobreakApi: chronobreakApi.reducer,
 	interviewApi: interviewApi.reducer,
+	promptTuningApi: promptTuningApi.reducer,
 
 	// Custom reducers
 	auth: persistReducer(authPersistConfig, authReducer),
@@ -54,6 +56,7 @@ const store = configureStore({
 				.concat(authApi.middleware)
 				.concat(logoutApi.middleware)
 				.concat(interviewApi.middleware)
+				.concat(promptTuningApi.middleware)
 	,
 });
 
