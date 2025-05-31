@@ -33,7 +33,7 @@ export default function useCommunicationConfigModel({
 	}, [audio]);
 
 	useFrame(() => {
-		if (!audio || audio.ended == true) return;
+		if (audio == null || mouthCues == null || audio.ended == true) return;
 		let found = false;
 		for (let i = currentMouthCuesIndex.current; i < mouthCues.length; i++) {
 			if (
