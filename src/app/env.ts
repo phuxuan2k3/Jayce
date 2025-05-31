@@ -1,10 +1,10 @@
 const backendUrl: string = import.meta.env.VITE_BACKEND_URL as string;
 const backendSocketUrl: string = import.meta.env
-  .VITE_BACKEND_SOCKET_URL as string;
+	.VITE_BACKEND_SOCKET_URL as string;
 
 // Configurations
 const noAuth =
-  (Boolean(import.meta.env.VITE_NO_AUTH === "true") as boolean) ?? false;
+	(Boolean(import.meta.env.VITE_NO_AUTH === "true") as boolean) ?? false;
 
 // Auth
 const bulbasaurUrl = import.meta.env.VITE_BULBASAUR_URL as string;
@@ -25,22 +25,25 @@ const threshSocketUrl = import.meta.env.VITE_THRESH_SOCKET_URL as string;
 // Scenario
 const ekkoUrl = import.meta.env.VITE_EKKO_URL as string;
 
+// Irelia
+const ireliaUrl = import.meta.env.VITE_IRELIA_URL as string;
+
 const url = {
-  thresh: {
-    base: threshUrl ?? backendUrl + "/thresh",
-    socket: threshSocketUrl ?? backendSocketUrl,
-  },
-  ekko: ekkoUrl ?? backendUrl + "/ekko",
-  bulbasaur: bulbasaurUrl ?? backendUrl + "/bulbasaur",
-  ivysaur: ivysaurUrl ?? backendUrl + "/ivysaur",
-  darius: dariusUrl ?? backendUrl + "/darius",
-  chronobreak: chronobreakUrl ?? backendUrl + "/chronobreak",
-  irelia: backendUrl + "/irelia",
+	thresh: {
+		base: threshUrl ?? backendUrl + "/thresh",
+		socket: threshSocketUrl ?? backendSocketUrl,
+	},
+	ekko: ekkoUrl ?? backendUrl + "/ekko",
+	bulbasaur: bulbasaurUrl ?? backendUrl + "/bulbasaur",
+	ivysaur: ivysaurUrl ?? backendUrl + "/ivysaur",
+	darius: dariusUrl ?? backendUrl + "/darius",
+	chronobreak: chronobreakUrl ?? backendUrl + "/chronobreak",
+	irelia: ireliaUrl ?? backendUrl + "/irelia",
 };
 
 const mock = {
-  userId: (import.meta.env.VITE_MOCK_USER_ID as string) || "1",
-  roleId: (import.meta.env.VITE_MOCK_ROLE_ID as string) || "1",
+	userId: (import.meta.env.VITE_MOCK_USER_ID as string) || "1",
+	roleId: (import.meta.env.VITE_MOCK_ROLE_ID as string) || "1",
 };
 
 export { backendUrl, backendSocketUrl, noAuth, url, mock };
