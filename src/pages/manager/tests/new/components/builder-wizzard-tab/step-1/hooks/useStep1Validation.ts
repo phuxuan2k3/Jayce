@@ -39,32 +39,6 @@ export const useStep1Validation = (
 					return 'Language selection is required';
 				}
 				break;
-			case 'openDate':
-				if (!value) {
-					return 'Open date is required';
-				}
-				if (new Date(value) < new Date()) {
-					return 'Open date cannot be in the past';
-				}
-				break;
-			case 'closeDate':
-				if (!value) {
-					return 'Close date is required';
-				}
-				if (examConfigPersist.openDate && new Date(value) <= new Date(examConfigPersist.openDate)) {
-					return 'Close date must be after open date';
-				}
-				break;
-			case 'password':
-				if (examConfigPersist.password !== null && examConfigPersist.password !== undefined) {
-					if (!value || value.trim().length === 0) {
-						return 'Password is required when password protection is enabled';
-					}
-					if (value.trim().length < 4) {
-						return 'Password must be at least 4 characters long';
-					}
-				}
-				break;
 		}
 		return undefined;
 	};

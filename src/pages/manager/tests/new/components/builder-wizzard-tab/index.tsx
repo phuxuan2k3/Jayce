@@ -6,6 +6,11 @@ import Step2 from "./step-2";
 import Step3 from "./step-3";
 import Step4 from "./step-4";
 import { TopicBlueprintData } from "../../models/generate.types";
+import { StyleRefinementData } from "./step-3/types";
+import ErrorMessages from "./components/ErrorMessage";
+import { ErrorContextProvider } from "./contexts/error.context";
+import { StepContextProvider } from "./contexts/step.context";
+import Header from "./components/Header";
 
 export default function BuilderWizzardTab({
 	examInitialConfig,
@@ -15,25 +20,48 @@ export default function BuilderWizzardTab({
 	onExamConfigChange?: (config: Partial<ExamConfigPersist>) => void;
 }) {
 	const [step, setStep] = useState<Steps>(1);
+	const [errorMessages, setErrorMessages] = useState<string[]>([]);
+
+
 	const [examConfig, setExamConfig] = useState<ExamConfigPersist>(examInitialConfig);
 	const [topicBlueprint, setTopicBlueprint] = useState<TopicBlueprintData>({
 		topics: []
 	});
+	const [styleRefinement, setStyleRefinement] = useState<StyleRefinementData>({
+		expertPersona: {
+			type: 'senior-architect',
+			customDescription: '',
+		},
+		samplingSettings: {
+			temperature: 0.7,
+			selfConsistencyRuns: 3,
+		},
+		examplesAndRAG: {
+			uploadedFiles: [],
+			customExamples: '',
+			selectedGalleryPresets: [],
+		},
+	});
 	const [validationState, setValidationState] = useState<{ [key: number]: boolean }>({
 		1: false,
 		2: false,
-		3: true,
+		3: false,
 		4: true
-	}); const handleExamConfigChange = useCallback((changes: Partial<ExamConfigPersist>) => {
+	});
+
+	const handleExamConfigChange = useCallback((changes: Partial<ExamConfigPersist>) => {
 		setExamConfig(prev => {
 			const updatedConfig = { ...prev, ...changes };
 			onExamConfigChange?.(changes);
 			return updatedConfig;
 		});
 	}, [onExamConfigChange]);
-
 	const handleTopicBlueprintChange = useCallback((changes: Partial<TopicBlueprintData>) => {
 		setTopicBlueprint(prev => ({ ...prev, ...changes }));
+	}, []);
+
+	const handleStyleRefinementChange = useCallback((changes: StyleRefinementData) => {
+		setStyleRefinement(changes);
 	}, []);
 
 	const handleValidationChange = useCallback((stepNumber: number, isValid: boolean) => {
@@ -63,37 +91,57 @@ export default function BuilderWizzardTab({
 				/>;
 			case 2:
 				return <Step2
-					examConfigPersist={examConfig}
-					onExamConfigChange={handleExamConfigChange}
 					topicBlueprintData={topicBlueprint}
 					onTopicBlueprintChange={handleTopicBlueprintChange}
 					onValidationChange={(isValid) => handleValidationChange(2, isValid)}
+				/>; case 3:
+				return <Step3
+					data={styleRefinement}
+					onChange={handleStyleRefinementChange}
+					onValidationChange={(isValid) => handleValidationChange(3, isValid)}
 				/>;
-			case 3:
-				return <Step3 />;
 			case 4:
 				return <Step4 />;
 			default:
 				return <div>Invalid Step</div>;
 		}
-	}, [examConfig, handleExamConfigChange, handleValidationChange, topicBlueprint, handleTopicBlueprintChange]);
+	}, [examConfig, handleExamConfigChange, handleValidationChange, topicBlueprint, handleTopicBlueprintChange, styleRefinement, handleStyleRefinementChange]);
+
+
 	return (
-		<div>
-			{/* Step display bar */}
-			<StepsBar
+		<ErrorContextProvider
+			errorMessages={errorMessages}
+			setErrorMessages={setErrorMessages}
+		>
+			<StepContextProvider
 				step={step}
-				onStepChange={(newStep) => {
-					if (canNavigateToStep(newStep)) {
-						setStep(newStep);
-					}
-				}}
-				canNavigateToStep={canNavigateToStep}
-				validationState={validationState}
-			/>
+				setStep={setStep}
+			>
+				<StepsBar
+					step={step}
+					onStepChange={(newStep) => {
+						if (canNavigateToStep(newStep)) {
+							setStep(newStep);
+						}
+					}}
+					canNavigateToStep={canNavigateToStep}
+					validationState={validationState}
+				/>
 
-			{stepSwitcher(step)}
+				<Header />
 
-		</div>
+				<ErrorMessages
+					errorMessages={[]}
+				/>
+
+				<div className="col-span-2 border-b border-primary-toned-300 w-full" />
+
+				<div className="text-base [&>label]:text-primary [&>label]:font-semibold w-full h-full overflow-y-auto grid grid-cols-[auto_1fr] items-center place-items-end gap-y-6 gap-x-8 p-6">
+					{stepSwitcher(step)}
+				</div>
+
+			</StepContextProvider>
+		</ErrorContextProvider>
 	);
 }
 
