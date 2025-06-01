@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetInterviewHistoryQuery } from "../../../../features/interviews/api/interview.api";
-import { CircularProgress, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import Strength from "./strength";
 import Script from "./script";
 import Summary from "./sumary";
@@ -10,6 +10,7 @@ import {
   faScroll,
   faArrowTrendUp,
 } from "@fortawesome/free-solid-svg-icons";
+import Loading from "./loading";
 
 const navItems = [
   { id: "summary", label: "Summary", icon: faChartPie },
@@ -24,9 +25,24 @@ const ResultPage = () => {
     localStorage.getItem("interviewInfo") || "{}"
   );
   const interviewId = interviewInfo.interviewId || "1";
-  const { data, isLoading, error } = useGetInterviewHistoryQuery({
+  const { data, isLoading, error, refetch } = useGetInterviewHistoryQuery({
     interviewId,
   });
+
+  useEffect(() => {
+    if (data && !data.finalComment) {
+      const timeoutId = setTimeout(() => {
+        refetch();
+      }, 18000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [data, refetch]);
+
+  useEffect(() => {
+    if (data?.finalComment) {
+      refetch();
+    }
+  }, [data?.finalComment, refetch]);
 
   const renderTabContent = () => {
     switch (tab) {
@@ -41,13 +57,8 @@ const ResultPage = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <Box className="flex flex-col items-center justify-center min-h-[50vh]">
-        <CircularProgress />
-        <div className="mt-4">Đang tải kết quả...</div>
-      </Box>
-    );
+  if (isLoading || (data && !data.finalComment)) {
+    return <Loading />;
   }
   if (error) return <div>Lỗi khi tải dữ liệu!</div>;
   if (!data) return <div>Không có dữ liệu.</div>;

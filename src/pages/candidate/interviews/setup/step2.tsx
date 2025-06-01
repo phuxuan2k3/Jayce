@@ -4,7 +4,7 @@ import { usePostStartInterviewMutation } from "../../../../features/interviews/a
 import ModalCheckSound from "./ModalCheckSound";
 
 const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
-  const [speechRate, setSpeechRate] = useState(3);
+  const [speechRate, setSpeechRate] = useState(0);
   const [numQuestion, setNumQuestion] = useState(4);
   const [skipIntro, setSkipIntro] = useState(false);
   const [skipCode, setSkipCode] = useState(false);
@@ -58,8 +58,8 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
               onChange={(e) => setLanguage(e.target.value)}
               className="py-2 pe-12 ps-2  shadow rounded-md focus:outline-none focus:ring focus:ring-teal-300"
             >
-              <option value="English">English</option>
-              <option value="VietNamese">VietNamese</option>
+              <option value="en">English</option>
+              <option value="vi">VietNamese</option>
             </select>
             <div className="mt-10 mb-2">Models (English)</div>
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
@@ -91,8 +91,8 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
           <div>Speech rate</div>
           <input
             type="range"
-            min="0"
-            max="100"
+            min="-20"
+            max="20"
             value={speechRate}
             onChange={(e) => setSpeechRate(Number(e.target.value))}
             className="mt-2 range  h-5 [--range-thumb-size:40px]  [--range-p:3px]   [--range-thumb:#2e808a] text-primary "
@@ -105,14 +105,14 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
 
           <input
             type="range"
-            min="8"
+            min="1"
             max="16"
             value={numQuestion}
             onChange={(e) => setNumQuestion(Number(e.target.value))}
             className="range mt-2 h-5 [--range-thumb-size:40px]  [--range-p:3px] [--range-thumb:#2e808a] text-primary "
           />
           <div className="flex justify-between  mb-10 font-medium text-black">
-            <div>8</div>
+            <div>1</div>
             <div>16</div>
           </div>
 

@@ -103,7 +103,7 @@ const ModalCheckSound: FC<ModalCheckSoundProps> = ({
                       d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
                     />
                   </svg>
-                  <span className="animate-pulse">Đang tải...</span>
+                  <span className="animate-pulse">Loading...</span>
                 </>
               ) : (
                 "Let's start"
