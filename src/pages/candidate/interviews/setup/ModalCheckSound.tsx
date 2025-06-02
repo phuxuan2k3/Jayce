@@ -1,18 +1,67 @@
-import { FC, MouseEvent } from "react";
+import { FC, MouseEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePostStartInterviewMutation } from "../../../../features/interviews/api/interview.api";
+import { JobSetupData } from "./setup";
 
 type ModalCheckSoundProps = {
   isOpen: boolean;
   onClose: () => void;
-  loading?: boolean;
+  data: JobSetupData;
+  speechRate: number;
+  numQuestion: number;
+  skipIntro: boolean;
+  skipCode: boolean;
+  language: string;
 };
 
 const ModalCheckSound: FC<ModalCheckSoundProps> = ({
   isOpen,
   onClose,
-  loading,
+  data,
+  speechRate,
+  numQuestion,
+  skipIntro,
+  skipCode,
+  language,
 }) => {
   const navigate = useNavigate();
+
+  const [interviewId, setInterviewId] = useState<string | null>(null);
+
+  const [postStartInterview] = usePostStartInterviewMutation();
+  const [loading, setLoading] = useState<boolean>(false);
+  const handleStartInterview = async () => {
+    // setIsopen(true);
+    setLoading(true);
+    localStorage.setItem("totalQuestion", numQuestion.toString());
+    const interviewData = {
+      position: data.position,
+      experience: data.experience,
+      language: language as string,
+      models: "en-GB-RyanNeural",
+      speed: speechRate,
+      skills: [data?.skills],
+      totalQuestions: numQuestion,
+      skipIntro,
+      skipCode,
+    };
+
+    try {
+      const response = await postStartInterview(interviewData).unwrap();
+      console.log("interview data", interviewData);
+      console.log("Interview started: ", response);
+      setInterviewId(response.interviewId);
+      setLoading(false);
+    } catch (err) {
+      console.error("Error starting interview: ", err);
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      handleStartInterview();
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -76,7 +125,11 @@ const ModalCheckSound: FC<ModalCheckSoundProps> = ({
               Back
             </button>
             <button
-              onClick={() => navigate("/candidate/interviews/live")}
+              onClick={() =>
+                navigate("/candidate/interviews/live", {
+                  state: { interviewId },
+                })
+              }
               disabled={loading}
               className={`w-1/2 py-2 bg-gradient-to-r from-[#2e808a] to-[#0fc2c0] text-white font-bold rounded-lg shadow-md transition flex items-center justify-center
                   ${loading ? "opacity-70 cursor-not-allowed" : "hover:scale-105 active:scale-95"}

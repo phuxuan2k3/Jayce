@@ -1,6 +1,5 @@
 import { FC, useState } from "react";
 import { JobSetupData } from "./setup";
-import { usePostStartInterviewMutation } from "../../../../features/interviews/api/interview.api";
 import ModalCheckSound from "./ModalCheckSound";
 
 const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
@@ -9,35 +8,6 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
   const [skipIntro, setSkipIntro] = useState(false);
   const [skipCode, setSkipCode] = useState(false);
   const [language, setLanguage] = useState<string>("English");
-
-  const [postStartInterview] = usePostStartInterviewMutation();
-  const [loading, setLoading] = useState<boolean>(false);
-  const handleStartInterview = async () => {
-    setIsopen(true);
-    setLoading(true);
-    localStorage.setItem("totalQuestion", numQuestion.toString());
-    const interviewData = {
-      position: data.position,
-      experience: data.experience,
-      language: language as string,
-      models: "en-GB-RyanNeural",
-      speed: speechRate,
-      skills: [data?.skills],
-      totalQuestions: numQuestion,
-      skipIntro,
-      skipCode,
-    };
-
-    try {
-      const response = await postStartInterview(interviewData).unwrap();
-      console.log("interview data", interviewData);
-      console.log("Interview started: ", response);
-      localStorage.setItem("interviewInfo", JSON.stringify(response));
-      setLoading(false);
-    } catch (err) {
-      console.error("Error starting interview: ", err);
-    }
-  };
 
   const [isOpen, setIsopen] = useState<boolean>(false);
   return (
@@ -144,18 +114,25 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
       </div>
       <div
         onClick={() => {
-          handleStartInterview();
+          // handleStartInterview();
           setIsopen(true);
         }}
         className="my-8 bg-primary text-center text-white px-24 py-1.5 rounded-lg"
       >
         Start
       </div>
+      {/* {interviewId && ( */}
       <ModalCheckSound
-        loading={loading}
         isOpen={isOpen}
         onClose={() => setIsopen(false)}
+        data={data}
+        language={language}
+        speechRate={speechRate}
+        numQuestion={numQuestion}
+        skipIntro={skipIntro}
+        skipCode={skipCode}
       />
+      {/* )} */}
     </>
   );
 };

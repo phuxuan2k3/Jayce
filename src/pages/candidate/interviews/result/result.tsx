@@ -11,6 +11,7 @@ import {
   faArrowTrendUp,
 } from "@fortawesome/free-solid-svg-icons";
 import Loading from "./loading";
+import { useLocation } from "react-router-dom";
 
 const navItems = [
   { id: "summary", label: "Summary", icon: faChartPie },
@@ -21,10 +22,8 @@ const navItems = [
 const ResultPage = () => {
   const [tab, setTab] = useState("summary");
 
-  const interviewInfo = JSON.parse(
-    localStorage.getItem("interviewInfo") || "{}"
-  );
-  const interviewId = interviewInfo.interviewId || "1";
+  const location = useLocation();
+  const interviewId = location.state?.interviewId;
   const { data, isLoading, error, refetch } = useGetInterviewHistoryQuery({
     interviewId,
   });

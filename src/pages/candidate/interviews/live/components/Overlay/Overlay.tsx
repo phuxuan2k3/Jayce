@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   useLazyGetInterviewOutroQuery,
   usePostAnswerMutation,
@@ -21,15 +21,12 @@ export default function Overlay() {
 
   const navigate = useNavigate();
   const totalQuestion = localStorage.getItem("totalQuestion") || "5";
-
+  const location = useLocation();
+  const interviewId = location.state?.interviewId;
   console.log("totalQuestion", totalQuestion);
   console.log("questionIndex", questionIndex);
   const handleAnswerRecorded = async (transcript: string) => {
-    const interviewInfo = JSON.parse(
-      localStorage.getItem("interviewInfo") || "{}"
-    );
-    const interviewId = interviewInfo?.interviewId;
-
+    console.log("interviewId từ navigate:", interviewId);
     if (!interviewId) {
       alert("Không tìm thấy interviewId!");
       return;
@@ -44,7 +41,7 @@ export default function Overlay() {
       }).unwrap();
       if (questionIndex >= parseInt(totalQuestion)) {
         await triggerSubmit({ interviewId }).unwrap();
-        navigate("/candidate/interviews/result");
+        navigate("/candidate/interviews/result", { state: { interviewId } });
       } else {
         goToNextQuestion();
       }
