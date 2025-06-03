@@ -1,149 +1,93 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useReducer } from "react";
 import { ExamConfigPersist } from "../../../../../../infra-test/core/test.model";
 import StepsBar from "./components/StepsBar";
 import Step1 from "./step-1";
 import Step2 from "./step-2";
 import Step3 from "./step-3";
 import Step4 from "./step-4";
-import { TopicBlueprintData } from "../../models/generate.types";
-import { StyleRefinementData } from "./step-3/types";
 import ErrorMessages from "./components/ErrorMessage";
-import { ErrorContextProvider } from "./contexts/error.context";
-import { StepContextProvider } from "./contexts/step.context";
 import Header from "./components/Header";
+import { examGenerationReducer, initializeState } from "./models/exam-generation.reducer";
+import { ExamGenerationModel } from "./models/exam-generation.model";
+import { StepInfoKey } from "./common/step-info";
 
 export default function BuilderWizzardTab({
 	examInitialConfig,
-	onExamConfigChange,
 }: {
 	examInitialConfig: ExamConfigPersist;
-	onExamConfigChange?: (config: Partial<ExamConfigPersist>) => void;
 }) {
-	const [step, setStep] = useState<Steps>(1);
-	const [errorMessages, setErrorMessages] = useState<string[]>([]);
+	const initialState = initializeState(examInitialConfig);
+	const [state, dispatch] = useReducer(examGenerationReducer, initialState);
+	const model = useMemo(() => ExamGenerationModel(state), [state]);
+	const stepInfo = model.getStepInfo();
 
-
-	const [examConfig, setExamConfig] = useState<ExamConfigPersist>(examInitialConfig);
-	const [topicBlueprint, setTopicBlueprint] = useState<TopicBlueprintData>({
-		topics: []
-	});
-	const [styleRefinement, setStyleRefinement] = useState<StyleRefinementData>({
-		expertPersona: {
-			type: 'senior-architect',
-			customDescription: '',
-		},
-		samplingSettings: {
-			temperature: 0.7,
-			selfConsistencyRuns: 3,
-		},
-		examplesAndRAG: {
-			uploadedFiles: [],
-			customExamples: '',
-			selectedGalleryPresets: [],
-		},
-	});
-	const [validationState, setValidationState] = useState<{ [key: number]: boolean }>({
-		1: false,
-		2: false,
-		3: false,
-		4: true
-	});
-
-	const handleExamConfigChange = useCallback((changes: Partial<ExamConfigPersist>) => {
-		setExamConfig(prev => {
-			const updatedConfig = { ...prev, ...changes };
-			onExamConfigChange?.(changes);
-			return updatedConfig;
-		});
-	}, [onExamConfigChange]);
-	const handleTopicBlueprintChange = useCallback((changes: Partial<TopicBlueprintData>) => {
-		setTopicBlueprint(prev => ({ ...prev, ...changes }));
-	}, []);
-
-	const handleStyleRefinementChange = useCallback((changes: StyleRefinementData) => {
-		setStyleRefinement(changes);
-	}, []);
-
-	const handleValidationChange = useCallback((stepNumber: number, isValid: boolean) => {
-		setValidationState(prev => ({
-			...prev,
-			[stepNumber]: isValid
-		}));
-	}, []);
-
-	const canNavigateToStep = useCallback((targetStep: Steps) => {
-		// Can always go back to previous steps
-		if (targetStep <= step) return true;
-
-		// Can only go forward if all previous steps are valid
-		for (let i = 1; i < targetStep; i++) {
-			if (!validationState[i]) return false;
-		}
-		return true;
-	}, [step, validationState]);
-	const stepSwitcher = useCallback((step: Steps) => {
+	const stepSwitcher = useCallback((step: StepInfoKey) => {
 		switch (step) {
 			case 1:
 				return <Step1
-					examConfigPersist={examConfig}
-					onExamConfigChange={handleExamConfigChange}
-					onValidationChange={(isValid) => handleValidationChange(1, isValid)}
+					step1Data={state.step1}
+					onStep1DataChange={(data) => dispatch({
+						type: 'SET_STEP1',
+						payload: data,
+					})}
 				/>;
 			case 2:
 				return <Step2
-					topicBlueprintData={topicBlueprint}
-					onTopicBlueprintChange={handleTopicBlueprintChange}
-					onValidationChange={(isValid) => handleValidationChange(2, isValid)}
+					step2Data={state.step2}
+					onStep2DataChange={(data) => dispatch({
+						type: 'SET_STEP2',
+						payload: data,
+					})}
 				/>; case 3:
 				return <Step3
-					data={styleRefinement}
-					onChange={handleStyleRefinementChange}
-					onValidationChange={(isValid) => handleValidationChange(3, isValid)}
+					step3Data={state.step3}
+					onStep3DataChange={(data) => dispatch({
+						type: 'SET_STEP3',
+						payload: data,
+					})}
 				/>;
 			case 4:
-				return <Step4 />;
+				return <Step4
+					state={state}
+					onConfirm={() => {
+						// TODO: Handle exam generation confirmation
+						console.log('Generating exam with state:', state);
+					}}
+				/>;
 			default:
 				return <div>Invalid Step</div>;
 		}
-	}, [examConfig, handleExamConfigChange, handleValidationChange, topicBlueprint, handleTopicBlueprintChange, styleRefinement, handleStyleRefinementChange]);
+	}, [state.step1, state.step2, state.step3]);
 
 
 	return (
-		<ErrorContextProvider
-			errorMessages={errorMessages}
-			setErrorMessages={setErrorMessages}
-		>
-			<StepContextProvider
-				step={step}
-				setStep={setStep}
-			>
-				<StepsBar
-					step={step}
-					onStepChange={(newStep) => {
-						if (canNavigateToStep(newStep)) {
-							setStep(newStep);
-						}
-					}}
-					canNavigateToStep={canNavigateToStep}
-					validationState={validationState}
-				/>
+		<div className="flex flex-col gap-4 p-4">
+			<StepsBar
+				step={state.step}
+				onStepChange={(step) => dispatch({
+					type: 'SET_STEP',
+					payload: step,
+				})}
+			/>
 
-				<Header />
+			<div className="border-b border-primary-toned-300 w-full" />
+
+			<div className="flex flex-col gap-2 p-4">
+				<Header
+					title={stepInfo.title}
+					description={stepInfo.description}
+				/>
 
 				<ErrorMessages
-					errorMessages={[]}
+					errorMessages={state.errorMessages}
 				/>
+			</div>
 
-				<div className="col-span-2 border-b border-primary-toned-300 w-full" />
+			<div className="border-b border-primary-toned-300 w-full" />
 
-				<div className="text-base [&>label]:text-primary [&>label]:font-semibold w-full h-full overflow-y-auto grid grid-cols-[auto_1fr] items-center place-items-end gap-y-6 gap-x-8 p-6">
-					{stepSwitcher(step)}
-				</div>
-
-			</StepContextProvider>
-		</ErrorContextProvider>
+			<div>
+				{stepSwitcher(state.step)}
+			</div>
+		</div>
 	);
 }
-
-type Steps = 1 | 2 | 3 | 4;
-

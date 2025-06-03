@@ -1,14 +1,13 @@
 interface HelpTextProps { }
 
 export default function HelpText({ }: HelpTextProps) {
-	return (
-		<div className="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-			<h4 className="text-sm font-semibold text-blue-800 mb-2">Tips:</h4>
-			<ul className="text-sm text-blue-700 space-y-1">
-				<li>• Difficulty percentages must total 100% for each topic</li>
-				<li>• Use descriptive topic names to organize your questions effectively</li>
-				<li>• Consider your target audience when setting difficulty distributions</li>
-			</ul>
-		</div>
+	return (<div className="mt-8 p-4 bg-primary-toned-50 border border-primary-toned-200 rounded-lg">
+		<h4 className="text-sm font-semibold text-primary-toned-800 mb-2">Tips:</h4>
+		<ul className="text-sm text-primary-toned-700 space-y-1">
+			<li>• Balance your difficulty distribution: mix Easy, Medium, and Hard questions based on your assessment goals</li>
+			<li>• Use clear, descriptive topic names that reflect the specific subject area being tested</li>
+			<li>• Consider your target audience's skill level when setting question counts for each difficulty</li>
+		</ul>
+	</div>
 	);
 }

@@ -4,9 +4,9 @@ import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplat
 import ExamConfigForm from "../../../../features/tests/ui2/forms/ExamConfigForm";
 import { examPersistReducer } from "../../../../features/tests/reducers/exam-persist.reducer";
 import { examPersistStateFactory } from "../../../../features/tests/reducers/exam-persist.store";
-import Sidebar from "./components/sidbar";
+import Sidebar from "./components/Sidebar";
 import ExamQuestionsManage from "../../../../features/tests/ui2/forms/ExamQuestionsManage";
-import PublishTab from "./components/sidbar/PublishTab";
+import PublishTab from "./components/PublishTab";
 import BuilderWizzardTab from "./components/builder-wizzard-tab";
 import { QuestionPersistOfTest } from "../../../../infra-test/core/question.model";
 
@@ -56,9 +56,6 @@ export default function ManagerTestEditPage() {
 			case "generate":
 				return <BuilderWizzardTab
 					examInitialConfig={state.config}
-					onExamConfigChange={(config) => {
-						dispatch({ type: "UPDATE_CONFIG", payload: config });
-					}}
 				/>;
 			case "publish":
 				return <PublishTab />

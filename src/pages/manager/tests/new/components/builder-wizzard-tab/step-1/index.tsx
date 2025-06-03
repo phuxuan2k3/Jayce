@@ -1,93 +1,99 @@
-import { ExamConfigPersist } from "../../../../../../../infra-test/core/test.model";
-import { useStep1Validation } from "./hooks/useStep1Validation";
-import { TextareaAutosize } from "@mui/material";
+import { cn } from "../../../../../../../app/cn";
+import TextareaAutosize from "react-textarea-autosize";
+import { Step1Data } from "../common/model-types";
+import { classNameInput } from "../common/classname";
+import { LanguageType, languages, seniorities, SeniorityType } from "../common/base-types";
+import HelpText from "./components/HelpText";
 
 export default function Step1({
-	examConfigPersist,
-	onExamConfigChange,
-	onValidationChange,
+	step1Data,
+	onStep1DataChange,
 }: {
-	examConfigPersist: ExamConfigPersist;
-	onExamConfigChange: (config: Partial<ExamConfigPersist>) => void;
-	onValidationChange?: (isValid: boolean) => void;
+	step1Data: Step1Data;
+	onStep1DataChange: (data: Step1Data) => void;
 }) {
-	const { errors, clearFieldError } = useStep1Validation(examConfigPersist, onValidationChange);
-
-	const handleFieldChange = (field: keyof ExamConfigPersist, value: any) => {
-		onExamConfigChange({ [field]: value });
-		clearFieldError(field as keyof typeof errors);
-	};
-
 	return (
-		<div>
-			<label htmlFor="test-title">
-				Title: <span className="text-red-500">*</span>
-			</label>
-			<div className="w-full">
-				<input
-					id="test-title"
-					type="text"
-					placeholder="Title"
-					className={`w-full h-fit border rounded-md focus:outline-none focus:ring px-4 py-2 ${errors.title
-						? 'border-red-500 focus:ring-red-300'
-						: 'border-primary focus:ring-teal-300'
-						}`}
-					value={examConfigPersist.title}
-					onChange={(e) => handleFieldChange('title', e.target.value)}
-				/>
-				{errors.title && (
-					<p className="text-red-500 text-sm mt-1">{errors.title}</p>
-				)}
-			</div>
+		<>
+			<div className="text-base [&>label]:text-primary [&>label]:font-semibold w-full h-full overflow-y-auto grid grid-cols-[auto_1fr] items-center place-items-end gap-y-6 gap-x-8 p-6">
+				<label htmlFor="test-title">
+					Title: <span className="text-red-500">*</span>
+				</label>
+				<div className="w-full">
+					<input
+						id="test-title"
+						type="text"
+						placeholder="Title"
+						className={cn(classNameInput)}
+						value={step1Data.title}
+						onChange={(e) => onStep1DataChange({
+							...step1Data,
+							title: e.target.value,
+						})}
+					/>
+				</div>
 
-			<label htmlFor="test-description" className="self-start mt-2">
-				Description: <span className="text-red-500">*</span>
-			</label>
-			<div className="w-full">
-				<TextareaAutosize
-					id="test-description"
-					minRows={1}
-					placeholder="Describe your test"
-					className={`w-full h-fit border rounded-md focus:outline-none focus:ring px-4 py-2 ${errors.description
-						? 'border-red-500 focus:ring-red-300'
-						: 'border-primary focus:ring-teal-300'
-						}`}
-					value={examConfigPersist.description}
-					onChange={(e) => handleFieldChange('description', e.target.value)}
-				/>
-				{errors.description && (
-					<p className="text-red-500 text-sm mt-1">{errors.description}</p>
-				)}
-			</div>
+				<label htmlFor="test-description" className="self-start mt-2">
+					Description: <span className="text-red-500">*</span>
+				</label>
+				<div className="w-full">
+					<TextareaAutosize
+						id="test-description"
+						minRows={1}
+						placeholder="Describe your test"
+						className={cn(classNameInput)}
+						value={step1Data.description}
+						onChange={(e) => onStep1DataChange({
+							...step1Data,
+							description: e.target.value,
+						})}
+					/>
+				</div>
 
-			<label htmlFor="test-language">
-				Language: <span className="text-red-500">*</span>
-			</label>
-			<div className="w-full">
-				<select
-					id="test-language"
-					className={`w-full h-fit border rounded-md focus:outline-none focus:ring px-4 py-2 ${errors.language
-						? 'border-red-500 focus:ring-red-300'
-						: 'border-primary focus:ring-teal-300'
-						}`}
-					value={examConfigPersist.language}
-					onChange={(e) => handleFieldChange('language', e.target.value)}
-				>
-					<option value="">Select language</option>
-					<option value="en">English</option>
-					<option value="es">Spanish</option>
-					<option value="fr">French</option>
-					<option value="de">German</option>
-					<option value="it">Italian</option>
-					<option value="pt">Portuguese</option>
-				</select>
+				<label htmlFor="test-language">
+					Language: <span className="text-red-500">*</span>
+				</label>
+				<div className="w-full">
+					<select
+						id="test-language"
+						className={cn(classNameInput)}
+						value={step1Data.language}
+						onChange={(e) => onStep1DataChange({
+							...step1Data,
+							language: e.target.value as LanguageType,
+						})}
+					>
+						{languages.map((lang) => (
+							<option key={lang} value={lang}>
+								{lang}
+							</option>
+						))}
+					</select>
+				</div>
 
-				{errors.language && (
-					<p className="text-red-500 text-sm mt-1">
-						{errors.language}
-					</p>
-				)}
+				<label htmlFor="test-seniority">
+					Seniority: <span className="text-red-500">*</span>
+				</label>
+				<div className="w-full">
+					<select
+						id="test-seniority"
+						className={cn(classNameInput)}
+						value={step1Data.seniority}
+						onChange={(e) => onStep1DataChange({
+							...step1Data,
+							seniority: e.target.value as SeniorityType,
+						})}
+					>
+						{seniorities.map((seniority) => (
+							<option key={seniority} value={seniority}>
+								{seniority}
+							</option>
+						))}
+					</select>
+				</div>			</div>
+
+			<div className="px-6">
+				<HelpText />
 			</div>
-		</div>
+		</>
 	)
 }
