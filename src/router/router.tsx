@@ -257,7 +257,7 @@ const router = createBrowserRouter(
 						// F1 - Tests
 
 						{
-							path: paths.manager.tests._layout,
+							path: paths.manager.tests.ROOT,
 							children: [
 								{
 									index: true,
