@@ -22,10 +22,3 @@ export type QuestionAggregate = {
 	numberOfCorrectAnswers: number;
 	averagePoints: number;
 };
-
-export type QuestionPersistOfTest = {
-	text: string;
-	options: string[];
-	points: number;
-	correctOption: number;
-};

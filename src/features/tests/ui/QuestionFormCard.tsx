@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { QuestionDTO } from '../types/crud';
 import GradientBorderNotGood from '../../../components/ui/border/GradientBorder.notgood';
-import { TestQuestion } from '../reducers/exam-persist.reducer';
+import { TestQuestion } from '../../../infra-test/reducers/exam-persist.reducer';
 import { BrainCircuitIcon } from "lucide-react"
 import TextareaAutosize from 'react-textarea-autosize';
 

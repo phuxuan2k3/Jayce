@@ -3,6 +3,7 @@ import { CriteriaRequest, CriteriaResponse, GeneratedQuestionResponse, QuestionD
 
 const promptApiCustom = promptApi.injectEndpoints({
 	endpoints: (builder) => ({
+		// Old endpoints
 		criteria: builder.mutation<{ criteriaList: CriteriaResponse[] }, CriteriaRequest>({
 			query: (CriteriaRequest) => ({
 				url: `/v1/suggest_criteria`,
@@ -10,6 +11,8 @@ const promptApiCustom = promptApi.injectEndpoints({
 				body: CriteriaRequest
 			}),
 		}),
+
+		// Old endpoints
 		generate: builder.mutation<QuestionDTO[], CriteriaRequest>({
 			query: (CriteriaRequest) => ({
 				url: `/v1/suggest_questions`,
@@ -30,7 +33,10 @@ const promptApiCustom = promptApi.injectEndpoints({
 			}
 		}),
 
+
+		// =================
 		// New
+		// =================
 
 		getSuggestOutlines: builder.query<GetSuggestOutlinesResponse, GetSuggestOutlinesRequest>({
 			query: (request) => ({
@@ -39,6 +45,7 @@ const promptApiCustom = promptApi.injectEndpoints({
 				body: request
 			}),
 		}),
+
 		getSuggestQuestions: builder.query<GetSuggestQuestionsResponse, GetSuggestQuestionsRequest>({
 			query: (request) => ({
 				url: `/v1/suggest_questions`,
@@ -65,7 +72,7 @@ export type GetSuggestOutlinesRequest = {
 	description: string;
 	difficulty: string;
 	tags: string[];
-	outlines: string[]; // Những gợi ý đã điềns
+	outlines: string[]; // Những gợi ý đã điền
 };
 
 export type GetSuggestOutlinesResponse = {

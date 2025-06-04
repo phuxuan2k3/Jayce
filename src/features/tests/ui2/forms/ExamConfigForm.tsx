@@ -1,5 +1,5 @@
 import TextareaAutosize from "react-textarea-autosize";
-import { ExamConfigPersist } from "../../../../infra-test/core/test.model";
+import { ExamConfigPersist } from "../../../../infra-test/persist/exam.persist";
 
 export default function ExamConfigForm({
 	configEdit,

@@ -4,8 +4,8 @@ import LeftLayoutTemplate from "../../../../../components/layouts/LeftLayoutTemp
 import ExamConfigForm from "../../../../../features/tests/ui2/forms/ExamConfigForm";
 import Sidebar from "./components/Sidebar";
 import { EditTabs } from "./type";
-import { examPersistReducer } from "../../../../../features/tests/reducers/exam-persist.reducer";
-import { examPersistStateFactory } from "../../../../../features/tests/reducers/exam-persist.store";
+import { examPersistReducer } from "../../../../../infra-test/reducers/exam-persist.reducer";
+import { examPersistStateFactory } from "../../../../../infra-test/reducers/exam-persist.store";
 import { mockQuestions } from "../index/components/questions-tab/mockData";
 import { mockExams } from "../../../../../infra-test/mocks/mockExams";
 

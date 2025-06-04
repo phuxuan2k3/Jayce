@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useReducer } from "react";
-import { ExamConfigPersist } from "../../../../../../infra-test/core/test.model";
+import { ExamConfigPersist } from "../../../../../../infra-test/persist/exam.persist";
 import StepsBar from "./components/StepsBar";
 import Step1 from "./step-1";
 import Step2 from "./step-2";
@@ -10,14 +10,33 @@ import Header from "./components/Header";
 import { examGenerationReducer, initializeState } from "./models/exam-generation.reducer";
 import { ExamGenerationModel } from "./models/exam-generation.model";
 import { StepInfoKey } from "./common/step-info";
+import useExamQuestionsGeneration from "./hooks/useExamQuestionsGeneration";
+import StepDone from "./step-done";
+import LoadingDialog from "./components/LoadingDialog";
+import ErrorDialog from "./components/ErrorDialog";
+import { QuestionPersistOfTest } from "../../../../../../infra-test/persist/question.persist";
 
 export default function BuilderWizzardTab({
 	examInitialConfig,
+	onBulkAddQuestions,
+	onReplaceQuestions,
+	onGenerationDisposal,
 }: {
 	examInitialConfig: ExamConfigPersist;
+	onBulkAddQuestions: (questions: QuestionPersistOfTest[]) => void;
+	onReplaceQuestions: (questions: QuestionPersistOfTest[]) => void;
+	onGenerationDisposal: () => void;
 }) {
 	const initialState = initializeState(examInitialConfig);
 	const [state, dispatch] = useReducer(examGenerationReducer, initialState);
+
+	const {
+		generateExamQuestions,
+		data,
+		isLoading,
+		error,
+	} = useExamQuestionsGeneration({ state });
+
 	const model = useMemo(() => ExamGenerationModel(state), [state]);
 	const stepInfo = model.getStepInfo();
 
@@ -50,8 +69,7 @@ export default function BuilderWizzardTab({
 				return <Step4
 					state={state}
 					onConfirm={() => {
-						// TODO: Handle exam generation confirmation
-						console.log('Generating exam with state:', state);
+						generateExamQuestions();
 					}}
 				/>;
 			default:
@@ -59,35 +77,54 @@ export default function BuilderWizzardTab({
 		}
 	}, [state.step1, state.step2, state.step3]);
 
-
 	return (
-		<div className="flex flex-col gap-4 p-4">
-			<StepsBar
-				step={state.step}
-				onStepChange={(step) => dispatch({
-					type: 'SET_STEP',
-					payload: step,
-				})}
-			/>
+		<div>
+			{isLoading && (
+				<LoadingDialog />
+			)}
 
-			<div className="border-b border-primary-toned-300 w-full" />
-
-			<div className="flex flex-col gap-2 p-4">
-				<Header
-					title={stepInfo.title}
-					description={stepInfo.description}
+			{error && (
+				<ErrorDialog
+					error={error}
+					onRetry={() => generateExamQuestions()}
 				/>
+			)}
 
-				<ErrorMessages
-					errorMessages={state.errorMessages}
+			{data != null ? (
+				<StepDone
+					generatedExamQuestions={data}
+					onReplaceQuestions={onReplaceQuestions}
+					onAppendQuestions={onBulkAddQuestions}
+					onGenerationDisposal={onGenerationDisposal}
 				/>
-			</div>
+			) : (
+				<div className="flex flex-col gap-4">
+					<StepsBar
+						step={state.step}
+						onStepChange={(step) => dispatch({
+							type: 'SET_STEP',
+							payload: step,
+						})}
+					/>
 
-			<div className="border-b border-primary-toned-300 w-full" />
+					<div className="border-b border-primary-toned-300 w-full" />
 
-			<div>
-				{stepSwitcher(state.step)}
-			</div>
+					<div className="flex flex-col gap-2 p-4">
+						<Header
+							title={stepInfo.title}
+							description={stepInfo.description}
+						/>
+
+						<ErrorMessages
+							errorMessages={state.errorMessages}
+						/>
+					</div>
+
+					<div className="border-b border-primary-toned-300 w-full" />
+					{stepSwitcher(state.step)}
+				</div>
+			)}
 		</div>
 	);
 }
+

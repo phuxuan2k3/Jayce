@@ -81,7 +81,6 @@ const paths = {
 					};
 				},
 			},
-			CREATE: `/manager/tests/create/`,
 			NEW: `/manager/tests/new/`,
 		},
 		scenario: {

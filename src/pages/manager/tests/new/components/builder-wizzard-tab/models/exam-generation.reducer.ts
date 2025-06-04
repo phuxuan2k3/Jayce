@@ -1,4 +1,4 @@
-import { ExamConfigPersist } from "../../../../../../../infra-test/core/test.model";
+import { ExamConfigPersist } from "../../../../../../../infra-test/persist/exam.persist";
 import { StepInfoKey } from "../common/step-info";
 import { ExamGenerationModel, ExamGenerationState } from "./exam-generation.model";
 

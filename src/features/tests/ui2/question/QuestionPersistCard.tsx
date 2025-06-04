@@ -3,18 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons';
 import TextareaAutosize from 'react-textarea-autosize';
 import { createContext, useContext } from 'react';
-
-type QuestionEditFields = {
-	text: string;
-	options: string[];
-	points: number;
-	correctOption: number;
-}
+import { QuestionPersistOfTest } from "../../../../infra-test/persist/question.persist";
 
 type QuestionEditContextType = {
 	index: number;
-	question: QuestionEditFields;
-	onQuestionChange: (edit: Partial<QuestionEditFields>) => void;
+	question: QuestionPersistOfTest;
+	onQuestionChange: (edit: Partial<QuestionPersistOfTest>) => void;
 	onDeleteQuestion: () => void;
 }
 
@@ -35,8 +29,8 @@ export default function QuestionPersistCard({
 	onDeleteQuestion,
 }: {
 	index: number;
-	question: QuestionEditFields;
-	onQuestionChange: (edit: Partial<QuestionEditFields>) => void;
+	question: QuestionPersistOfTest;
+	onQuestionChange: (edit: Partial<QuestionPersistOfTest>) => void;
 	onDeleteQuestion: () => void;
 }) {
 
