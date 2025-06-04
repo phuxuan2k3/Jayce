@@ -1,4 +1,3 @@
-
 export type ExamConfigPersist = {
 	roomId: string;
 	title: string;

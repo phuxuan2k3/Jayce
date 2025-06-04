@@ -1,4 +1,4 @@
-import { QuestionAggregate, QuestionCore } from "../../../../../../../infra-test/core/question.model";
+import { TestQuestionsAggregate, QuestionCore } from "../../../../../../../infra-test/core/question.model";
 
 const mockQuestions: QuestionCore[] = [
 	{
@@ -42,7 +42,7 @@ const mockQuestions: QuestionCore[] = [
 	},
 ];
 
-const mockQuestionAggregate: QuestionAggregate[] = [
+const mockQuestionAggregate: TestQuestionsAggregate[] = [
 	{
 		questionId: 1,
 		numberOfAnswers: 10,

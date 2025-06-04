@@ -1,4 +1,3 @@
-
 export type QuestionPersistOfTest = {
 	text: string;
 	options: string[];

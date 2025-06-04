@@ -1818,9 +1818,6 @@
 									"exam": {
 										"type": "object",
 										"properties": {
-											"hasPassword": {
-												"type": "boolean"
-											},
 											"roomId": {
 												"type": "string"
 											},
@@ -1839,10 +1836,12 @@
 											},
 											"closeDate": {
 												"type": "string"
+											},
+											"password": {
+												"type": "string"
 											}
 										},
 										"required": [
-											"hasPassword",
 											"roomId",
 											"numberOfAttemptsAllowed",
 											"isAnswerVisible",
@@ -2168,9 +2167,6 @@
 									"exam": {
 										"type": "object",
 										"properties": {
-											"hasPassword": {
-												"type": "boolean"
-											},
 											"roomId": {
 												"type": "string"
 											},
@@ -2189,10 +2185,12 @@
 											},
 											"closeDate": {
 												"type": "string"
+											},
+											"password": {
+												"type": "string"
 											}
 										},
 										"required": [
-											"hasPassword",
 											"roomId",
 											"numberOfAttemptsAllowed",
 											"isAnswerVisible",

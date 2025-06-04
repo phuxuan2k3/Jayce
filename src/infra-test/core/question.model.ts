@@ -16,7 +16,7 @@ export type QuestionDo = QuestionToDo & {
 
 // New
 
-export type QuestionAggregate = {
+export type TestQuestionsAggregate = {
 	questionId: number;
 	numberOfAnswers: number;
 	numberOfCorrectAnswers: number;

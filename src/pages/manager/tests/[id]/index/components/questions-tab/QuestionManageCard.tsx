@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { QuestionAggregate, QuestionCore } from '../../../../../../../infra-test/core/question.model'
+import { TestQuestionsAggregate, QuestionCore } from '../../../../../../../infra-test/core/question.model'
 
 export default function QuestionManageCard({
 	index,
@@ -10,7 +10,7 @@ export default function QuestionManageCard({
 	index: number;
 	totalAttempts: number;
 	question: QuestionCore;
-	questionAggregate: QuestionAggregate;
+	questionAggregate: TestQuestionsAggregate;
 }) {
 	const [showStatistics, setShowStatistics] = useState(false);
 	const { correctOption, options, points, text } = question;

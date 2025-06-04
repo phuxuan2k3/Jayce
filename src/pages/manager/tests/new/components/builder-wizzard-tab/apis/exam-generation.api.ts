@@ -21,8 +21,8 @@ export const {
 export type GetGenerateExamQuestionsApiRequest = {
 	title: string;
 	description: string;
-	language: LanguageType;
-	seniority: SeniorityType;
+	language: LanguageType; // English, Vietnamese, ...
+	seniority: SeniorityType; // Intern, Junior, Middle, Senior, Lead, ...
 	topics: Topic[];
 	creativity: number; // Creativity level from 1 to 10
 	context: {
