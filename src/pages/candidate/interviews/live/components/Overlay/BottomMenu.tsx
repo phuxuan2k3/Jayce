@@ -20,7 +20,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useLazyGetInterviewOutroQuery } from "../../../../../../features/interviews/api/interview.api";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function BottomMenu() {
   const [isSelectingBackground, setIsSelectingBackground] = useState(false);
@@ -45,7 +45,8 @@ export default function BottomMenu() {
   //   //   interviewId,
   //   // });
   // };
-
+  const location = useLocation();
+  const interviewId = location.state?.interviewId;
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -55,11 +56,6 @@ export default function BottomMenu() {
   const handleClose = () => setOpen(false);
 
   const handleSubmitInterview = async () => {
-    const interviewInfo = JSON.parse(
-      localStorage.getItem("interviewInfo") || "{}"
-    );
-    const interviewId = interviewInfo?.interviewId;
-
     if (!interviewId) {
       alert("Không tìm thấy interviewId!");
       return;
@@ -68,7 +64,7 @@ export default function BottomMenu() {
     try {
       setLoading(true);
       await triggerSubmit({ interviewId }).unwrap();
-      navigate("/candidate/interviews/result");
+      navigate("/candidate/interviews/result", { state: { interviewId } });
     } catch (error) {
       console.error("Error submitting interview:", error);
       alert("Đã xảy ra lỗi khi kết thúc phỏng vấn. Vui lòng thử lại.");
