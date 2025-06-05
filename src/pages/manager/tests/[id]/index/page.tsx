@@ -2,21 +2,43 @@ import { useState } from 'react';
 import NewLeftLayoutTemplate from '../../../../../components/layouts/NewLeftLayoutTemplate'
 import AttemptsTab from './components/attempts-tab';
 import Sidebar from './components/Sidebar';
-import { mockFullExamInformation } from './mockExamInformationData';
 import QuestionsTab from './components/questions-tab';
 import ExamInformationTab from './components/exam-information-tab';
-import { TabMode } from './types/tab-mode';
+import { TabMode } from './type';
 import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
 import { useAppDispatch } from '../../../../../app/hooks';
 import dialogSlice from '../../../../../features/tests/stores/dialogSlice';
 import ParticipantsTab from './components/participants-tab';
+import { useGetExamsByTestIdQuery } from '../../../../../features/tests/api/test.api-gen';
 
 export default function ManagerTestPage() {
-	const tesId = useGetTestIdParams();
+	const testId = useGetTestIdParams();
 	const dispatch = useAppDispatch();
-	const [mode, setMode] = useState<TabMode>('info');
 
-	const examInfo = mockFullExamInformation;
+	const [mode, setMode] = useState<TabMode>('info');
+	const examQuery = useGetExamsByTestIdQuery({ testId });
+	const exam = examQuery.data;
+
+	const getTab = (mode: TabMode) => {
+		switch (mode) {
+			case 'info':
+				return <ExamInformationTab
+					testId={testId}
+				/>;
+			case 'questions':
+				return <QuestionsTab
+					testId={testId}
+				/>;
+			case 'attempts':
+				return <AttemptsTab
+					testId={testId}
+				/>;
+			case 'participants':
+				return <ParticipantsTab
+					testId={testId}
+				/>;
+		}
+	}
 
 	return (
 		<NewLeftLayoutTemplate
@@ -27,9 +49,12 @@ export default function ManagerTestPage() {
 				/>
 			}
 			left={<Sidebar
-				testId={tesId}
+				testId={testId}
 				onModeChange={(mode) => setMode(mode)}
-				onDelete={() => dispatch(dialogSlice.actions.setDeleteExam(examInfo.exam))}
+				onDelete={() => {
+					if (exam == null) return;
+					dispatch(dialogSlice.actions.setDeleteExam(exam))
+				}}
 			/>}
 		>
 			{getTab(mode)}
@@ -37,15 +62,3 @@ export default function ManagerTestPage() {
 	);
 }
 
-const getTab = (mode: TabMode) => {
-	switch (mode) {
-		case 'info':
-			return <ExamInformationTab {...mockFullExamInformation} />;
-		case 'questions':
-			return <QuestionsTab />;
-		case 'attempts':
-			return <AttemptsTab />;
-		case 'participants':
-			return <ParticipantsTab />;
-	}
-}

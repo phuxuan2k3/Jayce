@@ -37,3 +37,12 @@ export type AttemptsOfCandidateInTestAggregate = {
 	rank: number;
 	candidateId: string;
 };
+
+export const EMPTY_ATTEMPT_AGGREGATE: AttemptsOfTestAggregate = {
+	totalParticipants: 0,
+	totalAttempts: 0,
+	averageScore: 0,
+	highestScore: 0,
+	lowestScore: 0,
+	averageTime: 0,
+};

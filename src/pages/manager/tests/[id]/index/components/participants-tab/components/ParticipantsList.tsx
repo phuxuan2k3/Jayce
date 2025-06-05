@@ -1,13 +1,19 @@
 import ParticipantCard from './ParticipantCard'
-import { mockParticipants } from '../mocks/mockParticipants';
-import { Participant } from '../types/participants';
+import { Participant } from '../type';
+import MyPagination from '../../../../../../../../components/ui/common/MyPagination';
 
 export default function ParticipantsList({
 	participants,
 	onParticipantSelect,
+	totalPages,
+	page,
+	onPageChange,
 }: {
 	participants: Participant[];
 	onParticipantSelect: (candidateId: string) => void;
+	totalPages: number;
+	page: number;
+	onPageChange: (page: number) => void;
 }) {
 	return (
 		<div className="space-y-4">
@@ -18,27 +24,35 @@ export default function ParticipantsList({
 				</p>
 			</div>
 
-			<div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-				{participants.map((participant) => (
-					<div
-						key={participant.user.id}
-						className="cursor-pointer hover:shadow-lg transition-shadow duration-200"
-						onClick={() => onParticipantSelect(participant.user.id)}
-					>
-						<ParticipantCard
-							user={participant.user}
-							highestScore={participant.attemptsAggregate.highestScore}
-							totalAttempts={participant.attemptsAggregate.totalAttempts}
-							rank={participant.attemptsAggregate.rank}
-						/>
-					</div>
-				))}
-			</div>
-
-			{mockParticipants.length === 0 && (
+			{participants.length === 0 ? (
 				<div className="text-center py-12">
 					<p className="text-gray-500 text-lg">No participants found for this test.</p>
 				</div>
+			) : (
+				<>
+					<div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+						{participants.map((participant) => (
+							<div
+								key={participant.user.id}
+								className="cursor-pointer hover:shadow-lg transition-shadow duration-200"
+								onClick={() => onParticipantSelect(participant.user.id)}
+							>
+								<ParticipantCard
+									user={participant.user}
+									highestScore={participant.attemptsAggregate.highestScore}
+									totalAttempts={participant.attemptsAggregate.totalAttempts}
+									rank={participant.attemptsAggregate.rank}
+								/>
+							</div>
+						))}
+					</div>
+
+					<MyPagination
+						totalPage={totalPages}
+						initialPage={page}
+						onPageChange={onPageChange}
+					/>
+				</>
 			)}
 		</div>
 	)

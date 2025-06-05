@@ -47,6 +47,7 @@ import ResultPage from "../pages/candidate/interviews/result/result";
 import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/page";
 import ManagerTestsNewPage from "../pages/manager/tests/new/page";
 import ManagerTestsAttemptPage from "../pages/manager/tests/attempts/[id]/index/page";
+import ManagerTestLayout from "../pages/manager/tests/[id]/layout";
 
 const router = createBrowserRouter(
 	[
@@ -258,6 +259,7 @@ const router = createBrowserRouter(
 
 						{
 							path: paths.manager.tests.ROOT,
+							element: <ManagerTestLayout />,
 							children: [
 								{
 									index: true,

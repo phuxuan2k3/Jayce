@@ -277,6 +277,14 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/exams/${queryArg.testId}/questions-with-answer`,
       }),
     }),
+    getExamsByTestIdQuestionsAggregate: build.query<
+      GetExamsByTestIdQuestionsAggregateApiResponse,
+      GetExamsByTestIdQuestionsAggregateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/exams/${queryArg.testId}/questions-aggregate`,
+      }),
+    }),
     postExamsJoin: build.mutation<
       PostExamsJoinApiResponse,
       PostExamsJoinApiArg
@@ -961,6 +969,16 @@ export type GetExamsByTestIdQuestionsWithAnswerApiResponse =
 export type GetExamsByTestIdQuestionsWithAnswerApiArg = {
   testId: string;
 };
+export type GetExamsByTestIdQuestionsAggregateApiResponse =
+  /** status 200 Success */ {
+    questionId: number;
+    numberOfAnswers: number;
+    numberOfCorrectAnswers: number;
+    averagePoints: number;
+  }[];
+export type GetExamsByTestIdQuestionsAggregateApiArg = {
+  testId: string;
+};
 export type PostExamsJoinApiResponse = unknown;
 export type PostExamsJoinApiArg = {
   body: {
@@ -1366,6 +1384,8 @@ export const {
   useLazyGetExamsByTestIdQuestionsToDoQuery,
   useGetExamsByTestIdQuestionsWithAnswerQuery,
   useLazyGetExamsByTestIdQuestionsWithAnswerQuery,
+  useGetExamsByTestIdQuestionsAggregateQuery,
+  useLazyGetExamsByTestIdQuestionsAggregateQuery,
   usePostExamsJoinMutation,
   useGetTemplatesQuery,
   useLazyGetTemplatesQuery,

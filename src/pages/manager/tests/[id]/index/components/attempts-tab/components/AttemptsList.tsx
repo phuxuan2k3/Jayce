@@ -2,10 +2,10 @@ import React from 'react';
 import { format, formatDistanceToNow } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import paths from '../../../../../../../../router/paths';
-import { AttemptCandidate } from '../../../types/attempt-candidate';
+import { AttemptWithCandidate } from "../type";
 
 interface Props {
-	data: AttemptCandidate[];
+	data: AttemptWithCandidate[];
 	page: number;
 	perPage: number;
 	onViewAttempt?: (attemptId: string) => void;

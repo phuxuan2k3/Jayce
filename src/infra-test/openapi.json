@@ -2477,6 +2477,58 @@
 				}
 			}
 		},
+		"/exams/{testId}/questions-aggregate": {
+			"get": {
+				"tags": [
+					"Exam"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
+						"in": "path"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"questionId": {
+												"type": "number"
+											},
+											"numberOfAnswers": {
+												"type": "number"
+											},
+											"numberOfCorrectAnswers": {
+												"type": "number"
+											},
+											"averagePoints": {
+												"type": "number"
+											}
+										},
+										"required": [
+											"questionId",
+											"numberOfAnswers",
+											"numberOfCorrectAnswers",
+											"averagePoints"
+										]
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
 		"/exams/join": {
 			"post": {
 				"summary": "Join exam with password (optional)",

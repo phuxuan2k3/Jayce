@@ -59,3 +59,21 @@ export type FeedbackProblems = "inaccurate" | "un-related" | "poor content" | "i
 export type PracticeCore = TestCore & PracticeAddon;
 
 export type ExamCore = TestCore & ExamAddon;
+
+export const EMPTY_EXAM_CORE: ExamCore = {
+	id: "",
+	authorId: "",
+	title: "",
+	description: "",
+	minutesToAnswer: 0,
+	closeDate: "",
+	openDate: "",
+	createdAt: "",
+	roomId: "",
+	hasPassword: false,
+	numberOfAttemptsAllowed: 0,
+	isAnswerVisible: false,
+	isAllowedToSeeOtherResults: false,
+	language: "",
+	mode: "",
+};

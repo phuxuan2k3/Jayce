@@ -1,6 +1,6 @@
 import { format } from 'date-fns'
 import { AttemptCore } from '../../../../../../../../infra-test/core/attempt.model';
-import { Participant } from '../types/participants';
+import { Participant } from '../type';
 
 export default function ParticipantDetails({
 	participant,

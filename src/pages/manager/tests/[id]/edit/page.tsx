@@ -6,12 +6,17 @@ import Sidebar from "./components/Sidebar";
 import { EditTabs } from "./type";
 import { examPersistReducer } from "../../../../../infra-test/reducers/exam-persist.reducer";
 import { examPersistStateFactory } from "../../../../../infra-test/reducers/exam-persist.store";
-import { mockQuestions } from "../index/components/questions-tab/mockData";
-import { mockExams } from "../../../../../infra-test/mocks/mockExams";
+import usePageData from "./hooks/usePageData";
+import FetchStateCover from "../../../../../components/wrapper/FetchStateCover";
 
 export default function ManagerTestEditPage() {
-	const exam = mockExams[0];
-	const questions = mockQuestions;
+	const {
+		isLoading,
+		error,
+		model: { exam, questions },
+	} = usePageData();
+
+
 	const [tab, setTab] = useState<EditTabs>("configuration");
 	const [state, dispatch] = useReducer(examPersistReducer, examPersistStateFactory({ exam, questions }));
 
@@ -57,7 +62,14 @@ export default function ManagerTestEditPage() {
 				/>
 			}
 		>
-			{getTab(tab)}
+			<FetchStateCover
+				queryState={{
+					isLoading,
+					error,
+				}}
+			>
+				{getTab(tab)}
+			</FetchStateCover>
 		</LeftLayoutTemplate>
 	);
 }

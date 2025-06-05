@@ -2,27 +2,45 @@ import { useState } from 'react';
 import { mockAttempts } from '../../../../../../../infra-test/mocks/mockAttempts'
 import ParticipantDetails from './components/ParticipantDetails'
 import ParticipantsList from './components/ParticipantsList'
-import { mockParticipants } from './mocks/mockParticipants'
+import useParticipantsTabData from './hooks/useParticipantsTabData';
+import { Filter } from './type';
+import useParticipantsList from './hooks/useParticipantsList';
 
-export default function ParticipantsTab() {
-	const [selectedCandidateId, setSelectedCandidateId] = useState<string | null>(null);
+export default function ParticipantsTab({
+	testId,
+}: {
+	testId: string;
+}) {
+	const [filter, setFilter] = useState<Filter>({
+		page: 1,
+		perPage: 10,
+	});
 
-	const handleParticipantSelect = (candidateId: string) => {
-		setSelectedCandidateId(candidateId);
-	}
+	const {
+		participants,
+		totalPages,
+	} = useParticipantsTabData({ testId, filter });
+
+	const {
+		handleParticipantSelect,
+		selectedParticipant,
+	} = useParticipantsList({ participants });
 
 	return (
 		<div className='flex flex-col items-center justify-center'>
-			{selectedCandidateId == null ? (
+			{selectedParticipant == null ? (
 				<ParticipantsList
-					onParticipantSelect={handleParticipantSelect}
-					participants={mockParticipants}
+					onParticipantSelect={(id) => handleParticipantSelect(id)}
+					participants={participants}
+					totalPages={totalPages}
+					onPageChange={(page) => setFilter({ ...filter, page })}
+					page={filter.page}
 				/>
 			) : (
 				<ParticipantDetails
-					participant={mockParticipants[0]}
+					participant={selectedParticipant}
 					attempts={mockAttempts}
-					onBack={() => setSelectedCandidateId(null)}
+					onBack={() => handleParticipantSelect(null)}
 				/>
 			)}
 		</div>
