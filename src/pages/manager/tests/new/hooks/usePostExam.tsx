@@ -58,7 +58,7 @@ function stateToPostExamArgs(state: ExamPersistState): PostExamsApiArg {
 				...state.config,
 				openDate: state.config.openDate.toISOString(),
 				closeDate: state.config.closeDate.toISOString(),
-				password: state.config.password ?? null,
+				password: state.config.password ?? undefined,
 				numberOfAttemptsAllowed: state.config.numberOfAttemptsAllowed ?? 0,
 			},
 			test: {

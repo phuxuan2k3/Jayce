@@ -1,5 +1,5 @@
 import { useCallback, useReducer, useState } from "react";
-import { CreateTab } from "./common/types";
+import { CreateTab } from "./types";
 import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
 import ExamConfigForm from "../../../../features/tests/ui2/forms/ExamConfigForm";
 import { examPersistReducer } from "../../../../infra-test/reducers/exam-persist.reducer";

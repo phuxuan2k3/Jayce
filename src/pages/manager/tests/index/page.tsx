@@ -5,7 +5,6 @@ import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutT
 import Sidebar from "./components/Sidebar";
 import { useAppDispatch } from "../../../../app/hooks";
 import dialogSlice from "../../../../features/tests/stores/dialogSlice";
-import { mockExams } from "../../../../infra-test/mocks/mockExams";
 import { useGetExamsQuery } from "../../../../features/tests/api/test.api-gen";
 import { useCallback, useState } from "react";
 import { Filter } from "./type";
