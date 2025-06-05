@@ -2,16 +2,9 @@ import useGetTestIdParams from '../../../../../../features/tests/hooks/useGetTes
 import { useGetExamsByTestIdQuery, useGetExamsByTestIdQuestionsWithAnswerQuery } from '../../../../../../features/tests/api/test.api-gen';
 import useFetchStatesCombine from '../../../../../../components/hooks/useFetchStates';
 import { ManagerTestEditPageModel } from '../type';
-import { EMPTY_EXAM_CORE } from '../../../../../../infra-test/core/test.model';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { SerializedError } from '@reduxjs/toolkit';
+import { FetchState } from '../../../../../../app/types';
 
-export default function usePageData(): {
-	isLoading: boolean;
-	error?: FetchBaseQueryError | SerializedError | unknown;
-	errorMessage: string | null;
-	model: ManagerTestEditPageModel;
-} {
+export default function usePageData(): FetchState<ManagerTestEditPageModel> {
 	const testId = useGetTestIdParams();
 	const examQuery = useGetExamsByTestIdQuery({ testId });
 	const examQuestionsQuery = useGetExamsByTestIdQuestionsWithAnswerQuery({ testId });
@@ -20,13 +13,23 @@ export default function usePageData(): {
 		fetchStates: [examQuery, examQuestionsQuery],
 	});
 
+	if (
+		examQuery.data == null ||
+		examQuestionsQuery.data == null
+	) {
+		return {
+			isLoading: fetchState.isLoading,
+			error: fetchState.error,
+			data: undefined,
+		};
+	}
+
 	return {
 		isLoading: fetchState.isLoading,
 		error: fetchState.error,
-		errorMessage: fetchState.errorMessage,
-		model: {
-			exam: examQuery.data || EMPTY_EXAM_CORE,
-			questions: examQuestionsQuery.data || [],
+		data: {
+			exam: examQuery.data,
+			questions: examQuestionsQuery.data,
 		},
 	}
 }

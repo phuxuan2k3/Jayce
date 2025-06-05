@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTrophy, faHourglassHalf } from '@fortawesome/free-solid-svg-icons';
-import { AttemptsOfTestAggregate } from '../../../../../../../infra-test/core/attempt.model';
-import { formatTime } from './utils';
+import { formatTime } from '../utils';
 import Card from './Card';
+import { AttemptsOfTestAggregate } from '../../../../../../../../infra-test/core/attempt.model';
 
 interface PerformanceMetricCardProps {
 	attemptOfTestAggregate: AttemptsOfTestAggregate;

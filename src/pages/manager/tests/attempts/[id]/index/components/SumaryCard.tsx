@@ -1,4 +1,4 @@
-import { ExamCore, TestAggregateCore } from '../../../../../../../infra-test/core/test.model';
+import { ExamCore, TestAggregate } from '../../../../../../../infra-test/core/test.model';
 import { CandidateCore, ManagerCore } from '../../../../../../../infra-test/core/user.model';
 import { AttemptAggregate, AttemptCore } from '../../../../../../../infra-test/core/attempt.model';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,7 +19,7 @@ import { format } from 'date-fns';
 
 interface SummaryCardProps {
 	exam: ExamCore;
-	testAggregate: TestAggregateCore;
+	testAggregate: TestAggregate;
 	manager: ManagerCore;
 	candidate: CandidateCore;
 	attempt: AttemptCore;

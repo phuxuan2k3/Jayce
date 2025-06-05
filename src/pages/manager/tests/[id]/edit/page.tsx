@@ -3,19 +3,26 @@ import ExamQuestionsManage from "../../../../../features/tests/ui2/forms/ExamQue
 import LeftLayoutTemplate from "../../../../../components/layouts/LeftLayoutTemplate";
 import ExamConfigForm from "../../../../../features/tests/ui2/forms/ExamConfigForm";
 import Sidebar from "./components/Sidebar";
-import { EditTabs } from "./type";
+import { EditTabs, ManagerTestEditPageModel } from "./type";
 import { examPersistReducer } from "../../../../../infra-test/reducers/exam-persist.reducer";
 import { examPersistStateFactory } from "../../../../../infra-test/reducers/exam-persist.store";
 import usePageData from "./hooks/usePageData";
 import FetchStateCover from "../../../../../components/wrapper/FetchStateCover";
+import { EMPTY_EXAM_CORE } from "../../../../../infra-test/core/test.model";
 
 export default function ManagerTestEditPage() {
 	const {
 		isLoading,
 		error,
-		model: { exam, questions },
+		data,
 	} = usePageData();
 
+	const model: ManagerTestEditPageModel = data ? data : {
+		exam: EMPTY_EXAM_CORE,
+		questions: [],
+	};
+
+	const { exam, questions } = model;
 
 	const [tab, setTab] = useState<EditTabs>("configuration");
 	const [state, dispatch] = useReducer(examPersistReducer, examPersistStateFactory({ exam, questions }));

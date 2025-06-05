@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle, faBullseye } from '@fortawesome/free-solid-svg-icons';
-import { TestAggregateCore } from '../../../../../../../infra-test/core/test.model';
+import { TestAggregate } from '../../../../../../../../infra-test/core/test.model';
 import Card from './Card';
 
 interface ContentOverviewCardProps {
-	testAggregate: TestAggregateCore;
+	testAggregate: TestAggregate;
 }
 
 export const ContentOverviewCard = ({ testAggregate }: ContentOverviewCardProps) => {

@@ -3,8 +3,8 @@ import {
 	faClipboardList, faClock, faGlobe,
 	faKey, faCalendarAlt, faDoorOpen
 } from '@fortawesome/free-solid-svg-icons';
-import { ExamCore } from '../../../../../../../infra-test/core/test.model';
-import { formatDate } from './utils';
+import { ExamCore } from '../../../../../../../../infra-test/core/test.model';
+import { formatDate } from '../utils';
 import Card from './Card';
 
 interface ExamDetailsProps {

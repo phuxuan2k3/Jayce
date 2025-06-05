@@ -33,9 +33,9 @@ export default function QuestionsTab({
 		});
 	}, [questions, questionsAggregate]);
 
-	const model: QuestionsTabModel = useMemo(() => {
+	const model: QuestionsTabModel = useMemo<QuestionsTabModel>(() => {
 		return {
-			questions: questionsWithAggregate,
+			questionsWithAggregate: questionsWithAggregate,
 			totalAttempts: testAttemptsAggregate?.totalAttempts ?? 0,
 		}
 	}, [questionsWithAggregate, testAttemptsAggregate]);

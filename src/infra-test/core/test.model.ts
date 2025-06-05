@@ -11,7 +11,7 @@ export type TestCore = {
 	createdAt: string;
 };
 
-export type TestAggregateCore = {
+export type TestAggregate = {
 	numberOfQuestions: number;
 	totalPoints: number;
 };

@@ -9,15 +9,14 @@ export default function useFetchStatesCombine({
 	const isLoading = fetchStates.some(state => state.isLoading);
 	const error = fetchStates.find(state => state.error)?.error;
 	const errorMessage = parseQueryError(error) || null;
+	const data = fetchStates.some(state => state.data == null)
+		? undefined
+		: fetchStates.map(state => state.data);
+
 	return {
 		isLoading,
 		error,
 		errorMessage,
-		data: fetchStates.reduce((acc, state) => {
-			if (state.data) {
-				return { ...acc, ...state.data };
-			}
-			return acc;
-		}, {}),
+		data,
 	}
 }

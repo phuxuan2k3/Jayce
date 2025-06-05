@@ -1,4 +1,4 @@
-import { QuestionAnswer } from '../types/type'
+import { QuestionAnswer } from '../type'
 
 export default function QuestionAnswerCard({
 	questionAnswer,

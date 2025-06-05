@@ -1,7 +1,7 @@
-import { TestAggregateCore } from "../core/test.model";
+import { TestAggregate } from "../core/test.model";
 
 
-export const mockTestAggregateData: TestAggregateCore = {
+export const mockTestAggregateData: TestAggregate = {
 	numberOfQuestions: 50,
 	totalPoints: 100,
 };

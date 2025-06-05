@@ -3,19 +3,15 @@ import Alert from '@mui/material/Alert';
 import React from "react";
 import { parseQueryError } from "../../helpers/fetchBaseQuery.error";
 import SkeletonLoading from "../ui/loading/SkeletonLoading";
-
-type RTKQueryState<T> = {
-	isLoading: boolean;
-	error?: unknown;
-	data?: T;
-}
+import { FetchState } from "../../app/types";
 
 // Type for components that can receive an error message
 type ErrorComponent = React.ComponentType<{ message: string }>;
 
 type Props<T> = {
-	queryState: RTKQueryState<T>;
-	children: ReactNode;
+	queryState: FetchState<T>;
+	children?: ReactNode;
+	childrenFactory?: (data: T) => ReactNode;
 	loadingNode?: ReactNode;
 	errorNode?: ErrorComponent | ReactNode;
 }
@@ -23,6 +19,7 @@ type Props<T> = {
 export default function FetchStateCover<T>({
 	queryState,
 	children,
+	childrenFactory,
 	loadingNode,
 	errorNode,
 }: Props<T>) {
@@ -51,6 +48,12 @@ export default function FetchStateCover<T>({
 					: errorNode
 			}
 		</>;
+	}
+	if (queryState.data == null) {
+		return null;
+	}
+	if (childrenFactory) {
+		return childrenFactory(queryState.data);
 	}
 	return children;
 }

@@ -3,9 +3,9 @@ import {
 	faCalendarCheck, faCalendarAlt, faCalendarTimes,
 	faEye, faEyeSlash, faUsers, faRepeat
 } from '@fortawesome/free-solid-svg-icons';
-import { ExamCore } from '../../../../../../../infra-test/core/test.model';
-import { formatDate } from './utils';
 import Card from './Card';
+import { ExamCore } from '../../../../../../../../infra-test/core/test.model';
+import { formatDate } from '../utils';
 
 interface ScheduleAccessProps {
 	exam: ExamCore;

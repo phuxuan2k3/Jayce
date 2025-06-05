@@ -38,6 +38,17 @@ export type AttemptsOfCandidateInTestAggregate = {
 	candidateId: string;
 };
 
+export const EMPTY_ATTEMPT_CORE: AttemptCore = {
+	id: "",
+	candidateId: "",
+	testId: "",
+	hasEnded: false,
+	secondsSpent: 0,
+	score: 0,
+	createdAt: "",
+	updatedAt: "",
+};
+
 export const EMPTY_ATTEMPT_AGGREGATE: AttemptsOfTestAggregate = {
 	totalParticipants: 0,
 	totalAttempts: 0,
