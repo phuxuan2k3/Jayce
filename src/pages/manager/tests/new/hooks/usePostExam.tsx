@@ -30,6 +30,10 @@ export default function usePostExam({
 
 	const handlePostExam = useCallback(async () => {
 		onPostingStarted();
+		if (errors.length > 0) {
+			console.warn("Cannot post exam, validation errors present.");
+			return;
+		}
 		const args = stateToPostExamArgs(state);
 		postExam(args);
 	}, []);

@@ -120,8 +120,14 @@ export default function ManagerTestEditPage() {
 							questionsErrors={validationError.questionsErrors}
 							configErrors={validationError.configErrors}
 							onClose={() => setIsPostingExam(false)}
-							onConfigEdit={() => setTab("configuration")}
-							onQuestionsEdit={() => setTab("questions")}
+							onConfigEdit={() => {
+								setTab("configuration");
+								setIsPostingExam(false);
+							}}
+							onQuestionsEdit={() => {
+								setTab("questions");
+								setIsPostingExam(false);
+							}}
 						/>
 					)}
 					{postExamState.isLoading && (
