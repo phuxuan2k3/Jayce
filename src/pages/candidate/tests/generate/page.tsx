@@ -3,7 +3,7 @@ import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutT
 import TestGenerationSidebar from "./components/ui/TestGenerationSidebar";
 import TemplateSelectionModal from "./components/ui/TemplateSelectionModal";
 import SaveTemplateDialog from "./components/ui/SaveTemplateDialog";
-import { TemplateCore } from "../../../../features/tests/model/test.model";
+import { TemplateCore } from "../../../../infra-test/core/test.model";
 import TestGenerationStepper from './components/ui/TestGenerationStepper';
 import PracticeBasicInfoStep from './components/steps/PracticeBasicInfoStep';
 import PracticePromptConfigStep from './components/steps/PracticePromptConfigStep';

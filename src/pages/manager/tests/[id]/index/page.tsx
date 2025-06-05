@@ -1,7 +1,45 @@
+import { useState } from 'react';
 import NewLeftLayoutTemplate from '../../../../../components/layouts/NewLeftLayoutTemplate'
-import QuestionsList from './components/questions-tab';
+import AttemptsTab from './components/attempts-tab';
+import Sidebar from './components/Sidebar';
+import QuestionsTab from './components/questions-tab';
+import ExamInformationTab from './components/exam-information-tab';
+import { TabMode } from './type';
+import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
+import { useAppDispatch } from '../../../../../app/hooks';
+import dialogSlice from '../../../../../features/tests/stores/dialogSlice';
+import ParticipantsTab from './components/participants-tab';
+import { useGetExamsByTestIdQuery } from '../../../../../features/tests/api/test.api-gen';
 
 export default function ManagerTestPage() {
+	const testId = useGetTestIdParams();
+	const dispatch = useAppDispatch();
+
+	const [mode, setMode] = useState<TabMode>('info');
+	const examQuery = useGetExamsByTestIdQuery({ testId });
+	const exam = examQuery.data;
+
+	const getTab = (mode: TabMode) => {
+		switch (mode) {
+			case 'info':
+				return <ExamInformationTab
+					testId={testId}
+				/>;
+			case 'questions':
+				return <QuestionsTab
+					testId={testId}
+				/>;
+			case 'attempts':
+				return <AttemptsTab
+					testId={testId}
+				/>;
+			case 'participants':
+				return <ParticipantsTab
+					testId={testId}
+				/>;
+		}
+	}
+
 	return (
 		<NewLeftLayoutTemplate
 			header={
@@ -10,32 +48,17 @@ export default function ManagerTestPage() {
 					description="Manage all your exams."
 				/>
 			}
-			left={
-				<div className="lg:sticky lg:top-[2vh] flex flex-col gap-4 shadow-primary rounded-lg p-4 bg-white">
-					<div className="flex flex-col gap-2 mb-4">
-						<h2 className="text-lg font-bold">Actions</h2>
-						<p className="text-sm text-primary-toned-500">You can create, edit or delete your tests.</p>
-					</div>
-					{/* <CommonButton
-						variant="secondary"
-					>
-						Avtive Tests
-					</CommonButton> */}
-					{/* <CommonButton
-						onClick={handleClickCreateTest}
-					>
-						Create Test
-					</CommonButton> */}
-				</div>
-			}
+			left={<Sidebar
+				testId={testId}
+				onModeChange={(mode) => setMode(mode)}
+				onDelete={() => {
+					if (exam == null) return;
+					dispatch(dialogSlice.actions.setDeleteExam(exam))
+				}}
+			/>}
 		>
-			{/* <ExamInformationSection
-				{...mockFullExamInformation}
-			/> */}
-
-			<QuestionsList />
-
-
+			{getTab(mode)}
 		</NewLeftLayoutTemplate>
 	);
 }
+

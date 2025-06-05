@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PracticeCore } from '../model/test.model';
-import { AttemptCore } from '../model/attempt.model';
+import { PracticeCore } from '../../../infra-test/core/test.model';
+import { AttemptCore } from '../../../infra-test/core/attempt.model';
 
 interface TestSelectState {
 	practiceTest?: PracticeCore;

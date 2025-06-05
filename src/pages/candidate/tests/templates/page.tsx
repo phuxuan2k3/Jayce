@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TemplateCore } from "../../../../features/tests/model/test.model";
+import { TemplateCore } from "../../../../infra-test/core/test.model";
 import TemplateForm from './components/TemplateForm';
 import TemplatesSidebar from './components/TemplatesSidebar';
 import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";

@@ -277,6 +277,14 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/exams/${queryArg.testId}/questions-with-answer`,
       }),
     }),
+    getExamsByTestIdQuestionsAggregate: build.query<
+      GetExamsByTestIdQuestionsAggregateApiResponse,
+      GetExamsByTestIdQuestionsAggregateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/exams/${queryArg.testId}/questions-aggregate`,
+      }),
+    }),
     postExamsJoin: build.mutation<
       PostExamsJoinApiResponse,
       PostExamsJoinApiArg
@@ -832,13 +840,13 @@ export type PostExamsApiArg = {
       correctOption: number;
     }[];
     exam: {
-      hasPassword: boolean;
       roomId: string;
       numberOfAttemptsAllowed: number;
       isAnswerVisible: boolean;
       isAllowedToSeeOtherResults: boolean;
       openDate: string;
       closeDate: string;
+      password?: string;
     };
   };
 };
@@ -903,13 +911,13 @@ export type PutExamsByTestIdApiArg = {
       correctOption: number;
     }[];
     exam: {
-      hasPassword: boolean;
       roomId: string;
       numberOfAttemptsAllowed: number;
       isAnswerVisible: boolean;
       isAllowedToSeeOtherResults: boolean;
       openDate: string;
       closeDate: string;
+      password?: string;
     };
     testId: string;
   };
@@ -959,6 +967,16 @@ export type GetExamsByTestIdQuestionsWithAnswerApiResponse =
     correctOption: number;
   }[];
 export type GetExamsByTestIdQuestionsWithAnswerApiArg = {
+  testId: string;
+};
+export type GetExamsByTestIdQuestionsAggregateApiResponse =
+  /** status 200 Success */ {
+    questionId: number;
+    numberOfAnswers: number;
+    numberOfCorrectAnswers: number;
+    averagePoints: number;
+  }[];
+export type GetExamsByTestIdQuestionsAggregateApiArg = {
   testId: string;
 };
 export type PostExamsJoinApiResponse = unknown;
@@ -1366,6 +1384,8 @@ export const {
   useLazyGetExamsByTestIdQuestionsToDoQuery,
   useGetExamsByTestIdQuestionsWithAnswerQuery,
   useLazyGetExamsByTestIdQuestionsWithAnswerQuery,
+  useGetExamsByTestIdQuestionsAggregateQuery,
+  useLazyGetExamsByTestIdQuestionsAggregateQuery,
   usePostExamsJoinMutation,
   useGetTemplatesQuery,
   useLazyGetTemplatesQuery,

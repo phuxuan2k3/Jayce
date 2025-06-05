@@ -1,29 +1,35 @@
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../router/paths";
-import TestExamList from "./components/TestExamList";
-import CommonButton from "../../../../components/ui/CommonButton";
-import { mockExams } from "./components/mockExams";
+import ExamList from "./components/ExamList";
 import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
+import Sidebar from "./components/Sidebar";
+import { useAppDispatch } from "../../../../app/hooks";
+import dialogSlice from "../../../../features/tests/stores/dialogSlice";
+import { useGetExamsQuery } from "../../../../features/tests/api/test.api-gen";
+import { useCallback, useState } from "react";
+import { Filter } from "./type";
 
 const ManagerTestsPage = () => {
 	const navigate = useNavigate();
-	const handleClickEditTest = (testId: string) => {
-		navigate(paths.manager.tests.in(testId).EDIT);
-	};
+	const dispatch = useAppDispatch();
+	const [filter, setFilter] = useState<Filter>({
+		page: 1,
+		perPage: 10,
+		searchTitle: "",
+		sort: "createdAt",
+	});
 
-	const handleClickDeleteTest = (_: string) => {
-		// deleteTest({ testId });
-	};
+	const examsQuery = useGetExamsQuery({
+		...filter,
+	});
 
-	const handleClickCreateTest = () => {
-		navigate(paths.manager.tests.CREATE);
-	};
+	const handleExamView = useCallback((testId: string) => {
+		navigate(paths.manager.tests.in(testId).ROOT);
+	}, []);
 
-	const handleExamView = (testId: string) => {
-		navigate(paths.manager.tests.in(testId).ATTEMPTS);
-	};
+	const exams = examsQuery.data?.data || [];
+	const totalPages = examsQuery.data?.totalPages || 1;
 
-	const tests = mockExams;
 
 	return (
 		<NewLeftLayoutTemplate
@@ -34,33 +40,22 @@ const ManagerTestsPage = () => {
 				/>
 			}
 			left={
-				<div className="lg:sticky lg:top-[2vh] flex flex-col gap-4 shadow-primary rounded-lg p-4 bg-white">
-					<div className="flex flex-col gap-2 mb-4">
-						<h2 className="text-lg font-bold">Actions</h2>
-						<p className="text-sm text-primary-toned-500">You can create, edit or delete your tests.</p>
-					</div>
-					<CommonButton
-						variant="secondary"
-					>
-						Avtive Tests
-					</CommonButton>
-					<CommonButton
-						onClick={handleClickCreateTest}
-					>
-						Create Test
-					</CommonButton>
-				</div>
+				<Sidebar />
 			}
 		>
-			<TestExamList
-				tests={tests}
-				totalPages={10}
-				onEdit={handleClickEditTest}
-				onDelete={handleClickDeleteTest}
+			<ExamList
+				tests={exams}
+				totalPages={totalPages}
+				onDelete={(exam) => dispatch(dialogSlice.actions.setDeleteExam(exam))}
 				onTestClick={handleExamView}
-				onPageChange={(_) => {
+				onPageChange={(page) => {
+					setFilter((prev) => ({
+						...prev,
+						page,
+					}));
 				}}
 			/>
+
 		</NewLeftLayoutTemplate>
 	);
 }

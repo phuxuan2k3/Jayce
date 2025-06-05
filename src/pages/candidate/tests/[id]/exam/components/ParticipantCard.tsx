@@ -1,4 +1,4 @@
-import { UserCore } from '../../../../../../features/tests/model/user.model'
+import { UserCore } from '../../../../../../infra-test/core/user.model'
 
 export default function ParticipantProfileCard({
 	participant,

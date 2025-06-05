@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TemplateCore } from "../../../../../features/tests/model/test.model";
+import { TemplateCore } from "../../../../../infra-test/core/test.model";
 import MyPagination from "../../../../../components/ui/common/MyPagination";
 
 interface TemplatesListProps {

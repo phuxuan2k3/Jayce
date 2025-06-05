@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useDeleteTemplatesByTemplateIdMutation, usePostTemplatesMutation, usePutTemplatesByTemplateIdMutation } from "../apis/template.api-enhance";
 import { useAppSelector } from "../../../../../app/hooks";
 import { authSelectors } from "../../../../../features/auth/store/authSlice";
-import { TemplateCore } from "../../../../../features/tests/model/test.model";
+import { TemplateCore } from "../../../../../infra-test/core/test.model";
 
 type MutationState = {
 	isLoading: boolean;

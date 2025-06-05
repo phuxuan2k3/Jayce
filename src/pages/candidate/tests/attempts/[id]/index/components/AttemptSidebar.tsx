@@ -1,12 +1,12 @@
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { AttemptCore } from "../../../../../../../features/tests/model/attempt.model";
-import { TestCore } from "../../../../../../../features/tests/model/test.model";
+import { AttemptCore } from "../../../../../../../infra-test/core/attempt.model";
+import { TestCore } from "../../../../../../../infra-test/core/test.model";
 import { useGetSelfAttemptsByAttemptIdAggregateQuery, useGetSelfTestsByTestIdAggregateQuery } from "../../../../../../../features/tests/api/test.api-gen";
 import { FetchError } from "../../../../../../../app/server-error";
 import paths from "../../../../../../../router/paths";
 import { useGetUsersQuery } from "../../../../../../../features/auth/api/auth-profile.api";
-import { getUserCore } from "../../../../../../../features/tests/model/user.model";
+import { getUserCore } from "../../../../../../../infra-test/core/user.model";
 
 const AttemptSidebar = ({
 	showAnswersAvailable,

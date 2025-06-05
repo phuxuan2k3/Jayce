@@ -1,5 +1,5 @@
 import React from 'react';
-import { TemplateCore } from "../../../../../features/tests/model/test.model";
+import { TemplateCore } from "../../../../../infra-test/core/test.model";
 
 interface DeleteTemplateModalProps {
 	isOpen: boolean;

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { FetchError } from "../../../../../../../app/server-error";
 import { useGetSelfAttemptsByAttemptIdAnswersQuery, useGetSelfTestsByTestIdQuestionsToDoQuery, useGetSelfTestsByTestIdQuestionsWithAnswersQuery } from "../../../../../../../features/tests/api/test.api-gen"
-import { AttemptCore } from "../../../../../../../features/tests/model/attempt.model";
+import { AttemptCore } from "../../../../../../../infra-test/core/attempt.model";
 import AnswerCard from "./AnswerCard";
 
 export default function AnswerList({

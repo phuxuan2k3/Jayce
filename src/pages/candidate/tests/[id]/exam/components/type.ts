@@ -1,4 +1,4 @@
-import { UserCore } from "../../../../../../features/tests/model/user.model";
+import { UserCore } from "../../../../../../infra-test/core/user.model";
 
 export type ParticipantWithUserInfo = UserCore & {
 	rank: number;

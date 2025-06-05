@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TemplateCore } from '../../../../../../features/tests/model/test.model';
+import { TemplateCore } from '../../../../../../infra-test/core/test.model';
 import { XCircle, Settings, Search } from 'lucide-react';
 import paths from '../../../../../../router/paths';
 import { useNavigate } from 'react-router-dom';

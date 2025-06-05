@@ -12,6 +12,8 @@ import chronobreakApi from '../features/scenarios/apis/base/chronobreak.api';
 import logoutApi from '../features/auth/api/logout.api.ts';
 import interviewApi from '../features/interviews/api/interview.api.ts';
 import fetchSlice from './fetchSlice.ts';
+import dialogSlice from '../features/tests/stores/dialogSlice.ts';
+import promptTuningApi from '../features/tests/base/prompt-tuning.api.ts';
 
 
 const authPersistConfig = {
@@ -29,11 +31,13 @@ const rootReducer = combineReducers({
 	ekkoApi: ekkoApi.reducer,
 	chronobreakApi: chronobreakApi.reducer,
 	interviewApi: interviewApi.reducer,
+	promptTuningApi: promptTuningApi.reducer,
 
 	// Custom reducers
 	auth: persistReducer(authPersistConfig, authReducer),
 	test: testReducer,
 	[fetchSlice.reducerPath]: fetchSlice.reducer,
+	[dialogSlice.reducerPath]: dialogSlice.reducer,
 });
 
 const store = configureStore({
@@ -52,6 +56,7 @@ const store = configureStore({
 				.concat(authApi.middleware)
 				.concat(logoutApi.middleware)
 				.concat(interviewApi.middleware)
+				.concat(promptTuningApi.middleware)
 	,
 });
 
@@ -64,6 +69,3 @@ export type AppStore = typeof store;
 setupListeners(store.dispatch);
 
 export default store;
-
-// TODO: global error display / page navigation middleware
-// https://owensiu.medium.com/rtk-query-how-to-centralize-error-handling-40c28bb48d5d

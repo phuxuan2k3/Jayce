@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExamCore } from '../../../../../features/tests/model/test.model';
+import { ExamCore } from '../../../../../infra-test/core/test.model';
 import { AlarmClock, AlertCircle, CheckCircle, X } from 'lucide-react';
 import { format } from 'date-fns';
 import PasswordInput from './PasswordInput';

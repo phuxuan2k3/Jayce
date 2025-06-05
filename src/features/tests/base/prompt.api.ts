@@ -3,7 +3,7 @@ import { url } from '../../../app/env';
 import serviceBaseQueryWithReauth from '../../../app/serviceBaseQueryReAuth';
 
 export const promptApi = createApi({
-	reducerPath: 'aiApi',
+	reducerPath: 'promptApi',
 	baseQuery: serviceBaseQueryWithReauth(url.darius),
 	endpoints: () => ({}),
 });

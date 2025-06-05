@@ -1,4 +1,4 @@
-import { QuestionToDo } from "../../../../../../../features/tests/model/question.model";
+import { QuestionToDo } from "../../../../../../../infra-test/core/question.model";
 
 export default function AnswerCard({
 	index,

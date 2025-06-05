@@ -1,7 +1,7 @@
 import AttemptList from '../../common/components/test-details/AttemptsList'
 import ParticipantStatisticCard from './ParticipantStatistic'
 import ParticipantProfileCard from './ParticipantCard'
-import { getUserCore } from '../../../../../../features/tests/model/user.model'
+import { getUserCore } from '../../../../../../infra-test/core/user.model'
 import { ArrowLeft } from 'lucide-react'
 import { useGetExamsByTestIdCandidateAndCandidateIdAttemptsAggregateQuery, useGetExamsByTestIdCandidateAndCandidateIdAttemptsQuery } from '../../../../../../features/tests/api/test.api-gen'
 import { useState } from 'react'

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PracticeCore } from "../../../../../features/tests/model/test.model";
+import { PracticeCore } from "../../../../../infra-test/core/test.model";
 import { useGetPracticesQuery } from "../../../../../features/tests/api/test.api-gen";
 
 export default function useTestsPage() {

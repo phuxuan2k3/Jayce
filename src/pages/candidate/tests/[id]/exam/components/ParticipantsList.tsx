@@ -4,7 +4,7 @@ import { ParticipantWithUserInfo } from "./type"
 import { Paging } from "../../../../../../features/tests/types/common";
 import { useGetExamsByTestIdParticipantsAggregateQuery } from "../../../../../../features/tests/api/test.api-gen";
 import { useGetUsersQuery } from "../../../../../../features/auth/api/auth-profile.api";
-import { getUserCore } from "../../../../../../features/tests/model/user.model";
+import { getUserCore } from "../../../../../../infra-test/core/user.model";
 import useQueryState from "../../../../../../components/hooks/useQueryState";
 
 export default function ParticipantsList({
