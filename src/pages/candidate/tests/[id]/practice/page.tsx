@@ -10,7 +10,7 @@ import usePracticePage from "./hooks/usePracticePage";
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import paths from "../../../../../router/paths";
 import OngoingAttemptCard from "../common/components/test-details/OngoingAttemptCard";
-import SidebarActions from "../../../../../features/tests/ui2/sidebar/SidebarActions";
+import SidebarActions from "../../../../../features/tests/ui/sidebar/SidebarActions";
 import { useCallback } from "react";
 import { useGetCurrentTestsByTestIdQuery, usePostPracticesByTestIdAttemptsStartMutation } from "../common/apis/attempts.api-enhance";
 

@@ -1,43 +1,7 @@
 import promptApi from "../base/prompt.api";
-import { CriteriaRequest, CriteriaResponse, GeneratedQuestionResponse, QuestionDTO } from "../types/crud";
 
 const promptApiCustom = promptApi.injectEndpoints({
 	endpoints: (builder) => ({
-		// Old endpoints
-		criteria: builder.mutation<{ criteriaList: CriteriaResponse[] }, CriteriaRequest>({
-			query: (CriteriaRequest) => ({
-				url: `/v1/suggest_criteria`,
-				method: "POST",
-				body: CriteriaRequest
-			}),
-		}),
-
-		// Old endpoints
-		generate: builder.mutation<QuestionDTO[], CriteriaRequest>({
-			query: (CriteriaRequest) => ({
-				url: `/v1/suggest_questions`,
-				method: "POST",
-				body: CriteriaRequest
-			}),
-			transformResponse: (response: GeneratedQuestionResponse) => {
-				return response.questionList.map((question) => {
-					const correctOption = question.optionList.findIndex((option) => option.isCorrect);
-					console.log("Correct option index:", correctOption);
-					return {
-						text: question.questionContent,
-						options: question.optionList.map((option) => option.optionContent),
-						correctOption: correctOption === -1 ? 0 : correctOption,
-						points: question.points || 0,
-					}
-				}) as QuestionDTO[];
-			}
-		}),
-
-
-		// =================
-		// New
-		// =================
-
 		getSuggestOutlines: builder.query<GetSuggestOutlinesResponse, GetSuggestOutlinesRequest>({
 			query: (request) => ({
 				url: `/v1/suggest_outlines`,
@@ -58,9 +22,6 @@ const promptApiCustom = promptApi.injectEndpoints({
 });
 
 export const {
-	useCriteriaMutation,
-	useGenerateMutation,
-
 	useLazyGetSuggestQuestionsQuery,
 	useLazyGetSuggestOutlinesQuery,
 } = promptApiCustom;
@@ -72,7 +33,7 @@ export type GetSuggestOutlinesRequest = {
 	description: string;
 	difficulty: string;
 	tags: string[];
-	outlines: string[]; // Những gợi ý đã điền
+	outlines: string[];
 };
 
 export type GetSuggestOutlinesResponse = {

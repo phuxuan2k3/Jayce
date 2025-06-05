@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import QuestionPersistCard from '../../../../../../../features/tests/ui2/question/QuestionPersistCard';
+import QuestionPersistCard from '../../../../../../../features/tests/ui/question/QuestionPersistCard';
 import { GetGenerateExamQuestionsApiResponse } from '../apis/exam-generation.api'
 import { QuestionPersistOfTest } from "../../../../../../../infra-test/persist/question.persist";
 import ActionsDialog from './components/ActionsDialog';

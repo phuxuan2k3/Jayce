@@ -1,11 +1,15 @@
 import { useMemo, useState } from "react";
 import MyPagination from "../../../../../../components/ui/common/MyPagination";
 import { ParticipantWithUserInfo } from "./type"
-import { Paging } from "../../../../../../features/tests/types/common";
 import { useGetExamsByTestIdParticipantsAggregateQuery } from "../../../../../../features/tests/api/test.api-gen";
 import { useGetUsersQuery } from "../../../../../../features/auth/api/auth-profile.api";
 import { getUserCore } from "../../../../../../infra-test/core/user.model";
 import useQueryState from "../../../../../../components/hooks/useQueryState";
+
+type Filter = {
+	page: number;
+	perPage: number;
+}
 
 export default function ParticipantsList({
 	testId,
@@ -14,7 +18,7 @@ export default function ParticipantsList({
 	testId: string;
 	onParticipantClicked: (participantId: string) => void;
 }) {
-	const [filter, setFilter] = useState<Paging>({
+	const [filter, setFilter] = useState<Filter>({
 		page: 1,
 		perPage: 10,
 	});

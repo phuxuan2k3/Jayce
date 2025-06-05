@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import NewLeftLayoutTemplate from "../../../../../components/layouts/NewLeftLayoutTemplate";
-import DefaultSidebarActions from "../../../../../features/tests/ui2/sidebar/DefaultSidebar";
+import DefaultSidebarActions from "../../../../../features/tests/ui/sidebar/DefaultSidebar";
 import AttemptsTabContent from "../common/components/test-details/AttemptsTabContent";
 import TabsComponent from "../common/components/test-details/TestTabsComponent";
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";

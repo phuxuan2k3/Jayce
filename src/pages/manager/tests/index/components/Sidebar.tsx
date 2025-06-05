@@ -1,5 +1,5 @@
-import SidebarActions from '../../../../../features/tests/ui2/sidebar/SidebarActions'
-import QuickAction from '../../../../../features/tests/ui2/sidebar/QuickAction'
+import SidebarActions from '../../../../../features/tests/ui/sidebar/SidebarActions'
+import QuickAction from '../../../../../features/tests/ui/sidebar/QuickAction'
 import { ClipboardPlus } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import paths from '../../../../../router/paths';

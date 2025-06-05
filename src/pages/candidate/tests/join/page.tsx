@@ -1,6 +1,6 @@
 import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
 import { useState, useEffect } from "react";
-import SidebarActions from "../../../../features/tests/ui2/sidebar/SidebarActions";
+import SidebarActions from "../../../../features/tests/ui/sidebar/SidebarActions";
 import JoinTestSection from "./components/JoinTestSection";
 import ExamInfoDialog from "./components/ExamInfoDialog";
 import { useGetExamsFindQuery } from "../../../../features/tests/api/test.api-gen";

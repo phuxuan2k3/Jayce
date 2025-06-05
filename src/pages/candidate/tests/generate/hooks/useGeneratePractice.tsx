@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { usePostPracticesMutation } from '../../../../../features/tests/api/test.api-gen'
-import { QuestionCoreCreate } from '../../../../../features/tests/types/create';
 import { PracticeGenerationActionTypes, PracticeGenerationReducer } from '../reducers/reducer-types';
 import { useLazyGetSuggestQuestionsQuery } from '../../../../../features/tests/api/prompt.api-custom';
 import paths from '../../../../../router/paths';
 import { PracticeGenerationLoadingState } from '../types';
 import usePracticeGenerationSelectors from '../reducers/practice-generation.selector';
 import { parseQueryError } from '../../../../../helpers/fetchBaseQuery.error';
+import { QuestionPersistOfTest } from '../../../../../infra-test/persist/question.persist';
 
 export default function useGeneratePractice({
 	state,
@@ -54,7 +54,7 @@ export default function useGeneratePractice({
 						...finalData,
 						mode: "practice",
 					},
-					questions: generatedQuestions.questions.map((question: QuestionCoreCreate) => ({
+					questions: generatedQuestions.questions.map((question: QuestionPersistOfTest) => ({
 						...question,
 					})),
 					practice: {

@@ -1,6 +1,6 @@
 import { ClipboardList, HelpCircle, Info, Trash2, Users } from 'lucide-react';
-import QuickAction from '../../../../../../features/tests/ui2/sidebar/QuickAction'
-import SidebarActions from '../../../../../../features/tests/ui2/sidebar/SidebarActions'
+import QuickAction from '../../../../../../features/tests/ui/sidebar/QuickAction'
+import SidebarActions from '../../../../../../features/tests/ui/sidebar/SidebarActions'
 import { TabMode } from '../type';
 import { useNavigate } from 'react-router-dom';
 import paths from '../../../../../../router/paths';

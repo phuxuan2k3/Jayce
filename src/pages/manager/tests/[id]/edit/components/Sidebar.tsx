@@ -1,6 +1,6 @@
-import ManagerSidebar from '../../../../../../features/tests/ui2/sidebar/ManagerSidebar'
+import ManagerSidebar from '../../../../../../features/tests/ui/sidebar/ManagerSidebar'
 import { ExamCore } from '../../../../../../infra-test/core/test.model'
-import QuickAction from '../../../../../../features/tests/ui2/sidebar/QuickAction';
+import QuickAction from '../../../../../../features/tests/ui/sidebar/QuickAction';
 import { EditTabs } from '../type';
 
 export default function Sidebar({

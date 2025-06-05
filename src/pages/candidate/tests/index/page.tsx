@@ -1,7 +1,7 @@
 import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../router/paths";
-import SidebarActions from "../../../../features/tests/ui2/sidebar/SidebarActions";
+import SidebarActions from "../../../../features/tests/ui/sidebar/SidebarActions";
 import UserGeneratedTestsSection from "./components/UserGeneratedTestsSection";
 import useQueryPracticeTestsServer from "./hooks/useQueryPracticeTestsServer";
 import { parseQueryError } from "../../../../helpers/fetchBaseQuery.error";

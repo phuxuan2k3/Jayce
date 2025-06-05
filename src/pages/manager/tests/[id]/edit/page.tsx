@@ -1,7 +1,7 @@
 import { useReducer, useState } from "react";
-import ExamQuestionsManage from "../../../../../features/tests/ui2/forms/ExamQuestionsManage";
+import ExamQuestionsManage from "../../../../../features/tests/ui/forms/ExamQuestionsManage";
 import LeftLayoutTemplate from "../../../../../components/layouts/LeftLayoutTemplate";
-import ExamConfigForm from "../../../../../features/tests/ui2/forms/ExamConfigForm";
+import ExamConfigForm from "../../../../../features/tests/ui/forms/ExamConfigForm";
 import Sidebar from "./components/Sidebar";
 import { EditTabs, ManagerTestEditPageModel } from "./type";
 import { examPersistReducer } from "../../../../../infra-test/reducers/exam-persist.reducer";

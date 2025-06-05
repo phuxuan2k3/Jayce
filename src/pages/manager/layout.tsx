@@ -3,7 +3,7 @@ import RoleGuard from "../../components/wrapper/RoleGuard";
 import FooterShort from "../../components/ui/footer/FooterShort";
 import ManagerNavbar from "../../components/ui/navbar/ManagerNavbar";
 import { Role } from "../../features/auth/types/auth";
-import DeleteExamDialog from "../../features/tests/ui2/DeleteExamDialog";
+import DeleteExamDialog from "../../features/tests/ui/DeleteExamDialog";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import dialogSlice from "../../features/tests/stores/dialogSlice";
 

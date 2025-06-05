@@ -5,7 +5,6 @@ import testApi from '../features/tests/base/test.api';
 import promptApi from '../features/tests/base/prompt.api';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import testReducer from '../features/tests/stores/testSlice.ts';
 import authApi from '../features/auth/api/auth.api.ts';
 import ekkoApi from '../features/scenarios/apis/base/ekko.api';
 import chronobreakApi from '../features/scenarios/apis/base/chronobreak.api';
@@ -27,15 +26,14 @@ const rootReducer = combineReducers({
 	authApi: authApi.reducer,
 	logoutApi: logoutApi.reducer,
 	testApi: testApi.reducer,
-	aiApi: promptApi.reducer,
 	ekkoApi: ekkoApi.reducer,
 	chronobreakApi: chronobreakApi.reducer,
 	interviewApi: interviewApi.reducer,
 	promptTuningApi: promptTuningApi.reducer,
+	[promptApi.reducerPath]: promptApi.reducer,
 
 	// Custom reducers
 	auth: persistReducer(authPersistConfig, authReducer),
-	test: testReducer,
 	[fetchSlice.reducerPath]: fetchSlice.reducer,
 	[dialogSlice.reducerPath]: dialogSlice.reducer,
 });
