@@ -56,3 +56,4 @@ jobs:
         NEW_TAG="${{ steps.increment_tag.outputs.new_tag }}"
         git tag "$NEW_TAG"
         git push https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }}.git --tags
+

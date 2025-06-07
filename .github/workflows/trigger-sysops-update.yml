@@ -63,4 +63,4 @@ jobs:
                       --body "Automated PR to update ${{ env.REPO_NAME }} image version to ${{ env.TAG }}" \
                       --base main \
                       --head "$BRANCH_NAME" \
-                      --repo "chisdev/sysops-bookie"
+                      --repo "ChisTrun/sysops-skillsharp"
