@@ -61,41 +61,97 @@ export default function ExamConfigForm({
 
 			<div className="col-span-2 border-b border-primary-toned-300 w-full" />
 
-			<label htmlFor="test-open-at">
+			<label>
 				Open time:
 			</label>
-			<div className="flex items-center gap-x-4 w-full">
+			<div className="flex flex-col gap-y-4 w-full">
 				<div className="flex items-center gap-x-2">
-					<span className="text-sm text-primary-toned-500">From:</span>
+					<label htmlFor="test-open-date" className="text-sm text-primary-toned-500 min-w-fit">
+						From Date:
+					</label>
 					<input
-						id="test-open-at"
-						type="datetime-local"
+						id="test-open-date"
+						type="date"
 						className="w-full h-fit border border-primary rounded-md focus:outline-none focus:ring focus:ring-teal-300 px-4 py-2"
-						value={configEdit.openDate.toISOString().slice(0, 16)}
+						value={configEdit.openDate.toISOString().slice(0, 10)}
 						onChange={(e) => {
-							const date = new Date(e.target.value);
+							const currentDate = new Date(configEdit.openDate);
+							const newDate = new Date(e.target.value);
+							newDate.setHours(currentDate.getHours(), currentDate.getMinutes());
 							onConfigEditChange({
-								openDate: date,
+								openDate: newDate,
+							});
+						}}
+					/>
+					<label htmlFor="test-open-time" className="text-sm text-primary-toned-500 min-w-fit">
+						Time:
+					</label>
+					<input
+						id="test-open-time"
+						type="time"
+						className="w-full h-fit border border-primary rounded-md focus:outline-none focus:ring focus:ring-teal-300 px-4 py-2"
+						value={configEdit.openDate.toTimeString().slice(0, 5)}
+						onChange={(e) => {
+							const currentDate = new Date(configEdit.openDate);
+							const [hours, minutes] = e.target.value.split(':');
+							currentDate.setHours(parseInt(hours), parseInt(minutes));
+							onConfigEditChange({
+								openDate: currentDate,
 							});
 						}}
 					/>
 				</div>
 				<div className="flex items-center gap-x-2">
-					<span className="text-sm text-primary-toned-500">To:</span>
+					<label htmlFor="test-close-date" className="text-sm text-primary-toned-500 min-w-fit">
+						To Date:
+					</label>
 					<input
-						id="test-close-at"
-						type="datetime-local"
+						id="test-close-date"
+						type="date"
 						className="w-full h-fit border border-primary rounded-md focus:outline-none focus:ring focus:ring-teal-300 px-4 py-2"
-						value={configEdit.closeDate.toISOString().slice(0, 16)}
+						value={configEdit.closeDate.toISOString().slice(0, 10)}
 						onChange={(e) => {
-							const date = new Date(e.target.value);
+							const currentDate = new Date(configEdit.closeDate);
+							const newDate = new Date(e.target.value);
+							newDate.setHours(currentDate.getHours(), currentDate.getMinutes());
 							onConfigEditChange({
-								closeDate: date,
+								closeDate: newDate,
+							});
+						}}
+					/>
+					<label htmlFor="test-close-time" className="text-sm text-primary-toned-500 min-w-fit">
+						Time:
+					</label>
+					<input
+						id="test-close-time"
+						type="time"
+						className="w-full h-fit border border-primary rounded-md focus:outline-none focus:ring focus:ring-teal-300 px-4 py-2"
+						value={configEdit.closeDate.toTimeString().slice(0, 5)}
+						onChange={(e) => {
+							const currentDate = new Date(configEdit.closeDate);
+							const [hours, minutes] = e.target.value.split(':');
+							currentDate.setHours(parseInt(hours), parseInt(minutes));
+							onConfigEditChange({
+								closeDate: currentDate,
 							});
 						}}
 					/>
 				</div>
 			</div>
+
+			<label htmlFor="test-room-id">
+				Room ID:
+			</label>
+			<input
+				id="test-room-id"
+				type="text"
+				placeholder="Room ID"
+				className="w-full h-fit border border-primary rounded-md focus:outline-none focus:ring focus:ring-teal-300 px-4 py-2"
+				value={configEdit.roomId}
+				onChange={(e) => onConfigEditChange({
+					roomId: e.target.value,
+				})}
+			/>
 
 			<label htmlFor="test-password">
 				Password:
@@ -113,13 +169,15 @@ export default function ExamConfigForm({
 							});
 						}}
 					/>
-					<span className="text-sm text-primary-toned-500">Require password</span>
+					<label htmlFor="use-password" className="text-sm text-primary-toned-500">
+						Require password
+					</label>
 				</div>
 
 				<input
 					id="test-password"
 					type="text"
-					disabled={configEdit.password !== null}
+					disabled={configEdit.password === null}
 					placeholder="Enter password"
 					className={`w-1/3 h-fit border border-primary rounded-md focus:outline-none focus:ring focus:ring-teal-300 px-4 py-2 ${configEdit.password === null ? "bg-gray-200 cursor-not-allowed" : ""}`}
 					value={configEdit.password || ""}
@@ -141,10 +199,11 @@ export default function ExamConfigForm({
 				<input
 					id="max-attempts"
 					type="number"
+					defaultValue={1}
 					min="1"
 					placeholder="Number of attempts"
 					className="w-1/2 h-fit border border-primary rounded-md focus:outline-none focus:ring focus:ring-teal-300 px-4 py-2"
-					value={configEdit.numberOfAttemptsAllowed || 1}
+					value={configEdit.numberOfAttemptsAllowed}
 					onChange={(e) => onConfigEditChange({
 						numberOfAttemptsAllowed: Number(e.target.value),
 					})}
@@ -165,7 +224,7 @@ export default function ExamConfigForm({
 							isAnswerVisible: e.target.checked,
 						})}
 					/>
-					<span className="text-sm text-primary-toned-500">Allow participants to see their results after completion</span>
+					<label htmlFor="show-results" className="text-sm text-primary-toned-500">Allow participants to see their results after completion</label>
 				</div>
 				<div className="flex items-center gap-x-2">
 					<input
@@ -177,7 +236,7 @@ export default function ExamConfigForm({
 							isAllowedToSeeOtherResults: e.target.checked,
 						})}
 					/>
-					<span className="text-sm text-primary-toned-500">Allow participants to see results of other participants</span>
+					<label htmlFor="show-results-others" className="text-sm text-primary-toned-500">Allow participants to see results of other participants</label>
 				</div>
 			</div>
 

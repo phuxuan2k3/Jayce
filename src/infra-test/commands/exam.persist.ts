@@ -5,7 +5,7 @@ export type ExamConfigPersist = {
 	minutesToAnswer: number;
 	language: string;
 	password: string | null;
-	numberOfAttemptsAllowed?: number | null;
+	numberOfAttemptsAllowed: number;
 	isAnswerVisible: boolean;
 	isAllowedToSeeOtherResults: boolean;
 	openDate: Date;

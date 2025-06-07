@@ -1,6 +1,6 @@
 import { ExamPersistState } from '../../../../../infra-test/reducers/exam-persist.store'
 import { PostExamsApiArg, usePostExamsMutation } from '../../../../../features/tests/api/test.api-gen'
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { examPersistSelectors } from '../../../../../infra-test/reducers/exam-persist.selector';
 import { parseQueryError } from '../../../../../helpers/fetchBaseQuery.error';
 
@@ -32,7 +32,9 @@ export default function usePostExam({
 		configErrors,
 		questionsErrors,
 		errors,
-	} = examPersistSelectors(state);
+	} = useMemo(() => {
+		return examPersistSelectors(state);
+	}, [state])
 
 	const handlePostExam = useCallback(async () => {
 		onPostingStarted();
@@ -43,7 +45,7 @@ export default function usePostExam({
 		}
 		const args = stateToPostExamArgs(state);
 		postExam(args);
-	}, []);
+	}, [state]);
 
 	return {
 		handlePostExam,

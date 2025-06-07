@@ -10,7 +10,7 @@ const EMPTY_EXAM_CONFIG: ExamConfigPersist = {
 	minutesToAnswer: 1,
 	language: "English",
 	password: null,
-	numberOfAttemptsAllowed: null,
+	numberOfAttemptsAllowed: 1,
 	isAnswerVisible: false,
 	isAllowedToSeeOtherResults: false,
 	openDate: new Date(),
