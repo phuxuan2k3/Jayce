@@ -1,24 +1,25 @@
 import { useMemo, useState } from 'react';
 import QuestionPersistCard from '../../../../../../../features/tests/ui/question/QuestionPersistCard';
-import { GetGenerateExamQuestionsApiResponse } from '../apis/exam-generation.api'
-import { QuestionPersistOfTest } from "../../../../../../../infra-test/persist/question.persist";
+import { QuestionPersistOfTest } from "../../../../../../../infra-test/commands/question.persist";
 import ActionsDialog from './components/ActionsDialog';
 import useArrayPagination from '../../../../../../../components/hooks/useArrayPagination';
 import MyPagination from '../../../../../../../components/ui/common/MyPagination';
 
 export default function StepDone({
-	generatedExamQuestions,
+	questions,
 	onReplaceQuestions,
 	onAppendQuestions,
 	onGenerationDisposal,
+	onRegenerateQuestions,
 }: {
-	generatedExamQuestions: GetGenerateExamQuestionsApiResponse;
+	questions: QuestionPersistOfTest[];
 	onReplaceQuestions: (questions: QuestionPersistOfTest[]) => void;
 	onAppendQuestions: (questions: QuestionPersistOfTest[]) => void;
 	onGenerationDisposal: () => void;
+	onRegenerateQuestions: () => void;
 }) {
 	const [isActionsDialogOpen, setIsActionsDialogOpen] = useState(false);
-	const [draftQuestions, setDraftQuestions] = useState<QuestionPersistOfTest[]>(generatedExamQuestions.questions);
+	const [draftQuestions, setDraftQuestions] = useState<QuestionPersistOfTest[]>(questions);
 
 	const totalQuestions = draftQuestions.length;
 	const totalPoints = useMemo(() => draftQuestions.reduce((sum, question) => sum + (question.points || 0), 0), [draftQuestions]);
@@ -75,8 +76,7 @@ export default function StepDone({
 					<div className="text-center mt-8">
 						<p className="text-gray-600">You can now review and finalize your exam questions.</p>
 						<p className="text-gray-600">Once you're satisfied, you can proceed to the next steps.</p>
-					</div>
-					<div className="flex justify-center mt-6">
+					</div>					<div className="flex justify-center mt-6 space-x-4">
 						<button
 							onClick={() => setIsActionsDialogOpen(true)}
 							className="bg-primary-toned-600 text-white px-6 py-2 rounded hover:bg-primary-toned-700 transition-colors"
@@ -84,8 +84,14 @@ export default function StepDone({
 							Review Actions
 						</button>
 						<button
+							onClick={onRegenerateQuestions}
+							className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors"
+						>
+							Re-Generate Questions
+						</button>
+						<button
 							onClick={() => window.location.reload()}
-							className="ml-4 bg-gray-300 text-gray-800 px-6 py-2 rounded hover:bg-gray-400 transition-colors"
+							className="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:bg-gray-400 transition-colors"
 						>
 							Cancel
 						</button>

@@ -6,7 +6,7 @@ import paths from '../../../../../router/paths';
 import { PracticeGenerationLoadingState } from '../types';
 import usePracticeGenerationSelectors from '../reducers/practice-generation.selector';
 import { parseQueryError } from '../../../../../helpers/fetchBaseQuery.error';
-import { QuestionPersistOfTest } from '../../../../../infra-test/persist/question.persist';
+import { QuestionPersistOfTest } from '../../../../../infra-test/commands/question.persist';
 
 export default function useGeneratePractice({
 	state,

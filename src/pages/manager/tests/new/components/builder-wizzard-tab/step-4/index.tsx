@@ -1,4 +1,4 @@
-import { ExamGenerationState } from "../models/exam-generation.model"
+import { ExamGenerationState } from "../../../models/exam-generation.model"
 import { useMemo } from "react";
 import {
 	OverviewCards,

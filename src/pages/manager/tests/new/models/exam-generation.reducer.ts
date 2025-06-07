@@ -1,12 +1,11 @@
-import { ExamConfigPersist } from "../../../../../../../infra-test/persist/exam.persist";
 import { StepInfoKey } from "../common/step-info";
 import { ExamGenerationModel, ExamGenerationState } from "./exam-generation.model";
 
-export const initializeState: (examConfig: ExamConfigPersist) => ExamGenerationState = (examConfig) => ({
+export const initialState: ExamGenerationState = {
 	step: 1,
 	step1: {
-		title: examConfig.title,
-		description: examConfig.description,
+		title: "",
+		description: "",
 		// TODO: sync with examConfig
 		language: "English",
 		seniority: "Intern",
@@ -23,9 +22,9 @@ export const initializeState: (examConfig: ExamConfigPersist) => ExamGenerationS
 		},
 	},
 	errorMessages: [],
-});
+};
 
-type ExamGenerationAction =
+export type ExamGenerationAction =
 	| { type: 'SET_STEP'; payload: number }
 	| { type: 'SET_STEP1'; payload: ExamGenerationState['step1'] }
 	| { type: 'SET_STEP2'; payload: ExamGenerationState['step2'] }

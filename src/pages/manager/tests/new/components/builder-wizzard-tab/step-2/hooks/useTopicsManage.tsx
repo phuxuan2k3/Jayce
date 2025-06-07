@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { Topic } from "../../models/topic.model";
+import { Topic } from "../../../../models/topic.model";
 
 export default function useTopicsManage({
 	topics,

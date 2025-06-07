@@ -2,10 +2,10 @@ import SummaryCards from "./components/SummaryCards";
 import AddTopicButton from "./components/AddTopicButton";
 import TopicCard from "./components/TopicCard";
 import HelpText from "./components/HelpText";
-import { Step2Data } from "../common/model-types";
-import { Topic } from "../models/topic.model";
+import { Topic } from "../../../models/topic.model";
 import useTopicsManage from "./hooks/useTopicsManage";
 import useGetTotalQuestions from "./hooks/useGetTotalQuestions";
+import { Step2Data } from "../../../common/model-types";
 
 export default function Step2({
 	step2Data,

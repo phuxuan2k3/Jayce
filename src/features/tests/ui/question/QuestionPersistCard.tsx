@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons';
 import TextareaAutosize from 'react-textarea-autosize';
 import { createContext, useContext } from 'react';
-import { QuestionPersistOfTest } from "../../../../infra-test/persist/question.persist";
+import { QuestionPersistOfTest } from "../../../../infra-test/commands/question.persist";
 
 type QuestionEditContextType = {
 	index: number;

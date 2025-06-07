@@ -1,7 +1,7 @@
 import { QuestionCore } from "../core/question.model";
-import { QuestionPersistOfTest } from "../persist/question.persist";
+import { QuestionPersistOfTest } from "../commands/question.persist";
 import { ExamCore } from "../core/test.model";
-import { ExamConfigPersist } from "../persist/exam.persist";
+import { ExamConfigPersist } from "../commands/exam.persist";
 
 const EMPTY_EXAM_CONFIG: ExamConfigPersist = {
 	roomId: "",

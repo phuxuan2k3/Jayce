@@ -1,5 +1,5 @@
 import { Globe, FileText } from "lucide-react";
-import { ExamGenerationState } from "../../models/exam-generation.model";
+import { ExamGenerationState } from "../../../../models/exam-generation.model";
 
 interface GenerationContextProps {
 	state: ExamGenerationState;

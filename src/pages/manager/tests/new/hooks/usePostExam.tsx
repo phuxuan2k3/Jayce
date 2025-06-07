@@ -28,21 +28,22 @@ export default function usePostExam({
 		}
 	}, [postExamState.error]);
 
-	const handlePostExam = useCallback(async () => {
-		onPostingStarted();
-		if (errors.length > 0) {
-			console.warn("Cannot post exam, validation errors present.");
-			return;
-		}
-		const args = stateToPostExamArgs(state);
-		postExam(args);
-	}, []);
-
 	const {
 		configErrors,
 		questionsErrors,
 		errors,
 	} = examPersistSelectors(state);
+
+	const handlePostExam = useCallback(async () => {
+		onPostingStarted();
+		if (errors.length > 0) {
+			console.warn("Cannot post exam, validation errors present.");
+			console.warn("Validation errors:", errors);
+			return;
+		}
+		const args = stateToPostExamArgs(state);
+		postExam(args);
+	}, []);
 
 	return {
 		handlePostExam,

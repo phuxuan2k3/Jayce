@@ -1,7 +1,7 @@
-import { Step3Data } from '../common/model-types';
 import CreativitySlider from './components/CreativitySlider';
 import ContextSection from './components/ContextSection';
 import HelpText from './components/HelpText';
+import { Step3Data } from '../../../common/model-types';
 
 export default function Step3({
 	step3Data,

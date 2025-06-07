@@ -1,5 +1,5 @@
-import { QuestionPersistOfTest } from "../persist/question.persist";
-import { ExamConfigPersist } from "../persist/exam.persist";
+import { QuestionPersistOfTest } from "../commands/question.persist";
+import { ExamConfigPersist } from "../commands/exam.persist";
 
 export type ExamPersistAction = {
 	type: 'UPDATE_CONFIG';

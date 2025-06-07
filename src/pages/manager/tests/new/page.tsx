@@ -1,5 +1,5 @@
 import { useCallback, useReducer, useState } from "react";
-import { CreateTab } from "./types";
+import { CreateTab } from "./common/create-tabs-types";
 import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
 import ExamConfigForm from "../../../../features/tests/ui/forms/ExamConfigForm";
 import { examPersistReducer } from "../../../../infra-test/reducers/exam-persist.reducer";
@@ -8,19 +8,25 @@ import Sidebar from "./components/Sidebar";
 import ExamQuestionsManage from "../../../../features/tests/ui/forms/ExamQuestionsManage";
 import PublishTab from "./components/publish-tab";
 import BuilderWizzardTab from "./components/builder-wizzard-tab";
-import { QuestionPersistOfTest } from "../../../../infra-test/persist/question.persist";
+import { QuestionPersistOfTest } from "../../../../infra-test/commands/question.persist";
 import usePostExam from "./hooks/usePostExam";
 import LoadingDialog from "./components/LoadingDialog";
 import ValidationErrorDialog from "./components/ValidationErrorDialog";
 import ErrorDialog from "./components/ErrorDialog";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../router/paths";
+import { examGenerationReducer, initialState } from "./models/exam-generation.reducer";
+import useExamQuestionsGeneration from "./hooks/useExamQuestionsGeneration";
 
-export default function ManagerTestEditPage() {
+export default function ManagerTestNewPage() {
+	const navigate = useNavigate();
 	const [tab, setTab] = useState<CreateTab>("configuration");
+
 	const [state, dispatch] = useReducer(examPersistReducer, examPersistStateFactory({}));
 	const [isPostingExam, setIsPostingExam] = useState(false);
-	const navigate = useNavigate();
+
+	const [stateGen, dispatchGen] = useReducer(examGenerationReducer, initialState);
+	const examGeneration = useExamQuestionsGeneration();
 
 	const {
 		handlePostExam,
@@ -86,6 +92,9 @@ export default function ManagerTestEditPage() {
 					onGenerationDisposal={() => {
 						setTab("questions");
 					}}
+					dispatch={dispatchGen}
+					state={stateGen}
+					examGeneration={examGeneration}
 				/>;
 			case "publish":
 				return <PublishTab
@@ -113,23 +122,27 @@ export default function ManagerTestEditPage() {
 		>
 			{getTab(tab)}
 
+			{tab === "publish" && hasValidationError === true && (
+				<ValidationErrorDialog
+					questionsErrors={validationError.questionsErrors}
+					configErrors={validationError.configErrors}
+					onClose={() => {
+						setIsPostingExam(false);
+						setTab("configuration");
+					}}
+					onConfigEdit={() => {
+						setTab("configuration");
+						setIsPostingExam(false);
+					}}
+					onQuestionsEdit={() => {
+						setTab("questions");
+						setIsPostingExam(false);
+					}}
+				/>
+			)}
+
 			{(isPostingExam) && (
 				<>
-					{hasValidationError && (
-						<ValidationErrorDialog
-							questionsErrors={validationError.questionsErrors}
-							configErrors={validationError.configErrors}
-							onClose={() => setIsPostingExam(false)}
-							onConfigEdit={() => {
-								setTab("configuration");
-								setIsPostingExam(false);
-							}}
-							onQuestionsEdit={() => {
-								setTab("questions");
-								setIsPostingExam(false);
-							}}
-						/>
-					)}
 					{postExamState.isLoading && (
 						<LoadingDialog />
 					)}

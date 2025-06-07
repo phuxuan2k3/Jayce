@@ -3,7 +3,7 @@ import ContextTabs, { TabType } from './ContextTabs';
 import TextContextTab from './TextContextTab';
 import FilesContextTab from './FilesContextTab';
 import LinksContextTab from './LinksContextTab';
-import { Step3Data } from '../../common/model-types';
+import { Step3Data } from '../../../../common/model-types';
 
 interface ContextSectionProps {
 	context: Step3Data['context'];

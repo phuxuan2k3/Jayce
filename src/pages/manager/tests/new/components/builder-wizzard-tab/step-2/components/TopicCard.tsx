@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { DifficultyLevel } from "../../common/base-types";
-import { Topic } from "../../models/topic.model";
+import { Topic } from "../../../../models/topic.model";
 import { cn } from '../../../../../../../../app/cn';
-import { classNameInput } from '../../common/classname';
 import { useMemo } from 'react';
 import TextareaAutosize from 'react-textarea-autosize'
+import { DifficultyLevel } from '../../../../common/base-types';
+import { classNameInput } from '../../../../common/classname';
 
 interface TopicCardProps {
 	topic: Topic;

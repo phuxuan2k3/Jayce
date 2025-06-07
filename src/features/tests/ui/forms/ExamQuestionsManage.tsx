@@ -1,7 +1,7 @@
 import QuestionEditCard from "../question/QuestionPersistCard";
 import { Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { QuestionPersistOfTest } from "../../../../infra-test/persist/question.persist";
+import { QuestionPersistOfTest } from "../../../../infra-test/commands/question.persist";
 
 const ExamQuestionsManage = ({
 	questions,

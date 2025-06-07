@@ -1,5 +1,5 @@
 import TextareaAutosize from "react-textarea-autosize";
-import { ExamConfigPersist } from "../../../../infra-test/persist/exam.persist";
+import { ExamConfigPersist } from "../../../../infra-test/commands/exam.persist";
 
 export default function ExamConfigForm({
 	configEdit,
@@ -144,7 +144,7 @@ export default function ExamConfigForm({
 					min="1"
 					placeholder="Number of attempts"
 					className="w-1/2 h-fit border border-primary rounded-md focus:outline-none focus:ring focus:ring-teal-300 px-4 py-2"
-					value={configEdit.numberOfAttemptsAllowed || 0}
+					value={configEdit.numberOfAttemptsAllowed || 1}
 					onChange={(e) => onConfigEditChange({
 						numberOfAttemptsAllowed: Number(e.target.value),
 					})}

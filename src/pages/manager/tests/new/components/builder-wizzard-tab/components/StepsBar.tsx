@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { StepInfoKey } from "../common/step-info";
+import { StepInfoKey } from "../../../common/step-info";
 
 export default function StepsBar({
 	step,

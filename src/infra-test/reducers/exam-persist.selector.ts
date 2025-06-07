@@ -1,5 +1,5 @@
-import { QuestionPersistOfTest } from "../persist/question.persist";
-import { ExamConfigPersist } from "../persist/exam.persist";
+import { QuestionPersistOfTest } from "../commands/question.persist";
+import { ExamConfigPersist } from "../commands/exam.persist";
 import { ExamPersistState } from "./exam-persist.store";
 
 const questionEditConstraint = (value: QuestionPersistOfTest): string[] => {

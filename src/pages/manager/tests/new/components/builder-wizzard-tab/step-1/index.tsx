@@ -1,9 +1,9 @@
 import { cn } from "../../../../../../../app/cn";
 import TextareaAutosize from "react-textarea-autosize";
-import { Step1Data } from "../common/model-types";
-import { classNameInput } from "../common/classname";
-import { LanguageType, languages, seniorities, SeniorityType } from "../common/base-types";
 import HelpText from "./components/HelpText";
+import { LanguageType, languages, SeniorityType, seniorities } from "../../../common/base-types";
+import { classNameInput } from "../../../common/classname";
+import { Step1Data } from "../../../common/model-types";
 
 export default function Step1({
 	step1Data,

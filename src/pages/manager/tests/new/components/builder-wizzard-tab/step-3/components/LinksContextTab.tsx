@@ -1,5 +1,5 @@
 import { cn } from '../../../../../../../../app/cn';
-import { classNameInput } from '../../common/classname';
+import { classNameInput } from '../../../../common/classname';
 
 interface LinksContextTabProps {
 	links: string[];
