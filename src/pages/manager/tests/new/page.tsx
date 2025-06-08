@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import paths from "../../../../router/paths";
 import { examGenerationReducer, initialState } from "./models/exam-generation.reducer";
 import useExamQuestionsGeneration from "./hooks/useExamQuestionsGeneration";
+import { parseQueryError } from "../../../../helpers/fetchBaseQuery.error";
 
 export default function ManagerTestNewPage() {
 	const navigate = useNavigate();
@@ -148,7 +149,7 @@ export default function ManagerTestNewPage() {
 					)}
 					{postExamState.error && (
 						<ErrorDialog
-							errorMessage="An error occurred while posting the exam. Please try again."
+							errorMessage={parseQueryError(postExamState.error) || undefined}
 							onClose={() => setIsPostingExam(false)}
 							onRetry={() => {
 								setIsPostingExam(true);
