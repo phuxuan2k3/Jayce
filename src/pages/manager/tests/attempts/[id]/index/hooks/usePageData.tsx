@@ -1,17 +1,17 @@
 import { useMemo } from 'react';
 import { ManagerTestsAttemptPageModel, QuestionAnswer } from '../type'
-import useGetAttemptIdParams from '../../../../../../../features/tests/hooks/useGetAttemptIdParams';
 import { useGetExamsAttemptsByAttemptIdAggregateQuery, useGetExamsAttemptsByAttemptIdAnswersQuery, useGetExamsAttemptsByAttemptIdQuery, useGetExamsByTestIdAggregateQuery, useGetExamsByTestIdQuery, useGetExamsByTestIdQuestionsWithAnswerQuery } from '../../../../../../../features/tests/api/test.api-gen';
 import { AnswerCore, AttemptAggregate, AttemptCore } from '../../../../../../../infra-test/core/attempt.model';
-import { FetchState } from '../../../../../../../app/types';
+import { FetchStateQuery } from '../../../../../../../app/types';
 import useFetchStatesCombine from '../../../../../../../components/hooks/useFetchStates';
 import { useGetUsersQuery } from '../../../../../../../features/auth/api/auth-profile.api';
 import { getUserCore, UserCore } from '../../../../../../../infra-test/core/user.model';
 import { ExamCore, TestAggregate, TestCore } from '../../../../../../../infra-test/core/test.model';
 import { QuestionCore } from '../../../../../../../infra-test/core/question.model';
+import useGetAttemptIdParams from '../../../../../../../infra-test/hooks/useGetAttemptIdParams';
 
 
-function useAttempt(attemptId: string): FetchState<{
+function useAttempt(attemptId: string): FetchStateQuery<{
 	attempt: AttemptCore;
 	attemptAggregate: AttemptAggregate;
 }> {
@@ -40,7 +40,7 @@ function useAttempt(attemptId: string): FetchState<{
 	}
 }
 
-function useAttemptBased(attempt?: AttemptCore): FetchState<{
+function useAttemptBased(attempt?: AttemptCore): FetchStateQuery<{
 	candidate: UserCore;
 	exam: ExamCore;
 	testAggregate: TestAggregate;
@@ -100,7 +100,7 @@ function useAttemptBased(attempt?: AttemptCore): FetchState<{
 	}
 }
 
-function useTestBased(test?: TestCore): FetchState<{
+function useTestBased(test?: TestCore): FetchStateQuery<{
 	manager: UserCore;
 }> {
 	if (!test) {
@@ -119,7 +119,7 @@ function useTestBased(test?: TestCore): FetchState<{
 	};
 }
 
-export default function usePageData(): FetchState<ManagerTestsAttemptPageModel> {
+export default function usePageData(): FetchStateQuery<ManagerTestsAttemptPageModel> {
 	const attemptId = useGetAttemptIdParams();
 
 	const useAttemptState = useAttempt(attemptId);

@@ -3,17 +3,10 @@ import RoleGuard from "../../components/wrapper/RoleGuard";
 import FooterShort from "../../components/ui/footer/FooterShort";
 import ManagerNavbar from "../../components/ui/navbar/ManagerNavbar";
 import { Role } from "../../features/auth/types/auth";
-import DeleteExamDialog from "../../features/tests/ui/DeleteExamDialog";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import dialogSlice from "../../features/tests/stores/dialogSlice";
+import DeleteExamDialog from "../../infra-test/ui/dialogs/DeleteExamDialog";
+import FetchStateDialog from "../../infra-test/ui/dialogs/FetchStateDialog";
 
 export default function ManagerLayout() {
-	const examToDelete = useAppSelector((state) => state.dialog.manager.deleteExam);
-	const dispatch = useAppDispatch();
-	const handleCloseDeleteDialog = () => {
-		dispatch(dialogSlice.actions.setDeleteExam(null));
-	};
-
 	return (
 		<RoleGuard roles={[Role.Manager]}>
 			<div className="flex flex-col w-full min-h-screen">
@@ -26,15 +19,8 @@ export default function ManagerLayout() {
 				<FooterShort />
 			</div>
 
-
-			<DeleteExamDialog
-				examToDelete={examToDelete}
-				onCancel={handleCloseDeleteDialog}
-				onDelete={(exam) => {
-					console.log("Deleting exam:", exam);
-					handleCloseDeleteDialog();
-				}}
-			/>
+			<DeleteExamDialog />
+			<FetchStateDialog />
 		</RoleGuard>
 	)
 }

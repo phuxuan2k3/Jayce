@@ -3,13 +3,13 @@ import Alert from '@mui/material/Alert';
 import React from "react";
 import { parseQueryError } from "../../helpers/fetchBaseQuery.error";
 import SkeletonLoading from "../ui/loading/SkeletonLoading";
-import { FetchState } from "../../app/types";
+import { FetchStateQuery } from "../../app/types";
 
 // Type for components that can receive an error message
 type ErrorComponent = React.ComponentType<{ message: string }>;
 
 type Props<T> = {
-	queryState: FetchState<T>;
+	queryState: FetchStateQuery<T>;
 	children?: ReactNode;
 	childrenFactory?: (data: T) => ReactNode;
 	loadingNode?: ReactNode;

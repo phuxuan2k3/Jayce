@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import QuestionPersistCard from '../../../../../../../features/tests/ui/question/QuestionPersistCard';
+import QuestionPersistCard from '../../../../../../../infra-test/ui/question/QuestionPersistCard';
 import { QuestionPersistOfTest } from "../../../../../../../infra-test/commands/question.persist";
 import ActionsDialog from './components/ActionsDialog';
 import useArrayPagination from '../../../../../../../components/hooks/useArrayPagination';

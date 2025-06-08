@@ -5,11 +5,11 @@ import Sidebar from './components/Sidebar';
 import QuestionsTab from './components/questions-tab';
 import ExamInformationTab from './components/exam-information-tab';
 import { TabMode } from './type';
-import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
 import { useAppDispatch } from '../../../../../app/hooks';
-import dialogSlice from '../../../../../features/tests/stores/dialogSlice';
+import deleteExamSlice from '../../../../../infra-test/stores/deleteExamSlice';
 import ParticipantsTab from './components/participants-tab';
 import { useGetExamsByTestIdQuery } from '../../../../../features/tests/api/test.api-gen';
+import useGetTestIdParams from '../../../../../infra-test/hooks/useGetTestIdParams';
 
 export default function ManagerTestPage() {
 	const testId = useGetTestIdParams();
@@ -53,7 +53,7 @@ export default function ManagerTestPage() {
 				onModeChange={(mode) => setMode(mode)}
 				onDelete={() => {
 					if (exam == null) return;
-					dispatch(dialogSlice.actions.setDeleteExam(exam))
+					dispatch(deleteExamSlice.actions.setDeleteExam(exam))
 				}}
 			/>}
 		>

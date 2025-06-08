@@ -1,12 +1,12 @@
 import { format } from "date-fns";
 import RightLayoutTemplate from "../../../../../../components/layouts/RightLayoutTemplate";
-import useGetAttemptIdParams from "../../../../../../features/tests/hooks/useGetAttemptIdParams";
 import { useGetSelfAttemptsByAttemptIdQuery } from "../../../../../../features/tests/api/test.api-gen";
 import AttemptSidebar from "./components/AttemptSidebar";
 import AnswerList from "./components/AnswerList";
 import FetchStateContent from "./components/FetchStateContent";
 import { useState } from "react";
 import useIsTestAllowToShowAnswer from "./hooks/useTestAllowToShowAnswer";
+import useGetAttemptIdParams from "../../../../../../infra-test/hooks/useGetAttemptIdParams";
 
 export default function CandidateTestsAttemptPage() {
 	const attemptId = useGetAttemptIdParams();

@@ -6,7 +6,7 @@ import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutT
 import TemplateCard from './components/TemplateCard';
 import useTemplateServerMutate from './hooks/useTemplateServerMutate';
 import DeleteTemplateModal from './components/DeleteTemplateModal';
-import useTemplateServerQuery from '../../../../features/tests/hooks/templates/useTemplateServerQuery';
+import useTemplateServerQuery from '../../../../infra-test/hooks/templates/useTemplateServerQuery';
 
 const CandidateTestsTemplatesPage: React.FC = () => {
 	const query = useTemplateServerQuery();

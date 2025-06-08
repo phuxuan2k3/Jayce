@@ -2,11 +2,11 @@ import RightLayoutTemplate from "../../../../../components/layouts/RightLayoutTe
 import TestDoSidebar from "../common/components/take-test/TestDoSidebar";
 import QuestionDoCard from "../common/components/take-test/QuestionDoCard";
 import useTakeTest from "../common/hooks/use-take-test/useTakeTest";
-import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import { useNavigate } from "react-router-dom";
 import { useGetPracticesByTestIdQuery, useGetPracticesByTestIdQuestionsToDoQuery } from "../../../../../features/tests/api/test.api-gen";
 import paths from "../../../../../router/paths";
 import { useState } from "react";
+import useGetTestIdParams from "../../../../../infra-test/hooks/useGetTestIdParams";
 
 const CandidateTestTakePracticePage = () => {
 	const testId = useGetTestIdParams();

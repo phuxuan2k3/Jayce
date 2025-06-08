@@ -1,4 +1,4 @@
-import SidebarActions from './SidebarActions'
+import SidebarActions from "../primitive/SidebarActions";
 
 export default function DefaultSidebarActions() {
 	return (

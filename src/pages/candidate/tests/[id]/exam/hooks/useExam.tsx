@@ -1,5 +1,5 @@
 import { useGetExamsByTestIdQuery } from '../../../../../../features/tests/api/test.api-gen';
-import useGetUsers from '../../../../../../features/tests/hooks/user/useGetUsers';
+import useGetUsers from '../../../../../../infra-test/hooks/user/useGetUsers';
 import { useGetExamsByTestIdAttemptsAggregateQuery } from '../../common/apis/attempts.api-enhance';
 
 export default function useExam(testId: string) {

@@ -1,7 +1,7 @@
 import React from "react";
 import MyPagination from "../../../../../../components/ui/common/MyPagination";
 import useQuestionsTab from "../hooks/useQuestionsTab";
-import { QuestionCoreCardDefault } from "../../../../../../features/tests/ui/question/QuestionCoreCard";
+import { QuestionCoreCardDefault } from "../../../../../../infra-test/ui/question/QuestionCoreCard";
 
 const QuestionsTabContent: React.FC = () => {
 	const {

@@ -1,6 +1,6 @@
 import { useGetPracticesByTestIdAggregateQuery, useGetPracticesByTestIdQuery } from '../../../../../../features/tests/api/test.api-gen';
-import useGetTestIdParams from '../../../../../../features/tests/hooks/useGetTestIdParams';
-import useGetUsers from '../../../../../../features/tests/hooks/user/useGetUsers';
+import useGetTestIdParams from '../../../../../../infra-test/hooks/useGetTestIdParams';
+import useGetUsers from '../../../../../../infra-test/hooks/user/useGetUsers';
 import { useGetPracticesByTestIdAttemptsAggregateQuery } from '../../common/apis/attempts.api-enhance';
 
 export default function usePracticePage() {

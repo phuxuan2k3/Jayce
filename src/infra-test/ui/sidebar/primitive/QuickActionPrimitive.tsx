@@ -7,22 +7,39 @@ import { VariantProps } from 'class-variance-authority';
 // Variants
 // ===================================
 
-const QuickActionVariants = cva(
-	"flex items-center gap-3 px-4 py-3 rounded-lg hover:shadow-md transition-all hover:translate-y-[-2px]",
+const QuickActionCVA = cva(
+	"flex items-center gap-3 px-4 py-3 rounded-lg transition-all",
 	{
 		variants: {
 			variant: {
 				default: "text-primary bg-gradient-to-r from-primary-toned-50 to-primary-toned-100",
 				alert: "text-secondary bg-gradient-to-r from-secondary-toned-50 to-secondary-toned-100",
 			},
+			active: {
+				true: "shadow-lg",
+				false: "hover:shadow-md hover:translate-y-[-2px]",
+			}
 		},
+		compoundVariants: [
+			{
+				variant: 'default',
+				active: true,
+				className: "bg-primary-toned-200 shadow-lg",
+			},
+			{
+				variant: 'alert',
+				active: true,
+				className: "bg-secondary-toned-200 shadow-lg",
+			},
+		],
 		defaultVariants: {
 			variant: 'default',
+			active: false,
 		},
 	}
 );
 
-export type QuickActionVariantsType = VariantProps<typeof QuickActionVariants>;
+export type QuickActionVariantsType = VariantProps<typeof QuickActionCVA>;
 
 // ===================================
 // Context
@@ -48,6 +65,7 @@ const QuickActionRoot = ({
 	children,
 	className,
 	variant = 'default',
+	active = false,
 	onClick,
 }: {
 	className?: string;
@@ -55,10 +73,10 @@ const QuickActionRoot = ({
 	children: ReactNode;
 } & QuickActionVariantsType) => (
 	<QuickActionProvider
-		value={{ variant }}>
+		value={{ variant, active }}>
 		<button
 			className={cn(
-				QuickActionVariants({ variant }),
+				QuickActionCVA({ variant }),
 				className,
 			)}
 			onClick={onClick}>

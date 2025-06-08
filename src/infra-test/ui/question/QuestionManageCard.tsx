@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { TestQuestionsAggregate, QuestionCore } from '../../../../infra-test/core/question.model'
+import { TestQuestionsAggregate, QuestionCore } from '../../core/question.model'
 
 export default function QuestionManageCard({
 	index,

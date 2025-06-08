@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import useGetTestIdParams from '../../../../../../features/tests/hooks/useGetTestIdParams';
 import { useGetPracticesByTestIdAttemptsQuery } from '../../common/apis/attempts.api-enhance';
+import useGetTestIdParams from '../../../../../../infra-test/hooks/useGetTestIdParams';
 
 type Filter = {
 	page: number;

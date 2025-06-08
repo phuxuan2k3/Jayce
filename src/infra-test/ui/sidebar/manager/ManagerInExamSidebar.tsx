@@ -1,18 +1,22 @@
 import { ClipboardList, HelpCircle, Info, Trash2, Users } from 'lucide-react';
-import QuickAction from '../../../../../../infra-test/ui/sidebar/primitive/QuickAction'
-import SidebarActions from '../../../../../../infra-test/ui/sidebar/primitive/SidebarActions'
-import { TabMode } from '../type';
 import { useNavigate } from 'react-router-dom';
-import paths from '../../../../../../router/paths';
+import SidebarActions from '../primitive/SidebarActions';
+import QuickAction from '../primitive/QuickAction';
+import paths from '../../../../router/paths';
 
-export default function Sidebar({
+const BaseTabModeAsConst = ['Info', 'Questions', 'Attempts', 'Participants'] as const;
+export type BaseTabModeType = (typeof BaseTabModeAsConst)[number];
+
+export default function ManagerInExamSidebar({
 	testId,
-	onModeChange,
 	onDelete,
+	mode = null,
+	onModeChange,
 }: {
 	testId: string;
-	onModeChange: (mode: TabMode) => void;
 	onDelete: () => void;
+	mode?: BaseTabModeType | null;
+	onModeChange: (mode: BaseTabModeType) => void;
 }) {
 	const navigate = useNavigate();
 
@@ -25,25 +29,25 @@ export default function Sidebar({
 				icon={<Info />}
 				title="Info"
 				description="Information and Stats."
-				onClick={() => onModeChange('info')}
+				onClick={() => onModeChange("Info")}
 			/>
 			<QuickAction
 				icon={<HelpCircle />}
 				title="Questions"
 				description="Questions in this exam."
-				onClick={() => onModeChange('questions')}
+				onClick={() => onModeChange("Questions")}
 			/>
 			<QuickAction
 				icon={<ClipboardList />}
 				title="Attempts"
 				description="Attempts made by candidates."
-				onClick={() => onModeChange('attempts')}
+				onClick={() => onModeChange("Attempts")}
 			/>
 			<QuickAction
 				icon={<Users />}
 				title="Participants"
 				description="Candidates who participated in this exam."
-				onClick={() => onModeChange('participants')}
+				onClick={() => onModeChange("Participants")}
 			/>
 
 			<hr className="my-2 border-t border-primary-toned-300" />

@@ -1,9 +1,9 @@
 import { Trash2 } from 'lucide-react';
 import { useAppDispatch } from '../../../../app/hooks';
-import { ExamCore } from '../../../../infra-test/core/test.model';
-import dialogSlice from '../../stores/dialogSlice';
-import QuickAction from './QuickAction';
-import SidebarActions from './SidebarActions'
+import { ExamCore } from '../../../core/test.model';
+import deleteExamSlice from '../../../stores/deleteExamSlice';
+import QuickAction from '../primitive/QuickAction';
+import SidebarActions from '../primitive/SidebarActions'
 
 export default function ManagerSidebar({
 	children
@@ -31,7 +31,7 @@ ManagerSidebar.DeleteExam = ({
 			variant="alert"
 			title="Delete Exam"
 			description="Remove this exam permanently"
-			onClick={() => dispatch(dialogSlice.actions.setDeleteExam(exam))}
+			onClick={() => dispatch(deleteExamSlice.actions.setDeleteExam(exam))}
 		/>
 	);
 }

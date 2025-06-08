@@ -11,8 +11,9 @@ import chronobreakApi from '../features/scenarios/apis/base/chronobreak.api';
 import logoutApi from '../features/auth/api/logout.api.ts';
 import interviewApi from '../features/interviews/api/interview.api.ts';
 import fetchSlice from './fetchSlice.ts';
-import dialogSlice from '../features/tests/stores/dialogSlice.ts';
+import deleteExamSlice from '../infra-test/stores/deleteExamSlice.ts';
 import promptTuningApi from '../features/tests/base/prompt-tuning.api.ts';
+import fetchStateSlice from '../infra-test/stores/fetchStateSlice.ts';
 
 
 const authPersistConfig = {
@@ -25,17 +26,18 @@ const authPersistConfig = {
 const rootReducer = combineReducers({
 	authApi: authApi.reducer,
 	logoutApi: logoutApi.reducer,
-	testApi: testApi.reducer,
 	ekkoApi: ekkoApi.reducer,
 	chronobreakApi: chronobreakApi.reducer,
 	interviewApi: interviewApi.reducer,
 	promptTuningApi: promptTuningApi.reducer,
+	[testApi.reducerPath]: testApi.reducer,
 	[promptApi.reducerPath]: promptApi.reducer,
 
 	// Custom reducers
 	auth: persistReducer(authPersistConfig, authReducer),
 	[fetchSlice.reducerPath]: fetchSlice.reducer,
-	[dialogSlice.reducerPath]: dialogSlice.reducer,
+	[deleteExamSlice.reducerPath]: deleteExamSlice.reducer,
+	[fetchStateSlice.reducerPath]: fetchStateSlice.reducer,
 });
 
 const store = configureStore({

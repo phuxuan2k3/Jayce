@@ -1,4 +1,4 @@
-import { TemplateCore } from "../../../infra-test/core/test.model";
+import { TemplateCore } from "../core/test.model";
 
 type TemplateCardProps = {
 	template: TemplateCore;

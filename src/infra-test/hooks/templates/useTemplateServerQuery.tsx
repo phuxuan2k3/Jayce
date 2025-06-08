@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useGetTemplatesQuery } from "../../api/test.api-gen";
+import { useGetTemplatesQuery } from "../../../pages/candidate/tests/templates/apis/template.api-enhance";
 
 type QueryFilters = {
 	searchName: string;

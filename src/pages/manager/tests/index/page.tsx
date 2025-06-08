@@ -4,7 +4,7 @@ import ExamList from "./components/ExamList";
 import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
 import Sidebar from "./components/Sidebar";
 import { useAppDispatch } from "../../../../app/hooks";
-import dialogSlice from "../../../../features/tests/stores/dialogSlice";
+import deleteExamSlice from "../../../../infra-test/stores/deleteExamSlice";
 import { useGetExamsQuery } from "../../../../features/tests/api/test.api-gen";
 import { useCallback, useState } from "react";
 import { Filter } from "./type";
@@ -46,7 +46,7 @@ const ManagerTestsPage = () => {
 			<ExamList
 				tests={exams}
 				totalPages={totalPages}
-				onDelete={(exam) => dispatch(dialogSlice.actions.setDeleteExam(exam))}
+				onDelete={(exam) => dispatch(deleteExamSlice.actions.setDeleteExam(exam))}
 				onTestClick={handleExamView}
 				onPageChange={(page) => {
 					setFilter((prev) => ({

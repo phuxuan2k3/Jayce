@@ -7,12 +7,12 @@ import FeedbackTabContent from "./components/FeedbackTabContent";
 import QuestionsTabContent from "./components/QuestionsTabContent";
 import usePracticeAttempts from "./hooks/usePracticeAttempts";
 import usePracticePage from "./hooks/usePracticePage";
-import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import paths from "../../../../../router/paths";
 import OngoingAttemptCard from "../common/components/test-details/OngoingAttemptCard";
-import SidebarActions from "../../../../../features/tests/ui/sidebar/SidebarActions";
+import SidebarActions from "../../../../../infra-test/ui/sidebar/primitive/SidebarActions";
 import { useCallback } from "react";
 import { useGetCurrentTestsByTestIdQuery, usePostPracticesByTestIdAttemptsStartMutation } from "../common/apis/attempts.api-enhance";
+import useGetTestIdParams from "../../../../../infra-test/hooks/useGetTestIdParams";
 
 export default function CandidatePracticePage() {
 	const navigate = useNavigate();

@@ -1,11 +1,11 @@
 import { ExamGenerationState } from "../models/exam-generation.model";
-import { FetchState } from "../../../../../app/types";
+import { FetchStateQuery } from "../../../../../app/types";
 import { QuestionPersistOfTest } from "../../../../../infra-test/commands/question.persist";
 import { useLazyGetGenerateExamQuestionsQuery, GetGenerateExamQuestionsApiRequest } from "../apis/exam-generation.api";
 
 export default function useExamQuestionsGeneration(): {
 	generateExamQuestions: (state: ExamGenerationState) => void;
-	state: FetchState<QuestionPersistOfTest[]>;
+	state: FetchStateQuery<QuestionPersistOfTest[]>;
 } {
 	const [generate, generateState] = useLazyGetGenerateExamQuestionsQuery();
 	return {

@@ -1,4 +1,4 @@
-import { useGetUsersQuery } from "../../../auth/api/auth-profile.api";
+import { useGetUsersQuery } from "../../../features/auth/api/auth-profile.api";
 
 export default function useGetUsers(userIds?: string[] | string) {
 	if (typeof userIds === "string") {

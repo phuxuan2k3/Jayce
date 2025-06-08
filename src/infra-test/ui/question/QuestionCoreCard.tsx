@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { QuestionCore } from "../../../../infra-test/core/question.model";
+import { QuestionCore } from "../../core/question.model";
 
 // Create context for the QuestionCard
 interface QuestionCardContextType {

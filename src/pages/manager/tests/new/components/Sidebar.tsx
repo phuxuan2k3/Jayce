@@ -1,6 +1,6 @@
 import { Upload } from "lucide-react";
-import ManagerSidebar from "../../../../../features/tests/ui/sidebar/ManagerSidebar";
-import QuickAction from "../../../../../features/tests/ui/sidebar/QuickAction";
+import ManagerSidebar from "../../../../../infra-test/ui/sidebar/manager/ManagerSidebar";
+import QuickAction from "../../../../../infra-test/ui/sidebar/primitive/QuickAction";
 import { CreateTab } from "../common/create-tabs-types";
 
 export default function Sidebar({

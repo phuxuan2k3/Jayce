@@ -1,11 +1,11 @@
 import { useCallback, useReducer, useState } from "react";
 import { CreateTab } from "./common/create-tabs-types";
 import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
-import ExamConfigForm from "../../../../features/tests/ui/forms/ExamConfigForm";
+import ExamConfigForm from "../../../../infra-test/ui/forms/ExamConfigForm";
 import { examPersistReducer } from "../../../../infra-test/reducers/exam-persist.reducer";
 import { examPersistStateFactory } from "../../../../infra-test/reducers/exam-persist.store";
 import Sidebar from "./components/Sidebar";
-import ExamQuestionsManage from "../../../../features/tests/ui/forms/ExamQuestionsManage";
+import ExamQuestionsManage from "../../../../infra-test/ui/forms/ExamQuestionsManage";
 import PublishTab from "./components/publish-tab";
 import BuilderWizzardTab from "./components/builder-wizzard-tab";
 import { QuestionPersistOfTest } from "../../../../infra-test/commands/question.persist";

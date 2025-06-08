@@ -1,10 +1,10 @@
-import useGetTestIdParams from '../../../../../../features/tests/hooks/useGetTestIdParams'
 import { useGetExamsByTestIdQuery, useGetExamsByTestIdQuestionsWithAnswerQuery } from '../../../../../../features/tests/api/test.api-gen';
 import useFetchStatesCombine from '../../../../../../components/hooks/useFetchStates';
 import { ManagerTestEditPageModel } from '../type';
-import { FetchState } from '../../../../../../app/types';
+import { FetchStateQuery } from '../../../../../../app/types';
+import useGetTestIdParams from '../../../../../../infra-test/hooks/useGetTestIdParams';
 
-export default function usePageData(): FetchState<ManagerTestEditPageModel> {
+export default function usePageData(): FetchStateQuery<ManagerTestEditPageModel> {
 	const testId = useGetTestIdParams();
 	const examQuery = useGetExamsByTestIdQuery({ testId });
 	const examQuestionsQuery = useGetExamsByTestIdQuestionsWithAnswerQuery({ testId });

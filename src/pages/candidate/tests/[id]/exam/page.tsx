@@ -1,9 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import NewLeftLayoutTemplate from "../../../../../components/layouts/NewLeftLayoutTemplate";
-import DefaultSidebarActions from "../../../../../features/tests/ui/sidebar/DefaultSidebar";
 import AttemptsTabContent from "../common/components/test-details/AttemptsTabContent";
 import TabsComponent from "../common/components/test-details/TestTabsComponent";
-import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import useExamSelfAttempts from "./hooks/useExamSelfAttempts";
 import useExam from "./hooks/useExam";
 import TestInfoCard from "../common/components/test-details/TestInfoCard";
@@ -13,6 +11,8 @@ import ConfigurationTabContent from "./components/ConfigurationTabContent";
 import ParticipantsTabContent from "./components/ParticipantsTabContent";
 import { useGetCurrentTestsByTestIdQuery, usePostExamsByTestIdAttemptsStartMutation } from "../common/apis/attempts.api-enhance";
 import { useCallback } from "react";
+import useGetTestIdParams from "../../../../../infra-test/hooks/useGetTestIdParams";
+import DefaultSidebarActions from "../../../../../infra-test/ui/sidebar/candidate/DefaultSidebar";
 
 export default function CandidateTestExamPage() {
 	const navigate = useNavigate();

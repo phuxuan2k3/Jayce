@@ -1,5 +1,5 @@
 import { useGetPracticesByTestIdQuestionsWithAnswerQuery } from '../../../../../../features/tests/api/test.api-gen';
-import useGetTestIdParams from '../../../../../../features/tests/hooks/useGetTestIdParams';
+import useGetTestIdParams from '../../../../../../infra-test/hooks/useGetTestIdParams';
 
 export default function useGetQuestionsWithAnswers({
 	showQuestions,

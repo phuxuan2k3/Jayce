@@ -1,11 +1,11 @@
-import { FetchState } from '../../app/types'
+import { FetchStateQuery } from '../../app/types'
 import { parseQueryError } from '../../helpers/fetchBaseQuery.error';
 
 export default function useFetchStatesCombine({
 	fetchStates,
 }: {
-	fetchStates: FetchState<unknown>[];
-}): FetchState<unknown> & { errorMessage: string | null } {
+	fetchStates: FetchStateQuery<unknown>[];
+}): FetchStateQuery<unknown> & { errorMessage: string | null } {
 	const isLoading = fetchStates.some(state => state.isLoading);
 	const error = fetchStates.find(state => state.error)?.error;
 	const errorMessage = parseQueryError(error) || null;

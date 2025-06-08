@@ -1,7 +1,7 @@
-import useGetTestIdParams from '../../../../../../features/tests/hooks/useGetTestIdParams';
 import { PostPracticesByTestIdFeedbackApiArg, useGetPracticesByTestIdFeedbackQuery, useGetPracticesByTestIdQuery, usePostPracticesByTestIdFeedbackMutation } from '../../../../../../features/tests/api/test.api-gen';
 import { useCallback, useEffect, useState } from 'react';
 import { FeedbackCore } from '../../../../../../infra-test/core/test.model';
+import useGetTestIdParams from '../../../../../../infra-test/hooks/useGetTestIdParams';
 
 export default function useFeedbackTab() {
 	const testId = useGetTestIdParams();
