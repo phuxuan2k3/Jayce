@@ -13,6 +13,7 @@ export default function useIsTestAllowToShowAnswer({
 	}, {
 		skip: testId == null || mode !== "exam",
 	});
+
 	const isTestAllowToShowAnswers = useMemo(() => {
 		if (mode === "practice") {
 			return true;
@@ -21,7 +22,7 @@ export default function useIsTestAllowToShowAnswer({
 			return examQuery.data.isAnswerVisible;
 		}
 		return false;
-	}, [mode]);
+	}, [mode, examQuery.isSuccess, examQuery.data]);
 
 	return {
 		allowToShowAnswer: isTestAllowToShowAnswers,
