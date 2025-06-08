@@ -49,10 +49,7 @@ export default function FetchStateCover<T>({
 			}
 		</>;
 	}
-	if (queryState.data == null) {
-		return null;
-	}
-	if (childrenFactory) {
+	if (childrenFactory && queryState.data != null) {
 		return childrenFactory(queryState.data);
 	}
 	return children;

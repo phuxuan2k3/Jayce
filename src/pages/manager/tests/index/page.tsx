@@ -5,9 +5,9 @@ import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutT
 import Sidebar from "./components/Sidebar";
 import { useAppDispatch } from "../../../../app/hooks";
 import deleteExamSlice from "../../../../infra-test/stores/deleteExamSlice";
-import { useGetExamsQuery } from "../../../../features/tests/api/test.api-gen";
 import { useCallback, useState } from "react";
 import { Filter } from "./type";
+import { useGetExamsQuery } from "../../../../infra-test/enhance-api/exam-manage.api-enhance";
 
 const ManagerTestsPage = () => {
 	const navigate = useNavigate();

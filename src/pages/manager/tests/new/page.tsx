@@ -3,7 +3,6 @@ import { CreateTab } from "./common/create-tabs-types";
 import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
 import ExamConfigForm from "../../../../infra-test/ui/forms/ExamConfigForm";
 import { examPersistReducer } from "../../../../infra-test/reducers/exam-persist.reducer";
-import { examPersistStateFactory } from "../../../../infra-test/reducers/exam-persist.store";
 import Sidebar from "./components/Sidebar";
 import ExamQuestionsManage from "../../../../infra-test/ui/forms/ExamQuestionsManage";
 import PublishTab from "./components/publish-tab";
@@ -11,22 +10,23 @@ import BuilderWizzardTab from "./components/builder-wizzard-tab";
 import { QuestionPersistOfTest } from "../../../../infra-test/commands/question.persist";
 import usePostExam from "./hooks/usePostExam";
 import LoadingDialog from "./components/LoadingDialog";
-import ValidationErrorDialog from "./components/ValidationErrorDialog";
+import ValidationErrorDialog from "../../../../infra-test/ui/dialogs/ExamValidationDialog";
 import ErrorDialog from "./components/ErrorDialog";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../router/paths";
-import { examGenerationReducer, initialState } from "./models/exam-generation.reducer";
+import { examGenerationReducer, initialState as initialStateGen } from "./models/exam-generation.reducer";
 import useExamQuestionsGeneration from "./hooks/useExamQuestionsGeneration";
 import { parseQueryError } from "../../../../helpers/fetchBaseQuery.error";
+import { initialState } from "../../../../infra-test/reducers/exam-persist.store";
 
 export default function ManagerTestNewPage() {
 	const navigate = useNavigate();
-	const [tab, setTab] = useState<CreateTab>("configuration");
+	const [tab, setTab] = useState<CreateTab>("info");
 
-	const [state, dispatch] = useReducer(examPersistReducer, examPersistStateFactory({}));
+	const [state, dispatch] = useReducer(examPersistReducer, initialState);
 	const [isPostingExam, setIsPostingExam] = useState(false);
 
-	const [stateGen, dispatchGen] = useReducer(examGenerationReducer, initialState);
+	const [stateGen, dispatchGen] = useReducer(examGenerationReducer, initialStateGen);
 	const examGeneration = useExamQuestionsGeneration();
 
 	const {
@@ -62,7 +62,7 @@ export default function ManagerTestNewPage() {
 
 	const getTab = (tab: CreateTab) => {
 		switch (tab) {
-			case "configuration":
+			case "info":
 				return <ExamConfigForm
 					configEdit={state.config}
 					onConfigEditChange={(config) => {
@@ -115,6 +115,7 @@ export default function ManagerTestNewPage() {
 			}}
 			left={
 				<Sidebar
+					tab={tab}
 					onTabChange={(tab) => {
 						setTab(tab);
 					}}
@@ -129,10 +130,10 @@ export default function ManagerTestNewPage() {
 					configErrors={validationError.configErrors}
 					onClose={() => {
 						setIsPostingExam(false);
-						setTab("configuration");
+						setTab("info");
 					}}
 					onConfigEdit={() => {
-						setTab("configuration");
+						setTab("info");
 						setIsPostingExam(false);
 					}}
 					onQuestionsEdit={() => {

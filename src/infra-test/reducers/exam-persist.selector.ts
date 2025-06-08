@@ -1,6 +1,7 @@
 import { QuestionPersistOfTest } from "../commands/question.persist";
 import { ExamConfigPersist } from "../commands/exam.persist";
 import { ExamPersistState } from "./exam-persist.store";
+import { PostExamsApiArg, PutExamsByTestIdApiArg } from "../../features/tests/api/test.api-gen";
 
 const questionEditConstraint = (value: QuestionPersistOfTest): string[] => {
 	const errors: string[] = [];
@@ -72,4 +73,44 @@ export const examPersistSelectors = (state: ExamPersistState) => {
 		questionsErrors,
 		configErrors,
 	}
+}
+
+export function stateToPostExamArgs(state: ExamPersistState): PostExamsApiArg {
+	return {
+		body: {
+			exam: {
+				...state.config,
+				openDate: state.config.openDate.toISOString(),
+				closeDate: state.config.closeDate.toISOString(),
+				password: state.config.password ?? undefined,
+				numberOfAttemptsAllowed: state.config.numberOfAttemptsAllowed ?? 0,
+			},
+			test: {
+				...state.config,
+				mode: "exam",
+			},
+			questions: state.questions.questions
+		}
+	};
+}
+
+export function stateToPutExamArgs(testId: string, state: ExamPersistState): PutExamsByTestIdApiArg {
+	return {
+		testId,
+		body: {
+			testId,
+			exam: {
+				...state.config,
+				openDate: state.config.openDate.toISOString(),
+				closeDate: state.config.closeDate.toISOString(),
+				password: state.config.password ?? undefined,
+				numberOfAttemptsAllowed: state.config.numberOfAttemptsAllowed ?? 0,
+			},
+			test: {
+				...state.config,
+				mode: "exam",
+			},
+			questions: state.questions.questions
+		}
+	};
 }

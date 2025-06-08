@@ -3,6 +3,17 @@ import { ExamPersistAction } from "./exam-persist.action";
 
 export const examPersistReducer = (state: ExamPersistState, action: ExamPersistAction): ExamPersistState => {
 	switch (action.type) {
+		case 'INITIALIZE':
+			if (state.isInitialized === true) return state;
+			return {
+				...state,
+				config: action.payload.config,
+				questions: {
+					questions: [...action.payload.questions],
+				},
+				isInitialized: true,
+			};
+
 		case 'UPDATE_CONFIG':
 			return {
 				...state,

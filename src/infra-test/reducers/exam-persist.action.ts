@@ -2,6 +2,12 @@ import { QuestionPersistOfTest } from "../commands/question.persist";
 import { ExamConfigPersist } from "../commands/exam.persist";
 
 export type ExamPersistAction = {
+	type: 'INITIALIZE';
+	payload: {
+		config: ExamConfigPersist;
+		questions: QuestionPersistOfTest[];
+	};
+} | {
 	type: 'UPDATE_CONFIG';
 	payload: Partial<ExamConfigPersist>;
 } | {

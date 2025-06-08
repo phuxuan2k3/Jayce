@@ -1,8 +1,9 @@
 import { ExamPersistState } from '../../../../../infra-test/reducers/exam-persist.store'
-import { PostExamsApiArg, usePostExamsMutation } from '../../../../../features/tests/api/test.api-gen'
+import { usePostExamsMutation } from '../../../../../features/tests/api/test.api-gen'
 import { useCallback, useEffect, useMemo } from 'react';
 import { examPersistSelectors } from '../../../../../infra-test/reducers/exam-persist.selector';
 import { parseQueryError } from '../../../../../helpers/fetchBaseQuery.error';
+import { stateToPostExamArgs } from "../../../../../infra-test/reducers/exam-persist.selector";
 
 export default function usePostExam({
 	state,
@@ -58,21 +59,3 @@ export default function usePostExam({
 	}
 }
 
-function stateToPostExamArgs(state: ExamPersistState): PostExamsApiArg {
-	return {
-		body: {
-			exam: {
-				...state.config,
-				openDate: state.config.openDate.toISOString(),
-				closeDate: state.config.closeDate.toISOString(),
-				password: state.config.password ?? undefined,
-				numberOfAttemptsAllowed: state.config.numberOfAttemptsAllowed ?? 0,
-			},
-			test: {
-				...state.config,
-				mode: "exam",
-			},
-			questions: state.questions.questions
-		}
-	}
-}

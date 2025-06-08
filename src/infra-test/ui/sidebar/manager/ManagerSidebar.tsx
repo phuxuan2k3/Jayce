@@ -1,9 +1,11 @@
-import { Trash2 } from 'lucide-react';
+import { ClipboardList, HelpCircle, Info, Trash2, Users } from 'lucide-react';
 import { useAppDispatch } from '../../../../app/hooks';
 import { ExamCore } from '../../../core/test.model';
 import deleteExamSlice from '../../../stores/deleteExamSlice';
 import QuickAction from '../primitive/QuickAction';
 import SidebarActions from '../primitive/SidebarActions'
+import { useNavigate } from 'react-router-dom';
+import paths from '../../../../router/paths';
 
 export default function ManagerSidebar({
 	children
@@ -11,7 +13,9 @@ export default function ManagerSidebar({
 	children?: React.ReactNode;
 }) {
 	return (
-		<SidebarActions>
+		<SidebarActions
+			bottomSection={<></>}
+		>
 			{children}
 		</SidebarActions>
 	)
@@ -25,13 +29,95 @@ ManagerSidebar.DeleteExam = ({
 	const dispatch = useAppDispatch();
 	return (
 		<QuickAction
-			icon={
-				<Trash2 />
-			}
+			icon={<Trash2 />}
 			variant="alert"
 			title="Delete Exam"
 			description="Remove this exam permanently"
 			onClick={() => dispatch(deleteExamSlice.actions.setDeleteExam(exam))}
+		/>
+	);
+}
+
+ManagerSidebar.Info = ({
+	active,
+	onClick,
+}: {
+	active?: boolean;
+	onClick: () => void;
+}) => {
+	return (
+		<QuickAction
+			icon={<Info />}
+			title="Info"
+			description="Information and Stats."
+			active={active}
+			onClick={onClick}
+		/>
+	);
+}
+
+ManagerSidebar.Questions = ({
+	active,
+	onClick,
+}: {
+	active: boolean;
+	onClick: () => void;
+}) => {
+	return (
+		<QuickAction
+			icon={<HelpCircle />}
+			active={active}
+			title="Questions"
+			description="Questions in this exam."
+			onClick={onClick}
+		/>
+	);
+}
+
+ManagerSidebar.Attempts = ({
+	active,
+	onClick,
+}: {
+	active: boolean;
+	onClick: () => void;
+}) => {
+	return (
+		<QuickAction
+			onClick={onClick}
+			active={active}
+			icon={<ClipboardList />}
+			title="Attempts"
+			description="View all attempts for this exam."
+		/>
+	);
+}
+
+ManagerSidebar.Participants = ({
+	active,
+	onClick,
+}: {
+	active: boolean;
+	onClick: () => void;
+}) => {
+	return (
+		<QuickAction
+			onClick={onClick}
+			active={active}
+			icon={<Users />}
+			title="Participants"
+			description="Candidates who participated in this exam."
+		/>
+	);
+}
+
+ManagerSidebar.BackToExams = () => {
+	const navigate = useNavigate();
+	return (
+		<QuickAction
+			icon={<Users />}
+			title="Back to Exams"
+			description="Return to the exams list."
+			onClick={() => navigate(paths.manager.tests.ROOT)}
 		/>
 	);
 }

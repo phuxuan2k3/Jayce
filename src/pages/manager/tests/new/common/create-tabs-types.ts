@@ -1,1 +1,1 @@
-export type CreateTab = "configuration" | "questions" | "generate" | "publish";
+export type CreateTab = "info" | "questions" | "generate" | "publish";

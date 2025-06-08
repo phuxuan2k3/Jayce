@@ -1,48 +1,39 @@
-import { ClipboardList, HelpCircle, Info, Trash2, Users } from 'lucide-react';
+import { ArrowLeft, HelpCircle } from 'lucide-react';
 import QuickAction from '../../../../../../infra-test/ui/sidebar/primitive/QuickAction'
-import SidebarActions from '../../../../../../infra-test/ui/sidebar/primitive/SidebarActions'
 import { TabMode } from '../type';
 import { useNavigate } from 'react-router-dom';
 import paths from '../../../../../../router/paths';
+import ManagerSidebar from '../../../../../../infra-test/ui/sidebar/manager/ManagerSidebar';
 
 export default function Sidebar({
 	testId,
+	mode,
 	onModeChange,
-	onDelete,
 }: {
 	testId: string;
+	mode: TabMode;
 	onModeChange: (mode: TabMode) => void;
-	onDelete: () => void;
 }) {
 	const navigate = useNavigate();
 
 	return (
-		<SidebarActions
-			title='Exam Actions'
-			bottomSection={false}
-		>
-			<QuickAction
-				icon={<Info />}
-				title="Info"
-				description="Information and Stats."
+		<ManagerSidebar>
+			<ManagerSidebar.Info
+				active={mode === 'info'}
 				onClick={() => onModeChange('info')}
 			/>
-			<QuickAction
-				icon={<HelpCircle />}
-				title="Questions"
-				description="Questions in this exam."
+			<ManagerSidebar.Questions
+				active={mode === 'questions'}
 				onClick={() => onModeChange('questions')}
 			/>
-			<QuickAction
-				icon={<ClipboardList />}
-				title="Attempts"
-				description="Attempts made by candidates."
+
+			<ManagerSidebar.Attempts
+				active={mode === 'attempts'}
 				onClick={() => onModeChange('attempts')}
 			/>
-			<QuickAction
-				icon={<Users />}
-				title="Participants"
-				description="Candidates who participated in this exam."
+
+			<ManagerSidebar.Participants
+				active={mode === 'participants'}
 				onClick={() => onModeChange('participants')}
 			/>
 
@@ -55,12 +46,11 @@ export default function Sidebar({
 				onClick={() => navigate(paths.manager.tests.in(testId).EDIT)}
 			/>
 			<QuickAction
-				icon={<Trash2 />}
-				title="Delete"
-				description="Delete the exam permanently."
-				onClick={() => onDelete()}
-				variant='alert'
+				icon={<ArrowLeft />}
+				title="Back to Exams"
+				description="Return to the exams list."
+				onClick={() => navigate(paths.manager.tests.ROOT)}
 			/>
-		</SidebarActions>
+		</ManagerSidebar>
 	)
 }

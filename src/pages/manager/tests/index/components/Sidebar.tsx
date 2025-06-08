@@ -16,9 +16,9 @@ export default function Sidebar() {
 				onClick={() => navigate(paths.manager.tests.NEW)}
 			/>
 			<QuickAction
-				title='Manage exams'
+				title='Manage your exams'
 				icon={<ClipboardPlus size={20} />}
-				description='Edit or delete existing exams'
+				description='View and Edit or Delete your exams'
 				onClick={() => { }}
 			/>
 		</SidebarActions>

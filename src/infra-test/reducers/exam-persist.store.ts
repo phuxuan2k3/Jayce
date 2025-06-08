@@ -1,6 +1,4 @@
-import { QuestionCore } from "../core/question.model";
 import { QuestionPersistOfTest } from "../commands/question.persist";
-import { ExamCore } from "../core/test.model";
 import { ExamConfigPersist } from "../commands/exam.persist";
 
 const EMPTY_EXAM_CONFIG: ExamConfigPersist = {
@@ -18,35 +16,17 @@ const EMPTY_EXAM_CONFIG: ExamConfigPersist = {
 };
 
 export type ExamPersistState = {
+	isInitialized: boolean;
 	questions: {
 		questions: QuestionPersistOfTest[];
 	};
 	config: ExamConfigPersist;
 };
 
-export const examPersistStateFactory = ({
-	exam,
-	questions,
-	password = null,
-}: {
-	exam?: ExamCore;
-	password?: string | null;
-	questions?: QuestionCore[];
-}): ExamPersistState => {
-	return {
-		config: exam != null ? {
-			...exam,
-			openDate: new Date(exam.openDate),
-			closeDate: new Date(exam.closeDate),
-			password: password ?? null,
-		} : EMPTY_EXAM_CONFIG,
-		questions: questions != null ? {
-			questions: questions.map((q) => ({
-				...q
-			})),
-		} : {
-			questions: []
-		},
-	};
+export const initialState: ExamPersistState = {
+	isInitialized: false,
+	questions: {
+		questions: [],
+	},
+	config: EMPTY_EXAM_CONFIG,
 };
-

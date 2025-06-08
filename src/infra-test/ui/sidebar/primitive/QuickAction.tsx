@@ -1,24 +1,23 @@
 import { ReactNode } from 'react';
-import QuickActionPrimitive from './QuickActionPrimitive';
+import QuickActionPrimitive, { QuickActionVariantsType } from './QuickActionPrimitive';
 
-type QuickActionProps = {
+export type QuickActionProps = {
 	icon: ReactNode;
 	title: string;
 	description: string;
 	onClick: () => void;
-	variant?: 'default' | 'alert';
-};
+} & QuickActionVariantsType;
 
 const QuickAction = ({
 	icon,
 	title,
 	description,
 	onClick,
-	variant = 'default',
+	...variant
 }: QuickActionProps) => (
 	<QuickActionPrimitive.Root
 		onClick={onClick}
-		variant={variant}
+		{...variant}
 	>
 		<QuickActionPrimitive.Icon icon={icon} />
 

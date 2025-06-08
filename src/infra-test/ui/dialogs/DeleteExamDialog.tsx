@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { useDeleteExamsByTestIdMutation } from '../../../features/tests/api/test.api-gen';
 import deleteExamSlice from '../../stores/deleteExamSlice';
 import useFetchStateDialog from '../../hooks/useFetchStateDialog';
+import { useDeleteExamsByTestIdMutation } from '../../enhance-api/exam-manage.api-enhance';
 
 export default function DeleteExamDialog() {
 	const examCore = useAppSelector((state) => state.deleteExam.exam);

@@ -5,19 +5,13 @@ import Sidebar from './components/Sidebar';
 import QuestionsTab from './components/questions-tab';
 import ExamInformationTab from './components/exam-information-tab';
 import { TabMode } from './type';
-import { useAppDispatch } from '../../../../../app/hooks';
-import deleteExamSlice from '../../../../../infra-test/stores/deleteExamSlice';
 import ParticipantsTab from './components/participants-tab';
-import { useGetExamsByTestIdQuery } from '../../../../../features/tests/api/test.api-gen';
 import useGetTestIdParams from '../../../../../infra-test/hooks/useGetTestIdParams';
 
 export default function ManagerTestPage() {
 	const testId = useGetTestIdParams();
-	const dispatch = useAppDispatch();
 
 	const [mode, setMode] = useState<TabMode>('info');
-	const examQuery = useGetExamsByTestIdQuery({ testId });
-	const exam = examQuery.data;
 
 	const getTab = (mode: TabMode) => {
 		switch (mode) {
@@ -51,10 +45,7 @@ export default function ManagerTestPage() {
 			left={<Sidebar
 				testId={testId}
 				onModeChange={(mode) => setMode(mode)}
-				onDelete={() => {
-					if (exam == null) return;
-					dispatch(deleteExamSlice.actions.setDeleteExam(exam))
-				}}
+				mode={mode}
 			/>}
 		>
 			{getTab(mode)}
