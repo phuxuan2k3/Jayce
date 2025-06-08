@@ -77,6 +77,9 @@ export default function ManagerTestEditPage() {
 
 	const handleSave = () => {
 		setIsValidating(true);
+		if (errors.length > 0) {
+			return;
+		}
 		const args = stateToPutExamArgs(testId, state);
 		updateExam(args);
 	};
