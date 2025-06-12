@@ -12,21 +12,27 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
 const getPieData = (totalScore: GetInterviewHistoryResponse["totalScore"]) => {
-  // This expects keys like "A", "B", "C", "D", "F"
-  const labels = ["A", "B", "C", "D", "F"];
+  const labelToGradeKey: Record<string, keyof typeof totalScore> = {
+    Excellent: "A",
+    Good: "B",
+    Fair: "C",
+    "Below Average": "D",
+    "Not Experienced": "F",
+  };
+
+  const labels = Object.keys(labelToGradeKey);
   const colors = [
-    "#527853", // Green
-    "#8DBDE2", // Blue
-    "#E1C03E", // Yellow
-    "#DA772C", // Orange
-    "#D85353", // Red
+    "#527853", // Excellent - Green
+    "#8DBDE2", // Good - Blue
+    "#E1C03E", // Fair - Yellow
+    "#DA772C", // Below Average - Orange
+    "#D85353", // Not Experienced - Red
   ];
-  const order = ["A", "B", "C", "D", "F"];
-  const data = order.map((grade) =>
-    totalScore && totalScore[grade as keyof typeof totalScore]
-      ? totalScore[grade as keyof typeof totalScore]
-      : 0
-  );
+
+  const data = labels.map((label) => {
+    const key = labelToGradeKey[label];
+    return totalScore?.[key] ?? 0;
+  });
   return {
     labels,
     datasets: [
@@ -57,6 +63,7 @@ const pieOptions = {
         color: "#2E808A",
         padding: 24,
         boxWidth: 22,
+        // filter: () => true,
       },
     },
     title: {
@@ -109,8 +116,8 @@ const Summary: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
               </Typography>
             </div>
             <Divider />
-            <div className="flex items-center justify-center h-[220px] w-full mt-4">
-              <div className="w-[170px] h-[170px] mx-auto relative">
+            <div className="flex items-center justify-center w-full mt-4">
+              <div className=" mx-auto relative">
                 <Pie
                   data={getPieData(scoreData.totalScore)}
                   options={pieOptions}

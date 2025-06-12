@@ -8,7 +8,7 @@ const SetUpStep1: FC<{
 }> = ({ data, onChange, onNext }) => {
   return (
     <>
-      <div className="fotn-back text-[48px] font-arya w-full text-center mt-6">
+      <div className=" text-primary-toned-600 text-[48px] font-arya font-black w-full text-center mt-6">
         Job Detail
       </div>
       <div className="text-[24px] text-gray-800 w-full text-center mb-8">
@@ -29,7 +29,7 @@ const SetUpStep1: FC<{
             <option value="projectmanager">Project Manager</option>
           </select>
         </div>
-        <div className=" mb-10 text-[var(--primary-color)]">
+        <div className=" mb-10 text-primary-toned-600">
           <div className="font-medium mb-1 text-xl ">Experience</div>
           <select
             value={data.experience}
@@ -37,9 +37,14 @@ const SetUpStep1: FC<{
             className="py-2 pe-12 ps-2 shadow rounded-md focus:outline-none focus:ring focus:ring-teal-300"
           >
             <option value="">Select your experience</option>
-            <option value="inter">Intern</option>
+            <option value="intern">Intern</option>
             <option value="fresher">Fresher</option>
             <option value="junior">Junior</option>
+            <option value="mid">Mid-level</option>
+            <option value="senior">Senior</option>
+            <option value="lead">Team Lead</option>
+            <option value="manager">Engineering Manager</option>
+            <option value="director">Director</option>
           </select>
         </div>
       </div>
@@ -63,7 +68,7 @@ const SetUpStep1: FC<{
       />
       <div
         onClick={onNext}
-        className="my-24 bg-primary text-center text-white px-24 py-1.5 rounded-lg"
+        className="my-20 bg-primary text-center text-white px-24 py-1.5 rounded-lg"
       >
         Next
       </div>

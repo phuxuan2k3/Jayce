@@ -24,24 +24,40 @@ const ResultPage = () => {
 
   const location = useLocation();
   const interviewId = location.state?.interviewId;
-  const { data, isLoading, error, refetch } = useGetInterviewHistoryQuery({
-    interviewId,
-  });
+  // const { data, isLoading, error, refetch } = useGetInterviewHistoryQuery({
+  //   interviewId,
+  // });
 
-  useEffect(() => {
-    if (data && !data.finalComment) {
-      const timeoutId = setTimeout(() => {
-        refetch();
-      }, 18000);
-      return () => clearTimeout(timeoutId);
+  // useEffect(() => {
+  //   if (data && !data.finalComment) {
+  //     const timeoutId = setTimeout(() => {
+  //       refetch();
+  //     }, 100);
+  //     return () => clearTimeout(timeoutId);
+  //   }
+  // }, [data, refetch]);
+
+  // useEffect(() => {
+  //   if (data?.finalComment) {
+  //     refetch();
+  //   }
+  // }, [data?.finalComment, refetch]);
+
+  const [stopPolling, setStopPolling] = useState(false);
+
+  const { data, isLoading } = useGetInterviewHistoryQuery(
+    { interviewId },
+    {
+      pollingInterval: stopPolling ? 0 : 2000,
+      skip: !interviewId,
     }
-  }, [data, refetch]);
+  );
 
   useEffect(() => {
     if (data?.finalComment) {
-      refetch();
+      setStopPolling(true);
     }
-  }, [data?.finalComment, refetch]);
+  }, [data]);
 
   const renderTabContent = () => {
     switch (tab) {
@@ -59,7 +75,6 @@ const ResultPage = () => {
   if (isLoading || (data && !data.finalComment)) {
     return <Loading />;
   }
-  if (error) return <div>Lỗi khi tải dữ liệu!</div>;
   if (!data) return <div>Không có dữ liệu.</div>;
 
   return (

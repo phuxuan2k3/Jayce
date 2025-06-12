@@ -221,3 +221,24 @@ h6 {
     left: 100%;
   }
 }
+.custom-select {
+  /* Áp dụng text và border tone màu chính */
+  color: var(--color-primary-toned-600);
+  border-color: var(--color-primary-toned-600);
+  background: white;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.custom-select:focus,
+.custom-select:hover {
+  border-color: var(--color-primary-toned-600);
+  box-shadow: 0 0 0 2px var(--color-primary-toned-600, #14b8a6);
+}
+
+/* Custom option color: chỉ dùng được với Firefox, Chrome không hỗ trợ hoàn toàn */
+.custom-select option {
+  color: var(--color-primary-toned-600);
+  background: white;
+}

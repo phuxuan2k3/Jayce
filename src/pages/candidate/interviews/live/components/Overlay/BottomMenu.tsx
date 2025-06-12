@@ -101,7 +101,6 @@ export default function BottomMenu() {
           </CommonButton>
         </div>
 
-        {/* Background selector */}
         <div
           className="h-fit w-full overflow-hidden"
           style={{
@@ -122,26 +121,93 @@ export default function BottomMenu() {
           <DoorOpen size={20} className="my-1" />
         </CommonButton>
       </div>
-      <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>
-        <DialogTitle>Kết thúc phỏng vấn?</DialogTitle>
-        <DialogContent>
-          <Typography>
-            Bạn có chắc chắn muốn <strong>kết thúc phỏng vấn</strong> sớm không?
-            Các câu hỏi chưa trả lời sẽ bị bỏ qua.
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        maxWidth="xs"
+        fullWidth
+        aria-labelledby="end-interview-dialog-title"
+        PaperProps={{
+          sx: {
+            borderRadius: 4,
+            background: "#ffffff",
+            boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
+          },
+        }}
+      >
+        <DialogTitle
+          id="end-interview-dialog-title"
+          sx={{
+            fontWeight: 700,
+            fontSize: "1.5rem",
+            textAlign: "center",
+            color: "#2e808a",
+            mb: 1,
+            p: 3,
+          }}
+        >
+          End Interview Early?
+        </DialogTitle>
+
+        <DialogContent sx={{ color: "#444" }}>
+          <Typography variant="body1" sx={{ mb: 1 }}>
+            You are about to <strong>end the interview</strong> before
+            completing all questions.
+            <br />
+            Please note that any unanswered questions will be automatically
+            marked as skipped, and your current progress will be submitted
+            as-is.
+            <br />
           </Typography>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} disabled={loading}>
-            Huỷ
+
+        <DialogActions
+          sx={{
+            px: 3,
+            pb: 2,
+            display: "flex",
+            gap: 2,
+            justifyContent: "center",
+          }}
+        >
+          <Button
+            onClick={handleClose}
+            disabled={loading}
+            variant="outlined"
+            sx={{
+              borderColor: "#2e808a",
+              color: "#2e808a",
+              fontWeight: 600,
+              px: 6,
+              "&:hover": {
+                backgroundColor: "#f1fafa",
+                borderColor: "#2e808a",
+              },
+            }}
+          >
+            Cancel
           </Button>
+
           <Button
             onClick={handleSubmitInterview}
             color="error"
             variant="contained"
             disabled={loading}
-            startIcon={loading && <CircularProgress size={18} />}
+            startIcon={
+              loading ? <CircularProgress size={18} color="inherit" /> : null
+            }
+            sx={{
+              background: "linear-gradient(to right, #2e808a, #0fc2c0)",
+              color: "#fff",
+              fontWeight: 600,
+              minWidth: 140,
+              px: 5,
+              "&:hover": {
+                opacity: 0.9,
+              },
+            }}
           >
-            {loading ? "Đang gửi..." : "Kết thúc"}
+            {loading ? "Submitting..." : "End Interview"}
           </Button>
         </DialogActions>
       </Dialog>
