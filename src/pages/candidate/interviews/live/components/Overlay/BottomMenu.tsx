@@ -19,13 +19,21 @@ import {
   DialogTitle,
   Typography,
 } from "@mui/material";
-import { useLazyGetInterviewOutroQuery } from "../../../../../../features/interviews/api/interview.api";
+import {
+  useLazyGetInterviewOutroQuery,
+  usePostAnswerMutation,
+} from "../../../../../../features/interviews/api/interview.api";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useQuestionContext } from "../../contexts/question-context";
+import ModalSubmitting from "./sub/ModalSubmit";
 
 export default function BottomMenu() {
   const [isSelectingBackground, setIsSelectingBackground] = useState(false);
   const { model, setModel } = useModelContext();
+  const { goToNextQuestion, questionIndex } = useQuestionContext();
+  const [postAnswer] = usePostAnswerMutation();
   const models: Models[] = ["Alice", "Jenny"];
+  const totalQuestion = localStorage.getItem("totalQuestion") || "5";
   const handleModelChange = () => {
     const currentIndex = models.indexOf(model);
     const nextIndex = (currentIndex + 1) % models.length;
@@ -51,10 +59,9 @@ export default function BottomMenu() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [triggerSubmit] = useLazyGetInterviewOutroQuery();
-
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  const [showSubmittingModal, setShowSubmittingModal] = useState(false);
   const handleSubmitInterview = async () => {
     if (!interviewId) {
       alert("Không tìm thấy interviewId!");
@@ -74,10 +81,38 @@ export default function BottomMenu() {
     }
   };
 
+  const handleNext = async () => {
+    console.log("interviewId từ navigate:", interviewId);
+    if (!interviewId) {
+      alert("Không tìm thấy interviewId!");
+      return;
+    }
+
+    try {
+      await postAnswer({
+        interviewId,
+        index: questionIndex,
+        answer: "",
+        recordProof: "",
+      }).unwrap();
+      if (questionIndex >= parseInt(totalQuestion)) {
+        setShowSubmittingModal(true);
+        await triggerSubmit({ interviewId }).unwrap();
+        navigate("/candidate/interviews/result", { state: { interviewId } });
+      } else {
+        goToNextQuestion();
+      }
+    } catch (e) {
+      alert("Có lỗi khi gửi đáp án. Vui lòng thử lại.");
+      console.error(e);
+    }
+  };
+  if (showSubmittingModal)
+    return <ModalSubmitting isOpen={showSubmittingModal} />;
   return (
     <div className="flex items-center px-2 py-1 gap-x-4 w-full h-fit ">
       <div className="bg-white/80 rounded-lg shadow-md flex items-center justify-between flex-1 p-1 relative">
-        <CommonButton>
+        <CommonButton onClick={() => handleNext()}>
           <span>Continue</span>
           <ArrowRight size={20} />
         </CommonButton>

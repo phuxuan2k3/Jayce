@@ -7,6 +7,8 @@ import { useQuestionContext } from "../../contexts/question-context";
 import BottomMenu from "./BottomMenu";
 import InterviewStatus from "./InterviewStatus";
 import Record from "./Record";
+import { useState } from "react";
+import ModalSubmitting from "./sub/ModalSubmit";
 
 // type AnswerData = {
 //   questionIndex: number;
@@ -18,7 +20,7 @@ export default function Overlay() {
   const [postAnswer] = usePostAnswerMutation();
 
   const [triggerSubmit] = useLazyGetInterviewOutroQuery();
-
+  const [showSubmittingModal, setShowSubmittingModal] = useState(false);
   const navigate = useNavigate();
   const totalQuestion = localStorage.getItem("totalQuestion") || "5";
   const location = useLocation();
@@ -40,7 +42,9 @@ export default function Overlay() {
         recordProof: "",
       }).unwrap();
       if (questionIndex >= parseInt(totalQuestion)) {
+        setShowSubmittingModal(true);
         await triggerSubmit({ interviewId }).unwrap();
+        setShowSubmittingModal(false);
         navigate("/candidate/interviews/result", { state: { interviewId } });
       } else {
         goToNextQuestion();
@@ -58,16 +62,15 @@ export default function Overlay() {
           totalQuestion={parseInt(totalQuestion) || 5}
         />
       </div>
-
       <div className="col-start-10 col-end-10 row-start-3 row-end-3 flex items-center justify-center">
         <Record onAnswerRecorded={handleAnswerRecorded} />
       </div>
-
       <div className="col-start-5 col-end-9 row-start-5 row-end-5 group">
-        <div className="flex items-end py-4 w-full h-full translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out">
+        <div className="flex items-end py-4 w-full h-full ">
           <BottomMenu />
         </div>
-      </div>
+      </div>{" "}
+      <ModalSubmitting isOpen={showSubmittingModal} />
     </div>
   );
 }

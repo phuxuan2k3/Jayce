@@ -22,7 +22,7 @@ const SetUpPage = () => {
   };
 
   return (
-    <div className="bg-primary bg-opacity-5 h-[100%]">
+    <div className=" bg-opacity-5 h-[100%] rounded-3xl">
       <div className=" font-asap flex-wrap flex justify-center w-[800px] mx-auto gap-1.5">
         <div className="flex font-arya items-center font-bold text-[28px] w-full mt-6">
           <div

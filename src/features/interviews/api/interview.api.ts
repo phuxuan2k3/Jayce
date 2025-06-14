@@ -58,7 +58,14 @@ const interviewApi = createApi({
     >({
       query: ({ interviewId }) => `/interviews/history/${interviewId}`,
     }),
-
+    getHistory: builder.query<
+      InterviewHistoryResponse,
+      {
+        pageIndex: number;
+      }
+    >({
+      query: (query) => `/interviews/history?page=${query.pageIndex}`,
+    }),
     getInterviewOutro: builder.query<
       InterviewOutroResponse,
       { interviewId: string }
@@ -75,6 +82,7 @@ export const {
   usePostGetScoreMutation,
   useGetInterviewHistoryQuery,
   useLazyGetInterviewOutroQuery,
+  useGetHistoryQuery,
 } = interviewApi;
 
 export default interviewApi;
@@ -203,6 +211,26 @@ export type InterviewOutroResponse = {
     };
   };
 };
+
+export interface InterviewHistoryResponse {
+  page: number;
+  perPage: number;
+  totalPages: number;
+  interviews: InterviewSummary[];
+}
+
+export interface InterviewSummary {
+  interviewId: string;
+  position: string;
+  experience: string;
+  totalScore: InterviewTotalScore;
+  baseData: InterviewBaseData;
+}
+
+export interface InterviewBaseData {
+  createdAt: string;
+  updatedAt: string;
+}
 
 export type PostInterviewAnswerRequest = {
   interviewId: string;
