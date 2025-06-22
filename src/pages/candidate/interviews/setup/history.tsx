@@ -95,7 +95,7 @@ const HistoryPage = () => {
 
   if (isLoading || isFetching) {
     return (
-      <div className=" mx-auto w-full  py-8">
+      <div className=" mx-auto w-full  px-16 py-8">
         <h2 className="text-2xl font-bold mb-6 text-[#2e808a] text-center">
           Interview History
         </h2>

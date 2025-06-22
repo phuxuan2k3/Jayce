@@ -12,17 +12,17 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
   const [isOpen, setIsopen] = useState<boolean>(false);
   return (
     <>
-      <div className="fotn-back text-[48px] font-arya w-full text-center mt-6">
+      <div className="fotn-back text-[32px] font-arya w-full text-center leading-[24px] mt-4">
         Interview Context & Models
       </div>
-      <div className="text-[24px] text-gray-800 w-full text-center mb-8">
+      <div className="text-md text-gray-800 w-full text-center mb-2">
         Then, choose AI interviewer & set up informations for the interview
         session.
       </div>
       <div className="flex w-full">
         <div className="w-7/12">
-          <div className="mb-10 text-[var(--primary-color)] ">
-            <div className="font-medium mb-1 text-xl w-full">Position</div>
+          <div className="mb-2 text-[var(--primary-color)] ">
+            <div className="font-medium mb-1 text-lg w-full">Language</div>
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
@@ -31,47 +31,36 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
               <option value="en">English</option>
               <option value="vi">VietNamese</option>
             </select>
-            <div className="mt-10 mb-2">Models (English)</div>
-            <div className="grid grid-cols-2 grid-rows-2 gap-4">
+            <div className="mt-4 mb-2">Models (English)</div>
+            <div className="grid grid-cols-2  gap-4">
               <img
                 className="size-[200px] rounded-lg bg-gray-300"
-                src="https://cdn2.futurepedia.io/2024-11-26T18-51-51.356Z-MtXWJEI4O08DkXhcFo8z7VXOEe00XPWLb.webp?w=1920"
+                src="/textures/aliceAvatar.png"
                 alt=""
               />
               <img
                 className="size-[200px] rounded-lg bg-gray-300"
-                src="https://animegenius-global.live3d.io/vtuber/ai_product/anime_genius/static/imgs/bc6966a47d013453c2f83a295eec4fb9.webp"
-                alt=""
-              />
-
-              <img
-                className="size-[200px] rounded-lg bg-gray-300"
-                src="https://www.aidemos.info/wp-content/uploads/2023/05/avatar_for_social_app_realistic_female_98944746-c433-464d-8e6c-e44ee6b6c03e.webp"
-                alt=""
-              />
-              <img
-                className="size-[200px] rounded-lg bg-gray-300"
-                src="https://www.aiavatar.cc/_next/static/media/4-RealisticOilPainting.9b11ae44.webp"
+                src="/textures/peterAvatar.png"
                 alt=""
               />
             </div>
           </div>
         </div>
-        <div className="w-5/12 text-xl text-primary font-semibold">
-          <div>Speech rate</div>
+        <div className="w-5/12 text-lg text-primary font-semibold">
+          <div className="leading-[20px]">Speech rate</div>
           <input
             type="range"
             min="-20"
             max="20"
             value={speechRate}
             onChange={(e) => setSpeechRate(Number(e.target.value))}
-            className="mt-2 range  h-5 [--range-thumb-size:40px]  [--range-p:3px]   [--range-thumb:#2e808a] text-primary "
+            className=" range  h-5 [--range-thumb-size:40px]  [--range-p:3px]   [--range-thumb:#2e808a] text-primary "
           />
-          <div className="flex  justify-between  mb-10 font-medium text-black">
+          <div className="flex text-sm justify-between  mb-3 font-medium text-primary-toned-700">
             <div>Low</div>
             <div>Fast</div>
           </div>
-          <div>Number of questions</div>
+          <div className="text-lg leading-[20px]">Number of questions</div>
 
           <input
             type="range"
@@ -79,9 +68,9 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
             max="16"
             value={numQuestion}
             onChange={(e) => setNumQuestion(Number(e.target.value))}
-            className="range mt-2 h-5 [--range-thumb-size:40px]  [--range-p:3px] [--range-thumb:#2e808a] text-primary "
+            className="range  h-5 [--range-thumb-size:40px]  [--range-p:3px] [--range-thumb:#2e808a] text-primary "
           />
-          <div className="flex justify-between  mb-10 font-medium text-black">
+          <div className="flex justify-between text-sm  mb-4 font-medium text-primary-toned-700">
             <div>1</div>
             <div>16</div>
           </div>
@@ -95,10 +84,10 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
               className="checkbox   checked:bg-primary checked:text-white size-8"
             />
           </div>
-          <div className="flex justify-between my-10">
+          <div className="flex justify-between my-4">
             <div className="w-3/5">
               <div> Skip coding question</div>
-              <div className="text-[12px] font-medium">
+              <div className="text-[12px] leading-[18px] font-medium">
                 (If you choose not to skip, the last question would be a coding
                 problem)
               </div>
@@ -117,7 +106,7 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
           // handleStartInterview();
           setIsopen(true);
         }}
-        className="my-8 bg-primary text-center text-white px-24 py-1.5 rounded-lg"
+        className="mb-4 bg-primary text-center text-white px-24 py-1.5 rounded-lg"
       >
         Start
       </div>

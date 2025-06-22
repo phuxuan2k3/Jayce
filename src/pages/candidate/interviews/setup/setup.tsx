@@ -27,7 +27,7 @@ const SetUpPage = () => {
         <div className="flex font-arya items-center font-bold text-[28px] w-full mt-6">
           <div
             onClick={() => setStep(1)}
-            className="size-10 text-white bg-primary text-center items-center flex justify-center text-2xl font-bold rounded-3xl"
+            className="size-8 text-white bg-primary text-center items-center flex justify-center text-lg font-bold rounded-3xl"
           >
             <span>1</span>
           </div>
@@ -35,9 +35,9 @@ const SetUpPage = () => {
           <hr className="flex-1" />
           <div
             onClick={() => setStep(2)}
-            className={`size-10 text-white ${
+            className={`size-8 text-white ${
               step === 1 ? "bg-gray-300" : "bg-primary"
-            } text-center items-center flex justify-center text-2xl font-bold rounded-3xl`}
+            } text-center items-center flex justify-center text-lg font-bold rounded-3xl`}
           >
             2
           </div>

@@ -1,33 +1,29 @@
-import { Environment } from '@react-three/drei';
-import { lazy, Suspense, useMemo } from 'react';
+import { Environment } from "@react-three/drei";
+import { lazy, Suspense, useMemo } from "react";
 
 export default function ModelDisplay({
-	model = "Alice",
+  model = "Alice",
 }: {
-	model?: "Jenny" | "Alice";
-
+  model?: "Jenny" | "Alice";
 }) {
-	const Model = useMemo(() => {
-		switch (model) {
-			case "Jenny":
-				return lazy(() => import('./Jenny/Model'));
-			case "Alice":
-				return lazy(() => import('./Alice/Model'));
-			default:
-				return lazy(() => import('./Alice/Model'));
-		}
-	}, [model]);
+  const Model = useMemo(() => {
+    switch (model) {
+      case "Jenny":
+        return lazy(() => import("./John/Model"));
+      case "Alice":
+        return lazy(() => import("./Alice/Model"));
+      default:
+        return lazy(() => import("./Alice/Model"));
+    }
+  }, [model]);
 
-	return (
-		<>
-			<Suspense fallback={null}>
-				<Model
-					position={[0, -4, 5]}
-					scale={2.5}
-				/>
-			</Suspense>
+  return (
+    <>
+      <Suspense fallback={null}>
+        <Model position={[0, -4, 5]} scale={2.5} />
+      </Suspense>
 
-			<Environment preset="sunset" />
-		</>
-	)
+      <Environment preset="sunset" />
+    </>
+  );
 }
