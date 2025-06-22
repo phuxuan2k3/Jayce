@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { usePostPracticesMutation } from '../../../../../features/tests/api/test.api-gen'
+import { usePostPracticesMutation } from '../../../../../infra-test/api/test.api-gen'
 import { PracticeGenerationActionTypes, PracticeGenerationReducer } from '../reducers/reducer-types';
-import { useLazyGetSuggestQuestionsQuery } from '../../../../../features/tests/api/prompt.api-custom';
+import { useLazyGetSuggestQuestionsQuery } from '../../../../../infra-test/api/prompt.api-custom';
 import paths from '../../../../../router/paths';
 import { PracticeGenerationLoadingState } from '../types';
 import usePracticeGenerationSelectors from '../reducers/practice-generation.selector';

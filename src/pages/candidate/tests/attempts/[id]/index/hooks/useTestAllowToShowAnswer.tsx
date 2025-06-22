@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useGetExamsByTestIdQuery } from '../../../../../../../features/tests/api/test.api-gen';
+import { useGetExamsByTestIdQuery } from '../../../../../../../infra-test/api/test.api-gen';
 
 export default function useIsTestAllowToShowAnswer({
 	testId,

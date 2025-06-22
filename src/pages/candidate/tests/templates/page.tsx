@@ -3,12 +3,13 @@ import { TemplateCore } from "../../../../infra-test/core/test.model";
 import TemplateForm from './components/TemplateForm';
 import TemplatesSidebar from './components/TemplatesSidebar';
 import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
-import TemplateCard from './components/TemplateCard';
 import useTemplateServerMutate from './hooks/useTemplateServerMutate';
 import DeleteTemplateModal from './components/DeleteTemplateModal';
 import useTemplateServerQuery from '../../../../infra-test/hooks/templates/useTemplateServerQuery';
+import TemplateList from './components/TemplateList';
 
 const CandidateTestsTemplatesPage: React.FC = () => {
+
 	const query = useTemplateServerQuery();
 	const mutate = useTemplateServerMutate();
 
@@ -16,7 +17,6 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [templateToDelete, setTemplateToDelete] = useState<TemplateCore | null>(null);
-
 
 	// Template form state
 	const [formData, setFormData] = useState<Omit<TemplateCore, "id">>({
@@ -107,48 +107,24 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 				/>
 			}
 		>
-			<div className="mb-6">
-				{isEditing ? (
-					<TemplateForm
-						isEditing={isEditing}
-						selectedTemplate={selectedTemplate}
-						formData={formData}
-						onFormDataChange={setFormData}
-						onSave={handleSaveTemplate}
-						onCancel={() => setIsEditing(false)}
-						onCreateNew={handleCreateNew}
-					/>
-				) : (
-					<div className="space-y-6">
-						<div className="flex justify-between items-center">
-							<h3 className="text-lg font-semibold">Available Templates</h3>
-							<button
-								onClick={handleCreateNew}
-								className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition"
-							>
-								Create New
-							</button>
-						</div>
-
-						{query.data.data.length > 0 ? (
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-								{query.data.data.map(template => (
-									<TemplateCard
-										key={template.id}
-										data={template}
-										onSelectTemplate={handleSelectTemplate}
-										onDeleteTemplate={handleDeleteTemplate}
-									/>
-								))}
-							</div>
-						) : (
-							<div className="text-center py-8 text-gray-500">
-								{query.filters.searchName ? "No templates match your search" : "No templates available"}
-							</div>
-						)}
-					</div>
-				)}
-			</div>
+			{isEditing ? (
+				<TemplateForm
+					isEditing={isEditing}
+					selectedTemplate={selectedTemplate}
+					formData={formData}
+					onFormDataChange={setFormData}
+					onSave={handleSaveTemplate}
+					onCancel={() => setIsEditing(false)}
+					onCreateNew={handleCreateNew}
+				/>
+			) : (
+				<TemplateList
+					searchName={query.filters.searchName}
+					onSelect={handleSelectTemplate}
+					onDelete={handleDeleteTemplate}
+					onCreateNew={handleCreateNew}
+				/>
+			)}
 
 			<DeleteTemplateModal
 				isOpen={showDeleteModal}

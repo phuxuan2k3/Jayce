@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../../../router/paths";
 import { usePatchCurrentAttemptsByAttemptIdAnswersMutation } from "../../apis/answer.api-enhance";
-import { usePatchCurrentAttemptsByAttemptIdSubmitMutation } from "../../../../../../../features/tests/api/test.api-gen";
+import { usePatchCurrentAttemptsByAttemptIdSubmitMutation } from "../../../../../../../infra-test/api/test.api-gen";
 
 export default function useCurrentAttemptActions({
 	attemptId,

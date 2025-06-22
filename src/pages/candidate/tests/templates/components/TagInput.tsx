@@ -45,7 +45,7 @@ const TagInput: React.FC<TagInputProps> = ({ tags, onTagsChange }) => {
 					value={newTag}
 					onChange={(e) => setNewTag(e.target.value)}
 					className="flex-1 p-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary-toned-500"
-					onKeyPress={(e) => {
+					onKeyDown={(e) => {
 						if (e.key === 'Enter') {
 							e.preventDefault();
 							handleAddTag();

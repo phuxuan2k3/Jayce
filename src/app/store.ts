@@ -1,8 +1,8 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/store/authSlice.ts';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import testApi from '../features/tests/base/test.api';
-import promptApi from '../features/tests/base/prompt.api';
+import testApi from '../infra-test/base/test.api.ts';
+import promptApi from '../infra-test/base/prompt.api.ts';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import authApi from '../features/auth/api/auth.api.ts';
@@ -12,7 +12,7 @@ import logoutApi from '../features/auth/api/logout.api.ts';
 import interviewApi from '../features/interviews/api/interview.api.ts';
 import fetchSlice from './fetchSlice.ts';
 import deleteExamSlice from '../infra-test/stores/deleteExamSlice.ts';
-import promptTuningApi from '../features/tests/base/prompt-tuning.api.ts';
+import promptTuningApi from '../infra-test/base/prompt-tuning.api.ts';
 import fetchStateSlice from '../infra-test/stores/fetchStateSlice.ts';
 
 

@@ -1,5 +1,5 @@
 import { ExamPersistState } from '../../../../../infra-test/reducers/exam-persist.store'
-import { usePostExamsMutation } from '../../../../../features/tests/api/test.api-gen'
+import { usePostExamsMutation } from '../../../../../infra-test/api/test.api-gen'
 import { useCallback, useEffect, useMemo } from 'react';
 import { examPersistSelectors } from '../../../../../infra-test/reducers/exam-persist.selector';
 import { parseQueryError } from '../../../../../helpers/fetchBaseQuery.error';

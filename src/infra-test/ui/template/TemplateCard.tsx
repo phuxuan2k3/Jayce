@@ -1,8 +1,8 @@
-import { TemplateCore } from "../core/test.model";
+import { TemplateCore } from "../../core/test.model";
 
 type TemplateCardProps = {
 	template: TemplateCore;
-	onGenerate: (templateId: string) => void;
+	onGenerate?: (templateId: string) => void;
 };
 
 const TemplateCard = ({ template, onGenerate }: TemplateCardProps) => (
@@ -28,7 +28,7 @@ const TemplateCard = ({ template, onGenerate }: TemplateCardProps) => (
 				{template.numberOfQuestions} questions • {template.numberOfOptions} options each
 			</span>
 			<button
-				onClick={() => onGenerate(template.id)}
+				onClick={() => onGenerate?.(template.id)}
 				className="px-3 py-1 bg-primary text-white rounded-lg text-sm"
 			>
 				Generate

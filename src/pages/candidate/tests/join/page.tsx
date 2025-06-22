@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import SidebarActions from "../../../../infra-test/ui/sidebar/primitive/SidebarActions";
 import JoinTestSection from "./components/JoinTestSection";
 import ExamInfoDialog from "./components/ExamInfoDialog";
-import { useGetExamsFindQuery } from "../../../../features/tests/api/test.api-gen";
+import { useGetExamsFindQuery } from "../../../../infra-test/api/test.api-gen";
 import { parseQueryError } from "../../../../helpers/fetchBaseQuery.error";
 
 export default function CandidateTestsJoinPage() {

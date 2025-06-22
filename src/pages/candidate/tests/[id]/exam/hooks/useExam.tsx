@@ -1,4 +1,4 @@
-import { useGetExamsByTestIdQuery } from '../../../../../../features/tests/api/test.api-gen';
+import { useGetExamsByTestIdQuery } from '../../../../../../infra-test/api/test.api-gen';
 import useGetUsers from '../../../../../../infra-test/hooks/user/useGetUsers';
 import { useGetExamsByTestIdAttemptsAggregateQuery } from '../../common/apis/attempts.api-enhance';
 

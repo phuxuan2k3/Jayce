@@ -1,4 +1,4 @@
-import { PostPracticesByTestIdFeedbackApiArg, useGetPracticesByTestIdFeedbackQuery, useGetPracticesByTestIdQuery, usePostPracticesByTestIdFeedbackMutation } from '../../../../../../features/tests/api/test.api-gen';
+import { PostPracticesByTestIdFeedbackApiArg, useGetPracticesByTestIdFeedbackQuery, useGetPracticesByTestIdQuery, usePostPracticesByTestIdFeedbackMutation } from '../../../../../../infra-test/api/test.api-gen';
 import { useCallback, useEffect, useState } from 'react';
 import { FeedbackCore } from '../../../../../../infra-test/core/test.model';
 import useGetTestIdParams from '../../../../../../infra-test/hooks/useGetTestIdParams';

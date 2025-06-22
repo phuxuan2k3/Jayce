@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { FetchError } from "../../../../../../../app/server-error";
-import { useGetSelfAttemptsByAttemptIdAnswersQuery, useGetSelfTestsByTestIdQuestionsToDoQuery, useGetSelfTestsByTestIdQuestionsWithAnswersQuery } from "../../../../../../../features/tests/api/test.api-gen"
+import { useGetSelfAttemptsByAttemptIdAnswersQuery, useGetSelfTestsByTestIdQuestionsToDoQuery, useGetSelfTestsByTestIdQuestionsWithAnswersQuery } from "../../../../../../../infra-test/api/test.api-gen"
 import { AttemptCore } from "../../../../../../../infra-test/core/attempt.model";
 import AnswerCard from "./AnswerCard";
 

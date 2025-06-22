@@ -43,808 +43,735 @@
 				"description": "Bearer token for authentication"
 			}
 		},
-		"schemas": {},
-		"parameters": {}
-	},
-	"paths": {
-		"/current/attempts/{attemptId}": {
-			"get": {
-				"tags": [
-					"Current Attempt"
-				],
-				"parameters": [
+		"schemas": {
+			"AnswerForQuestionTypeSchema": {
+				"oneOf": [
 					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "attemptId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": [
-										"object",
-										"null"
-									],
-									"properties": {
-										"id": {
-											"type": "string"
-										},
-										"order": {
-											"type": "integer",
-											"exclusiveMinimum": 0
-										},
-										"testId": {
-											"type": "string"
-										},
-										"candidateId": {
-											"type": "string"
-										},
-										"hasEnded": {
-											"type": "boolean"
-										},
-										"secondsSpent": {
-											"type": "integer",
-											"minimum": 0
-										},
-										"score": {
-											"type": "integer",
-											"minimum": 0
-										},
-										"createdAt": {
-											"type": "string"
-										},
-										"updatedAt": {
-											"type": "string"
-										},
-										"test": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "string"
-												},
-												"authorId": {
-													"type": "string"
-												},
-												"title": {
-													"type": "string"
-												},
-												"description": {
-													"type": "string"
-												},
-												"minutesToAnswer": {
-													"type": "number",
-													"minimum": 1,
-													"maximum": 10000
-												},
-												"language": {
-													"type": "string"
-												},
-												"mode": {
-													"type": "string"
-												},
-												"createdAt": {
-													"type": "string"
-												},
-												"updatedAt": {
-													"type": "string"
-												}
-											},
-											"required": [
-												"id",
-												"authorId",
-												"title",
-												"description",
-												"minutesToAnswer",
-												"language",
-												"mode",
-												"createdAt",
-												"updatedAt"
-											]
-										}
-									},
-									"required": [
-										"id",
-										"order",
-										"testId",
-										"candidateId",
-										"hasEnded",
-										"secondsSpent",
-										"score",
-										"createdAt",
-										"updatedAt",
-										"test"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/current/tests/{testId}": {
-			"get": {
-				"tags": [
-					"Current Attempt"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": [
-										"object",
-										"null"
-									],
-									"properties": {
-										"id": {
-											"type": "string"
-										},
-										"order": {
-											"type": "integer",
-											"exclusiveMinimum": 0
-										},
-										"testId": {
-											"type": "string"
-										},
-										"candidateId": {
-											"type": "string"
-										},
-										"hasEnded": {
-											"type": "boolean"
-										},
-										"secondsSpent": {
-											"type": "integer",
-											"minimum": 0
-										},
-										"score": {
-											"type": "integer",
-											"minimum": 0
-										},
-										"createdAt": {
-											"type": "string"
-										},
-										"updatedAt": {
-											"type": "string"
-										},
-										"test": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "string"
-												},
-												"authorId": {
-													"type": "string"
-												},
-												"title": {
-													"type": "string"
-												},
-												"description": {
-													"type": "string"
-												},
-												"minutesToAnswer": {
-													"type": "number",
-													"minimum": 1,
-													"maximum": 10000
-												},
-												"language": {
-													"type": "string"
-												},
-												"mode": {
-													"type": "string"
-												},
-												"createdAt": {
-													"type": "string"
-												},
-												"updatedAt": {
-													"type": "string"
-												}
-											},
-											"required": [
-												"id",
-												"authorId",
-												"title",
-												"description",
-												"minutesToAnswer",
-												"language",
-												"mode",
-												"createdAt",
-												"updatedAt"
-											]
-										}
-									},
-									"required": [
-										"id",
-										"order",
-										"testId",
-										"candidateId",
-										"hasEnded",
-										"secondsSpent",
-										"score",
-										"createdAt",
-										"updatedAt",
-										"test"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/current/attempts/{attemptId}/answers": {
-			"get": {
-				"tags": [
-					"Current Attempt"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "attemptId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "array",
-									"items": {
-										"type": "object",
-										"properties": {
-											"attemptId": {
-												"type": "string"
-											},
-											"questionId": {
-												"type": "number"
-											},
-											"chosenOption": {
-												"type": "number"
-											}
-										},
-										"required": [
-											"attemptId",
-											"questionId",
-											"chosenOption"
-										]
-									}
-								}
-							}
-						}
-					}
-				}
-			},
-			"patch": {
-				"tags": [
-					"Current Attempt"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "attemptId",
-						"in": "path"
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"questionId": {
-										"type": [
-											"number",
-											"null"
-										]
-									},
-									"chosenOption": {
-										"type": [
-											"number",
-											"null"
-										]
-									}
-								},
-								"required": [
-									"questionId"
+						"type": "object",
+						"properties": {
+							"type": {
+								"type": "string",
+								"enum": [
+									"MCQ"
 								]
+							},
+							"chosenOption": {
+								"type": "number"
 							}
+						},
+						"required": [
+							"type",
+							"chosenOption"
+						]
+					},
+					{
+						"type": "object",
+						"properties": {
+							"type": {
+								"type": "string",
+								"enum": [
+									"LONG_ANSWER"
+								]
+							},
+							"answer": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"type",
+							"answer"
+						]
+					}
+				]
+			},
+			"ExamDetailCommonSchema": {
+				"type": "object",
+				"properties": {
+					"mode": {
+						"type": "string",
+						"enum": [
+							"EXAM"
+						]
+					},
+					"roomId": {
+						"type": "string"
+					},
+					"hasPassword": {
+						"type": "boolean"
+					},
+					"password": {
+						"type": [
+							"string",
+							"null"
+						]
+					},
+					"numberOfAttemptsAllowed": {
+						"type": "integer",
+						"minimum": 0,
+						"default": 1
+					},
+					"numberOfParticipants": {
+						"type": "integer",
+						"minimum": 0,
+						"default": 0
+					},
+					"isAnswerVisible": {
+						"type": "boolean"
+					},
+					"isAllowedToSeeOtherResults": {
+						"type": "boolean"
+					},
+					"openDate": {
+						"type": [
+							"string",
+							"null"
+						]
+					},
+					"closeDate": {
+						"type": [
+							"string",
+							"null"
+						]
+					},
+					"participants": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"isPublic": {
+						"type": "boolean",
+						"default": false
+					}
+				},
+				"required": [
+					"mode",
+					"roomId",
+					"hasPassword",
+					"isAnswerVisible",
+					"isAllowedToSeeOtherResults",
+					"openDate",
+					"closeDate",
+					"participants"
+				]
+			},
+			"PracticeDetailCommonSchema": {
+				"type": "object",
+				"properties": {
+					"mode": {
+						"type": "string",
+						"enum": [
+							"PRACTICE"
+						]
+					},
+					"difficulty": {
+						"type": "string"
+					},
+					"tags": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"numberOfQuestions": {
+						"type": "integer",
+						"exclusiveMinimum": 0
+					},
+					"numberOfOptions": {
+						"type": "integer",
+						"exclusiveMinimum": 0
+					},
+					"outlines": {
+						"type": "array",
+						"items": {
+							"type": "string"
 						}
 					}
 				},
-				"responses": {
-					"200": {
-						"description": "Success"
+				"required": [
+					"mode",
+					"difficulty",
+					"tags",
+					"numberOfQuestions",
+					"numberOfOptions",
+					"outlines"
+				]
+			},
+			"TestDetailCommonSchema": {
+				"oneOf": [
+					{
+						"$ref": "#/components/schemas/ExamDetailCommonSchema"
+					},
+					{
+						"$ref": "#/components/schemas/PracticeDetailCommonSchema"
+					}
+				],
+				"discriminator": {
+					"propertyName": "mode",
+					"mapping": {
+						"EXAM": "#/components/schemas/ExamDetailCommonSchema",
+						"PRACTICE": "#/components/schemas/PracticeDetailCommonSchema"
 					}
 				}
-			}
-		},
-		"/current/attempts/{attemptId}/submit": {
-			"patch": {
-				"tags": [
-					"Current Attempt"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "attemptId",
-						"in": "path"
+			},
+			"TestCoreSchema": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"authorId": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"minutesToAnswer": {
+						"type": "number",
+						"minimum": 1,
+						"maximum": 10000
+					},
+					"language": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					},
+					"mode": {
+						"type": "string",
+						"enum": [
+							"EXAM",
+							"PRACTICE"
+						]
 					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success"
-					}
-				}
-			}
-		},
-		"/exams/{testId}/attempts": {
-			"get": {
-				"tags": [
-					"Attempts of Exam"
-				],
-				"parameters": [
+				},
+				"required": [
+					"id",
+					"authorId",
+					"title",
+					"description",
+					"minutesToAnswer",
+					"language",
+					"createdAt",
+					"updatedAt",
+					"mode"
+				]
+			},
+			"TestFullSchema": {
+				"allOf": [
 					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
+						"$ref": "#/components/schemas/TestCoreSchema"
 					},
 					{
-						"schema": {
-							"type": "number",
-							"minimum": 1,
-							"default": 1
-						},
-						"required": false,
-						"name": "page",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": [
-								"number",
-								"null"
-							],
-							"default": 5
-						},
-						"required": false,
-						"name": "perPage",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "sort",
-						"in": "query"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"page": {
-											"type": "number"
-										},
-										"perPage": {
-											"type": "number"
-										},
-										"total": {
-											"type": "number"
-										},
-										"totalPages": {
-											"type": "number"
-										},
-										"data": {
-											"type": "array",
-											"items": {
-												"type": "object",
-												"properties": {
-													"id": {
-														"type": "string"
-													},
-													"order": {
-														"type": "integer",
-														"exclusiveMinimum": 0
-													},
-													"testId": {
-														"type": "string"
-													},
-													"candidateId": {
-														"type": "string"
-													},
-													"hasEnded": {
-														"type": "boolean"
-													},
-													"secondsSpent": {
-														"type": "integer",
-														"minimum": 0
-													},
-													"score": {
-														"type": "integer",
-														"minimum": 0
-													},
-													"createdAt": {
-														"type": "string"
-													},
-													"updatedAt": {
-														"type": "string"
-													}
-												},
-												"required": [
-													"id",
-													"order",
-													"testId",
-													"candidateId",
-													"hasEnded",
-													"secondsSpent",
-													"score",
-													"createdAt",
-													"updatedAt"
-												]
-											}
-										}
+						"type": "object",
+						"properties": {
+							"_aggregate": {
+								"type": "object",
+								"properties": {
+									"numberOfQuestions": {
+										"type": "integer",
+										"minimum": 0
 									},
-									"required": [
-										"page",
-										"perPage",
-										"total",
-										"totalPages",
-										"data"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/exams/{testId}/attempts/self": {
-			"get": {
-				"tags": [
-					"Attempts of Exam"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					},
-					{
-						"schema": {
-							"type": "number",
-							"minimum": 1,
-							"default": 1
-						},
-						"required": false,
-						"name": "page",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": [
-								"number",
-								"null"
-							],
-							"default": 5
-						},
-						"required": false,
-						"name": "perPage",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "sort",
-						"in": "query"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"page": {
-											"type": "number"
-										},
-										"perPage": {
-											"type": "number"
-										},
-										"total": {
-											"type": "number"
-										},
-										"totalPages": {
-											"type": "number"
-										},
-										"data": {
-											"type": "array",
-											"items": {
-												"type": "object",
-												"properties": {
-													"id": {
-														"type": "string"
-													},
-													"order": {
-														"type": "integer",
-														"exclusiveMinimum": 0
-													},
-													"testId": {
-														"type": "string"
-													},
-													"candidateId": {
-														"type": "string"
-													},
-													"hasEnded": {
-														"type": "boolean"
-													},
-													"secondsSpent": {
-														"type": "integer",
-														"minimum": 0
-													},
-													"score": {
-														"type": "integer",
-														"minimum": 0
-													},
-													"createdAt": {
-														"type": "string"
-													},
-													"updatedAt": {
-														"type": "string"
-													}
-												},
-												"required": [
-													"id",
-													"order",
-													"testId",
-													"candidateId",
-													"hasEnded",
-													"secondsSpent",
-													"score",
-													"createdAt",
-													"updatedAt"
-												]
-											}
-										}
+									"totalPoints": {
+										"type": "integer",
+										"minimum": 0
 									},
-									"required": [
-										"page",
-										"perPage",
-										"total",
-										"totalPages",
-										"data"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/exams/{testId}/attempts/aggregate": {
-			"get": {
-				"tags": [
-					"Attempts of Exam"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"totalParticipants": {
-											"type": "number"
-										},
-										"totalAttempts": {
-											"type": "number"
-										},
-										"averageScore": {
-											"type": "number"
-										},
-										"highestScore": {
-											"type": "number"
-										},
-										"lowestScore": {
-											"type": "number"
-										},
-										"averageTime": {
-											"type": "number"
-										}
+									"totalCandidates": {
+										"type": "integer",
+										"minimum": 0
 									},
-									"required": [
-										"totalParticipants",
-										"totalAttempts",
-										"averageScore",
-										"highestScore",
-										"lowestScore",
-										"averageTime"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/exams/{testId}/participants/aggregate": {
-			"get": {
-				"tags": [
-					"Attempts of Exam"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					},
-					{
-						"schema": {
-							"type": "number",
-							"minimum": 1,
-							"default": 1
-						},
-						"required": false,
-						"name": "page",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": [
-								"number",
-								"null"
-							],
-							"default": 5
-						},
-						"required": false,
-						"name": "perPage",
-						"in": "query"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"page": {
-											"type": "number"
-										},
-										"perPage": {
-											"type": "number"
-										},
-										"total": {
-											"type": "number"
-										},
-										"totalPages": {
-											"type": "number"
-										},
-										"data": {
-											"type": "array",
-											"items": {
-												"type": "object",
-												"properties": {
-													"candidateId": {
-														"type": "string"
-													},
-													"rank": {
-														"type": "number"
-													},
-													"totalAttempts": {
-														"type": "number"
-													},
-													"averageScore": {
-														"type": "number"
-													},
-													"highestScore": {
-														"type": "number"
-													},
-													"lowestScore": {
-														"type": "number"
-													},
-													"averageTime": {
-														"type": "number"
-													}
-												},
-												"required": [
-													"candidateId",
-													"rank",
-													"totalAttempts",
-													"averageScore",
-													"highestScore",
-													"lowestScore",
-													"averageTime"
-												]
-											}
-										}
+									"totalAttempts": {
+										"type": "integer",
+										"minimum": 0
 									},
-									"required": [
-										"page",
-										"perPage",
-										"total",
-										"totalPages",
-										"data"
-									]
-								}
+									"averageScore": {
+										"type": "integer",
+										"minimum": 0
+									},
+									"highestScore": {
+										"type": "integer",
+										"minimum": 0
+									},
+									"lowestScore": {
+										"type": "integer",
+										"minimum": 0
+									},
+									"averageTime": {
+										"type": "integer",
+										"minimum": 0
+									}
+								},
+								"required": [
+									"numberOfQuestions",
+									"totalPoints",
+									"totalCandidates",
+									"totalAttempts",
+									"averageScore",
+									"highestScore",
+									"lowestScore",
+									"averageTime"
+								]
+							},
+							"_detail": {
+								"$ref": "#/components/schemas/TestDetailCommonSchema"
 							}
-						}
+						},
+						"required": [
+							"_aggregate",
+							"_detail"
+						]
 					}
-				}
-			}
-		},
-		"/exams/{testId}/candidate/{candidateId}/attempts/": {
-			"get": {
-				"tags": [
-					"Attempts of Exam"
-				],
-				"parameters": [
-					{
-						"schema": {
+				]
+			},
+			"AttemptCoreSchema": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"order": {
+						"type": "integer",
+						"exclusiveMinimum": 0
+					},
+					"testId": {
+						"type": "string"
+					},
+					"candidateId": {
+						"type": "string"
+					},
+					"hasEnded": {
+						"type": "boolean"
+					},
+					"status": {
+						"type": "string",
+						"enum": [
+							"IN_PROGRESS",
+							"COMPLETED",
+							"GRADED"
+						]
+					},
+					"secondsSpent": {
+						"type": "integer",
+						"minimum": 0
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					},
+					"_aggregate": {
+						"type": "object",
+						"properties": {
+							"points": {
+								"type": "integer",
+								"minimum": 0
+							},
+							"answered": {
+								"type": "integer",
+								"minimum": 0
+							},
+							"answeredCorrect": {
+								"type": "integer",
+								"minimum": 0
+							}
+						},
+						"required": [
+							"points",
+							"answered",
+							"answeredCorrect"
+						]
+					},
+					"_include": {
+						"type": "object",
+						"properties": {
+							"test": {
+								"$ref": "#/components/schemas/TestCoreSchema"
+							}
+						},
+						"required": [
+							"test"
+						]
+					}
+				},
+				"required": [
+					"id",
+					"order",
+					"testId",
+					"candidateId",
+					"hasEnded",
+					"status",
+					"secondsSpent",
+					"createdAt",
+					"updatedAt",
+					"_aggregate",
+					"_include"
+				]
+			},
+			"AnswerCoreSchema": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"attemptId": {
+						"type": "string"
+					},
+					"questionId": {
+						"type": "number"
+					},
+					"pointReceived": {
+						"type": "integer",
+						"minimum": 0,
+						"default": 0
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					},
+					"child": {
+						"$ref": "#/components/schemas/AnswerForQuestionTypeSchema"
+					}
+				},
+				"required": [
+					"id",
+					"attemptId",
+					"questionId",
+					"createdAt",
+					"updatedAt",
+					"child"
+				]
+			},
+			"FeedbackCoreSchema": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"testId": {
+						"type": "string"
+					},
+					"rating": {
+						"type": "number",
+						"minimum": 1,
+						"maximum": 10
+					},
+					"problems": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"enum": [
+								"inaccurate",
+								"un-related",
+								"poor content",
+								"incomplete",
+								"repeated",
+								"error",
+								"other",
+								""
+							]
+						},
+						"default": []
+					},
+					"comment": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"testId",
+					"rating",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"TemplateCoreSchema": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"language": {
+						"type": "string"
+					},
+					"minutesToAnswer": {
+						"type": "number",
+						"minimum": 1,
+						"maximum": 10000
+					},
+					"difficulty": {
+						"type": "string"
+					},
+					"tags": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"numberOfQuestions": {
+						"type": "number"
+					},
+					"numberOfOptions": {
+						"type": "number"
+					},
+					"outlines": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"userId",
+					"name",
+					"title",
+					"description",
+					"language",
+					"minutesToAnswer",
+					"difficulty",
+					"tags",
+					"numberOfQuestions",
+					"numberOfOptions",
+					"outlines",
+					"createdAt",
+					"updatedAt"
+				]
+			},
+			"CandidateCoreSchema": {
+				"type": "object",
+				"properties": {
+					"candidateId": {
+						"type": "string"
+					},
+					"_aggregate": {
+						"type": "object",
+						"properties": {
+							"rank": {
+								"type": "integer",
+								"minimum": 0
+							},
+							"totalAttempts": {
+								"type": "integer",
+								"minimum": 0
+							},
+							"averageScore": {
+								"type": "integer",
+								"minimum": 0
+							},
+							"highestScore": {
+								"type": "integer",
+								"minimum": 0
+							},
+							"lowestScore": {
+								"type": "integer",
+								"minimum": 0
+							},
+							"averageTime": {
+								"type": "integer",
+								"minimum": 0
+							}
+						},
+						"required": [
+							"rank",
+							"totalAttempts",
+							"averageScore",
+							"highestScore",
+							"lowestScore",
+							"averageTime"
+						]
+					}
+				},
+				"required": [
+					"candidateId",
+					"_aggregate"
+				]
+			},
+			"MCQDetailCommonSchema": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"enum": [
+							"MCQ"
+						]
+					},
+					"options": {
+						"type": "array",
+						"items": {
 							"type": "string"
 						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
+						"minItems": 2,
+						"maxItems": 10
 					},
+					"correctOption": {
+						"type": [
+							"integer",
+							"null"
+						],
+						"minimum": 0
+					}
+				},
+				"required": [
+					"type",
+					"options",
+					"correctOption"
+				]
+			},
+			"LongAnswerDetailCommonSchema": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"enum": [
+							"LONG_ANSWER"
+						]
+					},
+					"imageLinks": {
+						"type": [
+							"array",
+							"null"
+						],
+						"items": {
+							"type": "string"
+						}
+					},
+					"extraText": {
+						"type": [
+							"string",
+							"null"
+						]
+					},
+					"correctAnswer": {
+						"type": [
+							"string",
+							"null"
+						]
+					}
+				},
+				"required": [
+					"type",
+					"correctAnswer"
+				]
+			},
+			"QuestionDetailCommonSchema": {
+				"oneOf": [
+					{
+						"$ref": "#/components/schemas/MCQDetailCommonSchema"
+					},
+					{
+						"$ref": "#/components/schemas/LongAnswerDetailCommonSchema"
+					}
+				],
+				"discriminator": {
+					"propertyName": "type",
+					"mapping": {
+						"MCQ": "#/components/schemas/MCQDetailCommonSchema",
+						"LONG_ANSWER": "#/components/schemas/LongAnswerDetailCommonSchema"
+					}
+				}
+			},
+			"QuestionCoreSchema": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "number"
+					},
+					"testId": {
+						"type": "string"
+					},
+					"text": {
+						"type": "string"
+					},
+					"points": {
+						"type": "integer",
+						"minimum": 0
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"MCQ",
+							"LONG_ANSWER"
+						]
+					},
+					"detail": {
+						"$ref": "#/components/schemas/QuestionDetailCommonSchema"
+					},
+					"_aggregate_test": {
+						"type": "object",
+						"properties": {
+							"numberOfAnswers": {
+								"type": "integer",
+								"minimum": 0
+							},
+							"numberOfCorrectAnswers": {
+								"type": "integer",
+								"minimum": 0
+							},
+							"averageScore": {
+								"type": "integer",
+								"minimum": 0
+							}
+						},
+						"required": [
+							"numberOfAnswers",
+							"numberOfCorrectAnswers",
+							"averageScore"
+						]
+					}
+				},
+				"required": [
+					"id",
+					"testId",
+					"text",
+					"points",
+					"type",
+					"detail",
+					"_aggregate_test"
+				]
+			}
+		},
+		"parameters": {}
+	},
+	"paths": {
+		"/candidates/{candidateId}/attempts": {
+			"get": {
+				"tags": [
+					"Candidates"
+				],
+				"parameters": [
 					{
 						"schema": {
 							"type": "string"
@@ -869,7 +796,7 @@
 								"number",
 								"null"
 							],
-							"default": 5
+							"default": 100
 						},
 						"required": false,
 						"name": "perPage",
@@ -879,8 +806,8 @@
 						"schema": {
 							"type": "string"
 						},
-						"required": true,
-						"name": "sort",
+						"required": false,
+						"name": "testId",
 						"in": "query"
 					}
 				],
@@ -907,50 +834,7 @@
 										"data": {
 											"type": "array",
 											"items": {
-												"type": "object",
-												"properties": {
-													"id": {
-														"type": "string"
-													},
-													"order": {
-														"type": "integer",
-														"exclusiveMinimum": 0
-													},
-													"testId": {
-														"type": "string"
-													},
-													"candidateId": {
-														"type": "string"
-													},
-													"hasEnded": {
-														"type": "boolean"
-													},
-													"secondsSpent": {
-														"type": "integer",
-														"minimum": 0
-													},
-													"score": {
-														"type": "integer",
-														"minimum": 0
-													},
-													"createdAt": {
-														"type": "string"
-													},
-													"updatedAt": {
-														"type": "string"
-													}
-												},
-												"required": [
-													"id",
-													"order",
-													"testId",
-													"candidateId",
-													"hasEnded",
-													"secondsSpent",
-													"score",
-													"createdAt",
-													"updatedAt"
-												]
+												"$ref": "#/components/schemas/AttemptCoreSchema"
 											}
 										}
 									},
@@ -968,10 +852,10 @@
 				}
 			}
 		},
-		"/exams/{testId}/candidate/{candidateId}/attempts/aggregate": {
+		"/feedbacks": {
 			"get": {
 				"tags": [
-					"Attempts of Exam"
+					"Feedbacks"
 				],
 				"parameters": [
 					{
@@ -980,658 +864,41 @@
 						},
 						"required": true,
 						"name": "testId",
-						"in": "path"
-					},
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "candidateId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"candidateId": {
-											"type": "string"
-										},
-										"rank": {
-											"type": "number"
-										},
-										"totalAttempts": {
-											"type": "number"
-										},
-										"averageScore": {
-											"type": "number"
-										},
-										"highestScore": {
-											"type": "number"
-										},
-										"lowestScore": {
-											"type": "number"
-										},
-										"averageTime": {
-											"type": "number"
-										}
-									},
-									"required": [
-										"candidateId",
-										"rank",
-										"totalAttempts",
-										"averageScore",
-										"highestScore",
-										"lowestScore",
-										"averageTime"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/exams/attempts/{attemptId}": {
-			"get": {
-				"tags": [
-					"Attempts of Exam"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "attemptId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"id": {
-											"type": "string"
-										},
-										"order": {
-											"type": "integer",
-											"exclusiveMinimum": 0
-										},
-										"testId": {
-											"type": "string"
-										},
-										"candidateId": {
-											"type": "string"
-										},
-										"hasEnded": {
-											"type": "boolean"
-										},
-										"secondsSpent": {
-											"type": "integer",
-											"minimum": 0
-										},
-										"score": {
-											"type": "integer",
-											"minimum": 0
-										},
-										"createdAt": {
-											"type": "string"
-										},
-										"updatedAt": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"id",
-										"order",
-										"testId",
-										"candidateId",
-										"hasEnded",
-										"secondsSpent",
-										"score",
-										"createdAt",
-										"updatedAt"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/exams/attempts/{attemptId}/aggregate": {
-			"get": {
-				"tags": [
-					"Attempts of Exam"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "attemptId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"answered": {
-											"type": "number"
-										},
-										"answeredCorrect": {
-											"type": "number"
-										}
-									},
-									"required": [
-										"answered",
-										"answeredCorrect"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/exams/attempts/{attemptId}/answers": {
-			"get": {
-				"tags": [
-					"Attempts of Exam"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "attemptId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "array",
-									"items": {
-										"type": "object",
-										"properties": {
-											"attemptId": {
-												"type": "string"
-											},
-											"questionId": {
-												"type": "number"
-											},
-											"chosenOption": {
-												"type": "number"
-											}
-										},
-										"required": [
-											"attemptId",
-											"questionId",
-											"chosenOption"
-										]
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/exams/{testId}/attempts/start": {
-			"post": {
-				"tags": [
-					"Attempts of Exam"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success"
-					}
-				}
-			}
-		},
-		"/practices/{testId}/attempts": {
-			"get": {
-				"tags": [
-					"Attempts of Practice"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					},
-					{
-						"schema": {
-							"type": "number",
-							"minimum": 1,
-							"default": 1
-						},
-						"required": false,
-						"name": "page",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": [
-								"number",
-								"null"
-							],
-							"default": 5
-						},
-						"required": false,
-						"name": "perPage",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "sort",
-						"in": "query"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"page": {
-											"type": "number"
-										},
-										"perPage": {
-											"type": "number"
-										},
-										"total": {
-											"type": "number"
-										},
-										"totalPages": {
-											"type": "number"
-										},
-										"data": {
-											"type": "array",
-											"items": {
-												"type": "object",
-												"properties": {
-													"id": {
-														"type": "string"
-													},
-													"order": {
-														"type": "integer",
-														"exclusiveMinimum": 0
-													},
-													"testId": {
-														"type": "string"
-													},
-													"candidateId": {
-														"type": "string"
-													},
-													"hasEnded": {
-														"type": "boolean"
-													},
-													"secondsSpent": {
-														"type": "integer",
-														"minimum": 0
-													},
-													"score": {
-														"type": "integer",
-														"minimum": 0
-													},
-													"createdAt": {
-														"type": "string"
-													},
-													"updatedAt": {
-														"type": "string"
-													}
-												},
-												"required": [
-													"id",
-													"order",
-													"testId",
-													"candidateId",
-													"hasEnded",
-													"secondsSpent",
-													"score",
-													"createdAt",
-													"updatedAt"
-												]
-											}
-										}
-									},
-									"required": [
-										"page",
-										"perPage",
-										"total",
-										"totalPages",
-										"data"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/practices/{testId}/attempts/aggregate": {
-			"get": {
-				"tags": [
-					"Attempts of Practice"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"totalParticipants": {
-											"type": "number"
-										},
-										"totalAttempts": {
-											"type": "number"
-										},
-										"averageScore": {
-											"type": "number"
-										},
-										"highestScore": {
-											"type": "number"
-										},
-										"lowestScore": {
-											"type": "number"
-										},
-										"averageTime": {
-											"type": "number"
-										}
-									},
-									"required": [
-										"totalParticipants",
-										"totalAttempts",
-										"averageScore",
-										"highestScore",
-										"lowestScore",
-										"averageTime"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/practices/attempts/{attemptId}": {
-			"get": {
-				"tags": [
-					"Attempts of Practice"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "attemptId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"id": {
-											"type": "string"
-										},
-										"order": {
-											"type": "integer",
-											"exclusiveMinimum": 0
-										},
-										"testId": {
-											"type": "string"
-										},
-										"candidateId": {
-											"type": "string"
-										},
-										"hasEnded": {
-											"type": "boolean"
-										},
-										"secondsSpent": {
-											"type": "integer",
-											"minimum": 0
-										},
-										"score": {
-											"type": "integer",
-											"minimum": 0
-										},
-										"createdAt": {
-											"type": "string"
-										},
-										"updatedAt": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"id",
-										"order",
-										"testId",
-										"candidateId",
-										"hasEnded",
-										"secondsSpent",
-										"score",
-										"createdAt",
-										"updatedAt"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/practices/attempts/{attemptId}/aggregate": {
-			"get": {
-				"tags": [
-					"Attempts of Practice"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "attemptId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"answered": {
-											"type": "number"
-										},
-										"answeredCorrect": {
-											"type": "number"
-										}
-									},
-									"required": [
-										"answered",
-										"answeredCorrect"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/practices/attempts/{attemptId}/answers": {
-			"get": {
-				"tags": [
-					"Attempts of Practice"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "attemptId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "array",
-									"items": {
-										"type": "object",
-										"properties": {
-											"attemptId": {
-												"type": "string"
-											},
-											"questionId": {
-												"type": "number"
-											},
-											"chosenOption": {
-												"type": "number"
-											}
-										},
-										"required": [
-											"attemptId",
-											"questionId",
-											"chosenOption"
-										]
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/practices/{testId}/attempts/start": {
-			"post": {
-				"tags": [
-					"Attempts of Practice"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success"
-					}
-				}
-			}
-		},
-		"/exams": {
-			"get": {
-				"tags": [
-					"Exam"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "number",
-							"minimum": 1,
-							"default": 1
-						},
-						"required": false,
-						"name": "page",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": [
-								"number",
-								"null"
-							],
-							"default": 5
-						},
-						"required": false,
-						"name": "perPage",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": false,
-						"name": "searchTitle",
 						"in": "query"
 					},
 					{
 						"schema": {
 							"type": "string",
-							"default": "-createdAt"
+							"enum": [
+								"asc",
+								"desc"
+							]
 						},
 						"required": false,
-						"name": "sort",
+						"name": "sortByCreatedAt",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": [
+								"asc",
+								"desc"
+							]
+						},
+						"required": false,
+						"name": "sortByRating",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"required": false,
+						"name": "filterByProblems",
 						"in": "query"
 					}
 				],
@@ -1658,78 +925,7 @@
 										"data": {
 											"type": "array",
 											"items": {
-												"type": "object",
-												"properties": {
-													"id": {
-														"type": "string"
-													},
-													"authorId": {
-														"type": "string"
-													},
-													"title": {
-														"type": "string"
-													},
-													"description": {
-														"type": "string"
-													},
-													"minutesToAnswer": {
-														"type": "number",
-														"minimum": 1,
-														"maximum": 10000
-													},
-													"language": {
-														"type": "string"
-													},
-													"mode": {
-														"type": "string"
-													},
-													"createdAt": {
-														"type": "string"
-													},
-													"updatedAt": {
-														"type": "string"
-													},
-													"hasPassword": {
-														"type": "boolean"
-													},
-													"roomId": {
-														"type": "string"
-													},
-													"numberOfAttemptsAllowed": {
-														"type": "integer",
-														"exclusiveMinimum": 0
-													},
-													"isAnswerVisible": {
-														"type": "boolean"
-													},
-													"isAllowedToSeeOtherResults": {
-														"type": "boolean"
-													},
-													"openDate": {
-														"type": "string"
-													},
-													"closeDate": {
-														"type": "string"
-													}
-												},
-												"required": [
-													"id",
-													"authorId",
-													"title",
-													"description",
-													"minutesToAnswer",
-													"language",
-													"mode",
-													"createdAt",
-													"updatedAt",
-													"hasPassword",
-													"roomId",
-													"numberOfAttemptsAllowed",
-													"isAnswerVisible",
-													"isAllowedToSeeOtherResults",
-													"openDate",
-													"closeDate"
-												]
+												"$ref": "#/components/schemas/FeedbackCoreSchema"
 											}
 										}
 									},
@@ -1748,7 +944,7 @@
 			},
 			"post": {
 				"tags": [
-					"Exam"
+					"Feedbacks"
 				],
 				"requestBody": {
 					"required": true,
@@ -1757,104 +953,38 @@
 							"schema": {
 								"type": "object",
 								"properties": {
-									"test": {
-										"type": "object",
-										"properties": {
-											"title": {
-												"type": "string"
-											},
-											"description": {
-												"type": "string"
-											},
-											"minutesToAnswer": {
-												"type": "number",
-												"minimum": 1,
-												"maximum": 10000
-											},
-											"language": {
-												"type": "string"
-											},
-											"mode": {
-												"type": "string"
-											}
-										},
-										"required": [
-											"title",
-											"description",
-											"minutesToAnswer",
-											"language",
-											"mode"
-										]
+									"testId": {
+										"type": "string"
 									},
-									"questions": {
+									"rating": {
+										"type": "number",
+										"minimum": 1,
+										"maximum": 10
+									},
+									"problems": {
 										"type": "array",
 										"items": {
-											"type": "object",
-											"properties": {
-												"text": {
-													"type": "string"
-												},
-												"options": {
-													"type": "array",
-													"items": {
-														"type": "string"
-													}
-												},
-												"points": {
-													"type": "number"
-												},
-												"correctOption": {
-													"type": "number"
-												}
-											},
-											"required": [
-												"text",
-												"options",
-												"points",
-												"correctOption"
+											"type": "string",
+											"enum": [
+												"inaccurate",
+												"un-related",
+												"poor content",
+												"incomplete",
+												"repeated",
+												"error",
+												"other",
+												""
 											]
-										}
-									},
-									"exam": {
-										"type": "object",
-										"properties": {
-											"roomId": {
-												"type": "string"
-											},
-											"numberOfAttemptsAllowed": {
-												"type": "integer",
-												"exclusiveMinimum": 0
-											},
-											"isAnswerVisible": {
-												"type": "boolean"
-											},
-											"isAllowedToSeeOtherResults": {
-												"type": "boolean"
-											},
-											"openDate": {
-												"type": "string"
-											},
-											"closeDate": {
-												"type": "string"
-											},
-											"password": {
-												"type": "string"
-											}
 										},
-										"required": [
-											"roomId",
-											"numberOfAttemptsAllowed",
-											"isAnswerVisible",
-											"isAllowedToSeeOtherResults",
-											"openDate",
-											"closeDate"
-										]
+										"default": []
+									},
+									"comment": {
+										"type": "string"
 									}
 								},
 								"required": [
-									"test",
-									"questions",
-									"exam"
+									"testId",
+									"rating"
 								]
 							}
 						}
@@ -1862,30 +992,15 @@
 				},
 				"responses": {
 					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"testId": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"testId"
-									]
-								}
-							}
-						}
+						"description": "Success"
 					}
 				}
 			}
 		},
-		"/exams/find": {
+		"/feedbacks/{feedbackId}": {
 			"get": {
 				"tags": [
-					"Exam"
+					"Feedbacks"
 				],
 				"parameters": [
 					{
@@ -1893,111 +1008,7 @@
 							"type": "string"
 						},
 						"required": true,
-						"name": "roomId",
-						"in": "query"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"id": {
-											"type": "string"
-										},
-										"authorId": {
-											"type": "string"
-										},
-										"title": {
-											"type": "string"
-										},
-										"description": {
-											"type": "string"
-										},
-										"minutesToAnswer": {
-											"type": "number",
-											"minimum": 1,
-											"maximum": 10000
-										},
-										"language": {
-											"type": "string"
-										},
-										"mode": {
-											"type": "string"
-										},
-										"createdAt": {
-											"type": "string"
-										},
-										"updatedAt": {
-											"type": "string"
-										},
-										"hasPassword": {
-											"type": "boolean"
-										},
-										"roomId": {
-											"type": "string"
-										},
-										"numberOfAttemptsAllowed": {
-											"type": "integer",
-											"exclusiveMinimum": 0
-										},
-										"isAnswerVisible": {
-											"type": "boolean"
-										},
-										"isAllowedToSeeOtherResults": {
-											"type": "boolean"
-										},
-										"openDate": {
-											"type": "string"
-										},
-										"closeDate": {
-											"type": "string"
-										},
-										"hasJoined": {
-											"type": "boolean"
-										}
-									},
-									"required": [
-										"id",
-										"authorId",
-										"title",
-										"description",
-										"minutesToAnswer",
-										"language",
-										"mode",
-										"createdAt",
-										"updatedAt",
-										"hasPassword",
-										"roomId",
-										"numberOfAttemptsAllowed",
-										"isAnswerVisible",
-										"isAllowedToSeeOtherResults",
-										"openDate",
-										"closeDate",
-										"hasJoined"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/exams/{testId}": {
-			"get": {
-				"tags": [
-					"Exam"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
+						"name": "feedbackId",
 						"in": "path"
 					}
 				],
@@ -2007,78 +1018,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "object",
-									"properties": {
-										"id": {
-											"type": "string"
-										},
-										"authorId": {
-											"type": "string"
-										},
-										"title": {
-											"type": "string"
-										},
-										"description": {
-											"type": "string"
-										},
-										"minutesToAnswer": {
-											"type": "number",
-											"minimum": 1,
-											"maximum": 10000
-										},
-										"language": {
-											"type": "string"
-										},
-										"mode": {
-											"type": "string"
-										},
-										"createdAt": {
-											"type": "string"
-										},
-										"updatedAt": {
-											"type": "string"
-										},
-										"hasPassword": {
-											"type": "boolean"
-										},
-										"roomId": {
-											"type": "string"
-										},
-										"numberOfAttemptsAllowed": {
-											"type": "integer",
-											"exclusiveMinimum": 0
-										},
-										"isAnswerVisible": {
-											"type": "boolean"
-										},
-										"isAllowedToSeeOtherResults": {
-											"type": "boolean"
-										},
-										"openDate": {
-											"type": "string"
-										},
-										"closeDate": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"id",
-										"authorId",
-										"title",
-										"description",
-										"minutesToAnswer",
-										"language",
-										"mode",
-										"createdAt",
-										"updatedAt",
-										"hasPassword",
-										"roomId",
-										"numberOfAttemptsAllowed",
-										"isAnswerVisible",
-										"isAllowedToSeeOtherResults",
-										"openDate",
-										"closeDate"
-									]
+									"$ref": "#/components/schemas/FeedbackCoreSchema"
 								}
 							}
 						}
@@ -2087,7 +1027,7 @@
 			},
 			"put": {
 				"tags": [
-					"Exam"
+					"Feedbacks"
 				],
 				"parameters": [
 					{
@@ -2095,7 +1035,7 @@
 							"type": "string"
 						},
 						"required": true,
-						"name": "testId",
+						"name": "feedbackId",
 						"in": "path"
 					}
 				],
@@ -2106,108 +1046,38 @@
 							"schema": {
 								"type": "object",
 								"properties": {
-									"test": {
-										"type": "object",
-										"properties": {
-											"title": {
-												"type": "string"
-											},
-											"description": {
-												"type": "string"
-											},
-											"minutesToAnswer": {
-												"type": "number",
-												"minimum": 1,
-												"maximum": 10000
-											},
-											"language": {
-												"type": "string"
-											},
-											"mode": {
-												"type": "string"
-											}
-										},
-										"required": [
-											"title",
-											"description",
-											"minutesToAnswer",
-											"language",
-											"mode"
-										]
+									"testId": {
+										"type": "string"
 									},
-									"questions": {
+									"rating": {
+										"type": "number",
+										"minimum": 1,
+										"maximum": 10
+									},
+									"problems": {
 										"type": "array",
 										"items": {
-											"type": "object",
-											"properties": {
-												"text": {
-													"type": "string"
-												},
-												"options": {
-													"type": "array",
-													"items": {
-														"type": "string"
-													}
-												},
-												"points": {
-													"type": "number"
-												},
-												"correctOption": {
-													"type": "number"
-												}
-											},
-											"required": [
-												"text",
-												"options",
-												"points",
-												"correctOption"
+											"type": "string",
+											"enum": [
+												"inaccurate",
+												"un-related",
+												"poor content",
+												"incomplete",
+												"repeated",
+												"error",
+												"other",
+												""
 											]
-										}
-									},
-									"exam": {
-										"type": "object",
-										"properties": {
-											"roomId": {
-												"type": "string"
-											},
-											"numberOfAttemptsAllowed": {
-												"type": "integer",
-												"exclusiveMinimum": 0
-											},
-											"isAnswerVisible": {
-												"type": "boolean"
-											},
-											"isAllowedToSeeOtherResults": {
-												"type": "boolean"
-											},
-											"openDate": {
-												"type": "string"
-											},
-											"closeDate": {
-												"type": "string"
-											},
-											"password": {
-												"type": "string"
-											}
 										},
-										"required": [
-											"roomId",
-											"numberOfAttemptsAllowed",
-											"isAnswerVisible",
-											"isAllowedToSeeOtherResults",
-											"openDate",
-											"closeDate"
-										]
+										"default": []
 									},
-									"testId": {
+									"comment": {
 										"type": "string"
 									}
 								},
 								"required": [
-									"test",
-									"questions",
-									"exam",
-									"testId"
+									"testId",
+									"rating"
 								]
 							}
 						}
@@ -2221,7 +1091,7 @@
 			},
 			"delete": {
 				"tags": [
-					"Exam"
+					"Feedbacks"
 				],
 				"parameters": [
 					{
@@ -2229,333 +1099,10 @@
 							"type": "string"
 						},
 						"required": true,
-						"name": "testId",
+						"name": "feedbackId",
 						"in": "path"
 					}
 				],
-				"responses": {
-					"200": {
-						"description": "Success"
-					}
-				}
-			}
-		},
-		"/exams/{testId}/aggregate": {
-			"get": {
-				"tags": [
-					"Exam"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"numberOfQuestions": {
-											"type": "number"
-										},
-										"totalPoints": {
-											"type": "number"
-										}
-									},
-									"required": [
-										"numberOfQuestions",
-										"totalPoints"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/exams/{testId}/participants": {
-			"get": {
-				"tags": [
-					"Exam"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					},
-					{
-						"schema": {
-							"type": "number",
-							"default": 1
-						},
-						"required": false,
-						"name": "page",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": "number",
-							"default": 10
-						},
-						"required": false,
-						"name": "perPage",
-						"in": "query"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"page": {
-											"type": "number"
-										},
-										"perPage": {
-											"type": "number"
-										},
-										"total": {
-											"type": "number"
-										},
-										"totalPages": {
-											"type": "number"
-										},
-										"data": {
-											"type": "array",
-											"items": {
-												"type": "string"
-											}
-										}
-									},
-									"required": [
-										"page",
-										"perPage",
-										"total",
-										"totalPages",
-										"data"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/exams/{testId}/questions-to-do": {
-			"get": {
-				"tags": [
-					"Exam"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "array",
-									"items": {
-										"type": "object",
-										"properties": {
-											"id": {
-												"type": "number"
-											},
-											"testId": {
-												"type": "string"
-											},
-											"text": {
-												"type": "string"
-											},
-											"options": {
-												"type": "array",
-												"items": {
-													"type": "string"
-												}
-											},
-											"points": {
-												"type": "number"
-											}
-										},
-										"required": [
-											"id",
-											"testId",
-											"text",
-											"options",
-											"points"
-										]
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/exams/{testId}/questions-with-answer": {
-			"get": {
-				"tags": [
-					"Exam"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "array",
-									"items": {
-										"type": "object",
-										"properties": {
-											"id": {
-												"type": "number"
-											},
-											"testId": {
-												"type": "string"
-											},
-											"text": {
-												"type": "string"
-											},
-											"options": {
-												"type": "array",
-												"items": {
-													"type": "string"
-												}
-											},
-											"points": {
-												"type": "number"
-											},
-											"correctOption": {
-												"type": "number"
-											}
-										},
-										"required": [
-											"id",
-											"testId",
-											"text",
-											"options",
-											"points",
-											"correctOption"
-										]
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/exams/{testId}/questions-aggregate": {
-			"get": {
-				"tags": [
-					"Exam"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "array",
-									"items": {
-										"type": "object",
-										"properties": {
-											"questionId": {
-												"type": "number"
-											},
-											"numberOfAnswers": {
-												"type": "number"
-											},
-											"numberOfCorrectAnswers": {
-												"type": "number"
-											},
-											"averagePoints": {
-												"type": "number"
-											}
-										},
-										"required": [
-											"questionId",
-											"numberOfAnswers",
-											"numberOfCorrectAnswers",
-											"averagePoints"
-										]
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/exams/join": {
-			"post": {
-				"summary": "Join exam with password (optional)",
-				"tags": [
-					"Exam"
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"testId": {
-										"type": "string"
-									},
-									"password": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"testId"
-								]
-							}
-						}
-					}
-				},
 				"responses": {
 					"200": {
 						"description": "Success"
@@ -2566,17 +1113,9 @@
 		"/templates": {
 			"get": {
 				"tags": [
-					"Template"
+					"Templates"
 				],
 				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": false,
-						"name": "searchName",
-						"in": "query"
-					},
 					{
 						"schema": {
 							"type": "number",
@@ -2593,10 +1132,64 @@
 								"number",
 								"null"
 							],
-							"default": 5
+							"default": 100
 						},
 						"required": false,
 						"name": "perPage",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": false,
+						"name": "search",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": [
+								"asc",
+								"desc"
+							]
+						},
+						"required": false,
+						"name": "sortByCreatedAt",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": [
+								"asc",
+								"desc"
+							]
+						},
+						"required": false,
+						"name": "sortByName",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"required": false,
+						"name": "filterTags",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"required": false,
+						"name": "filterDifficulty",
 						"in": "query"
 					}
 				],
@@ -2623,75 +1216,7 @@
 										"data": {
 											"type": "array",
 											"items": {
-												"type": "object",
-												"properties": {
-													"id": {
-														"type": "string"
-													},
-													"userId": {
-														"type": "string"
-													},
-													"name": {
-														"type": "string"
-													},
-													"title": {
-														"type": "string"
-													},
-													"description": {
-														"type": "string"
-													},
-													"language": {
-														"type": "string"
-													},
-													"minutesToAnswer": {
-														"type": "number",
-														"minimum": 1,
-														"maximum": 10000
-													},
-													"difficulty": {
-														"type": "string"
-													},
-													"tags": {
-														"type": "array",
-														"items": {
-															"type": "string"
-														}
-													},
-													"numberOfQuestions": {
-														"type": "number"
-													},
-													"numberOfOptions": {
-														"type": "number"
-													},
-													"outlines": {
-														"type": "array",
-														"items": {
-															"type": "string"
-														}
-													},
-													"createdAt": {
-														"type": "string"
-													},
-													"updatedAt": {
-														"type": "string"
-													}
-												},
-												"required": [
-													"id",
-													"userId",
-													"name",
-													"title",
-													"description",
-													"language",
-													"minutesToAnswer",
-													"difficulty",
-													"tags",
-													"numberOfQuestions",
-													"numberOfOptions",
-													"outlines",
-													"createdAt",
-													"updatedAt"
-												]
+												"$ref": "#/components/schemas/TemplateCoreSchema"
 											}
 										}
 									},
@@ -2710,7 +1235,7 @@
 			},
 			"post": {
 				"tags": [
-					"Template"
+					"Templates"
 				],
 				"requestBody": {
 					"required": true,
@@ -2799,7 +1324,7 @@
 		"/templates/{templateId}": {
 			"get": {
 				"tags": [
-					"Template"
+					"Templates"
 				],
 				"parameters": [
 					{
@@ -2817,75 +1342,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "object",
-									"properties": {
-										"id": {
-											"type": "string"
-										},
-										"userId": {
-											"type": "string"
-										},
-										"name": {
-											"type": "string"
-										},
-										"title": {
-											"type": "string"
-										},
-										"description": {
-											"type": "string"
-										},
-										"language": {
-											"type": "string"
-										},
-										"minutesToAnswer": {
-											"type": "number",
-											"minimum": 1,
-											"maximum": 10000
-										},
-										"difficulty": {
-											"type": "string"
-										},
-										"tags": {
-											"type": "array",
-											"items": {
-												"type": "string"
-											}
-										},
-										"numberOfQuestions": {
-											"type": "number"
-										},
-										"numberOfOptions": {
-											"type": "number"
-										},
-										"outlines": {
-											"type": "array",
-											"items": {
-												"type": "string"
-											}
-										},
-										"createdAt": {
-											"type": "string"
-										},
-										"updatedAt": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"id",
-										"userId",
-										"name",
-										"title",
-										"description",
-										"language",
-										"minutesToAnswer",
-										"difficulty",
-										"tags",
-										"numberOfQuestions",
-										"numberOfOptions",
-										"outlines",
-										"createdAt",
-										"updatedAt"
-									]
+									"$ref": "#/components/schemas/TemplateCoreSchema"
 								}
 							}
 						}
@@ -2894,7 +1351,7 @@
 			},
 			"put": {
 				"tags": [
-					"Template"
+					"Templates"
 				],
 				"parameters": [
 					{
@@ -2951,7 +1408,19 @@
 											"type": "string"
 										}
 									}
-								}
+								},
+								"required": [
+									"name",
+									"title",
+									"description",
+									"language",
+									"minutesToAnswer",
+									"difficulty",
+									"tags",
+									"numberOfQuestions",
+									"numberOfOptions",
+									"outlines"
+								]
 							}
 						}
 					}
@@ -2964,7 +1433,7 @@
 			},
 			"delete": {
 				"tags": [
-					"Template"
+					"Templates"
 				],
 				"parameters": [
 					{
@@ -2983,10 +1452,10 @@
 				}
 			}
 		},
-		"/practices": {
+		"/tests": {
 			"get": {
 				"tags": [
-					"Practice"
+					"Tests"
 				],
 				"parameters": [
 					{
@@ -3005,10 +1474,38 @@
 								"number",
 								"null"
 							],
-							"default": 5
+							"default": 100
 						},
 						"required": false,
 						"name": "perPage",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": [
+								"EXAM",
+								"PRACTICE"
+							]
+						},
+						"required": false,
+						"name": "mode",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": false,
+						"name": "authorId",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": false,
+						"name": "candidateId",
 						"in": "query"
 					},
 					{
@@ -3022,10 +1519,25 @@
 					{
 						"schema": {
 							"type": "string",
-							"default": "-createdAt"
+							"enum": [
+								"asc",
+								"desc"
+							]
 						},
 						"required": false,
-						"name": "sort",
+						"name": "sortCreatedAt",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": [
+								"asc",
+								"desc"
+							]
+						},
+						"required": false,
+						"name": "sortTitle",
 						"in": "query"
 					}
 				],
@@ -3052,82 +1564,7 @@
 										"data": {
 											"type": "array",
 											"items": {
-												"type": "object",
-												"properties": {
-													"id": {
-														"type": "string"
-													},
-													"authorId": {
-														"type": "string"
-													},
-													"title": {
-														"type": "string"
-													},
-													"description": {
-														"type": "string"
-													},
-													"minutesToAnswer": {
-														"type": "number",
-														"minimum": 1,
-														"maximum": 10000
-													},
-													"language": {
-														"type": "string"
-													},
-													"mode": {
-														"type": "string"
-													},
-													"createdAt": {
-														"type": "string"
-													},
-													"updatedAt": {
-														"type": "string"
-													},
-													"difficulty": {
-														"type": "string",
-														"enum": [
-															"easy",
-															"medium",
-															"hard"
-														]
-													},
-													"tags": {
-														"type": "array",
-														"items": {
-															"type": "string"
-														}
-													},
-													"numberOfQuestions": {
-														"type": "integer",
-														"exclusiveMinimum": 0
-													},
-													"numberOfOptions": {
-														"type": "integer",
-														"exclusiveMinimum": 0
-													},
-													"outlines": {
-														"type": "array",
-														"items": {
-															"type": "string"
-														}
-													}
-												},
-												"required": [
-													"id",
-													"authorId",
-													"title",
-													"description",
-													"minutesToAnswer",
-													"language",
-													"mode",
-													"createdAt",
-													"updatedAt",
-													"difficulty",
-													"tags",
-													"numberOfQuestions",
-													"numberOfOptions",
-													"outlines"
-												]
+												"$ref": "#/components/schemas/TestFullSchema"
 											}
 										}
 									},
@@ -3146,7 +1583,7 @@
 			},
 			"post": {
 				"tags": [
-					"Practice"
+					"Tests"
 				],
 				"requestBody": {
 					"required": true,
@@ -3155,33 +1592,92 @@
 							"schema": {
 								"type": "object",
 								"properties": {
-									"test": {
-										"type": "object",
-										"properties": {
-											"title": {
-												"type": "string"
+									"title": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									},
+									"minutesToAnswer": {
+										"type": "number",
+										"minimum": 1,
+										"maximum": 10000
+									},
+									"language": {
+										"type": "string"
+									},
+									"mode": {
+										"type": "string",
+										"enum": [
+											"EXAM",
+											"PRACTICE"
+										]
+									},
+									"detail": {
+										"oneOf": [
+											{
+												"type": "object",
+												"properties": {
+													"mode": {
+														"type": "string",
+														"enum": [
+															"EXAM"
+														]
+													},
+													"roomId": {
+														"type": "string"
+													},
+													"password": {
+														"type": [
+															"string",
+															"null"
+														]
+													},
+													"numberOfAttemptsAllowed": {
+														"type": "integer",
+														"minimum": 0,
+														"default": 1
+													},
+													"numberOfParticipants": {
+														"type": "integer",
+														"minimum": 0,
+														"default": 0
+													},
+													"isAnswerVisible": {
+														"type": "boolean"
+													},
+													"isAllowedToSeeOtherResults": {
+														"type": "boolean"
+													},
+													"openDate": {
+														"type": [
+															"string",
+															"null"
+														]
+													},
+													"closeDate": {
+														"type": [
+															"string",
+															"null"
+														]
+													},
+													"isPublic": {
+														"type": "boolean",
+														"default": false
+													}
+												},
+												"required": [
+													"mode",
+													"roomId",
+													"isAnswerVisible",
+													"isAllowedToSeeOtherResults",
+													"openDate",
+													"closeDate"
+												]
 											},
-											"description": {
-												"type": "string"
-											},
-											"minutesToAnswer": {
-												"type": "number",
-												"minimum": 1,
-												"maximum": 10000
-											},
-											"language": {
-												"type": "string"
-											},
-											"mode": {
-												"type": "string"
+											{
+												"$ref": "#/components/schemas/PracticeDetailCommonSchema"
 											}
-										},
-										"required": [
-											"title",
-											"description",
-											"minutesToAnswer",
-											"language",
-											"mode"
 										]
 									},
 									"questions": {
@@ -3192,72 +1688,70 @@
 												"text": {
 													"type": "string"
 												},
-												"options": {
-													"type": "array",
-													"items": {
-														"type": "string"
-													}
-												},
 												"points": {
-													"type": "number"
+													"type": "integer",
+													"minimum": 0
 												},
-												"correctOption": {
-													"type": "number"
+												"type": {
+													"type": "string",
+													"enum": [
+														"MCQ",
+														"LONG_ANSWER"
+													]
+												},
+												"detail": {
+													"oneOf": [
+														{
+															"allOf": [
+																{
+																	"$ref": "#/components/schemas/MCQDetailCommonSchema"
+																},
+																{
+																	"type": "object",
+																	"properties": {
+																		"correctOption": {
+																			"type": "integer",
+																			"minimum": 0
+																		}
+																	}
+																}
+															]
+														},
+														{
+															"allOf": [
+																{
+																	"$ref": "#/components/schemas/LongAnswerDetailCommonSchema"
+																},
+																{
+																	"type": "object",
+																	"properties": {
+																		"correctAnswer": {
+																			"type": "string"
+																		}
+																	}
+																}
+															]
+														}
+													]
 												}
 											},
 											"required": [
 												"text",
-												"options",
 												"points",
-												"correctOption"
+												"type",
+												"detail"
 											]
 										}
-									},
-									"practice": {
-										"type": "object",
-										"properties": {
-											"difficulty": {
-												"type": "string",
-												"enum": [
-													"easy",
-													"medium",
-													"hard"
-												]
-											},
-											"tags": {
-												"type": "array",
-												"items": {
-													"type": "string"
-												}
-											},
-											"numberOfQuestions": {
-												"type": "integer",
-												"exclusiveMinimum": 0
-											},
-											"numberOfOptions": {
-												"type": "integer",
-												"exclusiveMinimum": 0
-											},
-											"outlines": {
-												"type": "array",
-												"items": {
-													"type": "string"
-												}
-											}
-										},
-										"required": [
-											"difficulty",
-											"tags",
-											"numberOfQuestions",
-											"numberOfOptions",
-											"outlines"
-										]
 									}
 								},
 								"required": [
-									"test",
-									"questions",
-									"practice"
+									"title",
+									"description",
+									"minutesToAnswer",
+									"language",
+									"mode",
+									"detail",
+									"questions"
 								]
 							}
 						}
@@ -3285,19 +1779,20 @@
 				}
 			}
 		},
-		"/practices/{testId}": {
+		"/tests/find-by-room": {
 			"get": {
 				"tags": [
-					"Practice"
+					"Tests"
 				],
 				"parameters": [
 					{
 						"schema": {
-							"type": "string"
+							"type": "string",
+							"minLength": 1
 						},
 						"required": true,
-						"name": "testId",
-						"in": "path"
+						"name": "roomId",
+						"in": "query"
 					}
 				],
 				"responses": {
@@ -3308,338 +1803,141 @@
 								"schema": {
 									"type": "object",
 									"properties": {
-										"id": {
-											"type": "string"
-										},
-										"authorId": {
-											"type": "string"
-										},
-										"title": {
-											"type": "string"
-										},
-										"description": {
-											"type": "string"
-										},
-										"minutesToAnswer": {
-											"type": "number",
-											"minimum": 1,
-											"maximum": 10000
-										},
-										"language": {
-											"type": "string"
-										},
-										"mode": {
-											"type": "string"
-										},
-										"createdAt": {
-											"type": "string"
-										},
-										"updatedAt": {
-											"type": "string"
-										},
-										"difficulty": {
-											"type": "string",
-											"enum": [
-												"easy",
-												"medium",
-												"hard"
+										"data": {
+											"allOf": [
+												{
+													"$ref": "#/components/schemas/TestFullSchema"
+												},
+												{
+													"allOf": [
+														{
+															"$ref": "#/components/schemas/TestCoreSchema"
+														},
+														{
+															"type": [
+																"object",
+																"null"
+															],
+															"properties": {
+																"_aggregate": {
+																	"type": "object",
+																	"properties": {
+																		"numberOfQuestions": {
+																			"type": "integer",
+																			"minimum": 0
+																		},
+																		"totalPoints": {
+																			"type": "integer",
+																			"minimum": 0
+																		},
+																		"totalCandidates": {
+																			"type": "integer",
+																			"minimum": 0
+																		},
+																		"totalAttempts": {
+																			"type": "integer",
+																			"minimum": 0
+																		},
+																		"averageScore": {
+																			"type": "integer",
+																			"minimum": 0
+																		},
+																		"highestScore": {
+																			"type": "integer",
+																			"minimum": 0
+																		},
+																		"lowestScore": {
+																			"type": "integer",
+																			"minimum": 0
+																		},
+																		"averageTime": {
+																			"type": "integer",
+																			"minimum": 0
+																		}
+																	},
+																	"required": [
+																		"numberOfQuestions",
+																		"totalPoints",
+																		"totalCandidates",
+																		"totalAttempts",
+																		"averageScore",
+																		"highestScore",
+																		"lowestScore",
+																		"averageTime"
+																	]
+																},
+																"_detail": {
+																	"$ref": "#/components/schemas/TestDetailCommonSchema"
+																}
+															},
+															"required": [
+																"_aggregate",
+																"_detail"
+															]
+														}
+													]
+												}
 											]
 										},
-										"tags": {
-											"type": "array",
-											"items": {
-												"type": "string"
-											}
-										},
-										"numberOfQuestions": {
-											"type": "integer",
-											"exclusiveMinimum": 0
-										},
-										"numberOfOptions": {
-											"type": "integer",
-											"exclusiveMinimum": 0
-										},
-										"outlines": {
-											"type": "array",
-											"items": {
-												"type": "string"
-											}
+										"hasJoined": {
+											"type": "boolean",
+											"default": false
 										}
 									},
 									"required": [
-										"id",
-										"authorId",
-										"title",
-										"description",
-										"minutesToAnswer",
-										"language",
-										"mode",
-										"createdAt",
-										"updatedAt",
-										"difficulty",
-										"tags",
-										"numberOfQuestions",
-										"numberOfOptions",
-										"outlines"
+										"data"
 									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/tests/{testId}": {
+			"get": {
+				"tags": [
+					"Tests"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
+						"in": "path"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": [
+								"1",
+								"0"
+							],
+							"default": "0"
+						},
+						"required": false,
+						"name": "viewPassword",
+						"in": "query"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TestFullSchema"
 								}
 							}
 						}
 					}
 				}
 			},
-			"delete": {
+			"put": {
 				"tags": [
-					"Practice"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success"
-					}
-				}
-			}
-		},
-		"/practices/{testId}/aggregate": {
-			"get": {
-				"tags": [
-					"Practice"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"numberOfQuestions": {
-											"type": "number"
-										},
-										"totalPoints": {
-											"type": "number"
-										}
-									},
-									"required": [
-										"numberOfQuestions",
-										"totalPoints"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/practices/{testId}/questions-to-do": {
-			"get": {
-				"tags": [
-					"Practice"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "array",
-									"items": {
-										"type": "object",
-										"properties": {
-											"id": {
-												"type": "number"
-											},
-											"testId": {
-												"type": "string"
-											},
-											"text": {
-												"type": "string"
-											},
-											"options": {
-												"type": "array",
-												"items": {
-													"type": "string"
-												}
-											},
-											"points": {
-												"type": "number"
-											}
-										},
-										"required": [
-											"id",
-											"testId",
-											"text",
-											"options",
-											"points"
-										]
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/practices/{testId}/questions-with-answer": {
-			"get": {
-				"tags": [
-					"Practice"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "array",
-									"items": {
-										"type": "object",
-										"properties": {
-											"id": {
-												"type": "number"
-											},
-											"testId": {
-												"type": "string"
-											},
-											"text": {
-												"type": "string"
-											},
-											"options": {
-												"type": "array",
-												"items": {
-													"type": "string"
-												}
-											},
-											"points": {
-												"type": "number"
-											},
-											"correctOption": {
-												"type": "number"
-											}
-										},
-										"required": [
-											"id",
-											"testId",
-											"text",
-											"options",
-											"points",
-											"correctOption"
-										]
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/practices/{testId}/feedback": {
-			"get": {
-				"tags": [
-					"Feedback"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": [
-										"object",
-										"null"
-									],
-									"properties": {
-										"practiceTestId": {
-											"type": "string"
-										},
-										"rating": {
-											"type": "number",
-											"minimum": 1,
-											"maximum": 10
-										},
-										"problems": {
-											"type": "array",
-											"items": {
-												"type": "string",
-												"enum": [
-													"inaccurate",
-													"un-related",
-													"poor content",
-													"incomplete",
-													"repeated",
-													"error",
-													"other"
-												]
-											}
-										},
-										"comment": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"practiceTestId",
-										"rating",
-										"problems",
-										"comment"
-									]
-								}
-							}
-						}
-					}
-				}
-			},
-			"post": {
-				"tags": [
-					"Feedback"
+					"Tests"
 				],
 				"parameters": [
 					{
@@ -3658,34 +1956,166 @@
 							"schema": {
 								"type": "object",
 								"properties": {
-									"rating": {
+									"title": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									},
+									"minutesToAnswer": {
 										"type": "number",
 										"minimum": 1,
-										"maximum": 10
+										"maximum": 10000
 									},
-									"problems": {
+									"language": {
+										"type": "string"
+									},
+									"mode": {
+										"type": "string",
+										"enum": [
+											"EXAM",
+											"PRACTICE"
+										]
+									},
+									"detail": {
+										"oneOf": [
+											{
+												"type": "object",
+												"properties": {
+													"mode": {
+														"type": "string",
+														"enum": [
+															"EXAM"
+														]
+													},
+													"roomId": {
+														"type": "string"
+													},
+													"password": {
+														"type": [
+															"string",
+															"null"
+														]
+													},
+													"numberOfAttemptsAllowed": {
+														"type": "integer",
+														"minimum": 0,
+														"default": 1
+													},
+													"numberOfParticipants": {
+														"type": "integer",
+														"minimum": 0,
+														"default": 0
+													},
+													"isAnswerVisible": {
+														"type": "boolean"
+													},
+													"isAllowedToSeeOtherResults": {
+														"type": "boolean"
+													},
+													"openDate": {
+														"type": [
+															"string",
+															"null"
+														]
+													},
+													"closeDate": {
+														"type": [
+															"string",
+															"null"
+														]
+													},
+													"isPublic": {
+														"type": "boolean",
+														"default": false
+													}
+												},
+												"required": [
+													"mode",
+													"roomId",
+													"isAnswerVisible",
+													"isAllowedToSeeOtherResults",
+													"openDate",
+													"closeDate"
+												]
+											},
+											{
+												"$ref": "#/components/schemas/PracticeDetailCommonSchema"
+											}
+										]
+									},
+									"questions": {
 										"type": "array",
 										"items": {
-											"type": "string",
-											"enum": [
-												"inaccurate",
-												"un-related",
-												"poor content",
-												"incomplete",
-												"repeated",
-												"error",
-												"other"
+											"type": "object",
+											"properties": {
+												"text": {
+													"type": "string"
+												},
+												"points": {
+													"type": "integer",
+													"minimum": 0
+												},
+												"type": {
+													"type": "string",
+													"enum": [
+														"MCQ",
+														"LONG_ANSWER"
+													]
+												},
+												"detail": {
+													"oneOf": [
+														{
+															"allOf": [
+																{
+																	"$ref": "#/components/schemas/MCQDetailCommonSchema"
+																},
+																{
+																	"type": "object",
+																	"properties": {
+																		"correctOption": {
+																			"type": "integer",
+																			"minimum": 0
+																		}
+																	}
+																}
+															]
+														},
+														{
+															"allOf": [
+																{
+																	"$ref": "#/components/schemas/LongAnswerDetailCommonSchema"
+																},
+																{
+																	"type": "object",
+																	"properties": {
+																		"correctAnswer": {
+																			"type": "string"
+																		}
+																	}
+																}
+															]
+														}
+													]
+												}
+											},
+											"required": [
+												"text",
+												"points",
+												"type",
+												"detail"
 											]
-										},
-										"default": []
-									},
-									"comment": {
-										"type": "string",
-										"default": ""
+										}
 									}
 								},
 								"required": [
-									"rating"
+									"title",
+									"description",
+									"minutesToAnswer",
+									"language",
+									"mode",
+									"detail",
+									"questions"
 								]
 							}
 						}
@@ -3699,7 +2129,7 @@
 			},
 			"delete": {
 				"tags": [
-					"Feedback"
+					"Tests"
 				],
 				"parameters": [
 					{
@@ -3718,10 +2148,10 @@
 				}
 			}
 		},
-		"/self/tests/{testId}": {
+		"/tests/{testId}/attempts": {
 			"get": {
 				"tags": [
-					"Self"
+					"Tests"
 				],
 				"parameters": [
 					{
@@ -3731,184 +2161,7 @@
 						"required": true,
 						"name": "testId",
 						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success"
-					}
-				}
-			}
-		},
-		"/self/tests/{testId}/aggregate": {
-			"get": {
-				"tags": [
-					"Self"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"numberOfQuestions": {
-											"type": "number"
-										},
-										"totalPoints": {
-											"type": "number"
-										}
-									},
-									"required": [
-										"numberOfQuestions",
-										"totalPoints"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/self/tests/{testId}/questions-to-do": {
-			"get": {
-				"tags": [
-					"Self"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "array",
-									"items": {
-										"type": "object",
-										"properties": {
-											"id": {
-												"type": "number"
-											},
-											"testId": {
-												"type": "string"
-											},
-											"text": {
-												"type": "string"
-											},
-											"options": {
-												"type": "array",
-												"items": {
-													"type": "string"
-												}
-											},
-											"points": {
-												"type": "number"
-											}
-										},
-										"required": [
-											"id",
-											"testId",
-											"text",
-											"options",
-											"points"
-										]
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/self/tests/{testId}/questions-with-answers": {
-			"get": {
-				"tags": [
-					"Self"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "testId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "array",
-									"items": {
-										"type": "object",
-										"properties": {
-											"id": {
-												"type": "number"
-											},
-											"testId": {
-												"type": "string"
-											},
-											"text": {
-												"type": "string"
-											},
-											"options": {
-												"type": "array",
-												"items": {
-													"type": "string"
-												}
-											},
-											"points": {
-												"type": "number"
-											},
-											"correctOption": {
-												"type": "number"
-											}
-										},
-										"required": [
-											"id",
-											"testId",
-											"text",
-											"options",
-											"points",
-											"correctOption"
-										]
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/self/attempts": {
-			"get": {
-				"tags": [
-					"Self"
-				],
-				"parameters": [
+					},
 					{
 						"schema": {
 							"type": "number",
@@ -3925,7 +2178,7 @@
 								"number",
 								"null"
 							],
-							"default": 5
+							"default": 100
 						},
 						"required": false,
 						"name": "perPage",
@@ -3935,16 +2188,21 @@
 						"schema": {
 							"type": "string"
 						},
-						"required": true,
-						"name": "sort",
+						"required": false,
+						"name": "candidateId",
 						"in": "query"
 					},
 					{
 						"schema": {
-							"type": "string"
+							"type": "string",
+							"enum": [
+								"IN_PROGRESS",
+								"COMPLETED",
+								"GRADED"
+							]
 						},
 						"required": false,
-						"name": "testId",
+						"name": "status",
 						"in": "query"
 					}
 				],
@@ -3971,96 +2229,7 @@
 										"data": {
 											"type": "array",
 											"items": {
-												"type": "object",
-												"properties": {
-													"id": {
-														"type": "string"
-													},
-													"order": {
-														"type": "integer",
-														"exclusiveMinimum": 0
-													},
-													"testId": {
-														"type": "string"
-													},
-													"candidateId": {
-														"type": "string"
-													},
-													"hasEnded": {
-														"type": "boolean"
-													},
-													"secondsSpent": {
-														"type": "integer",
-														"minimum": 0
-													},
-													"score": {
-														"type": "integer",
-														"minimum": 0
-													},
-													"createdAt": {
-														"type": "string"
-													},
-													"updatedAt": {
-														"type": "string"
-													},
-													"test": {
-														"type": "object",
-														"properties": {
-															"id": {
-																"type": "string"
-															},
-															"authorId": {
-																"type": "string"
-															},
-															"title": {
-																"type": "string"
-															},
-															"description": {
-																"type": "string"
-															},
-															"minutesToAnswer": {
-																"type": "number",
-																"minimum": 1,
-																"maximum": 10000
-															},
-															"language": {
-																"type": "string"
-															},
-															"mode": {
-																"type": "string"
-															},
-															"createdAt": {
-																"type": "string"
-															},
-															"updatedAt": {
-																"type": "string"
-															}
-														},
-														"required": [
-															"id",
-															"authorId",
-															"title",
-															"description",
-															"minutesToAnswer",
-															"language",
-															"mode",
-															"createdAt",
-															"updatedAt"
-														]
-													}
-												},
-												"required": [
-													"id",
-													"order",
-													"testId",
-													"candidateId",
-													"hasEnded",
-													"secondsSpent",
-													"score",
-													"createdAt",
-													"updatedAt",
-													"test"
-												]
+												"$ref": "#/components/schemas/AttemptCoreSchema"
 											}
 										}
 									},
@@ -4078,10 +2247,320 @@
 				}
 			}
 		},
-		"/self/attempts/{attemptId}": {
+		"/tests/{testId}/participants": {
 			"get": {
 				"tags": [
-					"Self"
+					"Tests"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
+						"in": "path"
+					},
+					{
+						"schema": {
+							"type": "number",
+							"minimum": 1,
+							"default": 1
+						},
+						"required": false,
+						"name": "page",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": [
+								"number",
+								"null"
+							],
+							"default": 100
+						},
+						"required": false,
+						"name": "perPage",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": [
+								"asc",
+								"desc"
+							]
+						},
+						"required": false,
+						"name": "sortByRank",
+						"in": "query"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"page": {
+											"type": "number"
+										},
+										"perPage": {
+											"type": "number"
+										},
+										"total": {
+											"type": "number"
+										},
+										"totalPages": {
+											"type": "number"
+										},
+										"data": {
+											"type": "array",
+											"items": {
+												"$ref": "#/components/schemas/CandidateCoreSchema"
+											}
+										}
+									},
+									"required": [
+										"page",
+										"perPage",
+										"total",
+										"totalPages",
+										"data"
+									]
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"description": "Add a participant to an exam",
+				"tags": [
+					"Tests"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
+						"in": "path"
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"password": {
+										"type": [
+											"string",
+											"null"
+										]
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			},
+			"delete": {
+				"description": "Remove a participant from an exam",
+				"tags": [
+					"Tests"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
+						"in": "path"
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"participantId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"participantId"
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
+		"/attempts": {
+			"get": {
+				"tags": [
+					"Attempts"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "number",
+							"minimum": 1,
+							"default": 1
+						},
+						"required": false,
+						"name": "page",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": [
+								"number",
+								"null"
+							],
+							"default": 100
+						},
+						"required": false,
+						"name": "perPage",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": false,
+						"name": "testId",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": false,
+						"name": "candidateId",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": [
+								"IN_PROGRESS",
+								"COMPLETED",
+								"GRADED"
+							]
+						},
+						"required": false,
+						"name": "status",
+						"in": "query"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"page": {
+											"type": "number"
+										},
+										"perPage": {
+											"type": "number"
+										},
+										"total": {
+											"type": "number"
+										},
+										"totalPages": {
+											"type": "number"
+										},
+										"data": {
+											"type": "array",
+											"items": {
+												"$ref": "#/components/schemas/AttemptCoreSchema"
+											}
+										}
+									},
+									"required": [
+										"page",
+										"perPage",
+										"total",
+										"totalPages",
+										"data"
+									]
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"Attempts"
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"testId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"testId"
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"attemptId": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"attemptId"
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/attempts/{attemptId}": {
+			"get": {
+				"tags": [
+					"Attempts"
 				],
 				"parameters": [
 					{
@@ -4099,96 +2578,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "object",
-									"properties": {
-										"id": {
-											"type": "string"
-										},
-										"order": {
-											"type": "integer",
-											"exclusiveMinimum": 0
-										},
-										"testId": {
-											"type": "string"
-										},
-										"candidateId": {
-											"type": "string"
-										},
-										"hasEnded": {
-											"type": "boolean"
-										},
-										"secondsSpent": {
-											"type": "integer",
-											"minimum": 0
-										},
-										"score": {
-											"type": "integer",
-											"minimum": 0
-										},
-										"createdAt": {
-											"type": "string"
-										},
-										"updatedAt": {
-											"type": "string"
-										},
-										"test": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "string"
-												},
-												"authorId": {
-													"type": "string"
-												},
-												"title": {
-													"type": "string"
-												},
-												"description": {
-													"type": "string"
-												},
-												"minutesToAnswer": {
-													"type": "number",
-													"minimum": 1,
-													"maximum": 10000
-												},
-												"language": {
-													"type": "string"
-												},
-												"mode": {
-													"type": "string"
-												},
-												"createdAt": {
-													"type": "string"
-												},
-												"updatedAt": {
-													"type": "string"
-												}
-											},
-											"required": [
-												"id",
-												"authorId",
-												"title",
-												"description",
-												"minutesToAnswer",
-												"language",
-												"mode",
-												"createdAt",
-												"updatedAt"
-											]
-										}
-									},
-									"required": [
-										"id",
-										"order",
-										"testId",
-										"candidateId",
-										"hasEnded",
-										"secondsSpent",
-										"score",
-										"createdAt",
-										"updatedAt",
-										"test"
-									]
+									"$ref": "#/components/schemas/AttemptCoreSchema"
 								}
 							}
 						}
@@ -4196,51 +2586,10 @@
 				}
 			}
 		},
-		"/self/attempts/{attemptId}/aggregate": {
+		"/attempts/{attemptId}/answers": {
 			"get": {
 				"tags": [
-					"Self"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"name": "attemptId",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"answered": {
-											"type": "number"
-										},
-										"answeredCorrect": {
-											"type": "number"
-										}
-									},
-									"required": [
-										"answered",
-										"answeredCorrect"
-									]
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/self/attempts/{attemptId}/answers": {
-			"get": {
-				"tags": [
-					"Self"
+					"Attempts"
 				],
 				"parameters": [
 					{
@@ -4260,27 +2609,122 @@
 								"schema": {
 									"type": "array",
 									"items": {
-										"type": "object",
-										"properties": {
-											"attemptId": {
-												"type": "string"
-											},
-											"questionId": {
-												"type": "number"
-											},
-											"chosenOption": {
-												"type": "number"
-											}
-										},
-										"required": [
-											"attemptId",
-											"questionId",
-											"chosenOption"
-										]
+										"$ref": "#/components/schemas/AnswerCoreSchema"
 									}
 								}
 							}
 						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"Attempts"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "attemptId",
+						"in": "path"
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"questionId": {
+										"type": "number"
+									},
+									"answer": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/AnswerForQuestionTypeSchema"
+											},
+											{
+												"oneOf": [
+													{
+														"type": "object",
+														"properties": {
+															"type": {
+																"type": "string",
+																"enum": [
+																	"MCQ"
+																]
+															},
+															"chosenOption": {
+																"type": "number"
+															}
+														},
+														"required": [
+															"type",
+															"chosenOption"
+														]
+													},
+													{
+														"type": "object",
+														"properties": {
+															"type": {
+																"type": "string",
+																"enum": [
+																	"LONG_ANSWER"
+																]
+															},
+															"answer": {
+																"type": "string"
+															}
+														},
+														"required": [
+															"type",
+															"answer"
+														]
+													},
+													{
+														"type": "null"
+													}
+												]
+											}
+										]
+									}
+								},
+								"required": [
+									"questionId",
+									"answer"
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
+		"/attempts/{attemptId}/submit": {
+			"patch": {
+				"tags": [
+					"Attempts"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "attemptId",
+						"in": "path"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success"
 					}
 				}
 			}

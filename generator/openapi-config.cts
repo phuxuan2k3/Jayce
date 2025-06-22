@@ -1,19 +1,17 @@
 import type { ConfigFile } from '@rtk-query/codegen-openapi'
 
-const baseApiDirString = "./../src/features/tests";
-const testsFeatureDirString = "./../src/features/tests";
-
 const testApi: ConfigFile = {
-	apiFile: `${baseApiDirString}/base/test.api.ts`,
+	apiFile: `./../src/infra-test/base/test.api.ts`,
 	schemaFile: `./../src/infra-test/openapi.json`,
 	apiImport: "testApi",
-	outputFile: `${testsFeatureDirString}/api/test.api-gen.ts`,
-	exportName: "testApiGen",
+	outputFile: `./../src/infra-test/api/test.api-gen-v2.ts`,
+	exportName: "testApiGenV2",
 	hooks: {
 		queries: true,
 		mutations: true,
 		lazyQueries: true,
 	},
+	tag: true,
 }
 
 // Export what API we want to generate

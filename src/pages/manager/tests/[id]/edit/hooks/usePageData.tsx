@@ -1,4 +1,4 @@
-import { useGetExamsByTestIdQuery, useGetExamsByTestIdQuestionsWithAnswerQuery } from '../../../../../../features/tests/api/test.api-gen';
+import { useGetExamsByTestIdQuery, useGetExamsByTestIdQuestionsWithAnswerQuery } from '../../../../../../infra-test/api/test.api-gen';
 import useFetchStatesCombine from '../../../../../../components/hooks/useFetchStates';
 import { ManagerTestEditPageModel } from '../type';
 import { FetchStateQuery } from '../../../../../../app/types';

@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import RightLayoutTemplate from "../../../../../../components/layouts/RightLayoutTemplate";
-import { useGetSelfAttemptsByAttemptIdQuery } from "../../../../../../features/tests/api/test.api-gen";
+import { useGetSelfAttemptsByAttemptIdQuery } from "../../../../../../infra-test/api/test.api-gen";
 import AttemptSidebar from "./components/AttemptSidebar";
 import AnswerList from "./components/AnswerList";
 import FetchStateContent from "./components/FetchStateContent";

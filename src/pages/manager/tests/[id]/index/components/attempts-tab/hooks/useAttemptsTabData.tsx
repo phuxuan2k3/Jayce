@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { Filter } from '../type'
-import { useGetExamsByTestIdAttemptsAggregateQuery, useGetExamsByTestIdAttemptsQuery } from '../../../../../../../../features/tests/api/test.api-gen';
+import { useGetExamsByTestIdAttemptsAggregateQuery, useGetExamsByTestIdAttemptsQuery } from '../../../../../../../../infra-test/api/test.api-gen';
 import { useGetUsersQuery } from '../../../../../../../../features/auth/api/auth-profile.api';
 import { AttemptsTabModel, AttemptWithCandidate } from "../type";
 import { getUserCore } from '../../../../../../../../infra-test/core/user.model';

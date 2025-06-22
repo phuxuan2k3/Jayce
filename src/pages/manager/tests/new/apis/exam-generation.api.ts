@@ -1,4 +1,4 @@
-import promptApi from "../../../../../features/tests/base/prompt.api";
+import promptApi from "../../../../../infra-test/base/prompt.api";
 import { LanguageType, SeniorityType } from "../common/base-types";
 import { Topic } from "../models/topic.model";
 

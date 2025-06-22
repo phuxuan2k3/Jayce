@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import FetchStateCover from "../../../../../../../components/wrapper/FetchStateCover";
-import { useGetExamsByTestIdAttemptsAggregateQuery, useGetExamsByTestIdQuestionsAggregateQuery, useGetExamsByTestIdQuestionsWithAnswerQuery } from "../../../../../../../features/tests/api/test.api-gen";
+import { useGetExamsByTestIdAttemptsAggregateQuery, useGetExamsByTestIdQuestionsAggregateQuery, useGetExamsByTestIdQuestionsWithAnswerQuery } from "../../../../../../../infra-test/api/test.api-gen";
 import QuestionManageCard from "../../../../../../../infra-test/ui/question/QuestionManageCard";
 import { QuestionsTabModel, QuestionsWithAggregate } from "./type";
 

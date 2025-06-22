@@ -1,4 +1,4 @@
-import { useGetPracticesByTestIdAggregateQuery, useGetPracticesByTestIdQuery } from '../../../../../../features/tests/api/test.api-gen';
+import { useGetPracticesByTestIdAggregateQuery, useGetPracticesByTestIdQuery } from '../../../../../../infra-test/api/test.api-gen';
 import useGetTestIdParams from '../../../../../../infra-test/hooks/useGetTestIdParams';
 import useGetUsers from '../../../../../../infra-test/hooks/user/useGetUsers';
 import { useGetPracticesByTestIdAttemptsAggregateQuery } from '../../common/apis/attempts.api-enhance';

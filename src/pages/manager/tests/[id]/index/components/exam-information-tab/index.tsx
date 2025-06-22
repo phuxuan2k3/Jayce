@@ -1,6 +1,6 @@
 
 import { InformationTabModel } from "./type";
-import { useGetExamsByTestIdAggregateQuery, useGetExamsByTestIdAttemptsAggregateQuery, useGetExamsByTestIdQuery } from '../../../../../../../features/tests/api/test.api-gen';
+import { useGetExamsByTestIdAggregateQuery, useGetExamsByTestIdAttemptsAggregateQuery, useGetExamsByTestIdQuery } from '../../../../../../../infra-test/api/test.api-gen';
 import FetchStateCover from '../../../../../../../components/wrapper/FetchStateCover';
 import { ContentOverviewCard } from './components/ContentOverviewCard';
 import { ExamDetails } from './components/ExamDetailsCard';

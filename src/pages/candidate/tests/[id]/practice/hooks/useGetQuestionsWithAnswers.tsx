@@ -1,4 +1,4 @@
-import { useGetPracticesByTestIdQuestionsWithAnswerQuery } from '../../../../../../features/tests/api/test.api-gen';
+import { useGetPracticesByTestIdQuestionsWithAnswerQuery } from '../../../../../../infra-test/api/test.api-gen';
 import useGetTestIdParams from '../../../../../../infra-test/hooks/useGetTestIdParams';
 
 export default function useGetQuestionsWithAnswers({

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { ManagerTestsAttemptPageModel, QuestionAnswer } from '../type'
-import { useGetExamsAttemptsByAttemptIdAggregateQuery, useGetExamsAttemptsByAttemptIdAnswersQuery, useGetExamsAttemptsByAttemptIdQuery, useGetExamsByTestIdAggregateQuery, useGetExamsByTestIdQuery, useGetExamsByTestIdQuestionsWithAnswerQuery } from '../../../../../../../features/tests/api/test.api-gen';
+import { useGetExamsAttemptsByAttemptIdAggregateQuery, useGetExamsAttemptsByAttemptIdAnswersQuery, useGetExamsAttemptsByAttemptIdQuery, useGetExamsByTestIdAggregateQuery, useGetExamsByTestIdQuery, useGetExamsByTestIdQuestionsWithAnswerQuery } from '../../../../../../../infra-test/api/test.api-gen';
 import { AnswerCore, AttemptAggregate, AttemptCore } from '../../../../../../../infra-test/core/attempt.model';
 import { FetchStateQuery } from '../../../../../../../app/types';
 import useFetchStatesCombine from '../../../../../../../components/hooks/useFetchStates';

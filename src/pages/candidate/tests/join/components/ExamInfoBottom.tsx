@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { usePostExamsJoinMutation } from '../../../../../features/tests/api/test.api-gen';
+import { usePostExamsJoinMutation } from '../../../../../infra-test/api/test.api-gen';
 import { ExamCore } from '../../../../../infra-test/core/test.model';
 import { useNavigate } from 'react-router-dom';
 import paths from '../../../../../router/paths';

@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { AttemptCore } from "../../../../../../../infra-test/core/attempt.model";
 import { TestCore } from "../../../../../../../infra-test/core/test.model";
-import { useGetSelfAttemptsByAttemptIdAggregateQuery, useGetSelfTestsByTestIdAggregateQuery } from "../../../../../../../features/tests/api/test.api-gen";
+import { useGetSelfAttemptsByAttemptIdAggregateQuery, useGetSelfTestsByTestIdAggregateQuery } from "../../../../../../../infra-test/api/test.api-gen";
 import { FetchError } from "../../../../../../../app/server-error";
 import paths from "../../../../../../../router/paths";
 import { useGetUsersQuery } from "../../../../../../../features/auth/api/auth-profile.api";

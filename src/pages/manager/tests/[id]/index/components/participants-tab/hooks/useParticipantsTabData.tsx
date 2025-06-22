@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useGetUsersQuery } from "../../../../../../../../features/auth/api/auth-profile.api";
-import { useGetExamsByTestIdParticipantsAggregateQuery } from "../../../../../../../../features/tests/api/test.api-gen";
+import { useGetExamsByTestIdParticipantsAggregateQuery } from "../../../../../../../../infra-test/api/test.api-gen";
 import { Filter, Participant } from "../type";
 import { getUserCore } from "../../../../../../../../infra-test/core/user.model";
 

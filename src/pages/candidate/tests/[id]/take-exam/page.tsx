@@ -4,7 +4,7 @@ import QuestionDoCard from "../common/components/take-test/QuestionDoCard";
 import TestDoSidebar from "../common/components/take-test/TestDoSidebar";
 import useTakeTest from "../common/hooks/use-take-test/useTakeTest";
 import paths from "../../../../../router/paths";
-import { useGetExamsByTestIdQuery, useGetExamsByTestIdQuestionsToDoQuery } from "../../../../../features/tests/api/test.api-gen";
+import { useGetExamsByTestIdQuery, useGetExamsByTestIdQuestionsToDoQuery } from "../../../../../infra-test/api/test.api-gen";
 import { useState } from "react";
 import useGetTestIdParams from "../../../../../infra-test/hooks/useGetTestIdParams";
 

@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import MyPagination from "../../../../../../components/ui/common/MyPagination";
 import { ParticipantWithUserInfo } from "./type"
-import { useGetExamsByTestIdParticipantsAggregateQuery } from "../../../../../../features/tests/api/test.api-gen";
+import { useGetExamsByTestIdParticipantsAggregateQuery } from "../../../../../../infra-test/api/test.api-gen";
 import { useGetUsersQuery } from "../../../../../../features/auth/api/auth-profile.api";
 import { getUserCore } from "../../../../../../infra-test/core/user.model";
 import useQueryState from "../../../../../../components/hooks/useQueryState";

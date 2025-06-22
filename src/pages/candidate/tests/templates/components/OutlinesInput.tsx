@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLazyGetSuggestOutlinesQuery } from '../../../../../features/tests/api/prompt.api-custom';
+import { useLazyGetSuggestOutlinesQuery } from '../../../../../infra-test/api/prompt.api-custom';
 import { TemplateFormData } from './types';
 
 interface Props {
