@@ -1,92 +1,98 @@
 import React, { useState } from 'react';
-import { TemplateCore } from "../../../../infra-test/core/test.model";
 import TemplateForm from './components/TemplateForm';
 import TemplatesSidebar from './components/TemplatesSidebar';
 import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
-import useTemplateServerMutate from './hooks/useTemplateServerMutate';
 import DeleteTemplateModal from './components/DeleteTemplateModal';
-import useTemplateServerQuery from '../../../../infra-test/hooks/templates/useTemplateServerQuery';
 import TemplateList from './components/TemplateList';
+import { TemplateCoreSchema, useDeleteTemplatesByTemplateIdMutation, usePostTemplatesMutation, usePutTemplatesByTemplateIdMutation } from '../../../../infra-test/api/test.api-gen-v2';
+import { EmptyTemplateForm, TemplateFormData } from './components/types';
+import LoadingDialog from '../../../../infra-test/ui/fetch-states/LoadingDialog';
+import ErrorDialog from '../../../../infra-test/ui/fetch-states/ErrorDialog';
 
 const CandidateTestsTemplatesPage: React.FC = () => {
-
-	const query = useTemplateServerQuery();
-	const mutate = useTemplateServerMutate();
-
-	const [selectedTemplate, setSelectedTemplate] = useState<TemplateCore | null>(null);
-	const [isEditing, setIsEditing] = useState(false);
+	const [searchTerm, setSearchTerm] = useState<string>('');
+	const [selectedTemplate, setSelectedTemplate] = useState<TemplateCoreSchema | null>(null);
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
-	const [templateToDelete, setTemplateToDelete] = useState<TemplateCore | null>(null);
+	const [templateToDelete, setTemplateToDelete] = useState<TemplateCoreSchema | null>(null);
 
 	// Template form state
-	const [formData, setFormData] = useState<Omit<TemplateCore, "id">>({
-		name: '',
-		title: '',
-		description: '',
-		numberOfQuestions: 5,
-		difficulty: "easy",
-		tags: [],
-		numberOfOptions: 4,
-		outlines: [],
-		minutesToAnswer: 10,
-		language: "English",
-	});
+	const [formData, setFormData] = useState<TemplateFormData | null>(null);
+
+	// API
+	const [deleteTemplate, deleteState] = useDeleteTemplatesByTemplateIdMutation();
+	const [createTemplate, createState] = usePostTemplatesMutation();
+	const [editTemplate, editState] = usePutTemplatesByTemplateIdMutation();
 
 	// Handle template selection
-	const handleSelectTemplate = (template: TemplateCore) => {
+	const handleSelectTemplate = (template: TemplateCoreSchema) => {
 		setSelectedTemplate(template);
 		setFormData({
 			...template,
 		});
-		setIsEditing(true);
 	};
 
 	// Handle create new template
 	const handleCreateNew = () => {
 		setSelectedTemplate(null);
-		setFormData({
-			name: '',
-			title: '',
-			description: '',
-			numberOfQuestions: 5,
-			difficulty: "easy",
-			tags: [],
-			numberOfOptions: 4,
-			outlines: [],
-			minutesToAnswer: 10,
-			language: "English",
-		});
-		setIsEditing(true);
+		setFormData(EmptyTemplateForm);
 	};
 
 	// Handle save template
 	const handleSaveTemplate = () => {
+		if (!formData) return;
 		if (selectedTemplate) {
-			mutate.editTemplate({
-				...formData,
-				id: selectedTemplate.id,
-			});
+			editTemplate({
+				templateId: selectedTemplate.id,
+				body: formData,
+			})
+				.unwrap()
+				.then(() => {
+					setSelectedTemplate(null);
+					setFormData(null);
+				})
+				.catch((error) => {
+					console.error('Failed to edit template:', error);
+				});
 		} else {
-			mutate.createTemplate({
-				...formData,
-			});
+			createTemplate({
+				body: formData,
+			})
+				.unwrap()
+				.then(() => {
+					setSelectedTemplate(null);
+					setFormData(null);
+				})
+				.catch((error) => {
+					console.error('Failed to create template:', error);
+				});
 		}
-		setIsEditing(false);
+		setFormData(null);
 	};
 
 	// Handle delete template
-	const handleDeleteTemplate = (template: TemplateCore) => {
+	const handleDeleteTemplate = (template: TemplateCoreSchema) => {
 		setTemplateToDelete(template);
 		setShowDeleteModal(true);
 	};
 
 	const confirmDelete = () => {
 		if (templateToDelete) {
-			mutate.deleteTemplate({ templateId: templateToDelete.id });
-			setShowDeleteModal(false);
-			setTemplateToDelete(null);
+			deleteTemplate({
+				templateId: templateToDelete.id,
+			})
+				.unwrap()
+				.then(() => {
+					setShowDeleteModal(false);
+					setTemplateToDelete(null);
+				})
+				.catch((error) => {
+					console.error('Failed to delete template:', error);
+				});
 		}
 	};
+
+	const isLoading = createState.isLoading || editState.isLoading || deleteState.isLoading;
+	const error = createState.error || editState.error || deleteState.error;
 
 	return (
 		<NewLeftLayoutTemplate
@@ -98,28 +104,23 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 			}
 			left={
 				<TemplatesSidebar
-					searchTerm={query.filters.searchName}
-					onSearchChange={(value) => query.setFilters(prev => ({
-						...prev,
-						searchName: value,
-					}))}
+					searchTerm={searchTerm}
+					onSearchChange={setSearchTerm}
 					onCreateNew={handleCreateNew}
 				/>
 			}
 		>
-			{isEditing ? (
+			{formData != null ? (
 				<TemplateForm
-					isEditing={isEditing}
 					selectedTemplate={selectedTemplate}
 					formData={formData}
 					onFormDataChange={setFormData}
 					onSave={handleSaveTemplate}
-					onCancel={() => setIsEditing(false)}
-					onCreateNew={handleCreateNew}
+					onCancel={() => setFormData(null)}
 				/>
 			) : (
 				<TemplateList
-					searchName={query.filters.searchName}
+					searchName={searchTerm}
 					onSelect={handleSelectTemplate}
 					onDelete={handleDeleteTemplate}
 					onCreateNew={handleCreateNew}
@@ -132,6 +133,9 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 				onClose={() => setShowDeleteModal(false)}
 				onConfirm={confirmDelete}
 			/>
+
+			{isLoading && <LoadingDialog />}
+			{error && <ErrorDialog error={error} />}
 
 		</NewLeftLayoutTemplate>
 	);

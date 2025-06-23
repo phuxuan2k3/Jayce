@@ -55,8 +55,8 @@ export type GetSuggestQuestionsRequest = {
 export type GetSuggestQuestionsResponse = {
 	questions: {
 		text: string;
-		options: string[];
 		points: number;
+		options: string[];
 		correctOption: number;
 	}[];
 };

@@ -43,13 +43,13 @@ createRoot(rootElement!).render(
 
 
 
-async function prepare() {
-	if (import.meta.env.MODE === 'development') {
-		const { browserWorker } = await import('./msw-browser.ts');
-		await browserWorker.start();
-	}
-}
+// async function prepare() {
+// 	if (import.meta.env.MODE === 'development') {
+// 		const { browserWorker } = await import('./msw-browser.ts');
+// 		await browserWorker.start();
+// 	}
+// }
 
-prepare().catch((error) => {
-	console.error('Error during MSW setup:', error);
-});
+// prepare().catch((error) => {
+// 	console.error('Error during MSW setup:', error);
+// });

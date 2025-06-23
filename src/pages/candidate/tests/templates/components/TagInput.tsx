@@ -20,24 +20,11 @@ const TagInput: React.FC<TagInputProps> = ({ tags, onTagsChange }) => {
 	};
 
 	return (
-		<div>
+		<div className='flex flex-col'>
 			<label className="block text-sm font-medium text-gray-700 mb-1">
 				Tags
 			</label>
-			<div className="flex flex-wrap gap-2 mb-2">
-				{tags.map((tag, idx) => (
-					<div key={idx} className="flex items-center bg-primary-toned-100 text-primary-toned-800 px-3 py-1 rounded-full">
-						{tag}
-						<button
-							type="button"
-							className="ml-2 text-primary-toned-500 hover:text-primary-toned-700"
-							onClick={() => handleRemoveTag(tag)}
-						>
-							×
-						</button>
-					</div>
-				))}
-			</div>
+
 			<div className="flex">
 				<input
 					type="text"
@@ -60,6 +47,21 @@ const TagInput: React.FC<TagInputProps> = ({ tags, onTagsChange }) => {
 					Add
 				</button>
 			</div>
+
+			{tags.length > 0 && <div className="flex flex-wrap gap-2 mt-2">
+				{tags.map((tag, idx) => (
+					<div key={idx} className="flex items-center bg-primary-toned-100 text-primary-toned-800 px-3 py-1 rounded-full text-xs">
+						{tag}
+						<button
+							type="button"
+							className="ml-2 text-primary-toned-500 hover:text-primary-toned-700"
+							onClick={() => handleRemoveTag(tag)}
+						>
+							×
+						</button>
+					</div>
+				))}
+			</div>}
 		</div>
 	);
 };

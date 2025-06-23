@@ -2148,6 +2148,51 @@
 				}
 			}
 		},
+		"/tests/{testId}/questions": {
+			"get": {
+				"tags": [
+					"Tests"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
+						"in": "path"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": [
+								"1",
+								"0"
+							],
+							"default": "0"
+						},
+						"required": false,
+						"name": "viewCorrectAnswer",
+						"in": "query"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/QuestionCoreSchema"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
 		"/tests/{testId}/attempts": {
 			"get": {
 				"tags": [

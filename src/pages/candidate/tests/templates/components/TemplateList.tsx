@@ -1,10 +1,11 @@
 import React from "react";
 import { TemplateCoreSchema, useGetTemplatesQuery } from "../../../../../infra-test/api/test.api-gen-v2";
 import TemplateCard from "../../../../../infra-test/ui-items/template/TemplateCard";
-import LoadingCover from "../../../../../infra-test/ui-items/fetch-states/LoadingCover";
-import ErrorCover from "../../../../../infra-test/ui-items/fetch-states/ErrorCover";
-import NotAvailible from "../../../../../infra-test/ui-items/fetch-states/NotAvailible";
-import MyPagination from "../../../../../components/ui/common/MyPagination";
+import LoadingCover from "../../../../../infra-test/ui/fetch-states/LoadingCover";
+import ErrorCover from "../../../../../infra-test/ui/fetch-states/ErrorCover";
+import NotAvailible from "../../../../../infra-test/ui/fetch-states/NotAvailible";
+import MyPaginationSection from "../../../../../infra-test/ui/MyPaginationSection";
+import MyButton from "../../../../../infra-test/ui/MyButton";
 
 interface TemplateListProps {
 	searchName: string;
@@ -30,18 +31,13 @@ const TemplateList: React.FC<TemplateListProps> = ({
 	if (error) return <ErrorCover error={error} />;
 	if (!isSuccess) return <NotAvailible />;
 
-	const { data: templates, totalPages, total } = pagedTemplates;
+	const { data: templates } = pagedTemplates;
 
 	return (
 		<div className="flex flex-col gap-4 w-full h-full">
-			<div className="flex justify-between items-center">
+			<div className="flex justify-between items-center border-b pb-4 mb-4">
 				<h3 className="text-lg font-semibold">Available Templates</h3>
-				<button
-					onClick={onCreateNew}
-					className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition"
-				>
-					Create New
-				</button>
+				<MyButton onClick={onCreateNew}>Create New</MyButton>
 			</div>
 
 			{templates.length > 0 ? (
@@ -56,17 +52,13 @@ const TemplateList: React.FC<TemplateListProps> = ({
 					))}
 				</div>
 			) : (
-				<div className="text-center py-8 text-gray-500">
+				<div className="h-full w-full flex items-center justify-center text-gray-500">
 					{searchName ? "No templates match your search" : "No templates available"}
 				</div>
 			)}
 
 			<div className="mt-auto flex flex-col items-center border-t pt-4">
-				<MyPagination totalPage={totalPages} initialPage={page} onPageChange={(page) => setPage(page)} />
-
-				<span className="text-sm text-gray-500 mt-4 italic w-full">
-					Showing {templates.length} of {total} templates
-				</span>
+				<MyPaginationSection {...pagedTemplates} onPageChange={(page) => setPage(page)} />
 			</div>
 		</div>
 	);

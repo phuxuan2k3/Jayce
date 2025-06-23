@@ -1,19 +1,18 @@
 import { useNavigate } from 'react-router-dom';
-import { usePostPracticesMutation } from '../../../../../infra-test/api/test.api-gen'
 import { PracticeGenerationActionTypes, PracticeGenerationReducer } from '../reducers/reducer-types';
 import { useLazyGetSuggestQuestionsQuery } from '../../../../../infra-test/api/prompt.api-custom';
 import paths from '../../../../../router/paths';
 import { PracticeGenerationLoadingState } from '../types';
 import usePracticeGenerationSelectors from '../reducers/practice-generation.selector';
 import { parseQueryError } from '../../../../../helpers/fetchBaseQuery.error';
-import { QuestionPersistOfTest } from '../../../../../infra-test/commands/question.persist';
+import { usePostTestsMutation } from '../../../../../infra-test/api/test.api-gen-v2';
 
 export default function useGeneratePractice({
 	state,
 	dispatch,
 }: PracticeGenerationReducer) {
 	const navigate = useNavigate();
-	const [createPractice] = usePostPracticesMutation();
+	const [createTest] = usePostTestsMutation();
 	const [getGeneratedQuestions] = useLazyGetSuggestQuestionsQuery();
 
 	const { finalData } = usePracticeGenerationSelectors({ state });
@@ -48,19 +47,31 @@ export default function useGeneratePractice({
 
 			setLoadingState("saving");
 
-			const createdTest = await createPractice({
+			const createdTest = await createTest({
 				body: {
-					test: {
-						...finalData,
-						mode: "practice",
+					title: finalData.title,
+					description: finalData.description,
+					mode: "PRACTICE",
+					language: finalData.language,
+					minutesToAnswer: finalData.minutesToAnswer,
+					detail: {
+						mode: "PRACTICE",
+						difficulty: finalData.difficulty,
+						numberOfOptions: finalData.numberOfOptions,
+						numberOfQuestions: finalData.numberOfQuestions,
+						outlines: finalData.outlines,
+						tags: finalData.tags,
 					},
-					questions: generatedQuestions.questions.map((question: QuestionPersistOfTest) => ({
-						...question,
+					questions: generatedQuestions.questions.map((q) => ({
+						text: q.text,
+						points: q.points,
+						type: "MCQ",
+						detail: {
+							type: "MCQ",
+							correctOption: q.correctOption,
+							options: q.options,
+						},
 					})),
-					practice: {
-						...finalData,
-						difficulty: finalData.difficulty as "easy" | "medium" | "hard",
-					}
 				},
 			}).unwrap();
 

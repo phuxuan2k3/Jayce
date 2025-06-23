@@ -29,7 +29,7 @@ const TemplateCardHeader: React.FC = () => {
 		<div className="flex flex-col gap-2 border-b border-primary-toned-200 pb-2">
 			<div className="flex justify-between items-center">
 				<div className="flex items-center gap-2">
-					<h3 className="font-bold text-lg">{template.title}</h3>
+					<h3 className="font-bold text-lg">{template.name}</h3>
 				</div>
 				{onDelete && (
 					<button
@@ -73,7 +73,7 @@ const TemplateCardFooter: React.FC = () => {
 			<span className="text-sm text-primary-toned-500">
 				{template.numberOfQuestions} questions • {template.numberOfOptions} options each
 			</span>
-			{onGenerate && (
+			{onGenerate != null && (
 				<button
 					onClick={e => {
 						e.stopPropagation();
@@ -99,15 +99,15 @@ export type TemplateCardProps = {
 const TemplateCard: React.FC<TemplateCardProps> = ({ template, onGenerate, onClick, onDelete }) => (
 	<TemplateCardContext.Provider value={{
 		template,
-		onGenerate: () => onGenerate?.(template),
-		onDelete: () => onDelete?.(template)
+		onGenerate: onGenerate ? () => onGenerate?.(template) : undefined,
+		onDelete: onDelete ? () => onDelete?.(template) : undefined,
 	}}>
 		<div
 			className="border border-primary-toned-300 rounded-lg p-4 cursor-pointer hover:shadow-md transition-shadow"
 			onClick={() => onClick?.(template)}
 		>
 			<TemplateCardHeader />
-			<p className="text-primary-toned-600 text-sm mt-2">{template.description}</p>
+			<p className="text-primary-toned-600 text-sm mt-2">{template.title}</p>
 			<TemplateCardTags />
 			<TemplateCardFooter />
 		</div>

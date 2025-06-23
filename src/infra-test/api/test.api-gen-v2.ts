@@ -1,277 +1,331 @@
 import { testApi as api } from "../base/test.api";
-const injectedRtkApi = api.injectEndpoints({
-  endpoints: (build) => ({
-    getCandidatesByCandidateIdAttempts: build.query<
-      GetCandidatesByCandidateIdAttemptsApiResponse,
-      GetCandidatesByCandidateIdAttemptsApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/candidates/${queryArg.candidateId}/attempts`,
-        params: {
-          page: queryArg.page,
-          perPage: queryArg.perPage,
-          testId: queryArg.testId,
+export const addTagTypes = [
+  "Candidates",
+  "Feedbacks",
+  "Templates",
+  "Tests",
+  "Attempts",
+] as const;
+const injectedRtkApi = api
+  .enhanceEndpoints({
+    addTagTypes,
+  })
+  .injectEndpoints({
+    endpoints: (build) => ({
+      getCandidatesByCandidateIdAttempts: build.query<
+        GetCandidatesByCandidateIdAttemptsApiResponse,
+        GetCandidatesByCandidateIdAttemptsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/candidates/${queryArg.candidateId}/attempts`,
+          params: {
+            page: queryArg.page,
+            perPage: queryArg.perPage,
+            testId: queryArg.testId,
+          },
+        }),
+        providesTags: ["Candidates"],
+      }),
+      getFeedbacks: build.query<GetFeedbacksApiResponse, GetFeedbacksApiArg>({
+        query: (queryArg) => ({
+          url: `/feedbacks`,
+          params: {
+            testId: queryArg.testId,
+            sortByCreatedAt: queryArg.sortByCreatedAt,
+            sortByRating: queryArg.sortByRating,
+            filterByProblems: queryArg.filterByProblems,
+          },
+        }),
+        providesTags: ["Feedbacks"],
+      }),
+      postFeedbacks: build.mutation<
+        PostFeedbacksApiResponse,
+        PostFeedbacksApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/feedbacks`,
+          method: "POST",
+          body: queryArg.body,
+        }),
+        invalidatesTags: ["Feedbacks"],
+      }),
+      getFeedbacksByFeedbackId: build.query<
+        GetFeedbacksByFeedbackIdApiResponse,
+        GetFeedbacksByFeedbackIdApiArg
+      >({
+        query: (queryArg) => ({ url: `/feedbacks/${queryArg.feedbackId}` }),
+        providesTags: ["Feedbacks"],
+      }),
+      putFeedbacksByFeedbackId: build.mutation<
+        PutFeedbacksByFeedbackIdApiResponse,
+        PutFeedbacksByFeedbackIdApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/feedbacks/${queryArg.feedbackId}`,
+          method: "PUT",
+          body: queryArg.body,
+        }),
+        invalidatesTags: ["Feedbacks"],
+      }),
+      deleteFeedbacksByFeedbackId: build.mutation<
+        DeleteFeedbacksByFeedbackIdApiResponse,
+        DeleteFeedbacksByFeedbackIdApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/feedbacks/${queryArg.feedbackId}`,
+          method: "DELETE",
+        }),
+        invalidatesTags: ["Feedbacks"],
+      }),
+      getTemplates: build.query<GetTemplatesApiResponse, GetTemplatesApiArg>({
+        query: (queryArg) => ({
+          url: `/templates`,
+          params: {
+            page: queryArg.page,
+            perPage: queryArg.perPage,
+            search: queryArg.search,
+            sortByCreatedAt: queryArg.sortByCreatedAt,
+            sortByName: queryArg.sortByName,
+            filterTags: queryArg.filterTags,
+            filterDifficulty: queryArg.filterDifficulty,
+          },
+        }),
+        providesTags: ["Templates"],
+      }),
+      postTemplates: build.mutation<
+        PostTemplatesApiResponse,
+        PostTemplatesApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/templates`,
+          method: "POST",
+          body: queryArg.body,
+        }),
+        invalidatesTags: ["Templates"],
+      }),
+      getTemplatesByTemplateId: build.query<
+        GetTemplatesByTemplateIdApiResponse,
+        GetTemplatesByTemplateIdApiArg
+      >({
+        query: (queryArg) => ({ url: `/templates/${queryArg.templateId}` }),
+        providesTags: ["Templates"],
+      }),
+      putTemplatesByTemplateId: build.mutation<
+        PutTemplatesByTemplateIdApiResponse,
+        PutTemplatesByTemplateIdApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/templates/${queryArg.templateId}`,
+          method: "PUT",
+          body: queryArg.body,
+        }),
+        invalidatesTags: ["Templates"],
+      }),
+      deleteTemplatesByTemplateId: build.mutation<
+        DeleteTemplatesByTemplateIdApiResponse,
+        DeleteTemplatesByTemplateIdApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/templates/${queryArg.templateId}`,
+          method: "DELETE",
+        }),
+        invalidatesTags: ["Templates"],
+      }),
+      getTests: build.query<GetTestsApiResponse, GetTestsApiArg>({
+        query: (queryArg) => ({
+          url: `/tests`,
+          params: {
+            page: queryArg.page,
+            perPage: queryArg.perPage,
+            mode: queryArg.mode,
+            authorId: queryArg.authorId,
+            candidateId: queryArg.candidateId,
+            searchTitle: queryArg.searchTitle,
+            sortCreatedAt: queryArg.sortCreatedAt,
+            sortTitle: queryArg.sortTitle,
+          },
+        }),
+        providesTags: ["Tests"],
+      }),
+      postTests: build.mutation<PostTestsApiResponse, PostTestsApiArg>({
+        query: (queryArg) => ({
+          url: `/tests`,
+          method: "POST",
+          body: queryArg.body,
+        }),
+        invalidatesTags: ["Tests"],
+      }),
+      getTestsFindByRoom: build.query<
+        GetTestsFindByRoomApiResponse,
+        GetTestsFindByRoomApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/tests/find-by-room`,
+          params: {
+            roomId: queryArg.roomId,
+          },
+        }),
+        providesTags: ["Tests"],
+      }),
+      getTestsByTestId: build.query<
+        GetTestsByTestIdApiResponse,
+        GetTestsByTestIdApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/tests/${queryArg.testId}`,
+          params: {
+            viewPassword: queryArg.viewPassword,
+          },
+        }),
+        providesTags: ["Tests"],
+      }),
+      putTestsByTestId: build.mutation<
+        PutTestsByTestIdApiResponse,
+        PutTestsByTestIdApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/tests/${queryArg.testId}`,
+          method: "PUT",
+          body: queryArg.body,
+        }),
+        invalidatesTags: ["Tests"],
+      }),
+      deleteTestsByTestId: build.mutation<
+        DeleteTestsByTestIdApiResponse,
+        DeleteTestsByTestIdApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/tests/${queryArg.testId}`,
+          method: "DELETE",
+        }),
+        invalidatesTags: ["Tests"],
+      }),
+      getTestsByTestIdQuestions: build.query<
+        GetTestsByTestIdQuestionsApiResponse,
+        GetTestsByTestIdQuestionsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/tests/${queryArg.testId}/questions`,
+          params: {
+            viewCorrectAnswer: queryArg.viewCorrectAnswer,
+          },
+        }),
+        providesTags: ["Tests"],
+      }),
+      getTestsByTestIdAttempts: build.query<
+        GetTestsByTestIdAttemptsApiResponse,
+        GetTestsByTestIdAttemptsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/tests/${queryArg.testId}/attempts`,
+          params: {
+            page: queryArg.page,
+            perPage: queryArg.perPage,
+            candidateId: queryArg.candidateId,
+            status: queryArg.status,
+          },
+        }),
+        providesTags: ["Tests"],
+      }),
+      getTestsByTestIdParticipants: build.query<
+        GetTestsByTestIdParticipantsApiResponse,
+        GetTestsByTestIdParticipantsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/tests/${queryArg.testId}/participants`,
+          params: {
+            page: queryArg.page,
+            perPage: queryArg.perPage,
+            sortByRank: queryArg.sortByRank,
+          },
+        }),
+        providesTags: ["Tests"],
+      }),
+      postTestsByTestIdParticipants: build.mutation<
+        PostTestsByTestIdParticipantsApiResponse,
+        PostTestsByTestIdParticipantsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/tests/${queryArg.testId}/participants`,
+          method: "POST",
+          body: queryArg.body,
+        }),
+        invalidatesTags: ["Tests"],
+      }),
+      deleteTestsByTestIdParticipants: build.mutation<
+        DeleteTestsByTestIdParticipantsApiResponse,
+        DeleteTestsByTestIdParticipantsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/tests/${queryArg.testId}/participants`,
+          method: "DELETE",
+          body: queryArg.body,
+        }),
+        invalidatesTags: ["Tests"],
+      }),
+      getAttempts: build.query<GetAttemptsApiResponse, GetAttemptsApiArg>({
+        query: (queryArg) => ({
+          url: `/attempts`,
+          params: {
+            page: queryArg.page,
+            perPage: queryArg.perPage,
+            testId: queryArg.testId,
+            candidateId: queryArg.candidateId,
+            status: queryArg.status,
+          },
+        }),
+        providesTags: ["Attempts"],
+      }),
+      postAttempts: build.mutation<PostAttemptsApiResponse, PostAttemptsApiArg>(
+        {
+          query: (queryArg) => ({
+            url: `/attempts`,
+            method: "POST",
+            body: queryArg.body,
+          }),
+          invalidatesTags: ["Attempts"],
         },
+      ),
+      getAttemptsByAttemptId: build.query<
+        GetAttemptsByAttemptIdApiResponse,
+        GetAttemptsByAttemptIdApiArg
+      >({
+        query: (queryArg) => ({ url: `/attempts/${queryArg.attemptId}` }),
+        providesTags: ["Attempts"],
+      }),
+      getAttemptsByAttemptIdAnswers: build.query<
+        GetAttemptsByAttemptIdAnswersApiResponse,
+        GetAttemptsByAttemptIdAnswersApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/attempts/${queryArg.attemptId}/answers`,
+        }),
+        providesTags: ["Attempts"],
+      }),
+      postAttemptsByAttemptIdAnswers: build.mutation<
+        PostAttemptsByAttemptIdAnswersApiResponse,
+        PostAttemptsByAttemptIdAnswersApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/attempts/${queryArg.attemptId}/answers`,
+          method: "POST",
+          body: queryArg.body,
+        }),
+        invalidatesTags: ["Attempts"],
+      }),
+      patchAttemptsByAttemptIdSubmit: build.mutation<
+        PatchAttemptsByAttemptIdSubmitApiResponse,
+        PatchAttemptsByAttemptIdSubmitApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/attempts/${queryArg.attemptId}/submit`,
+          method: "PATCH",
+        }),
+        invalidatesTags: ["Attempts"],
       }),
     }),
-    getFeedbacks: build.query<GetFeedbacksApiResponse, GetFeedbacksApiArg>({
-      query: (queryArg) => ({
-        url: `/feedbacks`,
-        params: {
-          testId: queryArg.testId,
-          sortByCreatedAt: queryArg.sortByCreatedAt,
-          sortByRating: queryArg.sortByRating,
-          filterByProblems: queryArg.filterByProblems,
-        },
-      }),
-    }),
-    postFeedbacks: build.mutation<
-      PostFeedbacksApiResponse,
-      PostFeedbacksApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/feedbacks`,
-        method: "POST",
-        body: queryArg.body,
-      }),
-    }),
-    getFeedbacksByFeedbackId: build.query<
-      GetFeedbacksByFeedbackIdApiResponse,
-      GetFeedbacksByFeedbackIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/feedbacks/${queryArg.feedbackId}` }),
-    }),
-    putFeedbacksByFeedbackId: build.mutation<
-      PutFeedbacksByFeedbackIdApiResponse,
-      PutFeedbacksByFeedbackIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/feedbacks/${queryArg.feedbackId}`,
-        method: "PUT",
-        body: queryArg.body,
-      }),
-    }),
-    deleteFeedbacksByFeedbackId: build.mutation<
-      DeleteFeedbacksByFeedbackIdApiResponse,
-      DeleteFeedbacksByFeedbackIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/feedbacks/${queryArg.feedbackId}`,
-        method: "DELETE",
-      }),
-    }),
-    getTemplates: build.query<GetTemplatesApiResponse, GetTemplatesApiArg>({
-      query: (queryArg) => ({
-        url: `/templates`,
-        params: {
-          page: queryArg.page,
-          perPage: queryArg.perPage,
-          search: queryArg.search,
-          sortByCreatedAt: queryArg.sortByCreatedAt,
-          sortByName: queryArg.sortByName,
-          filterTags: queryArg.filterTags,
-          filterDifficulty: queryArg.filterDifficulty,
-        },
-      }),
-    }),
-    postTemplates: build.mutation<
-      PostTemplatesApiResponse,
-      PostTemplatesApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/templates`,
-        method: "POST",
-        body: queryArg.body,
-      }),
-    }),
-    getTemplatesByTemplateId: build.query<
-      GetTemplatesByTemplateIdApiResponse,
-      GetTemplatesByTemplateIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/templates/${queryArg.templateId}` }),
-    }),
-    putTemplatesByTemplateId: build.mutation<
-      PutTemplatesByTemplateIdApiResponse,
-      PutTemplatesByTemplateIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/templates/${queryArg.templateId}`,
-        method: "PUT",
-        body: queryArg.body,
-      }),
-    }),
-    deleteTemplatesByTemplateId: build.mutation<
-      DeleteTemplatesByTemplateIdApiResponse,
-      DeleteTemplatesByTemplateIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/templates/${queryArg.templateId}`,
-        method: "DELETE",
-      }),
-    }),
-    getTests: build.query<GetTestsApiResponse, GetTestsApiArg>({
-      query: (queryArg) => ({
-        url: `/tests`,
-        params: {
-          page: queryArg.page,
-          perPage: queryArg.perPage,
-          mode: queryArg.mode,
-          authorId: queryArg.authorId,
-          candidateId: queryArg.candidateId,
-          searchTitle: queryArg.searchTitle,
-          sortCreatedAt: queryArg.sortCreatedAt,
-          sortTitle: queryArg.sortTitle,
-        },
-      }),
-    }),
-    postTests: build.mutation<PostTestsApiResponse, PostTestsApiArg>({
-      query: (queryArg) => ({
-        url: `/tests`,
-        method: "POST",
-        body: queryArg.body,
-      }),
-    }),
-    getTestsFindByRoom: build.query<
-      GetTestsFindByRoomApiResponse,
-      GetTestsFindByRoomApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/tests/find-by-room`,
-        params: {
-          roomId: queryArg.roomId,
-        },
-      }),
-    }),
-    getTestsByTestId: build.query<
-      GetTestsByTestIdApiResponse,
-      GetTestsByTestIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/tests/${queryArg.testId}`,
-        params: {
-          viewPassword: queryArg.viewPassword,
-        },
-      }),
-    }),
-    putTestsByTestId: build.mutation<
-      PutTestsByTestIdApiResponse,
-      PutTestsByTestIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/tests/${queryArg.testId}`,
-        method: "PUT",
-        body: queryArg.body,
-      }),
-    }),
-    deleteTestsByTestId: build.mutation<
-      DeleteTestsByTestIdApiResponse,
-      DeleteTestsByTestIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/tests/${queryArg.testId}`,
-        method: "DELETE",
-      }),
-    }),
-    getTestsByTestIdAttempts: build.query<
-      GetTestsByTestIdAttemptsApiResponse,
-      GetTestsByTestIdAttemptsApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/tests/${queryArg.testId}/attempts`,
-        params: {
-          page: queryArg.page,
-          perPage: queryArg.perPage,
-          candidateId: queryArg.candidateId,
-          status: queryArg.status,
-        },
-      }),
-    }),
-    getTestsByTestIdParticipants: build.query<
-      GetTestsByTestIdParticipantsApiResponse,
-      GetTestsByTestIdParticipantsApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/tests/${queryArg.testId}/participants`,
-        params: {
-          page: queryArg.page,
-          perPage: queryArg.perPage,
-          sortByRank: queryArg.sortByRank,
-        },
-      }),
-    }),
-    postTestsByTestIdParticipants: build.mutation<
-      PostTestsByTestIdParticipantsApiResponse,
-      PostTestsByTestIdParticipantsApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/tests/${queryArg.testId}/participants`,
-        method: "POST",
-        body: queryArg.body,
-      }),
-    }),
-    deleteTestsByTestIdParticipants: build.mutation<
-      DeleteTestsByTestIdParticipantsApiResponse,
-      DeleteTestsByTestIdParticipantsApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/tests/${queryArg.testId}/participants`,
-        method: "DELETE",
-        body: queryArg.body,
-      }),
-    }),
-    getAttempts: build.query<GetAttemptsApiResponse, GetAttemptsApiArg>({
-      query: (queryArg) => ({
-        url: `/attempts`,
-        params: {
-          page: queryArg.page,
-          perPage: queryArg.perPage,
-          testId: queryArg.testId,
-          candidateId: queryArg.candidateId,
-          status: queryArg.status,
-        },
-      }),
-    }),
-    postAttempts: build.mutation<PostAttemptsApiResponse, PostAttemptsApiArg>({
-      query: (queryArg) => ({
-        url: `/attempts`,
-        method: "POST",
-        body: queryArg.body,
-      }),
-    }),
-    getAttemptsByAttemptId: build.query<
-      GetAttemptsByAttemptIdApiResponse,
-      GetAttemptsByAttemptIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/attempts/${queryArg.attemptId}` }),
-    }),
-    getAttemptsByAttemptIdAnswers: build.query<
-      GetAttemptsByAttemptIdAnswersApiResponse,
-      GetAttemptsByAttemptIdAnswersApiArg
-    >({
-      query: (queryArg) => ({ url: `/attempts/${queryArg.attemptId}/answers` }),
-    }),
-    postAttemptsByAttemptIdAnswers: build.mutation<
-      PostAttemptsByAttemptIdAnswersApiResponse,
-      PostAttemptsByAttemptIdAnswersApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/attempts/${queryArg.attemptId}/answers`,
-        method: "POST",
-        body: queryArg.body,
-      }),
-    }),
-    patchAttemptsByAttemptIdSubmit: build.mutation<
-      PatchAttemptsByAttemptIdSubmitApiResponse,
-      PatchAttemptsByAttemptIdSubmitApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/attempts/${queryArg.attemptId}/submit`,
-        method: "PATCH",
-      }),
-    }),
-  }),
-  overrideExisting: false,
-});
+    overrideExisting: false,
+  });
 export { injectedRtkApi as testApiGenV2 };
 export type GetCandidatesByCandidateIdAttemptsApiResponse =
   /** status 200 Success */ {
@@ -527,6 +581,12 @@ export type DeleteTestsByTestIdApiResponse = unknown;
 export type DeleteTestsByTestIdApiArg = {
   testId: string;
 };
+export type GetTestsByTestIdQuestionsApiResponse =
+  /** status 200 Success */ QuestionCoreSchema[];
+export type GetTestsByTestIdQuestionsApiArg = {
+  testId: string;
+  viewCorrectAnswer?: "1" | "0";
+};
 export type GetTestsByTestIdAttemptsApiResponse = /** status 200 Success */ {
   page: number;
   perPage: number;
@@ -741,6 +801,26 @@ export type LongAnswerDetailCommonSchema = {
   extraText?: string | null;
   correctAnswer: string | null;
 };
+export type QuestionDetailCommonSchema =
+  | ({
+      type: "MCQ";
+    } & McqDetailCommonSchema)
+  | ({
+      type: "LONG_ANSWER";
+    } & LongAnswerDetailCommonSchema);
+export type QuestionCoreSchema = {
+  id: number;
+  testId: string;
+  text: string;
+  points: number;
+  type: "MCQ" | "LONG_ANSWER";
+  detail: QuestionDetailCommonSchema;
+  _aggregate_test: {
+    numberOfAnswers: number;
+    numberOfCorrectAnswers: number;
+    averageScore: number;
+  };
+};
 export type CandidateCoreSchema = {
   candidateId: string;
   _aggregate: {
@@ -796,6 +876,8 @@ export const {
   useLazyGetTestsByTestIdQuery,
   usePutTestsByTestIdMutation,
   useDeleteTestsByTestIdMutation,
+  useGetTestsByTestIdQuestionsQuery,
+  useLazyGetTestsByTestIdQuestionsQuery,
   useGetTestsByTestIdAttemptsQuery,
   useLazyGetTestsByTestIdAttemptsQuery,
   useGetTestsByTestIdParticipantsQuery,
