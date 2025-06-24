@@ -9,7 +9,7 @@ export const MockQuestionCore: QuestionCoreSchema[] = [
 		type: "MCQ",
 		detail: {
 			type: "MCQ",
-			options: ["Berlin", "Madrid", "Paris", "Rome"],
+			options: ["Berlin BerlinBerlinBerlinB erlinBerlinBerlinBerlinB erlinB erlinBerlinBe rlinBerlinBerl inBerlin Ber linBerlinBerli nBerlinBe r li nBe rlinBerlin BerlinBerl inBerlinBe rlinBerlinBerlinBerlin BerlinBerlinBerli nBerlinB erlinBerlin", "Madrid", "Paris", "Rome"],
 			correctOption: 2
 		},
 		_aggregate_test: {
@@ -73,7 +73,7 @@ export const MockQuestionCore: QuestionCoreSchema[] = [
 	{
 		id: 5,
 		testId: "test-004",
-		text: "Describe the process of normalization in databases.",
+		text: "Describe the process of normalization in databases. Why is it important? Provide an example. And what are the different normal forms? How do they differ? Specifically, what is the third normal form? Specifically, what is the Boyce-Codd normal form? How does it differ from the third normal form? Can you provide an example of a table that is in Boyce-Codd normal form but not in third normal form? Can you provide an example of a table that is in third normal form but not in Boyce-Codd normal form?",
 		points: 6,
 		type: "LONG_ANSWER",
 		detail: {

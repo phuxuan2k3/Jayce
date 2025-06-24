@@ -1,35 +1,18 @@
-import { QuestionCoreSchema, AnswerCoreSchema } from '../../../api/test.api-gen-v2';
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
-export type QuestionDisplayMode = 'exam' | 'list' | 'stats' | 'review' | 'manage';
-
-export type QuestionAnswer = {
-	answer: AnswerCoreSchema | null;
-	isCorrect?: boolean;
-	isChosen?: boolean;
-};
-
-export interface QuestionContextType {
-	question: QuestionCoreSchema;
-	answer?: QuestionAnswer;
-	mode: QuestionDisplayMode;
-	showCorrectAnswer?: boolean;
-	onAnswerChange?: (optionIndex: number) => void;
-	onToggleFlag?: () => void;
-	isFlagged?: boolean;
-	questionIndex?: number;
-	totalQuestions?: number;
+export type BaseComponentProps = {
+	className?: string;
+	children?: ReactNode;
+	onClick?: () => void;
 }
 
-export interface QuestionProps {
-	question: QuestionCoreSchema;
-	answer?: QuestionAnswer;
-	mode: QuestionDisplayMode;
-	showCorrectAnswer?: boolean;
-	onAnswerChange?: (optionIndex: number) => void;
-	onToggleFlag?: () => void;
-	isFlagged?: boolean;
-	questionIndex?: number;
-	totalQuestions?: number;
-	children: ReactNode;
-}
+export const TypeMap = {
+	"MCQ": {
+		label: "MCQ",
+		color: "bg-blue-100 text-blue-800",
+	},
+	"LONG_ANSWER": {
+		label: "Long Answer",
+		color: "bg-orange-100 text-orange-800",
+	},
+} as const;

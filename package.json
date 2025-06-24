@@ -32,6 +32,7 @@
     "clsx": "^2.1.1",
     "daisyui": "^5.0.6",
     "date-fns": "^4.1.0",
+    "framer-motion": "^12.19.1",
     "google-protobuf": "^3.21.4",
     "json-server": "^0.17.4",
     "lucide-react": "^0.474.0",

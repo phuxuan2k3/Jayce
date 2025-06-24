@@ -1,74 +1,68 @@
-import Header from './Header';
-import Text from './Text';
-import Images from './Images';
-import ExtraText from './ExtraText';
-import Options from './Options';
-import LongAnswerInput from './LongAnswerInput';
-import LongAnswerDisplay from './LongAnswerDisplay';
-import Status from './Status';
-import Stats from './Stats';
-import Navigation from './Navigation';
-import Compact from './Compact';
-import { QuestionProps } from './types';
-import { QuestionContext } from './context';
+import { cn } from "../../../../app/cn";
+import { BaseComponentProps } from "./types";
+import { QuestionContext, QuestionContextProps, ShowAnswerContext } from "./contexts";
+import { QuestionPrimitivesHeader } from "./QuestionHeader";
+import { QuestionPrimitivesDetail } from "./detail";
+import { useCallback, useState } from "react";
+import QuestionAggregate from "./QuestionAggregate";
 
-interface QuestionComponent extends React.FC<QuestionProps> {
-	Header: React.FC;
-	Text: React.FC;
-	Images: React.FC;
-	ExtraText: React.FC;
-	Options: React.FC;
-	LongAnswerInput: React.FC;
-	LongAnswerDisplay: React.FC;
-	Status: React.FC;
-	Stats: React.FC;
-	Navigation: React.FC<{ onPrevious?: () => void; onNext?: () => void; }>;
-	Compact: React.FC;
+type PrimitivesProps = BaseComponentProps & QuestionContextProps;
+
+function QuestionPrimitives({
+	children,
+	className = "",
+	...context
+}: PrimitivesProps) {
+	const [showAnswer, _setShowAnswer] = useState<boolean>(false);
+
+	const setShowAnswer = useCallback((show: boolean) => {
+		_setShowAnswer(show);
+	}, []);
+
+	return (
+		<ShowAnswerContext.Provider value={{
+			show: showAnswer,
+			setShow: setShowAnswer,
+		}}>
+			<QuestionContext.Provider value={{
+				...context,
+			}}>
+				<div
+					className={cn(
+						"flex flex-col gap-2 border border-primary rounded-lg shadow-md hover:shadow-lg px-6 py-6",
+						context.onClick && "cursor-pointer hover:bg-primary-toned-50",
+						className,
+					)}
+					onClick={context.onClick}>
+					{children}
+				</div>
+			</QuestionContext.Provider >
+		</ShowAnswerContext.Provider>
+	);
 }
 
-const Question = (({
-	question,
-	answer,
-	mode,
-	showCorrectAnswer = false,
-	onAnswerChange,
-	onToggleFlag,
-	isFlagged = false,
-	questionIndex,
-	totalQuestions,
-	children
-}) => {
-	const contextValue = {
-		question,
-		answer,
-		mode,
-		showCorrectAnswer,
-		onAnswerChange,
-		onToggleFlag,
-		isFlagged,
-		questionIndex,
-		totalQuestions
-	};
+// ================================================
+// Exports
+// ================================================
+
+QuestionPrimitives.Header = QuestionPrimitivesHeader;
+QuestionPrimitives.Detail = QuestionPrimitivesDetail;
+
+export default QuestionPrimitives;
+
+
+export function QuestionDefault({
+	className = "",
+	children,
+	...context
+}: PrimitivesProps) {
 	return (
-		<QuestionContext.Provider value={contextValue}>
-			<div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
-				{children}
-			</div>
-		</QuestionContext.Provider>
+		<QuestionPrimitives {...context} className={cn("bg-white", className)}>
+			<QuestionPrimitivesHeader />
+			<QuestionPrimitivesDetail />
+			{children}
+			<QuestionAggregate />
+		</QuestionPrimitives>
 	);
-}) as QuestionComponent;
+}
 
-
-Question.Header = Header;
-Question.Text = Text;
-Question.Images = Images;
-Question.ExtraText = ExtraText;
-Question.Options = Options;
-Question.LongAnswerInput = LongAnswerInput;
-Question.LongAnswerDisplay = LongAnswerDisplay;
-Question.Status = Status;
-Question.Stats = Stats;
-Question.Navigation = Navigation;
-Question.Compact = Compact;
-
-export default Question;
