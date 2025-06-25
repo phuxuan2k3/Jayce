@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLazyGetSuggestOutlinesQuery } from '../../../../../infra-test/api/prompt.api-custom';
 import { TemplateFormData } from './types';
-import MyButton from '../../../../../infra-test/ui/MyButton';
+import MyButton from '../../../../../infra-test/ui/buttons/MyButton';
 import { cn } from '../../../../../app/cn';
 import { Trash2 } from 'lucide-react';
 

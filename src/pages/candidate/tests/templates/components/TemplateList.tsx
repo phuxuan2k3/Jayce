@@ -3,9 +3,9 @@ import { TemplateCoreSchema, useGetTemplatesQuery } from "../../../../../infra-t
 import TemplateCard from "../../../../../infra-test/ui-items/template/TemplateCard";
 import LoadingCover from "../../../../../infra-test/ui/fetch-states/LoadingCover";
 import ErrorCover from "../../../../../infra-test/ui/fetch-states/ErrorCover";
-import NotAvailible from "../../../../../infra-test/ui/fetch-states/NotAvailible";
+import NoDataAvailibleCover from "../../../../../infra-test/ui/fetch-states/NoDataAvailibleCover";
 import MyPaginationSection from "../../../../../infra-test/ui/MyPaginationSection";
-import MyButton from "../../../../../infra-test/ui/MyButton";
+import MyButton from "../../../../../infra-test/ui/buttons/MyButton";
 
 interface TemplateListProps {
 	searchName: string;
@@ -29,7 +29,7 @@ const TemplateList: React.FC<TemplateListProps> = ({
 
 	if (isLoading) return <LoadingCover />
 	if (error) return <ErrorCover error={error} />;
-	if (!isSuccess) return <NotAvailible />;
+	if (!isSuccess) return <NoDataAvailibleCover />;
 
 	const { data: templates } = pagedTemplates;
 

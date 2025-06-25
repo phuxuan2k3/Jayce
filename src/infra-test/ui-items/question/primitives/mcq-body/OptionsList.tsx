@@ -1,43 +1,31 @@
 import { cn } from '../../../../../app/cn';
-import { ShowAnswerContext, QuestionContext } from '../contexts';
+import { QuestionContext } from '../contexts';
 import { BaseComponentProps } from '../types';
+import { ShowAnswerContext } from '../contexts';
 
-export function MCQDetail({
+export function OptionsList({
 	className = "",
 }: BaseComponentProps) {
 	const detail = QuestionContext.useMCQDetail();
-	const chosenOption = QuestionContext.useMCQAnswerDetail()?.chosenOption;
-	const { show: showResult } = ShowAnswerContext.useShowAnswer();
-
 	return (
-		<>
-			<ul className={cn("flex flex-col gap-4 text-[15px]", className)}>
-				{detail.options.map((_, index) => (
-					<OptionItem
-						key={index}
-						index={index} />
-				))}
-			</ul>
-			<hr className="my-1 border-gray-300" />
-			{showResult === true && (
-				chosenOption != null ? (
-					<div className="text-sm font-semibold text-gray-600">
-						Chosen Option: {String.fromCharCode(65 + chosenOption)}
-					</div>
-				) : (
-					<div className="text-sm font-semibold text-gray-600">
-						No option chosen.
-					</div>
-				)
-			)}
-		</>
+		<ul className={cn("flex flex-col gap-4 text-[15px]", className)}>
+			{detail.options.map((_, index) => (
+				<OptionItem
+					key={index}
+					index={index} />
+			))}
+		</ul>
 	);
 }
 
 function OptionItem({
-	className = "", onClick, index,
+	className = "",
+	optionClassName = "",
+	onClick,
+	index,
 }: BaseComponentProps & {
 	index: number;
+	optionClassName?: string;
 }) {
 	const { show: showResult } = ShowAnswerContext.useShowAnswer();
 	const detail = QuestionContext.useMCQDetail();
@@ -49,17 +37,13 @@ function OptionItem({
 
 	let optionState = OptionStateAsConst.DEFAULT;
 
-	if (
-		showResult === true &&
-		isCorrectOption === true
-	) {
+	if (showResult === true &&
+		isCorrectOption === true) {
 		optionState = OptionStateAsConst.CORRECT;
 	}
-	else if (
-		showResult === true &&
+	else if (showResult === true &&
 		chosenOption === index &&
-		isCorrectOption === false
-	) {
+		isCorrectOption === false) {
 		optionState = OptionStateAsConst.INCORRECT;
 	}
 	else if (chosenOption === index) {
@@ -71,20 +55,25 @@ function OptionItem({
 
 	return <>
 		{(detail.options[index] && (
-			<li className={cn("flex flex-row items-baseline gap-4 py-2 px-4 bg-gray-50 border border-gray-200 shadow-sm rounded-lg",
+			<li className={cn(
+				"flex flex-row items-baseline gap-4 py-2 px-4 bg-gray-50 border border-gray-200 shadow-sm rounded-lg",
 				onClick && "cursor-pointer hover:bg-gray-100 hover:border-gray-400",
 				optionState.bg,
 				className
 			)}
 				onClick={onClick}
 			>
-				<div className={cn('rounded-full h-7 aspect-square flex items-center justify-center', optionState.option)}>
+				<div className={cn(
+					'rounded-full h-7 aspect-square flex items-center justify-center',
+					optionState.option,
+					optionClassName,
+				)}>
 					<span>{character}</span>
 				</div>
 				<span className='mt-0'>{detail.options[index]}</span>
 			</li>
 		))}
-	</>
+	</>;
 }
 
 const OptionStateAsConst = {
@@ -109,4 +98,3 @@ const OptionStateAsConst = {
 		label: "Not Answered",
 	},
 };
-

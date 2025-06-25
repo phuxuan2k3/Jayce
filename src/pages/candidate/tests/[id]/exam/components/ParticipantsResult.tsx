@@ -1,6 +1,6 @@
 import AttemptList from '../../common/components/test-details/AttemptsList'
 import ParticipantStatisticCard from './ParticipantStatistic'
-import ParticipantProfileCard from './ParticipantCard'
+import UserCoreCard from '../../../../../../infra-test/ui-items/user/UserCoreCard'
 import { getUserCore } from '../../../../../../infra-test/core/user.model'
 import { ArrowLeft } from 'lucide-react'
 import { useGetExamsByTestIdCandidateAndCandidateIdAttemptsAggregateQuery, useGetExamsByTestIdCandidateAndCandidateIdAttemptsQuery } from '../../../../../../infra-test/api/test.api-gen'
@@ -85,8 +85,8 @@ export default function ParticipantsResult({
 				) : (
 					<>
 						<div className='flex flex-col h-fit gap-2 p-4'>
-							<ParticipantProfileCard
-								participant={participant}
+							<UserCoreCard
+								user={participant}
 							/>
 							<ParticipantStatisticCard
 								attemptAggregate={aggregate}

@@ -1,112 +1,66 @@
-import { useMemo, useState } from "react";
-import MyPagination from "../../../../../../components/ui/common/MyPagination";
-import { ParticipantWithUserInfo } from "./type"
-import { useGetExamsByTestIdParticipantsAggregateQuery } from "../../../../../../infra-test/api/test.api-gen";
+import { useState } from "react";
 import { useGetUsersQuery } from "../../../../../../features/auth/api/auth-profile.api";
-import { getUserCore } from "../../../../../../infra-test/core/user.model";
-import useQueryState from "../../../../../../components/hooks/useQueryState";
+import useGetTestIdParams from "../../../../../../infra-test/hooks/useGetTestIdParams";
+import { useGetTestsByTestIdParticipantsQuery } from "../../../../../../infra-test/api/test.api-gen-v2";
+import { PagedFilter, QuerySortValues } from "../../../../../../interfaces/paged.type";
+import FetchStateCover2 from "../../../../../../infra-test/ui/fetch-states/FetchStateCover2";
+import ParticipantsTable from "./ParticipantsTable";
+import MyPaginationSection from "../../../../../../infra-test/ui/MyPaginationSection";
 
-type Filter = {
-	page: number;
-	perPage: number;
+type Filter = PagedFilter & {
+	sortByRank: QuerySortValues;
 }
 
 export default function ParticipantsList({
-	testId,
 	onParticipantClicked,
 }: {
-	testId: string;
 	onParticipantClicked: (participantId: string) => void;
 }) {
+	const testId = useGetTestIdParams();
 	const [filter, setFilter] = useState<Filter>({
 		page: 1,
 		perPage: 10,
+		sortByRank: "asc",
 	});
 
-	const participantsQuery = useGetExamsByTestIdParticipantsAggregateQuery({
+	const participantsQuery = useGetTestsByTestIdParticipantsQuery({
 		testId,
-		page: filter.page,
-		perPage: filter.perPage,
+		...filter,
 	});
-	const participants = participantsQuery.data?.data;
-
-	const candidateIds = useMemo(() => participants?.map((participant) => participant.candidateId) || [], [participants]);
-
-	const usersQuery = useGetUsersQuery({ user_ids: candidateIds });
-	const users = usersQuery.data?.users;
-
-	const participantsWithInfo: ParticipantWithUserInfo[] = useMemo(() => {
-		if (!participants || !users) return [];
-		if (participants.length !== users.length) throw new Error("Participants and candidates info length mismatch");
-		return participants.map((participant, index) => {
-			const candidateCore = getUserCore(users[index]);
-			return {
-				...participant,
-				...candidateCore,
-			};
-		});
-	}, [participants, users]);
-
-	const isLoading = useQueryState({
-		queries: [
-			participantsQuery,
-			usersQuery,
-		],
+	const usersQuery = useGetUsersQuery({
+		user_ids: participantsQuery.data?.data.map((p) => p.candidateId) || [],
+	}, {
+		skip: participantsQuery.data == null || !participantsQuery.data.data.length,
 	});
 
-	if (isLoading) return isLoading;
 
 	return (
-		<div className="flex flex-col gap-4">
-			<table className="min-w-full divide-y divide-gray-200">
-				<thead className="bg-gray-50">
-					<tr>
-						<th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-							Rank
-						</th>
-						<th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-							Profile
-						</th>
-						<th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-							Highest Score
-						</th>
-						<th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-							Total Attempts
-						</th>
-					</tr>
-				</thead>
-				<tbody className="bg-white divide-y divide-gray-200">
-					{participantsWithInfo.map((participant) => (
-						<tr
-							key={participant.id}
-							className="hover:bg-gray-50 cursor-pointer"
-							onClick={() => onParticipantClicked(participant.id)}
-						>
-							<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-								{participant.rank}
-							</td>
-							<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-								<div className="flex items-center">
-									<img src={participant.avatarPath} alt={participant.fullname} className="h-8 w-8 rounded-full mr-2" />
-									<span>{participant.fullname}</span>
-								</div>
-							</td>
-							<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-								{participant.highestScore}
-							</td>
-							<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-								{participant.totalAttempts}
-							</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
+		<FetchStateCover2
+			fetchState={participantsQuery}
+			dataComponent={(paged) => (
+				<FetchStateCover2
+					fetchState={usersQuery}
+					dataComponent={(users) => (
+						<div className="flex flex-col gap-4">
+							<ParticipantsTable
+								participants={paged.data}
+								users={users.users}
+								onUserClicked={(userId) => onParticipantClicked(userId)}
+							/>
 
-			<MyPagination
-				initialPage={filter.page}
-				onPageChange={(page) => setFilter({ ...filter, page })}
-				totalPage={participantsQuery.data?.totalPages || 1}
-			/>
-		</div>
+							<MyPaginationSection
+								onPageChange={(page) => {
+									setFilter((prev) => ({ ...prev, page }));
+								}}
+								page={filter.page}
+								perPage={filter.perPage}
+								total={paged.total}
+								totalPages={paged.totalPages}
+							/>
+						</div>
+					)}
+				/>
+			)}
+		/>
 	)
 }

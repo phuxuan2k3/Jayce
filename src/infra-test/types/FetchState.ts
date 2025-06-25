@@ -3,7 +3,8 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 export type FetchState<T = any> = {
 	isLoading: boolean;
-	error?: FetchBaseQueryError | SerializedError;
+	error?: FetchError;
 	data?: T;
 };
 
+export type FetchError = FetchBaseQueryError | SerializedError;

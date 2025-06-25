@@ -2,11 +2,10 @@ import { cn } from "../../../../app/cn";
 import { BaseComponentProps } from "./types";
 import { QuestionContext, QuestionContextProps, ShowAnswerContext } from "./contexts";
 import { QuestionPrimitivesHeader } from "./QuestionHeader";
-import { QuestionPrimitivesDetail } from "./detail";
+import { QuestionPrimitivesDetailBody } from "./QuestionBody";
 import { useCallback, useState } from "react";
-import QuestionAggregate from "./QuestionAggregate";
 
-type PrimitivesProps = BaseComponentProps & QuestionContextProps;
+export type PrimitivesProps = BaseComponentProps & QuestionContextProps;
 
 function QuestionPrimitives({
 	children,
@@ -46,23 +45,8 @@ function QuestionPrimitives({
 // ================================================
 
 QuestionPrimitives.Header = QuestionPrimitivesHeader;
-QuestionPrimitives.Detail = QuestionPrimitivesDetail;
+QuestionPrimitives.Detail = QuestionPrimitivesDetailBody;
 
 export default QuestionPrimitives;
 
-
-export function QuestionDefault({
-	className = "",
-	children,
-	...context
-}: PrimitivesProps) {
-	return (
-		<QuestionPrimitives {...context} className={cn("bg-white", className)}>
-			<QuestionPrimitivesHeader />
-			<QuestionPrimitivesDetail />
-			{children}
-			<QuestionAggregate />
-		</QuestionPrimitives>
-	);
-}
 

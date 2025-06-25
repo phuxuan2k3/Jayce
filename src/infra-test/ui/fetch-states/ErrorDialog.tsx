@@ -2,7 +2,7 @@ import { SerializedError } from '@reduxjs/toolkit'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import React from 'react'
 import { parseQueryError } from '../../../helpers/fetchBaseQuery.error';
-import MyButton from '../MyButton';
+import MyButton from '../buttons/MyButton';
 
 export default function ErrorDialog({ error }: { error?: FetchBaseQueryError | SerializedError }) {
 	const [isError, setIsError] = React.useState(false);

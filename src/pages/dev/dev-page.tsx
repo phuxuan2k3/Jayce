@@ -1,17 +1,18 @@
 import { MockQuestionCore } from "../../infra-test/ui-items/question/mock-questions";
-import { QuestionDefault } from "../../infra-test/ui-items/question/primitives";
+import { QuestionDefault } from "../../infra-test/ui-items/question/views/QuestionDefault";
+import { QuestionDo } from "../../infra-test/ui-items/question/views/QuestionDo";
 
 export default function DevPage() {
 	return (<>
 		<div className="container mx-auto p-4 flex flex-col gap-4">
-			{MockQuestionCore.map((question, index) => (
+			{/* {MockQuestionCore.map((question, index) => (
 				<QuestionDefault
 					question={question}
 					key={question.id}
 					index={index}
 				// onClick={() => console.log("Question clicked:", question.id)}
 				/>
-			))}
+			))} */}
 
 			<QuestionDefault
 				question={MockQuestionCore[0]}
@@ -37,6 +38,16 @@ export default function DevPage() {
 					pointReceived: 1, // No points received yet
 				}}
 			/>
+
+			{/* <QuestionDo
+				question={MockQuestionCore[1]}
+				index={1}
+			/>
+
+			<QuestionDo
+				question={MockQuestionCore[2]}
+				index={3}
+			/> */}
 		</div>
 	</>);
 }

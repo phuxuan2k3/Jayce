@@ -1,5 +1,5 @@
-import { createContext, useContext } from "react";
-import { AnswerCoreSchema, QuestionCoreSchema } from "../../../api/test.api-gen-v2";
+import { createContext, useCallback, useContext } from "react";
+import { AnswerCoreSchema, AnswerForQuestionTypeSchema, QuestionCoreSchema } from "../../../api/test.api-gen-v2";
 
 export interface QuestionContextProps {
 	question: QuestionCoreSchema;
@@ -97,3 +97,44 @@ export const ShowAnswerContext = {
 	Provider: showAnswerContext.Provider,
 	useShowAnswer,
 }
+
+const doQuestionContext = createContext<{
+	doAnswer: AnswerForQuestionTypeSchema | undefined;
+	setDoAnswer: (answer: AnswerForQuestionTypeSchema | undefined) => void;
+} | undefined>(undefined);
+
+const useDoQuestionContext = () => {
+	const context = useContext(doQuestionContext);
+	if (!context) {
+		throw new Error("useDoQuestionContext must be used within a DoQuestionProvider");
+	}
+	const getMCQChosenOption = useCallback(() => {
+		if (context.doAnswer == null) {
+			return undefined;
+		}
+		if (context.doAnswer.type !== "MCQ") {
+			throw new Error("doAnswer is not a MCQ answer");
+		}
+		return context.doAnswer.chosenOption;
+	}, [context.doAnswer]);
+
+	const getLongAnswerAnswer = useCallback(() => {
+		if (context.doAnswer == null) {
+			return undefined;
+		}
+		if (context.doAnswer.type !== "LONG_ANSWER") {
+			throw new Error("doAnswer is not a LONG_ANSWER answer");
+		}
+		return context.doAnswer.answer;
+	}, [context.doAnswer]);
+	return {
+		...context,
+		getMCQChosenOption,
+		getLongAnswerAnswer,
+	};
+}
+
+export const DoQuestionContext = {
+	Provider: doQuestionContext.Provider,
+	useDoQuestionContext,
+};

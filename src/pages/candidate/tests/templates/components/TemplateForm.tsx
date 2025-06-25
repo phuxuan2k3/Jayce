@@ -4,7 +4,7 @@ import TagInput from './TagInput';
 import OutlinesInput from './OutlinesInput';
 import FieldInput from '../../../../../infra-test/ui/FieldInput';
 import { TemplateCoreSchema } from '../../../../../infra-test/api/test.api-gen-v2';
-import MyButton from '../../../../../infra-test/ui/MyButton';
+import MyButton from '../../../../../infra-test/ui/buttons/MyButton';
 
 interface TemplateFormProps {
 	selectedTemplate: TemplateCoreSchema | null;

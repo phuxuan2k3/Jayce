@@ -1,65 +1,51 @@
 import React from "react";
-import MyPagination from "../../../../../../components/ui/common/MyPagination";
-import useQuestionsTab from "../hooks/useQuestionsTab";
-import { QuestionCoreCardDefault } from "../../../../../../infra-test/ui/question/QuestionCoreCard";
+import { useGetTestsByTestIdQuestionsQuery } from "../../../../../../infra-test/api/test.api-gen-v2";
+import useGetTestIdParams from "../../../../../../infra-test/hooks/useGetTestIdParams";
+import { QueryBoolean, toggleQueryBoolean } from "../../../../../../infra-test/types/query";
+import FetchStateCover2 from "../../../../../../infra-test/ui/fetch-states/FetchStateCover2";
+import MyButton from "../../../../../../infra-test/ui/buttons/MyButton";
+import { QuestionDefault } from "../../../../../../infra-test/ui-items/question/views/QuestionDefault";
+import MyPaginationSection from "../../../../../../infra-test/ui/MyPaginationSection";
+import { arrayPagination } from "../../../../../../helpers/array";
+import { PagedFilter } from "../../../../../../interfaces/paged.type";
 
-const QuestionsTabContent: React.FC = () => {
-	const {
-		isLoading,
-		practice,
-		showQuestions,
-		showWarning,
-		handleShowQuestions,
-		showAllAnswers,
-		isQuesionAnswerVisible,
-		handleToggleAllAnswers,
-		handleToggleAnswer,
-		page,
-		setPage,
-		totalPages,
-		practiceAggregate: {
-			numberOfQuestions,
-			totalPoints,
-		},
-		pageItems: currentQuestions,
-	} = useQuestionsTab();
+export default function QuestionsTabContent({
+	numberOfAttempts,
+}: {
+	numberOfAttempts: number;
+}) {
+	const testId = useGetTestIdParams();
+
+	const [viewQuestions, setViewQuestions] = React.useState<boolean>(numberOfAttempts > 0);
+	const [viewCorrectAnswer, setViewCorrectAnswer] = React.useState<QueryBoolean>("0");
+	const [filter, setFilter] = React.useState<PagedFilter>({
+		page: 1,
+		perPage: 5,
+	});
+
+	const questionsQuery = useGetTestsByTestIdQuestionsQuery({ testId, viewCorrectAnswer }, {
+		skip: viewQuestions === false,
+	});
 
 	return (
-		<div className="flex flex-col gap-4">
-			{isLoading ? (
-				<div className="flex justify-center items-center h-40">
-					<div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
-				</div>
-			) : (
-				<>
-					{/* Questions Summary Section */}
-					<div className="bg-white rounded-lg shadow-md p-6">
-						<h3 className="text-lg font-semibold mb-3">Questions Summary</h3>
-						<div className="flex flex-col gap-2 mb-4">
-							<p><span className="font-medium">Test Name:</span> {practice?.title}</p>
-							<p><span className="font-medium">Number of Questions:</span> {numberOfQuestions}</p>
-							<p><span className="font-medium">Total Points:</span> {totalPoints}</p>
-						</div>
-
-						{/* Show warning only if user has no attempts */}
-						{showWarning && (
+		<FetchStateCover2
+			fetchState={questionsQuery}
+			dataComponent={(questionsData) => {
+				const paged = arrayPagination(questionsData, filter.page, filter.perPage);
+				return (
+					<div className="flex flex-col gap-4">
+						{numberOfAttempts === 0 && (
 							<div className="mt-4 text-center">
 								<p className="text-amber-600 mb-2">
 									Viewing questions may reveal test content. Are you sure you want to continue?
 								</p>
-								<button
-									className="px-4 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-toned-600 transition-colors"
-									onClick={() => handleShowQuestions()}
-								>
+								<MyButton onClick={() => setViewQuestions(true)}>
 									View Questions
-								</button>
+								</MyButton>
 							</div>
 						)}
-					</div>
 
-					{/* Questions List Section */}
-					{showQuestions && (
-						currentQuestions.length === 0 ? (
+						{questionsData.length === 0 ? (
 							<div className="flex justify-center items-center h-40">
 								<p className="text-gray-500">No questions available.</p>
 							</div>
@@ -67,42 +53,36 @@ const QuestionsTabContent: React.FC = () => {
 							<div className="bg-white rounded-lg shadow-md p-6">
 								<div className="flex justify-between items-center mb-4">
 									<h3 className="text-lg font-semibold">Test Questions</h3>
-									<button
-										className="px-3 py-1.5 text-sm border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors"
-										onClick={handleToggleAllAnswers}
+									<MyButton
+										onClick={() => setViewCorrectAnswer(toggleQueryBoolean(viewCorrectAnswer))}
+										variant={viewCorrectAnswer === "1" ? "secondary" : "primary"}
 									>
-										{showAllAnswers ? "Hide All Answers" : "Show All Answers"}
-									</button>
+										{viewCorrectAnswer === "1" ? "Hide All Answers" : "Show All Answers"}
+									</MyButton>
 								</div>
 
-								<div className="space-y-4">
-									{currentQuestions.map((question) => (
-										<QuestionCoreCardDefault
-											key={question.id}
+								<div className="flex flex-col gap-4">
+									{questionsData.map((question, index) => (
+										<QuestionDefault
 											question={question}
-											onToggleAnswer={() => handleToggleAnswer(question.id)}
-											showAnswer={isQuesionAnswerVisible(question.id)}
+											key={question.id}
+											index={index}
 										/>
 									))}
 								</div>
 
-								{/* Pagination */}
-								{totalPages > 1 && (
-									<div className="mt-6 flex justify-center">
-										<MyPagination
-											totalPage={totalPages}
-											initialPage={page}
-											onPageChange={setPage}
-										/>
-									</div>
-								)}
+								<MyPaginationSection
+									page={filter.page}
+									perPage={paged.perPage}
+									onPageChange={(page) => setFilter({ ...filter, page })}
+									total={paged.total}
+									totalPages={paged.totalPages}
+								/>
 							</div>
-						)
-					)}
-				</>
-			)}
-		</div>
+						)}
+					</div>
+				);
+			}}
+		/>
 	);
-};
-
-export default QuestionsTabContent;
+}
