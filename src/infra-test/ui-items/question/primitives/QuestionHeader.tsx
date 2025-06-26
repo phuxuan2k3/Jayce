@@ -47,17 +47,31 @@ function Type({
 	);
 }
 
+function Layout({
+	className = "",
+	children,
+}: BaseComponentProps & {
+	children?: React.ReactNode;
+}) {
+	return (
+		<div className={cn("flex items-center gap-4", className)}>
+			{children}
+		</div>
+	);
+}
+
 function Header({
 	className = "",
 }: BaseComponentProps) {
 	return (
-		<div className={cn("flex items-start gap-4 border-b border-primary-toned-200 pb-2", className)}>
+		<Layout className={cn("flex items-start gap-4 border-b border-primary-toned-200 pb-2", className)}>
 			<div className="flex flex-col items-stretch gap-1 flex-shrink-0">
 				<Index />
 				<Points className="w-full text-center" />
 			</div>
 			<Text className="flex-1" />
-		</div>
+			<Type className="py-0 text-xs px-4 rounded-full" />
+		</Layout>
 	);
 }
 
@@ -66,5 +80,6 @@ Header.Index = Index;
 Header.Text = Text;
 Header.Points = Points;
 Header.Type = Type;
+Header.Layout = Layout;
 
 export { Header as QuestionPrimitivesHeader };

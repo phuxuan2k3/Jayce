@@ -3,12 +3,12 @@ import TabsComponent from "../../../../../infra-test/ui/TabsComponent";
 import ParticipantsTabContent from "./components/ParticipantsTabContent";
 import useGetTestIdParams from "../../../../../infra-test/hooks/useGetTestIdParams";
 import DefaultSidebarActions from "../../../../../infra-test/ui/sidebar/candidate/DefaultSidebar";
-import AttemptsTabContent from "../../../../../infra-test/ui-shared/AttemptsTabContent";
+import AttemptsTabContent from "../../../../../infra-test/ui-shared/test-details/AttemptsTabContent";
 import { TestFullSchema, useGetTestsByTestIdQuery } from "../../../../../infra-test/api/test.api-gen-v2";
 import FetchStateCover2 from "../../../../../infra-test/ui/fetch-states/FetchStateCover2";
 import TestFullCard from "../../../../../infra-test/ui-items/test/TestFullCard";
 import UserCard from "../../../../../infra-test/ui-shared/UserCard";
-import CurrentAttemptCard from "../../../../../infra-test/ui-shared/CurrentAttemptCard";
+import CurrentAttemptCard from "../../../../../infra-test/ui-shared/test-details/CurrentAttemptCard";
 import { useCallback } from "react";
 import useGetUserId from "../../../../../infra-test/hooks/useGetUserId";
 
@@ -33,10 +33,7 @@ export default function CandidateTestExamPage() {
 			tabs.push({
 				id: "participants",
 				label: "Participants",
-				content: (
-					<ParticipantsTabContent
-					/>
-				)
+				content: <ParticipantsTabContent />,
 			});
 		}
 		return tabs;

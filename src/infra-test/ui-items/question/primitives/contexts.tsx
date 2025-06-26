@@ -127,6 +127,7 @@ const useDoQuestionContext = () => {
 		}
 		return context.doAnswer.answer;
 	}, [context.doAnswer]);
+
 	return {
 		...context,
 		getMCQChosenOption,

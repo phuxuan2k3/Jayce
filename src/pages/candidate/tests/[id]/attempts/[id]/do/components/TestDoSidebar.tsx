@@ -1,25 +1,25 @@
-import TestTimer from "../../../../../../../infra-test/ui/TestTimer";
 import { AlarmClock } from "lucide-react";
-import { QuestionDoingState } from "../../type";
+import TestTimer from "../../../../../../../../infra-test/ui/TestTimer";
+import { AttemptCoreSchema, TestFullSchema } from "../../../../../../../../infra-test/api/test.api-gen-v2";
+import { QuestionDoState } from "../types";
+import MyButton from "../../../../../../../../infra-test/ui/buttons/MyButton";
 
 export default function TestDoSidebar({
-	secondsLeft,
+	attempt,
+	test,
 	questionDoState,
 	currentQuestionIndex,
-	onCancel,
 	onSubmit,
 	onCurrentQuestionIndexChange,
 }: {
-	secondsLeft: number;
-	questionDoState: QuestionDoingState[];
+	attempt: AttemptCoreSchema;
+	test: TestFullSchema;
+	questionDoState: QuestionDoState[];
 	currentQuestionIndex: number;
-	onCancel: () => void;
 	onSubmit: () => void;
 	onCurrentQuestionIndexChange: (index: number) => void;
 }) {
-	const handleCancelTest = () => {
-		onCancel();
-	};
+	const secondsLeft = Math.max(test.minutesToAnswer * 60 - attempt.secondsSpent, 0);
 	const handleSubmitClick = () => {
 		onSubmit();
 	};
@@ -28,9 +28,7 @@ export default function TestDoSidebar({
 		<div className="flex flex-col h-full w-full">
 			<div className="flex justify-center items-center gap-1 font-bold text-xl mb-4 shadow-secondary bg-white rounded-lg py-4 text-secondary" >
 				<AlarmClock size={24} strokeWidth={2.5} className="mb-1 mr-1" />
-				<TestTimer
-					timeLeft={secondsLeft}
-				/>
+				<TestTimer timeLeft={secondsLeft} />
 			</div>
 			<div className="bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
 				<div className="mb-4 font-semibold text-primary text-xl">Questions</div>
@@ -45,7 +43,7 @@ export default function TestDoSidebar({
 									? "bg-primary-toned-600 text-white"
 									: question.isFlagged === true
 										? "bg-secondary-toned-200"
-										: question.chosenOption != null
+										: question.answer != null
 											? "bg-primary-toned-200"
 											: "bg-white"
 									}`}
@@ -59,16 +57,9 @@ export default function TestDoSidebar({
 
 			<hr className="mt-auto mb-2 border-primary-toned-700/50" />
 
-			<button
-				className="mt-4 w-full font-bold text-white bg-primary py-2 rounded-lg border-2 border-primary"
-				onClick={handleSubmitClick}>
+			<MyButton onClick={handleSubmitClick}>
 				Submit
-			</button>
-			<button
-				className="mt-4 w-full font-bold text-secondary bg-white border-2 border-secondary py-2 rounded-lg"
-				onClick={handleCancelTest}>
-				Cancel Test
-			</button>
-		</div >
+			</MyButton>
+		</div>
 	);
 }

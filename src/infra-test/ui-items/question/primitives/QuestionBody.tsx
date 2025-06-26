@@ -1,4 +1,4 @@
-import { QuestionContext, ShowAnswerContext } from './contexts';
+import { DoQuestionContext, QuestionContext, ShowAnswerContext } from './contexts';
 import { cn } from '../../../../app/cn';
 import MyButton from '../../../ui/buttons/MyButton';
 import { LongAnswerDetail, LongAnswerDo } from './la-body';
@@ -39,6 +39,7 @@ function QuestionDoBody({
 	className = "",
 }: BaseComponentProps) {
 	const { question } = QuestionContext.useQuestion();
+	const { setDoAnswer } = DoQuestionContext.useDoQuestionContext();
 	let detailComponent: React.ReactNode = null;
 	if (question.type === "MCQ") {
 		detailComponent = <MCQDo />;
@@ -49,9 +50,25 @@ function QuestionDoBody({
 	return (
 		<div className={cn('flex flex-col gap-4', className)}>
 			{detailComponent}
+
+			<MyButton
+				size={"small"}
+				className="self-end"
+				variant="secondary"
+				onClick={() => setDoAnswer(undefined)}
+			>
+				Clear Answer
+			</MyButton>
 		</div>
 	);
 }
+
+
+QuestionDetailBody.displayName = "QuestionBody";
+QuestionDetailBody.ShowAnswerButton = ShowAnswerButton;
+
+export { QuestionDetailBody as QuestionPrimitivesDetailBody };
+export { QuestionDoBody as QuestionPrimitivesDoBody };
 
 function ShowAnswerButton({
 	className = "",
@@ -68,9 +85,3 @@ function ShowAnswerButton({
 		</MyButton>
 	);
 }
-
-QuestionDetailBody.displayName = "QuestionBody";
-QuestionDetailBody.ShowAnswerButton = ShowAnswerButton;
-
-export { QuestionDetailBody as QuestionPrimitivesDetailBody };
-export { QuestionDoBody as QuestionPrimitivesDoBody };

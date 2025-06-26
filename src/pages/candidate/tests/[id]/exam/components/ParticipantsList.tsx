@@ -1,64 +1,35 @@
-import { useState } from "react";
 import { useGetUsersQuery } from "../../../../../../features/auth/api/auth-profile.api";
-import useGetTestIdParams from "../../../../../../infra-test/hooks/useGetTestIdParams";
-import { useGetTestsByTestIdParticipantsQuery } from "../../../../../../infra-test/api/test.api-gen-v2";
-import { PagedFilter, QuerySortValues } from "../../../../../../interfaces/paged.type";
+import { UserInfo } from "../../../../../../features/auth/store/authSlice";
+import { CandidateCoreSchema } from "../../../../../../infra-test/api/test.api-gen-v2";
 import FetchStateCover2 from "../../../../../../infra-test/ui/fetch-states/FetchStateCover2";
 import ParticipantsTable from "./ParticipantsTable";
-import MyPaginationSection from "../../../../../../infra-test/ui/MyPaginationSection";
-
-type Filter = PagedFilter & {
-	sortByRank: QuerySortValues;
-}
 
 export default function ParticipantsList({
+	participants,
 	onParticipantClicked,
 }: {
-	onParticipantClicked: (participantId: string) => void;
+	participants: CandidateCoreSchema[];
+	onParticipantClicked: ({
+		user,
+		participant,
+	}: {
+		user: UserInfo;
+		participant: CandidateCoreSchema;
+	}) => void;
+
 }) {
-	const testId = useGetTestIdParams();
-	const [filter, setFilter] = useState<Filter>({
-		page: 1,
-		perPage: 10,
-		sortByRank: "asc",
-	});
-
-	const participantsQuery = useGetTestsByTestIdParticipantsQuery({
-		testId,
-		...filter,
-	});
 	const usersQuery = useGetUsersQuery({
-		user_ids: participantsQuery.data?.data.map((p) => p.candidateId) || [],
-	}, {
-		skip: participantsQuery.data == null || !participantsQuery.data.data.length,
+		user_ids: participants.map((p) => p.candidateId),
 	});
-
 
 	return (
 		<FetchStateCover2
-			fetchState={participantsQuery}
-			dataComponent={(paged) => (
-				<FetchStateCover2
-					fetchState={usersQuery}
-					dataComponent={(users) => (
-						<div className="flex flex-col gap-4">
-							<ParticipantsTable
-								participants={paged.data}
-								users={users.users}
-								onUserClicked={(userId) => onParticipantClicked(userId)}
-							/>
-
-							<MyPaginationSection
-								onPageChange={(page) => {
-									setFilter((prev) => ({ ...prev, page }));
-								}}
-								page={filter.page}
-								perPage={filter.perPage}
-								total={paged.total}
-								totalPages={paged.totalPages}
-							/>
-						</div>
-					)}
+			fetchState={usersQuery}
+			dataComponent={(users) => (
+				<ParticipantsTable
+					participants={participants}
+					users={users.users}
+					onItemClicked={onParticipantClicked}
 				/>
 			)}
 		/>

@@ -1,9 +1,9 @@
-import AttemptCard from '../ui-items/attempt/AttemptCard'
-import FetchStateCover2 from '../ui/fetch-states/FetchStateCover2'
+import AttemptCard from '../../ui-items/attempt/AttemptCard'
+import FetchStateCover2 from '../../ui/fetch-states/FetchStateCover2'
 import StartNewAttemptButton from './StartNewAttemptButton'
-import { useGetTestsByTestIdAttemptsQuery } from '../api/test.api-gen-v2';
-import useGetTestIdParams from '../hooks/useGetTestIdParams';
-import useGetUserId from '../hooks/useGetUserId';
+import { useGetTestsByTestIdAttemptsQuery } from '../../api/test.api-gen-v2';
+import useGetTestIdParams from '../../hooks/useGetTestIdParams';
+import useGetUserId from '../../hooks/useGetUserId';
 
 export default function CurrentAttemptCard() {
 	const testId = useGetTestIdParams();

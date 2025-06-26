@@ -1,14 +1,10 @@
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { AttemptCore } from "../../../../../../../infra-test/core/attempt.model";
-import { TestCore } from "../../../../../../../infra-test/core/test.model";
-import { useGetSelfAttemptsByAttemptIdAggregateQuery, useGetSelfTestsByTestIdAggregateQuery } from "../../../../../../../infra-test/api/test.api-gen";
-import { FetchError } from "../../../../../../../app/server-error";
 import paths from "../../../../../../../router/paths";
-import { useGetUsersQuery } from "../../../../../../../features/auth/api/auth-profile.api";
-import { getUserCore } from "../../../../../../../infra-test/core/user.model";
+import { AttemptCoreSchema, TestFullSchema } from "../../../../../../../infra-test/api/test.api-gen-v2";
+import UserCard from "../../../../../../../infra-test/ui-shared/UserCard";
 
-const AttemptSidebar = ({
+export default function AttemptSidebar({
 	showAnswersAvailable,
 	showAnswers,
 	setShowAnswers,
@@ -18,102 +14,123 @@ const AttemptSidebar = ({
 	showAnswersAvailable: boolean;
 	showAnswers: boolean;
 	setShowAnswers: (show: boolean) => void;
-	attempt: AttemptCore;
-	test: TestCore;
-}) => {
+	attempt: AttemptCoreSchema;
+	test: TestFullSchema;
+}) {
 	const navigate = useNavigate();
-	const attemptAggregateQuery = useGetSelfAttemptsByAttemptIdAggregateQuery({
-		attemptId: attempt.id
-	}, {
-		skip: attempt == null
-	});
+	const { points, answered, answeredCorrect } = attempt._aggregate;
+	const { numberOfQuestions, totalPoints } = test._aggregate;
 
-	const testAggregateQuery = useGetSelfTestsByTestIdAggregateQuery({
-		testId: attempt.testId
-	}, {
-		skip: attempt == null
-	});
+	const getStatusBadge = () => {
+		const baseClasses = "px-3 py-1 rounded-full text-xs font-semibold";
+		switch (attempt.status) {
+			case "IN_PROGRESS":
+				return `${baseClasses} bg-yellow-100 text-yellow-800`;
+			case "COMPLETED":
+				return `${baseClasses} bg-blue-100 text-blue-800`;
+			case "GRADED":
+				return `${baseClasses} bg-green-100 text-green-800`;
+			default:
+				return `${baseClasses} bg-gray-100 text-gray-800`;
+		}
+	};
 
-	const usersQuery = useGetUsersQuery({
-		user_ids: [test.authorId]
-	}, {
-		skip: attempt == null
-	})
+	const getScorePercentage = () => {
+		return totalPoints > 0 ? Math.round((points / totalPoints) * 100) : 0;
+	};
 
-	const loading = attemptAggregateQuery.isLoading || testAggregateQuery.isLoading || usersQuery.isLoading;
-	const error = attemptAggregateQuery.error || testAggregateQuery.error || usersQuery.error;
-	const attemptAggregate = attemptAggregateQuery.data;
-	const testAggregate = testAggregateQuery.data;
-	const user = usersQuery.data?.users[0];
-
-	if (loading) return (
-		<div className="flex justify-center items-center h-64">
-			<div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary"></div>
-		</div>
-	);
-	if (error) throw new FetchError(error);
-	if (attemptAggregate == null || testAggregate == null || user == null) return (
-		<div className="flex justify-center items-center h-64">
-			<div className="bg-white rounded-lg shadow-md p-6 text-center">
-				<p className="text-gray-600">No data found for this attempt.</p>
-			</div>
-		</div>
-	);
-
-	const author = getUserCore(user);
+	const getAccuracyPercentage = () => {
+		return answered > 0 ? Math.round((answeredCorrect / answered) * 100) : 0;
+	};
 
 	return (
-		<div className="sticky top-2 max-h-[96vh] w-full flex flex-col items-center text-primary">
-			<div className="py-6 px-8 shadow-primary flex flex-col w-full items-stretch bg-white rounded-lg">
-				<div className="text-2xl font-bold text-center">
-					Summary
+		<div className="sticky top-2 max-h-[96vh] w-full flex flex-col gap-4 text-primary">
+			{/* Test Info Card */}
+			<div className="p-6 shadow-primary bg-white rounded-lg">
+				<div className="flex items-center justify-between mb-4">
+					<h3 className="text-lg font-bold text-primary">{test.title}</h3>
+					<span className={getStatusBadge()}>{attempt.status}</span>
 				</div>
 
-				<hr className="border-primary-toned-300 mt-4 mb-6" />
-
-				<div className="flex flex-col items-center gap-1 text-center font-semibold">
-					<div className="text-xl font-bold mb-2">{test.title}</div>
-					<div>Duration: {test.minutesToAnswer} minutes</div>
-					<div className="text-sm text-gray-500">By: {author.fullname}</div>
-				</div>
-
-				<hr className="border-primary-toned-300 mt-4 mb-6" />
-
-				<div className="flex flex-col items-stretch gap-1 font-semibold [&>div>span]:text-secondary">
-					<div className="text-center text-xl font-bold mb-2">Results</div>
-					<div>Score: <span>{attempt.score}%</span></div>
-					<div>Questions Answered: <span>{attemptAggregate.answered}/{attemptAggregate.answered}</span></div>
-					<div>Correct Answers: <span>{attemptAggregate.answeredCorrect}</span></div>
-					<div>
-						Time taken: <span>{formatSecondsToTimeString(attempt.secondsSpent)}</span>
+				<div className="space-y-2 text-sm">
+					<div className="flex justify-between">
+						<span className="text-gray-600">Mode:</span>
+						<span className="font-medium capitalize">{test.mode}</span>
 					</div>
-					<div>Started: <span>{format(new Date(attempt.createdAt), "PPp")}</span></div>
-					{attempt.hasEnded && (
-						<div>Completed: <span>{format(new Date(attempt.updatedAt), "PPp")}</span></div>
+					<div className="flex justify-between">
+						<span className="text-gray-600">Duration:</span>
+						<span className="font-medium">{test.minutesToAnswer} min</span>
+					</div>
+					<div className="flex justify-between">
+						<span className="text-gray-600">Language:</span>
+						<span className="font-medium">{test.language}</span>
+					</div>
+				</div>
+
+				<UserCard userId={test.authorId} />
+			</div>
+
+			{/* Attempt Results Card */}
+			<div className="p-6 shadow-primary bg-white rounded-lg">
+				<h3 className="text-lg font-bold text-primary mb-4">Attempt Results</h3>
+
+				{/* Score Overview */}
+				<div className="mb-4 p-3 bg-gray-50 rounded-lg">
+					<div className="flex justify-between items-center mb-2">
+						<span className="text-sm text-gray-600">Score</span>
+						<span className="text-lg font-bold text-primary">{getScorePercentage()}%</span>
+					</div>
+					<div className="text-xs text-gray-500">
+						{points} / {totalPoints} points
+					</div>
+				</div>
+
+				{/* Progress Stats */}
+				<div className="space-y-3 text-sm">
+					<div className="flex justify-between">
+						<span className="text-gray-600">Questions answered:</span>
+						<span className="font-medium">{answered} / {numberOfQuestions}</span>
+					</div>
+					<div className="flex justify-between">
+						<span className="text-gray-600">Accuracy:</span>
+						<span className="font-medium">{getAccuracyPercentage()}%</span>
+					</div>
+					<div className="flex justify-between">
+						<span className="text-gray-600">Time spent:</span>
+						<span className="font-medium">{formatSecondsToTimeString(attempt.secondsSpent)}</span>
+					</div>
+				</div>
+
+				{/* Timestamps */}
+				<div className="mt-4 pt-4 border-t border-gray-200 space-y-2 text-xs text-gray-500">
+					<div>Started: {format(new Date(attempt.createdAt), "MMM dd, yyyy 'at' HH:mm")}</div>
+					{attempt.status === "GRADED" && (
+						<div>Completed: {format(new Date(attempt.updatedAt), "MMM dd, yyyy 'at' HH:mm")}</div>
 					)}
 				</div>
 			</div>
 
-			<div className="py-6 px-8 shadow-primary flex flex-col w-full items-stretch bg-white rounded-lg mt-4">
+			{/* Actions Card */}
+			<div className="p-6 shadow-primary bg-white rounded-lg">
 				{showAnswersAvailable ? (
-					<button className="mt-8 bg-primary text-white rounded-lg py-2 px-4 font-semibold hover:bg-primary-toned-300 transition-colors duration-300 w-full"
+					<button
+						className="w-full mb-3 bg-primary text-white rounded-lg py-2 px-4 font-semibold hover:bg-primary-toned-300 transition-colors duration-300"
 						onClick={() => setShowAnswers(!showAnswers)}
 					>
-						{showAnswers === false ? "Show Answers" : "Hide Answers"}
+						{showAnswers ? "Hide Answers" : "Show Answers"}
 					</button>
 				) : (
-					<div className="text-sm text-gray-500 mt-2">
-						You are not allowed to see the answers.
+					<div className="text-sm text-gray-500 mb-3 text-center p-2 bg-gray-50 rounded">
+						Answers not available for viewing
 					</div>
 				)}
 
 				<button
-					className="mt-8 bg-white border-2 border-primary rounded-lg py-2 px-4 text-primary font-semibold hover:bg-primary hover:text-white transition-colors duration-300 w-full"
+					className="w-full bg-white border-2 border-primary rounded-lg py-2 px-4 text-primary font-semibold hover:bg-primary hover:text-white transition-colors duration-300"
 					onClick={() => {
-						if (test.mode === "practice") {
+						if (test.mode === "PRACTICE") {
 							navigate(paths.candidate.tests.in(attempt.testId).PRACTICE);
-						}
-						else {
+						} else {
 							navigate(paths.candidate.tests.in(attempt.testId).EXAM);
 						}
 					}}
@@ -124,9 +141,6 @@ const AttemptSidebar = ({
 		</div>
 	);
 };
-
-
-export default AttemptSidebar;
 
 const formatSecondsToTimeString = (seconds: number): string => {
 	const hours = Math.floor(seconds / 3600);

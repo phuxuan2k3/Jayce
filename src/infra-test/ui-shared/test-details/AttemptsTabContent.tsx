@@ -1,11 +1,11 @@
-import { useGetTestsByTestIdAttemptsQuery } from "../api/test.api-gen-v2";
-import useGetTestIdParams from "../hooks/useGetTestIdParams";
+import { useGetTestsByTestIdAttemptsQuery } from "../../api/test.api-gen-v2";
+import useGetTestIdParams from "../../hooks/useGetTestIdParams";
 import { useState } from "react";
-import FetchStateCover2 from "../ui/fetch-states/FetchStateCover2";
-import MyPaginationSection from "../ui/MyPaginationSection";
-import AttemptsTable from "../ui-items/attempt/AttemptsTable";
+import FetchStateCover2 from "../../ui/fetch-states/FetchStateCover2";
+import MyPaginationSection from "../../ui/MyPaginationSection";
+import AttemptsTable from "../../ui-items/attempt/AttemptsTable";
 import { useNavigate } from "react-router-dom";
-import paths from "../../router/paths";
+import paths from "../../../router/paths";
 
 type Filter = {
 	page: number;
@@ -45,7 +45,7 @@ const AttemptsTabContent = ({
 								onItemClick={(attemptId) => {
 									navigate(paths.candidate.tests.attempts.in(attemptId).ROOT);
 								}}
-								index={filter.page < 1 ? 0 : (filter.page - 1) * filter.perPage}
+								baseIndex={filter.page < 1 ? 0 : (filter.page - 1) * filter.perPage}
 							/>
 						</div>
 

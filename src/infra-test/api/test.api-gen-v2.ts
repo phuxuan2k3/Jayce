@@ -666,18 +666,7 @@ export type PostAttemptsByAttemptIdAnswersApiArg = {
   attemptId: string;
   body: {
     questionId: number;
-    answer: AnswerForQuestionTypeSchema &
-      (
-        | {
-            type: "MCQ";
-            chosenOption: number;
-          }
-        | {
-            type: "LONG_ANSWER";
-            answer: string;
-          }
-        | null
-      );
+    answer?: AnswerForQuestionTypeSchema;
   };
 };
 export type PatchAttemptsByAttemptIdSubmitApiResponse = unknown;

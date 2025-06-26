@@ -1,10 +1,11 @@
-import { AttemptsOfCandidateInTestAggregate } from '../../../../../../infra-test/core/attempt.model'
+import { CandidateCoreSchema } from '../../../../../../infra-test/api/test.api-gen-v2';
 
 export default function ParticipantStatisticCard({
-	attemptAggregate,
+	participant,
 }: {
-	attemptAggregate: AttemptsOfCandidateInTestAggregate
+	participant: CandidateCoreSchema;
 }) {
+	const agg = participant._aggregate;
 	return (
 		<div className='rounded-lg px-6 py-8 bg-primary-toned-50 shadow-md max-h-full overflow-y-auto'>
 			<h3 className="text-xl font-semibold mb-3">Statistic</h3>
@@ -15,22 +16,22 @@ export default function ParticipantStatisticCard({
 			[&>*:nth-child(even)]:text-right
 			'>
 				<span>Rank:</span>
-				<span>{attemptAggregate.rank}</span>
+				<span>{agg.rank}</span>
 
 				<span>Total Attempts:</span>
-				<span>{attemptAggregate.totalAttempts}</span>
+				<span>{agg.totalAttempts}</span>
 
 				<span>Highest Score:</span>
-				<span>{attemptAggregate.highestScore}</span>
+				<span>{agg.highestScore}</span>
 
 				<span>Lowest Score:</span>
-				<span>{attemptAggregate.lowestScore}</span>
+				<span>{agg.lowestScore}</span>
 
 				<span>Average Score:</span>
-				<span>{attemptAggregate.averageScore}</span>
+				<span>{agg.averageScore}</span>
 
 				<span>Average Time:</span>
-				<span>{formatSeconds(attemptAggregate.averageTime)}</span>
+				<span>{formatSeconds(agg.averageTime)}</span>
 			</div>
 		</div>
 	)

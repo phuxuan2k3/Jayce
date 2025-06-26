@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { usePostAttemptsMutation } from '../api/test.api-gen-v2';
-import useGetTestIdParams from '../hooks/useGetTestIdParams';
-import MyButtonWithLoading from '../ui/buttons/MyButtonWithLoading';
-import useActionStateWatch from '../hooks/useActionStateWatch';
-import paths from '../../router/paths';
+import { usePostAttemptsMutation } from '../../api/test.api-gen-v2';
+import useGetTestIdParams from '../../hooks/useGetTestIdParams';
+import MyButtonWithLoading from '../../ui/buttons/MyButtonWithLoading';
+import useActionStateWatch from '../../hooks/useActionStateWatch';
+import paths from '../../../router/paths';
 import { toast } from 'react-toastify';
-import { parseQueryError } from '../../helpers/fetchBaseQuery.error';
+import { parseQueryError } from '../../../helpers/fetchBaseQuery.error';
 
 export default function StartNewAttemptButton() {
 	const testId = useGetTestIdParams();

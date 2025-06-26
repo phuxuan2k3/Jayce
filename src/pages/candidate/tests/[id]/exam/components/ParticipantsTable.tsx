@@ -6,11 +6,17 @@ import { getUserCore } from '../../../../../../infra-test/core/user.model';
 export default function ParticipantsTable({
 	participants,
 	users,
-	onUserClicked,
+	onItemClicked,
 }: {
 	participants: CandidateCoreSchema[];
 	users: UserInfo[];
-	onUserClicked?: (userId: string) => void;
+	onItemClicked?: ({
+		user,
+		participant,
+	}: {
+		user: UserInfo;
+		participant: CandidateCoreSchema;
+	}) => void;
 }) {
 	const data = useMapUsers({
 		users,
@@ -37,29 +43,35 @@ export default function ParticipantsTable({
 				</tr>
 			</thead>
 			<tbody className="bg-white divide-y divide-gray-200">
-				{data.map(({ user, object: { _aggregate } }) => (
-					<tr
-						key={user.id}
-						className="hover:bg-gray-50 cursor-pointer"
-						onClick={() => onUserClicked?.(user.id)}
-					>
-						<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-							{_aggregate.rank}
-						</td>
-						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-							<div className="flex items-center">
-								<img src={user.avatarPath} alt={getUserCore(user).fullname} className="h-8 w-8 rounded-full mr-2" />
-								<span>{getUserCore(user).fullname}</span>
-							</div>
-						</td>
-						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-							{_aggregate.highestScore}
-						</td>
-						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-							{_aggregate.totalAttempts}
-						</td>
-					</tr>
-				))}
+				{data.map(({ user, object }) => {
+					const _aggregate = object._aggregate;
+					return (
+						<tr
+							key={user.id}
+							className="hover:bg-gray-50 cursor-pointer"
+							onClick={() => onItemClicked?.({
+								user,
+								participant: object,
+							})}
+						>
+							<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+								{_aggregate.rank}
+							</td>
+							<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+								<div className="flex items-center">
+									<img src={user.avatarPath} alt={getUserCore(user).fullname} className="h-8 w-8 rounded-full mr-2" />
+									<span>{getUserCore(user).fullname}</span>
+								</div>
+							</td>
+							<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+								{_aggregate.highestScore}
+							</td>
+							<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+								{_aggregate.totalAttempts}
+							</td>
+						</tr>
+					)
+				})}
 			</tbody>
 		</table>
 	);

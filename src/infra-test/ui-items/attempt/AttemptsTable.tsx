@@ -7,11 +7,11 @@ import paths from '../../../router/paths';
 interface Props {
 	attempts: AttemptCoreSchema[];
 	onItemClick?: (attemptId: string) => void;
-	index?: number;
+	baseIndex?: number;
 }
 
 const AttemptsTable: React.FC<Props> = ({
-	index,
+	baseIndex,
 	attempts,
 	onItemClick,
 }) => {
@@ -46,7 +46,7 @@ const AttemptsTable: React.FC<Props> = ({
 						onClick={() => handleAttemptClick(attempt.id)}
 					>
 						<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-							{index ? index + idx + 1 : idx + 1}
+							{baseIndex ? baseIndex + idx + 1 : idx + 1}
 						</td>
 						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 							<div>{format(new Date(attempt.createdAt), "MMM d, yyyy")}</div>

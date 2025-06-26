@@ -6,9 +6,9 @@ import useGetTestIdParams from "../../../../../infra-test/hooks/useGetTestIdPara
 import { TestFullSchema, useGetTestsByTestIdQuery } from "../../../../../infra-test/api/test.api-gen-v2";
 import FetchStateCover2 from "../../../../../infra-test/ui/fetch-states/FetchStateCover2";
 import TestFullCard from "../../../../../infra-test/ui-items/test/TestFullCard";
-import AttemptsTabContent from "../../../../../infra-test/ui-shared/AttemptsTabContent";
+import AttemptsTabContent from "../../../../../infra-test/ui-shared/test-details/AttemptsTabContent";
 import QuestionsTabContent from "./components/QuestionsTabContent";
-import CurrentAttemptCard from "../../../../../infra-test/ui-shared/CurrentAttemptCard";
+import CurrentAttemptCard from "../../../../../infra-test/ui-shared/test-details/CurrentAttemptCard";
 import { useCallback } from "react";
 
 export default function CandidatePracticePage() {
