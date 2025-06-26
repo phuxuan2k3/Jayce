@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import TemplateForm from './components/TemplateForm';
 import TemplatesSidebar from './components/TemplatesSidebar';
-import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
+import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
 import DeleteTemplateModal from './components/DeleteTemplateModal';
 import TemplateList from './components/TemplateList';
 import { TemplateCoreSchema, useDeleteTemplatesByTemplateIdMutation, usePostTemplatesMutation, usePutTemplatesByTemplateIdMutation } from '../../../../infra-test/api/test.api-gen-v2';
@@ -95,9 +95,9 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 	const error = createState.error || editState.error || deleteState.error;
 
 	return (
-		<NewLeftLayoutTemplate
+		<LeftLayoutTemplate
 			header={
-				<NewLeftLayoutTemplate.Header
+				<LeftLayoutTemplate.Header
 					title="Prompt Templates Management"
 					description="Create and manage test prompt templates for generating practice tests"
 				/>
@@ -137,7 +137,7 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 			{isLoading && <LoadingDialog />}
 			{error && <ErrorDialog error={error} />}
 
-		</NewLeftLayoutTemplate>
+		</LeftLayoutTemplate>
 	);
 };
 

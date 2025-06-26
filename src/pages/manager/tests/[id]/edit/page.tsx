@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useReducer, useState } from "react";
 import ExamQuestionsManage from "../../../../../infra-test/ui/forms/ExamQuestionsManage";
-import LeftLayoutTemplate from "../../../../../components/layouts/LeftLayoutTemplate";
+import LeftLayoutTemplateDefault from "../../../../../components/layouts/LeftLayoutTemplateDefault";
 import ExamConfigForm from "../../../../../infra-test/ui/forms/ExamConfigForm";
 import Sidebar from "./components/Sidebar";
 import { EditTabs, ManagerTestEditPageModel } from "./type";
@@ -114,7 +114,7 @@ export default function ManagerTestEditPage() {
 	const component = getTab(tab);
 
 	return (
-		<LeftLayoutTemplate
+		<LeftLayoutTemplateDefault
 			header={{
 				title: "Edit your test",
 				description: "You can edit your test here!",
@@ -153,7 +153,7 @@ export default function ManagerTestEditPage() {
 					}}
 				/>
 			)}
-		</LeftLayoutTemplate>
+		</LeftLayoutTemplateDefault>
 	);
 }
 

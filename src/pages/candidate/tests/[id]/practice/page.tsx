@@ -1,4 +1,4 @@
-import NewLeftLayoutTemplate from "../../../../../components/layouts/NewLeftLayoutTemplate";
+import LeftLayoutTemplate from "../../../../../components/layouts/LeftLayoutTemplate";
 import TabsComponent from "../../../../../infra-test/ui/TabsComponent";
 import FeedbackTabContent from "./components/FeedbackTabContent";
 import SidebarActions from "../../../../../infra-test/ui/sidebar/primitive/SidebarActions";
@@ -37,9 +37,9 @@ export default function CandidatePracticePage() {
 		<FetchStateCover2
 			fetchState={testQuery}
 			dataComponent={(test) => (
-				<NewLeftLayoutTemplate
+				<LeftLayoutTemplate
 					header={
-						<NewLeftLayoutTemplate.Header
+						<LeftLayoutTemplate.Header
 							title={test.title}
 							description={test.description}
 						/>
@@ -61,7 +61,7 @@ export default function CandidatePracticePage() {
 							<TabsComponent tabs={tabs(test)} defaultTabId="attempts" />
 						</div>
 					</div>
-				</NewLeftLayoutTemplate >
+				</LeftLayoutTemplate >
 			)}
 		/>
 	);

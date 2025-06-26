@@ -1,12 +1,12 @@
 import { useCallback, useReducer, useState } from "react";
 import { CreateTab } from "./common/create-tabs-types";
-import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
+import LeftLayoutTemplateDefault from "../../../../components/layouts/LeftLayoutTemplateDefault";
 import ExamConfigForm from "../../../../infra-test/ui/forms/ExamConfigForm";
 import { examPersistReducer } from "../../../../infra-test/reducers/exam-persist.reducer";
 import Sidebar from "./components/Sidebar";
 import ExamQuestionsManage from "../../../../infra-test/ui/forms/ExamQuestionsManage";
-import PublishTab from "./components/publish-tab";
-import BuilderWizzardTab from "./components/builder-wizzard-tab";
+import PublishTab from "./publish-tab";
+import BuilderWizzardTab from "./builder-wizzard-tab";
 import { QuestionPersistOfTest } from "../../../../infra-test/commands/question.persist";
 import usePostExam from "./hooks/usePostExam";
 import LoadingDialog from "./components/LoadingDialog";
@@ -108,7 +108,7 @@ export default function ManagerTestNewPage() {
 	}
 
 	return (
-		<LeftLayoutTemplate
+		<LeftLayoutTemplateDefault
 			header={{
 				title: "Create your test",
 				description: "Configure your test settings and questions.",
@@ -162,7 +162,7 @@ export default function ManagerTestNewPage() {
 			)}
 
 
-		</LeftLayoutTemplate>
+		</LeftLayoutTemplateDefault>
 	);
 }
 

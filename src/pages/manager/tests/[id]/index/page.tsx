@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import NewLeftLayoutTemplate from '../../../../../components/layouts/NewLeftLayoutTemplate'
+import LeftLayoutTemplate from '../../../../../components/layouts/LeftLayoutTemplate'
 import AttemptsTab from './components/attempts-tab';
 import Sidebar from './components/Sidebar';
 import QuestionsTab from './components/questions-tab';
@@ -35,9 +35,9 @@ export default function ManagerTestPage() {
 	}
 
 	return (
-		<NewLeftLayoutTemplate
+		<LeftLayoutTemplate
 			header={
-				<NewLeftLayoutTemplate.Header
+				<LeftLayoutTemplate.Header
 					title="Exams Management"
 					description="Manage all your exams."
 				/>
@@ -49,7 +49,7 @@ export default function ManagerTestPage() {
 			/>}
 		>
 			{getTab(mode)}
-		</NewLeftLayoutTemplate>
+		</LeftLayoutTemplate>
 	);
 }
 

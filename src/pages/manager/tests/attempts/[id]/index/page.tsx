@@ -1,5 +1,5 @@
 import usePageData from './hooks/usePageData';
-import NewRightLayoutTemplate from '../../../../../../components/layouts/NewRightLayoutTemplate';
+import RightLayoutTemplate from '../../../../../../components/layouts/RightLayoutTemplate';
 import SumaryCard from './components/SumaryCard';
 import QuestionAnswerList from './components/QuestionAnswerList';
 import FetchStateCover from '../../../../../../components/wrapper/FetchStateCover';
@@ -8,7 +8,7 @@ export default function ManagerTestsAttemptPage() {
 	const queryState = usePageData();
 
 	return (
-		<NewRightLayoutTemplate
+		<RightLayoutTemplate
 			header={`Attempt for ${queryState.data?.exam.title}`}
 			right={
 				<FetchStateCover
@@ -36,6 +36,6 @@ export default function ManagerTestsAttemptPage() {
 					/>
 				)}
 			/>
-		</NewRightLayoutTemplate>
+		</RightLayoutTemplate>
 	)
 }

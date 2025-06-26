@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import NewRightLayoutTemplate from "../../../../../../../components/layouts/NewRightLayoutTemplate";
+import RightLayoutTemplate from "../../../../../../../components/layouts/RightLayoutTemplate";
 import FetchStateCover2 from "../../../../../../../infra-test/ui/fetch-states/FetchStateCover2";
 import TestDoSidebar from "./components/TestDoSidebar";
 import useTestDoServer from "./hooks/useTestDoServer";
@@ -43,9 +43,9 @@ export default function CandidateTestDoPage() {
 		<FetchStateCover2
 			fetchState={serverState}
 			dataComponent={({ test, attempt }) => (
-				<NewRightLayoutTemplate
+				<RightLayoutTemplate
 					header={
-						<NewRightLayoutTemplate.Header
+						<RightLayoutTemplate.Header
 							title={test.title}
 							description={test.description}
 						/>
@@ -80,7 +80,7 @@ export default function CandidateTestDoPage() {
 							/>
 						)}
 					</div>
-				</NewRightLayoutTemplate>
+				</RightLayoutTemplate>
 			)}
 		/>
 	);

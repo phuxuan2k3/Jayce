@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../router/paths";
 import ExamList from "./components/ExamList";
-import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
+import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
 import Sidebar from "./components/Sidebar";
 import { useAppDispatch } from "../../../../app/hooks";
 import deleteExamSlice from "../../../../infra-test/stores/deleteExamSlice";
@@ -32,9 +32,9 @@ const ManagerTestsPage = () => {
 
 
 	return (
-		<NewLeftLayoutTemplate
+		<LeftLayoutTemplate
 			header={
-				<NewLeftLayoutTemplate.Header
+				<LeftLayoutTemplate.Header
 					title="Exams Management"
 					description="Manage all your exams."
 				/>
@@ -56,7 +56,7 @@ const ManagerTestsPage = () => {
 				}}
 			/>
 
-		</NewLeftLayoutTemplate>
+		</LeftLayoutTemplate>
 	);
 }
 

@@ -1,21 +1,36 @@
 import React from 'react'
 
-export default function RightLayoutTemplate({
-	header,
+export default function RightLayoutTemplateDefault({
+	header: {
+		title,
+		description,
+	},
 	children,
 	right,
 	aboveMain,
 }: {
-	header: React.ReactNode;
+	header: {
+		title: string;
+		description?: string;
+	};
 	children: React.ReactNode;
 	right: React.ReactNode;
 	aboveMain?: React.ReactNode;
 }) {
 	return (
 		<div className="container grid grid-cols-1 lg:grid-cols-[2fr_1fr] grid-rows-[auto_1fr] gap-4 lg:gap-8 mx-auto mt-8 mb-16 h-full">
-			{header && <header className="flex gap-x-4 lg:col-span-2">
-				{header}
-			</header>}
+			<header className="flex gap-x-4 col-span-2">
+				<div className='flex-1 flex flex-col'>
+					<div className="flex justify-between items-center">
+						<h1 className="text-2xl md:text-3xl font-bold">{title}</h1>
+					</div>
+					{description && (
+						<span className="text-sm text-primary-toned-500 line-clamp-2 overflow-hidden text-ellipsis">
+							{description}
+						</span>
+					)}
+				</div>
+			</header>
 
 			<aside className="lg:row-start-2 lg:col-start-2 p-2">
 				{right}
@@ -32,26 +47,3 @@ export default function RightLayoutTemplate({
 		</div >
 	)
 }
-
-const Header = ({
-	title,
-	description,
-}: {
-	title: string;
-	description?: string;
-}) => {
-	return (
-		<div className='mt-2 flex-1 flex flex-col'>
-			<div className="flex justify-between items-center">
-				<h1 className="text-2xl md:text-3xl font-bold">{title}</h1>
-			</div>
-			{description && (
-				<span className="text-sm text-primary-toned-500 line-clamp-2 overflow-hidden text-ellipsis">
-					{description}
-				</span>
-			)}
-		</div>
-	)
-}
-
-RightLayoutTemplate.Header = Header;

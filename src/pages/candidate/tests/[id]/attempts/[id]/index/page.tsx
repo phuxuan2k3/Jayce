@@ -5,7 +5,7 @@ import FetchStateContent from "./components/FetchStateContent";
 import { useState } from "react";
 import useIsTestAllowToShowAnswer from "./hooks/useTestAllowToShowAnswer";
 import useGetAttemptIdParams from "../../../../../../../infra-test/hooks/useGetAttemptIdParams";
-import NewRightLayoutTemplate from "../../../../../../../components/layouts/NewRightLayoutTemplate";
+import RightLayoutTemplate from "../../../../../../../components/layouts/RightLayoutTemplate";
 import { AttemptCoreSchema, TestFullSchema, useGetAttemptsByAttemptIdQuery, useGetTestsByTestIdQuery } from "../../../../../../../infra-test/api/test.api-gen-v2";
 import FetchStateCover2 from "../../../../../../../infra-test/ui/fetch-states/FetchStateCover2";
 import useGetTestIdParams from "../../../../../../../infra-test/hooks/useGetTestIdParams";
@@ -39,9 +39,9 @@ export default function CandidateTestsAttemptPage() {
 				<FetchStateCover2
 					fetchState={testQuery}
 					dataComponent={(test) => (
-						<NewRightLayoutTemplate
+						<RightLayoutTemplate
 							header={
-								<NewRightLayoutTemplate.Header
+								<RightLayoutTemplate.Header
 									title={`Attempt ${attempt.order} - ${test.title}`}
 									description={`Started at ${format(new Date(attempt.createdAt), "dd MMM yyyy, HH:mm")}`}
 								/>
@@ -67,7 +67,7 @@ export default function CandidateTestsAttemptPage() {
 									)}
 								/>
 							</div>
-						</NewRightLayoutTemplate>
+						</RightLayoutTemplate>
 					)}
 				/>
 			)}

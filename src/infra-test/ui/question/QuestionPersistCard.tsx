@@ -1,4 +1,3 @@
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons';
 import TextareaAutosize from 'react-textarea-autosize';

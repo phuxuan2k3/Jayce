@@ -1,4 +1,4 @@
-import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
+import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
 import { useState, useEffect } from "react";
 import SidebarActions from "../../../../infra-test/ui/sidebar/primitive/SidebarActions";
 import JoinTestSection from "./components/JoinTestSection";
@@ -34,9 +34,9 @@ export default function CandidateTestsJoinPage() {
 	};
 
 	return (
-		<NewLeftLayoutTemplate
+		<LeftLayoutTemplate
 			header={
-				<NewLeftLayoutTemplate.Header
+				<LeftLayoutTemplate.Header
 					title="Skillsharp Tests"
 					description="Join hosted tests or generate your own practice tests from templates"
 				/>
@@ -65,6 +65,6 @@ export default function CandidateTestsJoinPage() {
 					/>
 				}
 			</div>
-		</NewLeftLayoutTemplate>
+		</LeftLayoutTemplate>
 	);
 };
