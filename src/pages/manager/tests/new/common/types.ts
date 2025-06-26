@@ -34,3 +34,5 @@ export const getStepInfo = (step: StepInfoKey): StepInfoType => {
 		description: "No information available for this step.",
 	};
 };
+
+export type CreateTab = "info" | "questions" | "generate" | "publish";

@@ -1,5 +1,5 @@
 import { Globe, FileText } from "lucide-react";
-import { AllStepData } from "../../utils/types";
+import { AllStepData } from "../../../common/types";
 
 interface GenerationContextProps {
 	state: AllStepData;

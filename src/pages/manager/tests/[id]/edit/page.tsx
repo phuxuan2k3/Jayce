@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useReducer, useState } from "react";
-import ExamQuestionsManage from "../../../../../infra-test/ui/forms/ExamQuestionsManage";
+import QuestionsTab from "../../new/questions-tab";
 import LeftLayoutTemplateDefault from "../../../../../components/layouts/LeftLayoutTemplateDefault";
-import ExamConfigForm from "../../../../../infra-test/ui/forms/ExamConfigForm";
+import ConfigTab from "../../new/config-tab";
 import Sidebar from "./components/Sidebar";
 import { EditTabs, ManagerTestEditPageModel } from "./type";
 import { examPersistReducer } from "../../../../../infra-test/reducers/exam-persist.reducer";
@@ -87,14 +87,14 @@ export default function ManagerTestEditPage() {
 	const getTab = (tab: EditTabs) => {
 		switch (tab) {
 			case "info":
-				return <ExamConfigForm
-					configEdit={state.config}
-					onConfigEditChange={(config) => {
+				return <ConfigTab
+					examPersist={state.config}
+					onExamPersistChange={(config) => {
 						dispatch({ type: "UPDATE_CONFIG", payload: config });
 					}}
 				/>;
 			case "questions":
-				return <ExamQuestionsManage
+				return <QuestionsTab
 					questions={state.questions.questions}
 					onQuuestionAdd={(question) => {
 						dispatch({ type: "ADD_QUESTION", payload: { question } });

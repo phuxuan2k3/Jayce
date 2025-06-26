@@ -1,101 +1,110 @@
-import { useCallback, useReducer, useState } from "react";
-import { CreateTab } from "./common/create-tabs-types";
+import { useCallback, useState } from "react";
+import { CreateTab } from "./common/types";
 import LeftLayoutTemplateDefault from "../../../../components/layouts/LeftLayoutTemplateDefault";
-import ExamConfigForm from "../../../../infra-test/ui/forms/ExamConfigForm";
-import { examPersistReducer } from "../../../../infra-test/reducers/exam-persist.reducer";
+import ConfigTab from "./config-tab";
 import Sidebar from "./components/Sidebar";
-import ExamQuestionsManage from "../../../../infra-test/ui/forms/ExamQuestionsManage";
+import QuestionsTab from "./questions-tab";
 import PublishTab from "./publish-tab";
 import BuilderWizzardTab from "./builder-wizzard-tab";
-import { QuestionPersistOfTest } from "../../../../infra-test/commands/question.persist";
-import usePostExam from "./hooks/usePostExam";
 import LoadingDialog from "./components/LoadingDialog";
 import ValidationErrorDialog from "../../../../infra-test/ui/dialogs/ExamValidationDialog";
 import ErrorDialog from "./components/ErrorDialog";
 import { useNavigate } from "react-router-dom";
-import paths from "../../../../router/paths";
-import { examGenerationReducer, initialState as initialStateGen } from "./models/exam-generation.reducer";
-import useExamQuestionsGeneration from "./hooks/useExamQuestionsGeneration";
 import { parseQueryError } from "../../../../helpers/fetchBaseQuery.error";
-import { initialState } from "../../../../infra-test/reducers/exam-persist.store";
+import { ExamPersistCore } from "../../../../infra-test/ui-items/test/types";
+import { QuestionPersistCoreSchema } from "../../../../infra-test/ui-items/question/types";
+import { usePostTestsMutation } from "../../../../infra-test/api/test.api-gen-v2";
 
 export default function ManagerTestNewPage() {
 	const navigate = useNavigate();
 	const [tab, setTab] = useState<CreateTab>("info");
-
-	const [state, dispatch] = useReducer(examPersistReducer, initialState);
 	const [isPostingExam, setIsPostingExam] = useState(false);
 
-	const [stateGen, dispatchGen] = useReducer(examGenerationReducer, initialStateGen);
-	const examGeneration = useExamQuestionsGeneration();
-
-	const {
-		handlePostExam,
-		postExamState,
-		validationError,
-		hasValidationError,
-	} = usePostExam({
-		state,
-		onPostingStarted: () => {
-			setIsPostingExam(true);
+	const [examPersist, setExamPersist] = useState<ExamPersistCore>({
+		title: "",
+		description: "",
+		language: "English",
+		minutesToAnswer: 60,
+		mode: "EXAM",
+		detail: {
+			roomId: "",
+			openDate: null,
+			closeDate: null,
+			isAllowedToSeeOtherResults: false,
+			isAnswerVisible: false,
+			mode: "EXAM",
+			isPublic: false,
+			numberOfAttemptsAllowed: 1,
+			numberOfParticipants: undefined,
+			password: undefined,
 		},
-		onSuccess: (testId) => {
-			navigate(paths.manager.tests.in(testId).ROOT);
-		},
+		questions: [],
 	});
 
-	const handleBulkAddQuestions = useCallback((questions: QuestionPersistOfTest[]) => {
-		dispatch({
-			type: "BULK_ADD_QUESTIONS",
-			payload: { questions },
-		});
-		setTab("questions");
+	const [createTest, createTestState] = usePostTestsMutation();
+
+	const handleBulkAddQuestions = useCallback((questions: QuestionPersistCoreSchema[]) => {
+		setExamPersist((prev) => ({
+			...prev,
+			questions: [...prev.questions, ...(questions as ExamPersistCore["questions"])],
+		}));
 	}, []);
 
-	const handleReplaceQuestions = useCallback((questions: QuestionPersistOfTest[]) => {
-		dispatch({
-			type: "REPLACE_QUESTIONS",
-			payload: { questions },
-		});
-		setTab("questions");
+	const handleReplaceQuestions = useCallback((questions: QuestionPersistCoreSchema[]) => {
+		setExamPersist((prev) => ({
+			...prev,
+			questions: questions as ExamPersistCore["questions"],
+		}));
 	}, []);
+
+	const handleRemoveQuestion = useCallback((index: number) => {
+		setExamPersist((prev) => ({
+			...prev,
+			questions: prev.questions.filter((_, i) => i !== index),
+		}));
+	}, []);
+
+	const handleAddQuestion = useCallback((question: QuestionPersistCoreSchema) => {
+		setExamPersist((prev) => ({
+			...prev,
+			questions: [...prev.questions, question as ExamPersistCore["questions"][number]],
+		}));
+	}, []);
+
+	const handleUpdateQuestion = useCallback((index: number, question: Partial<QuestionPersistCoreSchema>) => {
+		setExamPersist((prev) => {
+			const updatedQuestions = [...prev.questions];
+			updatedQuestions[index] = { ...updatedQuestions[index], ...question } as ExamPersistCore["questions"][number];
+			return {
+				...prev,
+				questions: updatedQuestions,
+			};
+		});
+	}, []);
+
 
 	const getTab = (tab: CreateTab) => {
 		switch (tab) {
 			case "info":
-				return <ExamConfigForm
-					configEdit={state.config}
-					onConfigEditChange={(config) => {
-						dispatch({ type: "UPDATE_CONFIG", payload: config });
-					}}
+				return <ConfigTab
+					examPersist={examPersist}
+					onExamPersistChange={(patch) => setExamPersist((prev) => ({ ...prev, ...patch }))}
 				/>;
 			case "questions":
-				return <ExamQuestionsManage
-					questions={state.questions.questions}
-					onQuestionDelete={(index) => dispatch({
-						type: "REMOVE_QUESTION",
-						payload: { index },
-					})}
-					onQuuestionAdd={(question) => dispatch({
-						type: "ADD_QUESTION",
-						payload: { question },
-					})}
-					onQuestionUpdate={(index, question) => dispatch({
-						type: "UPDATE_QUESTION",
-						payload: { index, question },
-					})}
+				return <QuestionsTab
+					questions={examPersist.questions}
+					onQuestionDelete={(index) => handleRemoveQuestion(index)}
+					onQuuestionAdd={(question) => handleAddQuestion(question)}
+					onQuestionUpdate={(index, question) => handleUpdateQuestion(index, question)}
 				/>;
 			case "generate":
 				return <BuilderWizzardTab
 					onBulkAddQuestions={handleBulkAddQuestions}
 					onReplaceQuestions={handleReplaceQuestions}
-					examInitialConfig={state.config}
+					initialExam={examPersist}
 					onGenerationDisposal={() => {
 						setTab("questions");
 					}}
-					dispatch={dispatchGen}
-					state={stateGen}
-					examGeneration={examGeneration}
 				/>;
 			case "publish":
 				return <PublishTab

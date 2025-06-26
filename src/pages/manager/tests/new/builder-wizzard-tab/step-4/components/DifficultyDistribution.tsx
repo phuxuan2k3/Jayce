@@ -1,6 +1,6 @@
 import { Settings } from "lucide-react";
-import { DifficultyType, DifficultiesAsConst } from "../../utils/base-schema";
-import { difficultyClassNames, difficultyColorMap } from '../../utils/class-names';
+import { DifficultyType, DifficultiesAsConst } from "../../../common/base-schema";
+import { difficultyClassNames, difficultyColorMap } from '../../../common/class-names';
 
 interface DifficultyDistributionProps {
 	difficultyBreakdown: {

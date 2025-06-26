@@ -5,7 +5,7 @@ import HelpText from "./components/HelpText";
 import useTopicsManage from "./hooks/useTopicsManage";
 import useGetTotalQuestions from "./hooks/useGetTotalQuestions";
 import { Step2Data } from "../../common/model-types";
-import { Topic } from "../utils/base-schema";
+import { Topic } from "../../common/base-schema";
 
 export default function Step2({
 	data,

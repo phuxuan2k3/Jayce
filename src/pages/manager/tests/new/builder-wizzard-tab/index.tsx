@@ -1,55 +1,32 @@
-import { useCallback, useEffect, useMemo } from "react";
-import { ExamConfigPersist } from "../../../../../infra-test/commands/exam.persist";
-import { ExamGenerationAction } from "../models/exam-generation.reducer";
-import { ExamGenerationModel, ExamGenerationState } from "../models/exam-generation.model";
-import useExamQuestionsGeneration from "../hooks/useExamQuestionsGeneration";
+import { useState } from "react";
 import StepDone from "./step-done";
 import LoadingDialog from "./components/LoadingDialog";
 import ErrorDialog from "./components/ErrorDialog";
-import { QuestionPersistOfTest } from "../../../../../infra-test/commands/question.persist";
 import { parseQueryError } from "../../../../../helpers/fetchBaseQuery.error";
 import MainStep from "./MainStep";
+import { useLazyGetGenerateExamQuestionsQuery } from "../apis/exam-generation.api";
+import { transformAllStepDataToGenerateArgs, transformExamPersistToAllStepData, transformGenerateResponseToQuestionsPersistCore } from "../common/transform";
+import { QuestionPersistCoreSchema } from "../../../../../infra-test/ui-items/question/types";
+import { ExamPersistCore } from "../../../../../infra-test/ui-items/test/types";
+import { AllStepData } from "../common/types";
 
 export default function BuilderWizzardTab({
-	examInitialConfig,
+	initialExam,
 	onBulkAddQuestions,
 	onReplaceQuestions,
 	onGenerationDisposal,
-	examGeneration,
-	state,
-	dispatch,
 }: {
-	examInitialConfig: ExamConfigPersist;
-	onBulkAddQuestions: (questions: QuestionPersistOfTest[]) => void;
-	onReplaceQuestions: (questions: QuestionPersistOfTest[]) => void;
+	initialExam: ExamPersistCore;
+	onBulkAddQuestions: (questions: QuestionPersistCoreSchema[]) => void;
+	onReplaceQuestions: (questions: QuestionPersistCoreSchema[]) => void;
 	onGenerationDisposal: () => void;
-	examGeneration: ReturnType<typeof useExamQuestionsGeneration>;
-	state: ExamGenerationState;
-	dispatch: React.Dispatch<ExamGenerationAction>;
 }) {
-	useEffect(() => {
-		dispatch({
-			type: 'SET_STEP1',
-			payload: {
-				...state.step1,
-				title: examInitialConfig.title,
-				description: examInitialConfig.description,
-			},
-		});
-	}, [examInitialConfig]);
+	const [mainData, setMainData] = useState<AllStepData>(transformExamPersistToAllStepData(initialExam));
 
-	const model = useMemo(() => ExamGenerationModel(state), [state]);
-	const stepInfo = model.getStepInfo();
-
-	const { generateExamQuestions, state: { data, isLoading, error } } = examGeneration;
-
-	const handleGenerateExamQuestions = useCallback(() => {
-		generateExamQuestions(state);
-	}, [state]);
-
+	const [generate, { isLoading, error, data }] = useLazyGetGenerateExamQuestionsQuery();
 
 	return (
-		<div>
+		<>
 			{isLoading && (
 				<LoadingDialog />
 			)}
@@ -57,24 +34,31 @@ export default function BuilderWizzardTab({
 			{error && (
 				<ErrorDialog
 					error={parseQueryError(error) || "An error occurred while generating exam questions."}
-					onRetry={handleGenerateExamQuestions}
+					onRetry={() => {
+						generate(transformAllStepDataToGenerateArgs(mainData));
+					}}
 				/>
 			)}
-
 			{data != null ? (
 				<StepDone
-					questions={data}
-					onRegenerateQuestions={handleGenerateExamQuestions}
+					questions={transformGenerateResponseToQuestionsPersistCore(data)}
+					onRegenerateQuestions={() => {
+						generate(transformAllStepDataToGenerateArgs(mainData));
+					}}
 					onReplaceQuestions={onReplaceQuestions}
 					onAppendQuestions={onBulkAddQuestions}
 					onGenerationDisposal={onGenerationDisposal}
 				/>
 			) : (
 				<MainStep
-					onDataConfirm={onReplaceQuestions}
+					initialData={mainData}
+					onDataConfirm={(data) => {
+						setMainData(data);
+						generate(transformAllStepDataToGenerateArgs(data));
+					}}
 				/>
 			)}
-		</div>
+		</>
 	);
 }
 

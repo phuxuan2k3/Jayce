@@ -2,14 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import TextareaAutosize from 'react-textarea-autosize';
-import { QuestionPersistCoreSchema } from '../types';
-import { QuestionDetailCommonSchema } from '../../../api/test.api-gen-v2';
+import { LongAnswerDetail, MCQDetail, QuestionPersistCoreSchema } from '../types';
 import MCQPersistDetail from './MCQPersistDetail';
 import LongAnswerPersistDetail from './LongAnswerPersistDetail';
-
-// Type aliases for question details
-export type MCQDetail = Extract<QuestionDetailCommonSchema, { type: 'MCQ' }>;
-export type LongAnswerDetail = Extract<QuestionDetailCommonSchema, { type: 'LONG_ANSWER' }>;
 
 export default function QuestionPersistCard({
 	index,
@@ -26,7 +21,7 @@ export default function QuestionPersistCard({
 	const [mcqDetail, setMcqDetail] = useState<MCQDetail>(() =>
 		question.detail.type === 'MCQ'
 			? question.detail
-			: { type: 'MCQ', options: ['', ''], correctOption: null }
+			: { type: 'MCQ', options: ['', ''], correctOption: 0 }
 	);
 	const [longDetail, setLongDetail] = useState<LongAnswerDetail>(() =>
 		question.detail.type === 'LONG_ANSWER'
@@ -54,7 +49,7 @@ export default function QuestionPersistCard({
 	};
 
 	// Handle detail change for current type and save to local state
-	const handleDetailChange = (edit: Partial<QuestionDetailCommonSchema>) => {
+	const handleDetailChange = (edit: Partial<MCQDetail | LongAnswerDetail>) => {
 		if (question.detail.type === 'MCQ') {
 			const newDetail: MCQDetail = {
 				...mcqDetail,
@@ -88,7 +83,7 @@ export default function QuestionPersistCard({
 			{question.detail.type === 'MCQ' && (
 				<MCQPersistDetail
 					detail={question.detail}
-					questionId={question.id}
+					questionId={index || -1}
 					onQuestionChange={handleDetailChange}
 				/>
 			)}

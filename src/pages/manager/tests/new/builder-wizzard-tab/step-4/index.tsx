@@ -7,9 +7,9 @@ import {
 	GenerationContext,
 	ConfirmationSection
 } from "./components";
-import { BuilderStep1Type, BuilderStep2Type, BuilderStep3Type } from "../utils/step-schema";
-import { DifficultiesAsConst, DifficultyType } from "../utils/base-schema";
-import { AllStepData } from "../utils/types";
+import { BuilderStep1Type, BuilderStep2Type, BuilderStep3Type } from "../../common/step-schema";
+import { DifficultiesAsConst, DifficultyType } from "../../common/base-schema";
+import { AllStepData } from "../../common/types";
 
 export default function Step4({
 	onConfirm,

@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react'
-import { LanguagesAsConst } from '../utils/base-schema';
-import { BuilderStep1Schema, BuilderStep1Type, BuilderStep2Schema, BuilderStep2Type, BuilderStep3Schema, BuilderStep3Type } from '../utils/step-schema';
+import { LanguagesAsConst } from '../../common/base-schema';
+import { BuilderStep1Schema, BuilderStep1Type, BuilderStep2Schema, BuilderStep2Type, BuilderStep3Schema, BuilderStep3Type } from '../../common/step-schema';
 import useStepDraft from './useStepDraft';
-import { AllStepData, StepInfoKey } from '../utils/types';
+import { AllStepData, StepInfoKey } from '../../common/types';
 
 export default function useBuiderStepsData(initialStepData?: AllStepData) {
 	const [step, setStep] = useState<StepInfoKey>(1);

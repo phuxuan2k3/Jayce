@@ -1,7 +1,7 @@
 import CreativitySlider from './components/CreativitySlider';
 import ContextSection from './components/ContextSection';
 import HelpText from './components/HelpText';
-import { BuilderStep3Type } from '../utils/step-schema';
+import { BuilderStep3Type } from '../../common/step-schema';
 
 export default function Step3({
 	data,

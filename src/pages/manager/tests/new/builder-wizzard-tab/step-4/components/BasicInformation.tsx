@@ -1,5 +1,5 @@
 import { FileText } from "lucide-react";
-import { AllStepData } from "../../utils/types";
+import { AllStepData } from "../../../common/types";
 
 interface BasicInformationProps {
 	state: AllStepData;

@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { Topic } from '../../utils/base-schema';
+import { Topic } from '../../../common/base-schema';
 
 export default function useTopicsManage({
 	topics,

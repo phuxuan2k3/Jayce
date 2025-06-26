@@ -8,7 +8,7 @@ import Step2 from './step-2';
 import Step3 from './step-3';
 import Step4 from './step-4';
 import useBuiderStepsData from './hooks/useBuilderStepsData';
-import { AllStepData, getStepInfo, StepInfoKey } from './utils/types';
+import { AllStepData, getStepInfo, StepInfoKey } from '../common/types';
 
 export default function MainStep({
 	initialData,

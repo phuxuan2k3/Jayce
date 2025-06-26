@@ -1,5 +1,5 @@
 import { Target, Users, Lightbulb, BookOpen, Globe, FileText, Link, Upload } from "lucide-react";
-import { AllStepData } from "../../utils/types";
+import { AllStepData } from "../../../common/types";
 
 interface OverviewCardsProps {
 	state: AllStepData;

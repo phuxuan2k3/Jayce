@@ -1,8 +1,8 @@
 import { cn } from "../../../../../../app/cn";
 import TextareaAutosize from "react-textarea-autosize";
-import { classNameInput } from "../../common/classname";
-import { BuilderStep1Type } from "../utils/step-schema";
-import { LanguagesAsConst, LanguageType } from "../utils/base-schema";
+import { classNameInput } from "../../common/class-names";
+import { BuilderStep1Type } from "../../common/step-schema";
+import { LanguagesAsConst, LanguageType } from "../../common/base-schema";
 
 export default function Step1({
 	data,

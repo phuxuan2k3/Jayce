@@ -23,7 +23,7 @@ export default function MCQPersistDetail({
 		const newOptions = options.filter((_: string, i: number) => i !== optionIndex);
 		let newCorrectOption = correctOption;
 		if (typeof correctOption === 'number') {
-			if (optionIndex === correctOption) newCorrectOption = null;
+			if (optionIndex === correctOption) newCorrectOption = 0;
 			else if (optionIndex < correctOption) newCorrectOption = correctOption - 1;
 		}
 		onQuestionChange({ ...detail, options: newOptions, type: 'MCQ', correctOption: newCorrectOption });

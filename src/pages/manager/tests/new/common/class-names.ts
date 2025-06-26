@@ -1,4 +1,4 @@
-import { cn } from "../../../../../../app/cn";
+import { cn } from "../../../../../app/cn";
 import { DifficultyType } from "./base-schema";
 
 const borderColorClass: Record<DifficultyType, string> = {
@@ -91,3 +91,4 @@ export const difficultyColorMap: Record<DifficultyType, string> = {
 	Lead: 'red',
 	Expert: 'purple',
 };
+export const classNameInput = cn(`w-full h-fit border rounded-md px-4 py-2 border-primary focus:outline-none focus:ring focus:ring-primary-toned-200`);

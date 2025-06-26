@@ -3,7 +3,7 @@ import ContextTabs, { TabType } from './ContextTabs';
 import TextContextTab from './TextContextTab';
 import FilesContextTab from './FilesContextTab';
 import LinksContextTab from './LinksContextTab';
-import { BuilderStep3Type } from '../../utils/step-schema';
+import { BuilderStep3Type } from '../../../common/step-schema';
 
 interface ContextSectionProps {
 	context: BuilderStep3Type['context'];

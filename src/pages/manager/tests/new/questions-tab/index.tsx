@@ -1,17 +1,17 @@
-import QuestionEditCard from "../question/QuestionPersistCard";
 import { Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { QuestionPersistOfTest } from "../../commands/question.persist";
+import { QuestionPersistCoreSchema } from "../../../../../infra-test/ui-items/question/types";
+import QuestionPersistCard from "../../../../../infra-test/ui-items/question/form/QuestionPersist";
 
-const ExamQuestionsManage = ({
+const QuestionsTab = ({
 	questions,
 	onQuuestionAdd,
 	onQuestionUpdate,
 	onQuestionDelete,
 }: {
-	questions: QuestionPersistOfTest[];
-	onQuuestionAdd: (question: QuestionPersistOfTest) => void;
-	onQuestionUpdate: (index: number, question: Partial<QuestionPersistOfTest>) => void;
+	questions: QuestionPersistCoreSchema[];
+	onQuuestionAdd: (question: QuestionPersistCoreSchema) => void;
+	onQuestionUpdate: (index: number, question: Partial<QuestionPersistCoreSchema>) => void;
 	onQuestionDelete: (index: number) => void;
 }) => {
 	const lastCard = useRef<HTMLDivElement>(null);
@@ -37,8 +37,13 @@ const ExamQuestionsManage = ({
 						onQuuestionAdd({
 							text: "",
 							points: 1,
-							options: ["", "", "", ""],
-							correctOption: 0,
+							id: -1,
+							type: "MCQ",
+							detail: {
+								type: "MCQ",
+								options: ["", "", "", ""],
+								correctOption: 0,
+							}
 						});
 						setIsAdding(true);
 					}}
@@ -58,7 +63,7 @@ const ExamQuestionsManage = ({
 						className="w-full"
 						ref={index === questions.length - 1 ? lastCard : undefined}
 					>
-						<QuestionEditCard
+						<QuestionPersistCard
 							index={index}
 							question={questions[index]}
 							onQuestionChange={(question) => {
@@ -76,4 +81,4 @@ const ExamQuestionsManage = ({
 	);
 }
 
-export default ExamQuestionsManage;
+export default QuestionsTab;

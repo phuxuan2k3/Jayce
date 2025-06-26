@@ -1,6 +1,6 @@
 import TextareaAutosize from 'react-textarea-autosize';
 import { cn } from '../../../../../../../app/cn';
-import { classNameInput } from '../../../common/classname';
+import { classNameInput } from "../../../common/class-names";
 
 interface TextContextTabProps {
 	value: string;

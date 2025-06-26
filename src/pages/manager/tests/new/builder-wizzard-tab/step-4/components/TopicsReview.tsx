@@ -1,7 +1,7 @@
 import { Target } from "lucide-react";
-import { AllStepData } from "../../utils/types";
-import { DifficultiesAsConst } from '../../utils/base-schema';
-import { difficultyColorMap } from '../../utils/class-names';
+import { AllStepData } from "../../../common/types";
+import { DifficultiesAsConst } from '../../../common/base-schema';
+import { difficultyColorMap } from '../../../common/class-names';
 
 interface TopicsReviewProps {
 	state: AllStepData;
