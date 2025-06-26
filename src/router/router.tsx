@@ -29,7 +29,7 @@ import CandidateTestsPage from "../pages/candidate/tests/index/page";
 import ManagerLayout from "../pages/manager/layout";
 import AuthBusinessRegisterPage from "../pages/auth/bussiness-register/AuthBusinessRegisterPage";
 import AuthChooseRolePage from "../pages/auth/choose-role/AuthChooseRolePage";
-import CandidateTestsAttemptPage from "../pages/candidate/tests/attempts/[id]/index/page";
+import CandidateTestsAttemptPage from "../pages/candidate/tests/[id]/attempts/[id]/index/page";
 import ManagerTestsPage from "../pages/manager/tests/index/page";
 import CandidateHomePage from "../pages/candidate/index/CandidateHomePage";
 import CandidateInterviewLivePage from "../pages/candidate/interviews/live/CandidateInterviewLivePage";

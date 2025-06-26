@@ -2,7 +2,7 @@ import ParticipantStatisticCard from './ParticipantStatistic'
 import UserCoreCard from '../../../../../../infra-test/ui-items/user/UserCoreCard'
 import { ArrowLeft } from 'lucide-react'
 import { useState } from 'react'
-import { PagedFilter } from '../../../../../../interfaces/paged.type'
+import { PagingFilter } from "../../../../../../infra-test/types/query"
 import { ParticipantUser } from './type'
 import AttemptsTable from '../../../../../../infra-test/ui-items/attempt/AttemptsTable'
 import { useGetAttemptsQuery } from '../../../../../../infra-test/api/test.api-gen-v2'
@@ -19,7 +19,7 @@ export default function ParticipantsResult({
 }) {
 	const testId = useGetTestIdParams();
 
-	const [filter, setFilter] = useState<PagedFilter>({
+	const [filter, setFilter] = useState<PagingFilter>({
 		page: 1,
 		perPage: 10,
 	});

@@ -4,10 +4,3 @@ export type Paged<T> = {
 	totalPage: number;
 	perPage: number;
 }
-
-export type PagedFilter = {
-	page: number;
-	perPage: number;
-}
-
-export type QuerySortValues = "asc" | "desc" | undefined;

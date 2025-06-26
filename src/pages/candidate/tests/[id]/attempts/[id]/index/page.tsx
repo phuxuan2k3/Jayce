@@ -1,15 +1,15 @@
 import { format } from "date-fns";
 import AttemptSidebar from "./components/AttemptSidebar";
-import AnswerList from "./components/AnswerList";
+import AnswersList from "./components/AnswersList";
 import FetchStateContent from "./components/FetchStateContent";
 import { useState } from "react";
 import useIsTestAllowToShowAnswer from "./hooks/useTestAllowToShowAnswer";
-import useGetAttemptIdParams from "../../../../../../infra-test/hooks/useGetAttemptIdParams";
-import NewRightLayoutTemplate from "../../../../../../components/layouts/NewRightLayoutTemplate";
-import { AttemptCoreSchema, TestFullSchema, useGetAttemptsByAttemptIdQuery, useGetTestsByTestIdQuery } from "../../../../../../infra-test/api/test.api-gen-v2";
-import FetchStateCover2 from "../../../../../../infra-test/ui/fetch-states/FetchStateCover2";
-import useGetTestIdParams from "../../../../../../infra-test/hooks/useGetTestIdParams";
-import useGetUserId from "../../../../../../infra-test/hooks/useGetUserId";
+import useGetAttemptIdParams from "../../../../../../../infra-test/hooks/useGetAttemptIdParams";
+import NewRightLayoutTemplate from "../../../../../../../components/layouts/NewRightLayoutTemplate";
+import { AttemptCoreSchema, TestFullSchema, useGetAttemptsByAttemptIdQuery, useGetTestsByTestIdQuery } from "../../../../../../../infra-test/api/test.api-gen-v2";
+import FetchStateCover2 from "../../../../../../../infra-test/ui/fetch-states/FetchStateCover2";
+import useGetTestIdParams from "../../../../../../../infra-test/hooks/useGetTestIdParams";
+import useGetUserId from "../../../../../../../infra-test/hooks/useGetUserId";
 
 export default function CandidateTestsAttemptPage() {
 	const attemptId = useGetAttemptIdParams();
@@ -60,7 +60,7 @@ export default function CandidateTestsAttemptPage() {
 								<FetchStateContent
 									{...attemptQuery}
 									childrenFactory={(data) => (
-										<AnswerList
+										<AnswersList
 											showAnswers={showAnswers}
 											attempt={data}
 										/>

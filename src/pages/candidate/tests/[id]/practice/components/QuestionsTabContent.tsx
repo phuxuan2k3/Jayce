@@ -7,7 +7,7 @@ import MyButton from "../../../../../../infra-test/ui/buttons/MyButton";
 import { QuestionDefault } from "../../../../../../infra-test/ui-items/question/views/QuestionDefault";
 import MyPaginationSection from "../../../../../../infra-test/ui/MyPaginationSection";
 import { arrayPagination } from "../../../../../../helpers/array";
-import { PagedFilter } from "../../../../../../interfaces/paged.type";
+import { PagingFilter } from "../../../../../../infra-test/types/query";
 
 export default function QuestionsTabContent({
 	numberOfAttempts,
@@ -18,7 +18,7 @@ export default function QuestionsTabContent({
 
 	const [viewQuestions, setViewQuestions] = React.useState<boolean>(numberOfAttempts > 0);
 	const [viewCorrectAnswer, setViewCorrectAnswer] = React.useState<QueryBoolean>("0");
-	const [filter, setFilter] = React.useState<PagedFilter>({
+	const [filter, setFilter] = React.useState<PagingFilter>({
 		page: 1,
 		perPage: 5,
 	});

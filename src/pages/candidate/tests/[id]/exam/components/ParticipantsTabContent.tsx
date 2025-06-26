@@ -3,12 +3,13 @@ import ParticipantsList from "./ParticipantsList";
 import useGetTestIdParams from "../../../../../../infra-test/hooks/useGetTestIdParams";
 import { useGetTestsByTestIdParticipantsQuery } from "../../../../../../infra-test/api/test.api-gen-v2";
 import FetchStateCover2 from "../../../../../../infra-test/ui/fetch-states/FetchStateCover2";
-import { PagedFilter, QuerySortValues } from "../../../../../../interfaces/paged.type";
+import { PagingFilter } from "../../../../../../infra-test/types/query";
+import { QuerySortValues } from "../../../../../../infra-test/types/query";
 import MyPaginationSection from "../../../../../../infra-test/ui/MyPaginationSection";
 import { ParticipantUser } from "./type";
 import ParticipantsResult from "./ParticipantsResult";
 
-type Filter = PagedFilter & {
+type Filter = PagingFilter & {
 	sortByRank: QuerySortValues;
 }
 

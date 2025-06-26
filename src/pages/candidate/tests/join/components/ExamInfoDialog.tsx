@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import { ExamCore } from '../../../../../infra-test/core/test.model';
 import { AlarmClock, AlertCircle, CheckCircle, X } from 'lucide-react';
 import { format } from 'date-fns';
 import PasswordInput from './PasswordInput';
-import ExamInfoBottom from './ExamInfoBottom';
+import ExamInfoDialogBottom from './ExamInfoDialogBottom';
+import { GetTestsFindByRoomApiResponse } from '../../../../../infra-test/api/test.api-gen-v2';
 
 interface ExamInfoDialogProps {
 	isOpen: boolean;
 	onClose: () => void;
 	roomId: string;
 	isLoading: boolean;
-	examData?: ExamCore & {
-		hasJoined: boolean;
-	};
+	data: GetTestsFindByRoomApiResponse | undefined;
 	error: string | null;
 }
 
@@ -21,13 +19,34 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 	onClose,
 	roomId,
 	isLoading,
-	examData,
+	data,
 	error
 }) => {
 	const [password, setPassword] = useState('');
 	const [passwordError, setPasswordError] = useState<string | null>(null);
 
 	if (!isOpen) return null;
+	if (data == null) return null;
+
+	const { data: examData, hasJoined } = data;
+	if (examData._detail.mode !== "EXAM") {
+		return (
+			<div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 p-4">
+				<div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+					<h2 className="text-xl font-bold mb-4">Invalid Test Type</h2>
+					<p className="text-gray-600 mb-4">This test is not an exam. Please join a valid exam.</p>
+					<button
+						onClick={onClose}
+						className="px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-toned-600 transition-colors"
+					>
+						Close
+					</button>
+				</div>
+			</div>
+		);
+	}
+	const detail = examData._detail;
+
 
 	return (
 		<div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 p-4">
@@ -75,7 +94,10 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 							</div>
 						</div>
 
-						<h2 className="text-xl font-bold text-center mb-6">{examData.title}</h2>
+						<h2 className="text-xl font-bold text-center mb-6">
+							<span className="text-primary">{examData._detail.mode}</span>
+							{examData.title}
+						</h2>
 
 						<div className="space-y-4 mb-6">
 							<div className="bg-gray-50 p-4 rounded-lg">
@@ -89,7 +111,7 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 
 									<div className="flex items-center">
 										<span className="font-medium mr-2">Available:</span>
-										<span>{formatDate(examData.openDate)} - {formatDate(examData.closeDate)}</span>
+										<span>{formatDate(detail.openDate)} - {formatDate(detail.closeDate)}</span>
 									</div>
 
 									<div className="flex items-center">
@@ -99,17 +121,37 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 
 									<div className="flex items-center">
 										<span className="font-medium mr-2">Attempts allowed:</span>
-										<span>{examData.numberOfAttemptsAllowed}</span>
+										<span>{detail.numberOfAttemptsAllowed}</span>
 									</div>
 
 									<div className="flex items-center">
 										<span className="font-medium mr-2">Answers visible:</span>
-										<span>{examData.isAnswerVisible ? 'Yes' : 'No'}</span>
+										<span>{detail.isAnswerVisible ? 'Yes' : 'No'}</span>
+									</div>
+
+									<div className="flex items-center">
+										<span className="font-medium mr-2">See other results:</span>
+										<span>{detail.isAllowedToSeeOtherResults ? "Yes" : "No"}</span>
+									</div>
+
+									<div className="flex items-center">
+										<span className="font-medium mr-2">Max number of participants:</span>
+										<span>{detail.mode}</span>
+									</div>
+
+									<div className="flex items-center">
+										<span className="font-medium mr-2">Current number of participants:</span>
+										<span>{detail.participants.length}</span>
+									</div>
+
+									<div className="flex items-center">
+										<span className="font-medium mr-2">Public:</span>
+										<span>{detail.isPublic ? 'Yes' : 'No'}</span>
 									</div>
 								</div>
 							</div>
 						</div>
-						{(examData.hasJoined === false && examData.hasPassword === true) ? (
+						{(hasJoined === false && detail.hasPassword === true) ? (
 							<PasswordInput
 								password={password}
 								onPasswordChange={setPassword}
@@ -122,10 +164,10 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 					</div>
 				)}
 
-				{examData && <div className='pb-4 px-4'>
-					<ExamInfoBottom
+				{examData && examData._detail.mode === "EXAM" && <div className='pb-4 px-4'>
+					<ExamInfoDialogBottom
 						examData={examData}
-						hasJoined={examData.hasJoined}
+						hasJoined={hasJoined === true}
 						onCancel={onClose}
 						onJoinError={setPasswordError}
 						password={password}
@@ -138,8 +180,9 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 
 export default ExamInfoDialog;
 
-const formatDate = (dateString: string) => {
+const formatDate = (dateString: string | null) => {
 	try {
+		if (!dateString) return "N/A";
 		return format(new Date(dateString), 'MMM dd, yyyy • hh:mm a');
 	} catch (error) {
 		return dateString;

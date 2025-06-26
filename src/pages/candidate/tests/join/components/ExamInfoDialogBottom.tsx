@@ -1,24 +1,23 @@
 import { useEffect } from 'react'
-import { usePostExamsJoinMutation } from '../../../../../infra-test/api/test.api-gen';
-import { ExamCore } from '../../../../../infra-test/core/test.model';
 import { useNavigate } from 'react-router-dom';
 import paths from '../../../../../router/paths';
+import { TestFullSchema, usePostTestsByTestIdParticipantsMutation } from '../../../../../infra-test/api/test.api-gen-v2';
 
-export default function ExamInfoBottom({
+export default function ExamInfoDialogBottom({
 	examData,
 	hasJoined,
 	password,
 	onJoinError,
 	onCancel,
 }: {
-	examData: ExamCore;
+	examData: TestFullSchema;
 	hasJoined: boolean;
 	password: string;
 	onJoinError: (error: string) => void;
 	onCancel: () => void;
 }) {
 	const navigate = useNavigate();
-	const [join, joinState] = usePostExamsJoinMutation();
+	const [join, joinState] = usePostTestsByTestIdParticipantsMutation();
 
 	useEffect(() => {
 		if (joinState.isSuccess) {
@@ -32,23 +31,22 @@ export default function ExamInfoBottom({
 			return;
 		}
 		// If the test requires a password but none was provided
-		if (examData.hasPassword) {
+		if (examData._detail.mode === "EXAM" && examData._detail.hasPassword) {
 			if (!password) {
 				onJoinError('Please enter the password to join this test');
 			} else {
 				join({
+					testId: examData.id,
 					body: {
 						password,
-						testId: examData.id,
 					}
 				});
 			}
 		}
 		else {
 			join({
-				body: {
-					testId: examData.id,
-				}
+				testId: examData.id,
+				body: {}
 			});
 		}
 	};
