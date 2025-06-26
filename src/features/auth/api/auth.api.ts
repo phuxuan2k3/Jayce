@@ -88,7 +88,7 @@ const authApi = createApi({
 				method: "POST",
 				body: { email, resetCode, newPassword },
 			}),
-		})
+		}),
 	}),
 });
 

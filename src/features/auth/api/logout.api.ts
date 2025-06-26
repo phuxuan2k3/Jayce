@@ -33,6 +33,25 @@ const logoutApi = createApi({
 				body,
 			}),
 		}),
+		getBalance: builder.mutation<{ balance: number, is_premium: boolean, premium_expires: string }, void>({
+			query: () => ({
+				url: '/balance',
+				method: 'GET',
+			}),
+		}),
+		setPremium: builder.mutation<{ success: boolean }, { plan: 1 | 2 }>({
+			query: (body) => ({
+				url: '/premium',
+				method: 'POST',
+				body,
+			}),
+		}),
+		getTransactions: builder.mutation<{ history: { id: number, amount: number, note: string, created_at: string }[] }, void>({
+			query: () => ({
+				url: '/transactions',
+				method: 'GET',
+			}),
+		}),
 	}),
 });
 
@@ -43,4 +62,7 @@ export const {
 	useUpdateMetadataMutation,
 	useMeMutation,
 	useChangePasswordMutation,
+	useGetBalanceMutation,
+	useSetPremiumMutation,
+	useGetTransactionsMutation,
 } = logoutApi;

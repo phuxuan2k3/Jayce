@@ -13,7 +13,6 @@ import CandidateScenariosPage from "../pages/candidate/scenarios/index/Candidate
 import CandidateScenarioPage from "../pages/candidate/scenarios/[id]/index/CandidateScenarioPage";
 import CandidateScenarioAnswerPage from "../pages/candidate/scenarios/[id]/answer/CandidateScenarioAnswerPage";
 import CandidateScenarioReviewPage from "../pages/candidate/scenarios/[id]/review/CandidateScenarioReviewPage";
-import ProfilePage from "../pages/common/profile/index/ProfilePage";
 import PricingPage from "../pages/common/profile/pricing/PricingPage";
 import AuthProvideSuggestionPage from "../pages/auth/provide-suggestion/AuthProvideSuggestion";
 import AuthProvidePositionPage from "../pages/auth/provide-position/AuthProvidePositionPage";
@@ -228,15 +227,11 @@ const router = createBrowserRouter(
               children: [
                 {
                   index: true,
-                  element: <ProfilePage />,
+                  element: <Settings />,
                 },
                 {
                   path: paths.candidate.profile.PRICING,
                   element: <PricingPage />,
-                },
-                {
-                  path: paths.candidate.profile.SETTINGS,
-                  element: <Settings />,
                 },
               ],
             },
@@ -347,15 +342,11 @@ const router = createBrowserRouter(
               children: [
                 {
                   index: true,
-                  element: <ProfilePage />,
+                  element: <Settings />,
                 },
                 {
                   path: paths.manager.profile.PRICING,
                   element: <PricingPage />,
-                },
-                {
-                  path: paths.manager.profile.SETTINGS,
-                  element: <Settings />,
                 },
               ],
             },

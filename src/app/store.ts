@@ -13,6 +13,7 @@ import interviewApi from '../features/interviews/api/interview.api.ts';
 import fetchSlice from './fetchSlice.ts';
 import deleteExamSlice from '../infra-test/stores/deleteExamSlice.ts';
 import promptTuningApi from '../features/tests/base/prompt-tuning.api.ts';
+import paymentApi from '../features/payment/api/payment.api.ts';
 import fetchStateSlice from '../infra-test/stores/fetchStateSlice.ts';
 
 
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
 	promptTuningApi: promptTuningApi.reducer,
 	[testApi.reducerPath]: testApi.reducer,
 	[promptApi.reducerPath]: promptApi.reducer,
+	paymentApi: paymentApi.reducer,
 
 	// Custom reducers
 	auth: persistReducer(authPersistConfig, authReducer),
@@ -57,6 +59,7 @@ const store = configureStore({
 				.concat(logoutApi.middleware)
 				.concat(interviewApi.middleware)
 				.concat(promptTuningApi.middleware)
+				.concat(paymentApi.middleware)
 	,
 });
 

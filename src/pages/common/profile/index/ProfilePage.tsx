@@ -2,27 +2,20 @@ import React from "react";
 import UserProfile from "./UserInfo";
 import { useAppSelector } from '../../../../app/hooks';
 import { authSelectors } from '../../../../features/auth/store/authSlice';
-import Interviews from "./Activities/Interviews";
-import Scenarios from "./Activities/Scenarios";
-import Tests from "./Activities/Tests";
 
 const ProfilePage = () => {
-	const [activeTab, setActiveTab] = React.useState<"Interviews" | "Scenarios" | "Tests">("Interviews");
+	const [activeTab, setActiveTab] = React.useState<"Interviews" | "Tests">("Tests");
 	const authData = useAppSelector(authSelectors.selectUserInfo);
 	console.log("Auth data", authData);
 	const [indicatorStyle, setIndicatorStyle] = React.useState({ left: 0, width: 0 });
 
 	const interviewsRef = React.useRef(null);
-	const scenariosRef = React.useRef(null);
+	// const scenariosRef = React.useRef(null);
 	const testsRef = React.useRef(null);
 
-	const toggleActiveTab = (tab: "Interviews" | "Scenarios" | "Tests") => {
+	const toggleActiveTab = (tab: "Interviews" | "Tests") => {
 		setActiveTab(tab);
 	};
-
-	// const uploadResume = (resume: File | null) => {
-	// 	console.log("Upload resume", resume);
-	// };
 
 	if (!authData) {
 		return <div>Loading...</div>;
@@ -31,7 +24,7 @@ const ProfilePage = () => {
 	React.useEffect(() => {
 		const tabMap = {
 			Interviews: interviewsRef,
-			Scenarios: scenariosRef,
+			// Scenarios: scenariosRef,
 			Tests: testsRef,
 		};
 
@@ -43,29 +36,11 @@ const ProfilePage = () => {
 	}, [activeTab]);
 
 	return (
-		<div className="flex p-4 min-h-screen">
-			<UserProfile userInfo={authData}/>
-			
-			<div className="w-3/4 p-4 pl-10">
+		<div className="flex flex-col md:flex-row p-4 min-h-screen gap-4">
+			<UserProfile userInfo={authData} />
+
+			<div className="w-full md:w-3/4 p-4 md:pl-10">
 				<div className="relative flex border-b-gradient text-lg mb-4 z-0">
-					<button
-						ref={interviewsRef}
-						className={`relative px-4 pb-2 transition-all duration-300 ${activeTab === "Interviews" ? "text-teal-600" : "text-gray-500"
-							}`}
-						onClick={() => toggleActiveTab("Interviews")}
-					>
-						Interviews
-					</button>
-
-					<button
-						ref={scenariosRef}
-						className={`relative px-4 pb-2 transition-all duration-300 ${activeTab === "Scenarios" ? "text-teal-600" : "text-gray-500"
-							}`}
-						onClick={() => toggleActiveTab("Scenarios")}
-					>
-						Scenarios
-					</button>
-
 					<button
 						ref={testsRef}
 						className={`relative px-4 pb-2 transition-all duration-300 ${activeTab === "Tests" ? "text-teal-600" : "text-gray-500"
@@ -75,6 +50,24 @@ const ProfilePage = () => {
 						Tests
 					</button>
 
+					<button
+						ref={interviewsRef}
+						className={`relative px-4 pb-2 transition-all duration-300 ${activeTab === "Interviews" ? "text-teal-600" : "text-gray-500"
+							}`}
+						onClick={() => toggleActiveTab("Interviews")}
+					>
+						Interviews
+					</button>
+
+					{/* <button
+						ref={scenariosRef}
+						className={`relative px-4 pb-2 transition-all duration-300 ${activeTab === "Scenarios" ? "text-teal-600" : "text-gray-500"
+							}`}
+						onClick={() => toggleActiveTab("Scenarios")}
+					>
+						Scenarios
+					</button> */}
+
 					<div
 						className="absolute bottom-0 h-1 bg-teal-500 transition-all duration-300"
 						style={{
@@ -83,12 +76,6 @@ const ProfilePage = () => {
 						}}
 					/>
 				</div>
-
-				{activeTab === "Interviews" && <Interviews />}
-
-				{activeTab === "Scenarios" && <Scenarios />}
-
-				{activeTab === "Tests" && <Tests />}
 			</div>
 		</div>
 	);

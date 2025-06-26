@@ -28,6 +28,9 @@ const ekkoUrl = import.meta.env.VITE_EKKO_URL as string;
 // Irelia
 const ireliaUrl = import.meta.env.VITE_IRELIA_URL as string;
 
+// Graves
+const gravesUrl = import.meta.env.VITE_GRAVES_URL as string;
+
 const url = {
 	thresh: {
 		base: threshUrl ?? backendUrl + "/thresh",
@@ -39,6 +42,7 @@ const url = {
 	darius: dariusUrl ?? backendUrl + "/darius",
 	chronobreak: chronobreakUrl ?? backendUrl + "/chronobreak",
 	irelia: ireliaUrl ?? backendUrl + "/irelia",
+	graves: gravesUrl ?? backendUrl + "/graves",
 };
 
 const mock = {

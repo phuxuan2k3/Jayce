@@ -110,7 +110,7 @@ const SaveTemplateDialog: React.FC<SaveTemplateDialogProps> = ({
 	};
 
 	return (
-		<div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+		<div className="fixed inset-0 bg-black bg-opacity-50 z-[100] flex items-center justify-center p-4">
 			<div className="bg-white rounded-lg shadow-lg w-full max-w-3xl max-h-[90vh] flex flex-col">
 				<div className="flex justify-between items-center p-4 border-b">
 					<h2 className="text-xl font-bold text-primary">Save as Template</h2>
