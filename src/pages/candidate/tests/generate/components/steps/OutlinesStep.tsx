@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLazyGetSuggestOutlinesQuery } from '../../../../../../features/tests/api/prompt.api-custom';
+import { useLazyGetSuggestOutlinesQuery } from '../../../../../../infra-test/api/prompt.api-custom';
 import { PracticeGenerationActionTypes, PracticeGenerationReducer } from '../../reducers/reducer-types';
 
 const OutlinesStep: React.FC<{

@@ -1,106 +1,133 @@
-import { useCallback, useReducer, useState } from "react";
-import { CreateTab } from "./common/create-tabs-types";
-import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
-import ExamConfigForm from "../../../../infra-test/ui/forms/ExamConfigForm";
-import { examPersistReducer } from "../../../../infra-test/reducers/exam-persist.reducer";
+import { useCallback, useEffect, useState } from "react";
+import { CreateTab } from "./common/types";
+import LeftLayoutTemplateDefault from "../../../../components/layouts/LeftLayoutTemplateDefault";
+import ConfigTab from "../../../../infra-test/ui-shared/config-tab";
 import Sidebar from "./components/Sidebar";
-import ExamQuestionsManage from "../../../../infra-test/ui/forms/ExamQuestionsManage";
-import PublishTab from "./components/publish-tab";
-import BuilderWizzardTab from "./components/builder-wizzard-tab";
-import { QuestionPersistOfTest } from "../../../../infra-test/commands/question.persist";
-import usePostExam from "./hooks/usePostExam";
-import LoadingDialog from "./components/LoadingDialog";
-import ValidationErrorDialog from "../../../../infra-test/ui/dialogs/ExamValidationDialog";
-import ErrorDialog from "./components/ErrorDialog";
+import QuestionsTab from "../../../../infra-test/ui-shared/questions-tab";
+import PublishTab from "./publish-tab";
+import BuilderWizzardTab from "./builder-wizzard-tab";
+import ExamPersistValidationErrorsDialog from "../../../../infra-test/ui-shared/ExamPersistValidationErrorsDialog";
 import { useNavigate } from "react-router-dom";
+import { ExamPersistCoreSchema } from "../../../../infra-test/ui-items/test/types";
+import { QuestionPersistCoreSchema } from "../../../../infra-test/ui-items/question/types";
+import { usePostTestsMutation } from "../../../../infra-test/api/test.api-gen-v2";
 import paths from "../../../../router/paths";
-import { examGenerationReducer, initialState as initialStateGen } from "./models/exam-generation.reducer";
-import useExamQuestionsGeneration from "./hooks/useExamQuestionsGeneration";
-import { parseQueryError } from "../../../../helpers/fetchBaseQuery.error";
-import { initialState } from "../../../../infra-test/reducers/exam-persist.store";
+import useZodParseLazy from "../../../../infra-test/hooks/useZodParseLazy";
+import { ExamPersistValidationSchema } from "../../../../infra-test/ui-items/test/persist-schema";
+import LoadingDialog from "../../../../infra-test/ui/fetch-states/LoadingDialog";
+import ErrorDialog from "../../../../infra-test/ui/fetch-states/ErrorDialog";
 
 export default function ManagerTestNewPage() {
 	const navigate = useNavigate();
 	const [tab, setTab] = useState<CreateTab>("info");
-
-	const [state, dispatch] = useReducer(examPersistReducer, initialState);
 	const [isPostingExam, setIsPostingExam] = useState(false);
 
-	const [stateGen, dispatchGen] = useReducer(examGenerationReducer, initialStateGen);
-	const examGeneration = useExamQuestionsGeneration();
-
-	const {
-		handlePostExam,
-		postExamState,
-		validationError,
-		hasValidationError,
-	} = usePostExam({
-		state,
-		onPostingStarted: () => {
-			setIsPostingExam(true);
+	const [examPersist, setExamPersist] = useState<ExamPersistCoreSchema>({
+		title: "",
+		description: "",
+		language: "English",
+		minutesToAnswer: 60,
+		mode: "EXAM",
+		detail: {
+			roomId: "",
+			openDate: null,
+			closeDate: null,
+			isAllowedToSeeOtherResults: false,
+			isAnswerVisible: false,
+			mode: "EXAM",
+			isPublic: false,
+			numberOfAttemptsAllowed: 1,
+			numberOfParticipants: undefined,
+			password: undefined,
 		},
-		onSuccess: (testId) => {
-			navigate(paths.manager.tests.in(testId).ROOT);
-		},
+		questions: [],
 	});
 
-	const handleBulkAddQuestions = useCallback((questions: QuestionPersistOfTest[]) => {
-		dispatch({
-			type: "BULK_ADD_QUESTIONS",
-			payload: { questions },
-		});
-		setTab("questions");
+	const [createTest, createTestState] = usePostTestsMutation();
+	useEffect(() => {
+		if (createTestState.isSuccess) {
+			setIsPostingExam(false);
+			const { testId } = createTestState.data;
+			navigate(paths.manager.tests.in(testId).ROOT);
+		}
+	}, [createTestState.isSuccess, createTestState.data, navigate]);
+
+	const { errors, handleParse, clearErrors } = useZodParseLazy(ExamPersistValidationSchema);
+	useEffect(() => {
+		if (tab === "publish") {
+			handleParse(examPersist);
+		}
+	}, [tab, examPersist, handleParse]);
+
+	const handleBulkAddQuestions = useCallback((questions: QuestionPersistCoreSchema[]) => {
+		setExamPersist((prev) => ({
+			...prev,
+			questions: [...prev.questions, ...(questions as ExamPersistCoreSchema["questions"])],
+		}));
 	}, []);
 
-	const handleReplaceQuestions = useCallback((questions: QuestionPersistOfTest[]) => {
-		dispatch({
-			type: "REPLACE_QUESTIONS",
-			payload: { questions },
+	const handleReplaceQuestions = useCallback((questions: QuestionPersistCoreSchema[]) => {
+		setExamPersist((prev) => ({
+			...prev,
+			questions: questions as ExamPersistCoreSchema["questions"],
+		}));
+	}, []);
+
+	const handleRemoveQuestion = useCallback((index: number) => {
+		setExamPersist((prev) => ({
+			...prev,
+			questions: prev.questions.filter((_, i) => i !== index),
+		}));
+	}, []);
+
+	const handleAddQuestion = useCallback((question: QuestionPersistCoreSchema) => {
+		setExamPersist((prev) => ({
+			...prev,
+			questions: [...prev.questions, question as ExamPersistCoreSchema["questions"][number]],
+		}));
+	}, []);
+
+	const handleUpdateQuestion = useCallback((index: number, question: Partial<QuestionPersistCoreSchema>) => {
+		setExamPersist((prev) => {
+			const updatedQuestions = [...prev.questions];
+			updatedQuestions[index] = { ...updatedQuestions[index], ...question } as ExamPersistCoreSchema["questions"][number];
+			return {
+				...prev,
+				questions: updatedQuestions,
+			};
 		});
-		setTab("questions");
 	}, []);
 
 	const getTab = (tab: CreateTab) => {
 		switch (tab) {
 			case "info":
-				return <ExamConfigForm
-					configEdit={state.config}
-					onConfigEditChange={(config) => {
-						dispatch({ type: "UPDATE_CONFIG", payload: config });
-					}}
+				return <ConfigTab
+					examPersist={examPersist}
+					onExamPersistChange={(patch) => setExamPersist((prev) => ({ ...prev, ...patch }))}
 				/>;
 			case "questions":
-				return <ExamQuestionsManage
-					questions={state.questions.questions}
-					onQuestionDelete={(index) => dispatch({
-						type: "REMOVE_QUESTION",
-						payload: { index },
-					})}
-					onQuuestionAdd={(question) => dispatch({
-						type: "ADD_QUESTION",
-						payload: { question },
-					})}
-					onQuestionUpdate={(index, question) => dispatch({
-						type: "UPDATE_QUESTION",
-						payload: { index, question },
-					})}
+				return <QuestionsTab
+					questions={examPersist.questions}
+					onQuestionDelete={(index) => handleRemoveQuestion(index)}
+					onQuuestionAdd={(question) => handleAddQuestion(question)}
+					onQuestionUpdate={(index, question) => handleUpdateQuestion(index, question)}
 				/>;
 			case "generate":
 				return <BuilderWizzardTab
 					onBulkAddQuestions={handleBulkAddQuestions}
 					onReplaceQuestions={handleReplaceQuestions}
-					examInitialConfig={state.config}
+					initialExam={examPersist}
 					onGenerationDisposal={() => {
 						setTab("questions");
 					}}
-					dispatch={dispatchGen}
-					state={stateGen}
-					examGeneration={examGeneration}
 				/>;
 			case "publish":
 				return <PublishTab
-					examPersistState={state}
-					onPublish={() => handlePostExam()}
+					examPersist={examPersist}
+					onPublish={() => {
+						setIsPostingExam(true);
+						createTest({ body: examPersist });
+					}}
 				/>
 			default:
 				return null;
@@ -108,7 +135,7 @@ export default function ManagerTestNewPage() {
 	}
 
 	return (
-		<LeftLayoutTemplate
+		<LeftLayoutTemplateDefault
 			header={{
 				title: "Create your test",
 				description: "Configure your test settings and questions.",
@@ -124,19 +151,21 @@ export default function ManagerTestNewPage() {
 		>
 			{getTab(tab)}
 
-			{tab === "publish" && hasValidationError === true && (
-				<ValidationErrorDialog
-					questionsErrors={validationError.questionsErrors}
-					configErrors={validationError.configErrors}
+			{tab === "publish" && errors != undefined && (
+				<ExamPersistValidationErrorsDialog
+					errors={errors}
 					onClose={() => {
+						clearErrors();
 						setIsPostingExam(false);
 						setTab("info");
 					}}
 					onConfigEdit={() => {
+						clearErrors();
 						setTab("info");
 						setIsPostingExam(false);
 					}}
 					onQuestionsEdit={() => {
+						clearErrors();
 						setTab("questions");
 						setIsPostingExam(false);
 					}}
@@ -145,24 +174,11 @@ export default function ManagerTestNewPage() {
 
 			{(isPostingExam) && (
 				<>
-					{postExamState.isLoading && (
-						<LoadingDialog />
-					)}
-					{postExamState.error && (
-						<ErrorDialog
-							errorMessage={parseQueryError(postExamState.error) || undefined}
-							onClose={() => setIsPostingExam(false)}
-							onRetry={() => {
-								setIsPostingExam(true);
-								handlePostExam();
-							}}
-						/>
-					)}
+					{createTestState.isLoading && <LoadingDialog />}
+					{createTestState.error && <ErrorDialog error={createTestState.error} />}
 				</>
 			)}
-
-
-		</LeftLayoutTemplate>
+		</LeftLayoutTemplateDefault>
 	);
 }
 

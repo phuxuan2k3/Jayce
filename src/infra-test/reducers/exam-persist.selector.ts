@@ -1,7 +1,7 @@
 import { QuestionPersistOfTest } from "../commands/question.persist";
 import { ExamConfigPersist } from "../commands/exam.persist";
 import { ExamPersistState } from "./exam-persist.store";
-import { PostExamsApiArg, PutExamsByTestIdApiArg } from "../../features/tests/api/test.api-gen";
+import { PostExamsApiArg, PutExamsByTestIdApiArg } from "../api/test.api-gen";
 
 const questionEditConstraint = (value: QuestionPersistOfTest): string[] => {
 	const errors: string[] = [];

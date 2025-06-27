@@ -1,4 +1,4 @@
-import { testApiGen } from "../../features/tests/api/test.api-gen";
+import { testApiGen } from "../api/test.api-gen";
 
 const examManageApi = testApiGen.enhanceEndpoints({
 	addTagTypes: ["Exam"],

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
-import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
+import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
 import TestGenerationSidebar from "./components/ui/TestGenerationSidebar";
 import TemplateSelectionModal from "./components/ui/TemplateSelectionModal";
 import SaveTemplateDialog from "./components/ui/SaveTemplateDialog";
@@ -120,9 +120,9 @@ const CandidateTestsGeneratePage: React.FC = () => {
 
 	return (
 		<>
-			<NewLeftLayoutTemplate
+			<LeftLayoutTemplate
 				header={
-					<NewLeftLayoutTemplate.Header
+					<LeftLayoutTemplate.Header
 						title="Generate Practice Test"
 						description="Create a customized test using AI."
 					/>
@@ -159,7 +159,7 @@ const CandidateTestsGeneratePage: React.FC = () => {
 						)}
 					</div>
 				</div>
-			</NewLeftLayoutTemplate>
+			</LeftLayoutTemplate>
 
 			{/* Template Selection Modal */}
 			<TemplateSelectionModal

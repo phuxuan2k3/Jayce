@@ -1,10 +1,11 @@
-import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
+import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../router/paths";
 import SidebarActions from "../../../../infra-test/ui/sidebar/primitive/SidebarActions";
 import UserGeneratedTestsSection from "./components/UserGeneratedTestsSection";
 import useQueryPracticeTestsServer from "./hooks/useQueryPracticeTestsServer";
 import { parseQueryError } from "../../../../helpers/fetchBaseQuery.error";
+import { useGetTestsQuery } from "../../../../infra-test/api/test.api-gen-v2";
 
 export default function CandidateTestsPage() {
 	const navigate = useNavigate();
@@ -17,14 +18,19 @@ export default function CandidateTestsPage() {
 		setFilters,
 	} = useQueryPracticeTestsServer();
 
+
+	const { } = useGetTestsQuery({
+
+	});
+
 	const handleManageTest = (testId: string) => {
 		navigate(paths.candidate.tests.in(testId).PRACTICE);
 	};
 
 	return (
-		<NewLeftLayoutTemplate
+		<LeftLayoutTemplate
 			header={
-				<NewLeftLayoutTemplate.Header
+				<LeftLayoutTemplate.Header
 					title="Skillsharp Tests"
 					description="Join hosted tests or generate your own practice tests from templates"
 				/>
@@ -58,6 +64,6 @@ export default function CandidateTestsPage() {
 					onPageChange={page => setFilters({ ...filters, page })}
 				/>
 			</div>
-		</NewLeftLayoutTemplate>
+		</LeftLayoutTemplate>
 	);
 };

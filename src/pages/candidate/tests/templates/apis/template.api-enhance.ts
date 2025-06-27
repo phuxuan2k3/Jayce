@@ -1,4 +1,4 @@
-import { testApiGen } from "../../../../../features/tests/api/test.api-gen";
+import { testApiGen } from "../../../../../infra-test/api/test.api-gen";
 
 const templateApiEnhance = testApiGen.enhanceEndpoints({
 	addTagTypes: ['Templates'],

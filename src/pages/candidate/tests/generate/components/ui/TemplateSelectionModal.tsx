@@ -4,8 +4,8 @@ import { XCircle, Settings, Search } from 'lucide-react';
 import paths from '../../../../../../router/paths';
 import { useNavigate } from 'react-router-dom';
 import MyPagination from '../../../../../../components/ui/common/MyPagination';
-import TemplateCard from '../../../templates/components/TemplateCard';
-import { useGetTemplatesQuery } from '../../../../../../features/tests/api/test.api-gen';
+import { useGetTemplatesQuery } from '../../../../../../infra-test/api/test.api-gen-v2';
+import TemplateCard from '../../../../../../infra-test/ui-items/template/TemplateCard';
 
 type Filter = {
 	searchName: string;
@@ -117,8 +117,8 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 								{pagedTemplates.data.map((template) => (
 									<TemplateCard
 										key={template.id}
-										data={template}
-										onSelectTemplate={(template) => {
+										template={template}
+										onClick={() => {
 											onSelectTemplate(template);
 											onClose();
 										}}

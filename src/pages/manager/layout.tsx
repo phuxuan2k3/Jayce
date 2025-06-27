@@ -3,7 +3,7 @@ import RoleGuard from "../../components/wrapper/RoleGuard";
 import FooterShort from "../../components/ui/footer/FooterShort";
 import ManagerNavbar from "../../components/ui/navbar/ManagerNavbar";
 import { Role } from "../../features/auth/types/auth";
-import DeleteExamDialog from "../../infra-test/ui/dialogs/DeleteExamDialog";
+import DeleteExamDialog from "./tests/[id]/components/DeleteTestModal";
 import FetchStateDialog from "../../infra-test/ui/dialogs/FetchStateDialog";
 
 export default function ManagerLayout() {

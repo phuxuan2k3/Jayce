@@ -25,15 +25,13 @@ const paths = {
 					TAKE_PRACTICE: `/candidate/tests/${id}/take-practice/`,
 					EXAM: `/candidate/tests/${id}/exam/`,
 					TAKE_EXAM: `/candidate/tests/${id}/exam/take-exam/`,
+					attempts: {
+						in: (id: number | string = ":attemptId") => ({
+							ROOT: `/candidate/tests/${id}/attempts/${id}/`,
+							DO: `/candidate/tests/${id}/attempts/${id}/do/`,
+						}),
+					}
 				};
-			},
-			attempts: {
-				// TODO: add this page: '/candidate/attempts',
-				in(id: number | string = ":attemptId") {
-					return {
-						ROOT: `/candidate/tests/attempts/${id}/`,
-					};
-				},
 			},
 			TEMPLATES: `/candidate/tests/templates/`,
 			GENERATE: `/candidate/tests/generate/`,
@@ -68,14 +66,14 @@ const paths = {
 				return {
 					ROOT: `/manager/tests/${id}/`,
 					EDIT: `/manager/tests/${id}/edit/`,
+					attempts: {
+						in(id: number | string = ":attemptId") {
+							return {
+								ROOT: `/manager/tests/attempts/${id}/`,
+							};
+						},
+					},
 				};
-			},
-			attempts: {
-				in(id: number | string = ":attemptId") {
-					return {
-						ROOT: `/manager/tests/attempts/${id}/`,
-					};
-				},
 			},
 			NEW: `/manager/tests/new/`,
 		},

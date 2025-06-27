@@ -32,6 +32,7 @@
     "clsx": "^2.1.1",
     "daisyui": "^5.0.6",
     "date-fns": "^4.1.0",
+    "framer-motion": "^12.19.1",
     "google-protobuf": "^3.21.4",
     "json-server": "^0.17.4",
     "lucide-react": "^0.474.0",
@@ -43,12 +44,14 @@
     "react-router-dom": "^6.28.0",
     "react-speech-recognition": "^3.10.0",
     "react-textarea-autosize": "^8.5.9",
+    "react-toastify": "^11.0.5",
     "redux-persist": "^6.0.0",
     "regenerator-runtime": "^0.14.1",
     "tailwind-merge": "^3.2.0",
     "tar": "^7.4.3",
     "three-stdlib": "^2.35.15",
-    "zod": "^3.24.1"
+    "use-debounce": "^10.0.5",
+    "zod": "^3.25.67"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
@@ -73,6 +76,7 @@
     "tailwindcss": "^3.4.17",
     "ts-node": "^10.9.2",
     "ts-to-zod": "^3.15.0",
+    "tsx": "^4.20.3",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.11.0",
     "vite": "^6.3.5"
