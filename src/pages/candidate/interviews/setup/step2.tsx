@@ -28,8 +28,8 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
               onChange={(e) => setLanguage(e.target.value)}
               className="py-2 pe-12 ps-2  shadow rounded-md focus:outline-none focus:ring focus:ring-teal-300"
             >
-              <option value="en">English</option>
-              <option value="vi">VietNamese</option>
+              <option value="English">English</option>
+              <option value="Vietnamese">VietNamese</option>
             </select>
             <div className="mt-4 mb-2">Models (English)</div>
             <div className="grid grid-cols-2  gap-4">
