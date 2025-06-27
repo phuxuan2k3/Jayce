@@ -6,20 +6,28 @@ import useGetTestIdParams from "../../../../../infra-test/hooks/useGetTestIdPara
 import { TestFullSchema, useGetTestsByTestIdQuery } from "../../../../../infra-test/api/test.api-gen-v2";
 import FetchStateCover2 from "../../../../../infra-test/ui/fetch-states/FetchStateCover2";
 import TestFullCard from "../../../../../infra-test/ui-items/test/TestFullCard";
-import AttemptsTabContent from "../../../../../infra-test/ui-shared/test-details/AttemptsTabContent";
+import AttemptsTab from "../../../../../infra-test/ui-shared/attempts-tab";
 import QuestionsTabContent from "./components/QuestionsTabContent";
 import CurrentAttemptCard from "../../../../../infra-test/ui-shared/test-details/CurrentAttemptCard";
 import { useCallback } from "react";
+import useGetUserId from "../../../../../infra-test/hooks/useGetUserId";
+import { useNavigate } from "react-router-dom";
+import paths from "../../../../../router/paths";
 
 export default function CandidatePracticePage() {
+	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
 	const testQuery = useGetTestsByTestIdQuery({ testId });
+	const userId = useGetUserId();
 
 	const tabs = useCallback((test: TestFullSchema) => [
 		{
 			id: "attempts",
 			label: "Attempts",
-			content: <AttemptsTabContent />
+			content: <AttemptsTab
+				onAttemptClick={(attempt) => navigate(paths.candidate.tests.in(testId).attempts.in(attempt.id).ROOT)}
+				candidateId={userId}
+			/>
 		},
 		{
 			id: "questions",

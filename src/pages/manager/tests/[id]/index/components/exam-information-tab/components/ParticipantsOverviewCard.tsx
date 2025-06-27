@@ -1,15 +1,16 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartBar, faUsers, faRepeat } from '@fortawesome/free-solid-svg-icons';
-import { AttemptsOfTestAggregate } from '../../../../../../../../infra-test/core/attempt.model';
-import Card from './Card';
+import MyCard from '../../../../../../../../infra-test/ui/MyCard';
 
-interface ParticipantsStatisticCardProps {
-	attemptOfTestAggregate: AttemptsOfTestAggregate;
-}
-
-export const ParticipantsStatisticCard = ({ attemptOfTestAggregate }: ParticipantsStatisticCardProps) => {
+export const ParticipantsOverviewCard = ({
+	totalParticipants,
+	totalAttempts,
+}: {
+	totalParticipants: number;
+	totalAttempts: number;
+}) => {
 	return (
-		<Card
+		<MyCard
 			header='Participant Statistics'
 			icon={<FontAwesomeIcon icon={faChartBar} className="text-primary mr-3" />}
 			body={
@@ -18,7 +19,7 @@ export const ParticipantsStatisticCard = ({ attemptOfTestAggregate }: Participan
 						<FontAwesomeIcon icon={faUsers} className="text-primary-toned-500 w-4 mr-4" />
 						<div>
 							<p className="text-sm text-gray-500">Total Participants:</p>
-							<p className="font-semibold">{attemptOfTestAggregate.totalParticipants}</p>
+							<p className="font-semibold">{totalParticipants}</p>
 						</div>
 					</div>
 
@@ -26,7 +27,7 @@ export const ParticipantsStatisticCard = ({ attemptOfTestAggregate }: Participan
 						<FontAwesomeIcon icon={faRepeat} className="text-primary-toned-500 w-4 mr-4" />
 						<div>
 							<p className="text-sm text-gray-500">Total Attempts:</p>
-							<p className="font-semibold">{attemptOfTestAggregate.totalAttempts}</p>
+							<p className="font-semibold">{totalAttempts}</p>
 						</div>
 					</div>
 				</div>

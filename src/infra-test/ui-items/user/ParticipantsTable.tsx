@@ -1,7 +1,7 @@
-import { UserInfo } from '../../../../../../features/auth/store/authSlice';
-import { CandidateCoreSchema } from '../../../../../../infra-test/api/test.api-gen-v2';
-import useMapUsers from '../../../../../../infra-test/hooks/useMapUsers';
-import { getUserCore } from '../../../../../../infra-test/core/user.model';
+import { UserInfo } from '../../../features/auth/store/authSlice';
+import { CandidateCoreSchema } from '../../api/test.api-gen-v2';
+import useMapUsers from '../../hooks/useMapUsers';
+import { getUserCore } from '../../core/user.model';
 
 export default function ParticipantsTable({
 	participants,

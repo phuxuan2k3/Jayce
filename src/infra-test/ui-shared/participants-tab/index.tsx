@@ -1,11 +1,11 @@
 import { useState } from "react";
 import ParticipantsList from "./ParticipantsList";
-import useGetTestIdParams from "../../../../../../infra-test/hooks/useGetTestIdParams";
-import { useGetTestsByTestIdParticipantsQuery } from "../../../../../../infra-test/api/test.api-gen-v2";
-import FetchStateCover2 from "../../../../../../infra-test/ui/fetch-states/FetchStateCover2";
-import { PagingFilter } from "../../../../../../infra-test/types/query";
-import { QuerySortValues } from "../../../../../../infra-test/types/query";
-import MyPaginationSection from "../../../../../../infra-test/ui/MyPaginationSection";
+import useGetTestIdParams from "../../hooks/useGetTestIdParams";
+import { useGetTestsByTestIdParticipantsQuery } from "../../api/test.api-gen-v2";
+import FetchStateCover2 from "../../ui/fetch-states/FetchStateCover2";
+import { PagingFilter } from "../../types/query";
+import { QuerySortValues } from "../../types/query";
+import MyPaginationSection from "../../ui/MyPaginationSection";
 import { ParticipantUser } from "./type";
 import ParticipantsResult from "./ParticipantsResult";
 
@@ -13,7 +13,7 @@ type Filter = PagingFilter & {
 	sortByRank: QuerySortValues;
 }
 
-export default function ParticipantsTabContent() {
+export default function ParticipantsTab() {
 	const testId = useGetTestIdParams();
 
 	const [selectedParticipant, setSelectedPaticipant] = useState<ParticipantUser | null>(null);

@@ -1,4 +1,4 @@
-import { CandidateCoreSchema } from '../../../../../../infra-test/api/test.api-gen-v2';
+import { CandidateCoreSchema } from '../../api/test.api-gen-v2';
 
 export default function ParticipantStatisticCard({
 	participant,

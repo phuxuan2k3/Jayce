@@ -1,14 +1,14 @@
 import ParticipantStatisticCard from './ParticipantStatistic'
-import UserCoreCard from '../../../../../../infra-test/ui-items/user/UserCoreCard'
+import UserCoreCard from '../../ui-items/user/UserCoreCard'
 import { ArrowLeft } from 'lucide-react'
 import { useState } from 'react'
-import { PagingFilter } from "../../../../../../infra-test/types/query"
+import { PagingFilter } from "../../types/query"
 import { ParticipantUser } from './type'
-import AttemptsTable from '../../../../../../infra-test/ui-items/attempt/AttemptsTable'
-import { useGetAttemptsQuery } from '../../../../../../infra-test/api/test.api-gen-v2'
-import useGetTestIdParams from '../../../../../../infra-test/hooks/useGetTestIdParams'
-import FetchStateCover2 from '../../../../../../infra-test/ui/fetch-states/FetchStateCover2'
-import MyPaginationSection from '../../../../../../infra-test/ui/MyPaginationSection'
+import AttemptsTable from '../../ui-items/attempt/AttemptsTable'
+import { useGetAttemptsQuery } from '../../api/test.api-gen-v2'
+import useGetTestIdParams from '../../hooks/useGetTestIdParams'
+import FetchStateCover2 from '../../ui/fetch-states/FetchStateCover2'
+import MyPaginationSection from '../../ui/MyPaginationSection'
 
 export default function ParticipantsResult({
 	participantUser: { user, participant },

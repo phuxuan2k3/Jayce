@@ -1,12 +1,10 @@
 import React from 'react';
 import { format, formatDistanceToNow } from 'date-fns';
-import { useNavigate } from 'react-router-dom';
 import { AttemptCoreSchema } from '../../api/test.api-gen-v2';
-import paths from '../../../router/paths';
 
 interface Props {
 	attempts: AttemptCoreSchema[];
-	onItemClick?: (attemptId: string) => void;
+	onItemClick?: (attempt: AttemptCoreSchema) => void;
 	baseIndex?: number;
 }
 
@@ -15,10 +13,6 @@ const AttemptsTable: React.FC<Props> = ({
 	attempts,
 	onItemClick,
 }) => {
-	const navigate = useNavigate();
-	const handleAttemptClick = (attemptId: string) => {
-		return onItemClick ? onItemClick(attemptId) : navigate(paths.candidate.tests.attempts.in(attemptId).ROOT);
-	}
 
 	if (attempts.length === 0) {
 		return (
@@ -43,7 +37,7 @@ const AttemptsTable: React.FC<Props> = ({
 					<tr
 						key={attempt.id}
 						className="hover:bg-gray-50 cursor-pointer"
-						onClick={() => handleAttemptClick(attempt.id)}
+						onClick={() => onItemClick?.(attempt)}
 					>
 						<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
 							{baseIndex ? baseIndex + idx + 1 : idx + 1}

@@ -1,9 +1,9 @@
 import LeftLayoutTemplate from "../../../../../components/layouts/LeftLayoutTemplate";
 import TabsComponent from "../../../../../infra-test/ui/TabsComponent";
-import ParticipantsTabContent from "./components/ParticipantsTabContent";
+import ParticipantsTab from "../../../../../infra-test/ui-shared/participants-tab";
 import useGetTestIdParams from "../../../../../infra-test/hooks/useGetTestIdParams";
 import DefaultSidebarActions from "../../../../../infra-test/ui/sidebar/candidate/DefaultSidebar";
-import AttemptsTabContent from "../../../../../infra-test/ui-shared/test-details/AttemptsTabContent";
+import AttemptsTab from "../../../../../infra-test/ui-shared/attempts-tab";
 import { TestFullSchema, useGetTestsByTestIdQuery } from "../../../../../infra-test/api/test.api-gen-v2";
 import FetchStateCover2 from "../../../../../infra-test/ui/fetch-states/FetchStateCover2";
 import TestFullCard from "../../../../../infra-test/ui-items/test/TestFullCard";
@@ -11,8 +11,11 @@ import UserCard from "../../../../../infra-test/ui-shared/UserCard";
 import CurrentAttemptCard from "../../../../../infra-test/ui-shared/test-details/CurrentAttemptCard";
 import { useCallback } from "react";
 import useGetUserId from "../../../../../infra-test/hooks/useGetUserId";
+import { useNavigate } from "react-router-dom";
+import paths from "../../../../../router/paths";
 
 export default function CandidateTestExamPage() {
+	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
 	const userId = useGetUserId();
 
@@ -24,7 +27,10 @@ export default function CandidateTestExamPage() {
 			{
 				id: "attempts",
 				label: "Your Attempts",
-				content: <AttemptsTabContent userId={userId} />
+				content: <AttemptsTab
+					onAttemptClick={(attempt) => navigate(paths.candidate.tests.in(testId).attempts.in(attempt.id).ROOT)}
+					candidateId={userId}
+				/>
 			},
 
 		];
@@ -33,7 +39,7 @@ export default function CandidateTestExamPage() {
 			tabs.push({
 				id: "participants",
 				label: "Participants",
-				content: <ParticipantsTabContent />,
+				content: <ParticipantsTab />,
 			});
 		}
 		return tabs;
