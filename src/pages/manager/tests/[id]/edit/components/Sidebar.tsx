@@ -1,4 +1,4 @@
-import ManagerSidebar from '../../../../../../infra-test/ui/sidebar/manager/ManagerSidebar'
+import ManagerSidebar from '../../../../../../infra-test/ui-shared/sidebar/ManagerSidebar'
 import QuickAction from '../../../../../../infra-test/ui/sidebar/primitive/QuickAction';
 import { ArrowDownToLine, Trash2 } from 'lucide-react';
 import { EditTabs } from '../page';

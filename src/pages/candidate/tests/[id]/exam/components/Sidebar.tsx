@@ -1,6 +1,6 @@
-import SidebarActions from "../primitive/SidebarActions";
+import SidebarActions from "../../../../../../infra-test/ui/sidebar/primitive/SidebarActions";
 
-export default function DefaultSidebarActions() {
+export default function Sidebar() {
 	return (
 		<SidebarActions>
 			<SidebarActions.BrowseTemplates />

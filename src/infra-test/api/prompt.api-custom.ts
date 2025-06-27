@@ -1,4 +1,4 @@
-import promptApi from "../base/prompt.api";
+import promptApi from "./prompt.api";
 
 const promptApiCustom = promptApi.injectEndpoints({
 	endpoints: (builder) => ({

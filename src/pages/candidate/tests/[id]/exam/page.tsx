@@ -2,7 +2,7 @@ import LeftLayoutTemplate from "../../../../../components/layouts/LeftLayoutTemp
 import TabsComponent from "../../../../../infra-test/ui/TabsComponent";
 import ParticipantsTab from "../../../../../infra-test/ui-shared/participants-tab";
 import useGetTestIdParams from "../../../../../infra-test/hooks/useGetTestIdParams";
-import DefaultSidebarActions from "../../../../../infra-test/ui/sidebar/candidate/DefaultSidebar";
+import Sidebar from "./components/Sidebar";
 import AttemptsTab from "../../../../../infra-test/ui-shared/attempts-tab";
 import { TestFullSchema, useGetTestsByTestIdQuery } from "../../../../../infra-test/api/test.api-gen-v2";
 import FetchStateCover2 from "../../../../../infra-test/ui/fetch-states/FetchStateCover2";
@@ -56,7 +56,7 @@ export default function CandidateTestExamPage() {
 							description={test.description}
 						/>
 					}
-					left={<DefaultSidebarActions />}
+					left={<Sidebar />}
 				>
 					<div className="flex flex-col gap-8">
 						<div>

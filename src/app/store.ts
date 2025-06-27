@@ -1,8 +1,8 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/store/authSlice.ts';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import testApi from '../infra-test/base/test.api.ts';
-import promptApi from '../infra-test/base/prompt.api.ts';
+import testApi from '../infra-test/api/test.api.ts';
+import promptApi from '../infra-test/api/prompt.api.ts';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import authApi from '../features/auth/api/auth.api.ts';

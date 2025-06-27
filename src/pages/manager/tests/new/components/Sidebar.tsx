@@ -1,5 +1,5 @@
 import { Upload, WandSparkles } from "lucide-react";
-import ManagerSidebar from "../../../../../infra-test/ui/sidebar/manager/ManagerSidebar";
+import ManagerSidebar from "../../../../../infra-test/ui-shared/sidebar/ManagerSidebar";
 import QuickAction from "../../../../../infra-test/ui/sidebar/primitive/QuickAction";
 import { CreateTab } from "../common/types";
 

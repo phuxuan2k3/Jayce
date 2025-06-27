@@ -3,7 +3,7 @@ import QuickAction from '../../../../../../infra-test/ui/sidebar/primitive/Quick
 import { TabMode } from '../type';
 import { useNavigate } from 'react-router-dom';
 import paths from '../../../../../../router/paths';
-import ManagerSidebar from '../../../../../../infra-test/ui/sidebar/manager/ManagerSidebar';
+import ManagerSidebar from '../../../../../../infra-test/ui-shared/sidebar/ManagerSidebar';
 
 export default function Sidebar({
 	testId,
