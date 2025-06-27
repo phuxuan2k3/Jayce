@@ -1,5 +1,5 @@
 import TextareaAutosize from "react-textarea-autosize";
-import { ExamPersistCore } from "../../../../../../infra-test/ui-items/test/types";
+import { ExamPersistCoreSchema } from "../../../ui-items/test/types";
 
 export function TitleDescriptionSection({
 	title,
@@ -8,7 +8,7 @@ export function TitleDescriptionSection({
 }: {
 	title: string;
 	description: string;
-	onChange: (patch: Partial<Pick<ExamPersistCore, "title" | "description">>) => void;
+	onChange: (patch: Partial<Pick<ExamPersistCoreSchema, "title" | "description">>) => void;
 }) {
 	return (
 		<>

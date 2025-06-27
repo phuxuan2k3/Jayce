@@ -1,5 +1,5 @@
 import { QuestionPersistCoreSchema } from "../../../../../infra-test/ui-items/question/types";
-import { ExamPersistCore } from "../../../../../infra-test/ui-items/test/types";
+import { ExamPersistCoreSchema } from "../../../../../infra-test/ui-items/test/types";
 import { GetGenerateExamQuestionsApiRequest, GetGenerateExamQuestionsApiResponse } from "../apis/exam-generation.api";
 import { LanguageType } from "./base-schema";
 import { AllStepData } from "./types";
@@ -33,7 +33,7 @@ export function transformGenerateResponseToQuestionsPersistCore(response: GetGen
 	}));
 }
 
-export function transformExamPersistToAllStepData(exam: ExamPersistCore): AllStepData {
+export function transformExamPersistToAllStepData(exam: ExamPersistCoreSchema): AllStepData {
 	return {
 		step1: {
 			title: exam.title,

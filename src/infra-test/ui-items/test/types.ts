@@ -3,7 +3,7 @@ import { QuestionPersistCoreSchema } from "../question/types";
 
 type ExamPersistDetailSchema = Extract<PostTestsApiArg["body"]["detail"], { mode: "EXAM" }>;
 
-export type ExamPersistCore = Omit<PostTestsApiArg["body"], "detail" | "questions"> & {
+export type ExamPersistCoreSchema = Omit<PostTestsApiArg["body"], "detail" | "questions"> & {
 	detail: ExamPersistDetailSchema;
 	questions: QuestionPersistCoreSchema[];
 };

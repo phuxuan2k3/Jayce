@@ -4,20 +4,20 @@ import z from "zod";
 const McqDetailCommonSchema = z.object({
 	type: z.literal("MCQ"),
 	options: z.array(z.string()),
-	correctOption: z.number().nullable(),
+	correctOption: z.number(),
 });
 
 const LongAnswerDetailCommonSchema = z.object({
 	type: z.literal("LONG_ANSWER"),
 	imageLinks: z.array(z.string()).nullable().optional(),
 	extraText: z.string().nullable().optional(),
-	correctAnswer: z.string().nullable(),
+	correctAnswer: z.string(),
 });
 
 // Question detail schema (union)
 const QuestionDetailSchema = z.union([
-	McqDetailCommonSchema.extend({ correctOption: z.number().optional() }),
-	LongAnswerDetailCommonSchema.extend({ correctAnswer: z.string().optional() }),
+	McqDetailCommonSchema,
+	LongAnswerDetailCommonSchema,
 ]);
 
 // Question schema
@@ -43,9 +43,9 @@ const ExamDetailSchema = z.object({
 });
 
 // Main schema for EXAM mode
-export const ExamPersistCoreZodSchema = z.object({
+export const ExamPersistValidationSchema = z.object({
 	title: z.string().min(1, "Title is required"),
-	description: z.string().optional(),
+	description: z.string(),
 	minutesToAnswer: z.number(),
 	language: z.string(),
 	mode: z.literal("EXAM"),

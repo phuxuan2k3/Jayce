@@ -1,7 +1,7 @@
 import { Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { QuestionPersistCoreSchema } from "../../../../../infra-test/ui-items/question/types";
-import QuestionPersistCard from "../../../../../infra-test/ui-items/question/form/QuestionPersist";
+import { QuestionPersistCoreSchema } from "../../ui-items/question/types";
+import QuestionPersistCard from "../../ui-items/question/form/QuestionPersist";
 
 const QuestionsTab = ({
 	questions,

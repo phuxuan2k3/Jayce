@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { ExamPersistCore } from '../../../../../infra-test/ui-items/test/types';
+import { ExamPersistCoreSchema } from '../../../../../infra-test/ui-items/test/types';
 import {
 	ExamHeader,
 	ExamSummary,
@@ -13,7 +13,7 @@ export default function PublishTab({
 	examPersist,
 	onPublish
 }: {
-	examPersist: ExamPersistCore;
+	examPersist: ExamPersistCoreSchema;
 	onPublish: () => void;
 }) {
 	const { questions, ...config } = examPersist;

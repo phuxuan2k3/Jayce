@@ -1,19 +1,18 @@
 import ManagerSidebar from '../../../../../../infra-test/ui/sidebar/manager/ManagerSidebar'
-import { ExamCore } from '../../../../../../infra-test/core/test.model'
-import { EditTabs } from '../type';
 import QuickAction from '../../../../../../infra-test/ui/sidebar/primitive/QuickAction';
-import { ArrowDownToLine } from 'lucide-react';
+import { ArrowDownToLine, Trash2 } from 'lucide-react';
+import { EditTabs } from '../page';
 
 export default function Sidebar({
-	exam,
 	tab,
 	onModeChange,
 	onSave,
+	onDelete,
 }: {
-	exam: ExamCore;
 	tab: EditTabs;
 	onModeChange: (tab: EditTabs) => void;
 	onSave: () => void;
+	onDelete: () => void;
 }) {
 	return (
 		<ManagerSidebar>
@@ -25,9 +24,17 @@ export default function Sidebar({
 				active={tab === "questions"}
 				onClick={() => onModeChange('questions')}
 			/>
+
 			<hr className="my-2 border-primary-toned-300" />
 
-			<ManagerSidebar.DeleteExam exam={exam} />
+			<QuickAction
+				icon={<Trash2 />}
+				title='Delete Exam'
+				variant={"alert"}
+				description='Remove this exam permanently'
+				onClick={onDelete}
+			/>
+
 			<QuickAction
 				icon={<ArrowDownToLine />}
 				title='Save'

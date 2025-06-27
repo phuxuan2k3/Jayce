@@ -1,4 +1,4 @@
-import { ExamPersistCore } from "../../../../../../infra-test/ui-items/test/types";
+import { ExamPersistCoreSchema } from "../../../ui-items/test/types";
 
 export function VisibilitySection({
 	isAnswerVisible,
@@ -9,7 +9,7 @@ export function VisibilitySection({
 	isAnswerVisible: boolean;
 	isAllowedToSeeOtherResults: boolean;
 	isPublic?: boolean;
-	onChange: (patch: Partial<ExamPersistCore["detail"]>) => void;
+	onChange: (patch: Partial<ExamPersistCoreSchema["detail"]>) => void;
 }) {
 	return (
 		<div className="col-start-2 flex flex-col gap-2 w-full">

@@ -1,4 +1,4 @@
-import { ExamPersistCore } from "../../../../../infra-test/ui-items/test/types";
+import { ExamPersistCoreSchema } from "../../ui-items/test/types";
 import { TitleDescriptionSection } from "./components/TitleDescriptionSection";
 import { DurationSection } from "./components/DurationSection";
 import { OpenCloseTimeSection } from "./components/OpenCloseTimeSection";
@@ -11,10 +11,10 @@ export default function ConfigTab({
 	examPersist,
 	onExamPersistChange,
 }: {
-	examPersist: ExamPersistCore;
-	onExamPersistChange: (configEdit: Partial<ExamPersistCore>) => void;
+	examPersist: ExamPersistCoreSchema;
+	onExamPersistChange: (configEdit: Partial<ExamPersistCoreSchema>) => void;
 }) {
-	const handleDetailChange = (detailPatch: Partial<ExamPersistCore["detail"]>) => {
+	const handleDetailChange = (detailPatch: Partial<ExamPersistCoreSchema["detail"]>) => {
 		onExamPersistChange({
 			detail: { ...examPersist.detail, ...detailPatch },
 		});

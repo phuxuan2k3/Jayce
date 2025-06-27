@@ -7,7 +7,7 @@ import MainStep from "./MainStep";
 import { useLazyGetGenerateExamQuestionsQuery } from "../apis/exam-generation.api";
 import { transformAllStepDataToGenerateArgs, transformExamPersistToAllStepData, transformGenerateResponseToQuestionsPersistCore } from "../common/transform";
 import { QuestionPersistCoreSchema } from "../../../../../infra-test/ui-items/question/types";
-import { ExamPersistCore } from "../../../../../infra-test/ui-items/test/types";
+import { ExamPersistCoreSchema } from "../../../../../infra-test/ui-items/test/types";
 import { AllStepData } from "../common/types";
 
 export default function BuilderWizzardTab({
@@ -16,7 +16,7 @@ export default function BuilderWizzardTab({
 	onReplaceQuestions,
 	onGenerationDisposal,
 }: {
-	initialExam: ExamPersistCore;
+	initialExam: ExamPersistCoreSchema;
 	onBulkAddQuestions: (questions: QuestionPersistCoreSchema[]) => void;
 	onReplaceQuestions: (questions: QuestionPersistCoreSchema[]) => void;
 	onGenerationDisposal: () => void;

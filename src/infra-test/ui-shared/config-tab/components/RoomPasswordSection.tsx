@@ -1,4 +1,4 @@
-import { ExamPersistCore } from "../../../../../../infra-test/ui-items/test/types";
+import { ExamPersistCoreSchema } from "../../../ui-items/test/types";
 
 export function RoomPasswordSection({
 	roomId,
@@ -7,7 +7,7 @@ export function RoomPasswordSection({
 }: {
 	roomId: string;
 	password?: string | null;
-	onChange: (patch: Partial<ExamPersistCore["detail"]>) => void;
+	onChange: (patch: Partial<ExamPersistCoreSchema["detail"]>) => void;
 }) {
 	return (
 		<>

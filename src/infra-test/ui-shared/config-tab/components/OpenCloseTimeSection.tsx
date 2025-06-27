@@ -1,4 +1,4 @@
-import { ExamPersistCore } from "../../../../../../infra-test/ui-items/test/types";
+import { ExamPersistCoreSchema } from "../../../ui-items/test/types";
 
 export function OpenCloseTimeSection({
 	openDate,
@@ -9,7 +9,7 @@ export function OpenCloseTimeSection({
 }: {
 	openDate: string | null;
 	closeDate: string | null;
-	onChange: (patch: Partial<ExamPersistCore["detail"]>) => void;
+	onChange: (patch: Partial<ExamPersistCoreSchema["detail"]>) => void;
 	getDateValue: (dateStr: string | null) => string;
 	getTimeValue: (dateStr: string | null) => string;
 }) {

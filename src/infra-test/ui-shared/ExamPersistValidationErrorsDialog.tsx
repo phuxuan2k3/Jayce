@@ -1,23 +1,33 @@
-import { AlertTriangle, Settings, Edit3, X } from 'lucide-react'
+import { AlertTriangle, Settings, Edit3, X } from 'lucide-react';
+import { z } from 'zod';
+import { ExamPersistValidationSchema } from '../ui-items/test/persist-schema';
+import { useMemo } from 'react';
 
 interface ValidationErrorDialogProps {
-	configErrors: string[];
-	questionsErrors: {
-		index: number | string; // Index or identifier for the question
-		message: string;
-	}[];
+	errors: z.ZodError<z.infer<typeof ExamPersistValidationSchema>> | undefined;
 	onClose: () => void;
 	onConfigEdit: () => void;
 	onQuestionsEdit: () => void;
 }
 
-export default function ValidationErrorDialog({
-	configErrors,
-	questionsErrors,
+export default function ExamPersistValidationErrorsDialog({
+	errors,
 	onClose,
 	onConfigEdit,
 	onQuestionsEdit,
 }: ValidationErrorDialogProps) {
+	const configErrors = useMemo(
+		() => errors?.issues.filter(i => i.path.length === 0).map(i => i.message) ?? [],
+		[errors]
+	);
+	const questionsErrors = useMemo(
+		() => errors?.issues.filter(i => i.path.length > 0).map(i => ({
+			index: i.path[0], message: i.message,
+		})) ?? [],
+		[errors]
+	);
+
+
 	const hasConfigErrors = configErrors.length > 0;
 	const hasQuestionsErrors = questionsErrors.length > 0;
 	const hasAnyErrors = hasConfigErrors || hasQuestionsErrors;

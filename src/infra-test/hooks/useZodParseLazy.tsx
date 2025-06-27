@@ -13,10 +13,12 @@ export default function useZodParseLazy<T>(schema: z.ZodType<T>, options?: Optio
 	handleParse: (data: unknown) => T | undefined;
 	errors: z.ZodError<T> | undefined;
 	errorMessages: string[];
+	clearErrors: () => void;
 } {
 	const { messageRetriver } = options || {};
 
 	const [errors, setErrors] = React.useState<z.ZodError<T> | undefined>(undefined);
+
 	const handleParse = React.useCallback((data: unknown): T | undefined => {
 		try {
 			const parsedData = schema.parse(data);
@@ -40,9 +42,14 @@ export default function useZodParseLazy<T>(schema: z.ZodType<T>, options?: Optio
 		return errors.errors.map((error) => error.message);
 	}, [errors, messageRetriver]);
 
+	const clearErrors = React.useCallback(() => {
+		setErrors(undefined);
+	}, []);
+
 	return {
 		errors,
 		errorMessages,
 		handleParse,
+		clearErrors,
 	};
 }

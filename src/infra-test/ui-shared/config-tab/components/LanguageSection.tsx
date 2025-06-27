@@ -1,11 +1,11 @@
-import { ExamPersistCore } from "../../../../../../infra-test/ui-items/test/types";
+import { ExamPersistCoreSchema } from "../../../ui-items/test/types";
 
 export function LanguageSection({
 	language,
 	onChange,
 }: {
 	language: string;
-	onChange: (patch: Partial<Pick<ExamPersistCore, "language">>) => void;
+	onChange: (patch: Partial<Pick<ExamPersistCoreSchema, "language">>) => void;
 }) {
 	return (
 		<>

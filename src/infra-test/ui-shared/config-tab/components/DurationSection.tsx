@@ -1,11 +1,11 @@
-import { ExamPersistCore } from "../../../../../../infra-test/ui-items/test/types";
+import { ExamPersistCoreSchema } from "../../../ui-items/test/types";
 
 export function DurationSection({
 	minutesToAnswer,
 	onChange,
 }: {
 	minutesToAnswer: number;
-	onChange: (patch: Partial<Pick<ExamPersistCore, "minutesToAnswer">>) => void;
+	onChange: (patch: Partial<Pick<ExamPersistCoreSchema, "minutesToAnswer">>) => void;
 }) {
 	return (
 		<>
