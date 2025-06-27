@@ -8,7 +8,7 @@ import FetchStateCover2 from "../../../../../infra-test/ui/fetch-states/FetchSta
 import TestFullCard from "../../../../../infra-test/ui-items/test/TestFullCard";
 import AttemptsTab from "../../../../../infra-test/ui-shared/attempts-tab";
 import QuestionsTabContent from "./components/QuestionsTabContent";
-import CurrentAttemptCard from "../../../../../infra-test/ui-shared/test-details/CurrentAttemptCard";
+import CurrentAttemptCard from "../../../../../infra-test/ui-shared/test-pages/CurrentAttemptCard";
 import { useCallback } from "react";
 import useGetUserId from "../../../../../infra-test/hooks/useGetUserId";
 import { useNavigate } from "react-router-dom";

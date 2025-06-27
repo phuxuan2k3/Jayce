@@ -1,8 +1,8 @@
-import { useGetAttemptsByAttemptIdAnswersQuery, useGetTestsByTestIdQuestionsQuery } from "../../../../../../../../infra-test/api/test.api-gen-v2";
-import { QueryUtils } from "../../../../../../../../infra-test/types/query";
-import FetchStateCover2 from "../../../../../../../../infra-test/ui/fetch-states/FetchStateCover2";
-import concatQuestionsWithOptionalAnswers from "../../../../../../../../infra-test/functions/concatQuestionsAnswers";
-import QuestionWithAnswer from "../../../../../../../../infra-test/ui-items/question/views/QuestionWithAnswer";
+import { useGetAttemptsByAttemptIdAnswersQuery, useGetTestsByTestIdQuestionsQuery } from "../../api/test.api-gen-v2";
+import { QueryUtils } from "../../types/query";
+import FetchStateCover2 from "../../ui/fetch-states/FetchStateCover2";
+import concatQuestionsWithOptionalAnswers from "../../functions/concatQuestionsAnswers";
+import QuestionWithAnswer from "../../ui-items/question/views/QuestionWithAnswer";
 
 export default function AnswersList({
 	attemptId,
@@ -20,7 +20,6 @@ export default function AnswersList({
 	}, {
 		refetchOnMountOrArgChange: true,
 	});
-
 
 	return (
 		<FetchStateCover2

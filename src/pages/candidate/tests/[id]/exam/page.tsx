@@ -8,7 +8,7 @@ import { TestFullSchema, useGetTestsByTestIdQuery } from "../../../../../infra-t
 import FetchStateCover2 from "../../../../../infra-test/ui/fetch-states/FetchStateCover2";
 import TestFullCard from "../../../../../infra-test/ui-items/test/TestFullCard";
 import UserCard from "../../../../../infra-test/ui-shared/UserCard";
-import CurrentAttemptCard from "../../../../../infra-test/ui-shared/test-details/CurrentAttemptCard";
+import CurrentAttemptCard from "../../../../../infra-test/ui-shared/test-pages/CurrentAttemptCard";
 import { useCallback } from "react";
 import useGetUserId from "../../../../../infra-test/hooks/useGetUserId";
 import { useNavigate } from "react-router-dom";

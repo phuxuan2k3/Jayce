@@ -1,8 +1,8 @@
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import paths from "../../../../../../../../router/paths";
-import { AttemptCoreSchema, TestFullSchema } from "../../../../../../../../infra-test/api/test.api-gen-v2";
-import UserCard from "../../../../../../../../infra-test/ui-shared/UserCard";
+import paths from "../../../router/paths";
+import { AttemptCoreSchema, TestFullSchema } from "../../api/test.api-gen-v2";
+import UserCard from "../UserCard";
 
 export default function AttemptSidebar({
 	showAnswersAvailable,

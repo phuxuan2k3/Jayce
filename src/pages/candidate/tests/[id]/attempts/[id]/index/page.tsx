@@ -1,9 +1,7 @@
 import { format } from "date-fns";
-import AttemptSidebar from "./components/AttemptSidebar";
-import AnswersList from "./components/AnswersList";
-import FetchStateContent from "./components/FetchStateContent";
+import AttemptSidebar from "../../../../../../../infra-test/ui-shared/attempt-pages/AttemptSidebar";
+import AnswersList from "../../../../../../../infra-test/ui-shared/attempt-pages/AnswersList";
 import { useState } from "react";
-import useIsTestAllowToShowAnswer from "./hooks/useTestAllowToShowAnswer";
 import useGetAttemptIdParams from "../../../../../../../infra-test/hooks/useGetAttemptIdParams";
 import RightLayoutTemplate from "../../../../../../../components/layouts/RightLayoutTemplate";
 import { AttemptCoreSchema, TestFullSchema, useGetAttemptsByAttemptIdQuery, useGetTestsByTestIdQuery } from "../../../../../../../infra-test/api/test.api-gen-v2";
@@ -57,14 +55,10 @@ export default function CandidateTestsAttemptPage() {
 							}
 						>
 							<div className="w-full p-4">
-								<FetchStateContent
-									{...attemptQuery}
-									childrenFactory={(data) => (
-										<AnswersList
-											showAnswers={showAnswers}
-											attempt={data}
-										/>
-									)}
+								<AnswersList
+									testId={testId}
+									attemptId={attemptId}
+									viewCorrectAnswer={showAnswers}
 								/>
 							</div>
 						</RightLayoutTemplate>
