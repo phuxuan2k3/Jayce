@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import UnauthNavbar from "../../components/ui/navbar/UnauthNavbar";
+import UnauthNavbar from "../../components/partials/UnauthNavbar";
 
 export default function AuthLayout() {
 	return (

@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import UnauthNavbar from "../../components/ui/navbar/UnauthNavbar";
-import FooterLong from "../../components/ui/footer/FooterLong";
+import UnauthNavbar from "../../components/partials/UnauthNavbar";
+import FooterLong from "../../components/partials/FooterLong";
 import RoleGuard from "../../components/wrapper/RoleGuard";
 import paths from "../../router/paths";
 import { Role } from "../../features/auth/types/auth";

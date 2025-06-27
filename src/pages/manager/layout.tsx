@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import RoleGuard from "../../components/wrapper/RoleGuard";
-import FooterShort from "../../components/ui/footer/FooterShort";
-import ManagerNavbar from "../../components/ui/navbar/ManagerNavbar";
+import FooterShort from "../../components/partials/FooterShort";
+import ManagerNavbar from "../../components/partials/ManagerNavbar";
 import { Role } from "../../features/auth/types/auth";
 import DeleteExamDialog from "./tests/[id]/components/DeleteTestModal";
 import FetchStateDialog from "../../infra-test/ui/dialogs/FetchStateDialog";
