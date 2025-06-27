@@ -1,10 +1,3 @@
-import { ExamPersistState } from "../../../../../../infra-test/reducers/exam-persist.store";
-
-export interface PublishTabProps {
-	examPersistState: ExamPersistState;
-	onPublish: () => void;
-}
-
 export interface ExamStats {
 	totalQuestions: number;
 	totalPoints: number;
@@ -22,9 +15,4 @@ export interface ConfigItemProps {
 	value: string | number;
 	isStatus?: boolean;
 	statusType?: 'success' | 'danger' | 'neutral';
-}
-
-export interface QuestionItemProps {
-	question: any;
-	index: number;
 }

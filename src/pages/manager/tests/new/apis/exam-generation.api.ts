@@ -1,6 +1,5 @@
 import promptApi from "../../../../../infra-test/base/prompt.api";
-import { LanguageType, SeniorityType } from "../common/base-types";
-import { Topic } from "../models/topic.model";
+import { LanguageType, Topic } from "../common/base-schema";
 
 const promptApiCustom = promptApi.injectEndpoints({
 	endpoints: (builder) => ({
@@ -22,7 +21,6 @@ export type GetGenerateExamQuestionsApiRequest = {
 	title: string;
 	description: string;
 	language: LanguageType; // English, Vietnamese, ...
-	seniority: SeniorityType; // Intern, Junior, Middle, Senior, Lead, ...
 	topics: Topic[];
 	creativity: number; // Creativity level from 1 to 10
 	context: {

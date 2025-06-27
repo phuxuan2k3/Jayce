@@ -9,7 +9,6 @@ export function transformAllStepDataToGenerateArgs(allStepData: AllStepData): Ge
 		title: allStepData.step1.title,
 		description: allStepData.step1.description,
 		language: allStepData.step1.language,
-		seniority: "Senior",
 		topics: allStepData.step2.topics,
 		creativity: allStepData.step3.creativity,
 		context: {

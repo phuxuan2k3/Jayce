@@ -1,7 +1,7 @@
 import { QuestionAnswer } from '../type'
 import QuestionAnswerCard from './QuestionAnswerCard'
-import useArrayPagination from '../../../../../../../components/hooks/useArrayPagination';
-import MyPagination from '../../../../../../../components/ui/common/MyPagination';
+import useArrayPagination from '../../../../../../../../components/hooks/useArrayPagination';
+import MyPagination from '../../../../../../../../components/ui/common/MyPagination';
 
 interface QuestionAnswerListProps {
 	questionsAnswers: QuestionAnswer[];

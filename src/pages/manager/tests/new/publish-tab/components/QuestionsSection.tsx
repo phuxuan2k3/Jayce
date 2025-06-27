@@ -1,11 +1,13 @@
-import { QuestionItem } from './QuestionItem';
+import { QuestionPersistCoreSchema } from '../../../../../../infra-test/ui-items/question/types';
+import { QuestionDefault } from '../../../../../../infra-test/ui-items/question/views/QuestionDefault';
 
-interface QuestionsSectionProps {
-	questions: any[];
+export const QuestionsSection = ({
+	questions,
+	totalQuestions,
+}: {
+	questions: QuestionPersistCoreSchema[];
 	totalQuestions: number;
-}
-
-export const QuestionsSection = ({ questions, totalQuestions }: QuestionsSectionProps) => {
+}) => {
 	return (
 		<div className="bg-white rounded-lg shadow-md border border-primary-toned-200 p-6">
 			<h2 className="text-xl font-semibold text-primary-toned-700 mb-4">Questions</h2>
@@ -17,7 +19,11 @@ export const QuestionsSection = ({ questions, totalQuestions }: QuestionsSection
 			) : (
 				<div className="space-y-6">
 					{questions.map((question, index) => (
-						<QuestionItem key={index} question={question} index={index} />
+						<QuestionDefault
+							question={question}
+							key={index}
+							index={index}
+						/>
 					))}
 				</div>
 			)}

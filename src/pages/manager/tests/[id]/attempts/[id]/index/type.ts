@@ -1,7 +1,7 @@
-import { AnswerCore, AttemptAggregate, AttemptCore } from "../../../../../../infra-test/core/attempt.model";
-import { QuestionCore } from "../../../../../../infra-test/core/question.model";
-import { ExamCore, TestAggregate } from "../../../../../../infra-test/core/test.model";
-import { CandidateCore, ManagerCore } from "../../../../../../infra-test/core/user.model";
+import { AnswerCore, AttemptAggregate, AttemptCore } from "../../../../../../../infra-test/core/attempt.model";
+import { QuestionCore } from "../../../../../../../infra-test/core/question.model";
+import { ExamCore, TestAggregate } from "../../../../../../../infra-test/core/test.model";
+import { CandidateCore, ManagerCore } from "../../../../../../../infra-test/core/user.model";
 
 export type QuestionAnswer = {
 	question: QuestionCore;

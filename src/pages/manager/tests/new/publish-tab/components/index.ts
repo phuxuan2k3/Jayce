@@ -5,4 +5,3 @@ export { QuestionsSection } from './QuestionsSection';
 export { PublishFooter } from './PublishFooter';
 export { StatCard } from './StatCard';
 export { ConfigItem } from './ConfigItem';
-export { QuestionItem } from './QuestionItem';

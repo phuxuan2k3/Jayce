@@ -1,14 +1,14 @@
 import { useMemo } from 'react';
 import { ManagerTestsAttemptPageModel, QuestionAnswer } from '../type'
-import { useGetExamsAttemptsByAttemptIdAggregateQuery, useGetExamsAttemptsByAttemptIdAnswersQuery, useGetExamsAttemptsByAttemptIdQuery, useGetExamsByTestIdAggregateQuery, useGetExamsByTestIdQuery, useGetExamsByTestIdQuestionsWithAnswerQuery } from '../../../../../../../infra-test/api/test.api-gen';
-import { AnswerCore, AttemptAggregate, AttemptCore } from '../../../../../../../infra-test/core/attempt.model';
-import { FetchStateQuery } from '../../../../../../../app/types';
-import useFetchStatesCombine from '../../../../../../../components/hooks/useFetchStates';
-import { useGetUsersQuery } from '../../../../../../../features/auth/api/auth-profile.api';
-import { getUserCore, UserCore } from '../../../../../../../infra-test/core/user.model';
-import { ExamCore, TestAggregate, TestCore } from '../../../../../../../infra-test/core/test.model';
-import { QuestionCore } from '../../../../../../../infra-test/core/question.model';
-import useGetAttemptIdParams from '../../../../../../../infra-test/hooks/useGetAttemptIdParams';
+import { useGetExamsAttemptsByAttemptIdAggregateQuery, useGetExamsAttemptsByAttemptIdAnswersQuery, useGetExamsAttemptsByAttemptIdQuery, useGetExamsByTestIdAggregateQuery, useGetExamsByTestIdQuery, useGetExamsByTestIdQuestionsWithAnswerQuery } from '../../../../../../../../infra-test/api/test.api-gen';
+import { AnswerCore, AttemptAggregate, AttemptCore } from '../../../../../../../../infra-test/core/attempt.model';
+import { FetchStateQuery } from '../../../../../../../../app/types';
+import useFetchStatesCombine from '../../../../../../../../components/hooks/useFetchStates';
+import { useGetUsersQuery } from '../../../../../../../../features/auth/api/auth-profile.api';
+import { getUserCore, UserCore } from '../../../../../../../../infra-test/core/user.model';
+import { ExamCore, TestAggregate, TestCore } from '../../../../../../../../infra-test/core/test.model';
+import { QuestionCore } from '../../../../../../../../infra-test/core/question.model';
+import useGetAttemptIdParams from '../../../../../../../../infra-test/hooks/useGetAttemptIdParams';
 
 
 function useAttempt(attemptId: string): FetchStateQuery<{

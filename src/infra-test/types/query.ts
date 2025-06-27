@@ -25,4 +25,9 @@ export class QueryUtils {
 		if (value === false) return "0";
 		return undefined;
 	}
+	static toggleSort(value: QuerySortValues): QuerySortValues {
+		if (value === "asc") return "desc";
+		if (value === "desc") return "asc";
+		return undefined;
+	}
 }

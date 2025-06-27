@@ -2,7 +2,10 @@ import { AlertTriangle, Settings, Edit3, X } from 'lucide-react'
 
 interface ValidationErrorDialogProps {
 	configErrors: string[];
-	questionsErrors: string[];
+	questionsErrors: {
+		index: number | string; // Index or identifier for the question
+		message: string;
+	}[];
 	onClose: () => void;
 	onConfigEdit: () => void;
 	onQuestionsEdit: () => void;
@@ -86,7 +89,9 @@ export default function ValidationErrorDialog({
 								</div>
 								<ul className="list-disc list-inside space-y-1 mb-4 text-amber-700">
 									{questionsErrors.map((error, index) => (
-										<li key={index} className="text-sm">{error}</li>
+										<li key={index} className="text-sm">
+											Question {(Number(error.index) || 0) + 1}: {error.message}
+										</li>
 									))}
 								</ul>
 								{onQuestionsEdit && (

@@ -37,7 +37,6 @@ const QuestionsTab = ({
 						onQuuestionAdd({
 							text: "",
 							points: 1,
-							id: -1,
 							type: "MCQ",
 							detail: {
 								type: "MCQ",

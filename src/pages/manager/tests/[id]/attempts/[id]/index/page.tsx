@@ -1,8 +1,8 @@
 import usePageData from './hooks/usePageData';
-import RightLayoutTemplate from '../../../../../../components/layouts/RightLayoutTemplate';
+import RightLayoutTemplate from '../../../../../../../components/layouts/RightLayoutTemplate';
 import SumaryCard from './components/SumaryCard';
 import QuestionAnswerList from './components/QuestionAnswerList';
-import FetchStateCover from '../../../../../../components/wrapper/FetchStateCover';
+import FetchStateCover from '../../../../../../../components/wrapper/FetchStateCover';
 
 export default function ManagerTestsAttemptPage() {
 	const queryState = usePageData();

@@ -1,11 +1,12 @@
 import { createContext, useCallback, useContext } from "react";
 import { AnswerCoreSchema, AnswerForQuestionTypeSchema, QuestionCoreSchema } from "../../../api/test.api-gen-v2";
 
+type QuestionCoreSchemaMinimal = Omit<QuestionCoreSchema, "id" | "testId" | "_aggregate_test">
+
 export interface QuestionContextProps {
-	question: QuestionCoreSchema;
+	question: QuestionCoreSchemaMinimal;
 	withAnswer?: Pick<AnswerCoreSchema, "pointReceived" | "child" | "pointReceived">;
 	index?: number;
-	showAggregate?: boolean;
 }
 
 const questionContext = createContext<QuestionContextProps | undefined>(undefined);

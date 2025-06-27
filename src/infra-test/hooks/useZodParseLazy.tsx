@@ -11,7 +11,7 @@ type Options<T> = {
  */
 export default function useZodParseLazy<T>(schema: z.ZodType<T>, options?: Options<T>): {
 	handleParse: (data: unknown) => T | undefined;
-	errors: z.ZodError | undefined;
+	errors: z.ZodError<T> | undefined;
 	errorMessages: string[];
 } {
 	const { messageRetriver } = options || {};

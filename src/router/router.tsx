@@ -46,7 +46,7 @@ import ManagerTestPage from "../pages/manager/tests/[id]/index/page";
 import ResultPage from "../pages/candidate/interviews/result/result";
 import ManagerTestEditPage from "../pages/manager/tests/[id]/edit/page";
 import ManagerTestsNewPage from "../pages/manager/tests/new/page";
-import ManagerTestsAttemptPage from "../pages/manager/tests/attempts/[id]/index/page";
+import ManagerTestsAttemptPage from "../pages/manager/tests/[id]/attempts/[id]/index/page";
 import ManagerTestLayout from "../pages/manager/tests/[id]/layout";
 import DevPage from "../pages/dev/dev-page";
 

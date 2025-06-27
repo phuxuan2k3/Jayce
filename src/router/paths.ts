@@ -67,14 +67,14 @@ const paths = {
 				return {
 					ROOT: `/manager/tests/${id}/`,
 					EDIT: `/manager/tests/${id}/edit/`,
+					attempts: {
+						in(id: number | string = ":attemptId") {
+							return {
+								ROOT: `/manager/tests/attempts/${id}/`,
+							};
+						},
+					},
 				};
-			},
-			attempts: {
-				in(id: number | string = ":attemptId") {
-					return {
-						ROOT: `/manager/tests/attempts/${id}/`,
-					};
-				},
 			},
 			NEW: `/manager/tests/new/`,
 		},

@@ -1,3 +1,5 @@
+import { QuestionPersistCoreSchema } from "../../../../../infra-test/ui-items/question/types";
+
 export const formatDateDisplay = (date: Date): string => {
 	return date.toLocaleDateString('en-US', {
 		year: 'numeric',
@@ -9,7 +11,7 @@ export const formatDateDisplay = (date: Date): string => {
 	});
 };
 
-export const calculateExamStats = (questions: any[]) => {
+export const calculateExamStats = (questions: QuestionPersistCoreSchema[]) => {
 	const totalQuestions = questions.length;
 	const totalPoints = questions.reduce((sum, q) => sum + q.points, 0);
 	const averagePoints = totalQuestions > 0 ? (totalPoints / totalQuestions).toFixed(1) : '0';

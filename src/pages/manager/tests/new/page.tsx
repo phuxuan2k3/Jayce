@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CreateTab } from "./common/types";
 import LeftLayoutTemplateDefault from "../../../../components/layouts/LeftLayoutTemplateDefault";
 import ConfigTab from "./config-tab";
@@ -14,6 +14,9 @@ import { parseQueryError } from "../../../../helpers/fetchBaseQuery.error";
 import { ExamPersistCore } from "../../../../infra-test/ui-items/test/types";
 import { QuestionPersistCoreSchema } from "../../../../infra-test/ui-items/question/types";
 import { usePostTestsMutation } from "../../../../infra-test/api/test.api-gen-v2";
+import paths from "../../../../router/paths";
+import useZodParseLazy from "../../../../infra-test/hooks/useZodParseLazy";
+import { ExamPersistCoreZodSchema } from "./common/persist-schema";
 
 export default function ManagerTestNewPage() {
 	const navigate = useNavigate();
@@ -42,6 +45,28 @@ export default function ManagerTestNewPage() {
 	});
 
 	const [createTest, createTestState] = usePostTestsMutation();
+	useEffect(() => {
+		if (createTestState.isSuccess) {
+			setIsPostingExam(false);
+			const { testId } = createTestState.data;
+			navigate(paths.manager.tests.in(testId).ROOT);
+		}
+	}, [createTestState.isSuccess, createTestState.data, navigate]);
+
+	const { errors, handleParse } = useZodParseLazy(ExamPersistCoreZodSchema);
+	useEffect(() => {
+		if (tab === "publish") {
+			handleParse(examPersist);
+		}
+	}, [tab, examPersist, handleParse]);
+
+	const validationError = errors ? {
+		configErrors: errors.issues.filter(issue => issue.path.length === 0).map(issue => issue.message),
+		questionsErrors: errors.issues.filter(issue => issue.path.length > 0).map(issue => ({
+			index: issue.path[0],
+			message: issue.message,
+		})),
+	} : { configErrors: [], questionsErrors: [] };
 
 	const handleBulkAddQuestions = useCallback((questions: QuestionPersistCoreSchema[]) => {
 		setExamPersist((prev) => ({
@@ -108,8 +133,11 @@ export default function ManagerTestNewPage() {
 				/>;
 			case "publish":
 				return <PublishTab
-					examPersistState={state}
-					onPublish={() => handlePostExam()}
+					examPersist={examPersist}
+					onPublish={() => {
+						setIsPostingExam(true);
+						createTest({ body: examPersist });
+					}}
 				/>
 			default:
 				return null;
@@ -133,7 +161,7 @@ export default function ManagerTestNewPage() {
 		>
 			{getTab(tab)}
 
-			{tab === "publish" && hasValidationError === true && (
+			{tab === "publish" && errors != undefined && (
 				<ValidationErrorDialog
 					questionsErrors={validationError.questionsErrors}
 					configErrors={validationError.configErrors}
@@ -154,23 +182,21 @@ export default function ManagerTestNewPage() {
 
 			{(isPostingExam) && (
 				<>
-					{postExamState.isLoading && (
+					{createTestState.isLoading && (
 						<LoadingDialog />
 					)}
-					{postExamState.error && (
+					{createTestState.error && (
 						<ErrorDialog
-							errorMessage={parseQueryError(postExamState.error) || undefined}
+							errorMessage={parseQueryError(createTestState.error) || undefined}
 							onClose={() => setIsPostingExam(false)}
 							onRetry={() => {
 								setIsPostingExam(true);
-								handlePostExam();
+								createTest({ body: examPersist });
 							}}
 						/>
 					)}
 				</>
 			)}
-
-
 		</LeftLayoutTemplateDefault>
 	);
 }

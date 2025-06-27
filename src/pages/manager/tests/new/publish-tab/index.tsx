@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+import { ExamPersistCore } from '../../../../../infra-test/ui-items/test/types';
 import {
 	ExamHeader,
 	ExamSummary,
@@ -5,12 +7,23 @@ import {
 	QuestionsSection,
 	PublishFooter
 } from './components';
-import { useExamStats } from './hooks/useExamStats';
-import { PublishTabProps } from './types';
+import { calculateExamStats } from './utils';
 
-export default function PublishTab({ examPersistState, onPublish }: PublishTabProps) {
-	const { config, questions } = examPersistState;
-	const examStats = useExamStats(questions.questions, config.minutesToAnswer);
+export default function PublishTab({
+	examPersist,
+	onPublish
+}: {
+	examPersist: ExamPersistCore;
+	onPublish: () => void;
+}) {
+	const { questions, ...config } = examPersist;
+	const examStats = useMemo(() => {
+		const stats = calculateExamStats(questions);
+		return {
+			...stats,
+			duration: config.minutesToAnswer * 60,
+		};
+	}, [questions, config.minutesToAnswer]);
 
 	return (
 		<div className="w-full h-full py-6 px-4 bg-gray-50 overflow-y-auto">
@@ -25,7 +38,7 @@ export default function PublishTab({ examPersistState, onPublish }: PublishTabPr
 				<ExamConfiguration config={config} />
 
 				<QuestionsSection
-					questions={questions.questions}
+					questions={questions}
 					totalQuestions={examStats.totalQuestions}
 				/>
 
