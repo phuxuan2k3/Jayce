@@ -3,7 +3,7 @@ import { AlarmClock, AlertCircle, CheckCircle, X } from 'lucide-react';
 import { format } from 'date-fns';
 import PasswordInput from './PasswordInput';
 import ExamInfoDialogBottom from './ExamInfoDialogBottom';
-import { GetTestsFindByRoomApiResponse } from '../../../../../infra-test/api/test.api-gen-v2';
+import { GetTestsFindByRoomApiResponse } from '../../../../../features/tests/api/test.api-gen-v2';
 
 interface ExamInfoDialogProps {
 	isOpen: boolean;

@@ -1,8 +1,8 @@
 import { AlarmClock } from "lucide-react";
-import TestTimer from "../../../../../../../../infra-test/ui/TestTimer";
-import { AttemptCoreSchema, TestFullSchema } from "../../../../../../../../infra-test/api/test.api-gen-v2";
 import { QuestionDoState } from "../types";
-import MyButton from "../../../../../../../../infra-test/ui/buttons/MyButton";
+import { AttemptCoreSchema, TestFullSchema } from "../../../../../../../../features/tests/api/test.api-gen-v2";
+import MyButton from "../../../../../../../../features/tests/ui/buttons/MyButton";
+import TestTimer from "./TestTimer";
 
 export default function TestDoSidebar({
 	attempt,

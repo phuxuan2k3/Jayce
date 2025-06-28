@@ -1,11 +1,12 @@
 import React from "react";
-import { TemplateCoreSchema, useGetTemplatesQuery } from "../../../../../infra-test/api/test.api-gen-v2";
-import TemplateCard from "../../../../../infra-test/ui-items/template/TemplateCard";
-import LoadingCover from "../../../../../infra-test/ui/fetch-states/LoadingCover";
-import ErrorCover from "../../../../../infra-test/ui/fetch-states/ErrorCover";
-import NoDataAvailibleCover from "../../../../../infra-test/ui/fetch-states/NoDataAvailibleCover";
-import MyPaginationSection from "../../../../../infra-test/ui/MyPaginationSection";
-import MyButton from "../../../../../infra-test/ui/buttons/MyButton";
+import { TemplateCoreSchema } from "../../../../../features/tests/api/test.api-gen-v2";
+import TemplateCard from "../../../../../features/tests/ui-items/template/TemplateCard";
+import MyButton from "../../../../../features/tests/ui/buttons/MyButton";
+import ErrorCover from "../../../../../features/tests/ui/fetch-states/ErrorCover";
+import LoadingCover from "../../../../../features/tests/ui/fetch-states/LoadingCover";
+import NoDataAvailibleCover from "../../../../../features/tests/ui/fetch-states/NoDataAvailibleCover";
+import MyPaginationSection from "../../../../../features/tests/ui/MyPaginationSection";
+import { useGetTemplatesQuery } from "../apis/template.api-enhance";
 
 interface TemplateListProps {
 	searchName: string;

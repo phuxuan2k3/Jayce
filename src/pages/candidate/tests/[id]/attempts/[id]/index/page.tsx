@@ -1,13 +1,14 @@
 import { format } from "date-fns";
-import AttemptSidebar from "../../../../../../../infra-test/ui-shared/attempt-pages/AttemptSidebar";
-import AnswersList from "../../../../../../../infra-test/ui-shared/attempt-pages/AnswersList";
 import { useState } from "react";
-import useGetAttemptIdParams from "../../../../../../../infra-test/hooks/useGetAttemptIdParams";
 import RightLayoutTemplate from "../../../../../../../components/layouts/RightLayoutTemplate";
-import { AttemptCoreSchema, TestFullSchema, useGetAttemptsByAttemptIdQuery, useGetTestsByTestIdQuery } from "../../../../../../../infra-test/api/test.api-gen-v2";
-import FetchStateCover2 from "../../../../../../../infra-test/ui/fetch-states/FetchStateCover2";
-import useGetTestIdParams from "../../../../../../../infra-test/hooks/useGetTestIdParams";
-import useGetUserId from "../../../../../../../infra-test/hooks/useGetUserId";
+import { useGetAttemptsByAttemptIdQuery, useGetTestsByTestIdQuery, AttemptCoreSchema, TestFullSchema } from "../../../../../../../features/tests/api/test.api-gen-v2";
+import useGetAttemptIdParams from "../../../../../../../features/tests/hooks/useGetAttemptIdParams";
+import useGetTestIdParams from "../../../../../../../features/tests/hooks/useGetTestIdParams";
+import useGetUserId from "../../../../../../../features/tests/hooks/useGetUserId";
+import AnswersList from "../../../../../../../features/tests/ui-shared/attempt-pages/AnswersList";
+import AttemptSidebar from "../../../../../../../features/tests/ui-shared/attempt-pages/AttemptSidebar";
+import FetchStateCover2 from "../../../../../../../features/tests/ui/fetch-states/FetchStateCover2";
+
 
 export default function CandidateTestsAttemptPage() {
 	const attemptId = useGetAttemptIdParams();

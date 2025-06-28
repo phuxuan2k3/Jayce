@@ -1,18 +1,18 @@
 import LeftLayoutTemplate from "../../../../../components/layouts/LeftLayoutTemplate";
-import TabsComponent from "../../../../../infra-test/ui/TabsComponent";
-import ParticipantsTab from "../../../../../infra-test/ui-shared/participants-tab";
-import useGetTestIdParams from "../../../../../infra-test/hooks/useGetTestIdParams";
-import Sidebar from "./components/Sidebar";
-import AttemptsTab from "../../../../../infra-test/ui-shared/attempts-tab";
-import { TestFullSchema, useGetTestsByTestIdQuery } from "../../../../../infra-test/api/test.api-gen-v2";
-import FetchStateCover2 from "../../../../../infra-test/ui/fetch-states/FetchStateCover2";
-import TestFullCard from "../../../../../infra-test/ui-items/test/TestFullCard";
-import UserCard from "../../../../../infra-test/ui-shared/UserCard";
-import CurrentAttemptCard from "../../../../../infra-test/ui-shared/test-pages/CurrentAttemptCard";
-import { useCallback } from "react";
-import useGetUserId from "../../../../../infra-test/hooks/useGetUserId";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../router/paths";
+import { Sidebar } from "lucide-react";
+import { useCallback } from "react";
+import { useGetTestsByTestIdQuery, TestFullSchema } from "../../../../../features/tests/api/test.api-gen-v2";
+import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
+import useGetUserId from "../../../../../features/tests/hooks/useGetUserId";
+import TestFullCard from "../../../../../features/tests/ui-items/test/TestFullCard";
+import AttemptsTab from "../../../../../features/tests/ui-shared/test-pages/attempts-tab";
+import CurrentAttemptCard from "../../../../../features/tests/ui-shared/test-pages/CurrentAttemptCard";
+import ParticipantsTab from "../../../../../features/tests/ui-shared/test-pages/participants-tab";
+import UserCard from "../../../../../features/tests/ui-shared/UserCard";
+import FetchStateCover2 from "../../../../../features/tests/ui/fetch-states/FetchStateCover2";
+import MyTabs from "../../../../../features/tests/ui/MyTabs";
 
 export default function CandidateTestExamPage() {
 	const navigate = useNavigate();
@@ -67,7 +67,7 @@ export default function CandidateTestExamPage() {
 
 						<div className="flex flex-col gap-4">
 							<h2 className="text-xl font-bold">Details</h2>
-							<TabsComponent tabs={tabs(test)} defaultTabId="attempts" />
+							<MyTabs tabs={tabs(test)} defaultTabId="attempts" />
 						</div>
 					</div>
 				</LeftLayoutTemplate>

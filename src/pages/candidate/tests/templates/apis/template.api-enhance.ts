@@ -1,6 +1,6 @@
-import { testApiGen } from "../../../../../infra-test/api/test.api-gen";
+import { testApiGenV2 } from "../../../../../features/tests/api/test.api-gen-v2";
 
-const templateApiEnhance = testApiGen.enhanceEndpoints({
+const templateApiEnhance = testApiGenV2.enhanceEndpoints({
 	addTagTypes: ['Templates'],
 	endpoints: {
 		getTemplates: {

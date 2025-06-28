@@ -2,15 +2,23 @@ import { useNavigate } from "react-router-dom";
 import paths from "../../../../router/paths";
 import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
 import { useCallback, useState } from "react";
-import { Filter } from "./type";
-import { useGetTestsQuery } from "../../../../infra-test/api/test.api-gen-v2";
-import useGetUserId from "../../../../infra-test/hooks/useGetUserId";
-import FetchStateCover2 from "../../../../infra-test/ui/fetch-states/FetchStateCover2";
-import MyPaginationSection from "../../../../infra-test/ui/MyPaginationSection";
-import TestCoreCard from "../../../../infra-test/ui-items/test/TestCoreCard";
 import { ClipboardPlus } from "lucide-react";
-import QuickAction from "../../../../infra-test/ui/sidebar/primitive/QuickAction";
-import SidebarActions from "../../../../infra-test/ui/sidebar/primitive/SidebarActions";
+import { useGetTestsQuery } from "../../../../features/tests/api/test.api-gen-v2";
+import useGetUserId from "../../../../features/tests/hooks/useGetUserId";
+import TestCoreCard from "../../../../features/tests/ui-items/test/TestCoreCard";
+import FetchStateCover2 from "../../../../features/tests/ui/fetch-states/FetchStateCover2";
+import MyPaginationSection from "../../../../features/tests/ui/MyPaginationSection";
+import QuickAction from "../../../../features/tests/ui/sidebar/primitive/QuickAction";
+import SidebarActions from "../../../../features/tests/ui/sidebar/primitive/SidebarActions";
+import { QuerySortValues } from "../../../../features/tests/types/query";
+
+type Filter = {
+	page: number;
+	perPage: number;
+	searchTitle?: string;
+	sortCreatedAt?: QuerySortValues;
+	sortTitle?: QuerySortValues;
+}
 
 const ManagerTestsPage = () => {
 	const navigate = useNavigate();

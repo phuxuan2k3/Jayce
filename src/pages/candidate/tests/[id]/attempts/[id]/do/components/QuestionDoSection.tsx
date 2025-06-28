@@ -1,12 +1,12 @@
 import { Trash2 } from "lucide-react";
 import { QuestionDoState } from "../types";
-import useActionStateWatch from "../../../../../../../../infra-test/hooks/useActionStateWatch";
 import { usePostAttemptsByAttemptIdAnswersMutation } from "../apis/answer";
 import { toast } from "react-toastify";
 import { parseQueryError } from "../../../../../../../../helpers/fetchBaseQuery.error";
-import { QuestionDo } from "../../../../../../../../infra-test/ui-items/question/views/QuestionDo";
-import { AnswerForQuestionTypeSchema } from "../../../../../../../../infra-test/api/test.api-gen-v2";
-import useGetAttemptIdParams from "../../../../../../../../infra-test/hooks/useGetAttemptIdParams";
+import { AnswerForQuestionTypeSchema } from "../../../../../../../../features/tests/api/test.api-gen-v2";
+import useActionStateWatch from "../../../../../../../../features/tests/hooks/useActionStateWatch";
+import useGetAttemptIdParams from "../../../../../../../../features/tests/hooks/useGetAttemptIdParams";
+import { QuestionDo } from "../../../../../../../../features/tests/ui-items/question/views/QuestionDo";
 
 export default function QuestionDoSection({
 	totalQuestion,

@@ -1,11 +1,11 @@
 import React from 'react';
 import { StarIcon, AlertCircle, MessageSquare } from 'lucide-react';
 import { parseQueryError } from '../../../../../../helpers/fetchBaseQuery.error';
-import { usePostFeedbacksMutation } from '../../../../../../infra-test/api/test.api-gen-v2';
-import MyButtonWithLoading from '../../../../../../infra-test/ui/buttons/MyButtonWithLoading';
-import useGetTestIdParams from '../../../../../../infra-test/hooks/useGetTestIdParams';
-import useActionStateWatch from '../../../../../../infra-test/hooks/useActionStateWatch';
 import { toast } from 'react-toastify';
+import { usePostFeedbacksMutation } from '../../../../../../features/tests/api/test.api-gen-v2';
+import useActionStateWatch from '../../../../../../features/tests/hooks/useActionStateWatch';
+import useGetTestIdParams from '../../../../../../features/tests/hooks/useGetTestIdParams';
+import MyButtonWithLoading from '../../../../../../features/tests/ui/buttons/MyButtonWithLoading';
 
 export default function FeedbackTabContent() {
 	const testId = useGetTestIdParams();

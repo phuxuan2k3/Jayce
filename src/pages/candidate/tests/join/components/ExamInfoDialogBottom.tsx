@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import paths from '../../../../../router/paths';
-import { TestFullSchema, usePostTestsByTestIdParticipantsMutation } from '../../../../../infra-test/api/test.api-gen-v2';
+import { TestFullSchema, usePostTestsByTestIdParticipantsMutation } from '../../../../../features/tests/api/test.api-gen-v2';
 
 export default function ExamInfoDialogBottom({
 	examData,

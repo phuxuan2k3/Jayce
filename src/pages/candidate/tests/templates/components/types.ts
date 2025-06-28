@@ -1,4 +1,5 @@
-import { TemplateCoreSchema } from "../../../../../infra-test/api/test.api-gen-v2";
+import { TemplateCoreSchema } from "../../../../../features/tests/api/test.api-gen-v2";
+
 
 export type TemplateFormData = Omit<TemplateCoreSchema, 'id' | 'createdAt' | 'updatedAt' | 'userId'>;
 

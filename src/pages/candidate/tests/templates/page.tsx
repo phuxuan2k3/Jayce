@@ -4,10 +4,12 @@ import TemplatesSidebar from './components/TemplatesSidebar';
 import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
 import DeleteTemplateModal from './components/DeleteTemplateModal';
 import TemplateList from './components/TemplateList';
-import { TemplateCoreSchema, useDeleteTemplatesByTemplateIdMutation, usePostTemplatesMutation, usePutTemplatesByTemplateIdMutation } from '../../../../infra-test/api/test.api-gen-v2';
 import { EmptyTemplateForm, TemplateFormData } from './components/types';
-import LoadingDialog from '../../../../infra-test/ui/fetch-states/LoadingDialog';
-import ErrorDialog from '../../../../infra-test/ui/fetch-states/ErrorDialog';
+import { TemplateCoreSchema } from '../../../../features/tests/api/test.api-gen-v2';
+import { useDeleteTemplatesByTemplateIdMutation, usePostTemplatesMutation, usePutTemplatesByTemplateIdMutation } from './apis/template.api-enhance';
+import ErrorDialog from '../../../../features/tests/ui/fetch-states/ErrorDialog';
+import LoadingDialog from '../../../../features/tests/ui/fetch-states/LoadingDialog';
+
 
 const CandidateTestsTemplatesPage: React.FC = () => {
 	const [searchTerm, setSearchTerm] = useState<string>('');

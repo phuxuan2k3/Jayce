@@ -1,20 +1,22 @@
 import { useEffect, useReducer } from "react";
 import RightLayoutTemplate from "../../../../../../../components/layouts/RightLayoutTemplate";
-import FetchStateCover2 from "../../../../../../../infra-test/ui/fetch-states/FetchStateCover2";
 import TestDoSidebar from "./components/TestDoSidebar";
 import useTestDoServer from "./hooks/useTestDoServer";
 import { initialState, testDoReducer } from "./model";
-import { usePatchAttemptsByAttemptIdSubmitMutation } from "../../../../../../../infra-test/api/test.api-gen-v2";
-import useGetAttemptIdParams from "../../../../../../../infra-test/hooks/useGetAttemptIdParams";
 import QuestionDoSection from "./components/QuestionDoSection";
-import useActionStateWatch from "../../../../../../../infra-test/hooks/useActionStateWatch";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../../../router/paths";
 import { toast } from "react-toastify";
 import { parseQueryError } from "../../../../../../../helpers/fetchBaseQuery.error";
+import { usePatchAttemptsByAttemptIdSubmitMutation } from "../../../../../../../features/tests/api/test.api-gen-v2";
+import useActionStateWatch from "../../../../../../../features/tests/hooks/useActionStateWatch";
+import useGetAttemptIdParams from "../../../../../../../features/tests/hooks/useGetAttemptIdParams";
+import FetchStateCover2 from "../../../../../../../features/tests/ui/fetch-states/FetchStateCover2";
+import useGetTestIdParams from "../../../../../../../features/tests/hooks/useGetTestIdParams";
 
 export default function CandidateTestDoPage() {
 	const navigate = useNavigate();
+	const testId = useGetTestIdParams();
 	const attemptId = useGetAttemptIdParams();
 
 	const serverState = useTestDoServer();
@@ -22,7 +24,7 @@ export default function CandidateTestDoPage() {
 	useActionStateWatch(submitState, {
 		onSuccess: () => {
 			toast.success("Attempt submitted successfully");
-			navigate(paths.candidate.tests.attempts.in(attemptId).ROOT);
+			navigate(paths.candidate.tests.in(testId).attempts.in(attemptId).ROOT);
 		},
 		onError: (error) => {
 			console.error("Failed to submit attempt:", error);

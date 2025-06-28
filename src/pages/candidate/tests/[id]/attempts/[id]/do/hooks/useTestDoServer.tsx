@@ -1,6 +1,6 @@
-import { useGetAttemptsByAttemptIdQuery, useGetTestsByTestIdQuery, useGetTestsByTestIdQuestionsQuery } from '../../../../../../../../infra-test/api/test.api-gen-v2';
-import useGetTestIdParams from '../../../../../../../../infra-test/hooks/useGetTestIdParams';
-import useGetAttemptIdParams from '../../../../../../../../infra-test/hooks/useGetAttemptIdParams';
+import { useGetTestsByTestIdQuery, useGetTestsByTestIdQuestionsQuery, useGetAttemptsByAttemptIdQuery } from '../../../../../../../../features/tests/api/test.api-gen-v2';
+import useGetAttemptIdParams from '../../../../../../../../features/tests/hooks/useGetAttemptIdParams';
+import useGetTestIdParams from '../../../../../../../../features/tests/hooks/useGetTestIdParams';
 import { useGetAttemptsByAttemptIdAnswersQuery } from '../apis/answer';
 
 export default function useTestDoServer() {

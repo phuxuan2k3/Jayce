@@ -2,9 +2,10 @@ import React from 'react';
 import { TemplateFormData } from './types';
 import TagInput from './TagInput';
 import OutlinesInput from './OutlinesInput';
-import FieldInput from '../../../../../infra-test/ui/FieldInput';
-import { TemplateCoreSchema } from '../../../../../infra-test/api/test.api-gen-v2';
-import MyButton from '../../../../../infra-test/ui/buttons/MyButton';
+import { TemplateCoreSchema } from '../../../../../features/tests/api/test.api-gen-v2';
+import MyButton from '../../../../../features/tests/ui/buttons/MyButton';
+import FieldInput from '../../../../../features/tests/ui/FieldInput';
+
 
 interface TemplateFormProps {
 	selectedTemplate: TemplateCoreSchema | null;

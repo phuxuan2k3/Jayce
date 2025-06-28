@@ -1,4 +1,4 @@
-import { testApiGenV2 } from "../../../../../../../../infra-test/api/test.api-gen-v2";
+import { testApiGenV2 } from "../../../../../../../../features/tests/api/test.api-gen-v2";
 
 const answerEnhance = testApiGenV2.enhanceEndpoints({
 	addTagTypes: ["AttemptsByAttemptIdAnswers"],
@@ -23,7 +23,10 @@ const answerEnhance = testApiGenV2.enhanceEndpoints({
 						{ attemptId: arg.attemptId },
 						(draft) => {
 							const questionIndex = draft.findIndex((q) => q.questionId === arg.body.questionId);
-							if (questionIndex !== -1) {
+							if (arg.body.answer == null || arg.body.answer === undefined) {
+								draft.splice(questionIndex, 1);
+							}
+							else if (questionIndex !== -1) {
 								draft[questionIndex].child = arg.body.answer;
 							} else {
 								draft.push({

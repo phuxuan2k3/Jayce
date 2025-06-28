@@ -1,7 +1,7 @@
 import z from 'zod';
-import useDraftValue from '../../../../../../infra-test/hooks/useDraftValue';
-import useZodParseLazy from '../../../../../../infra-test/hooks/useZodParseLazy';
 import { useCallback } from 'react';
+import useZodParseLazy from '../../../../../../features/tests/hooks/useZodParseLazy';
+import useDraftValue from '../../../../../../features/tests/hooks/useDraftValue';
 
 /**
  * Generic hook for step draft management and validation

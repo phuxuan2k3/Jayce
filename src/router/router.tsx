@@ -30,7 +30,7 @@ import AuthBusinessRegisterPage from "../pages/auth/bussiness-register/AuthBusin
 import AuthChooseRolePage from "../pages/auth/choose-role/AuthChooseRolePage";
 import CandidateTestsAttemptPage from "../pages/candidate/tests/[id]/attempts/[id]/index/page";
 import ManagerTestsPage from "../pages/manager/tests/index/page";
-import CandidateHomePage from "../pages/candidate/index/CandidateHomePage";
+import CandidateHomePage from "../pages/candidate/index/page";
 import CandidateInterviewLivePage from "../pages/candidate/interviews/live/CandidateInterviewLivePage";
 // import SetUpPage from "../pages/candidate/interviews/setup/setup";
 import Settings from "../pages/common/profile/index/Settings";

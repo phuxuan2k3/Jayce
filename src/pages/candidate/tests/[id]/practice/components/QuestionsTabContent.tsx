@@ -1,13 +1,12 @@
 import React from "react";
-import { useGetTestsByTestIdQuestionsQuery } from "../../../../../../infra-test/api/test.api-gen-v2";
-import useGetTestIdParams from "../../../../../../infra-test/hooks/useGetTestIdParams";
-import { QueryBoolean, toggleQueryBoolean } from "../../../../../../infra-test/types/query";
-import FetchStateCover2 from "../../../../../../infra-test/ui/fetch-states/FetchStateCover2";
-import MyButton from "../../../../../../infra-test/ui/buttons/MyButton";
-import { QuestionDefault } from "../../../../../../infra-test/ui-items/question/views/QuestionDefault";
-import MyPaginationSection from "../../../../../../infra-test/ui/MyPaginationSection";
+import { useGetTestsByTestIdQuestionsQuery } from "../../../../../../features/tests/api/test.api-gen-v2";
+import useGetTestIdParams from "../../../../../../features/tests/hooks/useGetTestIdParams";
+import { QueryBoolean, PagingFilter, toggleQueryBoolean } from "../../../../../../features/tests/types/query";
+import { QuestionDefault } from "../../../../../../features/tests/ui-items/question/views/QuestionDefault";
+import MyButton from "../../../../../../features/tests/ui/buttons/MyButton";
+import FetchStateCover2 from "../../../../../../features/tests/ui/fetch-states/FetchStateCover2";
+import MyPaginationSection from "../../../../../../features/tests/ui/MyPaginationSection";
 import { arrayPagination } from "../../../../../../helpers/array";
-import { PagingFilter } from "../../../../../../infra-test/types/query";
 
 export default function QuestionsTabContent({
 	numberOfAttempts,

@@ -1,4 +1,4 @@
-import { TestFullSchema, QuestionCoreSchema, AttemptCoreSchema, AnswerCoreSchema, AnswerForQuestionTypeSchema } from '../../../../../../../infra-test/api/test.api-gen-v2';
+import { TestFullSchema, QuestionCoreSchema, AttemptCoreSchema, AnswerCoreSchema, AnswerForQuestionTypeSchema } from "../../../../../../../features/tests/api/test.api-gen-v2";
 
 export type TestDoServerData = {
 	test: TestFullSchema;

@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { PracticeGenerationActionTypes, PracticeGenerationReducer } from '../reducers/reducer-types';
-import { useLazyGetSuggestQuestionsQuery } from '../../../../../infra-test/api/prompt.api-custom';
 import paths from '../../../../../router/paths';
 import { PracticeGenerationLoadingState } from '../types';
 import usePracticeGenerationSelectors from '../reducers/practice-generation.selector';
 import { parseQueryError } from '../../../../../helpers/fetchBaseQuery.error';
-import { usePostTestsMutation } from '../../../../../infra-test/api/test.api-gen-v2';
+import { usePostTestsMutation } from '../../../../../features/tests/api/test.api-gen-v2';
+import { useLazyGetSuggestQuestionsQuery } from '../../../../../features/tests/api/prompt.api-custom';
 
 export default function useGeneratePractice({
 	state,

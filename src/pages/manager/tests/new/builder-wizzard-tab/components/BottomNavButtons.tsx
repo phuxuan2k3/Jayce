@@ -1,4 +1,4 @@
-import MyButton from '../../../../../../infra-test/ui/buttons/MyButton'
+import MyButton from "../../../../../../features/tests/ui/buttons/MyButton";
 
 export default function BottomNavButtons({
 	onBack,

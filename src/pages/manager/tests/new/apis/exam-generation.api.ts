@@ -1,4 +1,4 @@
-import promptApi from "../../../../../infra-test/api/prompt.api";
+import promptApi from "../../../../../features/tests/api/prompt.api";
 import { LanguageType, Topic } from "../common/base-schema";
 
 const promptApiCustom = promptApi.injectEndpoints({
