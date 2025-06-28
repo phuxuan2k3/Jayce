@@ -4,14 +4,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChartPie, faHistory } from "@fortawesome/free-solid-svg-icons";
 import SetUpPage from "./setup";
 import HistoryPage from "./history";
+import { useLanguage } from "../../../../LanguageProvider";
 
-const navItems = [
-  { id: "Interview", label: "Interview", icon: faChartPie },
-  { id: "History", label: "History", icon: faHistory },
+const navTabKeys = [
+  { id: "Interview", labelKey: "tab_interview", icon: faChartPie },
+  { id: "History", labelKey: "tab_history", icon: faHistory },
 ];
 
 const InterviewPage = () => {
   const [tab, setTab] = useState("Interview");
+  const { t } = useLanguage();
 
   const renderTabContent = () => {
     switch (tab) {
@@ -25,17 +27,17 @@ const InterviewPage = () => {
   };
 
   return (
-    <div className="bg-white h-fit  mx-12">
-      <div className="text-3xl font-black font-arya  mt-4 text-primary-toned-600 drop-shadow">
-        Interview Result
+    <div className="bg-white h-fit mx-12">
+      <div className="text-3xl font-black font-arya mt-4 text-primary-toned-600 drop-shadow">
+        {t("interview_result_title")}
       </div>
-      <div className=" font-arya mb-4 text-gray-700">
-        <p>Congratulations on completing the interview!</p>
-        <p>Let's take a look at the result!</p>
+      <div className="font-arya mb-4 text-gray-700">
+        <p>{t("interview_result_congrats")}</p>
+        <p>{t("interview_result_let_see")}</p>
       </div>
       <Box className="w-full flex justify-center ">
         <div className="w-[340px] h-[500px] bg-white/90 rounded-3xl shadow p-6 flex flex-col gap-2 items-center mr-10">
-          {navItems.map((item) => {
+          {navTabKeys.map((item) => {
             const isSelected = tab === item.id;
             return (
               <button
@@ -60,7 +62,7 @@ const InterviewPage = () => {
                     isSelected ? "text-white" : "text-primary-toned-600"
                   }`}
                 />
-                <span>{item.label}</span>
+                <span>{t(item.labelKey)}</span>
               </button>
             );
           })}

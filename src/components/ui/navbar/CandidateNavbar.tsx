@@ -11,6 +11,7 @@ import { useAppSelector } from "../../../app/hooks";
 import paths from "../../../router/paths";
 import { useLogoutMutation } from "../../../features/auth/api/logout.api";
 import { authSelectors } from "../../../features/auth/store/authSlice";
+import LanguageSwitcher from "./Language";
 
 const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -215,6 +216,7 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                   onClick={() => setOpenResource(true)}
                 >
                   <span>Resources</span>
+
                   <FontAwesomeIcon
                     className="ps-2 align-middle"
                     icon={faChevronDown}
@@ -298,6 +300,7 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
             )}
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            <LanguageSwitcher />
             <div className="relative ml-3">
               <div>
                 <FontAwesomeIcon

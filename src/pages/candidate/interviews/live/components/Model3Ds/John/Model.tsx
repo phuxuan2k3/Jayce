@@ -33,7 +33,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { scene, ...gltfRest } = useGLTF("/models/Peter.glb") as GLTFResult;
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
 
-  const fbx = useFBX("/animations/Idle.fbx");
+  const fbx = useFBX("/animations/Stand.fbx");
 
   const group = useRef<THREE.Group>(null);
 
@@ -64,6 +64,20 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
     }
   }, [actions]);
 
+  // const { scene } = useGLTF("/models/Peter.glb");
+  // const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
+  // const { nodes, materials } = useGraph(clone) as GLTFResult;
+
+  // // Self Inject:
+  // const groupRef = useRef<THREE.Group>(null);
+  // useConfigModel({
+  //   modelRender: {
+  //     nodes: nodes as any,
+  //     materials: materials as any,
+  //   },
+  //   groupRef,
+  // });
+  // const group = useRef<THREE.Group>(null);
   return (
     <group ref={group} {...props} dispose={null}>
       <primitive object={nodes.Hips} />

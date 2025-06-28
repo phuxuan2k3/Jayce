@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SetUpStep1 from "./step1";
 import SetUpStep2 from "./step2";
+import { useLanguage } from "../../../../LanguageProvider";
 
 export interface JobSetupData {
   position: string;
@@ -21,8 +22,10 @@ const SetUpPage = () => {
     setJobData((prev) => ({ ...prev, ...newData }));
   };
 
+  const { t } = useLanguage();
+
   return (
-    <div className=" bg-opacity-5 h-[100%] rounded-3xl">
+    <div className="bg-opacity-5 h-[100%] rounded-3xl">
       <div className=" font-asap flex-wrap flex justify-center w-[800px] mx-auto gap-1.5">
         <div className="flex font-arya items-center font-bold text-[28px] w-full mt-6">
           <div
@@ -31,7 +34,7 @@ const SetUpPage = () => {
           >
             <span>1</span>
           </div>
-          <span className="ms-4">Job description</span>
+          <span className="ms-4">{t("job_des")}</span>
           <hr className="flex-1" />
           <div
             onClick={() => setStep(2)}
@@ -41,7 +44,7 @@ const SetUpPage = () => {
           >
             2
           </div>
-          <span className="ms-4">Interview context & models</span>
+          <span className="ms-4">{t("interview_context_models")}</span>
         </div>
 
         {step === 1 && (
