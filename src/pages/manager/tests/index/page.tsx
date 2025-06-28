@@ -1,62 +1,101 @@
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../router/paths";
-import ExamList from "./components/ExamList";
-import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
-import Sidebar from "./components/Sidebar";
-import { useAppDispatch } from "../../../../app/hooks";
-import deleteExamSlice from "../../../../infra-test/stores/deleteExamSlice";
+import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
 import { useCallback, useState } from "react";
-import { Filter } from "./type";
-import { useGetExamsQuery } from "../../../../infra-test/enhance-api/exam-manage.api-enhance";
+import { ClipboardPlus } from "lucide-react";
+import { useGetTestsQuery } from "../../../../features/tests/api/test.api-gen-v2";
+import useGetUserId from "../../../../features/tests/hooks/useGetUserId";
+import TestCoreCard from "../../../../features/tests/ui-items/test/TestCoreCard";
+import FetchStateCover2 from "../../../../features/tests/ui/fetch-states/FetchStateCover2";
+import MyPaginationSection from "../../../../features/tests/ui/MyPaginationSection";
+import QuickAction from "../../../../features/tests/ui/sidebar/primitive/QuickAction";
+import SidebarActions from "../../../../features/tests/ui/sidebar/primitive/SidebarActions";
+import { QuerySortValues } from "../../../../features/tests/types/query";
+
+type Filter = {
+	page: number;
+	perPage: number;
+	searchTitle?: string;
+	sortCreatedAt?: QuerySortValues;
+	sortTitle?: QuerySortValues;
+}
 
 const ManagerTestsPage = () => {
 	const navigate = useNavigate();
-	const dispatch = useAppDispatch();
+	const userId = useGetUserId();
+
 	const [filter, setFilter] = useState<Filter>({
 		page: 1,
 		perPage: 10,
 		searchTitle: "",
-		sort: "createdAt",
+		sortCreatedAt: undefined,
+		sortTitle: undefined,
 	});
 
-	const examsQuery = useGetExamsQuery({
-		...filter,
+	const examsQuery = useGetTestsQuery({
+		mode: "EXAM",
+		authorId: userId,
+		page: filter.page,
+		perPage: filter.perPage,
+		searchTitle: filter.searchTitle,
+		sortCreatedAt: filter.sortCreatedAt,
+		sortTitle: filter.sortTitle,
 	});
 
 	const handleExamView = useCallback((testId: string) => {
 		navigate(paths.manager.tests.in(testId).ROOT);
 	}, []);
 
-	const exams = examsQuery.data?.data || [];
-	const totalPages = examsQuery.data?.totalPages || 1;
-
-
 	return (
-		<NewLeftLayoutTemplate
+		<LeftLayoutTemplate
 			header={
-				<NewLeftLayoutTemplate.Header
+				<LeftLayoutTemplate.Header
 					title="Exams Management"
 					description="Manage all your exams."
 				/>
 			}
 			left={
-				<Sidebar />
+				<SidebarActions title='Quick Actions'>
+					<QuickAction
+						title='Create exam'
+						icon={<ClipboardPlus size={20} />}
+						description='Create a new exam'
+						onClick={() => navigate(paths.manager.tests.NEW)}
+					/>
+					<QuickAction
+						title='Manage your exams'
+						icon={<ClipboardPlus size={20} />}
+						description='View and Edit or Delete your exams'
+						onClick={() => { }}
+					/>
+				</SidebarActions>
 			}
 		>
-			<ExamList
-				tests={exams}
-				totalPages={totalPages}
-				onDelete={(exam) => dispatch(deleteExamSlice.actions.setDeleteExam(exam))}
-				onTestClick={handleExamView}
-				onPageChange={(page) => {
-					setFilter((prev) => ({
-						...prev,
-						page,
-					}));
-				}}
-			/>
+			<FetchStateCover2
+				fetchState={examsQuery}
+				dataComponent={({ totalPages, total, data }) => (
+					<div className="flex flex-col gap-8 mt-4 mb-4 items-center">
+						<div className="flex-1 flex flex-col gap-4 px-4">
+							{data.map((test, index) => (
+								<TestCoreCard
+									key={index}
+									test={test}
+									onClick={() => handleExamView(test.id)}
+								/>
+							))}
+						</div>
 
-		</NewLeftLayoutTemplate>
+						<MyPaginationSection
+							onPageChange={(page: number) => setFilter(prev => ({ ...prev, page }))}
+							totalPages={totalPages}
+							page={filter.page}
+							perPage={filter.perPage}
+							total={total}
+						/>
+					</div>
+				)}
+			/>
+		</LeftLayoutTemplate>
 	);
 }
 

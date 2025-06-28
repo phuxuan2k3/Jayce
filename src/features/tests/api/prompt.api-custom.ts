@@ -1,4 +1,4 @@
-import promptApi from "../base/prompt.api";
+import promptApi from "./prompt.api";
 
 const promptApiCustom = promptApi.injectEndpoints({
 	endpoints: (builder) => ({
@@ -55,8 +55,8 @@ export type GetSuggestQuestionsRequest = {
 export type GetSuggestQuestionsResponse = {
 	questions: {
 		text: string;
-		options: string[];
 		points: number;
+		options: string[];
 		correctOption: number;
 	}[];
 };

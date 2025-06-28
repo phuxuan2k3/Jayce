@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "./app/hooks.ts";
 import { authActions, authSelectors } from "./features/auth/store/authSlice.ts";
 import { useRefreshMutation } from "./features/auth/api/auth.api.ts";
 import { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
 
 function App() {
 	const dispatch = useAppDispatch();
@@ -27,8 +28,12 @@ function App() {
 			}
 		}
 	}, []);
+
 	return (
-		<RouterProvider router={router} />
+		<>
+			<RouterProvider router={router} />
+			<ToastContainer />
+		</>
 	);
 }
 

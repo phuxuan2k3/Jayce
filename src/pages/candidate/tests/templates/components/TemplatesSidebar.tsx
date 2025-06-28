@@ -1,4 +1,4 @@
-import SidebarActions from '../../../../../infra-test/ui/sidebar/primitive/SidebarActions';
+import SidebarActions from "../../../../../features/tests/ui/sidebar/primitive/SidebarActions";
 
 interface TemplatesSidebarProps {
 	searchTerm: string;

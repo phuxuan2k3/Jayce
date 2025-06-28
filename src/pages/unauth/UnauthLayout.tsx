@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import UnauthNavbar from "../../components/ui/navbar/UnauthNavbar";
-import FooterLong from "../../components/ui/footer/FooterLong";
+import UnauthNavbar from "../../components/partials/UnauthNavbar";
+import FooterLong from "../../components/partials/FooterLong";
 import RoleGuard from "../../components/wrapper/RoleGuard";
 import paths from "../../router/paths";
 import { Role } from "../../features/auth/types/auth";
@@ -13,11 +13,11 @@ export default function UnauthLayout() {
 			alternativeUrl={[
 				{
 					role: Role.Candidate,
-					alternativeUrl: paths.candidate._layout
+					alternativeUrl: paths.candidate.ROOT
 				},
 				{
 					role: Role.Manager,
-					alternativeUrl: paths.manager._layout
+					alternativeUrl: paths.manager.ROOT
 				},
 			]}>
 			<div className="flex flex-col min-h-screen">

@@ -1,14 +1,18 @@
 import { useState } from 'react';
-import NewLeftLayoutTemplate from '../../../../../components/layouts/NewLeftLayoutTemplate'
-import AttemptsTab from './components/attempts-tab';
+import LeftLayoutTemplate from '../../../../../components/layouts/LeftLayoutTemplate'
 import Sidebar from './components/Sidebar';
 import QuestionsTab from './components/questions-tab';
 import ExamInformationTab from './components/exam-information-tab';
-import { TabMode } from './type';
-import ParticipantsTab from './components/participants-tab';
-import useGetTestIdParams from '../../../../../infra-test/hooks/useGetTestIdParams';
+import { useNavigate } from 'react-router-dom';
+import paths from '../../../../../router/paths';
+import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
+import AttemptsTab from '../../../../../features/tests/ui-shared/test-pages/attempts-tab';
+import ParticipantsTab from '../../../../../features/tests/ui-shared/test-pages/participants-tab';
+
+export type TabMode = 'info' | 'questions' | 'attempts' | 'participants';
 
 export default function ManagerTestPage() {
+	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
 
 	const [mode, setMode] = useState<TabMode>('info');
@@ -25,19 +29,17 @@ export default function ManagerTestPage() {
 				/>;
 			case 'attempts':
 				return <AttemptsTab
-					testId={testId}
+					onAttemptClick={(attempt) => navigate(paths.manager.tests.in(testId).attempts.in(attempt.id).ROOT)}
 				/>;
 			case 'participants':
-				return <ParticipantsTab
-					testId={testId}
-				/>;
+				return <ParticipantsTab />;
 		}
 	}
 
 	return (
-		<NewLeftLayoutTemplate
+		<LeftLayoutTemplate
 			header={
-				<NewLeftLayoutTemplate.Header
+				<LeftLayoutTemplate.Header
 					title="Exams Management"
 					description="Manage all your exams."
 				/>
@@ -49,7 +51,7 @@ export default function ManagerTestPage() {
 			/>}
 		>
 			{getTab(mode)}
-		</NewLeftLayoutTemplate>
+		</LeftLayoutTemplate>
 	);
 }
 

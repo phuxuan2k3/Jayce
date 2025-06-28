@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
-import NewLeftLayoutTemplate from "../../../../components/layouts/NewLeftLayoutTemplate";
+import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
 import TestGenerationSidebar from "./components/ui/TestGenerationSidebar";
 import TemplateSelectionModal from "./components/ui/TemplateSelectionModal";
 import SaveTemplateDialog from "./components/ui/SaveTemplateDialog";
-import { TemplateCore } from "../../../../infra-test/core/test.model";
 import TestGenerationStepper from './components/ui/TestGenerationStepper';
 import PracticeBasicInfoStep from './components/steps/PracticeBasicInfoStep';
 import PracticePromptConfigStep from './components/steps/PracticePromptConfigStep';
@@ -15,6 +14,7 @@ import ApiErrorDialog from './components/ui/ApiErrorDialog';
 import { PracticeGenerationActionTypes } from './reducers/reducer-types';
 import { PracticeGenerationData } from './types';
 import usePracticeGenerationSelectors from './reducers/practice-generation.selector';
+import { TemplateCoreSchema } from '../../../../features/tests/api/test.api-gen-v2';
 
 const CandidateTestsGeneratePage: React.FC = () => {
 	const [state, dispatch] = useReducer(practiceGenerationReducer, initialState);
@@ -73,7 +73,7 @@ const CandidateTestsGeneratePage: React.FC = () => {
 		setActiveStep((prev) => prev - 1);
 	};
 
-	const handleSelectTemplate = (template: TemplateCore) => {
+	const handleSelectTemplate = (template: TemplateCoreSchema) => {
 		dispatch({
 			type: PracticeGenerationActionTypes.APPLY_TEMPLATE,
 			payload: template,
@@ -120,9 +120,9 @@ const CandidateTestsGeneratePage: React.FC = () => {
 
 	return (
 		<>
-			<NewLeftLayoutTemplate
+			<LeftLayoutTemplate
 				header={
-					<NewLeftLayoutTemplate.Header
+					<LeftLayoutTemplate.Header
 						title="Generate Practice Test"
 						description="Create a customized test using AI."
 					/>
@@ -159,7 +159,7 @@ const CandidateTestsGeneratePage: React.FC = () => {
 						)}
 					</div>
 				</div>
-			</NewLeftLayoutTemplate>
+			</LeftLayoutTemplate>
 
 			{/* Template Selection Modal */}
 			<TemplateSelectionModal

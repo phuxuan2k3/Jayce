@@ -1,39 +1,24 @@
 import React from 'react'
 
-export default function LeftLayoutTemplate({
-	header: {
-		title,
-		description,
-	},
+function LeftLayoutTemplate({
+	header,
 	children,
-	left: right,
+	left,
 	aboveMain,
 }: {
-	header: {
-		title: string;
-		description?: string;
-	};
+	header?: React.ReactNode;
 	children: React.ReactNode;
 	left: React.ReactNode;
 	aboveMain?: React.ReactNode;
 }) {
 	return (
-		<div className="container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-[auto_1fr] gap-4 lg:gap-8 mx-auto mt-8 mb-16 h-full">
-			<header className="flex gap-x-4 lg:col-span-2">
-				<div className='flex-1 flex flex-col'>
-					<div className="flex justify-between items-center">
-						<h1 className="text-2xl md:text-3xl font-bold">{title}</h1>
-					</div>
-					{description && (
-						<span className="text-sm text-primary-toned-500 line-clamp-2 overflow-hidden text-ellipsis">
-							{description}
-						</span>
-					)}
-				</div>
-			</header>
+		<div className="container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-[auto_1fr] gap-4 lg:gap-8 mx-auto mt-4 mb-8 h-full">
+			{header && <header className="flex gap-x-4 lg:col-span-2">
+				{header}
+			</header>}
 
 			<aside className="lg:row-start-2 lg:col-start-1 w-full h-full">
-				{right}
+				{left}
 			</aside>
 
 			<main className='lg:row-start-2 lg:col-start-2 w-full h-full flex flex-col items-stretch gap-2'>
@@ -47,3 +32,28 @@ export default function LeftLayoutTemplate({
 		</div>
 	)
 }
+
+const Header = ({
+	title,
+	description,
+}: {
+	title: string;
+	description?: string;
+}) => {
+	return (
+		<div className='mt-2 flex-1 flex flex-col'>
+			<div className="flex justify-between items-center">
+				<h1 className="text-2xl md:text-3xl font-bold">{title}</h1>
+			</div>
+			{description && (
+				<span className="text-sm text-primary-toned-500 line-clamp-2 overflow-hidden text-ellipsis">
+					{description}
+				</span>
+			)}
+		</div>
+	)
+}
+
+LeftLayoutTemplate.Header = Header;
+
+export default LeftLayoutTemplate;

@@ -1,9 +1,9 @@
 import React from 'react';
-import { TemplateCore } from "../../../../../infra-test/core/test.model";
+import { TemplateCoreSchema } from '../../../../../features/tests/api/test.api-gen-v2';
 
 interface DeleteTemplateModalProps {
 	isOpen: boolean;
-	template: TemplateCore | null;
+	template: TemplateCoreSchema | null;
 	onClose: () => void;
 	onConfirm: () => void;
 }

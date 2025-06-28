@@ -1,4 +1,4 @@
-import { TemplateCore } from "../../../../../infra-test/core/test.model";
+import { TemplateCoreSchema } from "../../../../../features/tests/api/test.api-gen-v2";
 import { PracticeGenerationData, PracticeGenerationLoadingState } from "../types";
 
 export type PracticeGenerationReducer = {
@@ -8,7 +8,7 @@ export type PracticeGenerationReducer = {
 
 export type PracticeGenerationState = {
 	data: PracticeGenerationData;
-	template: TemplateCore | null;
+	template: TemplateCoreSchema | null;
 	error: string | null;
 	apiError: string | null;
 	loadingState: PracticeGenerationLoadingState;
@@ -36,5 +36,5 @@ export type PracticeGenerationAction = {
 	payload: string | null;
 } | {
 	type: PracticeGenerationActionTypes.APPLY_TEMPLATE;
-	payload: TemplateCore | null;
+	payload: TemplateCoreSchema | null;
 }

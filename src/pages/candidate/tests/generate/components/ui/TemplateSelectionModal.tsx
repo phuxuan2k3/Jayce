@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { TemplateCore } from '../../../../../../infra-test/core/test.model';
 import { XCircle, Settings, Search } from 'lucide-react';
 import paths from '../../../../../../router/paths';
 import { useNavigate } from 'react-router-dom';
 import MyPagination from '../../../../../../components/ui/common/MyPagination';
-import TemplateCard from '../../../templates/components/TemplateCard';
-import { useGetTemplatesQuery } from '../../../../../../features/tests/api/test.api-gen';
+import { TemplateCoreSchema, useGetTemplatesQuery } from '../../../../../../features/tests/api/test.api-gen-v2';
+import TemplateCard from '../../../../../../features/tests/ui-items/template/TemplateCard';
 
 type Filter = {
 	searchName: string;
@@ -15,7 +14,7 @@ type Filter = {
 interface TemplateSelectionModalProps {
 	isOpen: boolean;
 	onClose: () => void;
-	onSelectTemplate: (template: TemplateCore) => void;
+	onSelectTemplate: (template: TemplateCoreSchema) => void;
 }
 
 const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
@@ -117,8 +116,8 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 								{pagedTemplates.data.map((template) => (
 									<TemplateCard
 										key={template.id}
-										data={template}
-										onSelectTemplate={(template) => {
+										template={template}
+										onClick={() => {
 											onSelectTemplate(template);
 											onClose();
 										}}

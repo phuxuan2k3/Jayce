@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import QuickAction from '../../../../../../infra-test/ui/sidebar/primitive/QuickAction';
 import paths from '../../../../../../router/paths';
 import { ArrowLeft, Save, List } from 'lucide-react';
-import SidebarActions from '../../../../../../infra-test/ui/sidebar/primitive/SidebarActions';
+import SidebarActions from '../../../../../../features/tests/ui/sidebar/primitive/SidebarActions';
+import QuickAction from '../../../../../../features/tests/ui/sidebar/primitive/QuickAction';
 
 type TestGenerationSidebarProps = {
 	onSaveTemplate?: () => void;

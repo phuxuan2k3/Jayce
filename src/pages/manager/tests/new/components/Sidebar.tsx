@@ -1,7 +1,7 @@
 import { Upload, WandSparkles } from "lucide-react";
-import ManagerSidebar from "../../../../../infra-test/ui/sidebar/manager/ManagerSidebar";
-import QuickAction from "../../../../../infra-test/ui/sidebar/primitive/QuickAction";
-import { CreateTab } from "../common/create-tabs-types";
+import { CreateTab } from "../common/types";
+import ManagerSidebar from "../../../../../features/tests/ui-shared/sidebar/ManagerSidebar";
+import QuickAction from "../../../../../features/tests/ui/sidebar/primitive/QuickAction";
 
 export default function Sidebar({
 	tab,

@@ -1,6 +1,6 @@
 import React from 'react';
-import { TemplateCore } from "../../../../../../infra-test/core/test.model";
 import { ListFilter } from 'lucide-react';
+import { TemplateCoreSchema } from '../../../../../../features/tests/api/test.api-gen-v2';
 
 type PracticeInfo = {
 	title: string;
@@ -12,7 +12,7 @@ type PracticeInfo = {
 interface Props {
 	info: PracticeInfo;
 	onInfoChange: (info: PracticeInfo) => void;
-	selectedTemplate: TemplateCore | null;
+	selectedTemplate: TemplateCoreSchema | null;
 	onSelectTemplateClick: () => void;
 }
 

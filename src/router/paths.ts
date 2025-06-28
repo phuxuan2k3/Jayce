@@ -15,39 +15,23 @@ const paths = {
 		PROVIDE_COMPANIES: "/auth/provide-companies",
 	},
 	candidate: {
-		_layout: "/candidate/",
+		ROOT: "/candidate/",
 		tests: {
 			ROOT: "/candidate/tests/",
-			in(id: number | string = ":testId") {
-				return {
-					_layout: `/candidate/tests/${id}/`,
-					PRACTICE: `/candidate/tests/${id}/practice/`,
-					TAKE_PRACTICE: `/candidate/tests/${id}/take-practice/`,
-					EXAM: `/candidate/tests/${id}/exam/`,
-					TAKE_EXAM: `/candidate/tests/${id}/exam/take-exam/`,
-				};
-			},
-			attempts: {
-				// TODO: add this page: '/candidate/attempts',
-				in(id: number | string = ":attemptId") {
-					return {
-						ROOT: `/candidate/tests/attempts/${id}/`,
-					};
-				},
-			},
+			in: (testId: number | string = ":testId") => ({
+				ROOT: `/candidate/tests/${testId}/`,
+				PRACTICE: `/candidate/tests/${testId}/practice/`,
+				EXAM: `/candidate/tests/${testId}/exam/`,
+				attempts: {
+					in: (attemptId: number | string = ":attemptId") => ({
+						ROOT: `/candidate/tests/${testId}/attempts/${attemptId}/`,
+						DO: `/candidate/tests/${testId}/attempts/${attemptId}/do/`,
+					}),
+				}
+			}),
 			TEMPLATES: `/candidate/tests/templates/`,
 			GENERATE: `/candidate/tests/generate/`,
 			JOIN: `/candidate/tests/join/`,
-		},
-		scenarios: {
-			_layout: "/candidate/scenarios/",
-			in(id: number | string = ":scenarioId") {
-				return {
-					_layout: `/candidate/scenarios/${id}/`,
-					ANSWER: `/candidate/scenarios/${id}/answer/`,
-					REVIEW: `/candidate/scenarios/${id}/review/`,
-				};
-			},
 		},
 		interview: {
 			_layout: "/candidate/interviews",
@@ -61,43 +45,19 @@ const paths = {
 		},
 	},
 	manager: {
-		_layout: "/manager",
+		ROOT: "/manager",
 		tests: {
 			ROOT: "/manager/tests/",
-			in(id: number | string = ":testId") {
-				return {
-					ROOT: `/manager/tests/${id}/`,
-					EDIT: `/manager/tests/${id}/edit/`,
-				};
-			},
-			attempts: {
-				in(id: number | string = ":attemptId") {
-					return {
-						ROOT: `/manager/tests/attempts/${id}/`,
-					};
+			in: (testId: number | string = ":testId") => ({
+				ROOT: `/manager/tests/${testId}/`,
+				EDIT: `/manager/tests/${testId}/edit/`,
+				attempts: {
+					in: (attemptId: number | string = ":attemptId") => ({
+						ROOT: `/manager/tests/${testId}/attempts/${attemptId}/`,
+					}),
 				},
-			},
+			}),
 			NEW: `/manager/tests/new/`,
-		},
-		scenario: {
-			_layout: "/manager/scenarios/",
-			in(id: number | string = ":scenarioId") {
-				return {
-					_layout: `/manager/scenarios/${id}/`,
-					SUBMISSIONS: `/manager/scenarios/${id}/submissions/`,
-					EDIT_DETAIL: `/manager/scenarios/${id}/edit-detail/`,
-					EDIT_QUESTIONS: `/manager/scenarios/${id}/edit-questions/`,
-				};
-			},
-			submissions: {
-				in(id: number | string = ":submissionId") {
-					return {
-						_layout: `/manager/scenarios/submissions/${id}/`,
-					};
-				},
-			},
-			CREATE_DETAIL: `/manager/scenarios/create-detail/`,
-			CREATE_QUESTIONS: `/manager/scenarios/create-questions/`,
 		},
 		profile: {
 			_layout: "/manager/profile/",

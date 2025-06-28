@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { useLazyGetSuggestOutlinesQuery } from '../../../../../features/tests/api/prompt.api-custom';
 import { TemplateFormData } from './types';
+import { cn } from '../../../../../app/cn';
+import { Trash2 } from 'lucide-react';
+import { useLazyGetSuggestOutlinesQuery } from '../../../../../features/tests/api/prompt.api-custom';
+import MyButton from '../../../../../features/tests/ui/buttons/MyButton';
 
 interface Props {
 	template: TemplateFormData;
@@ -19,8 +22,10 @@ const OutlinesInput: React.FC<Props> = ({
 	const [suggestions, setSuggestions] = useState<string[]>([]);
 	const [getOutlineSuggestions] = useLazyGetSuggestOutlinesQuery();
 
+	const MAX_OUTLINES = 5;
+
 	const handleAddOutline = () => {
-		if (newOutline.trim()) {
+		if (newOutline.trim() && outlines.length < MAX_OUTLINES) {
 			onOutlinesChange([...outlines, newOutline]);
 			setNewOutline('');
 		}
@@ -48,14 +53,19 @@ const OutlinesInput: React.FC<Props> = ({
 	};
 
 	const handleAddSuggestion = (suggestion: string) => {
-		onOutlinesChange([...outlines, suggestion]);
-		// Remove the suggestion from the list
-		setSuggestions(suggestions.filter((s) => s !== suggestion));
+		if (outlines.length < MAX_OUTLINES) {
+			onOutlinesChange([...outlines, suggestion]);
+			setSuggestions(suggestions.filter((s) => s !== suggestion));
+		}
 	};
 
 	const handleAddAllSuggestions = () => {
-		onOutlinesChange([...outlines, ...suggestions]);
-		setSuggestions([]);
+		const availableSlots = MAX_OUTLINES - outlines.length;
+		if (availableSlots > 0) {
+			const toAdd = suggestions.slice(0, availableSlots);
+			onOutlinesChange([...outlines, ...toAdd]);
+			setSuggestions(suggestions.slice(toAdd.length));
+		}
 	};
 
 	const handleClearSuggestions = () => {
@@ -67,53 +77,56 @@ const OutlinesInput: React.FC<Props> = ({
 			<label className="block text-sm font-medium text-gray-700 mb-1">
 				Outlines
 			</label>
-			<div className="space-y-3 mb-3">
+
+			{outlines.length > 0 && <div className="space-y-3 mb-3">
 				{outlines.map((outline, idx) => (
 					<div
 						key={idx}
-						className="p-3 border border-primary-toned-300 rounded-md bg-primary-toned-50 relative text-primary-toned-700"
+						className="py-1 px-3 border border-primary-toned-300 rounded-md bg-primary-toned-50 text-primary-toned-700 flex flex-row justify-between items-center"
 					>
+						<p className="text-sm">{outline}</p>
 						<button
-							type="button"
-							className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+							className='bg-transparent text-red-500 hover:text-red-700 hover:bg-red-100 p-2 rounded-full transition-colors'
 							onClick={() => handleRemoveOutline(idx)}
 						>
-							×
+							<Trash2 size={18} />
 						</button>
-						<p className="text-sm">{outline}</p>
 					</div>
 				))}
-			</div>
-			<div className="space-y-2">
+			</div>}
+
+			<div className="flex flex-col">
 				<input
 					type="text"
 					placeholder="Enter outline text..."
 					value={newOutline}
 					onChange={(e) => setNewOutline(e.target.value)}
-					className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-toned-500"
+					className="w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-toned-500"
 				/>
 				<div className="flex gap-2">
-					<button
-						type="button"
-						onClick={handleAddOutline}
-						className="flex-1 px-4 py-2 bg-primary-toned-600 text-white rounded-md hover:bg-primary-toned-700"
-					>
-						Add Outline
-					</button>
-					<button
-						type="button"
+					<MyButton
 						onClick={handleGenerateSuggestions}
 						disabled={isGeneratingSuggestions}
-						className={`flex-1 px-4 py-2 rounded-md ${isGeneratingSuggestions
-							? 'bg-gray-400 cursor-not-allowed'
-							: 'bg-green-600 hover:bg-green-700 text-white'
-							}`}
+						className={cn('flex-1', isGeneratingSuggestions && 'bg-gray-400 cursor-not-allowed')}
+						variant={"secondary"}
 					>
 						{isGeneratingSuggestions
-							? 'Generating...'
-							: 'Get Suggestions'}
-					</button>
+							? <span>Generating...</span>
+							: <span>Get Suggestions</span>
+						}
+					</MyButton>
+
+					<MyButton
+						onClick={handleAddOutline}
+						className={cn('flex-1', outlines.length >= MAX_OUTLINES && 'bg-gray-400 cursor-not-allowed')}
+						disabled={outlines.length >= MAX_OUTLINES}
+					>
+						Add Outline
+					</MyButton>
 				</div>
+				{outlines.length >= MAX_OUTLINES && (
+					<p className="text-xs text-red-500 mt-2">You can only add up to 5 outlines.</p>
+				)}
 			</div>
 
 			{suggestions.length > 0 && (
@@ -123,36 +136,34 @@ const OutlinesInput: React.FC<Props> = ({
 							AI Suggestions
 						</h3>
 						<div className="flex gap-2">
-							<button
-								type="button"
+							<MyButton
 								onClick={handleAddAllSuggestions}
-								className="text-xs px-2 py-1 bg-primary-toned-600 text-white rounded hover:bg-primary-toned-700"
+								size={"small"}
 							>
 								Add All
-							</button>
-							<button
-								type="button"
+							</MyButton>
+							<MyButton
 								onClick={handleClearSuggestions}
-								className="text-xs px-2 py-1 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+								size={"small"}
+								variant={"gray"}
 							>
 								Clear
-							</button>
+							</MyButton>
 						</div>
 					</div>
 					<div className="space-y-2">
 						{suggestions.map((suggestion, idx) => (
 							<div
 								key={idx}
-								className="p-2 border border-green-200 rounded-md bg-green-50 flex justify-between items-center"
+								className="p-2 border border-primary-toned-200 rounded-md bg-primary-toned-50 flex justify-between items-center"
 							>
-								<p className="text-sm text-gray-800">{suggestion}</p>
-								<button
-									type="button"
+								<p className="text-sm text-primary-toned-800">{suggestion}</p>
+								<MyButton
 									onClick={() => handleAddSuggestion(suggestion)}
-									className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+									size={"small"}
 								>
 									Add
-								</button>
+								</MyButton>
 							</div>
 						))}
 					</div>
