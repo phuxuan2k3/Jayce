@@ -32,13 +32,16 @@ const ModalCheckSound: FC<ModalCheckSoundProps> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const handleStartInterview = async () => {
     // setIsopen(true);
+
     setLoading(true);
     localStorage.setItem("totalQuestion", numQuestion.toString());
     const interviewData = {
       position: data.position,
       experience: data.experience,
       language: language as string,
-      models: "en-GB-RyanNeural",
+      // language: "Vietnamese",
+      models:
+        language === "Vietnamese" ? "vi-VN-HoaiMyNeural" : "en-US-JennyNeural",
       speed: speechRate,
       skills: [data?.skills],
       totalQuestions: numQuestion,
