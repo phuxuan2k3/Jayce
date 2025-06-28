@@ -1,7 +1,7 @@
-import useGetTestIdParams from "../../../../../infra-test/hooks/useGetTestIdParams";
-import { useGetTestsByTestIdQuery, useGetTestsByTestIdQuestionsQuery } from "../../../../../infra-test/api/test.api-gen-v2";
-import { TestConverter } from "../../../../../infra-test/ui-items/test/test-converter";
-import FetchStateCover2 from "../../../../../infra-test/ui/fetch-states/FetchStateCover2";
+import { useGetTestsByTestIdQuery, useGetTestsByTestIdQuestionsQuery } from "../../../../../features/tests/api/test.api-gen-v2";
+import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
+import { TestConverter } from "../../../../../features/tests/ui-items/test/test-converter";
+import FetchStateCover2 from "../../../../../features/tests/ui/fetch-states/FetchStateCover2";
 import ManagerTestEditMain from "./main";
 
 export type EditTabs = "info" | "questions";

@@ -10,7 +10,7 @@ import Step4 from './step-4';
 import useBuiderStepsData from './hooks/useBuilderStepsData';
 import { AllStepData, getStepInfo, StepInfoKey } from '../common/types';
 
-export default function MainStep({
+export default function BuilderWizzardTabMain({
 	initialData,
 	onDataConfirm,
 }: {

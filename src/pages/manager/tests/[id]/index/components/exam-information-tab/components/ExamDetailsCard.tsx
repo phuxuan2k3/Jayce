@@ -4,8 +4,8 @@ import {
 	faKey, faCalendarAlt, faDoorOpen, faUsers, faEye, faUserLock, faLockOpen, faLock, faCheck,
 } from '@fortawesome/free-solid-svg-icons';
 import { formatDate } from '../utils';
-import MyCard from '../../../../../../../../infra-test/ui/MyCard';
-import { TestFullSchema } from '../../../../../../../../infra-test/api/test.api-gen-v2';
+import { TestFullSchema } from '../../../../../../../../features/tests/api/test.api-gen-v2';
+import MyCard from '../../../../../../../../features/tests/ui/MyCard';
 
 export const ExamDetails = ({
 	exam

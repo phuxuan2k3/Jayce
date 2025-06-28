@@ -1,7 +1,7 @@
-import { QuestionCoreSchema, useGetTestsByTestIdQuestionsQuery } from "../../../../../../../infra-test/api/test.api-gen-v2";
-import FetchStateCover2 from "../../../../../../../infra-test/ui/fetch-states/FetchStateCover2";
-import QuestionPrimitives from "../../../../../../../infra-test/ui-items/question/primitives";
-import QuestionAggregate from "../../../../../../../infra-test/ui-items/question/primitives/QuestionAggregate";
+import { useGetTestsByTestIdQuestionsQuery, QuestionCoreSchema } from "../../../../../../../features/tests/api/test.api-gen-v2";
+import QuestionPrimitives from "../../../../../../../features/tests/ui-items/question/primitives";
+import QuestionAggregate from "../../../../../../../features/tests/ui-items/question/primitives/QuestionAggregate";
+import FetchStateCover2 from "../../../../../../../features/tests/ui/fetch-states/FetchStateCover2";
 
 export default function QuestionsTab({
 	testId,

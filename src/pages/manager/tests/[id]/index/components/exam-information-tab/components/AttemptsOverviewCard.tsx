@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartBar, faTrophy, faHourglassHalf, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { formatTime } from '../utils';
-import MyCard from '../../../../../../../../infra-test/ui/MyCard';
+import MyCard from '../../../../../../../../features/tests/ui/MyCard';
 
 export const AttemptsOverviewCard = ({
 	totalAttempts,

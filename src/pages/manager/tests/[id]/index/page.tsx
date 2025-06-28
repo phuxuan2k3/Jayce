@@ -3,11 +3,11 @@ import LeftLayoutTemplate from '../../../../../components/layouts/LeftLayoutTemp
 import Sidebar from './components/Sidebar';
 import QuestionsTab from './components/questions-tab';
 import ExamInformationTab from './components/exam-information-tab';
-import useGetTestIdParams from '../../../../../infra-test/hooks/useGetTestIdParams';
-import ParticipantsTab from '../../../../../infra-test/ui-shared/participants-tab';
-import AttemptsTab from '../../../../../infra-test/ui-shared/attempts-tab';
 import { useNavigate } from 'react-router-dom';
 import paths from '../../../../../router/paths';
+import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
+import AttemptsTab from '../../../../../features/tests/ui-shared/test-pages/attempts-tab';
+import ParticipantsTab from '../../../../../features/tests/ui-shared/test-pages/participants-tab';
 
 export type TabMode = 'info' | 'questions' | 'attempts' | 'participants';
 

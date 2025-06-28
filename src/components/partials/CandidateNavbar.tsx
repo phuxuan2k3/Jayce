@@ -33,7 +33,7 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
 	};
 
 	const handleLogoClick = () => {
-		navigate(paths.candidate._layout);
+		navigate(paths.candidate.ROOT);
 	};
 
 	const [openPractice, setOpenPractice] = useState(false);

@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { ExamPersistCoreSchema } from '../../../../../infra-test/ui-items/test/types';
 import {
 	ExamHeader,
 	ExamSummary,
@@ -8,6 +7,7 @@ import {
 	PublishFooter
 } from './components';
 import { calculateExamStats } from './utils';
+import { ExamPersistCoreSchema } from '../../../../../features/tests/ui-items/test/types';
 
 export default function PublishTab({
 	examPersist,

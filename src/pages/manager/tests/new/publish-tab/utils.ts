@@ -1,4 +1,4 @@
-import { QuestionPersistCoreSchema } from "../../../../../infra-test/ui-items/question/types";
+import { QuestionPersistCoreSchema } from "../../../../../features/tests/ui-items/question/types";
 
 export const formatDateDisplay = (date: Date): string => {
 	return date.toLocaleDateString('en-US', {

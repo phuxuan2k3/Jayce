@@ -1,5 +1,5 @@
-import { QuestionPersistCoreSchema } from "../../../../../infra-test/ui-items/question/types";
-import { ExamPersistCoreSchema } from "../../../../../infra-test/ui-items/test/types";
+import { QuestionPersistCoreSchema } from "../../../../../features/tests/ui-items/question/types";
+import { ExamPersistCoreSchema } from "../../../../../features/tests/ui-items/test/types";
 import { GetGenerateExamQuestionsApiRequest, GetGenerateExamQuestionsApiResponse } from "../apis/exam-generation.api";
 import { LanguageType } from "./base-schema";
 import { AllStepData } from "./types";

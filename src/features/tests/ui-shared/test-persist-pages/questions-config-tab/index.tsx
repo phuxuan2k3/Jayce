@@ -1,9 +1,9 @@
 import { Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { QuestionPersistCoreSchema } from "../../ui-items/question/types";
-import QuestionPersistCard from "../../ui-items/question/form/QuestionPersist";
+import QuestionPersistCard from "../../../ui-items/question/form/QuestionPersist";
+import { QuestionPersistCoreSchema } from "../../../ui-items/question/types";
 
-const QuestionsTab = ({
+const QuestionsConfigTab = ({
 	questions,
 	onQuuestionAdd,
 	onQuestionUpdate,
@@ -80,4 +80,4 @@ const QuestionsTab = ({
 	);
 }
 
-export default QuestionsTab;
+export default QuestionsConfigTab;

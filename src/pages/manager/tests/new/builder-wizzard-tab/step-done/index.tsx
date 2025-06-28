@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
 import ActionsDialog from './components/ActionsDialog';
 import useArrayPagination from '../../../../../../components/hooks/useArrayPagination';
-import { QuestionPersistCoreSchema } from '../../../../../../infra-test/ui-items/question/types';
-import QuestionPersistCard from '../../../../../../infra-test/ui-items/question/form/QuestionPersist';
 import MyPagination from '../../../../../../components/ui/common/MyPagination';
+import QuestionPersistCard from '../../../../../../features/tests/ui-items/question/form/QuestionPersist';
+import { QuestionPersistCoreSchema } from '../../../../../../features/tests/ui-items/question/types';
 
 export default function StepDone({
 	questions,

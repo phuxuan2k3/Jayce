@@ -13,11 +13,11 @@ export default function UnauthLayout() {
 			alternativeUrl={[
 				{
 					role: Role.Candidate,
-					alternativeUrl: paths.candidate._layout
+					alternativeUrl: paths.candidate.ROOT
 				},
 				{
 					role: Role.Manager,
-					alternativeUrl: paths.manager._layout
+					alternativeUrl: paths.manager.ROOT
 				},
 			]}>
 			<div className="flex flex-col min-h-screen">

@@ -1,7 +1,7 @@
-import ManagerSidebar from '../../../../../../infra-test/ui-shared/sidebar/ManagerSidebar'
-import QuickAction from '../../../../../../infra-test/ui/sidebar/primitive/QuickAction';
 import { ArrowDownToLine, Trash2 } from 'lucide-react';
 import { EditTabs } from '../page';
+import ManagerSidebar from '../../../../../../features/tests/ui-shared/sidebar/ManagerSidebar';
+import QuickAction from '../../../../../../features/tests/ui/sidebar/primitive/QuickAction';
 
 export default function Sidebar({
 	tab,

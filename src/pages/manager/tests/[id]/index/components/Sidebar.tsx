@@ -1,9 +1,9 @@
 import { ArrowLeft, HelpCircle } from 'lucide-react';
-import QuickAction from '../../../../../../infra-test/ui/sidebar/primitive/QuickAction'
-import { TabMode } from '../type';
 import { useNavigate } from 'react-router-dom';
 import paths from '../../../../../../router/paths';
-import ManagerSidebar from '../../../../../../infra-test/ui-shared/sidebar/ManagerSidebar';
+import ManagerSidebar from '../../../../../../features/tests/ui-shared/sidebar/ManagerSidebar';
+import QuickAction from '../../../../../../features/tests/ui/sidebar/primitive/QuickAction';
+import { TabMode } from '../page';
 
 export default function Sidebar({
 	testId,

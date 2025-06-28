@@ -14,7 +14,7 @@ import useGetAttemptIdParams from "../../../../../../../features/tests/hooks/use
 import FetchStateCover2 from "../../../../../../../features/tests/ui/fetch-states/FetchStateCover2";
 import useGetTestIdParams from "../../../../../../../features/tests/hooks/useGetTestIdParams";
 
-export default function CandidateTestDoPage() {
+export default function CandidateTestAttemptsDoPage() {
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
 	const attemptId = useGetAttemptIdParams();

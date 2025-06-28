@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle, faBullseye } from '@fortawesome/free-solid-svg-icons';
-import MyCard from '../../../../../../../../infra-test/ui/MyCard';
+import MyCard from '../../../../../../../../features/tests/ui/MyCard';
 
 export const QuestionsOverviewCard = ({
 	numberOfQuestions,

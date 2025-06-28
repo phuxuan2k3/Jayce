@@ -1,21 +1,22 @@
 import { useCallback, useEffect, useState } from "react";
 import { CreateTab } from "./common/types";
 import LeftLayoutTemplateDefault from "../../../../components/layouts/LeftLayoutTemplateDefault";
-import ConfigTab from "../../../../infra-test/ui-shared/config-tab";
-import Sidebar from "./components/Sidebar";
-import QuestionsTab from "../../../../infra-test/ui-shared/questions-tab";
-import PublishTab from "./publish-tab";
-import BuilderWizzardTab from "./builder-wizzard-tab";
-import ExamPersistValidationErrorsDialog from "../../../../infra-test/ui-shared/ExamPersistValidationErrorsDialog";
 import { useNavigate } from "react-router-dom";
-import { ExamPersistCoreSchema } from "../../../../infra-test/ui-items/test/types";
-import { QuestionPersistCoreSchema } from "../../../../infra-test/ui-items/question/types";
-import { usePostTestsMutation } from "../../../../infra-test/api/test.api-gen-v2";
+import { usePostTestsMutation } from "../../../../features/tests/api/test.api-gen-v2";
+import useZodParseLazy from "../../../../features/tests/hooks/useZodParseLazy";
+import { QuestionPersistCoreSchema } from "../../../../features/tests/ui-items/question/types";
+import { ExamPersistValidationSchema } from "../../../../features/tests/ui-items/test/persist-schema";
+import { ExamPersistCoreSchema } from "../../../../features/tests/ui-items/test/types";
+import ConfigTab from "../../../../features/tests/ui-shared/test-persist-pages/config-tab";
+import ExamPersistValidationErrorsDialog from "../../../../features/tests/ui-shared/test-persist-pages/ExamPersistValidationErrorsDialog";
+import ErrorDialog from "../../../../features/tests/ui/fetch-states/ErrorDialog";
+import LoadingDialog from "../../../../features/tests/ui/fetch-states/LoadingDialog";
 import paths from "../../../../router/paths";
-import useZodParseLazy from "../../../../infra-test/hooks/useZodParseLazy";
-import { ExamPersistValidationSchema } from "../../../../infra-test/ui-items/test/persist-schema";
-import LoadingDialog from "../../../../infra-test/ui/fetch-states/LoadingDialog";
-import ErrorDialog from "../../../../infra-test/ui/fetch-states/ErrorDialog";
+import BuilderWizzardTab from "./builder-wizzard-tab";
+import PublishTab from "./publish-tab";
+import QuestionsConfigTab from "../../../../features/tests/ui-shared/test-persist-pages/questions-config-tab";
+import Sidebar from "./components/Sidebar";
+
 
 export default function ManagerTestNewPage() {
 	const navigate = useNavigate();
@@ -106,7 +107,7 @@ export default function ManagerTestNewPage() {
 					onExamPersistChange={(patch) => setExamPersist((prev) => ({ ...prev, ...patch }))}
 				/>;
 			case "questions":
-				return <QuestionsTab
+				return <QuestionsConfigTab
 					questions={examPersist.questions}
 					onQuestionDelete={(index) => handleRemoveQuestion(index)}
 					onQuuestionAdd={(question) => handleAddQuestion(question)}

@@ -4,15 +4,15 @@ import TopicCard from "./components/TopicCard";
 import HelpText from "./components/HelpText";
 import useTopicsManage from "./hooks/useTopicsManage";
 import useGetTotalQuestions from "./hooks/useGetTotalQuestions";
-import { Step2Data } from "../../common/model-types";
 import { Topic } from "../../common/base-schema";
+import { BuilderStep2Type } from "../../common/step-schema";
 
 export default function Step2({
 	data,
 	onDataChange,
 }: {
-	data: Step2Data;
-	onDataChange: (data: Step2Data) => void;
+	data: BuilderStep2Type;
+	onDataChange: (data: BuilderStep2Type) => void;
 }) {
 	const {
 		addTopic,

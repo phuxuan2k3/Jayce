@@ -10,7 +10,7 @@ import AttemptSidebar from "../../../../../../../features/tests/ui-shared/attemp
 import FetchStateCover2 from "../../../../../../../features/tests/ui/fetch-states/FetchStateCover2";
 
 
-export default function CandidateTestsAttemptPage() {
+export default function CandidateTestAttemptPage() {
 	const attemptId = useGetAttemptIdParams();
 	const testId = useGetTestIdParams();
 	const userId = useGetUserId();

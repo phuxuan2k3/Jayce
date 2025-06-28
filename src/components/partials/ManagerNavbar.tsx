@@ -33,7 +33,7 @@ const ManagerNavbar = ({ showNav = true }: { showNav?: boolean }) => {
 	};
 
 	const handleLogoClick = () => {
-		navigate(paths.manager._layout);
+		navigate(paths.manager.ROOT);
 	};
 
 	const [openAssessment, setOpenAssessment] = useState(false);

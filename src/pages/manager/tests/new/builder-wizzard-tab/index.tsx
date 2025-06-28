@@ -1,14 +1,13 @@
 import { useState } from "react";
 import StepDone from "./step-done";
-import LoadingDialog from "./components/LoadingDialog";
-import ErrorDialog from "./components/ErrorDialog";
-import { parseQueryError } from "../../../../../helpers/fetchBaseQuery.error";
-import MainStep from "./MainStep";
+import BuilderWizzardTabMain from "./main";
 import { useLazyGetGenerateExamQuestionsQuery } from "../apis/exam-generation.api";
 import { transformAllStepDataToGenerateArgs, transformExamPersistToAllStepData, transformGenerateResponseToQuestionsPersistCore } from "../common/transform";
-import { QuestionPersistCoreSchema } from "../../../../../infra-test/ui-items/question/types";
-import { ExamPersistCoreSchema } from "../../../../../infra-test/ui-items/test/types";
 import { AllStepData } from "../common/types";
+import { QuestionPersistCoreSchema } from "../../../../../features/tests/ui-items/question/types";
+import { ExamPersistCoreSchema } from "../../../../../features/tests/ui-items/test/types";
+import ErrorDialog from "../../../../../features/tests/ui/fetch-states/ErrorDialog";
+import LoadingDialog from "../../../../../features/tests/ui/fetch-states/LoadingDialog";
 
 export default function BuilderWizzardTab({
 	initialExam,
@@ -27,18 +26,9 @@ export default function BuilderWizzardTab({
 
 	return (
 		<>
-			{isLoading && (
-				<LoadingDialog />
-			)}
+			{isLoading && <LoadingDialog />}
+			{error && <ErrorDialog error={error} />}
 
-			{error && (
-				<ErrorDialog
-					error={parseQueryError(error) || "An error occurred while generating exam questions."}
-					onRetry={() => {
-						generate(transformAllStepDataToGenerateArgs(mainData));
-					}}
-				/>
-			)}
 			{data != null ? (
 				<StepDone
 					questions={transformGenerateResponseToQuestionsPersistCore(data)}
@@ -50,7 +40,7 @@ export default function BuilderWizzardTab({
 					onGenerationDisposal={onGenerationDisposal}
 				/>
 			) : (
-				<MainStep
+				<BuilderWizzardTabMain
 					initialData={mainData}
 					onDataConfirm={(data) => {
 						setMainData(data);

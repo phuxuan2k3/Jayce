@@ -1,9 +1,9 @@
 import { ExamDetails } from './components/ExamDetailsCard';
 import { AttemptsOverviewCard } from './components/AttemptsOverviewCard';
-import { useGetTestsByTestIdQuery } from "../../../../../../../infra-test/api/test.api-gen-v2";
-import FetchStateCover2 from "../../../../../../../infra-test/ui/fetch-states/FetchStateCover2";
 import { QuestionsOverviewCard } from './components/QuestionsOverviewCard';
 import { ParticipantsOverviewCard } from './components/ParticipantsOverviewCard';
+import FetchStateCover2 from '../../../../../../../features/tests/ui/fetch-states/FetchStateCover2';
+import { useGetTestsByTestIdQuery } from '../../../../../../../features/tests/api/test.api-gen-v2';
 
 export default function ExamInformationTab({
 	testId,

@@ -1,5 +1,5 @@
-import { QuestionPersistCoreSchema } from '../../../../../../infra-test/ui-items/question/types';
-import { QuestionDefault } from '../../../../../../infra-test/ui-items/question/views/QuestionDefault';
+import { QuestionPersistCoreSchema } from "../../../../../../features/tests/ui-items/question/types";
+import { QuestionDefault } from "../../../../../../features/tests/ui-items/question/views/QuestionDefault";
 
 export const QuestionsSection = ({
 	questions,

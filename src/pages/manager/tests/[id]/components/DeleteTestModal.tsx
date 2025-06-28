@@ -1,8 +1,8 @@
 import { useDeleteTestModalContext } from './delete-test-modal.context';
-import { useDeleteTestsByTestIdMutation } from '../../../../../infra-test/api/test.api-gen-v2';
-import useActionStateWatch from '../../../../../infra-test/hooks/useActionStateWatch';
 import { toast } from 'react-toastify';
 import { parseQueryError } from '../../../../../helpers/fetchBaseQuery.error';
+import { useDeleteTestsByTestIdMutation } from '../../../../../features/tests/api/test.api-gen-v2';
+import useActionStateWatch from '../../../../../features/tests/hooks/useActionStateWatch';
 
 export default function DeleteExamDialog() {
 	const { test, setTest } = useDeleteTestModalContext();

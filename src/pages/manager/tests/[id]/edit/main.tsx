@@ -3,21 +3,21 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import LeftLayoutTemplateDefault from "../../../../../components/layouts/LeftLayoutTemplateDefault";
 import { parseQueryError } from "../../../../../helpers/fetchBaseQuery.error";
-import { usePutTestsByTestIdMutation, testApiGenV2 } from "../../../../../infra-test/api/test.api-gen-v2";
-import useActionStateWatch from "../../../../../infra-test/hooks/useActionStateWatch";
-import useArrayManage from "../../../../../infra-test/hooks/useArrayManage";
-import useDraftValue from "../../../../../infra-test/hooks/useDraftValue";
-import useGetTestIdParams from "../../../../../infra-test/hooks/useGetTestIdParams";
-import useZodParseLazy from "../../../../../infra-test/hooks/useZodParseLazy";
-import { ExamPersistValidationSchema } from "../../../../../infra-test/ui-items/test/persist-schema";
-import { ExamPersistCoreSchema } from "../../../../../infra-test/ui-items/test/types";
-import ConfigTab from "../../../../../infra-test/ui-shared/config-tab";
-import ExamPersistValidationErrorsDialog from "../../../../../infra-test/ui-shared/ExamPersistValidationErrorsDialog";
 import paths from "../../../../../router/paths";
 import { useDeleteTestModalContext } from "../components/delete-test-modal.context";
 import { EditTabs } from "./page";
-import QuestionsTab from "../../../../../infra-test/ui-shared/questions-tab";
 import Sidebar from "./components/Sidebar";
+import { usePutTestsByTestIdMutation, testApiGenV2 } from "../../../../../features/tests/api/test.api-gen-v2";
+import useActionStateWatch from "../../../../../features/tests/hooks/useActionStateWatch";
+import useArrayManage from "../../../../../features/tests/hooks/useArrayManage";
+import useDraftValue from "../../../../../features/tests/hooks/useDraftValue";
+import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
+import useZodParseLazy from "../../../../../features/tests/hooks/useZodParseLazy";
+import { ExamPersistValidationSchema } from "../../../../../features/tests/ui-items/test/persist-schema";
+import { ExamPersistCoreSchema } from "../../../../../features/tests/ui-items/test/types";
+import ConfigTab from "../../../../../features/tests/ui-shared/test-persist-pages/config-tab";
+import ExamPersistValidationErrorsDialog from "../../../../../features/tests/ui-shared/test-persist-pages/ExamPersistValidationErrorsDialog";
+import QuestionsConfigTab from "../../../../../features/tests/ui-shared/test-persist-pages/questions-config-tab";
 
 export default function ManagerTestEditMain({
 	data,
@@ -85,7 +85,7 @@ export default function ManagerTestEditMain({
 					}}
 				/>;
 			case "questions":
-				return <QuestionsTab
+				return <QuestionsConfigTab
 					questions={draftValue.questions}
 					onQuestionDelete={(questionId) => remove(questionId)}
 					onQuuestionAdd={(question) => add(question)}
