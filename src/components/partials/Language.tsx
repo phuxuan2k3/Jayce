@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useLanguage } from "../../../LanguageProvider";
+import { useLanguage } from "../../LanguageProvider";
 
 export default function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage();

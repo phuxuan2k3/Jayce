@@ -41,6 +41,7 @@ export const en = {
   interview_result_title: "Interview Result",
   interview_result_congrats: "Congratulations on completing the interview!",
   interview_result_let_see: "Let's take a look at the result!",
+  new: "djshadhs",
 } as const;
 
 export type TranslationKey = keyof typeof en;

@@ -40,4 +40,5 @@ export const vi = {
   interview_result_title: "Kết quả phỏng vấn",
   interview_result_congrats: "Chúc mừng bạn đã hoàn thành buổi phỏng vấn!",
   interview_result_let_see: "Hãy cùng xem kết quả nhé!",
+  new: "djshadhs",
 } as const;
