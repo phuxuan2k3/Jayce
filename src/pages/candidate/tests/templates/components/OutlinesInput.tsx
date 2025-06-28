@@ -155,9 +155,9 @@ const OutlinesInput: React.FC<Props> = ({
 						{suggestions.map((suggestion, idx) => (
 							<div
 								key={idx}
-								className="p-2 border border-green-200 rounded-md bg-green-50 flex justify-between items-center"
+								className="p-2 border border-primary-toned-200 rounded-md bg-primary-toned-50 flex justify-between items-center"
 							>
-								<p className="text-sm text-gray-800">{suggestion}</p>
+								<p className="text-sm text-primary-toned-800">{suggestion}</p>
 								<MyButton
 									onClick={() => handleAddSuggestion(suggestion)}
 									size={"small"}

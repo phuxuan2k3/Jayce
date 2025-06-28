@@ -106,12 +106,18 @@
 						]
 					},
 					"numberOfAttemptsAllowed": {
-						"type": "integer",
+						"type": [
+							"integer",
+							"null"
+						],
 						"minimum": 0,
 						"default": 1
 					},
 					"numberOfParticipants": {
-						"type": "integer",
+						"type": [
+							"integer",
+							"null"
+						],
 						"minimum": 0,
 						"default": 0
 					},
@@ -275,35 +281,59 @@
 								"type": "object",
 								"properties": {
 									"numberOfQuestions": {
-										"type": "integer",
+										"type": [
+											"integer",
+											"null"
+										],
 										"minimum": 0
 									},
 									"totalPoints": {
-										"type": "integer",
+										"type": [
+											"integer",
+											"null"
+										],
 										"minimum": 0
 									},
 									"totalCandidates": {
-										"type": "integer",
+										"type": [
+											"integer",
+											"null"
+										],
 										"minimum": 0
 									},
 									"totalAttempts": {
-										"type": "integer",
+										"type": [
+											"integer",
+											"null"
+										],
 										"minimum": 0
 									},
 									"averageScore": {
-										"type": "integer",
+										"type": [
+											"integer",
+											"null"
+										],
 										"minimum": 0
 									},
 									"highestScore": {
-										"type": "integer",
+										"type": [
+											"integer",
+											"null"
+										],
 										"minimum": 0
 									},
 									"lowestScore": {
-										"type": "integer",
+										"type": [
+											"integer",
+											"null"
+										],
 										"minimum": 0
 									},
 									"averageTime": {
-										"type": "integer",
+										"type": [
+											"integer",
+											"null"
+										],
 										"minimum": 0
 									}
 								},
@@ -370,15 +400,24 @@
 						"type": "object",
 						"properties": {
 							"points": {
-								"type": "integer",
+								"type": [
+									"integer",
+									"null"
+								],
 								"minimum": 0
 							},
 							"answered": {
-								"type": "integer",
+								"type": [
+									"integer",
+									"null"
+								],
 								"minimum": 0
 							},
 							"answeredCorrect": {
-								"type": "integer",
+								"type": [
+									"integer",
+									"null"
+								],
 								"minimum": 0
 							}
 						},
@@ -427,7 +466,10 @@
 						"type": "number"
 					},
 					"pointReceived": {
-						"type": "integer",
+						"type": [
+							"integer",
+							"null"
+						],
 						"minimum": 0,
 						"default": 0
 					},
@@ -580,27 +622,45 @@
 						"type": "object",
 						"properties": {
 							"rank": {
-								"type": "integer",
+								"type": [
+									"integer",
+									"null"
+								],
 								"minimum": 0
 							},
 							"totalAttempts": {
-								"type": "integer",
+								"type": [
+									"integer",
+									"null"
+								],
 								"minimum": 0
 							},
 							"averageScore": {
-								"type": "integer",
+								"type": [
+									"integer",
+									"null"
+								],
 								"minimum": 0
 							},
 							"highestScore": {
-								"type": "integer",
+								"type": [
+									"integer",
+									"null"
+								],
 								"minimum": 0
 							},
 							"lowestScore": {
-								"type": "integer",
+								"type": [
+									"integer",
+									"null"
+								],
 								"minimum": 0
 							},
 							"averageTime": {
-								"type": "integer",
+								"type": [
+									"integer",
+									"null"
+								],
 								"minimum": 0
 							}
 						},
@@ -733,15 +793,24 @@
 						"type": "object",
 						"properties": {
 							"numberOfAnswers": {
-								"type": "integer",
+								"type": [
+									"integer",
+									"null"
+								],
 								"minimum": 0
 							},
 							"numberOfCorrectAnswers": {
-								"type": "integer",
+								"type": [
+									"integer",
+									"null"
+								],
 								"minimum": 0
 							},
 							"averageScore": {
-								"type": "integer",
+								"type": [
+									"integer",
+									"null"
+								],
 								"minimum": 0
 							}
 						},
@@ -1634,12 +1703,18 @@
 														]
 													},
 													"numberOfAttemptsAllowed": {
-														"type": "integer",
+														"type": [
+															"integer",
+															"null"
+														],
 														"minimum": 0,
 														"default": 1
 													},
 													"numberOfParticipants": {
-														"type": "integer",
+														"type": [
+															"integer",
+															"null"
+														],
 														"minimum": 0,
 														"default": 0
 													},
@@ -1779,6 +1854,43 @@
 				}
 			}
 		},
+		"/tests/suggested": {
+			"get": {
+				"tags": [
+					"Tests"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": [
+								"integer",
+								"null"
+							],
+							"minimum": 0,
+							"default": 5
+						},
+						"required": false,
+						"name": "numberOfTests",
+						"in": "query"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/TestFullSchema"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
 		"/tests/find-by-room": {
 			"get": {
 				"tags": [
@@ -1823,35 +1935,59 @@
 																	"type": "object",
 																	"properties": {
 																		"numberOfQuestions": {
-																			"type": "integer",
+																			"type": [
+																				"integer",
+																				"null"
+																			],
 																			"minimum": 0
 																		},
 																		"totalPoints": {
-																			"type": "integer",
+																			"type": [
+																				"integer",
+																				"null"
+																			],
 																			"minimum": 0
 																		},
 																		"totalCandidates": {
-																			"type": "integer",
+																			"type": [
+																				"integer",
+																				"null"
+																			],
 																			"minimum": 0
 																		},
 																		"totalAttempts": {
-																			"type": "integer",
+																			"type": [
+																				"integer",
+																				"null"
+																			],
 																			"minimum": 0
 																		},
 																		"averageScore": {
-																			"type": "integer",
+																			"type": [
+																				"integer",
+																				"null"
+																			],
 																			"minimum": 0
 																		},
 																		"highestScore": {
-																			"type": "integer",
+																			"type": [
+																				"integer",
+																				"null"
+																			],
 																			"minimum": 0
 																		},
 																		"lowestScore": {
-																			"type": "integer",
+																			"type": [
+																				"integer",
+																				"null"
+																			],
 																			"minimum": 0
 																		},
 																		"averageTime": {
-																			"type": "integer",
+																			"type": [
+																				"integer",
+																				"null"
+																			],
 																			"minimum": 0
 																		}
 																	},
@@ -1998,12 +2134,18 @@
 														]
 													},
 													"numberOfAttemptsAllowed": {
-														"type": "integer",
+														"type": [
+															"integer",
+															"null"
+														],
 														"minimum": 0,
 														"default": 1
 													},
 													"numberOfParticipants": {
-														"type": "integer",
+														"type": [
+															"integer",
+															"null"
+														],
 														"minimum": 0,
 														"default": 0
 													},

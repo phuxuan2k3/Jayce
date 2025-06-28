@@ -6,7 +6,6 @@ import { TemplateCoreSchema } from '../../../../../features/tests/api/test.api-g
 import MyButton from '../../../../../features/tests/ui/buttons/MyButton';
 import FieldInput from '../../../../../features/tests/ui/FieldInput';
 
-
 interface TemplateFormProps {
 	selectedTemplate: TemplateCoreSchema | null;
 	formData: TemplateFormData;

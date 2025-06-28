@@ -1,4 +1,4 @@
-export default function CandidateHomPage() {
+export default function CandidatePage() {
 	return (
 		<div>CandidateHomPage</div>
 	)
