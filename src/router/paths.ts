@@ -18,19 +18,17 @@ const paths = {
 		ROOT: "/candidate/",
 		tests: {
 			ROOT: "/candidate/tests/",
-			in(id: number | string = ":testId") {
-				return {
-					ROOT: `/candidate/tests/${id}/`,
-					PRACTICE: `/candidate/tests/${id}/practice/`,
-					EXAM: `/candidate/tests/${id}/exam/`,
-					attempts: {
-						in: (id: number | string = ":attemptId") => ({
-							ROOT: `/candidate/tests/${id}/attempts/${id}/`,
-							DO: `/candidate/tests/${id}/attempts/${id}/do/`,
-						}),
-					}
-				};
-			},
+			in: (testId: number | string = ":testId") => ({
+				ROOT: `/candidate/tests/${testId}/`,
+				PRACTICE: `/candidate/tests/${testId}/practice/`,
+				EXAM: `/candidate/tests/${testId}/exam/`,
+				attempts: {
+					in: (attemptId: number | string = ":attemptId") => ({
+						ROOT: `/candidate/tests/${testId}/attempts/${attemptId}/`,
+						DO: `/candidate/tests/${testId}/attempts/${attemptId}/do/`,
+					}),
+				}
+			}),
 			TEMPLATES: `/candidate/tests/templates/`,
 			GENERATE: `/candidate/tests/generate/`,
 			JOIN: `/candidate/tests/join/`,
@@ -50,19 +48,15 @@ const paths = {
 		ROOT: "/manager",
 		tests: {
 			ROOT: "/manager/tests/",
-			in(id: number | string = ":testId") {
-				return {
-					ROOT: `/manager/tests/${id}/`,
-					EDIT: `/manager/tests/${id}/edit/`,
-					attempts: {
-						in(id: number | string = ":attemptId") {
-							return {
-								ROOT: `/manager/tests/attempts/${id}/`,
-							};
-						},
-					},
-				};
-			},
+			in: (testId: number | string = ":testId") => ({
+				ROOT: `/manager/tests/${testId}/`,
+				EDIT: `/manager/tests/${testId}/edit/`,
+				attempts: {
+					in: (attemptId: number | string = ":attemptId") => ({
+						ROOT: `/manager/tests/${testId}/attempts/${attemptId}/`,
+					}),
+				},
+			}),
 			NEW: `/manager/tests/new/`,
 		},
 		profile: {

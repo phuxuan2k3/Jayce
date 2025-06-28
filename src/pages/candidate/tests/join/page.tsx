@@ -1,10 +1,10 @@
 import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
 import { useState, useEffect } from "react";
-import SidebarActions from "../../../../infra-test/ui/sidebar/primitive/SidebarActions";
 import JoinTestSection from "./components/JoinTestSection";
 import ExamInfoDialog from "./components/ExamInfoDialog";
 import { parseQueryError } from "../../../../helpers/fetchBaseQuery.error";
-import { useGetTestsFindByRoomQuery } from "../../../../infra-test/api/test.api-gen-v2";
+import SidebarActions from "../../../../features/tests/ui/sidebar/primitive/SidebarActions";
+import { useGetTestsFindByRoomQuery } from "../../../../features/tests/api/test.api-gen-v2";
 
 export default function CandidateTestsJoinPage() {
 	const [roomId, setRoomId] = useState<string | null>(null);

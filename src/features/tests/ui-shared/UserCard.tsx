@@ -1,7 +1,7 @@
 import { useGetUsersQuery } from '../../auth/api/auth-profile.api'
 import FetchStateCover2 from '../ui/fetch-states/FetchStateCover2'
-import { getUserCore } from '../core/user.model'
 import UserCoreCard from '../ui-items/user/UserCoreCard'
+import { getUserCore } from '../../auth/types/profile'
 
 export default function UserCard({
 	userId,

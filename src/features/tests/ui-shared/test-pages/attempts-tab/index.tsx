@@ -1,9 +1,9 @@
-import { AttemptCoreSchema, useGetTestsByTestIdAttemptsQuery } from "../../api/test.api-gen-v2";
-import useGetTestIdParams from "../../hooks/useGetTestIdParams";
 import { useState } from "react";
-import FetchStateCover2 from "../../ui/fetch-states/FetchStateCover2";
-import MyPaginationSection from "../../ui/MyPaginationSection";
-import AttemptsTable from "../../ui-items/attempt/AttemptsTable";
+import { AttemptCoreSchema, useGetTestsByTestIdAttemptsQuery } from "../../../api/test.api-gen-v2";
+import useGetTestIdParams from "../../../hooks/useGetTestIdParams";
+import AttemptsTable from "../../../ui-items/attempt/AttemptsTable";
+import FetchStateCover2 from "../../../ui/fetch-states/FetchStateCover2";
+import MyPaginationSection from "../../../ui/MyPaginationSection";
 
 type Filter = {
 	page: number;

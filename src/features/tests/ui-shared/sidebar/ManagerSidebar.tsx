@@ -2,7 +2,7 @@ import { ClipboardList, HelpCircle, Info, Users } from 'lucide-react';
 import QuickAction from '../../ui/sidebar/primitive/QuickAction';
 import SidebarActions from '../../ui/sidebar/primitive/SidebarActions'
 import { useNavigate } from 'react-router-dom';
-import paths from '../../../router/paths';
+import paths from '../../../../router/paths';
 
 export default function ManagerSidebar({
 	children

@@ -1,4 +1,3 @@
-import { ExamPersistCoreSchema } from "../../ui-items/test/types";
 import { TitleDescriptionSection } from "./components/TitleDescriptionSection";
 import { DurationSection } from "./components/DurationSection";
 import { OpenCloseTimeSection } from "./components/OpenCloseTimeSection";
@@ -6,6 +5,7 @@ import { RoomPasswordSection } from "./components/RoomPasswordSection";
 import { AttemptsParticipantsSection } from "./components/AttemptsParticipantsSection";
 import { VisibilitySection } from "./components/VisibilitySection";
 import { LanguageSection } from "./components/LanguageSection";
+import { ExamPersistCoreSchema } from "../../../ui-items/test/types";
 
 export default function ConfigTab({
 	examPersist,

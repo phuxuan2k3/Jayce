@@ -1,13 +1,12 @@
 import { useState } from "react";
 import ParticipantsList from "./ParticipantsList";
-import useGetTestIdParams from "../../hooks/useGetTestIdParams";
-import { useGetTestsByTestIdParticipantsQuery } from "../../api/test.api-gen-v2";
-import FetchStateCover2 from "../../ui/fetch-states/FetchStateCover2";
-import { PagingFilter } from "../../types/query";
-import { QuerySortValues } from "../../types/query";
-import MyPaginationSection from "../../ui/MyPaginationSection";
 import { ParticipantUser } from "./type";
 import ParticipantsResult from "./ParticipantsResult";
+import { useGetTestsByTestIdParticipantsQuery } from "../../../api/test.api-gen-v2";
+import useGetTestIdParams from "../../../hooks/useGetTestIdParams";
+import { PagingFilter, QuerySortValues } from "../../../types/query";
+import FetchStateCover2 from "../../../ui/fetch-states/FetchStateCover2";
+import MyPaginationSection from "../../../ui/MyPaginationSection";
 
 type Filter = PagingFilter & {
 	sortByRank: QuerySortValues;

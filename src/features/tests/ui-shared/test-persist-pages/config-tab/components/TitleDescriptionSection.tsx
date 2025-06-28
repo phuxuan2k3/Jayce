@@ -1,5 +1,5 @@
 import TextareaAutosize from "react-textarea-autosize";
-import { ExamPersistCoreSchema } from "../../../ui-items/test/types";
+import { ExamPersistCoreSchema } from "../../../../ui-items/test/types";
 
 export function TitleDescriptionSection({
 	title,

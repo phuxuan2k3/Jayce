@@ -1,8 +1,8 @@
-import { useGetUsersQuery } from "../../../features/auth/api/auth-profile.api";
-import { UserInfo } from "../../../features/auth/store/authSlice";
-import { CandidateCoreSchema } from "../../api/test.api-gen-v2";
-import FetchStateCover2 from "../../ui/fetch-states/FetchStateCover2";
-import ParticipantsTable from "../../ui-items/user/ParticipantsTable";
+import { useGetUsersQuery } from "../../../../auth/api/auth-profile.api";
+import { UserInfo } from "../../../../auth/store/authSlice";
+import { CandidateCoreSchema } from "../../../api/test.api-gen-v2";
+import ParticipantsTable from "../../../ui-items/user/ParticipantsTable";
+import FetchStateCover2 from "../../../ui/fetch-states/FetchStateCover2";
 
 export default function ParticipantsList({
 	participants,
