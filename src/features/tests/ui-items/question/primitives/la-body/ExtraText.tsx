@@ -1,4 +1,4 @@
-import { cn } from '../../../../../app/cn';
+import { cn } from '../../../../../../app/cn';
 import { MySlider } from '../../../../ui/MySlider';
 import { QuestionContext } from '../contexts';
 import { BaseComponentProps } from '../types';

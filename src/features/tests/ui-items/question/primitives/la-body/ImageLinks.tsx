@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { cn } from '../../../../../app/cn';
 import MyDialog from '../../../../ui/MyDialog';
 import { MySlider } from '../../../../ui/MySlider';
 import { QuestionContext } from '../contexts';
 import { BaseComponentProps } from '../types';
 import { commonSliderButtonClassNames, commonBoxClassNames } from './type';
+import { cn } from '../../../../../../app/cn';
 
 export function ImageLinks({
 	className = "",

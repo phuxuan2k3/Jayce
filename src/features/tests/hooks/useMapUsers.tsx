@@ -1,5 +1,5 @@
 import React from 'react'
-import { UserInfo } from '../../features/auth/store/authSlice'
+import { UserInfo } from '../../auth/store/authSlice';
 
 export default function useMapUsers<T extends Record<string, any>>({
 	users,

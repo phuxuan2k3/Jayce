@@ -1,4 +1,4 @@
-import { cn } from '../../../../../app/cn';
+import { cn } from '../../../../../../app/cn';
 import { BaseComponentProps } from '../types';
 import { AttemptChosenOption } from './ChosenOption';
 import { CorrectOption } from './CorrectOption';

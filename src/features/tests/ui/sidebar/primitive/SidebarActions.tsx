@@ -1,7 +1,7 @@
 import { createContext, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import QuickAction from "./QuickAction";
-import paths from "../../../../router/paths";
+import paths from "../../../../../router/paths";
 
 type SidebarActionsContextType = {};
 

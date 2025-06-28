@@ -1,6 +1,6 @@
 import React from 'react'
 import { createPortal } from 'react-dom'
-import { cn } from '../../app/cn';
+import { cn } from '../../../app/cn';
 
 export default function MyDialog({
 	className = '',

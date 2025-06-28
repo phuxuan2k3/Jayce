@@ -1,5 +1,4 @@
-import { cn } from "../../../../../app/cn";
-
+import { cn } from "../../../../../../app/cn";
 
 export const commonBoxClassNames = cn("py-2 text-gray-800 px-4 border rounded-lg text-sm");
 

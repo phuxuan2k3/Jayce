@@ -1,9 +1,9 @@
 import { DoQuestionContext, QuestionContext, ShowAnswerContext } from './contexts';
-import { cn } from '../../../../app/cn';
 import MyButton from '../../../ui/buttons/MyButton';
 import { LongAnswerDetail, LongAnswerDo } from './la-body';
 import { MCQDetail, MCQDo } from './mcq-body';
 import { BaseComponentProps } from './types';
+import { cn } from '../../../../../app/cn';
 
 function QuestionDetailBody({
 	className = "",

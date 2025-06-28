@@ -1,7 +1,7 @@
-import { UserInfo } from '../../../features/auth/store/authSlice';
+import { UserInfo } from '../../../auth/store/authSlice';
+import { getUserCore } from '../../../auth/types/profile';
 import { CandidateCoreSchema } from '../../api/test.api-gen-v2';
 import useMapUsers from '../../hooks/useMapUsers';
-import { getUserCore } from '../../core/user.model';
 
 export default function ParticipantsTable({
 	participants,

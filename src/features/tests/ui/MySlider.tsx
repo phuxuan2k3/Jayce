@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { cn } from '../../app/cn';
 import { BaseComponentProps } from '../ui-items/question/primitives/types';
+import { cn } from '../../../app/cn';
 
 export function MySlider({
 	className = "", children, trigger, maxHeight = '24rem'

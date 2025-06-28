@@ -1,5 +1,5 @@
 import { UserInfo } from '../../../auth/store/authSlice';
-import { getUserCore, UserCore } from '../../core/user.model'
+import { UserCore, getUserCore } from '../../../auth/types/profile';
 
 export default function UserCoreCard({
 	user,

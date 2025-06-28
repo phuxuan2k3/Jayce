@@ -1,4 +1,3 @@
-import { cn } from '../../../../../app/cn';
 import { ShowAnswerContext } from '../contexts';
 import { BaseComponentProps } from '../types';
 import { ImageLinks } from './ImageLinks';
@@ -6,6 +5,7 @@ import { ExtraText } from './ExtraText';
 import { CorrectAnswerText } from './CorrectAnswerText';
 import { AttemptAnswerText } from './AttemptAnswerText';
 import DoAnswerText from './DoAnswerText';
+import { cn } from '../../../../../../app/cn';
 
 export function LongAnswerDetail({
 	className = "",

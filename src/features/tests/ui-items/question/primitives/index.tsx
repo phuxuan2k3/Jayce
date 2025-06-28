@@ -1,9 +1,9 @@
-import { cn } from "../../../../app/cn";
 import { BaseComponentProps } from "./types";
 import { QuestionContext, QuestionContextProps, ShowAnswerContext } from "./contexts";
 import { QuestionPrimitivesHeader } from "./QuestionHeader";
 import { QuestionPrimitivesDetailBody } from "./QuestionBody";
 import { useCallback, useState } from "react";
+import { cn } from "../../../../../app/cn";
 
 export type PrimitivesProps = BaseComponentProps & QuestionContextProps;
 

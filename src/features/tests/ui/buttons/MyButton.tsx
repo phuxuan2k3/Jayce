@@ -1,6 +1,6 @@
 import React from 'react'
-import { cn } from '../../../app/cn'
 import { cva, VariantProps } from 'class-variance-authority'
+import { cn } from '../../../../app/cn'
 
 const buttonVariants = cva(
 	'px-4 py-2 rounded-md transition font-semibold',

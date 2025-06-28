@@ -1,4 +1,4 @@
-import { cn } from '../../../../../app/cn';
+import { cn } from '../../../../../../app/cn';
 import { QuestionContext, ShowAnswerContext } from '../contexts';
 import { BaseComponentProps } from '../types';
 

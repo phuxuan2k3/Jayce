@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { FetchError } from '../types/fetch-state';
-import { parseQueryError } from '../../helpers/fetchBaseQuery.error';
+import { parseQueryError } from '../../../helpers/fetchBaseQuery.error';
 
 type ActionState<T> = {
 	isLoading: boolean;

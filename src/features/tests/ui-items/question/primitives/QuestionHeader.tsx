@@ -1,6 +1,6 @@
-import { cn } from "../../../../app/cn";
 import { BaseComponentProps, TypeMap } from "./types";
 import { QuestionContext } from "./contexts";
+import { cn } from "../../../../../app/cn";
 
 const { useQuestion } = QuestionContext;
 

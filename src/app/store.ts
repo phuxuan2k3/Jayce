@@ -11,7 +11,6 @@ import paymentApi from '../features/payment/api/payment.api.ts';
 import testApi from '../features/tests/api/test.api.ts';
 import promptApi from '../features/tests/api/prompt.api.ts';
 
-
 const authPersistConfig = {
 	key: 'auth',
 	storage,

@@ -1,7 +1,7 @@
 import React from 'react'
 import { DoQuestionContext } from '../contexts'
 import { BaseComponentProps } from '../types';
-import { cn } from '../../../../../app/cn';
+import { cn } from '../../../../../../app/cn';
 
 export default function DoAnswerText({
 	className = '',

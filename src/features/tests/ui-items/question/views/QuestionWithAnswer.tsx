@@ -1,4 +1,4 @@
-import { cn } from '../../../../app/cn';
+import { cn } from '../../../../../app/cn';
 import QuestionPrimitives, { PrimitivesProps } from '../primitives';
 import { QuestionPrimitivesDetailBody } from '../primitives/QuestionBody';
 import { QuestionPrimitivesHeader } from '../primitives/QuestionHeader';

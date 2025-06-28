@@ -1,6 +1,6 @@
+import { cn } from '../../../../../app/cn';
 import { MySlider } from '../../../ui/MySlider';
 import { ArrowUpCircleIcon, ChartLine, CopyCheckIcon, PercentCircle, Users } from 'lucide-react';
-import { cn } from '../../../../app/cn';
 
 export default function QuestionAggregate({
 	aggregate,
