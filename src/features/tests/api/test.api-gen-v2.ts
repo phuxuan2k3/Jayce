@@ -502,8 +502,8 @@ export type PostTestsApiArg = {
           mode: "EXAM";
           roomId: string;
           password?: string | null;
-          numberOfAttemptsAllowed?: number | null;
-          numberOfParticipants?: number | null;
+          numberOfAttemptsAllowed?: number;
+          numberOfParticipants?: number;
           isAnswerVisible: boolean;
           isAllowedToSeeOtherResults: boolean;
           openDate: string | null;
@@ -535,14 +535,14 @@ export type GetTestsFindByRoomApiResponse = /** status 200 Success */ {
     (TestCoreSchema &
       ({
         _aggregate: {
-          numberOfQuestions: number | null;
-          totalPoints: number | null;
-          totalCandidates: number | null;
-          totalAttempts: number | null;
-          averageScore: number | null;
-          highestScore: number | null;
-          lowestScore: number | null;
-          averageTime: number | null;
+          numberOfQuestions: number;
+          totalPoints: number;
+          totalCandidates: number;
+          totalAttempts: number;
+          averageScore: number;
+          highestScore: number;
+          lowestScore: number;
+          averageTime: number;
         };
         _detail: TestDetailCommonSchema;
       } | null));
@@ -571,8 +571,8 @@ export type PutTestsByTestIdApiArg = {
           mode: "EXAM";
           roomId: string;
           password?: string | null;
-          numberOfAttemptsAllowed?: number | null;
-          numberOfParticipants?: number | null;
+          numberOfAttemptsAllowed?: number;
+          numberOfParticipants?: number;
           isAnswerVisible: boolean;
           isAllowedToSeeOtherResults: boolean;
           openDate: string | null;
@@ -712,9 +712,9 @@ export type AttemptCoreSchema = {
   createdAt: string;
   updatedAt: string;
   _aggregate: {
-    points: number | null;
-    answered: number | null;
-    answeredCorrect: number | null;
+    points: number;
+    answered: number;
+    answeredCorrect: number;
   };
   _include: {
     test: TestCoreSchema;
@@ -759,8 +759,8 @@ export type ExamDetailCommonSchema = {
   roomId: string;
   hasPassword: boolean;
   password?: string | null;
-  numberOfAttemptsAllowed?: number | null;
-  numberOfParticipants?: number | null;
+  numberOfAttemptsAllowed?: number;
+  numberOfParticipants?: number;
   isAnswerVisible: boolean;
   isAllowedToSeeOtherResults: boolean;
   openDate: string | null;
@@ -785,14 +785,14 @@ export type TestDetailCommonSchema =
     } & PracticeDetailCommonSchema);
 export type TestFullSchema = TestCoreSchema & {
   _aggregate: {
-    numberOfQuestions: number | null;
-    totalPoints: number | null;
-    totalCandidates: number | null;
-    totalAttempts: number | null;
-    averageScore: number | null;
-    highestScore: number | null;
-    lowestScore: number | null;
-    averageTime: number | null;
+    numberOfQuestions: number;
+    totalPoints: number;
+    totalCandidates: number;
+    totalAttempts: number;
+    averageScore: number;
+    highestScore: number;
+    lowestScore: number;
+    averageTime: number;
   };
   _detail: TestDetailCommonSchema;
 };
@@ -822,20 +822,20 @@ export type QuestionCoreSchema = {
   type: "MCQ" | "LONG_ANSWER";
   detail: QuestionDetailCommonSchema;
   _aggregate_test: {
-    numberOfAnswers: number | null;
-    numberOfCorrectAnswers: number | null;
-    averageScore: number | null;
+    numberOfAnswers: number;
+    numberOfCorrectAnswers: number;
+    averageScore: number;
   };
 };
 export type CandidateCoreSchema = {
   candidateId: string;
   _aggregate: {
-    rank: number | null;
-    totalAttempts: number | null;
-    averageScore: number | null;
-    highestScore: number | null;
-    lowestScore: number | null;
-    averageTime: number | null;
+    rank: number;
+    totalAttempts: number;
+    averageScore: number;
+    highestScore: number;
+    lowestScore: number;
+    averageTime: number;
   };
 };
 export type AnswerForQuestionTypeSchema =
@@ -851,7 +851,7 @@ export type AnswerCoreSchema = {
   id: string;
   attemptId: string;
   questionId: number;
-  pointReceived?: number | null;
+  pointReceived?: number;
   createdAt: string;
   updatedAt: string;
   child: AnswerForQuestionTypeSchema;
