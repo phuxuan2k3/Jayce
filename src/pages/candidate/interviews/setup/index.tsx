@@ -5,6 +5,7 @@ import { faChartPie, faHistory } from "@fortawesome/free-solid-svg-icons";
 import SetUpPage from "./setup";
 import HistoryPage from "./history";
 import { useLanguage } from "../../../../LanguageProvider";
+import { useLocation } from "react-router-dom";
 
 const navTabKeys = [
   { id: "Interview", labelKey: "tab_interview", icon: faChartPie },
@@ -12,17 +13,21 @@ const navTabKeys = [
 ];
 
 const InterviewPage = () => {
+  const location = useLocation();
+  const position = location.state?.position || "";
+  const experience = location.state?.experience || "";
+
   const [tab, setTab] = useState("Interview");
   const { t } = useLanguage();
 
   const renderTabContent = () => {
     switch (tab) {
       case "Interview":
-        return <SetUpPage />;
+        return <SetUpPage position={position} experience={experience} />;
       case "History":
         return <HistoryPage />;
       default:
-        return <SetUpPage />;
+        return <SetUpPage position={position} experience={experience} />;
     }
   };
 

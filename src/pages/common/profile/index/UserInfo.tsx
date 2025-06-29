@@ -21,12 +21,12 @@ interface UserProfileProps {
 	userInfo: UserInfo;
 }
 
-const sccOptions = [
-	{ scc: 60, vnd: 60000 },
-	{ scc: 120, vnd: 120000 },
-	{ scc: 180, vnd: 170000 },
-	{ scc: 240, vnd: 220000 },
-	{ scc: 1440, vnd: 1200000 },
+const sscOptions = [
+	{ ssc: 60, vnd: 60000 },
+	{ ssc: 120, vnd: 120000 },
+	{ ssc: 180, vnd: 170000 },
+	{ ssc: 240, vnd: 220000 },
+	{ ssc: 1440, vnd: 1200000 },
 ];
 
 const UserProfile: React.FC<UserProfileProps> = ({ userInfo: authData }) => {
@@ -70,7 +70,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userInfo: authData }) => {
 			setCreating(true);
 			setCreatingError(null);
 			try {
-				const chosen = sccOptions[selectedOption];
+				const chosen = sscOptions[selectedOption];
 				console.log("Top-up with:", chosen);
 				const item = {
 					name: "Top-up SSC",
@@ -171,7 +171,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userInfo: authData }) => {
 					</div>
 				</div>
 				<div className="bg-primary-toned-50 rounded-lg p-4 mt-4">
-					<p className="font-semibold text-lg mb-2">Balance (SCC)</p>
+					<p className="font-semibold text-lg mb-2">Balance (SSC)</p>
 					<div className="flex items-center justify-between text-[28px] font-bold text-[var(--primary-color)] mb-4 bg-white shadow rounded-md px-2 py-2">
 						<span>{authBalance?.balance.toLocaleString() || 0}</span>
 						<AutorenewIcon
@@ -206,9 +206,9 @@ const UserProfile: React.FC<UserProfileProps> = ({ userInfo: authData }) => {
 			<Dialog open={openTopup} onClose={handleCloseTopupDialog} maxWidth="sm" fullWidth>
 				<DialogTitle className="text-center font-bold text-xl">Choose a Top-Up Package</DialogTitle>
 				<DialogContent className="flex flex-wrap gap-4 justify-center py-6">
-					{sccOptions.map((opt, index) => {
+					{sscOptions.map((opt, index) => {
 						const isSelected = selectedOption === index;
-						const isLast = index === sccOptions.length - 1;
+						const isLast = index === sscOptions.length - 1;
 
 						return (
 							<div
@@ -226,7 +226,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userInfo: authData }) => {
 										Best Value
 									</div>
 								)}
-								<div className="text-xl font-semibold">{opt.scc.toLocaleString()} SSC</div>
+								<div className="text-xl font-semibold">{opt.ssc.toLocaleString()} SSC</div>
 								<div
 									className={clsx(
 										"text-sm",

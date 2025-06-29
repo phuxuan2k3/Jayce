@@ -81,7 +81,7 @@ const PricingPage = () => {
                         <li><CheckIcon className="mr-4" /> Priority job referrals</li>
                     </ul>
                     <div className="w-full flex items-center justify-around mt-2">
-                        <p className="text-orange-500 text-xl font-semibold text-center mt-4">120 SCC/month</p>
+                        <p className="text-orange-500 text-xl font-semibold text-center mt-4">120 SSC/month</p>
                         <button className="w-1/2 px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={() => handleSetPremium(1)}>
                             {isLoading ? "Processing..." : balance?.is_premium ? "Extend" : "Start now"}
                         </button>
@@ -100,8 +100,8 @@ const PricingPage = () => {
                     </ul>
                     <div className="w-full flex items-center justify-around mt-2">
                         <div className="flex flex-col items-center justify-center">
-                            <p className="text-gray-400 text-sm text-center line-through">120 SCC/month</p>
-                            <p className="text-orange-500 text-xl font-semibold text-center">110 SCC/month</p>
+                            <p className="text-gray-400 text-sm text-center line-through">120 SSC/month</p>
+                            <p className="text-orange-500 text-xl font-semibold text-center">110 SSC/month</p>
                         </div>
                         <button className="w-1/2 px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={() => handleSetPremium(2)}>
                             {isLoading ? "Processing..." : balance?.is_premium ? "Extend" : "Start now"}

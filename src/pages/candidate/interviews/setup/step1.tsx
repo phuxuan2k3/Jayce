@@ -32,7 +32,7 @@ const SetUpStep1: FC<{
             className="py-2 pe-12 ps-2 text-md shadow rounded-md focus:outline-none focus:ring focus:ring-teal-300"
           >
             <option value="">{t("select_position")}</option>
-            <option value="Soft Engineer">
+            <option value="Software Engineer">
               {t("position_software_engineer")}
             </option>
             <option value="Data Analyst">{t("position_data_analyst")}</option>

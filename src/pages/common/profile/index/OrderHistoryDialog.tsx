@@ -63,7 +63,7 @@ const OrderHistoryDialog: React.FC<OrderHistoryDialogProps> = ({ open, onClose }
         }
     };
 
-    const convertToSCC = (amount: number): number => {
+    const convertToSSC = (amount: number): number => {
         switch (amount) {
             case 60000: return 60;
             case 120000: return 120;
@@ -129,9 +129,9 @@ const OrderHistoryDialog: React.FC<OrderHistoryDialogProps> = ({ open, onClose }
                                     <div className="flex justify-between items-center">
                                         <div className="flex items-baseline gap-2">
                                             <span className="text-3xl font-bold text-[var(--primary-color)]">
-                                                {convertToSCC(order.amount.Int32).toLocaleString()}
+                                                {convertToSSC(order.amount.Int32).toLocaleString()}
                                             </span>
-                                            <span className="text-sm text-gray-500 font-medium">SCC</span>
+                                            <span className="text-sm text-gray-500 font-medium">SSC</span>
                                         </div>
 
                                         <div

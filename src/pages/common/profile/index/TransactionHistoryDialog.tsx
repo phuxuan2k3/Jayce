@@ -59,7 +59,7 @@ const TransactionHistoryDialog: React.FC<TransactionHistoryDialogProps> = ({ ope
                                 <div className="flex justify-between items-center">
                                     <div className="text-2xl font-bold text-[var(--primary-color)]">
                                         {tx.amount.toLocaleString()}
-                                        <span className="text-sm text-gray-500 font-medium ml-1">SCC</span>
+                                        <span className="text-sm text-gray-500 font-medium ml-1">SSC</span>
                                     </div>
 
                                     <div className="text-xs text-gray-500" title={format(new Date(tx.created_at), "PPpp")}>

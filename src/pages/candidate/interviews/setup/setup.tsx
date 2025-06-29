@@ -9,12 +9,17 @@ export interface JobSetupData {
   skills: string;
 }
 
-const SetUpPage = () => {
+interface SetUpPageProps {
+  position?: string;
+  experience?: string;
+}
+
+const SetUpPage: React.FC<SetUpPageProps> = ({ position, experience }) => {
   const [step, setStep] = useState(1);
 
   const [jobData, setJobData] = useState<JobSetupData>({
-    position: "",
-    experience: "",
+    position: position || "",
+    experience: experience || "",
     skills: "",
   });
 

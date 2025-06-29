@@ -26,12 +26,12 @@ import { Role } from "../../../../features/auth/types/auth";
 import paths from "../../../../router/paths";
 import TransactionHistoryDialog from "./TransactionHistoryDialog";
 
-const sccOptions = [
-    { scc: 60, vnd: 60000 },
-    { scc: 120, vnd: 120000 },
-    { scc: 180, vnd: 170000 },
-    { scc: 240, vnd: 220000 },
-    { scc: 1440, vnd: 1200000 },
+const sscOptions = [
+    { ssc: 60, vnd: 60000 },
+    { ssc: 120, vnd: 120000 },
+    { ssc: 180, vnd: 170000 },
+    { ssc: 240, vnd: 220000 },
+    { ssc: 1440, vnd: 1200000 },
 ];
 
 const Settings = () => {
@@ -87,7 +87,7 @@ const Settings = () => {
         setCreating(true);
         setCreatingError(null);
         try {
-            const chosen = sccOptions[selectedOption];
+            const chosen = sscOptions[selectedOption];
             const item = {
                 name: "Top-up SSC",
                 quantity: 1,
@@ -144,11 +144,11 @@ const Settings = () => {
                         <div className="flex flex-col lg:flex-row lg:items-center justify-center lg:justify-end gap-4">
                             <div className="flex flex-col w-full lg:max-w-[300px]">
                                 <p className="text-sm text-gray-600">Balance (SSC)</p>
-                                <div className="flex items-center justify-between px-5 py-3 bg-white rounded-xl shadow-md text-[28px] font-bold text-[var(--primary-color)]">
+                                <div className="mt-2 flex items-center justify-between px-5 py-3 bg-white border rounded-xl shadow-md text-[26px] font-bold text-[var(--primary-color)]">
                                     <div className="flex items-center justify-center gap-2">
                                         <AddCircleOutlineIcon
                                             onClick={() => setOpenTopup(true)}
-                                            className="cursor-pointer text-gray-500 hover:text-primary transition-transform duration-200"
+                                            className="mr-1 cursor-pointer text-gray-500 hover:text-primary transition-transform duration-200"
                                         />
                                         <span>{authBalance?.balance.toLocaleString() || 0}</span>
                                     </div>
@@ -241,9 +241,9 @@ const Settings = () => {
             <Dialog open={openTopup} onClose={() => setOpenTopup(false)} maxWidth="sm" fullWidth>
                 <DialogTitle className="text-center font-bold text-xl">Choose a Top-Up Package</DialogTitle>
                 <DialogContent className="flex flex-wrap gap-4 justify-center py-6">
-                    {sccOptions.map((opt, index) => {
+                    {sscOptions.map((opt, index) => {
                         const isSelected = selectedOption === index;
-                        const isLast = index === sccOptions.length - 1;
+                        const isLast = index === sscOptions.length - 1;
 
                         return (
                             <div
@@ -261,7 +261,7 @@ const Settings = () => {
                                         Best Value
                                     </div>
                                 )}
-                                <div className="text-xl font-semibold">{opt.scc.toLocaleString()} SSC</div>
+                                <div className="text-xl font-semibold">{opt.ssc.toLocaleString()} SSC</div>
                                 <div className={clsx("text-sm", isSelected ? "text-white/80" : "text-gray-700")}>
                                     {opt.vnd.toLocaleString()} VND
                                 </div>
