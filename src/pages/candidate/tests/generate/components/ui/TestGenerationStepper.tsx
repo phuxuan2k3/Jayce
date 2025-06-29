@@ -22,7 +22,7 @@ export default function TestGenerationStepper({
 	const isFinalStep = step === StepsEnum[StepsEnum.length - 1];
 	const isFirstStep = step === StepsEnum[0];
 
-	const isNextDisabled = hasErrors || (isFinalStep && !hasErrors);
+	const isNextDisabled = false; // Always allow next step
 	const isBackDisabled = isFirstStep;
 
 	const handleNext = () => {

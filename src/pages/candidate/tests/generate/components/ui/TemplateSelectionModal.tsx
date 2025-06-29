@@ -62,7 +62,6 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 
 	return (
 		<MyDialog>
-
 			<div className="bg-white rounded-lg shadow-lg w-full max-w-3xl max-h-[80vh] flex flex-col">
 				<div className="flex justify-between items-center p-4 border-b">
 					<h2 className="text-xl font-bold text-primary">Choose a Template</h2>

@@ -22,6 +22,7 @@ export default function CandidateTestsGeneratePage() {
 	const [showApiErrorDialog, setShowApiErrorDialog] = useState(false);
 
 	const {
+		handleApplyTemplate,
 		handleDataChange,
 		handleDataConfirm,
 		draftValue,
@@ -40,6 +41,11 @@ export default function CandidateTestsGeneratePage() {
 			setShowApiErrorDialog(true);
 		}
 	}, [generationError]);
+
+	const handleSelectTemplate = (template: TemplateCoreSchema) => {
+		handleApplyTemplate(template);
+		setSelectedTemplate(template);
+	}
 
 	const getStepContent = () => {
 		switch (step) {
@@ -99,15 +105,13 @@ export default function CandidateTestsGeneratePage() {
 					<TestGenerationStepper
 						step={step}
 						hasErrors={validationErrorMessages.length > 0}
-						onStepChange={(step) => {
-							handleDataConfirm(step);
-							if (validationErrorMessages.length === 0) {
-								setStep(step);
+						onStepChange={(nextStep) => {
+							if (handleDataConfirm(step)) {
+								setStep(nextStep);
 							}
 						}}
 						onFinish={() => {
-							handleDataConfirm(step);
-							if (validationErrorMessages.length === 0) {
+							if (handleDataConfirm(step)) {
 								handleGeneratePractice(value);
 							}
 						}}
@@ -138,7 +142,7 @@ export default function CandidateTestsGeneratePage() {
 			<TemplateSelectionModal
 				isOpen={showTemplatesModal}
 				onClose={() => setShowTemplatesModal(false)}
-				onSelectTemplate={(template) => setSelectedTemplate(template)}
+				onSelectTemplate={(template) => handleSelectTemplate(template)}
 			/>
 
 			{/* Save Template Dialog */}

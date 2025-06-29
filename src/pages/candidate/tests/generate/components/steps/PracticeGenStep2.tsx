@@ -1,6 +1,7 @@
 import React from 'react';
 import TagInput from '../../../templates/components/TagInput';
 import { PracticeStep2Type } from '../../types';
+import { DifficultiesAsConst } from '../../../../../manager/tests/new/common/base-schema';
 
 export default function PracticeGenStep2({
 	data: data,
@@ -19,9 +20,7 @@ export default function PracticeGenStep2({
 			...data,
 			[name]: ['numberOfQuestions', 'numberOfOptions'].includes(name)
 				? parseInt(value, 10)
-				: name === 'difficulty'
-					? value.toLowerCase() as "easy" | "medium" | "hard"
-					: value,
+				: value,
 		});
 	};
 
@@ -77,9 +76,11 @@ export default function PracticeGenStep2({
 							onChange={handleInputChange}
 							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						>
-							<option value="easy">Easy</option>
-							<option value="medium">Medium</option>
-							<option value="hard">Hard</option>
+							{DifficultiesAsConst.map((difficulty) => (
+								<option key={difficulty} value={difficulty}>
+									{difficulty}
+								</option>
+							))}
 						</select>
 					</div>
 
