@@ -1,15 +1,15 @@
 import React from 'react';
-import { TemplateFormData } from './types';
-import TagInput from './TagInput';
-import OutlinesInput from './OutlinesInput';
-import { TemplateCoreSchema } from '../../../../../features/tests/api/test.api-gen-v2';
-import MyButton from '../../../../../features/tests/ui/buttons/MyButton';
-import FieldInput from '../../../../../features/tests/ui/FieldInput';
+import { TemplatePersistCoreSchema } from './types';
+import TagInput from '../../../../pages/candidate/tests/templates/components/TagInput';
+import OutlinesInput from '../../../../pages/candidate/tests/templates/components/OutlinesInput';
+import { TemplateCoreSchema } from '../../api/test.api-gen-v2';
+import MyButton from '../../ui/buttons/MyButton';
+import FieldInput from '../../ui/FieldInput';
 
 interface TemplateFormProps {
 	selectedTemplate: TemplateCoreSchema | null;
-	formData: TemplateFormData;
-	onFormDataChange: (data: TemplateFormData) => void;
+	formData: TemplatePersistCoreSchema;
+	onFormDataChange: (data: TemplatePersistCoreSchema) => void;
 	onSave: () => void;
 	onCancel: () => void;
 }

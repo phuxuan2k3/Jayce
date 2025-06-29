@@ -1,4 +1,5 @@
 import { QuestionCoreSchema, TestFullSchema } from "../../api/test.api-gen-v2";
+import { QuestionsConverter } from "../question/questions-converter";
 import { QuestionPersistCoreSchema } from "../question/types";
 import { ExamPersistCoreSchema } from "./types";
 
@@ -11,28 +12,7 @@ export class TestConverter {
 				...test._detail,
 				mode: "EXAM",
 			},
-			questions: questions.map(q => this.questionCoreSchema_2_questionPersistCoreSchema(q)).filter((q): q is QuestionPersistCoreSchema => q !== null),
+			questions: questions.map(q => QuestionsConverter.questionCoreSchema_2_questionPersistCoreSchema(q)).filter((q): q is QuestionPersistCoreSchema => q !== null),
 		};
-	}
-
-	static questionCoreSchema_2_questionPersistCoreSchema(question: QuestionCoreSchema): QuestionPersistCoreSchema | null {
-		if (question.detail.type === "MCQ") {
-			return {
-				...question,
-				detail: {
-					...question.detail,
-					correctOption: question.detail.correctOption ?? 0,
-				},
-			};
-		} else if (question.detail.type === "LONG_ANSWER") {
-			return {
-				...question,
-				detail: {
-					...question.detail,
-					correctAnswer: question.detail.correctAnswer ?? "",
-				},
-			};
-		}
-		return null;
 	}
 }

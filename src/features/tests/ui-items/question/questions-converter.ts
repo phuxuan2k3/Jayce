@@ -1,5 +1,5 @@
 import { AnswerCoreSchema, QuestionCoreSchema } from "../../api/test.api-gen-v2";
-import { QuestionWithOptionalAnswer } from "./types";
+import { QuestionPersistCoreSchema, QuestionWithOptionalAnswer } from "./types";
 
 export class QuestionsConverter {
 	static concatQuestionsWithOptionalAnswers({
@@ -31,5 +31,26 @@ export class QuestionsConverter {
 		}
 
 		return combined;
+	}
+
+	static questionCoreSchema_2_questionPersistCoreSchema(question: QuestionCoreSchema): QuestionPersistCoreSchema | null {
+		if (question.detail.type === "MCQ") {
+			return {
+				...question,
+				detail: {
+					...question.detail,
+					correctOption: question.detail.correctOption ?? 0,
+				},
+			};
+		} else if (question.detail.type === "LONG_ANSWER") {
+			return {
+				...question,
+				detail: {
+					...question.detail,
+					correctAnswer: question.detail.correctAnswer ?? "",
+				},
+			};
+		}
+		return null;
 	}
 }

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { TemplateFormData } from './types';
+import { TemplatePersistCoreSchema } from '../../../../../features/tests/ui-items/template/types';
 import { cn } from '../../../../../app/cn';
 import { Trash2 } from 'lucide-react';
-import { useLazyGetSuggestOutlinesQuery } from '../../../../../features/tests/api/prompt.api-custom';
+import { useLazyGetSuggestOutlinesQuery } from '../../generate/api/practice-generate.api';
 import MyButton from '../../../../../features/tests/ui/buttons/MyButton';
 
 interface Props {
-	template: TemplateFormData;
+	template: TemplatePersistCoreSchema;
 	outlines: string[];
 	onOutlinesChange: (newOutlines: string[]) => void;
 }
