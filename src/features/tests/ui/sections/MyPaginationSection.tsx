@@ -41,7 +41,7 @@ export default function MyPaginationSection({
 	totalPages?: number;
 	onPageChange: (page: number) => void;
 }) {
-	const isLoading = totalPages == null || totalPages <= 1 || total == null || total <= 0;
+	const isLoading = totalPages == null || total == null;
 	return (
 		<div className="flex flex-col items-center justify-center w-full p-4">
 			<ThemeProvider theme={theme}>

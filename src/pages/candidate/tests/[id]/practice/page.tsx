@@ -5,14 +5,14 @@ import LeftLayoutTemplate from "../../../../../components/layouts/LeftLayoutTemp
 import { useGetTestsByTestIdQuery, TestFullSchema } from "../../../../../features/tests/api/test.api-gen-v2";
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import useGetUserId from "../../../../../features/tests/hooks/useGetUserId";
-import TestFullCard from "../../../../../features/tests/ui-items/test/TestFullCard";
 import AttemptsTab from "../../../../../features/tests/ui-shared/test-pages/attempts-tab";
-import CurrentAttemptCard from "../../../../../features/tests/ui-shared/test-pages/CurrentAttemptCard";
 import FetchStateCover2 from "../../../../../features/tests/ui/fetch-states/FetchStateCover2";
 import MyTabs from "../../../../../features/tests/ui/MyTabs";
-import SidebarActions from "../../../../../features/tests/ui/sidebar/primitive/SidebarActions";
 import FeedbackTabContent from "./components/FeedbackTabContent";
 import QuestionsTabContent from "./components/QuestionsTabContent";
+import RightLayoutTemplate from "../../../../../components/layouts/RightLayoutTemplate";
+import TestFullSidebar from "./components/Sidebar";
+import CurrentAttemptCard from "../../../../../features/tests/ui-shared/test-pages/CurrentAttemptCard";
 
 export default function CandidatePracticePage() {
 	const navigate = useNavigate();
@@ -42,25 +42,32 @@ export default function CandidatePracticePage() {
 	], []);
 
 	return (
-		<FetchStateCover2
-			fetchState={testQuery}
-			dataComponent={(test) => (
-				<LeftLayoutTemplate
-					header={
+
+		<RightLayoutTemplate
+			header={
+				<FetchStateCover2
+					fetchState={testQuery}
+					loadingComponent={
+						<div className="flex flex-col gap-2 w-[500px]">
+							<div className="h-8 w-2/3 bg-gray-200 animate-pulse rounded" /> {/* Title skeleton */}
+							<div className="h-4 w-1/2 bg-gray-100 animate-pulse rounded" /> {/* Description skeleton */}
+						</div>
+					}
+					dataComponent={(test) => (
 						<LeftLayoutTemplate.Header
 							title={test.title}
 							description={test.description}
 						/>
-					}
-					left={<SidebarActions>
-						<SidebarActions.YourTests />
-						<SidebarActions.BrowseTemplates />
-						<SidebarActions.JoinTest />
-					</SidebarActions>}
-				>
+					)}
+				/>
+			}
+			right={<TestFullSidebar testId={testId} />}
+		>
+			<FetchStateCover2
+				fetchState={testQuery}
+				dataComponent={(test) => (
 					<div className="flex flex-col gap-8">
-						<div className="flex flex-col gap-6">
-							<TestFullCard test={test} />
+						<div className="flex flex-col gap-2">
 							<CurrentAttemptCard />
 						</div>
 
@@ -69,8 +76,9 @@ export default function CandidatePracticePage() {
 							<MyTabs tabs={tabs(test)} defaultTabId="attempts" />
 						</div>
 					</div>
-				</LeftLayoutTemplate >
-			)}
-		/>
+				)}
+			/>
+		</RightLayoutTemplate>
+
 	);
 }
