@@ -4,17 +4,22 @@ import { AttemptCoreSchema, useGetTestsByTestIdAttemptsQuery } from '../../api/t
 import useGetTestIdParams from '../../hooks/useGetTestIdParams';
 import useGetUserId from '../../hooks/useGetUserId';
 import useTimeCountDown from '../../hooks/useTimeCountDown';
-import { AlarmClock, Calendar, History } from 'lucide-react';
+import { AlarmClock, ArrowRight, Calendar, History } from 'lucide-react';
+import MyButton from '../../ui/buttons/MyButton';
+import { useNavigate } from 'react-router-dom';
+import paths from '../../../../router/paths';
 
 export default function CurrentAttemptCard() {
 	const testId = useGetTestIdParams();
 	const userId = useGetUserId();
+
 	const currentAttemptQuery = useGetTestsByTestIdAttemptsQuery({
 		testId,
 		candidateId: userId,
 		status: "IN_PROGRESS"
 	}, {
-		pollingInterval: 5000,
+		pollingInterval: 30000,
+		refetchOnMountOrArgChange: true,
 	});
 
 	return (
@@ -28,13 +33,21 @@ export default function CurrentAttemptCard() {
 					))}
 				</div>
 			) : (
-				<StartNewAttemptButton />
+				<div className="flex flex-col gap-2 items-center justify-center p-6 bg-primary-toned-50 rounded-lg shadow-md text-sm text-primary-toned-600">
+					<h2 className="text-xl font-semibold text-primary-toned-800 mb-4">No current attempts</h2>
+					<p>You haven't started any attempts for this test yet.</p>
+					<p>Click the button below to start a new attempt.</p>
+					<hr className="my-2 w-full border-primary-toned-300/50" />
+					<StartNewAttemptButton className='mb-4' />
+				</div>
 			)}
 		/>
 	)
 }
 
 function CurrentAttemptCardItem({ attempt }: { attempt: AttemptCoreSchema }) {
+	const testId = useGetTestIdParams();
+	const navigate = useNavigate();
 	const { order, createdAt, updatedAt, _include } = attempt;
 	const { test } = _include;
 	const { minutesToAnswer, title } = test;
@@ -74,6 +87,14 @@ function CurrentAttemptCardItem({ attempt }: { attempt: AttemptCoreSchema }) {
 						style={{ width: `${secondsLeft === 0 ? 0 : Math.max(0, Math.min(100, (secondsLeft / (test.minutesToAnswer * 60)) * 100))}%` }}
 					></div>
 				</div>
+				<MyButton
+					variant="secondary"
+					className="ml-4 flex items-center gap-2"
+					onClick={() => navigate(paths.candidate.tests.in(testId).attempts.in(attempt.id).DO)}
+				>
+					Continue Attempt
+					<ArrowRight strokeWidth={3} />
+				</MyButton>
 			</div>
 			<div className="flex flex-wrap gap-6 text-sm text-secondary-toned-700 mt-3 border-t border-secondary-toned-300 pt-3">
 				<div className="flex items-center gap-1">

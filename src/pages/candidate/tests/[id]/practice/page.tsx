@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../router/paths";
-import LeftLayoutTemplate from "../../../../../components/layouts/LeftLayoutTemplate";
 import { useGetTestsByTestIdQuery, TestFullSchema } from "../../../../../features/tests/api/test.api-gen-v2";
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import useGetUserId from "../../../../../features/tests/hooks/useGetUserId";
@@ -11,7 +10,7 @@ import MyTabs from "../../../../../features/tests/ui/MyTabs";
 import FeedbackTabContent from "./components/FeedbackTabContent";
 import QuestionsTabContent from "./components/QuestionsTabContent";
 import RightLayoutTemplate from "../../../../../components/layouts/RightLayoutTemplate";
-import TestFullSidebar from "./components/Sidebar";
+import TestFullSidebar from "../../../../../features/tests/ui-shared/sidebar/TestFullSidebar";
 import CurrentAttemptCard from "../../../../../features/tests/ui-shared/test-pages/CurrentAttemptCard";
 
 export default function CandidatePracticePage() {
@@ -42,7 +41,6 @@ export default function CandidatePracticePage() {
 	], []);
 
 	return (
-
 		<RightLayoutTemplate
 			header={
 				<FetchStateCover2
@@ -54,9 +52,14 @@ export default function CandidatePracticePage() {
 						</div>
 					}
 					dataComponent={(test) => (
-						<LeftLayoutTemplate.Header
+						<RightLayoutTemplate.Header
 							title={test.title}
 							description={test.description}
+							backButton={
+								<RightLayoutTemplate.BackButton
+									onClick={() => navigate(paths.candidate.tests.ROOT)}
+								/>
+							}
 						/>
 					)}
 				/>
@@ -66,14 +69,19 @@ export default function CandidatePracticePage() {
 			<FetchStateCover2
 				fetchState={testQuery}
 				dataComponent={(test) => (
-					<div className="flex flex-col gap-8">
+					<div className="flex-1 flex flex-col gap-8">
 						<div className="flex flex-col gap-2">
 							<CurrentAttemptCard />
 						</div>
 
-						<div className="flex flex-col gap-4">
+						<div className="flex-1 flex flex-col gap-4">
 							<h2 className="text-xl font-bold">Details</h2>
-							<MyTabs tabs={tabs(test)} defaultTabId="attempts" />
+							<MyTabs
+								tabs={tabs(test)}
+								tabClassName="flex-1"
+								defaultTabId="attempts"
+								className="flex-1"
+							/>
 						</div>
 					</div>
 				)}

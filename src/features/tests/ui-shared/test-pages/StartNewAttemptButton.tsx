@@ -6,8 +6,13 @@ import useActionStateWatch from '../../hooks/useActionStateWatch';
 import { toast } from 'react-toastify';
 import { parseQueryError } from '../../../../helpers/fetchBaseQuery.error';
 import paths from '../../../../router/paths';
+import { cn } from '../../../../app/cn';
 
-export default function StartNewAttemptButton() {
+export default function StartNewAttemptButton({
+	className = '',
+}: {
+	className?: string;
+}) {
 	const testId = useGetTestIdParams();
 	const navigate = useNavigate();
 
@@ -26,6 +31,7 @@ export default function StartNewAttemptButton() {
 
 	return (
 		<MyButtonWithLoading
+			className={cn(`w-full`, className)}
 			loading={state.isLoading}
 			onClick={() => postAttempts({ body: { testId } })}
 		>

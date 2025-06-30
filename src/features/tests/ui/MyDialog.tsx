@@ -10,10 +10,10 @@ export default function MyDialog({
 	children?: React.ReactNode;
 }) {
 	return createPortal(
-		<div className={cn("fixed inset-0 flex items-center justify-center bg-black bg-opacity-50", className)}>
+		<div className={cn("fixed inset-0 flex items-center justify-center bg-black/50 z-10", className)}>
 			{children}
 		</div>
 		,
-		document.getElementById('dialog-root') || document.body
+		document.body
 	)
 }

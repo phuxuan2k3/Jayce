@@ -1,5 +1,6 @@
 import { ReactNode, useState } from "react";
 import { CSSProperties } from "react";
+import { cn } from "../../../app/cn";
 
 type Tab = {
 	id: string;
@@ -10,6 +11,8 @@ type Tab = {
 type TabsComponentProps = {
 	tabs: Tab[];
 	defaultTabId?: string;
+	tabClassName?: string;
+	className?: string;
 };
 
 // Local styles for animations
@@ -24,7 +27,7 @@ const tabStyles = {
 	// so we'll inject a style element for the animations
 };
 
-const MyTabs = ({ tabs, defaultTabId }: TabsComponentProps) => {
+const MyTabs = ({ tabs, defaultTabId, className = '', tabClassName = '' }: TabsComponentProps) => {
 	const [activeTabId, setActiveTabId] = useState(defaultTabId || tabs[0]?.id);
 	const [prevTabId, setPrevTabId] = useState(defaultTabId || tabs[0]?.id);
 
@@ -67,7 +70,7 @@ const MyTabs = ({ tabs, defaultTabId }: TabsComponentProps) => {
         `}
 			</style>
 
-			<div className="flex flex-col gap-4">
+			<div className={cn("flex flex-col gap-4", className)}>
 				{/* Tab Navigation */}
 				<div className="border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white rounded-t-lg">
 					<nav className="flex -mb-px">
@@ -124,10 +127,8 @@ const MyTabs = ({ tabs, defaultTabId }: TabsComponentProps) => {
 				</div>
 
 				{/* Tab Content with Animation */}
-				<div className="py-2 overflow-hidden">
-					<div key={activeTabId} style={getSlideAnimation()}>
-						{activeTab?.content}
-					</div>
+				<div key={activeTabId} style={getSlideAnimation()} className={cn("py-2 overflow-hidden", tabClassName)}>
+					{activeTab?.content}
 				</div>
 			</div>
 		</>

@@ -1,8 +1,8 @@
-import { useGetUsersQuery } from "../../../../../../features/auth/api/auth-profile.api";
-import { TestFullSchema, useGetTestsByTestIdQuery } from "../../../../../../features/tests/api/test.api-gen-v2"
-import { TestUtils } from "../../../../../../features/tests/ui-items/test/test-utils";
+import { TestFullSchema, useGetTestsByTestIdQuery } from "../../api/test.api-gen-v2"
+import { TestUtils } from "../../ui-items/test/test-utils";
 import { Globe, Timer, ListCollapse, ClipboardList } from "lucide-react";
-import FetchStateCover2 from "../../../../../../features/tests/ui/fetch-states/FetchStateCover2";
+import FetchStateCover2 from "../../ui/fetch-states/FetchStateCover2";
+import { SmallUserInfo } from "../SmallUserInfo";
 
 
 export default function TestFullSidebar({
@@ -25,7 +25,7 @@ export default function TestFullSidebar({
 	}
 
 	return (
-		<div className="sticky top-2 shadow-primary bg-white rounded-lg p-6 flex flex-col gap-2 text-primary">
+		<div className="sticky top-2 max-h-[96vh] overflow-y-auto shadow-primary bg-white rounded-lg p-6 flex flex-col gap-2 text-primary">
 			<FetchStateCover2
 				fetchState={testQuery}
 				dataComponent={(test) => {
@@ -76,27 +76,12 @@ export default function TestFullSidebar({
 }
 
 function SidebarHeader({ test, mode, authorId }: { test: TestFullSchema, mode: TestFullSchema["mode"], authorId: string }) {
-	const userQuery = useGetUsersQuery({ user_ids: [authorId] });
 	return (
 		<div className="flex flex-col items-center gap-2">
 			<h2 className="text-2xl text-center">{test.title}</h2>
 			<span className={TestUtils.getClassNames(mode).bandage}>{test.mode}</span>
 
-			<FetchStateCover2
-				fetchState={userQuery}
-				dataComponent={(user: any) => (
-					<div className="flex items-center gap-2 mt-2">
-						<img
-							src={user.users.at(0)?.avatarPath || "/avatar/default.png"}
-							alt={user.users.at(0)?.metadata.fullname || "Unknown Author"}
-							className="w-8 h-8 rounded-full"
-						/>
-						<span className="text-sm font-semibold font-arya text-primary-toned-700">
-							{user.users.at(0)?.metadata.fullname || "Unknown Author"}
-						</span>
-					</div>
-				)}
-			/>
+			<SmallUserInfo userId={authorId} />
 		</div>
 	)
 }

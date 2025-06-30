@@ -3,6 +3,10 @@ import { QuestionDoState } from "../types";
 import { AttemptCoreSchema, TestFullSchema } from "../../../../../../../../features/tests/api/test.api-gen-v2";
 import MyButton from "../../../../../../../../features/tests/ui/buttons/MyButton";
 import TestTimer from "./TestTimer";
+import useTimeCountDown from "../../../../../../../../features/tests/hooks/useTimeCountDown";
+import { useEffect } from "react";
+
+// The server auto submit when time is up, so we don't need to handle the submit there.
 
 export default function TestDoSidebar({
 	attempt,
@@ -10,6 +14,7 @@ export default function TestDoSidebar({
 	questionDoState,
 	currentQuestionIndex,
 	onSubmit,
+	onTimesUp,
 	onCurrentQuestionIndexChange,
 }: {
 	attempt: AttemptCoreSchema;
@@ -17,12 +22,18 @@ export default function TestDoSidebar({
 	questionDoState: QuestionDoState[];
 	currentQuestionIndex: number;
 	onSubmit: () => void;
+	onTimesUp: () => void;
 	onCurrentQuestionIndexChange: (index: number) => void;
 }) {
-	const secondsLeft = Math.max(test.minutesToAnswer * 60 - attempt.secondsSpent, 0);
-	const handleSubmitClick = () => {
-		onSubmit();
-	};
+	const secondsLeft = useTimeCountDown({
+		endDate: new Date(new Date(attempt.createdAt).getTime() + (test.minutesToAnswer * 60 * 1000)),
+	});
+
+	useEffect(() => {
+		if (secondsLeft <= 0) {
+			onTimesUp();
+		}
+	}, [secondsLeft, onTimesUp]);
 
 	return (
 		<div className="flex flex-col h-full w-full">
@@ -57,7 +68,7 @@ export default function TestDoSidebar({
 
 			<hr className="mt-auto mb-2 border-primary-toned-700/50" />
 
-			<MyButton onClick={handleSubmitClick}>
+			<MyButton onClick={onSubmit}>
 				Submit
 			</MyButton>
 		</div>

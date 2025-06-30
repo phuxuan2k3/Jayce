@@ -1,4 +1,3 @@
-import { Trash2 } from "lucide-react";
 import { QuestionDoState } from "../types";
 import { usePostAttemptsByAttemptIdAnswersMutation } from "../apis/answer";
 import { toast } from "react-toastify";
@@ -36,7 +35,6 @@ export default function QuestionDoSection({
 	const isLastQuestion = currentQuestionIndex === totalQuestion - 1;
 
 	const handleNextQuestion = () => {
-		console.log(currentQuestionIndex, totalQuestion);
 		if (currentQuestionIndex < totalQuestion) {
 			onQuestionIndexChange(currentQuestionIndex + 1);
 		}
@@ -60,7 +58,6 @@ export default function QuestionDoSection({
 
 	return (
 		<div className="w-full flex flex-col justify-between">
-
 			<QuestionDo
 				question={question}
 				doAnswer={questionDoState.answer || undefined}
@@ -80,14 +77,7 @@ export default function QuestionDoSection({
 				>
 					Previous
 				</button>
-				<button
-					className="flex-shrink flex items-center gap-1 text-secondary-toned-500 font-semibold bg-secondary-toned-100 rounded-full px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed"
-					disabled={questionDoState.answer == null}
-					onClick={() => handleAnswerQuestion(undefined)}
-				>
-					<Trash2 size={18} strokeWidth={2.5} />
-					<span className="text-sm">Clear Answer</span>
-				</button>
+
 				<button
 					className="font-bold text-white border-2 border-primary bg-primary rounded-lg px-6 py-1 disabled:opacity-50 disabled:cursor-not-allowed"
 					onClick={handleNextQuestion}

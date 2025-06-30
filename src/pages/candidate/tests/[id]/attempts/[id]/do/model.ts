@@ -1,3 +1,4 @@
+import { AnswerCoreSchema } from "../../../../../../../features/tests/api/test.api-gen-v2";
 import { QuestionDoState, TestDoServerData } from "./types";
 
 export type TestDoState = {
@@ -32,6 +33,7 @@ type Actions =
 	| { type: "PREVIOUS_INDEX"; payload: null }
 	| { type: "SET_INDEX"; payload: number }
 	| { type: "SET_FLAG"; payload: boolean }
+	| { type: "UPDATE_ANSWERS"; payload: AnswerCoreSchema[] }
 	;
 
 export function testDoReducer(state: TestDoState, action: Actions): TestDoState {
@@ -66,6 +68,26 @@ export function testDoReducer(state: TestDoState, action: Actions): TestDoState 
 			return {
 				...state,
 				questionsDo: updatedQuestions,
+			};
+
+		case "UPDATE_ANSWERS":
+			if (!state.isInitialized) {
+				return state; // Prevent updates if not initialized
+			}
+			const answersOfQuestions = new Map<number, AnswerCoreSchema>();
+			action.payload.forEach((answer) => {
+				answersOfQuestions.set(answer.questionId, answer);
+			});
+			const updatedQuestionsWithAnswers = state.questionsDo.map((q) => {
+				const answer = answersOfQuestions.get(q.question.id);
+				return {
+					...q,
+					answer: answer ? answer.child : null,
+				};
+			});
+			return {
+				...state,
+				questionsDo: updatedQuestionsWithAnswers,
 			};
 
 		default:
