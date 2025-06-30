@@ -5,7 +5,7 @@ import MyButton from "../../../../../features/tests/ui/buttons/MyButton";
 import ErrorCover from "../../../../../features/tests/ui/fetch-states/ErrorCover";
 import LoadingCover from "../../../../../features/tests/ui/fetch-states/LoadingCover";
 import NoDataAvailibleCover from "../../../../../features/tests/ui/fetch-states/NoDataAvailibleCover";
-import MyPaginationSection from "../../../../../features/tests/ui/MyPaginationSection";
+import MyPaginationSection from "../../../../../features/tests/ui/sections/MyPaginationSection";
 import { useGetTemplatesQuery } from "../apis/template.api-enhance";
 
 interface TemplateListProps {

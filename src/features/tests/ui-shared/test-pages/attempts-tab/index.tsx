@@ -3,7 +3,7 @@ import { AttemptCoreSchema, useGetTestsByTestIdAttemptsQuery } from "../../../ap
 import useGetTestIdParams from "../../../hooks/useGetTestIdParams";
 import AttemptsTable from "../../../ui-items/attempt/AttemptsTable";
 import FetchStateCover2 from "../../../ui/fetch-states/FetchStateCover2";
-import MyPaginationSection from "../../../ui/MyPaginationSection";
+import MyPaginationSection from "../../../ui/sections/MyPaginationSection";
 
 type Filter = {
 	page: number;

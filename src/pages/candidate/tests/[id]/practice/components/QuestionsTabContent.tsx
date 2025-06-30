@@ -5,7 +5,7 @@ import { QueryBoolean, PagingFilter, toggleQueryBoolean } from "../../../../../.
 import { QuestionDefault } from "../../../../../../features/tests/ui-items/question/views/QuestionDefault";
 import MyButton from "../../../../../../features/tests/ui/buttons/MyButton";
 import FetchStateCover2 from "../../../../../../features/tests/ui/fetch-states/FetchStateCover2";
-import MyPaginationSection from "../../../../../../features/tests/ui/MyPaginationSection";
+import MyPaginationSection from "../../../../../../features/tests/ui/sections/MyPaginationSection";
 import { arrayPagination } from "../../../../../../helpers/array";
 
 export default function QuestionsTabContent({

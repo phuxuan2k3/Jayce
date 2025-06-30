@@ -36,6 +36,7 @@ export default function QuestionDoSection({
 	const isLastQuestion = currentQuestionIndex === totalQuestion - 1;
 
 	const handleNextQuestion = () => {
+		console.log(currentQuestionIndex, totalQuestion);
 		if (currentQuestionIndex < totalQuestion) {
 			onQuestionIndexChange(currentQuestionIndex + 1);
 		}

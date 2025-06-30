@@ -7,7 +7,7 @@ import { useGetTestsQuery } from "../../../../features/tests/api/test.api-gen-v2
 import useGetUserId from "../../../../features/tests/hooks/useGetUserId";
 import TestCoreCard from "../../../../features/tests/ui-items/test/TestCoreCard";
 import FetchStateCover2 from "../../../../features/tests/ui/fetch-states/FetchStateCover2";
-import MyPaginationSection from "../../../../features/tests/ui/MyPaginationSection";
+import MyPaginationSection from "../../../../features/tests/ui/sections/MyPaginationSection";
 import QuickAction from "../../../../features/tests/ui/sidebar/primitive/QuickAction";
 import SidebarActions from "../../../../features/tests/ui/sidebar/primitive/SidebarActions";
 import { QuerySortValues } from "../../../../features/tests/types/query";

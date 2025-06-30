@@ -1,17 +1,20 @@
 import { QuestionDoState, TestDoServerData } from "./types";
 
 export type TestDoState = {
+	isInitialized: boolean;
 	questionsDo: QuestionDoState[];
 	currentIndex: number;
 }
 
 export const initialState: TestDoState = {
+	isInitialized: false,
 	questionsDo: [],
 	currentIndex: 0,
 };
 
 function initializeQuestionsDo(server: TestDoServerData): TestDoState {
 	return {
+		isInitialized: true,
 		questionsDo: server.questions.map((q, index) => ({
 			question: q,
 			index,
@@ -34,6 +37,9 @@ type Actions =
 export function testDoReducer(state: TestDoState, action: Actions): TestDoState {
 	switch (action.type) {
 		case "INITIALIZE_STATE":
+			if (state.isInitialized) {
+				return state; // Prevent re-initialization
+			}
 			return initializeQuestionsDo(action.payload);
 		case "NEXT_INDEX":
 			return {

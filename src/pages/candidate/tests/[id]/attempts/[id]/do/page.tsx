@@ -20,6 +20,7 @@ export default function CandidateTestAttemptsDoPage() {
 	const attemptId = useGetAttemptIdParams();
 
 	const serverState = useTestDoServer();
+
 	const [patchSubmit, submitState] = usePatchAttemptsByAttemptIdSubmitMutation();
 	useActionStateWatch(submitState, {
 		onSuccess: () => {
@@ -36,10 +37,10 @@ export default function CandidateTestAttemptsDoPage() {
 	const [state, dispatch] = useReducer(testDoReducer, initialState);
 
 	useEffect(() => {
-		if (serverState.data) {
+		if (serverState.isSuccess && serverState.data != null) {
 			dispatch({ type: "INITIALIZE_STATE", payload: serverState.data });
 		}
-	}, [serverState.data]);
+	}, [serverState.data, serverState.isSuccess]);
 
 	return (
 		<FetchStateCover2

@@ -37,14 +37,16 @@ export default function MyPaginationSection({
 }: {
 	page: number;
 	perPage: number;
-	total: number;
-	totalPages: number;
+	total?: number;
+	totalPages?: number;
 	onPageChange: (page: number) => void;
 }) {
+	const isLoading = totalPages == null || totalPages <= 1 || total == null || total <= 0;
 	return (
 		<div className="flex flex-col items-center justify-center w-full p-4">
 			<ThemeProvider theme={theme}>
 				<MUIPagination
+					disabled={isLoading}
 					count={totalPages}
 					page={page}
 					variant='outlined'
