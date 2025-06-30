@@ -58,7 +58,7 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
   return (
     <nav className="bg-white drop-shadow-lg z-[100]">
       <div className=" lg:mx-12 px-6   ">
-        <div className="relative h-[100px] flex items-center justify-between">
+        <div className="relative h-[60px] flex items-center justify-between">
           {showNav && (
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
               <button
@@ -110,9 +110,9 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
               onClick={handleLogoClick}
               className="flex shrink-0 items-center cursor-pointer"
             >
-              <img src={logo} alt="logo" />
+              <img src={logo} alt="logo" className="size-10" />
               <img
-                className="ml-3 hidden lg:block"
+                className="ml-3 hidden lg:block h-8"
                 src={skillsharp}
                 alt="project name"
               />
@@ -132,7 +132,7 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                   {openPractice && (
                     <div
                       ref={dropdownRef}
-                      className=" absolute px-6 py-4 left-10 top-[70px] mt-1 bg-white shadow-lg rounded w-[360px]  text-lg font-medium"
+                      className=" absolute px-6 py-4 left-10 top-[50px] mt-1 bg-white shadow-lg rounded w-[360px]  text-lg font-medium"
                     >
                       <div className="flex items-center">
                         <svg
@@ -158,7 +158,7 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                         </div>
                       </div>
 
-                      <Link
+                      {/* <Link
                         to="/candidate/scenarios"
                         className="flex items-center py-4"
                       >
@@ -181,7 +181,7 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                             Quizzes everyday
                           </div>
                         </div>
-                      </Link>
+                      </Link> */}
 
                       <Link
                         to="/candidate/tests"
@@ -223,7 +223,7 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                   {openResource && (
                     <div
                       ref={dropdownRef}
-                      className="absolute px-6 py-4 left-0 top-[70px] mt-1 bg-white shadow-lg rounded w-[360px] z-10 text-lg font-medium"
+                      className="absolute px-6 py-4 left-0 top-[50px] mt-1 bg-white shadow-lg rounded w-[360px] z-10 text-lg font-medium"
                     >
                       <div className="flex items-center">
                         <svg
