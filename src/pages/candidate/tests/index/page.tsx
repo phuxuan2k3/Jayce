@@ -8,8 +8,9 @@ import { PagingFilter, QuerySortValues } from "../../../../features/tests/types/
 import TestCoreCard from "../../../../features/tests/ui-items/test/TestCoreCard";
 import MyButton from "../../../../features/tests/ui/buttons/MyButton";
 import FetchStateCover2 from "../../../../features/tests/ui/fetch-states/FetchStateCover2";
-import MyPaginationSection from "../../../../features/tests/ui/MyPaginationSection";
 import SidebarActions from "../../../../features/tests/ui/sidebar/primitive/SidebarActions";
+import MyItemsListTemplate from "../../../../features/tests/templates/MyItemsListTemplate";
+import MyHeaderTitleSection from "../../../../features/tests/ui/sections/MyHeaderSection";
 
 type Filter = PagingFilter & {
 	searchTitle?: string;
@@ -55,42 +56,49 @@ export default function CandidateTestsPage() {
 				</SidebarActions>
 			}
 		>
-			<FetchStateCover2
-				fetchState={testsQuery}
-				dataComponent={({ data: tests, totalPages, total }) => (
-					<div className="flex flex-col gap-8 border-b pb-6 border-primary-toned-200">
-						<h2 className="text-2xl font-bold mb-4">Your Generated Tests</h2>
-						<p className="text-primary-toned-700 mb-4">View and manage the practice tests you've generated.</p>
-
-						{tests.length > 0 ? (
-							<div className="flex flex-col gap-4">
-								{tests.map(test => (
+			<MyItemsListTemplate
+				pagedFetchState={testsQuery}
+				paging={filter}
+				onPageChange={(page) => setFilters(prev => ({ ...prev, page }))}
+				heading={
+					<MyHeaderTitleSection
+						title="Your Generated Tests"
+						description="View and manage the practice tests you've generated."
+					/>
+				}
+				body={
+					<FetchStateCover2
+						fetchState={{ ...testsQuery }}
+						loadingComponent={
+							<div className="flex flex-col w-full gap-4">
+								<div className="h-48 rounded-lg bg-gray-200 animate-pulse" />
+								<div className="h-48 rounded-lg bg-gray-200 animate-pulse" />
+							</div>
+						}
+						dataComponent={({ data: tests }) => (
+							tests.length > 0 ? (
+								tests.map(test => (
 									<TestCoreCard
+										className="w-full"
 										key={test.id}
 										test={test}
 										onClick={(test) => navigate(paths.candidate.tests.in(test.id).PRACTICE)}
 									/>
-								))}
-
-								<MyPaginationSection
-									totalPages={totalPages}
-									total={total}
-									onPageChange={(page) => setFilters(prev => ({ ...prev, page }))}
-									page={filter.page}
-									perPage={filter.perPage}
-								/>
-							</div>
-						) : (
-							<div className="text-center p-8 bg-gray-50 rounded-lg">
-								<p className="text-gray-500">You haven't generated any tests yet.</p>
-								<MyButton onClick={() => navigate(paths.candidate.tests.GENERATE)}>
-									Create Your First Test
-								</MyButton>
-							</div>
+								))
+							) : (
+								<div className="text-center p-8 bg-gray-50 rounded-lg">
+									<p className="text-gray-500">You haven't generated any tests yet.</p>
+									<MyButton onClick={() => navigate(paths.candidate.tests.GENERATE)}>
+										Create Your First Test
+									</MyButton>
+								</div>
+							)
 						)}
-					</div>
-				)}
+					/>
+				}
 			/>
-		</LeftLayoutTemplate>
+
+
+		</LeftLayoutTemplate >
 	);
 };

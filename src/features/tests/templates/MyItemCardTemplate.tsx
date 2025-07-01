@@ -1,4 +1,4 @@
-export default function MyCard({
+export default function MyItemCardTemplate({
 	header,
 	icon,
 	body,

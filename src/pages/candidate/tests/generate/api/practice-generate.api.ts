@@ -1,6 +1,7 @@
-import promptApi from "./prompt.api";
+import promptApi from "../../../../../features/tests/api/prompt.api";
+import { QuestionPersistCoreSchema } from "../../../../../features/tests/ui-items/question/types";
 
-const promptApiCustom = promptApi.injectEndpoints({
+const practiceGenerateApi = promptApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getSuggestOutlines: builder.query<GetSuggestOutlinesResponse, GetSuggestOutlinesRequest>({
 			query: (request) => ({
@@ -24,9 +25,9 @@ const promptApiCustom = promptApi.injectEndpoints({
 export const {
 	useLazyGetSuggestQuestionsQuery,
 	useLazyGetSuggestOutlinesQuery,
-} = promptApiCustom;
+} = practiceGenerateApi;
 
-export default promptApiCustom;
+export default practiceGenerateApi;
 
 export type GetSuggestOutlinesRequest = {
 	title: string;
@@ -53,11 +54,5 @@ export type GetSuggestQuestionsRequest = {
 };
 
 export type GetSuggestQuestionsResponse = {
-	questions: {
-		text: string;
-		points: number;
-		options: string[];
-		correctOption: number;
-	}[];
+	questions: QuestionPersistCoreSchema[];
 };
-

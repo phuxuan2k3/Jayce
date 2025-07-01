@@ -1,94 +1,82 @@
 import { useNavigate } from 'react-router-dom';
-import { PracticeGenerationActionTypes, PracticeGenerationReducer } from '../reducers/reducer-types';
-import paths from '../../../../../router/paths';
-import { PracticeGenerationLoadingState } from '../types';
-import usePracticeGenerationSelectors from '../reducers/practice-generation.selector';
-import { parseQueryError } from '../../../../../helpers/fetchBaseQuery.error';
 import { usePostTestsMutation } from '../../../../../features/tests/api/test.api-gen-v2';
-import { useLazyGetSuggestQuestionsQuery } from '../../../../../features/tests/api/prompt.api-custom';
+import { useLazyGetSuggestQuestionsQuery } from '../api/practice-generate.api';
+import { useState } from 'react';
+import { PracticeStepAllData } from '../types';
+import paths from '../../../../../router/paths';
+import { parseQueryError } from '../../../../../helpers/fetchBaseQuery.error';
 
-export default function useGeneratePractice({
-	state,
-	dispatch,
-}: PracticeGenerationReducer) {
+export default function useGeneratePractice() {
 	const navigate = useNavigate();
-	const [createTest] = usePostTestsMutation();
+	const [generationError, setGenerationError] = useState<string | null>(null);
+	const [loadingState, setLoadingState] = useState<"none" | "generating" | "saving">("none");
+
 	const [getGeneratedQuestions] = useLazyGetSuggestQuestionsQuery();
+	const [createTest] = usePostTestsMutation();
 
-	const { finalData } = usePracticeGenerationSelectors({ state });
-
-	const setLoadingState = (loadingState: PracticeGenerationLoadingState) => {
-		dispatch({
-			type: PracticeGenerationActionTypes.SET_LOADING_STATE,
-			payload: loadingState,
-		});
-	}
-
-	const setApiError = (error: string | null) => {
-		dispatch({
-			type: PracticeGenerationActionTypes.SET_API_ERROR,
-			payload: error,
-		});
-	}
-
-	const handleGeneratePractice = async () => {
+	const handleGeneratePractice = async (allStepData: PracticeStepAllData) => {
 		try {
+			const { title, description, language, minutesToAnswer } = allStepData.step1;
+			const { difficulty, numberOfOptions, numberOfQuestions, tags } = allStepData.step2;
+			const { outlines } = allStepData.step3;
+
 			setLoadingState("generating");
 
-			const generatedQuestions = await getGeneratedQuestions({
-				...finalData,
+			const { questions } = await getGeneratedQuestions({
+				title,
+				description,
+				language,
+				minutesToAnswer,
+				difficulty,
+				numberOfOptions,
+				numberOfQuestions,
+				tags,
+				outlines,
 			}).unwrap();
 
-			if (generatedQuestions.questions.length === 0) {
+			if (questions.length === 0) {
 				setLoadingState("none");
-				setApiError("No questions generated. Please try again with different parameters.");
+				setGenerationError("No questions generated. Please try again with different parameters.");
 				return;
 			}
 
 			setLoadingState("saving");
 
-			const createdTest = await createTest({
+			const { testId } = await createTest({
 				body: {
-					title: finalData.title,
-					description: finalData.description,
+					title,
+					description,
+					language,
+					minutesToAnswer,
 					mode: "PRACTICE",
-					language: finalData.language,
-					minutesToAnswer: finalData.minutesToAnswer,
 					detail: {
 						mode: "PRACTICE",
-						difficulty: finalData.difficulty,
-						numberOfOptions: finalData.numberOfOptions,
-						numberOfQuestions: finalData.numberOfQuestions,
-						outlines: finalData.outlines,
-						tags: finalData.tags,
+						difficulty,
+						numberOfOptions,
+						numberOfQuestions,
+						outlines,
+						tags,
 					},
-					questions: generatedQuestions.questions.map((q) => ({
-						text: q.text,
-						points: q.points,
-						type: "MCQ",
-						detail: {
-							type: "MCQ",
-							correctOption: q.correctOption,
-							options: q.options,
-						},
-					})),
+					questions,
 				},
 			}).unwrap();
 
 			setLoadingState("none");
-			navigate(paths.candidate.tests.in(createdTest.testId).PRACTICE);
+			navigate(paths.candidate.tests.in(testId).PRACTICE);
 
 		} catch (error: any) {
 			const errorMessage = parseQueryError(error);
 			if (errorMessage) {
-				setApiError(errorMessage);
+				setGenerationError(errorMessage);
 			} else {
-				setApiError("An unknown error occurred");
+				setGenerationError("An unknown error occurred");
 			}
 		}
 	};
 
 	return {
 		handleGeneratePractice,
+		generationError,
+		loadingState,
 	}
 }

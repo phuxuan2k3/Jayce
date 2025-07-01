@@ -1,36 +1,26 @@
 import React from 'react';
 import TagInput from '../../../templates/components/TagInput';
-import { PracticeDifficulty } from '../../types';
+import { PracticeStep2Type } from '../../types';
+import { DifficultiesAsConst } from '../../../../../manager/tests/new/common/base-schema';
 
-type PromptConfig = {
-	difficulty: PracticeDifficulty;
-	numberOfQuestions: number;
-	numberOfOptions: number;
-	tags: string[];
-};
-
-interface Props {
-	promptConfig: PromptConfig;
-	onPromptConfigChange: (data: PromptConfig) => void;
-	testTitle: string;
-	testDescription: string;
-}
-
-const PracticePromptConfigStep: React.FC<Props> = ({
-	promptConfig,
-	onPromptConfigChange,
+export default function PracticeGenStep2({
+	data: data,
+	onDataChange: onDataChange,
 	testTitle,
 	testDescription
-}) => {
+}: {
+	data: PracticeStep2Type;
+	onDataChange: (data: PracticeStep2Type) => void;
+	testTitle: string;
+	testDescription?: string;
+}) {
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
 		const { name, value } = e.target;
-		onPromptConfigChange({
-			...promptConfig,
+		onDataChange({
+			...data,
 			[name]: ['numberOfQuestions', 'numberOfOptions'].includes(name)
 				? parseInt(value, 10)
-				: name === 'difficulty'
-					? value.toLowerCase() as "easy" | "medium" | "hard"
-					: value,
+				: value,
 		});
 	};
 
@@ -69,7 +59,7 @@ const PracticePromptConfigStep: React.FC<Props> = ({
 							type="number"
 							id="numberOfQuestions"
 							name="numberOfQuestions"
-							value={promptConfig.numberOfQuestions}
+							value={data.numberOfQuestions}
 							onChange={handleInputChange}
 							min={1}
 							max={50}
@@ -82,13 +72,15 @@ const PracticePromptConfigStep: React.FC<Props> = ({
 						<select
 							id="difficulty"
 							name="difficulty"
-							value={promptConfig.difficulty}
+							value={data.difficulty}
 							onChange={handleInputChange}
 							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						>
-							<option value="easy">Easy</option>
-							<option value="medium">Medium</option>
-							<option value="hard">Hard</option>
+							{DifficultiesAsConst.map((difficulty) => (
+								<option key={difficulty} value={difficulty}>
+									{difficulty}
+								</option>
+							))}
 						</select>
 					</div>
 
@@ -100,7 +92,7 @@ const PracticePromptConfigStep: React.FC<Props> = ({
 							type="number"
 							id="numberOfOptions"
 							name="numberOfOptions"
-							value={promptConfig.numberOfOptions}
+							value={data.numberOfOptions}
 							onChange={handleInputChange}
 							min={2}
 							max={6}
@@ -110,8 +102,8 @@ const PracticePromptConfigStep: React.FC<Props> = ({
 				</div>
 
 				<TagInput
-					tags={promptConfig.tags}
-					onTagsChange={(newTags) => onPromptConfigChange({ ...promptConfig, tags: newTags })}
+					tags={data.tags || []}
+					onTagsChange={(newTags) => onDataChange({ ...data, tags: newTags })}
 				/>
 
 				<div className="bg-primary-toned-50 p-4 rounded-md border border-primary-toned-200">
@@ -124,5 +116,3 @@ const PracticePromptConfigStep: React.FC<Props> = ({
 		</div>
 	);
 };
-
-export default PracticePromptConfigStep;

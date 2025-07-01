@@ -5,7 +5,7 @@ const promptApiCustom = promptApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getGenerateExamQuestions: builder.query<GetGenerateExamQuestionsApiResponse, GetGenerateExamQuestionsApiRequest>({
 			query: (data) => ({
-				url: "/exam/generate",
+				url: "/v1/suggest_exam_question",
 				method: "POST",
 				body: data,
 			}),

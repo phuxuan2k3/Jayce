@@ -1,115 +1,82 @@
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import { useEffect, useState } from 'react';
 import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
 import TestGenerationSidebar from "./components/ui/TestGenerationSidebar";
 import TemplateSelectionModal from "./components/ui/TemplateSelectionModal";
 import SaveTemplateDialog from "./components/ui/SaveTemplateDialog";
 import TestGenerationStepper from './components/ui/TestGenerationStepper';
-import PracticeBasicInfoStep from './components/steps/PracticeBasicInfoStep';
-import PracticePromptConfigStep from './components/steps/PracticePromptConfigStep';
-import OutlinesStep from './components/steps/OutlinesStep';
+import PracticeGenStep1 from './components/steps/PracticeGenStep1';
+import PracticeGenStep2 from './components/steps/PracticeGenStep2';
 import { LoadingScreen } from './components/ui/LoadingScreen';
-import useGeneratePractice from './hooks/useGeneratePractice';
-import { initialState, practiceGenerationReducer } from './reducers/practice-generation.reducer';
 import ApiErrorDialog from './components/ui/ApiErrorDialog';
-import { PracticeGenerationActionTypes } from './reducers/reducer-types';
-import { PracticeGenerationData } from './types';
-import usePracticeGenerationSelectors from './reducers/practice-generation.selector';
+import { PracticeSteps } from './types';
 import { TemplateCoreSchema } from '../../../../features/tests/api/test.api-gen-v2';
+import usePracticeGenerationStepManage from './hooks/usePracticeManage';
+import PracticeGenStep3 from './components/steps/PracticeGenStep3';
+import useGeneratePractice from './hooks/useGeneratePractice';
 
-const CandidateTestsGeneratePage: React.FC = () => {
-	const [state, dispatch] = useReducer(practiceGenerationReducer, initialState);
+export default function CandidateTestsGeneratePage() {
+	const [step, setStep] = useState<PracticeSteps>("step1");
+	const [selectedTemplate, setSelectedTemplate] = useState<TemplateCoreSchema | null>(null);
+	const [showTemplatesModal, setShowTemplatesModal] = useState(false);
+	const [showSaveTemplateDialog, setShowSaveTemplateDialog] = useState(false);
+	const [showApiErrorDialog, setShowApiErrorDialog] = useState(false);
+
+	const {
+		handleApplyTemplate,
+		handleDataChange,
+		handleDataConfirm,
+		draftValue,
+		validationErrorMessages,
+		value,
+	} = usePracticeGenerationStepManage();
 
 	const {
 		handleGeneratePractice,
-	} = useGeneratePractice({
-		state,
-		dispatch,
-	});
+		generationError,
+		loadingState,
+	} = useGeneratePractice();
 
-	const { verifyData } = usePracticeGenerationSelectors({ state });
-
-	const [showApiErrorDialog, setShowApiErrorDialog] = useState(false);
 	useEffect(() => {
-		if (state.apiError) {
+		if (generationError != null) {
 			setShowApiErrorDialog(true);
 		}
-	}, [state.apiError]);
-
-	const [activeStep, setActiveStep] = useState(0);
-	const [showSaveTemplateDialog, setShowSaveTemplateDialog] = useState(false);
-	const [showTemplatesModal, setShowTemplatesModal] = useState(false);
-
-	const setData = useCallback((data: Partial<PracticeGenerationData>) => {
-		dispatch({
-			type: PracticeGenerationActionTypes.SET_DATA,
-			payload: {
-				...state.data,
-				...data,
-			},
-		});
-		dispatch({
-			type: PracticeGenerationActionTypes.SET_ERROR,
-			payload: null,
-		});
-	}, [state.data]);
-
-	const handleNext = () => {
-		const { isValid, message } = verifyData(activeStep);
-		if (!isValid) {
-			dispatch({
-				type: PracticeGenerationActionTypes.SET_ERROR,
-				payload: message,
-			});
-			return;
-		}
-		dispatch({
-			type: PracticeGenerationActionTypes.SET_ERROR,
-			payload: null,
-		});
-		setActiveStep((prev) => prev + 1);
-	};
-
-	const handleBack = () => {
-		setActiveStep((prev) => prev - 1);
-	};
+	}, [generationError]);
 
 	const handleSelectTemplate = (template: TemplateCoreSchema) => {
-		dispatch({
-			type: PracticeGenerationActionTypes.APPLY_TEMPLATE,
-			payload: template,
-		});
-	};
+		handleApplyTemplate(template);
+		setSelectedTemplate(template);
+	}
 
-	const handleSaveAsTemplateClick = () => {
-		setShowSaveTemplateDialog(true);
-	};
-
-	const getStepContent = (step: number) => {
+	const getStepContent = () => {
 		switch (step) {
-			case 0:
+			case "step1":
 				return (
-					<PracticeBasicInfoStep
-						info={state.data}
-						onInfoChange={(info) => setData(info)}
-						selectedTemplate={state.template}
+					<PracticeGenStep1
+						data={draftValue[step]}
+						onDataChange={(info) => handleDataChange(step, info)}
+						selectedTemplate={selectedTemplate}
 						onSelectTemplateClick={() => setShowTemplatesModal(true)}
 					/>
 				);
-			case 1:
+			case "step2":
 				return (
-					<PracticePromptConfigStep
-						promptConfig={state.data}
-						onPromptConfigChange={(promptConfig) => setData(promptConfig)}
-						testTitle={state.data.title}
-						testDescription={state.data.description}
+					<PracticeGenStep2
+						data={draftValue[step]}
+						onDataChange={(data) => handleDataChange(step, data)}
+						testTitle={value.step1.title}
+						testDescription={value.step1.description}
 					/>
 				);
-			case 2:
+			case "step3":
 				return (
-					<OutlinesStep
-						reducer={{
-							state,
-							dispatch,
+					<PracticeGenStep3
+						data={draftValue[step]}
+						onDataChange={(data) => handleDataChange(step, data)}
+						suggestionData={{
+							title: value.step1.title,
+							description: value.step1.description,
+							tags: value.step2.tags,
+							difficulty: value.step2.difficulty,
 						}}
 					/>
 				);
@@ -129,33 +96,43 @@ const CandidateTestsGeneratePage: React.FC = () => {
 				}
 				left={
 					<TestGenerationSidebar
-						onSaveTemplate={handleSaveAsTemplateClick}
+						onSaveTemplate={() => setShowSaveTemplateDialog(true)}
 						onShowTemplates={() => setShowTemplatesModal(true)}
 					/>
 				}
 			>
-				<div className="bg-white rounded-lg shadow p-6">
+				<div className="p-6">
 					<TestGenerationStepper
-						activeStep={activeStep}
-						onNext={handleNext}
-						onBack={handleBack}
-						onFinish={handleGeneratePractice}
-						isNextDisabled={state.error != null || activeStep === 3}
-						isBackDisabled={activeStep === 0}
+						step={step}
+						hasErrors={validationErrorMessages.length > 0}
+						onStepChange={(nextStep) => {
+							if (handleDataConfirm(step)) {
+								setStep(nextStep);
+							}
+						}}
+						onFinish={() => {
+							if (handleDataConfirm(step)) {
+								handleGeneratePractice(value);
+							}
+						}}
 					/>
 
-					{state.error && (
-						<div className="mt-4 text-red-500">
-							{state.error}
+					{validationErrorMessages.length > 0 && (
+						<div className="bg-red-100 text-red-800 p-4 rounded-md
+								mb-4">
+							<ul className="list-disc pl-5">
+								{validationErrorMessages.map((error, index) => (
+									<li key={index}>{error}</li>
+								))}
+							</ul>
 						</div>
 					)}
 
 					<div className="mt-8">
-						{state.loadingState !== "none" ? (
-							<LoadingScreen
-								state={state.loadingState} />
+						{loadingState !== "none" ? (
+							<LoadingScreen state={loadingState} />
 						) : (
-							getStepContent(activeStep)
+							getStepContent()
 						)}
 					</div>
 				</div>
@@ -165,25 +142,26 @@ const CandidateTestsGeneratePage: React.FC = () => {
 			<TemplateSelectionModal
 				isOpen={showTemplatesModal}
 				onClose={() => setShowTemplatesModal(false)}
-				onSelectTemplate={handleSelectTemplate}
+				onSelectTemplate={(template) => handleSelectTemplate(template)}
 			/>
 
 			{/* Save Template Dialog */}
 			<SaveTemplateDialog
 				isOpen={showSaveTemplateDialog}
 				onClose={() => setShowSaveTemplateDialog(false)}
-				initializeTemplateCreateData={state.data}
-				onTemplateSaved={(templateData) => setData(templateData)}
+				initializeTemplateCreateData={{
+					...draftValue.step1,
+					...draftValue.step2,
+					...draftValue.step3,
+				}}
 			/>
 
 			<ApiErrorDialog
-				error={state.apiError}
+				error={generationError}
 				onClose={() => setShowApiErrorDialog(false)}
-				onRetry={() => handleGeneratePractice()}
+				onRetry={() => handleGeneratePractice(value)}
 				isOpen={showApiErrorDialog}
 			/>
 		</>
 	);
 };
-
-export default CandidateTestsGeneratePage;

@@ -5,7 +5,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { formatDate } from '../utils';
 import { TestFullSchema } from '../../../../../../../../features/tests/api/test.api-gen-v2';
-import MyCard from '../../../../../../../../features/tests/ui/MyCard';
+import MyItemCardTemplate from '../../../../../../../../features/tests/templates/MyItemCardTemplate';
 
 export const ExamDetails = ({
 	exam
@@ -18,7 +18,7 @@ export const ExamDetails = ({
 	return (
 		<div className="flex flex-col md:flex-row gap-8 w-full">
 			<div className="flex-1 min-w-[280px]">
-				<MyCard
+				<MyItemCardTemplate
 					header="Exam Configs"
 					icon={<FontAwesomeIcon icon={faClipboardList} className="text-primary mr-3" />}
 					body={
@@ -70,7 +70,7 @@ export const ExamDetails = ({
 				/>
 			</div>
 			<div className="flex-1 min-w-[280px]">
-				<MyCard
+				<MyItemCardTemplate
 					header="Exam Access Info"
 					icon={<FontAwesomeIcon icon={faClipboardList} className="text-primary mr-3" />}
 					body={

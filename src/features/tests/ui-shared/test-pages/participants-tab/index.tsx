@@ -6,7 +6,7 @@ import { useGetTestsByTestIdParticipantsQuery } from "../../../api/test.api-gen-
 import useGetTestIdParams from "../../../hooks/useGetTestIdParams";
 import { PagingFilter, QuerySortValues } from "../../../types/query";
 import FetchStateCover2 from "../../../ui/fetch-states/FetchStateCover2";
-import MyPaginationSection from "../../../ui/MyPaginationSection";
+import MyPaginationSection from "../../../ui/sections/MyPaginationSection";
 
 type Filter = PagingFilter & {
 	sortByRank: QuerySortValues;

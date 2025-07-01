@@ -1,31 +1,23 @@
 import React from 'react';
 import { ListFilter } from 'lucide-react';
 import { TemplateCoreSchema } from '../../../../../../features/tests/api/test.api-gen-v2';
+import { PracticeStep1Type } from '../../types';
 
-type PracticeInfo = {
-	title: string;
-	description: string;
-	language: string;
-	minutesToAnswer: number;
-};
-
-interface Props {
-	info: PracticeInfo;
-	onInfoChange: (info: PracticeInfo) => void;
-	selectedTemplate: TemplateCoreSchema | null;
-	onSelectTemplateClick: () => void;
-}
-
-const PracticeBasicInfoStep: React.FC<Props> = ({
-	info,
-	onInfoChange,
+export default function PracticeGenStep1({
+	data: data,
+	onDataChange: onDataChange,
 	selectedTemplate,
 	onSelectTemplateClick,
-}) => {
+}: {
+	data: PracticeStep1Type;
+	onDataChange: (info: PracticeStep1Type) => void;
+	selectedTemplate: TemplateCoreSchema | null;
+	onSelectTemplateClick: () => void;
+}) {
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
 		const { name, value } = e.target;
-		onInfoChange({
-			...info,
+		onDataChange({
+			...data,
 			[name]: name === 'minutesToAnswer' ? parseInt(value, 10) : value,
 		});
 	};
@@ -72,7 +64,7 @@ const PracticeBasicInfoStep: React.FC<Props> = ({
 						type="text"
 						id="title"
 						name="title"
-						value={info.title}
+						value={data.title}
 						onChange={handleInputChange}
 						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						placeholder="E.g., React Fundamentals Practice Test"
@@ -87,7 +79,7 @@ const PracticeBasicInfoStep: React.FC<Props> = ({
 					<textarea
 						id="description"
 						name="description"
-						value={info.description}
+						value={data.description}
 						onChange={handleInputChange}
 						rows={3}
 						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
@@ -104,7 +96,7 @@ const PracticeBasicInfoStep: React.FC<Props> = ({
 						<select
 							id="language"
 							name="language"
-							value={info.language}
+							value={data.language}
 							onChange={handleInputChange}
 							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						>
@@ -125,7 +117,7 @@ const PracticeBasicInfoStep: React.FC<Props> = ({
 							type="number"
 							id="minutesToAnswer"
 							name="minutesToAnswer"
-							value={info.minutesToAnswer}
+							value={data.minutesToAnswer}
 							onChange={handleInputChange}
 							min={5}
 							max={180}
@@ -144,5 +136,3 @@ const PracticeBasicInfoStep: React.FC<Props> = ({
 		</div>
 	);
 };
-
-export default PracticeBasicInfoStep;

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartBar, faTrophy, faHourglassHalf, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { formatTime } from '../utils';
-import MyCard from '../../../../../../../../features/tests/ui/MyCard';
+import MyItemCardTemplate from '../../../../../../../../features/tests/templates/MyItemCardTemplate';
 
 export const AttemptsOverviewCard = ({
 	totalAttempts,
@@ -19,7 +19,7 @@ export const AttemptsOverviewCard = ({
 	totalCandidates: number;
 }) => {
 	return (
-		<MyCard
+		<MyItemCardTemplate
 			header='Attempts Overview'
 			icon={<FontAwesomeIcon icon={faChartBar} className="text-primary mr-3" />}
 			body={

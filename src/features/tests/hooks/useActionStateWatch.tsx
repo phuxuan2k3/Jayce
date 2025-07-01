@@ -24,7 +24,7 @@ export default function useActionStateWatch<T>(actionState: ActionState<T>, opti
 	}, [isLoading, onLoading]);
 
 	useEffect(() => {
-		if (isSuccess && data) onSuccess?.(data);
+		if (isSuccess && data !== undefined) onSuccess?.(data);
 	}, [isSuccess, data, onSuccess]);
 
 	useEffect(() => {

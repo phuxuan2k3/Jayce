@@ -2,7 +2,6 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { url } from "../../../app/env";
 import serviceBaseQueryNoAuth from '../../../app/serviceBaseQueryNoAuth';
 import { AuthResponse, RefreshRequest, RefreshResponse } from '../types/auth';
-import { UserInfo } from '../store/authSlice';
 
 const authApi = createApi({
 	reducerPath: 'authApi',
@@ -90,13 +89,6 @@ const authApi = createApi({
 				body: { email, resetCode, newPassword },
 			}),
 		}),
-		getUsers: builder.mutation<{ users: UserInfo[] }, { user_ids: number[] | string[] }>({
-			query: (body) => ({
-				url: '/list',
-				method: 'POST',
-				body: body.user_ids
-			}),
-		}),
 	}),
 });
 
@@ -110,7 +102,6 @@ export const {
 	useResetPasswordMutation,
 	useReqResetPasswordMutation,
 	useVerifyResetCodeMutation,
-	useGetUsersMutation,
 } = authApi;
 
 export default authApi;

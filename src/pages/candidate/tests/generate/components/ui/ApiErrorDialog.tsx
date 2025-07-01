@@ -1,3 +1,5 @@
+import MyDialog from "../../../../../../features/tests/ui/MyDialog";
+
 export default function ApiErrorDialog({
 	error,
 	onClose,
@@ -11,7 +13,7 @@ export default function ApiErrorDialog({
 }) {
 	if (!isOpen) return null;
 	return (
-		<div className="fixed inset-0 flex items-center justify-center z-50">
+		<MyDialog>
 			<div className="bg-white rounded-lg shadow-lg p-6">
 				<h2 className="text-lg font-semibold text-red-600">Error</h2>
 				<p className="mt-2 text-gray-700">{error}</p>
@@ -30,6 +32,6 @@ export default function ApiErrorDialog({
 					</button>
 				</div>
 			</div>
-		</div>
+		</MyDialog>
 	);
 } 

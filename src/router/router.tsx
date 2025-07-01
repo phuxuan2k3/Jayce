@@ -36,6 +36,7 @@ import ManagerTestsAttemptPage from "../pages/manager/tests/[id]/attempts/[id]/i
 import ManagerTestLayout from "../pages/manager/tests/[id]/layout";
 import InterviewPage from "../pages/candidate/interviews/setup";
 import CandidateTestAttemptsDoPage from "../pages/candidate/tests/[id]/attempts/[id]/do/page";
+import CandidateTestPage from "../pages/candidate/tests/[id]/index/page";
 
 const router = createBrowserRouter(
 	[
@@ -128,6 +129,9 @@ const router = createBrowserRouter(
 									children: [
 										{
 											index: true,
+											element: <CandidateTestPage />,
+										},
+										{
 											path: paths.candidate.tests.in().PRACTICE,
 											element: <CandidatePracticePage />,
 										},

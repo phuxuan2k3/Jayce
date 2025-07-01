@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import TemplateForm from './components/TemplateForm';
+import TemplateForm from '../../../../features/tests/ui-items/template/TemplateForm';
 import TemplatesSidebar from './components/TemplatesSidebar';
 import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
 import DeleteTemplateModal from './components/DeleteTemplateModal';
 import TemplateList from './components/TemplateList';
-import { EmptyTemplateForm, TemplateFormData } from './components/types';
+import { EmptyTemplatePersist, TemplatePersistCoreSchema } from '../../../../features/tests/ui-items/template/types';
 import { TemplateCoreSchema } from '../../../../features/tests/api/test.api-gen-v2';
 import { useDeleteTemplatesByTemplateIdMutation, usePostTemplatesMutation, usePutTemplatesByTemplateIdMutation } from './apis/template.api-enhance';
 import ErrorDialog from '../../../../features/tests/ui/fetch-states/ErrorDialog';
@@ -18,7 +18,7 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 	const [templateToDelete, setTemplateToDelete] = useState<TemplateCoreSchema | null>(null);
 
 	// Template form state
-	const [formData, setFormData] = useState<TemplateFormData | null>(null);
+	const [formData, setFormData] = useState<TemplatePersistCoreSchema | null>(null);
 
 	// API
 	const [deleteTemplate, deleteState] = useDeleteTemplatesByTemplateIdMutation();
@@ -36,7 +36,7 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 	// Handle create new template
 	const handleCreateNew = () => {
 		setSelectedTemplate(null);
-		setFormData(EmptyTemplateForm);
+		setFormData(EmptyTemplatePersist);
 	};
 
 	// Handle save template

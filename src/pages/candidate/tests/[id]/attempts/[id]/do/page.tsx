@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import RightLayoutTemplate from "../../../../../../../components/layouts/RightLayoutTemplate";
 import TestDoSidebar from "./components/TestDoSidebar";
 import useTestDoServer from "./hooks/useTestDoServer";
@@ -13,18 +13,21 @@ import useActionStateWatch from "../../../../../../../features/tests/hooks/useAc
 import useGetAttemptIdParams from "../../../../../../../features/tests/hooks/useGetAttemptIdParams";
 import FetchStateCover2 from "../../../../../../../features/tests/ui/fetch-states/FetchStateCover2";
 import useGetTestIdParams from "../../../../../../../features/tests/hooks/useGetTestIdParams";
+import TimesUpDialog from "./components/TimesUpDialog";
 
 export default function CandidateTestAttemptsDoPage() {
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
 	const attemptId = useGetAttemptIdParams();
 
+	const [isTimesUpDialogOpen, setIsTimesUpDialogOpen] = useState(false);
 	const serverState = useTestDoServer();
+
 	const [patchSubmit, submitState] = usePatchAttemptsByAttemptIdSubmitMutation();
 	useActionStateWatch(submitState, {
 		onSuccess: () => {
 			toast.success("Attempt submitted successfully");
-			navigate(paths.candidate.tests.in(testId).attempts.in(attemptId).ROOT);
+			navigate(paths.candidate.tests.in(testId).ROOT);
 		},
 		onError: (error) => {
 			console.error("Failed to submit attempt:", error);
@@ -36,10 +39,19 @@ export default function CandidateTestAttemptsDoPage() {
 	const [state, dispatch] = useReducer(testDoReducer, initialState);
 
 	useEffect(() => {
-		if (serverState.data) {
+		if (serverState.isSuccess && serverState.data != null) {
 			dispatch({ type: "INITIALIZE_STATE", payload: serverState.data });
 		}
-	}, [serverState.data]);
+	}, [serverState.data, serverState.isSuccess]);
+
+	useEffect(() => {
+		if (serverState.data?.attemptAnswers != null) {
+			dispatch({
+				type: "UPDATE_ANSWERS",
+				payload: serverState.data.attemptAnswers
+			});
+		}
+	}, [serverState.data?.attemptAnswers]);
 
 	return (
 		<FetchStateCover2
@@ -50,6 +62,11 @@ export default function CandidateTestAttemptsDoPage() {
 						<RightLayoutTemplate.Header
 							title={test.title}
 							description={test.description}
+							backButton={
+								<RightLayoutTemplate.BackButton
+									onClick={() => navigate(paths.candidate.tests.in(testId).ROOT)}
+								/>
+							}
 						/>
 					}
 					right={
@@ -60,6 +77,7 @@ export default function CandidateTestAttemptsDoPage() {
 							currentQuestionIndex={state.currentIndex}
 							onCurrentQuestionIndexChange={(index) => dispatch({ type: "SET_INDEX", payload: index })}
 							onSubmit={() => patchSubmit({ attemptId })}
+							onTimesUp={() => setIsTimesUpDialogOpen(true)}
 						/>
 					}
 				>
@@ -82,6 +100,13 @@ export default function CandidateTestAttemptsDoPage() {
 							/>
 						)}
 					</div>
+					<TimesUpDialog
+						isOpen={isTimesUpDialogOpen}
+						onBackToTest={() => {
+							setIsTimesUpDialogOpen(false);
+							navigate(paths.candidate.tests.in(testId).ROOT);
+						}}
+					/>
 				</RightLayoutTemplate>
 			)}
 		/>
