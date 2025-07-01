@@ -7,11 +7,9 @@ import { cn } from '../../../../app/cn';
 interface Props {
 	attempts: AttemptCoreSchema[];
 	onItemClick?: (attempt: AttemptCoreSchema) => void;
-	baseIndex?: number;
 }
 
 const AttemptsTable: React.FC<Props> = ({
-	baseIndex,
 	attempts,
 	onItemClick,
 }) => {
@@ -25,7 +23,7 @@ const AttemptsTable: React.FC<Props> = ({
 	}
 
 	return (
-		<table className="w-full bg-white rounded-lg shadow-md">
+		<table className="w-full bg-white rounded-lg border border-gray-200 shadow-md">
 			<thead className="bg-gray-50 text-gray-700">
 				<tr>
 					<th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">#</th>
@@ -36,21 +34,21 @@ const AttemptsTable: React.FC<Props> = ({
 				</tr>
 			</thead>
 			<tbody className="divide-y divide-gray-200">
-				{attempts.map((attempt, idx) => (
+				{attempts.map((attempt) => (
 					<tr
 						key={attempt.id}
 						className="hover:bg-gray-50 cursor-pointer"
 						onClick={() => onItemClick?.(attempt)}
 					>
 						<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-							{baseIndex ? baseIndex + idx + 1 : idx + 1}
+							{attempt.order}
 						</td>
 						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 							<div>{format(new Date(attempt.createdAt), "MMM d, yyyy")}</div>
 							<div className="text-xs">{formatDistanceToNow(new Date(attempt.createdAt), { addSuffix: true })}</div>
 						</td>
-						<td className={cn("px-6 py-4 whitespace-nowrap text-sm font-semibold", AttemptUtils.status(attempt).fontColor)}>
-							{AttemptUtils.status(attempt).text}
+						<td className={cn("px-6 py-4 whitespace-nowrap text-sm font-semibold", AttemptUtils.status(attempt.status).fontColor)}>
+							{AttemptUtils.status(attempt.status).text}
 						</td>
 						<td className="px-6 py-4 whitespace-nowrap text-sm text-primary font-bold">
 							{attempt._aggregate.points}

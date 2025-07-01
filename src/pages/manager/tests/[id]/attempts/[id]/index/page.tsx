@@ -6,7 +6,7 @@ import useGetAttemptIdParams from '../../../../../../../features/tests/hooks/use
 import useGetTestIdParams from '../../../../../../../features/tests/hooks/useGetTestIdParams';
 import useGetUserId from '../../../../../../../features/tests/hooks/useGetUserId';
 import AnswersList from '../../../../../../../features/tests/ui-shared/attempt-pages/AnswersList';
-import AttemptSidebar from '../../../../../../../features/tests/ui-shared/attempt-pages/AttemptSidebar';
+import AttemptSidebar from '../../../../../../../features/tests/ui-shared/sidebar/AttemptSidebar';
 import FetchStateCover2 from '../../../../../../../features/tests/ui/fetch-states/FetchStateCover2';
 
 

@@ -12,6 +12,7 @@ import QuestionsTabContent from "./components/QuestionsTabContent";
 import RightLayoutTemplate from "../../../../../components/layouts/RightLayoutTemplate";
 import TestFullSidebar from "../../../../../features/tests/ui-shared/sidebar/TestFullSidebar";
 import CurrentAttemptCard from "../../../../../features/tests/ui-shared/test-pages/CurrentAttemptCard";
+import TitleSkeleton from "../../../../../features/tests/ui/skeletons/TitleSkeleton";
 
 export default function CandidatePracticePage() {
 	const navigate = useNavigate();
@@ -51,12 +52,7 @@ export default function CandidatePracticePage() {
 			header={
 				<FetchStateCover2
 					fetchState={testQuery}
-					loadingComponent={
-						<div className="flex flex-col gap-2 w-[500px]">
-							<div className="h-8 w-2/3 bg-gray-200 animate-pulse rounded" /> {/* Title skeleton */}
-							<div className="h-4 w-1/2 bg-gray-100 animate-pulse rounded" /> {/* Description skeleton */}
-						</div>
-					}
+					loadingComponent={<TitleSkeleton />}
 					dataComponent={(test) => (
 						<RightLayoutTemplate.Header
 							title={test.title}

@@ -235,6 +235,9 @@ const injectedRtkApi = api
             perPage: queryArg.perPage,
             candidateId: queryArg.candidateId,
             status: queryArg.status,
+            sortByPoints: queryArg.sortByPoints,
+            sortByCreatedAt: queryArg.sortByCreatedAt,
+            sortBySecondsSpent: queryArg.sortBySecondsSpent,
           },
         }),
         providesTags: ["Tests"],
@@ -284,6 +287,9 @@ const injectedRtkApi = api
             testId: queryArg.testId,
             candidateId: queryArg.candidateId,
             status: queryArg.status,
+            sortByPoints: queryArg.sortByPoints,
+            sortByCreatedAt: queryArg.sortByCreatedAt,
+            sortBySecondsSpent: queryArg.sortBySecondsSpent,
           },
         }),
         providesTags: ["Attempts"],
@@ -617,6 +623,9 @@ export type GetTestsByTestIdAttemptsApiArg = {
   perPage?: number | null;
   candidateId?: string;
   status?: "IN_PROGRESS" | "COMPLETED" | "GRADED";
+  sortByPoints?: "asc" | "desc";
+  sortByCreatedAt?: "asc" | "desc";
+  sortBySecondsSpent?: "asc" | "desc";
 };
 export type GetTestsByTestIdParticipantsApiResponse =
   /** status 200 Success */ {
@@ -659,6 +668,9 @@ export type GetAttemptsApiArg = {
   testId?: string;
   candidateId?: string;
   status?: "IN_PROGRESS" | "COMPLETED" | "GRADED";
+  sortByPoints?: "asc" | "desc";
+  sortByCreatedAt?: "asc" | "desc";
+  sortBySecondsSpent?: "asc" | "desc";
 };
 export type PostAttemptsApiResponse = /** status 200 Success */ {
   attemptId: string;
@@ -851,7 +863,7 @@ export type AnswerCoreSchema = {
   id: string;
   attemptId: string;
   questionId: number;
-  pointReceived?: number;
+  pointReceived?: number | null;
   createdAt: string;
   updatedAt: string;
   child: AnswerForQuestionTypeSchema;

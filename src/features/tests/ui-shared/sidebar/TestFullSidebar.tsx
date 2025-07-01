@@ -1,9 +1,6 @@
-import { TestFullSchema, useGetTestsByTestIdQuery } from "../../api/test.api-gen-v2"
-import { TestUtils } from "../../ui-items/test/test-utils";
-import { Globe, Timer, ListCollapse, ClipboardList } from "lucide-react";
+import { useGetTestsByTestIdQuery } from "../../api/test.api-gen-v2"
 import FetchStateCover2 from "../../ui/fetch-states/FetchStateCover2";
-import { SmallUserInfo } from "../SmallUserInfo";
-
+import { TestSidebarPrimitives } from "./TestSidebarPrimitives";
 
 export default function TestFullSidebar({
 	testId,
@@ -32,7 +29,7 @@ export default function TestFullSidebar({
 					const { minutesToAnswer, language, mode, createdAt, updatedAt, _aggregate, _detail, authorId } = test;
 					return (
 						<>
-							<SidebarHeader
+							<TestSidebarPrimitives.Header
 								test={test}
 								mode={mode}
 								authorId={authorId}
@@ -40,7 +37,7 @@ export default function TestFullSidebar({
 
 							<hr className="border-primary-toned-300 my-2" />
 
-							<SidebarCommonInfo
+							<TestSidebarPrimitives.CommonInfo
 								language={language}
 								minutesToAnswer={minutesToAnswer}
 								_aggregate={_aggregate}
@@ -71,47 +68,6 @@ export default function TestFullSidebar({
 					);
 				}}
 			/>
-		</div>
-	)
-}
-
-function SidebarHeader({ test, mode, authorId }: { test: TestFullSchema, mode: TestFullSchema["mode"], authorId: string }) {
-	return (
-		<div className="flex flex-col items-center gap-2">
-			<h2 className="text-2xl text-center">{test.title}</h2>
-			<span className={TestUtils.getClassNames(mode).bandage}>{test.mode}</span>
-
-			<SmallUserInfo userId={authorId} />
-		</div>
-	)
-}
-
-function SidebarCommonInfo({ language, minutesToAnswer, _aggregate }: { language: string, minutesToAnswer: number, _aggregate: any }) {
-	return (
-		<div className="flex flex-col gap-2">
-			<div className="flex items-center gap-2">
-				<Globe size={16} strokeWidth={2.5} />
-				<span className="w-20 font-medium text-primary-toned-700">Language:</span>
-				<span className="font-semibold ml-auto">{language}</span>
-			</div>
-
-			<div className="flex items-center gap-2">
-				<Timer size={18} strokeWidth={2.5} />
-				<span className="w-20 font-medium text-primary-toned-700">Duration:</span>
-				<span className="font-semibold ml-auto">{minutesToAnswer} min</span>
-			</div>
-
-			<div className="flex items-center gap-2">
-				<ListCollapse size={18} strokeWidth={2.5} />
-				<span className="font-medium text-primary-toned-700">Number of questions:</span>
-				<span className="font-semibold ml-auto">{_aggregate.numberOfQuestions || 0}</span>
-			</div>
-
-			<div className="flex items-center gap-2">
-				<ClipboardList size={18} strokeWidth={2.5} />
-				<span className="font-medium text-primary-toned-700">Total points:</span>
-				<span className="font-semibold ml-auto">{_aggregate.totalPoints || 0}</span>
-			</div>
 		</div>
 	)
 }

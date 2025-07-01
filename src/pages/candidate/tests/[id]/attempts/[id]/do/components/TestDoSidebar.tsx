@@ -1,11 +1,18 @@
 import { AlarmClock } from "lucide-react";
 import { QuestionDoState } from "../types";
-import { AttemptCoreSchema, TestFullSchema } from "../../../../../../../../features/tests/api/test.api-gen-v2";
+import { AttemptCoreSchema, TestFullSchema, usePatchAttemptsByAttemptIdSubmitMutation } from "../../../../../../../../features/tests/api/test.api-gen-v2";
 import MyButton from "../../../../../../../../features/tests/ui/buttons/MyButton";
 import TestTimer from "./TestTimer";
 import useTimeCountDown from "../../../../../../../../features/tests/hooks/useTimeCountDown";
 import { useEffect, useState } from "react";
 import MyDialog from "../../../../../../../../features/tests/ui/MyDialog";
+import { toast } from "react-toastify";
+import useActionStateWatch from "../../../../../../../../features/tests/hooks/useActionStateWatch";
+import { parseQueryError } from "../../../../../../../../helpers/fetchBaseQuery.error";
+import paths from "../../../../../../../../router/paths";
+import { useNavigate } from "react-router-dom";
+import useGetTestIdParams from "../../../../../../../../features/tests/hooks/useGetTestIdParams";
+import TimesUpDialog from "./TimesUpDialog";
 
 // The server auto submit when time is up, so we don't need to handle the submit there.
 
@@ -14,28 +21,43 @@ export default function TestDoSidebar({
 	test,
 	questionDoState,
 	currentQuestionIndex,
-	onSubmit,
-	onTimesUp,
 	onCurrentQuestionIndexChange,
 }: {
 	attempt: AttemptCoreSchema;
 	test: TestFullSchema;
 	questionDoState: QuestionDoState[];
 	currentQuestionIndex: number;
-	onSubmit: () => void;
-	onTimesUp: () => void;
 	onCurrentQuestionIndexChange: (index: number) => void;
 }) {
+	const navigate = useNavigate();
+	const testId = useGetTestIdParams();
+	const attemptId = attempt.id;
+
+	const [isTimesUpDialogOpen, setIsTimesUpDialogOpen] = useState(false);
 	const [showSubmitDialog, setShowSubmitDialog] = useState(false);
+
+	const [patchSubmit, submitState] = usePatchAttemptsByAttemptIdSubmitMutation();
+	useActionStateWatch(submitState, {
+		onSuccess: () => {
+			toast.success("Attempt submitted successfully");
+			navigate(paths.candidate.tests.in(testId).ROOT);
+		},
+		onError: (error) => {
+			console.error("Failed to submit attempt:", error);
+			const errorMessage = parseQueryError(error);
+			toast.error("Failed to submit attempt: " + errorMessage);
+		}
+	});
+
 	const secondsLeft = useTimeCountDown({
 		endDate: new Date(new Date(attempt.createdAt).getTime() + (test.minutesToAnswer * 60 * 1000)),
 	});
 
 	useEffect(() => {
 		if (secondsLeft <= 0) {
-			onTimesUp();
+			setIsTimesUpDialogOpen(true);
 		}
-	}, [secondsLeft, onTimesUp]);
+	}, [secondsLeft]);
 
 	return (
 		<div className="flex flex-col h-full w-full">
@@ -80,8 +102,11 @@ export default function TestDoSidebar({
 					<h1>Do you want to submit your answers?</h1>
 					<hr className="my-4 border-primary-toned-700/50" />
 					<div className="flex w-full gap-2 mt-auto">
-						<MyButton onClick={onSubmit} className="flex-1">
-							Yes, submit
+						<MyButton
+							onClick={() => patchSubmit({ attemptId })} className="flex-1"
+							disabled={submitState.isLoading}
+						>
+							{submitState.isLoading ? "Submitting..." : "Yes, submit"}
 						</MyButton>
 						<MyButton variant="secondary" onClick={() => setShowSubmitDialog(false)} className="flex-1">
 							No, cancel
@@ -89,6 +114,14 @@ export default function TestDoSidebar({
 					</div>
 				</div>
 			</MyDialog>}
+
+			{isTimesUpDialogOpen && <TimesUpDialog
+				isOpen={isTimesUpDialogOpen}
+				onBackToTest={() => {
+					setIsTimesUpDialogOpen(false);
+					navigate(paths.candidate.tests.in(testId).ROOT);
+				}}
+			/>}
 		</div>
 	);
 }

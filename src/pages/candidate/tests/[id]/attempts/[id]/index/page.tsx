@@ -1,26 +1,24 @@
 import { format } from "date-fns";
-import { useState } from "react";
 import RightLayoutTemplate from "../../../../../../../components/layouts/RightLayoutTemplate";
-import { useGetAttemptsByAttemptIdQuery, useGetTestsByTestIdQuery, AttemptCoreSchema, TestFullSchema } from "../../../../../../../features/tests/api/test.api-gen-v2";
-import useGetAttemptIdParams from "../../../../../../../features/tests/hooks/useGetAttemptIdParams";
 import useGetTestIdParams from "../../../../../../../features/tests/hooks/useGetTestIdParams";
-import useGetUserId from "../../../../../../../features/tests/hooks/useGetUserId";
 import AnswersList from "../../../../../../../features/tests/ui-shared/attempt-pages/AnswersList";
-import AttemptSidebar from "../../../../../../../features/tests/ui-shared/attempt-pages/AttemptSidebar";
+import AttemptSidebar from "../../../../../../../features/tests/ui-shared/sidebar/AttemptSidebar";
+import { useNavigate } from "react-router-dom";
+import paths from "../../../../../../../router/paths";
+import useTestWithAttemptQueries from "../../../../../../../features/tests/hooks/query/useTestWithAttemptQueries";
 import FetchStateCover2 from "../../../../../../../features/tests/ui/fetch-states/FetchStateCover2";
-
+import { AttemptCoreSchema, TestFullSchema } from "../../../../../../../features/tests/api/test.api-gen-v2";
+import { useCallback } from "react";
+import useGetUserId from "../../../../../../../features/tests/hooks/useGetUserId";
+import TitleSkeleton from "../../../../../../../features/tests/ui/skeletons/TitleSkeleton";
 
 export default function CandidateTestAttemptPage() {
-	const attemptId = useGetAttemptIdParams();
-	const testId = useGetTestIdParams();
+	const navigate = useNavigate();
 	const userId = useGetUserId();
+	const testId = useGetTestIdParams();
+	const testWithAttemptQuery = useTestWithAttemptQueries();
 
-	const [showAnswers, setShowAnswers] = useState(false);
-
-	const attemptQuery = useGetAttemptsByAttemptIdQuery({ attemptId });
-	const testQuery = useGetTestsByTestIdQuery({ testId });
-
-	const isAllowedToShowAnswer = (attempt: AttemptCoreSchema, test: TestFullSchema) => {
+	const isAllowedToShowAnswer = useCallback((attempt: AttemptCoreSchema, test: TestFullSchema) => {
 		return (
 			(userId === test.authorId) ||
 			(test._detail.mode === "PRACTICE" && attempt.candidateId === test.authorId) ||
@@ -29,43 +27,38 @@ export default function CandidateTestAttemptPage() {
 				userId === test.authorId
 			))
 		);
-	}
+	}, [userId]);
 
 	return (
-		<FetchStateCover2
-			fetchState={attemptQuery}
-			dataComponent={(attempt) => (
+
+		<RightLayoutTemplate
+			header={
 				<FetchStateCover2
-					fetchState={testQuery}
-					dataComponent={(test) => (
-						<RightLayoutTemplate
-							header={
-								<RightLayoutTemplate.Header
-									title={`Attempt ${attempt.order} - ${test.title}`}
-									description={`Started at ${format(new Date(attempt.createdAt), "dd MMM yyyy, HH:mm")}`}
-								/>
-							}
-							right={
-								<AttemptSidebar
-									showAnswersAvailable={isAllowedToShowAnswer(attempt, test)}
-									setShowAnswers={setShowAnswers}
-									showAnswers={showAnswers}
-									attempt={attempt}
-									test={test}
-								/>
-							}
-						>
-							<div className="w-full p-4">
-								<AnswersList
-									testId={testId}
-									attemptId={attemptId}
-									viewCorrectAnswer={showAnswers}
-								/>
-							</div>
-						</RightLayoutTemplate>
+					fetchState={testWithAttemptQuery}
+					loadingComponent={<TitleSkeleton />}
+					dataComponent={({ attempt, test }) => (
+						<RightLayoutTemplate.Header
+							title={`Attempt #${attempt.order} - ${test.title}`}
+							description={`Started at ${format(new Date(attempt.createdAt), "dd MMM yyyy, HH:mm")}`}
+							backButton={<RightLayoutTemplate.BackButton onClick={() => navigate(paths.candidate.tests.in(testId).ROOT)} />}
+						/>
 					)}
 				/>
-			)}
-		/>
+			}
+			right={
+				<AttemptSidebar />
+			}
+		>
+			<FetchStateCover2
+				fetchState={testWithAttemptQuery}
+				dataComponent={({ attempt, test }) => (
+					<AnswersList
+						isAllowedToShowAnswer={isAllowedToShowAnswer(attempt, test)}
+					/>
+				)}
+			/>
+		</RightLayoutTemplate>
 	);
 }
+
+

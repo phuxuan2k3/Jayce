@@ -279,7 +279,7 @@
 										"minimum": 0
 									},
 									"totalPoints": {
-										"type": "integer",
+										"type": "number",
 										"minimum": 0
 									},
 									"totalCandidates": {
@@ -291,19 +291,19 @@
 										"minimum": 0
 									},
 									"averageScore": {
-										"type": "integer",
+										"type": "number",
 										"minimum": 0
 									},
 									"highestScore": {
-										"type": "integer",
+										"type": "number",
 										"minimum": 0
 									},
 									"lowestScore": {
-										"type": "integer",
+										"type": "number",
 										"minimum": 0
 									},
 									"averageTime": {
-										"type": "integer",
+										"type": "number",
 										"minimum": 0
 									}
 								},
@@ -370,7 +370,7 @@
 						"type": "object",
 						"properties": {
 							"points": {
-								"type": "integer",
+								"type": "number",
 								"minimum": 0
 							},
 							"answered": {
@@ -427,9 +427,10 @@
 						"type": "number"
 					},
 					"pointReceived": {
-						"type": "integer",
-						"minimum": 0,
-						"default": 0
+						"type": [
+							"number",
+							"null"
+						]
 					},
 					"createdAt": {
 						"type": "string"
@@ -741,7 +742,7 @@
 								"minimum": 0
 							},
 							"averageScore": {
-								"type": "integer",
+								"type": "number",
 								"minimum": 0
 							}
 						},
@@ -1863,7 +1864,7 @@
 																			"minimum": 0
 																		},
 																		"totalPoints": {
-																			"type": "integer",
+																			"type": "number",
 																			"minimum": 0
 																		},
 																		"totalCandidates": {
@@ -1875,19 +1876,19 @@
 																			"minimum": 0
 																		},
 																		"averageScore": {
-																			"type": "integer",
+																			"type": "number",
 																			"minimum": 0
 																		},
 																		"highestScore": {
-																			"type": "integer",
+																			"type": "number",
 																			"minimum": 0
 																		},
 																		"lowestScore": {
-																			"type": "integer",
+																			"type": "number",
 																			"minimum": 0
 																		},
 																		"averageTime": {
-																			"type": "integer",
+																			"type": "number",
 																			"minimum": 0
 																		}
 																	},
@@ -2285,6 +2286,42 @@
 						"required": false,
 						"name": "status",
 						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": [
+								"asc",
+								"desc"
+							]
+						},
+						"required": false,
+						"name": "sortByPoints",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": [
+								"asc",
+								"desc"
+							]
+						},
+						"required": false,
+						"name": "sortByCreatedAt",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": [
+								"asc",
+								"desc"
+							]
+						},
+						"required": false,
+						"name": "sortBySecondsSpent",
+						"in": "query"
 					}
 				],
 				"responses": {
@@ -2551,6 +2588,42 @@
 						},
 						"required": false,
 						"name": "status",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": [
+								"asc",
+								"desc"
+							]
+						},
+						"required": false,
+						"name": "sortByPoints",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": [
+								"asc",
+								"desc"
+							]
+						},
+						"required": false,
+						"name": "sortByCreatedAt",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": [
+								"asc",
+								"desc"
+							]
+						},
+						"required": false,
+						"name": "sortBySecondsSpent",
 						"in": "query"
 					}
 				],
