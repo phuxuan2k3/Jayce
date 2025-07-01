@@ -2,6 +2,7 @@ import { FC, MouseEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePostStartInterviewMutation } from "../../../../features/interviews/api/interview.api";
 import { JobSetupData } from "./setup";
+import { useLanguage } from "../../../../LanguageProvider";
 
 type ModalCheckSoundProps = {
   isOpen: boolean;
@@ -72,6 +73,7 @@ const ModalCheckSound: FC<ModalCheckSoundProps> = ({
     e.stopPropagation();
   };
 
+  const { t } = useLanguage();
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
@@ -83,41 +85,41 @@ const ModalCheckSound: FC<ModalCheckSoundProps> = ({
       >
         <>
           <h2 className="text-3xl font-bold mb-3 text-[#2e808a] text-center">
-            Before you begin
+            {t("checksound_title")}
           </h2>
           <p className="mb-4 text-gray-700 text-center">
-            Your submitted information has been received. You may now proceed to
-            verify your audio and network connectivity to ensure optimal
-            performance during the sessions.
+            {t("checksound_desc")}
           </p>
           <div className="bg-[#e7f6f8] rounded-lg px-4 py-3 mb-4">
             <div className="font-semibold text-[#2e808a] mb-1">
-              Instructions:
+              {t("instructions")}
             </div>
             <ol className="list-decimal list-inside text-gray-700 space-y-1">
-              <li>Carefully listen to each question.</li>
+              <li>{t("listen_each_question")}</li>
               <li>
-                Formulate your response, then click the{" "}
-                <span className="font-semibold text-[#2e808a]">‘Answer’</span>{" "}
-                button.
+                {t("formulate_response")}{" "}
+                <span className="font-semibold text-[#2e808a]">
+                  {" "}
+                  {t("answer_button")}
+                </span>{" "}
               </li>
               <li>
-                After completion, click{" "}
-                <span className="font-semibold text-[#2e808a]">‘Continue’</span>{" "}
-                to submit and move to the next question.
+                {t("after_completion")}{" "}
+                <span className="font-semibold text-[#2e808a]">
+                  {" "}
+                  {t("continue_button")}
+                </span>{" "}
+                {t("to_submit_next")}
               </li>
             </ol>
           </div>
           <div className="bg-red-50 border-l-4 border-red-400 p-3 rounded mb-6">
             <div className="font-bold text-red-600 mb-1">
-              Please be advised:
+              {t("please_be_advised")}
             </div>
             <ul className="list-disc list-inside text-red-500 text-sm space-y-1">
-              <li>
-                If you unexpectedly leave a session, your interview will be
-                submitted as is and a retake will not be possible.
-              </li>
-              <li>Do not refresh the page or you'll lose the data.</li>
+              <li>{t("session_leave_warning")}</li>
+              <li>{t("refresh_warning")}</li>
             </ul>
           </div>
           <div className="flex gap-4 mt-8">
@@ -125,7 +127,7 @@ const ModalCheckSound: FC<ModalCheckSoundProps> = ({
               onClick={onClose}
               className="w-1/2 py-2 border border-[#2e808a] rounded-lg font-semibold text-[#2e808a] hover:bg-[#f1fafa] transition"
             >
-              Back
+              {t("back")}
             </button>
             <button
               onClick={() =>
@@ -159,10 +161,10 @@ const ModalCheckSound: FC<ModalCheckSoundProps> = ({
                       d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
                     />
                   </svg>
-                  <span className="animate-pulse">Loading...</span>
+                  <span className="animate-pulse">{t("loading")}</span>
                 </>
               ) : (
-                "Let's start"
+                t("lets_start")
               )}
             </button>
           </div>

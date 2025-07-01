@@ -1,4 +1,7 @@
+import { useLanguage } from "../../../../LanguageProvider";
+
 export default function Loading() {
+  const { t } = useLanguage();
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-[#feffff] via-[#ffffff] to-[#acfdfd] animate-fade-in">
       <div className="relative flex flex-col items-center">
@@ -8,10 +11,10 @@ export default function Loading() {
         </div>
 
         <h1 className="mt-8 text-4xl md:text-5xl font-arya font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] via-[#34c759] to-[#facc15] animate-fade-in">
-          Loading...
+          {t("loading")}
         </h1>
         <p className="mt-2 text-lg md:text-xl font-asap text-primary animate-fade-in animate-pulse-slow">
-          Please wait while we load the results...
+          {t("loading_please_wait")}
         </p>
         <div className="flex gap-2 mt-10">
           <span

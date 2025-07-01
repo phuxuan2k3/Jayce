@@ -9,6 +9,7 @@ import {} from //   faCommentDots,
 //   faCircleQuestion,
 //   faUserCircle,
 "@fortawesome/free-solid-svg-icons";
+import { useLanguage } from "../../../../LanguageProvider";
 
 // const statusColor: Record<string, string> = {
 //   Full: "text-green-600",
@@ -31,6 +32,8 @@ const statusBgColor: Record<string, string> = {
 const Script: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
   scoreData,
 }) => {
+  const { t } = useLanguage();
+
   return (
     <div className="max-w-4xl mx-auto overflow-auto">
       <div className="w-full h-[500px]">
@@ -64,14 +67,14 @@ const Script: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
                         className="text-primary-toned-600 text-xl mt-0.5"
                       /> */}
                       <span className="font-semibold text-gray-700">
-                        Your Answer:
+                        {t("script_your_answer")}
                       </span>
                       <span className="ml-2 text-gray-800">
                         {res.answer && res.answer.trim() ? (
                           res.answer
                         ) : (
                           <span className="italic text-gray-400">
-                            No answer provided
+                            {t("script_no_answer")}
                           </span>
                         )}
                       </span>
@@ -83,7 +86,7 @@ const Script: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
                         className="text-primary-toned-600 text-xl mt-0.5"
                       /> */}
                       <span className="font-semibold text-gray-700">
-                        Evaluate the answer:
+                        {t("script_evaluate_answer")}
                       </span>
                       <span className="ml-2 text-gray-800">{res.comment}</span>
                     </div>

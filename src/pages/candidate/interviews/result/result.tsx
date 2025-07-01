@@ -12,16 +12,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Loading from "./loading";
 import { useLocation } from "react-router-dom";
-
-const navItems = [
-  { id: "summary", label: "Summary", icon: faChartPie },
-  { id: "script", label: "Scripts", icon: faScroll },
-  { id: "strength", label: "Areas of Improvement", icon: faArrowTrendUp },
-];
+import { useLanguage } from "../../../../LanguageProvider";
 
 const ResultPage = () => {
-  const [tab, setTab] = useState("summary");
+  const { t } = useLanguage();
 
+  const [tab, setTab] = useState("summary");
+  const navItems = [
+    { id: "summary", label: t("result_summary"), icon: faChartPie },
+    { id: "script", label: t("result_scripts"), icon: faScroll },
+    {
+      id: "strength",
+      label: t("result_areas_of_improvement"),
+      icon: faArrowTrendUp,
+    },
+  ];
   const location = useLocation();
   const interviewId = location.state?.interviewId;
   // const { data, isLoading, error, refetch } = useGetInterviewHistoryQuery({
@@ -44,7 +49,6 @@ const ResultPage = () => {
   // }, [data?.finalComment, refetch]);
 
   const [stopPolling, setStopPolling] = useState(false);
-
   const { data, isLoading } = useGetInterviewHistoryQuery(
     { interviewId },
     {
@@ -75,16 +79,16 @@ const ResultPage = () => {
   if (isLoading || (data && !data.finalComment)) {
     return <Loading />;
   }
-  if (!data) return <div>Không có dữ liệu.</div>;
+  if (!data) return <div>{t("result_no_data")}</div>;
 
   return (
     <div className="bg-white h-fit pb-20 mx-12">
       <div className="text-[40px] font-black font-arya text-center mt-10 text-primary-toned-600 drop-shadow">
-        Interview Result
+        {t("result_title")}
       </div>
       <div className="text-center text-[20px] font-arya mb-10 text-gray-700">
-        <p>Congratulations on completing the interview!</p>
-        <p>Let's take a look at the result!</p>
+        <p>{t("result_congrats")}</p>
+        <p>{t("result_lets_take_a_look")}</p>
       </div>
       <Box className="w-full flex justify-center ">
         <div className="w-[340px] h-[500px] bg-white/90 rounded-3xl shadow p-6 flex flex-col gap-2 items-center mr-10">
