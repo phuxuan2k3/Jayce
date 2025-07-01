@@ -8,7 +8,21 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
   const [numQuestion, setNumQuestion] = useState(4);
   const [skipIntro, setSkipIntro] = useState(false);
   const [skipCode, setSkipCode] = useState(false);
-
+  const [selectedModel, setSelectedModel] = useState<"alice" | "peter">(
+    "alice"
+  );
+  const models = [
+    {
+      key: "alice",
+      src: "/textures/aliceAvatar.png",
+      label: "Alice",
+    },
+    {
+      key: "peter",
+      src: "/textures/peterAvatar.png",
+      label: "Peter",
+    },
+  ];
   const [isOpen, setIsopen] = useState<boolean>(false);
   const { t, language, setLanguage } = useLanguage();
 
@@ -36,16 +50,31 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
             </select>
             <div className="mt-4 mb-2">{t("models_english")}</div>
             <div className="grid grid-cols-2  gap-4">
-              <img
-                className="size-[200px] rounded-lg bg-gray-300"
-                src="/textures/aliceAvatar.png"
-                alt=""
-              />
-              <img
-                className="size-[200px] rounded-lg bg-gray-300"
-                src="/textures/peterAvatar.png"
-                alt=""
-              />
+              {models.map((model) => (
+                <div
+                  key={model.key}
+                  className={`
+                    size-[200px] rounded-lg bg-gray-300 cursor-pointer transition-all
+                    ${
+                      selectedModel === model.key
+                        ? "border-4 border-primary"
+                        : "border-2 border-transparent opacity-80 hover:border-primary-toned-600"
+                    }
+                  `}
+                  onClick={() =>
+                    setSelectedModel(model.key as "alice" | "peter")
+                  }
+                >
+                  <img
+                    className="w-full h-full object-cover rounded-lg"
+                    src={model.src}
+                    alt={model.label}
+                  />
+                  <div className="text-center font-bold mt-2">
+                    {/* {model.label} */}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -120,6 +149,7 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
         numQuestion={numQuestion}
         skipIntro={skipIntro}
         skipCode={skipCode}
+        model={selectedModel}
       />
     </>
   );

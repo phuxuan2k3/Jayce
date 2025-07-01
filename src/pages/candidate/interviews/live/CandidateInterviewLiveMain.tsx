@@ -5,12 +5,14 @@ import SpinnerLoading from "../../../../components/ui/loading/SpinnerLoading";
 import Background from "./components/Background";
 import Overlay from "./components/Overlay/Overlay";
 import { useBackgroundContext } from "./contexts/background-context";
-import { useModelContext } from "./contexts/model-context";
+// import { useModelContext } from "./contexts/model-context";
+import { useLocation } from "react-router-dom";
 
 export default function CandidateInterviewLiveMain() {
   const [isStarting, setIsStarting] = useState(false);
   const { background } = useBackgroundContext();
-  const { model } = useModelContext();
+  const location = useLocation();
+  const model = location.state?.model || "alice";
 
   return (
     <div

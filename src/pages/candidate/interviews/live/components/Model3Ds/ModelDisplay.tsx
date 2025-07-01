@@ -2,15 +2,15 @@ import { Environment } from "@react-three/drei";
 import { lazy, Suspense, useMemo } from "react";
 
 export default function ModelDisplay({
-  model = "Alice",
+  model = "alice",
 }: {
-  model?: "Jenny" | "Alice";
+  model?: "peter" | "alice";
 }) {
   const Model = useMemo(() => {
     switch (model) {
-      case "Jenny":
+      case "peter":
         return lazy(() => import("./John/Model"));
-      case "Alice":
+      case "alice":
         return lazy(() => import("./Alice/Model"));
       default:
         return lazy(() => import("./Alice/Model"));

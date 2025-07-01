@@ -13,6 +13,7 @@ type ModalCheckSoundProps = {
   skipIntro: boolean;
   skipCode: boolean;
   language: string;
+  model: string;
 };
 
 const ModalCheckSound: FC<ModalCheckSoundProps> = ({
@@ -24,6 +25,7 @@ const ModalCheckSound: FC<ModalCheckSoundProps> = ({
   skipIntro,
   skipCode,
   language,
+  model,
 }) => {
   const navigate = useNavigate();
 
@@ -42,7 +44,13 @@ const ModalCheckSound: FC<ModalCheckSoundProps> = ({
       language: language as string,
       // language: "Vietnamese",
       models:
-        language === "Vietnamese" ? "vi-VN-HoaiMyNeural" : "en-US-JennyNeural",
+        language === "Vietnamese"
+          ? model === "alice"
+            ? "vi-VN-HoaiMyNeural"
+            : "vi-VN-NamMinhNeural"
+          : model === "alice"
+            ? "en-US-JennyNeural"
+            : "en-IN-PrabhatNeural",
       speed: speechRate,
       skills: [data?.skills],
       totalQuestions: numQuestion,
@@ -132,7 +140,7 @@ const ModalCheckSound: FC<ModalCheckSoundProps> = ({
             <button
               onClick={() =>
                 navigate("/candidate/interviews/live", {
-                  state: { interviewId },
+                  state: { interviewId, model },
                 })
               }
               disabled={loading}

@@ -8,6 +8,7 @@ import {
 import logo from "/svg/logo.svg";
 import skillsharp from "/svg/skillsharp.svg";
 import paths from "../../router/paths";
+import LanguageSwitcher from "./Language";
 
 const UnauthNavbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -266,6 +267,7 @@ const UnauthNavbar = () => {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            <LanguageSwitcher />
             <div className="relative ml-3">
               <div>
                 <FontAwesomeIcon
