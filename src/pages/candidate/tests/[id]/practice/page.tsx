@@ -24,7 +24,13 @@ export default function CandidatePracticePage() {
 			id: "attempts",
 			label: "Attempts",
 			content: <AttemptsTab
-				onAttemptClick={(attempt) => navigate(paths.candidate.tests.in(testId).attempts.in(attempt.id).ROOT)}
+				onAttemptClick={(attempt) => {
+					if (attempt.status === "IN_PROGRESS") {
+						navigate(paths.candidate.tests.in(testId).attempts.in(attempt.id).DO);
+					} else {
+						navigate(paths.candidate.tests.in(testId).attempts.in(attempt.id).ROOT);
+					}
+				}}
 				candidateId={userId}
 			/>
 		},

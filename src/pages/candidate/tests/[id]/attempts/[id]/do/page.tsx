@@ -81,7 +81,7 @@ export default function CandidateTestAttemptsDoPage() {
 						/>
 					}
 				>
-					<div className="flex flex-row w-full justify-between">
+					<div className="flex w-full justify-between">
 						{state.questionsDo.length === 0 ? (
 							<div>No questions found</div>
 						) : (

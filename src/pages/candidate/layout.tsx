@@ -9,7 +9,7 @@ export default function CandidateLayout() {
 		<RoleGuard roles={[Role.Candidate]}>
 			<div className="flex flex-col w-full min-h-screen">
 				<CandidateNavbar />
-				<div className="flex-1">
+				<div className="flex-1 flex items-center justify-center">
 					<Outlet />
 				</div>
 				<FooterShort />

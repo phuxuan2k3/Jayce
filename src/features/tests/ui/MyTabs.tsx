@@ -63,10 +63,6 @@ const MyTabs = ({ tabs, defaultTabId, className = '', tabClassName = '' }: TabsC
             0% { transform: translateX(-15px); opacity: 0; }
             100% { transform: translateX(0); opacity: 1; }
           }
-          @keyframes pulse {
-            0%, 100% { opacity: 0.6; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
-          }
         `}
 			</style>
 
@@ -115,9 +111,6 @@ const MyTabs = ({ tabs, defaultTabId, className = '', tabClassName = '' }: TabsC
 										{/* Animated dot indicator */}
 										<span
 											className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 rounded-full bg-primary"
-											style={{
-												animation: "pulse 1.5s infinite",
-											}}
 										></span>
 									</>
 								)}

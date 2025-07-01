@@ -70,7 +70,6 @@ function Header({
 				<Points className="w-full text-center" />
 			</div>
 			<Text className="flex-1" />
-			<Type className="py-0 text-xs px-4 rounded-full" />
 		</Layout>
 	);
 }

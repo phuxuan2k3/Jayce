@@ -24,8 +24,10 @@ export default function CurrentAttemptCard() {
 
 	return (
 		<FetchStateCover2
-			fetchState={currentAttemptQuery}
-			loadingComponent={<div className='h-64 w-full animate-pulse rounded-md bg-gray-200' />}
+			fetchState={{ ...currentAttemptQuery }}
+			loadingComponent={(
+				<div className='h-64 w-full animate-pulse rounded-md bg-gray-200' />
+			)}
 			dataComponent={({ data: attempts }) => attempts.length > 0 ? (
 				<div className="flex flex-col gap-2">
 					{attempts.map(attempt => (

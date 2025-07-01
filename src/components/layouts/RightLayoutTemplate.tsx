@@ -6,14 +6,16 @@ export default function RightLayoutTemplate({
 	children,
 	right,
 	aboveMain,
+	className = '',
 }: {
 	header: React.ReactNode;
 	children: React.ReactNode;
 	right: React.ReactNode;
 	aboveMain?: React.ReactNode;
+	className?: string;
 }) {
 	return (
-		<div className="container grid grid-cols-1 lg:grid-cols-[2fr_1fr] grid-rows-[auto_1fr] gap-4 lg:gap-8 mx-auto mt-4 mb-8 h-full">
+		<div className={cn("container grid grid-cols-1 lg:grid-cols-[2fr_1fr] grid-rows-[auto_1fr] gap-4 lg:gap-8 mx-auto mt-4 mb-8 h-full", className)}>
 			{header && <header className="flex gap-x-4 lg:col-span-2">
 				{header}
 			</header>}

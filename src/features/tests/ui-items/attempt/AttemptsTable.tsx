@@ -1,6 +1,8 @@
 import React from 'react';
 import { format, formatDistanceToNow } from 'date-fns';
 import { AttemptCoreSchema } from '../../api/test.api-gen-v2';
+import { AttemptUtils } from './attempt-utils';
+import { cn } from '../../../../app/cn';
 
 interface Props {
 	attempts: AttemptCoreSchema[];
@@ -28,6 +30,7 @@ const AttemptsTable: React.FC<Props> = ({
 				<tr>
 					<th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">#</th>
 					<th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date</th>
+					<th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th>
 					<th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Score</th>
 					<th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Time Spent</th>
 				</tr>
@@ -46,12 +49,11 @@ const AttemptsTable: React.FC<Props> = ({
 							<div>{format(new Date(attempt.createdAt), "MMM d, yyyy")}</div>
 							<div className="text-xs">{formatDistanceToNow(new Date(attempt.createdAt), { addSuffix: true })}</div>
 						</td>
-						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-							{attempt.hasEnded ? (
-								<span className="text-green-600 font-semibold">{attempt._aggregate.points}</span>
-							) : (
-								<span className="text-red-600 font-semibold">In Progress</span>
-							)}
+						<td className={cn("px-6 py-4 whitespace-nowrap text-sm font-semibold", AttemptUtils.status(attempt).fontColor)}>
+							{AttemptUtils.status(attempt).text}
+						</td>
+						<td className="px-6 py-4 whitespace-nowrap text-sm text-primary font-bold">
+							{attempt._aggregate.points}
 						</td>
 						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 							{formatSeconds(attempt.secondsSpent)}

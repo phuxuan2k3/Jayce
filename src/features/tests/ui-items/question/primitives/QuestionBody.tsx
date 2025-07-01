@@ -9,7 +9,7 @@ function QuestionDetailBody({
 	className = "",
 }: BaseComponentProps) {
 	const { show } = ShowAnswerContext.useShowAnswer();
-	const { question } = QuestionContext.useQuestion();
+	const { question, hasCorrectAnswer } = QuestionContext.useQuestion();
 	const answer = QuestionContext.useAnswer();
 
 	let detailComponent: React.ReactNode = null;
@@ -22,7 +22,7 @@ function QuestionDetailBody({
 	return (
 		<div className={cn('flex flex-col gap-4', className)}>
 			{detailComponent}
-			<ShowAnswerButton className="self-end" />
+			{hasCorrectAnswer && <ShowAnswerButton className="self-end" />}
 			{show && answer && (
 				<>
 					<hr className="my-2 border-gray-300" />

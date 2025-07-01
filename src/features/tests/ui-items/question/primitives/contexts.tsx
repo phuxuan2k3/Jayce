@@ -16,7 +16,15 @@ const useQuestion = () => {
 	if (!context) {
 		throw new Error("useQuestionContext must be used within a QuestionPrimitives");
 	}
-	return context;
+	const hasCorrectAnswer = (
+		context.question.detail.type === "MCQ" && context.question.detail.correctOption != null
+	) || (
+			context.question.detail.type === "LONG_ANSWER" && context.question.detail.correctAnswer != null
+		);
+	return {
+		...context,
+		hasCorrectAnswer,
+	};
 }
 
 const useMCQDetail = () => {

@@ -2,17 +2,23 @@ import { BaseComponentProps } from "./types";
 import { QuestionContext, QuestionContextProps, ShowAnswerContext } from "./contexts";
 import { QuestionPrimitivesHeader } from "./QuestionHeader";
 import { QuestionPrimitivesDetailBody } from "./QuestionBody";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { cn } from "../../../../../app/cn";
 
-export type PrimitivesProps = BaseComponentProps & QuestionContextProps;
+export type PrimitivesProps = BaseComponentProps & QuestionContextProps & {
+	showAnswer?: boolean;
+};
 
 function QuestionPrimitives({
 	children,
 	className = "",
+	showAnswer: initialShowAnswer = false,
 	...context
 }: PrimitivesProps) {
-	const [showAnswer, _setShowAnswer] = useState<boolean>(false);
+	const [showAnswer, _setShowAnswer] = useState<boolean>(initialShowAnswer);
+	useEffect(() => {
+		_setShowAnswer(initialShowAnswer);
+	}, [initialShowAnswer]);
 
 	const setShowAnswer = useCallback((show: boolean) => {
 		_setShowAnswer(show);

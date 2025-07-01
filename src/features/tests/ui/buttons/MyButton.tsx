@@ -3,7 +3,7 @@ import { cva, VariantProps } from 'class-variance-authority'
 import { cn } from '../../../../app/cn'
 
 const buttonVariants = cva(
-	'px-4 py-2 rounded-md transition font-semibold',
+	'px-4 py-2 rounded-md transition font-semibold disabled:opacity-50 disabled:cursor-not-allowed',
 	{
 		variants: {
 			variant: {
@@ -17,7 +17,8 @@ const buttonVariants = cva(
 			size: {
 				large: 'text-lg px-6 py-3',
 				normal: 'text-base px-4 py-2',
-				small: 'text-xs px-2 py-1 font-normal', // font-normal for small
+				medium: 'text-sm px-3 py-1.5',
+				small: 'text-xs px-2 py-1 font-normal',
 			},
 		},
 		defaultVariants: {
