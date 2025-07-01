@@ -82,4 +82,11 @@ export const vi = {
   script_status_full: "Đầy đủ",
   script_status_partial: "Một phần",
   script_status_none: "Chưa trả lời",
+  strength_interview_feedback: "Phản hồi phỏng vấn",
+  strength_strengths: "Điểm mạnh",
+  strength_areas_of_improvement: "Cần cải thiện",
+  strength_final_comment: "Nhận xét cuối",
+  summary_overall_feedback: "Nhận xét tổng quan",
+  summary_grade_distribution: "Phân bố điểm",
+  summary_skill_scores: "Điểm kỹ năng",
 } as const;

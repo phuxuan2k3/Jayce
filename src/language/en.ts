@@ -83,6 +83,13 @@ export const en = {
   script_status_full: "Full",
   script_status_partial: "Partial",
   script_status_none: "None",
+  strength_interview_feedback: "Interview Feedback",
+  strength_strengths: "Strengths",
+  strength_areas_of_improvement: "Areas of Improvement",
+  strength_final_comment: "Final Comment",
+  summary_overall_feedback: "Overall Feedback",
+  summary_grade_distribution: "Grade Distribution",
+  summary_skill_scores: "Skill Scores",
 } as const;
 
 export type TranslationKey = keyof typeof en;

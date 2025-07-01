@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChartPie, faStar } from "@fortawesome/free-solid-svg-icons";
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
+import { useLanguage } from "../../../../LanguageProvider";
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
 const getPieData = (totalScore: GetInterviewHistoryResponse["totalScore"]) => {
@@ -75,6 +76,7 @@ const pieOptions = {
 const Summary: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
   scoreData,
 }) => {
+  const { t } = useLanguage();
   return (
     <div className="w-full h-full p-0 md:p-8 flex flex-col md:flex-row gap-8">
       {/* Feedback Card */}
@@ -89,7 +91,7 @@ const Summary: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
               variant="h5"
               className="font-black text-primary-toned-600 tracking-tight font-arya"
             >
-              Overall Feedback
+              {t("summary_overall_feedback")}
             </Typography>
           </div>
           <Divider />
@@ -112,7 +114,7 @@ const Summary: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
                 variant="subtitle1"
                 className="font-bold text-primary-toned-600 font-arya"
               >
-                Grade Distribution
+                {t("summary_grade_distribution")}
               </Typography>
             </div>
             <Divider />
@@ -138,7 +140,7 @@ const Summary: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
                 variant="subtitle1"
                 className="font-bold text-primary-toned-600 font-arya"
               >
-                Skill Scores
+                {t("summary_skill_scores")}
               </Typography>
             </div>
             <Divider />
