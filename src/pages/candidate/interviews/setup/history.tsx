@@ -7,6 +7,7 @@ import {
   HiOutlineRefresh,
 } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../../../../LanguageProvider";
 
 const formatDate = (isoString: string) => {
   const date = new Date(isoString);
@@ -93,11 +94,13 @@ const HistoryPage = () => {
     pageIndex: page,
   });
 
+  const { t } = useLanguage();
+
   if (isLoading || isFetching) {
     return (
       <div className=" mx-auto w-full  px-16 py-8">
         <h2 className="text-2xl font-bold mb-6 text-[#2e808a] text-center">
-          Interview History
+          {t("interview_history")}
         </h2>
         <div className="flex flex-col gap-4 max-h-[500px] overflow-y-auto pr-2">
           {[...Array(3)].map((_, idx) => (
@@ -112,7 +115,7 @@ const HistoryPage = () => {
     return (
       <div className="w-full flex justify-center items-center py-10">
         <span className="text-lg text-red-600 font-semibold">
-          Failed to load interview history.
+          {t("failed_to_load_interview_history")}
         </span>
       </div>
     );
@@ -121,11 +124,11 @@ const HistoryPage = () => {
   return (
     <div className=" w-full px-16 py-8">
       <h2 className="text-2xl font-bold mb-6 text-[#2e808a] text-center">
-        Interview History
+        {t("interview_history")}
       </h2>
       {data?.interviews?.length === 0 && (
         <div className="text-center text-gray-500">
-          No interview history found.
+          {t("no_interview_history")}
         </div>
       )}
       {data && data?.interviews?.length > 0 && (
@@ -147,7 +150,7 @@ const HistoryPage = () => {
                   </span>
                   <div>
                     <span className="text-xs text-gray-500 font-medium">
-                      Position
+                      {t("position")}
                     </span>
                     <div className="text-lg font-bold text-[#2e808a]">
                       {interview.position}
@@ -160,7 +163,7 @@ const HistoryPage = () => {
                   </span>
                   <div>
                     <span className="text-xs text-gray-500 font-medium">
-                      Experience
+                      {t("experience")}
                     </span>
                     <div className="text-base font-semibold">
                       {interview.experience}
@@ -170,7 +173,7 @@ const HistoryPage = () => {
               </div>
               <div className="flex flex-wrap gap-8 mt-2 items-center">
                 <div>
-                  <span className="text-sm text-gray-500">Scores</span>
+                  <span className="text-sm text-gray-500">{t("scores")}</span>
                   <div className="mt-1">
                     <ScoreBadges score={interview.totalScore} />
                   </div>
@@ -180,7 +183,9 @@ const HistoryPage = () => {
                     <span className="text-[#2e808a]">
                       <HiOutlineCalendar className="w-5 h-5" />
                     </span>
-                    <span className="text-sm text-gray-500">Created At</span>
+                    <span className="text-sm text-gray-500">
+                      {t("created_at")}
+                    </span>
                   </div>
 
                   <div>
@@ -195,7 +200,9 @@ const HistoryPage = () => {
                     <span className="text-[#2e808a]">
                       <HiOutlineRefresh className="w-5 h-5" />
                     </span>
-                    <span className="text-sm text-gray-500">Updated At</span>
+                    <span className="text-sm text-gray-500">
+                      {t("updated_at")}
+                    </span>
                   </div>
 
                   <div>
