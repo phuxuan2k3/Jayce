@@ -25,6 +25,7 @@ import Notifications from "./Tabs/Notifications";
 import { Role } from "../../../../features/auth/types/auth";
 import paths from "../../../../router/paths";
 import TransactionHistoryDialog from "./TransactionHistoryDialog";
+import { useLanguage } from "../../../../LanguageProvider";
 
 const sscOptions = [
     { ssc: 60, vnd: 60000 },
@@ -35,6 +36,7 @@ const sscOptions = [
 ];
 
 const Settings = () => {
+    const { t } = useLanguage();
     const navigate = useNavigate();
     const [selectedTab, setSelectedTab] = React.useState<'Public profile' | 'Account' | 'Theme preferences' | 'Notifications'>('Public profile');
 
@@ -42,7 +44,7 @@ const Settings = () => {
     console.log("Auth data", authData);
 
     if (!authData) {
-        return <div>Loading...</div>;
+        return <div>{t("settings_user_loading")}</div>;
     }
 
     const handleGoToPricing = () => {
@@ -104,13 +106,13 @@ const Settings = () => {
             });
 
             if (response.error) {
-                setCreatingError("Failed to create payment link. Please try again later.");
+                setCreatingError(t("settings_topup_failed"));
                 return;
             }
 
             window.open(response.data.checkoutUrl, "_blank");
         } catch (error) {
-            setCreatingError("Failed to create payment link. Please try again later.");
+            setCreatingError(t("settings_topup_failed"));
         } finally {
             setCreating(false);
         }
@@ -129,7 +131,7 @@ const Settings = () => {
                             />
                             {authBalance?.is_premium && (
                                 <div className="absolute -top-1 -right-5 bg-yellow-400 text-white text-[10px] font-bold px-2 py-[2px] rounded-full shadow">
-                                    PREMIUM
+                                    {t("settings_balance_premium_label")}
                                 </div>
                             )}
                         </div>
@@ -143,7 +145,7 @@ const Settings = () => {
                     <div className="w-full lg:w-[80%] flex flex-col gap-6">
                         <div className="flex flex-col lg:flex-row lg:items-center justify-center lg:justify-end gap-4">
                             <div className="flex flex-col w-full lg:max-w-[300px]">
-                                <p className="text-sm text-gray-600">Balance (SSC)</p>
+                                <p className="text-sm text-gray-600">{t("settings_balance_title")}</p>
                                 <div className="mt-2 flex items-center justify-between px-5 py-3 bg-white border rounded-xl shadow-md text-[26px] font-bold text-[var(--primary-color)]">
                                     <div className="flex items-center justify-center gap-2">
                                         <AddCircleOutlineIcon
@@ -165,13 +167,13 @@ const Settings = () => {
                                     onClick={() => setOpenOrderDialog(true)}
                                     className="w-full lg:w-auto px-4 py-2 border border-primary font-bold text-primary rounded-lg hover:bg-primary hover:text-white transition-colors duration-200"
                                 >
-                                    Top-Up History
+                                    {t("settings_balance_topup_history")}
                                 </button>
                                 <button
                                     onClick={() => setOpenTransactionDialog(true)}
                                     className="w-full lg:w-auto px-4 py-2 border border-primary font-bold text-primary rounded-lg hover:bg-primary hover:text-white transition-colors duration-200"
                                 >
-                                    Transaction History
+                                    {t("settings_balance_transaction_history")}
                                 </button>
                             </div>
                         </div>
@@ -188,7 +190,7 @@ const Settings = () => {
                                     : 'hover:bg-primary-toned-50 opacity-50'
                                     }`}
                             >
-                                <PersonOutlineIcon className="h-6 w-6 mr-1" /> Public profile
+                                <PersonOutlineIcon className="h-6 w-6 mr-1" /> {t("settings_tab_public_profile")}
                             </div>
 
                             <div
@@ -198,7 +200,7 @@ const Settings = () => {
                                     : 'hover:bg-primary-toned-50 opacity-50'
                                     }`}
                             >
-                                <SettingsOutlinedIcon className="h-6 w-6 mr-1" /> Account
+                                <SettingsOutlinedIcon className="h-6 w-6 mr-1" /> {t("settings_tab_account")}
                             </div>
 
                             <div
@@ -208,7 +210,7 @@ const Settings = () => {
                                     : 'hover:bg-primary-toned-50 opacity-50'
                                     }`}
                             >
-                                <PaletteOutlinedIcon className="h-6 w-6 mr-1" /> Theme preferences
+                                <PaletteOutlinedIcon className="h-6 w-6 mr-1" /> {t("settings_tab_theme_preferences")}
                             </div>
 
                             <div
@@ -218,14 +220,14 @@ const Settings = () => {
                                     : 'hover:bg-primary-toned-50 opacity-50'
                                     }`}
                             >
-                                <NotificationsOutlinedIcon className="h-6 w-6 mr-1" /> Notifications
+                                <NotificationsOutlinedIcon className="h-6 w-6 mr-1" /> {t("settings_tab_notifications")}
                             </div>
 
                             <div
                                 onClick={() => handleGoToPricing()}
                                 className="flex-shrink-0 p-2 rounded cursor-pointer text-center lg:text-start"
                             >
-                                <SubtitlesOutlinedIcon className="h-6 w-6 mr-1 opacity-50" /> <span className="opacity-50">Billing</span> <OpenInNewOutlinedIcon className="text-primary h-4 w-4 ml-1" />
+                                <SubtitlesOutlinedIcon className="h-6 w-6 mr-1 opacity-50" /> <span className="opacity-50">{t("settings_tab_billing")}</span> <OpenInNewOutlinedIcon className="text-primary h-4 w-4 ml-1" />
                             </div>
                         </div>
                     </div>
@@ -239,7 +241,7 @@ const Settings = () => {
                 </div>
             </div>
             <Dialog open={openTopup} onClose={() => setOpenTopup(false)} maxWidth="sm" fullWidth>
-                <DialogTitle className="text-center font-bold text-xl">Choose a Top-Up Package</DialogTitle>
+                <DialogTitle className="text-center font-bold text-xl">{t("settings_topup_title")}</DialogTitle>
                 <DialogContent className="flex flex-wrap gap-4 justify-center py-6">
                     {sscOptions.map((opt, index) => {
                         const isSelected = selectedOption === index;
@@ -258,7 +260,7 @@ const Settings = () => {
                             >
                                 {isLast && (
                                     <div className="absolute top-[-10px] right-[-10px] bg-yellow-400 text-[var(--primary-color)] text-xs font-bold px-2 py-1 rounded-full shadow">
-                                        Best Value
+                                        {t("settings_topup_best_value")}
                                     </div>
                                 )}
                                 <div className="text-xl font-semibold">{opt.ssc.toLocaleString()} SSC</div>
@@ -275,7 +277,7 @@ const Settings = () => {
                         onClick={() => setOpenTopup(false)}
                         className="w-1/2 px-4 py-2 border border-[var(--primary-color)] font-bold text-[var(--primary-color)] rounded-lg"
                     >
-                        Cancel
+                        {t("settings_topup_cancel")}
                     </button>
                     <button
                         onClick={handleConfirmTopup}
@@ -285,7 +287,7 @@ const Settings = () => {
                             selectedOption === null ? "bg-gray-300 text-white cursor-not-allowed" : "bg-[var(--primary-color)] text-white"
                         )}
                     >
-                        {isCreating ? "Processing..." : "Confirm"}
+                        {isCreating ? t("settings_topup_processing") : t("settings_topup_confirm")}
                     </button>
                 </DialogActions>
             </Dialog>

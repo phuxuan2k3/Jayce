@@ -7,6 +7,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@m
 // import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import AlertError from "../../../../../components/ui/alert/AlertError";
 import AlertSuccess from "../../../../../components/ui/alert/AlertSuccess";
+import { useLanguage } from "../../../../../LanguageProvider";
 
 interface AccountProps {
 	authData: UserInfo;
@@ -22,6 +23,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 const Account: React.FC<AccountProps> = ({ authData }) => {
+	const { t } = useLanguage();
 	const [openChangePassword, setOpenChangePassword] = React.useState(false);
 	const [oldPassword, setOldPassword] = React.useState("");
 	const [newPassword, setNewPassword] = React.useState("");
@@ -39,23 +41,23 @@ const Account: React.FC<AccountProps> = ({ authData }) => {
 		if (isLoading) return;
 
 		const newErrors: { [key: string]: string } = {};
-		if (!oldPassword) newErrors.oldPassword = "Old password is required";
+		if (!oldPassword) newErrors.oldPassword = t("change_password_error_old_required");
 
 		if (!newPassword) {
-			newErrors.newPassword = "New password is required";
+			newErrors.newPassword = t("change_password_error_old_required");
 		} else if (newPassword.length < 6) {
-			newErrors.newPassword = "New password must be at least 6 characters long.";
+			newErrors.newPassword = t("change_password_error_min_length");
 		} else if (!/[A-Z]/.test(newPassword)) {
-			newErrors.newPassword = "New password must contain at least one uppercase letter.";
+			newErrors.newPassword = t("change_password_error_uppercase");
 		} else if (!/[a-z]/.test(newPassword)) {
-			newErrors.newPassword = "New password must contain at least one lowercase letter.";
+			newErrors.newPassword = t("change_password_error_lowercase");
 		} else if (!/[0-9]/.test(newPassword)) {
-			newErrors.newPassword = "New password must contain at least one number.";
+			newErrors.newPassword = t("change_password_error_number");
 		} else if (!/[!@#$%^&*(),.?":{}|<>]/.test(newPassword)) {
-			newErrors.newPassword = "New password must contain at least one special character.";
+			newErrors.newPassword = t("change_password_error_special");
 		}
 
-		if (confirmNewPassword !== newPassword) newErrors.confirmNewPassword = "Passwords do not match";
+		if (confirmNewPassword !== newPassword) newErrors.confirmNewPassword = t("change_password_error_confirm_mismatch");
 
 		if (Object.keys(newErrors).length > 0) {
 			setErrors(newErrors);
@@ -68,7 +70,7 @@ const Account: React.FC<AccountProps> = ({ authData }) => {
 		setSuccessMessage(null);
 		try {
 			await changePassword({ oldPassword, newPassword, confirmNewPassword }).unwrap();
-			setSuccessMessage("Password changed successfully!");
+			setSuccessMessage(t("change_password_success"));
 			setOpenChangePassword(false);
 			setOldPassword("");
 			setNewPassword("");
@@ -76,7 +78,7 @@ const Account: React.FC<AccountProps> = ({ authData }) => {
 			setErrors({});
 			setUpdateError(null);
 		} catch (error: any) {
-			setUpdateError(error?.data?.message || "An error occurred");
+			setUpdateError(error?.data?.message || t("change_password_error_default"));
 		} finally {
 			setIsLoading(false);
 		}
@@ -103,113 +105,77 @@ const Account: React.FC<AccountProps> = ({ authData }) => {
 		<>
 			<div>
 				{successMessage && <AlertSuccess successMessage={successMessage} />}
-				<h2 className="text-xl font-bold mb-4">Account Info</h2>
+				<h2 className="text-xl font-bold mb-4">{t("account_title_info")}</h2>
 				<table className="w-full mb-8">
 					<tbody>
 						<tr className="border-b border-black w-full">
-							<td className="w-[20%]">SkillSharp ID</td>
-							<td className="w-[70%] p-2 opacity-70">{authData.username || "No info"}</td>
+							<td className="w-[20%]">{t("account_label_id")}</td>
+							<td className="w-[70%] p-2 opacity-70">{authData.username || t("account_no_info")}</td>
 							<td className="w-[10%] text-end"></td>
 						</tr>
 						<tr className="border-b border-black w-full">
-							<td className="w-[20%]">Email</td>
-							<td className="w-[70%] p-2 opacity-70">{authData.email || "No info"}</td>
+							<td className="w-[20%]">{t("account_label_email")}</td>
+							<td className="w-[70%] p-2 opacity-70">{authData.email || t("account_no_info")}</td>
 							<td className="w-[10%] text-end"></td>
 						</tr>
 						<tr className="border-b border-black w-full">
-							<td className="w-[20%]">Password</td>
-							<td className="w-[70%] p-2 text-primary cursor-pointer hover:underline" onClick={() => setOpenChangePassword(true)}>Change password</td>
+							<td className="w-[20%]">{t("account_label_password")}</td>
+							<td className="w-[70%] p-2 text-primary cursor-pointer hover:underline" onClick={() => setOpenChangePassword(true)}>{t("account_action_change_password")}</td>
 							<td className="w-[10%] text-end"></td>
 						</tr>
 					</tbody>
 				</table>
 
-				<h2 className="text-xl font-bold mb-4">Social Account</h2>
+				<h2 className="text-xl font-bold mb-4">{t("account_title_social")}</h2>
 				<table className="w-full mb-8">
 					<tbody>
 						<tr className="border-b border-black w-full">
-							<td className="w-[20%] flex gap-2"><img className="w-5 h-5" src="/defaults/linkedin.png" alt="linkedin" />LinkedIn</td>
-							<td className="w-[70%] p-2 opacity-70">Not connected</td>
+							<td className="w-[20%] flex gap-2"><img className="w-5 h-5" src="/defaults/linkedin.png" alt="linkedin" />{t("account_label_linkedin")}</td>
+							<td className="w-[70%] p-2 opacity-70">{t("account_not_connected")}</td>
 							<td className="w-[10%] text-end">
-								<span className="text-primary cursor-pointer hover:underline">Connect</span>
+								<span className="text-primary cursor-pointer hover:underline">{t("account_action_connect")}</span>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 
-				<h2 className="text-xl font-bold mb-4 text-secondary-toned-500">Danger Zone</h2>
+				<h2 className="text-xl font-bold mb-4 text-secondary-toned-500">{t("account_title_danger")}</h2>
 				<button className="px-3 font-semibold rounded-lg py-2 cursor-pointer border border-red-500 bg-white text-red-600 hover:text-white hover:bg-red-600 transition duration-300" onClick={handleOpenDialog}>
-					Delete account
+					{t("account_action_delete_account")}
 				</button>
 			</div>
 			<BootstrapDialog open={openChangePassword} onClose={() => setOpenChangePassword(false)} maxWidth="sm" fullWidth>
-				<div className="bg-primary-toned-50 rounded-sm shadow-primary p-4 border border-solid border-primary">
+				<div className="bg-white rounded-sm shadow-primary p-4 border border-solid border-primary">
 					<DialogTitle className="text-center font-semibold text-lg">
-						Change Password
+						{t("change_password_title")}
 					</DialogTitle>
 					<DialogContent className="flex flex-col gap-4 pt-4">
 						<TextField
-							label="Old Password"
+							label={t("change_password_old")}
 							type="password"
 							fullWidth
 							value={oldPassword}
 							onChange={(e) => setOldPassword(e.target.value)}
 							error={!!errors.oldPassword}
 							helperText={errors.oldPassword}
-						// InputProps={{
-						//     endAdornment: (
-						//         <InputAdornment position="end">
-						//             <IconButton
-						//                 onClick={() => setShowOldPassword(prev => !prev)}
-						//                 edge="end"
-						//             >
-						//                 {showOldPassword ? <VisibilityOff /> : <Visibility />}
-						//             </IconButton>
-						//         </InputAdornment>
-						//     ),
-						// }}
 						/>
 						<TextField
-							label="New Password"
+							label={t("change_password_new")}
 							type={"password"}
 							fullWidth
 							value={newPassword}
 							onChange={(e) => setNewPassword(e.target.value)}
 							error={!!errors.newPassword}
 							helperText={errors.newPassword}
-						// InputProps={{
-						//     endAdornment: (
-						//         <InputAdornment position="end">
-						//             <IconButton
-						//                 onClick={() => setShowNewPassword(prev => !prev)} // Toggle visibility correctly
-						//                 edge="end"
-						//             >
-						//                 {showNewPassword ? <VisibilityOff /> : <Visibility />}
-						//             </IconButton>
-						//         </InputAdornment>
-						//     ),
-						// }}
 						/>
 						<TextField
-							label="Confirm New Password"
+							label={t("change_password_confirm")}
 							type={"password"}
 							fullWidth
 							value={confirmNewPassword}
 							onChange={(e) => setConfirmNewPassword(e.target.value)}
 							error={!!errors.confirmNewPassword}
 							helperText={errors.confirmNewPassword}
-						// InputProps={{
-						//     endAdornment: (
-						//         <InputAdornment position="end">
-						//             <IconButton
-						//                 onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
-						//                 edge="end"
-						//             >
-						//                 {showConfirmNewPassword ? <VisibilityOff /> : <Visibility />}
-						//             </IconButton>
-						//         </InputAdornment>
-						//     ),
-						// }}
 						/>
 
 						{updateError && <AlertError errorMessage={updateError} />}
@@ -219,14 +185,14 @@ const Account: React.FC<AccountProps> = ({ authData }) => {
 							className="w-1/3 px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer"
 							onClick={() => setOpenChangePassword(false)}
 						>
-							Cancel
+							{t("change_password_cancel")}
 						</button>
 						<button
 							className="w-1/3 px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer"
 							onClick={handlePasswordChange}
 							disabled={isLoading}
 						>
-							{isLoading ? "Saving..." : "Save"}
+							{isLoading ? t("change_password_saving") : t("change_password_save")}
 						</button>
 					</DialogActions>
 				</div>
@@ -234,14 +200,14 @@ const Account: React.FC<AccountProps> = ({ authData }) => {
 			<BootstrapDialog className="" onClose={handleCloseDialog} open={open}>
 				<div className="bg-primary-toned-50 rounded-sm shadow-primary p-4 border border-solid border-primary">
 					<DialogContent className="mb-4">
-						<span>Do you really want to delete your account?</span>
+						<span>{t("delete_account_confirm_message")}</span>
 					</DialogContent>
 					<DialogActions className="flex items-center justify-evenly mb-4">
 						<button className="w-1/4 px-3 font-semibold mr-3 rounded-lg py-2 border-[var(--primary-color)] text-[var(--primary-color)] border-2 cursor-pointer" onClick={handleCloseDialog}>
-							No
+							{t("delete_account_confirm_no")}
 						</button>
 						<button className="w-1/4 px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={handleConfirmDelete}>
-							Yes
+							{t("delete_account_confirm_yes")}
 						</button>
 					</DialogActions>
 				</div>

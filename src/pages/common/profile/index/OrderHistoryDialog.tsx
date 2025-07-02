@@ -4,6 +4,8 @@ import clsx from "clsx";
 import { Order } from "../../../../features/payment/types/payment";
 import { useListOrdersMutation, useGetOrderMutation } from "../../../../features/payment/api/payment.api";
 import { formatDistanceToNow, format } from "date-fns";
+import { enUS, vi } from "date-fns/locale";
+import { useLanguage } from "../../../../LanguageProvider";
 
 interface OrderHistoryDialogProps {
     open: boolean;
@@ -11,6 +13,8 @@ interface OrderHistoryDialogProps {
 }
 
 const OrderHistoryDialog: React.FC<OrderHistoryDialogProps> = ({ open, onClose }) => {
+    const { t, language } = useLanguage();
+    console.log(language);
     const [loading, setLoading] = useState(false);
     const [orders, setOrders] = useState<Order[]>([]);
 
@@ -76,32 +80,32 @@ const OrderHistoryDialog: React.FC<OrderHistoryDialogProps> = ({ open, onClose }
 
     return (
         <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-            <DialogTitle className="text-center font-bold text-xl mt-2">Top-Up History</DialogTitle>
+            <DialogTitle className="text-center font-bold text-xl mt-2">{t("settings_topup_history_title")}</DialogTitle>
             <DialogContent className="p-6">
                 <div className="flex flex-col sm:flex-row justify-between gap-4 mb-4">
                     <div className="flex items-center gap-2">
-                        <label className="text-gray-800 text-sm">Status:</label>
+                        <label className="text-gray-800 text-sm">{t("settings_topup_history_status")}:</label>
                         <select
                             value={statusFilter}
                             onChange={(e) => setStatusFilter(e.target.value)}
                             className="border rounded-md p-2"
                         >
-                            <option value="ALL">All</option>
-                            <option value="PENDING">Pending</option>
-                            <option value="PAID">Paid</option>
-                            <option value="EXPIRED">Expired</option>
-                            <option value="CANCELLED">Cancelled</option>
+                            <option value="ALL">{t("settings_order_status_all")}</option>
+                            <option value="PENDING">{t("settings_order_status_pending")}</option>
+                            <option value="PAID">{t("settings_order_status_paid")}</option>
+                            <option value="EXPIRED">{t("settings_order_status_expired")}</option>
+                            <option value="CANCELLED">{t("settings_order_status_cancelled")}</option>
                         </select>
                     </div>
                     <div className="flex items-center gap-2">
-                        <label className="text-gray-800 text-sm">Sort:</label>
+                        <label className="text-gray-800 text-sm">{t("settings_topup_history_sort")}:</label>
                         <select
                             value={sortOrder}
                             onChange={(e) => setSortOrder(e.target.value as "ASC" | "DESC")}
                             className="border rounded-md p-2"
                         >
-                            <option value="DESC">Newest First</option>
-                            <option value="ASC">Oldest First</option>
+                            <option value="DESC">{t("settings_topup_history_sort_newest")}</option>
+                            <option value="ASC">{t("settings_topup_history_sort_oldest")}</option>
                         </select>
                     </div>
                 </div>
@@ -143,24 +147,26 @@ const OrderHistoryDialog: React.FC<OrderHistoryDialogProps> = ({ open, onClose }
                                                 order.status === "EXPIRED" && "bg-gray-500"
                                             )}
                                         >
-                                            {order.status}
+                                            {t(order.status)}
                                         </div>
                                     </div>
 
                                     <div className="mt-4 space-y-1 text-sm text-gray-600">
-                                        <div title={format(new Date(order.createdat.Time), "PPpp")}>
-                                            <span className="font-medium">Created:</span>{" "}
+                                        <div title={format(new Date(order.createdat.Time), "PPpp", { locale: language === "vi" ? vi : enUS })}>
+                                            <span className="font-medium">{t("settings_topup_order_created_at")}:</span>{" "}
                                             {formatDistanceToNow(new Date(order.createdat.Time), {
                                                 addSuffix: true,
+                                                locale: language === "vi" ? vi : enUS,
                                             })}
                                         </div>
                                         {(order.status === "PAID" || order.status === "EXPIRED") && (
-                                            <div title={format(new Date(order.updatedat.Time), "PPpp")}>
+                                            <div title={format(new Date(order.updatedat.Time), "PPpp", { locale: language === "vi" ? vi : enUS })}>
                                                 <span className="font-medium">
-                                                    {order.status === "PAID" ? "Success:" : "Expired:"}
+                                                    {order.status === "PAID" ? `${t("settings_order_status_paid")}:` : `${t("settings_order_status_expired")}:`}
                                                 </span>{" "}
                                                 {formatDistanceToNow(new Date(order.updatedat.Time), {
                                                     addSuffix: true,
+                                                    locale: language === "vi" ? vi : enUS,
                                                 })}
                                             </div>
                                         )}
@@ -168,7 +174,7 @@ const OrderHistoryDialog: React.FC<OrderHistoryDialogProps> = ({ open, onClose }
 
                                     {isPending && (
                                         <div className="absolute bottom-5 right-6 text-xs text-yellow-600 font-semibold animate-pulse">
-                                            Click to pay
+                                            {t("settings_topup_click_to_pay")}
                                         </div>
                                     )}
                                 </div>
@@ -177,7 +183,7 @@ const OrderHistoryDialog: React.FC<OrderHistoryDialogProps> = ({ open, onClose }
 
                         {filteredOrders.length === 0 && !loading && (
                             <div className="text-center text-gray-500 mt-4 mb-4">
-                                No top-up history found.
+                                {t("settings_topup_no_orders")}
                             </div>
                         )}
                     </div>
@@ -188,7 +194,7 @@ const OrderHistoryDialog: React.FC<OrderHistoryDialogProps> = ({ open, onClose }
                     onClick={onClose}
                     className="w-1/2 px-4 py-2 border border-[var(--primary-color)] font-bold text-[var(--primary-color)] rounded-lg"
                 >
-                    Close
+                    {t("settings_topup_close")}
                 </button>
             </DialogActions>
         </Dialog>

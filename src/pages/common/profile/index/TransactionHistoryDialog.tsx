@@ -8,6 +8,8 @@ import {
 } from "@mui/material";
 import { format, formatDistanceToNow } from "date-fns";
 import { useGetTransactionsMutation } from "../../../../features/auth/api/logout.api";
+import { useLanguage } from "../../../../LanguageProvider";
+import { enUS, vi } from "date-fns/locale";
 
 interface TransactionHistoryDialogProps {
     open: boolean;
@@ -15,6 +17,7 @@ interface TransactionHistoryDialogProps {
 }
 
 const TransactionHistoryDialog: React.FC<TransactionHistoryDialogProps> = ({ open, onClose }) => {
+    const { t, language } = useLanguage();
     const [loading, setLoading] = useState(false);
     const [transactions, setTransactions] = useState<{
         id: number;
@@ -43,7 +46,7 @@ const TransactionHistoryDialog: React.FC<TransactionHistoryDialogProps> = ({ ope
 
     return (
         <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-            <DialogTitle className="text-center font-bold text-xl mt-2">Transaction History</DialogTitle>
+            <DialogTitle className="text-center font-bold text-xl mt-2">{t("settings_transactions_title")}</DialogTitle>
             <DialogContent className="p-6">
                 {loading ? (
                     <div className="flex justify-center py-10">
@@ -62,19 +65,19 @@ const TransactionHistoryDialog: React.FC<TransactionHistoryDialogProps> = ({ ope
                                         <span className="text-sm text-gray-500 font-medium ml-1">SSC</span>
                                     </div>
 
-                                    <div className="text-xs text-gray-500" title={format(new Date(tx.created_at), "PPpp")}>
-                                        {formatDistanceToNow(new Date(tx.created_at), { addSuffix: true })}
+                                    <div className="text-xs text-gray-500" title={format(new Date(tx.created_at), "PPpp", { locale: language === "vi" ? vi : enUS })}>
+                                        {formatDistanceToNow(new Date(tx.created_at), { addSuffix: true, locale: language === "vi" ? vi : enUS })}
                                     </div>
                                 </div>
                                 <div className="mt-2 text-sm text-gray-600">
-                                    <span className="font-medium">Note:</span> {tx.note || "No note"}
+                                    <span className="font-medium">{t("settings_transactions_note")}:</span> {tx.note || t("settings_transactions_no_note")}
                                 </div>
                             </div>
                         ))}
 
                         {transactions.length === 0 && !loading && (
                             <div className="text-center text-gray-500 mt-4 mb-4">
-                                No transaction history found.
+                                {t("settings_transactions_no_transactions")}
                             </div>
                         )}
                     </div>
@@ -85,7 +88,7 @@ const TransactionHistoryDialog: React.FC<TransactionHistoryDialogProps> = ({ ope
                     onClick={onClose}
                     className="w-1/2 px-4 py-2 border border-[var(--primary-color)] font-bold text-[var(--primary-color)] rounded-lg"
                 >
-                    Close
+                    {t("settings_transactions_close")}
                 </button>
             </DialogActions>
         </Dialog>
