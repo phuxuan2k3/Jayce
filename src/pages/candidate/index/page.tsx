@@ -11,20 +11,23 @@ import { useGetTestsSuggestedQuery, useGetTemplatesQuery } from "../../../featur
 import { useAppSelector } from "../../../app/hooks";
 import { authSelectors } from "../../../features/auth/store/authSlice";
 import SpinnerLoading from "../../../components/ui/loading/SpinnerLoading";
+import { useLanguage } from "../../../LanguageProvider";
 
 const SuggestedInterviewPositions = [
-	{ position: "Software Engineer", experience: "intern" },
-	{ position: "Software Engineer", experience: "junior" },
-	{ position: "Data Analyst", experience: "fresher" },
-	{ position: "Project Manager", experience: "mid" },
-	{ position: "Software Engineer", experience: "senior" },
-	{ position: "Data Analyst", experience: "lead" },
-	{ position: "Project Manager", experience: "manager" },
-	{ position: "Software Engineer", experience: "director" },
-	{ position: "Data Analyst", experience: "senior" },
+	{ position: "software_engineer", experience: "intern" },
+	{ position: "software_engineer", experience: "junior" },
+	{ position: "data_analyst", experience: "fresher" },
+	{ position: "project_manager", experience: "mid" },
+	{ position: "software_engineer", experience: "senior" },
+	{ position: "data_analyst", experience: "lead" },
+	{ position: "project_manager", experience: "manager" },
+	{ position: "software_engineer", experience: "director" },
+	{ position: "data_analyst", experience: "senior" },
 ];
 
 const CandidateHomePage = () => {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 
 	const authData = useAppSelector(authSelectors.selectUserInfo);
@@ -39,15 +42,15 @@ const CandidateHomePage = () => {
 	return (
 		<>
 			<div className="p-2 max-w-7xl mx-auto mt-4">
-				<h1 className="text-3xl font-bold">Welcome back, {authData?.metadata.fullname || authData?.username}</h1>
-				<p className="text-lg mb-6">Continue learning with our recommendations based on your career goals and recent activity.</p>
+				<h1 className="text-3xl font-bold">{t("candidate_home_welcome")}, {authData?.metadata.fullname || authData?.username}</h1>
+				<p className="text-lg mb-6">{t("candidate_home_subtitle")}</p>
 
 				<div className="flex gap-8">
 					<div className="w-3/4 flex flex-col">
 						<div id="suggested-tests" className="mb-8 pb-8 border-b-gradient">
 							<div className="flex justify-between items-center text-primary mb-4">
-								<h2 className="text-2xl font-semibold">Suggested Tests</h2>
-								<a className="text-sm hover:underline cursor-pointer" onClick={() => { navigate(paths.candidate.tests.ROOT) }}>See more</a>
+								<h2 className="text-2xl font-semibold">{t("candidate_home_suggested_tests_title")}</h2>
+								<a className="text-sm hover:underline cursor-pointer" onClick={() => { navigate(paths.candidate.tests.ROOT) }}>{t("candidate_home_suggested_tests_see_more")}</a>
 							</div>
 							{isTestsLoading ? (
 								<div className="mb-2">
@@ -57,12 +60,12 @@ const CandidateHomePage = () => {
 								null
 							) : (
 								<div className="text-center">
-									<p className="text-gray-500 mb-4">No tests available.</p>
+									<p className="text-gray-500 mb-4">{t("candidate_home_suggested_tests_empty")}</p>
 									<button
 										className="px-6 py-2 rounded-lg font-bold bg-primary border text-white hover:bg-white hover:text-primary hover:border hover:border-primary transition-all duration-200"
 										onClick={() => navigate(paths.candidate.tests.GENERATE)}
 									>
-										Create your first test
+										{t("candidate_home_suggested_tests_create")}
 									</button>
 								</div>
 							)}
@@ -70,8 +73,8 @@ const CandidateHomePage = () => {
 
 						<div id="recent-templates" className="mb-8 pb-8 border-b-gradient">
 							<div className="flex justify-between items-center text-primary mb-4">
-								<h2 className="text-2xl font-semibold">Recent Templates</h2>
-								<a className="text-sm hover:underline cursor-pointer" onClick={() => { navigate(paths.candidate.tests.TEMPLATES) }}>See more</a>
+								<h2 className="text-2xl font-semibold">{t("candidate_home_recent_templates_title")}</h2>
+								<a className="text-sm hover:underline cursor-pointer" onClick={() => { navigate(paths.candidate.tests.TEMPLATES) }}>{t("candidate_home_recent_templates_see_more")}</a>
 							</div>
 							{isTemplatesLoading ? (
 								<div className="mb-2">
@@ -96,24 +99,24 @@ const CandidateHomePage = () => {
 													</div>
 
 													<div className="grid grid-cols-3 gap-3 mt-4 text-sm text-gray-700">
-														<span><strong>Template name:</strong> {template.name}</span>
-														<span><strong>Difficulty:</strong> {template.difficulty}</span>
-														<span><strong>Language:</strong> {template.language}</span>
-														<span><strong>Minutes to answer:</strong> {template.minutesToAnswer} min</span>
-														<span><strong>Questions:</strong> {template.numberOfQuestions}</span>
-														<span><strong>Options per question:</strong> {template.numberOfOptions}</span>
+														<span><strong>{t("candidate_home_template_field_name")}:</strong> {template.name}</span>
+														<span><strong>{t("candidate_home_template_field_difficulty")}:</strong> {template.difficulty}</span>
+														<span><strong>{t("candidate_home_template_field_language")}:</strong> {template.language}</span>
+														<span><strong>{t("candidate_home_template_field_minutes")}:</strong> {template.minutesToAnswer} min</span>
+														<span><strong>{t("candidate_home_template_field_questions")}:</strong> {template.numberOfQuestions}</span>
+														<span><strong>{t("candidate_home_template_field_options")}:</strong> {template.numberOfOptions}</span>
 													</div>
 
 													{template.outlines.length > 0 && (
 														<div className="mt-4">
-															<strong>Outlines:</strong>
+															<strong>{t("candidate_home_template_field_outlines")}:</strong>
 															<ul className="list-disc list-inside text-sm mt-1 text-gray-800">
 																{template.outlines.slice(0, 2).map((outline: string, index: number) => (
 																	<li key={index}>{outline}</li>
 																))}
 																{template.outlines.length > 2 && (
 																	<li title={template.outlines.slice(2).join("\n")}>
-																		And {template.outlines.length - 2} more...
+																		{t("candidate_home_template_field_outlines_more").replace("{{count}}", (template.outlines.length - 2).toString())}
 																	</li>
 																)}
 															</ul>
@@ -126,19 +129,19 @@ const CandidateHomePage = () => {
 												className="px-10 rounded-lg py-2 font-bold cursor-pointer bg-[var(--primary-color)] border text-white hover:bg-white hover:text-primary hover:border hover:border-primary transition-all duration-200"
 												onClick={() => navigate(paths.candidate.tests.GENERATE)}
 											>
-												Apply
+												{t("candidate_home_template_button_apply")}
 											</button>
 										</div>
 									</div>
 								))
 							) : (
 								<div className="text-center">
-									<p className="text-gray-500 mb-4">No templates available.</p>
+									<p className="text-gray-500 mb-4">{t("candidate_home_recent_templates_empty")}</p>
 									<button
 										className="px-6 py-2 rounded-lg font-bold bg-primary border text-white hover:bg-white hover:text-primary hover:border hover:border-primary transition-all duration-200"
 										onClick={() => navigate(paths.candidate.tests.TEMPLATES)}
 									>
-										Create your first template
+										{t("candidate_home_recent_templates_create")}
 									</button>
 								</div>
 							)}
@@ -146,8 +149,8 @@ const CandidateHomePage = () => {
 
 						<div id="suggested-positions" className="mb-8">
 							<div className="flex justify-between items-center text-primary mb-4">
-								<h2 className="text-2xl font-semibold">Suggested Interview Positions</h2>
-								<a className="text-sm hover:underline cursor-pointer" onClick={() => { navigate(paths.candidate.interview.SETUP) }}>Customize</a>
+								<h2 className="text-2xl font-semibold">{t("candidate_home_positions_title")}</h2>
+								<a className="text-sm hover:underline cursor-pointer" onClick={() => { navigate(paths.candidate.interview.SETUP) }}>{t("candidate_home_positions_customize")}</a>
 							</div>
 							<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
 								{SuggestedInterviewPositions.map((item, idx) => (
@@ -155,13 +158,19 @@ const CandidateHomePage = () => {
 										key={idx}
 										onClick={() =>
 											navigate(paths.candidate.interview.SETUP, {
-												state: { position: item.position, experience: item.experience },
+												state: {
+													position: item.position
+														.split("_")
+														.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+														.join(" "),
+													experience: item.experience,
+												},
 											})
 										}
 										className="cursor-pointer border p-4 rounded-lg shadow-sm hover:bg-gray-50 transition"
 									>
-										<div className="font-semibold text-lg">{item.position}</div>
-										<div className="text-sm text-gray-600">{item.experience.charAt(0).toUpperCase() + item.experience.slice(1)} level</div>
+										<div className="font-semibold text-lg">{t("position_" + item.position)}</div>
+										<div className="text-sm text-gray-600">{t("experience_" + item.experience)}</div>
 									</div>
 								))}
 							</div>
@@ -171,7 +180,7 @@ const CandidateHomePage = () => {
 					<div className="w-1/4 flex flex-col gap-4 sticky top-10 self-start mb-8">
 						<div className="border border-gray-200 p-5 rounded-2xl shadow-sm bg-white">
 							<h3 className="text-xl font-bold text-primary mb-4 flex items-center gap-2">
-								Quick Navigation
+								{t("candidate_home_quick_nav_title")}
 							</h3>
 							<ul className="space-y-3 text-sm font-medium text-gray-700">
 								<li>
@@ -179,7 +188,7 @@ const CandidateHomePage = () => {
 										href="#suggested-tests"
 										className="block px-3 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition"
 									>
-										Suggested Tests
+										{t("candidate_home_suggested_tests_title")}
 									</a>
 								</li>
 								<li>
@@ -187,7 +196,7 @@ const CandidateHomePage = () => {
 										href="#recent-templates"
 										className="block px-3 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition"
 									>
-										Recent Templates
+										{t("candidate_home_recent_templates_title")}
 									</a>
 								</li>
 								<li>
@@ -195,7 +204,7 @@ const CandidateHomePage = () => {
 										href="#suggested-positions"
 										className="block px-3 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition"
 									>
-										Suggested Interview Positions
+										{t("candidate_home_positions_title")}
 									</a>
 								</li>
 							</ul>
@@ -227,7 +236,7 @@ const CandidateHomePage = () => {
 						<div className="border border-gray-300 rounded-md overflow-hidden">
 							<img src="/defaults/landing_img_316.png" alt="Ad Banner" className="w-full object-cover" />
 							<div className="bg-blue-100 text-xs text-center py-1 text-blue-600 font-medium cursor-pointer">
-								Bỏ quảng cáo
+								{t("candidate_home_ad_remove")}
 							</div>
 						</div>
 					</div>

@@ -3,24 +3,14 @@ import { UserInfo } from "../../../../../features/auth/store/authSlice";
 import { useUpdateMetadataMutation, useMeMutation } from "../../../../../features/auth/api/logout.api";
 import AlertError from "../../../../../components/ui/alert/AlertError";
 import AlertSuccess from "../../../../../components/ui/alert/AlertSuccess";
+import { useLanguage } from "../../../../../LanguageProvider";
 
 interface PublicProfileProps {
 	authData: UserInfo;
 }
 
-const fields = [
-	{ key: "fullname", label: "Name" },
-	{ key: "gender", label: "Gender" },
-	{ key: "country", label: "Location" },
-	{ key: "birthday", label: "Birthday" },
-	{ key: "summary", label: "Summary" },
-	{ key: "website", label: "Website" },
-	{ key: "linkedIn", label: "LinkedIn" },
-	{ key: "company", label: "Work" },
-	{ key: "education", label: "Education" },
-];
-
 const PublicProfile: React.FC<PublicProfileProps> = ({ authData }) => {
+	const { t, language } = useLanguage();
 	const [editingField, setEditingField] = React.useState<string | null>(null);
 	const [inputValue, setInputValue] = React.useState<string>("");
 	const [updateMetadata] = useUpdateMetadataMutation();
@@ -28,6 +18,18 @@ const PublicProfile: React.FC<PublicProfileProps> = ({ authData }) => {
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const [successMessage, setSuccessMessage] = React.useState<string | null>(null);
 	const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+
+	const fields = [
+		{ key: "fullname", label: t("profile_label_name") },
+		{ key: "gender", label: t("profile_label_gender") },
+		{ key: "country", label: t("profile_label_location") },
+		{ key: "birthday", label: t("profile_label_birthday") },
+		{ key: "summary", label: t("profile_label_summary") },
+		{ key: "website", label: t("profile_label_website") },
+		{ key: "linkedIn", label: t("profile_label_linkedin") },
+		{ key: "company", label: t("profile_label_work") },
+		{ key: "education", label: t("profile_label_education") },
+	];
 
 	console.log("Auth data", authData);
 
@@ -64,9 +66,9 @@ const PublicProfile: React.FC<PublicProfileProps> = ({ authData }) => {
 		try {
 			await updateMetadata({ metadata: { [editingField]: inputValue } }).unwrap();
 			await me().unwrap();
-			setSuccessMessage(`Info updated successfully (${editingField})`);
+			setSuccessMessage(`${t("profile_update_success")} (${editingField})`);
 		} catch (error) {
-			setErrorMessage("Failed to update your infomation");
+			setErrorMessage(t("profile_update_failed"));
 			console.error("Failed to update your infomation", error);
 		} finally {
 			setEditingField(null);
@@ -76,13 +78,13 @@ const PublicProfile: React.FC<PublicProfileProps> = ({ authData }) => {
 	};
 
 	const renderRow = (field: { key: string; label: string }) => {
-		let value = authData.metadata[field.key] || "No info";
+		let value = authData.metadata[field.key] || t("profile_no_info");
 		const isEditing = editingField === field.key;
 
-		if (field.key === "birthday" && value !== "No info") {
+		if (field.key === "birthday" && value !== t("profile_no_info")) {
 			try {
 				const date = new Date(value.replace(/\//g, "-"));
-				value = date.toLocaleDateString("en-US", {
+				value = date.toLocaleDateString(language === "vi" ? "vi-VN" : "en-US", {
 					year: "numeric",
 					month: "long",
 					day: "numeric",
@@ -113,10 +115,10 @@ const PublicProfile: React.FC<PublicProfileProps> = ({ authData }) => {
 								value={inputValue}
 								onChange={(e) => setInputValue(e.target.value)}
 							>
-								<option value="">Select gender</option>
-								<option selected={authData.metadata.gender === "Male"} value="Male">Male</option>
-								<option selected={authData.metadata.gender === "Female"} value="Female">Female</option>
-								<option selected={authData.metadata.gender === "Prefer not to say"} value="Prefer not to say">Prefer not to say</option>
+								<option value="">{t("profile_gender_select")}</option>
+								<option selected={authData.metadata.gender === "Male"} value="Male">{t("profile_gender_male")}</option>
+								<option selected={authData.metadata.gender === "Female"} value="Female">{t("profile_gender_female")}</option>
+								<option selected={authData.metadata.gender === "Prefer not to say"} value="Prefer not to say">{t("profile_gender_other")}</option>
 							</select>
 						) : (
 							<input
@@ -133,7 +135,7 @@ const PublicProfile: React.FC<PublicProfileProps> = ({ authData }) => {
 				<td className="w-[10%] text-end space-x-2">
 					{isEditing ? (
 						isLoading ? (
-							<span className="text-primary">Updating...</span>
+							<span className="text-primary">{t("profile_action_updating")}</span>
 						) : (
 							<>
 								<button
@@ -141,14 +143,14 @@ const PublicProfile: React.FC<PublicProfileProps> = ({ authData }) => {
 									onClick={handleCancel}
 									disabled={isLoading}
 								>
-									Cancel
+									{t("profile_action_cancel")}
 								</button>
 								<button
 									className="text-primary-toned-500 hover:underline"
 									onClick={handleSave}
 									disabled={isLoading}
 								>
-									Save
+									{t("profile_action_save")}
 								</button>
 							</>
 						)
@@ -157,7 +159,7 @@ const PublicProfile: React.FC<PublicProfileProps> = ({ authData }) => {
 							className="text-primary cursor-pointer hover:underline"
 							onClick={() => handleEdit(field.key, authData.metadata[field.key])}
 						>
-							Edit
+							{t("profile_action_edit")}
 						</span>
 					)}
 				</td>
@@ -169,7 +171,7 @@ const PublicProfile: React.FC<PublicProfileProps> = ({ authData }) => {
 		<div>
 			{successMessage && <AlertSuccess successMessage={successMessage} />}
 			{errorMessage && <AlertError errorMessage={errorMessage} />}
-			<h2 className="text-xl font-bold mb-4">Basic Info</h2>
+			<h2 className="text-xl font-bold mb-4">{t("profile_title_basic")}</h2>
 			<table className="w-full mb-8">
 				<tbody>
 					{fields
@@ -178,7 +180,7 @@ const PublicProfile: React.FC<PublicProfileProps> = ({ authData }) => {
 				</tbody>
 			</table>
 
-			<h2 className="text-xl font-bold mb-4">Experience</h2>
+			<h2 className="text-xl font-bold mb-4">{t("profile_title_experience")}</h2>
 			<table className="w-full">
 				<tbody>
 					{fields
