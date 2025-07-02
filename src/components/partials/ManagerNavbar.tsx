@@ -134,7 +134,7 @@ const ManagerNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                   />
                   {openAssessment && (
                     <Portal id="product">
-                      <div className="absolute px-6 py-4 left-10 top-[70px] mt-1 bg-white shadow-lg rounded w-[300px] z-10 text-lg font-medium">
+                      <div className="absolute px-6 py-4 left-[200px] top-[60px] mt-1 bg-white shadow-lg rounded w-[300px] z-10 text-lg font-medium">
                         <div className="flex items-center">
                           <svg
                             width="40"
@@ -185,7 +185,10 @@ const ManagerNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                 <div
                   ref={dropdownRef}
                   className="relative pe-6 flex items-center py-2 text-xl font-semibold text-black  cursor-pointer"
-                  onClick={() => setOpenHiring(true)}
+                  onClick={() => {
+                    setOpenHiring(true);
+                    setOpenAssessment(false);
+                  }}
                 >
                   <span>Hiring</span>
                   <FontAwesomeIcon
@@ -194,7 +197,7 @@ const ManagerNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                   />
                   {openHiring && (
                     <Portal id="product">
-                      <div className="absolute px-6 py-4 left-0 top-[70px] mt-1 bg-white shadow-lg rounded w-[360px] z-10 text-lg font-medium">
+                      <div className="absolute px-6 py-4 left-[360px] top-[60px] mt-1 bg-white shadow-lg rounded w-[360px] z-10 text-lg font-medium">
                         <div className="flex items-center">
                           <svg
                             width="40"
@@ -353,7 +356,7 @@ const ManagerNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                   />
                   {isMenuOpen && (
                     <Portal id="product">
-                      <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-50">
+                      <div className="absolute right-10 top-14 mt-2 w-48 bg-white border rounded shadow-lg z-50">
                         <Link
                           to={paths.manager.profile._layout}
                           className="block px-4 py-2 text-gray-800 hover:bg-gray-200"

@@ -134,7 +134,7 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                     <Portal id="product">
                       <div
                         ref={dropdownRef}
-                        className=" absolute px-6 py-4 left-10 top-[50px] mt-1 bg-white shadow-lg rounded w-[360px]  text-lg font-medium"
+                        className=" absolute px-6 py-4 left-[360px] top-[50px] mt-1 bg-white shadow-lg rounded w-[360px]  text-lg font-medium"
                       >
                         <div className="flex items-center">
                           <svg
@@ -227,7 +227,7 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                     <Portal id="product">
                       <div
                         ref={dropdownRef}
-                        className="absolute px-6 py-4 left-0 top-[50px] mt-1 bg-white shadow-lg rounded w-[360px] z-10 text-lg font-medium"
+                        className="absolute px-6 py-4 left-[500px] top-[50px] mt-1 bg-white shadow-lg rounded w-[360px] z-10 text-lg font-medium"
                       >
                         <div className="flex items-center">
                           <svg
@@ -323,7 +323,7 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                   />
                   {isMenuOpen && (
                     <Portal id="product">
-                      <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-50">
+                      <div className="absolute right-[20px] top-14 mt-2 w-48 bg-white border rounded shadow-lg z-50">
                         <Link
                           to={paths.candidate.profile._layout}
                           className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
