@@ -1,6 +1,9 @@
 import { QuestionPersistCoreSchema } from "../../../../../features/tests/ui-items/question/types";
 
 export const formatDateDisplay = (date: Date): string => {
+	if (!(date instanceof Date) || isNaN(date.getTime())) {
+		return 'Invalid date';
+	}
 	return date.toLocaleDateString('en-US', {
 		year: 'numeric',
 		month: 'long',

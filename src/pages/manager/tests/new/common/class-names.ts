@@ -19,6 +19,15 @@ const bgColorClass: Record<DifficultyType, string> = {
 	Expert: cn("bg-purple-100"),
 };
 
+const bgColorHeavyClass: Record<DifficultyType, string> = {
+	Intern: cn("bg-blue-600"),
+	Junior: cn("bg-green-600"),
+	Middle: cn("bg-yellow-600"),
+	Senior: cn("bg-orange-600"),
+	Lead: cn("bg-red-600"),
+	Expert: cn("bg-purple-600"),
+};
+
 const textColorClass: Record<DifficultyType, string> = {
 	Intern: cn("text-blue-800"),
 	Junior: cn("text-green-800"),
@@ -62,6 +71,11 @@ class DifficultyClassNameBuilder {
 
 	outerBackground() {
 		this.classes.push(outerBgColorClass[this.difficulty] || cn("bg-gray-50"));
+		return this;
+	}
+
+	heavyBackground() {
+		this.classes.push(bgColorHeavyClass[this.difficulty] || cn("bg-gray-600"));
 		return this;
 	}
 

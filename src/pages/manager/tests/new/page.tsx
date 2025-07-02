@@ -1,11 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { CreateTab } from "./common/types";
-import LeftLayoutTemplateDefault from "../../../../components/layouts/LeftLayoutTemplateDefault";
 import { useNavigate } from "react-router-dom";
 import { usePostTestsMutation } from "../../../../features/tests/api/test.api-gen-v2";
-import useZodParseLazy from "../../../../features/tests/hooks/useZodParseLazy";
 import { QuestionPersistCoreSchema } from "../../../../features/tests/ui-items/question/types";
-import { ExamPersistValidationSchema } from "../../../../features/tests/ui-items/test/persist-schema";
 import { ExamPersistCoreSchema } from "../../../../features/tests/ui-items/test/types";
 import ConfigTab from "../../../../features/tests/ui-shared/test-persist-pages/config-tab";
 import ExamPersistValidationErrorsDialog from "../../../../features/tests/ui-shared/test-persist-pages/ExamPersistValidationErrorsDialog";
@@ -16,12 +13,16 @@ import BuilderWizzardTab from "./builder-wizzard-tab";
 import PublishTab from "./publish-tab";
 import QuestionsConfigTab from "../../../../features/tests/ui-shared/test-persist-pages/questions-config-tab";
 import Sidebar from "./components/Sidebar";
+import { z } from "zod";
+import { ExamPersistZodSchema, ExamPersistZodSchemaType } from "../../../../features/tests/schemas/exam-persist-zod";
+import RightLayoutTemplate from "../../../../components/layouts/RightLayoutTemplate";
 
 
 export default function ManagerTestNewPage() {
 	const navigate = useNavigate();
 	const [tab, setTab] = useState<CreateTab>("info");
 	const [isPostingExam, setIsPostingExam] = useState(false);
+	const [zodErrors, setZodErrors] = useState<z.ZodError<ExamPersistZodSchemaType> | undefined>(undefined);
 
 	const [examPersist, setExamPersist] = useState<ExamPersistCoreSchema>({
 		title: "",
@@ -31,8 +32,8 @@ export default function ManagerTestNewPage() {
 		mode: "EXAM",
 		detail: {
 			roomId: "",
-			openDate: null,
-			closeDate: null,
+			openDate: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
+			closeDate: new Date(Date.now() + 25 * 60 * 60 * 1000).toISOString(),
 			isAllowedToSeeOtherResults: false,
 			isAnswerVisible: false,
 			mode: "EXAM",
@@ -53,12 +54,11 @@ export default function ManagerTestNewPage() {
 		}
 	}, [createTestState.isSuccess, createTestState.data, navigate]);
 
-	const { errors, handleParse, clearErrors } = useZodParseLazy(ExamPersistValidationSchema);
 	useEffect(() => {
 		if (tab === "publish") {
-			handleParse(examPersist);
+
 		}
-	}, [tab, examPersist, handleParse]);
+	}, [tab, examPersist]);
 
 	const handleBulkAddQuestions = useCallback((questions: QuestionPersistCoreSchema[]) => {
 		setExamPersist((prev) => ({
@@ -136,15 +136,31 @@ export default function ManagerTestNewPage() {
 	}
 
 	return (
-		<LeftLayoutTemplateDefault
-			header={{
-				title: "Create your test",
-				description: "Configure your test settings and questions.",
-			}}
-			left={
+		<RightLayoutTemplate
+			header={
+				<RightLayoutTemplate.Header
+					title="Create your Exam"
+					description="Configure your exam settings and questions."
+					backButton={
+						<RightLayoutTemplate.BackButton
+							onClick={() => navigate(paths.manager.tests.ROOT)}
+						/>
+					}
+				/>
+			}
+			right={
 				<Sidebar
 					tab={tab}
 					onTabChange={(tab) => {
+						if (tab === "publish") {
+							const result = ExamPersistZodSchema.safeParse(examPersist);
+							if (!result.success) {
+								setZodErrors(result.error);
+								setIsPostingExam(false);
+								return;
+							}
+							setZodErrors(undefined);
+						}
 						setTab(tab);
 					}}
 				/>
@@ -152,21 +168,20 @@ export default function ManagerTestNewPage() {
 		>
 			{getTab(tab)}
 
-			{tab === "publish" && errors != undefined && (
+			{zodErrors != undefined && (
 				<ExamPersistValidationErrorsDialog
-					errors={errors}
+					errors={zodErrors}
 					onClose={() => {
-						clearErrors();
+						setZodErrors(undefined);
 						setIsPostingExam(false);
-						setTab("info");
 					}}
 					onConfigEdit={() => {
-						clearErrors();
+						setZodErrors(undefined);
 						setTab("info");
 						setIsPostingExam(false);
 					}}
 					onQuestionsEdit={() => {
-						clearErrors();
+						setZodErrors(undefined);
 						setTab("questions");
 						setIsPostingExam(false);
 					}}
@@ -179,7 +194,7 @@ export default function ManagerTestNewPage() {
 					{createTestState.error && <ErrorDialog error={createTestState.error} />}
 				</>
 			)}
-		</LeftLayoutTemplateDefault>
+		</RightLayoutTemplate>
 	);
 }
 

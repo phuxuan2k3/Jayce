@@ -36,7 +36,7 @@ export default function TopicCard({
 	}, [topic.difficultyDistribution, totalQuestions]);
 
 	return (
-		<div className="bg-white border border-primary-toned-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+		<div className="bg-white border border-primary-toned-200 rounded-lg p-6 shadow-md">
 			<div className="space-y-4">
 				{/* Topic Header */}
 				<div className="flex items-center justify-between">
@@ -66,38 +66,39 @@ export default function TopicCard({
 					)}
 				</div>
 
-				<hr className='border-gray-300' />
+				<hr className='border-primary-toned-300' />
 
 				{/* Difficulty Distribution */}
 				<div>
-					<h4 className="text-sm font-semibold text-primary mb-3">Difficulty Distribution</h4>
+					<h4 className="text-lg font-semibold text-primary mb-3">Difficulty Distribution</h4>
 					<div className="grid grid-cols-3 gap-4">
 						{difficulties.map((difficulty) => (
-							<div key={difficulty} className="space-y-2">
-								<label className="block text-sm font-medium text-gray-600">
-									{difficulty}
-								</label>
-								<div className="flex items-center gap-2">
-									<input
-										type="number"
-										min="0"
-										max="100"
-										value={topic.difficultyDistribution[difficulty]}
-										onChange={(e) => onUpdate(index, {
-											difficultyDistribution: {
-												...topic.difficultyDistribution,
-												[difficulty]: parseInt(e.target.value, 10) || 0
-											}
-										})}
-										className="w-16 border border-gray-300 rounded px-2 py-1 text-center focus:outline-none focus:ring-2 focus:ring-primary-toned-300"
-									/>
+							<div key={difficulty} className="flex flex-col gap-2 border border-gray-200 rounded-lg p-4 shadow-md">
+								<div className='flex items-center justify-between'>
+									<label className="block text-sm font-semibold text-primary">
+										{difficulty}:
+									</label>
+									<div className="flex items-center gap-2">
+										<input
+											type="number"
+											min="0"
+											max="100"
+											value={topic.difficultyDistribution[difficulty]}
+											onChange={(e) => onUpdate(index, {
+												difficultyDistribution: {
+													...topic.difficultyDistribution,
+													[difficulty]: parseInt(e.target.value, 10) || 0
+												}
+											})}
+											className="w-18 border border-gray-300 rounded px-2 py-1 text-center focus:outline-none focus:ring-2 focus:ring-primary-toned-300"
+										/>
+									</div>
 								</div>
-								{/* Visual percentage bar */}
 								<div className="w-full bg-gray-200 rounded-full h-2">
 									<div
 										className={cn(
 											`h-2 rounded-full transition-all duration-300`,
-											difficultyClassNames(difficulty).background().text()
+											difficultyClassNames(difficulty).heavyBackground().build()
 										)}
 										style={{ width: `${difficultiesPercentage[difficulty]}%` }}
 									></div>
@@ -107,7 +108,7 @@ export default function TopicCard({
 					</div>
 
 					{/* Distribution Summary */}
-					<div className="mt-3 p-3 bg-gray-50 rounded-lg">
+					<div className="mt-6 p-3 bg-primary-toned-50 text-primary rounded-lg">
 						<h5 className=''>
 							Number of Questions: <span className="font-semibold">{totalQuestions}</span>
 						</h5>

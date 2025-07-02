@@ -14,7 +14,14 @@ export const DifficultiesDistributionSchema = z.object(
 export type DifficultyDistributionType = z.infer<typeof DifficultiesDistributionSchema>;
 
 export const TopicSchema = z.object({
-	name: z.string(),
+	name: z.string().min(1, "Topic name is required"),
 	difficultyDistribution: DifficultiesDistributionSchema,
+}).refine((data) => {
+	const total = Object.values(data.difficultyDistribution).reduce((sum, value) => sum +
+		value, 0)
+	return total > 0
+}, {
+	message: "At least one difficulty level must be greater than 0",
+	path: ["difficultyDistribution"]
 });
 export type Topic = z.infer<typeof TopicSchema>;

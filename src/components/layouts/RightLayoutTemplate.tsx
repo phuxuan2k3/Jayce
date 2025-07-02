@@ -15,7 +15,7 @@ export default function RightLayoutTemplate({
 	className?: string;
 }) {
 	return (
-		<div className={cn("container grid grid-cols-1 lg:grid-cols-[2fr_1fr] grid-rows-[auto_1fr] gap-4 lg:gap-8 mx-auto mt-4 mb-8 h-full min-h-screen", className)}>
+		<div className={cn("container grid grid-cols-1 lg:grid-cols-[5fr_2fr] grid-rows-[auto_1fr] gap-4 lg:gap-8 mx-auto mt-4 mb-8 h-full min-h-screen", className)}>
 			{header && <header className="flex gap-x-4 lg:col-span-2">
 				{header}
 			</header>}

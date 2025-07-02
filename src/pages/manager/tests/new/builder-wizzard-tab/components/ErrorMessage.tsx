@@ -5,8 +5,8 @@ export default function ErrorMessages({
 }) {
 	return (
 		errorMessages.length > 0 && (
-			<div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-				<ul className="text-red-600 text-sm">
+			<div className="px-6 py-4 bg-red-50 border border-red-200 rounded-lg shadow-md mb-4">
+				<ul className="text-red-500 list-disc list-inside">
 					{errorMessages.map((msg, index) => (
 						<li key={index}>{msg}</li>
 					))}

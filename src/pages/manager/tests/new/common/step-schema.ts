@@ -2,8 +2,8 @@ import z from "zod";
 import { LanguagesAsConst, TopicSchema } from "./base-schema";
 
 export const BuilderStep1Schema = z.object({
-	title: z.string(),
-	description: z.string(),
+	title: z.string().min(1, "Title is required"),
+	description: z.string().min(1, "Description is required"),
 	language: z.enum(LanguagesAsConst),
 });
 
@@ -23,3 +23,4 @@ export const BuilderStep3Schema = z.object({
 export type BuilderStep1Type = z.infer<typeof BuilderStep1Schema>;
 export type BuilderStep2Type = z.infer<typeof BuilderStep2Schema>;
 export type BuilderStep3Type = z.infer<typeof BuilderStep3Schema>;
+

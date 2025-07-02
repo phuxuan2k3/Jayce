@@ -7,10 +7,11 @@ import { useGetTestsQuery } from "../../../../features/tests/api/test.api-gen-v2
 import useGetUserId from "../../../../features/tests/hooks/useGetUserId";
 import TestCoreCard from "../../../../features/tests/ui-items/test/TestCoreCard";
 import FetchStateCover2 from "../../../../features/tests/ui/fetch-states/FetchStateCover2";
-import MyPaginationSection from "../../../../features/tests/ui/sections/MyPaginationSection";
 import QuickAction from "../../../../features/tests/ui/sidebar/primitive/QuickAction";
 import SidebarActions from "../../../../features/tests/ui/sidebar/primitive/SidebarActions";
 import { QuerySortValues } from "../../../../features/tests/types/query";
+import MyItemsListTemplate from "../../../../features/tests/templates/MyItemsListTemplate";
+import MyHeaderTitleSection from "../../../../features/tests/ui/sections/MyHeaderSection";
 
 type Filter = {
 	page: number;
@@ -71,29 +72,31 @@ const ManagerTestsPage = () => {
 				</SidebarActions>
 			}
 		>
-			<FetchStateCover2
-				fetchState={examsQuery}
-				dataComponent={({ totalPages, total, data }) => (
-					<div className="flex flex-col gap-8 mt-4 mb-4 items-center">
-						<div className="flex-1 flex flex-col gap-4 px-4">
+			<MyItemsListTemplate
+				pagedFetchState={examsQuery}
+				paging={filter}
+				onPageChange={(page: number) => setFilter(prev => ({ ...prev, page }))}
+				heading={
+					<MyHeaderTitleSection
+						title="Your Exams"
+						description="View and manage the exams you have created."
+					/>
+				}
+				body={<FetchStateCover2
+					fetchState={examsQuery}
+					dataComponent={({ data }) => (
+						<div className="flex-1 flex flex-col gap-4 w-full">
 							{data.map((test, index) => (
 								<TestCoreCard
+									className="w-full"
 									key={index}
 									test={test}
 									onClick={() => handleExamView(test.id)}
 								/>
 							))}
 						</div>
-
-						<MyPaginationSection
-							onPageChange={(page: number) => setFilter(prev => ({ ...prev, page }))}
-							totalPages={totalPages}
-							page={filter.page}
-							perPage={filter.perPage}
-							total={total}
-						/>
-					</div>
-				)}
+					)}
+				/>}
 			/>
 		</LeftLayoutTemplate>
 	);

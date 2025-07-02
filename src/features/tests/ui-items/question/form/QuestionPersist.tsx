@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import TextareaAutosize from 'react-textarea-autosize';
 import { LongAnswerDetail, MCQDetail, QuestionPersistCoreSchema } from '../types';
 import MCQPersistDetail from './MCQPersistDetail';
 import LongAnswerPersistDetail from './LongAnswerPersistDetail';
+import MyInput from '../../../ui/forms/MyInput';
+import MyLabel from '../../../ui/forms/MyLabel';
+import MyTextArea from '../../../ui/forms/MyTextArea';
+import MyButton from '../../../ui/buttons/MyButton';
+import { cn } from '../../../../../app/cn';
 
 export default function QuestionPersistCard({
 	index,
@@ -42,9 +46,15 @@ export default function QuestionPersistCard({
 	const handleTypeChange = (type: 'MCQ' | 'LONG_ANSWER') => {
 		if (type === question.detail.type) return;
 		if (type === 'MCQ') {
-			onQuestionChange({ detail: mcqDetail });
+			onQuestionChange({
+				type: "MCQ",
+				detail: mcqDetail
+			});
 		} else {
-			onQuestionChange({ detail: longDetail });
+			onQuestionChange({
+				type: "LONG_ANSWER",
+				detail: longDetail
+			});
 		}
 	};
 
@@ -77,9 +87,10 @@ export default function QuestionPersistCard({
 				text={question.text}
 				questionType={question.detail.type}
 				onQuestionChange={onQuestionChange}
-				onDeleteQuestion={onDeleteQuestion}
 				onTypeChange={handleTypeChange}
 			/>
+			<hr className='border-primary-toned-300' />
+
 			{question.detail.type === 'MCQ' && (
 				<MCQPersistDetail
 					detail={question.detail}
@@ -93,13 +104,34 @@ export default function QuestionPersistCard({
 					onQuestionChange={handleDetailChange}
 				/>
 			)}
+
+			{onDeleteQuestion && (
+				<>
+					<hr className='border-primary-toned-300' />
+
+					<div className='flex justify-end'>
+						<MyButton
+							type="button"
+							variant="destructive"
+							size="small"
+							onClick={onDeleteQuestion}
+						>
+							<FontAwesomeIcon icon={faTrashCan} className="mr-2" />
+							Delete Question
+						</MyButton>
+					</div>
+				</>
+			)}
 		</QuestionPersistLayout>
 	);
 }
 
-function QuestionPersistLayout({ children }: { children: React.ReactNode }) {
+function QuestionPersistLayout({ children, className }: {
+	children: React.ReactNode;
+	className?: string;
+}) {
 	return (
-		<div className="w-full flex flex-col gap-4 rounded-lg border border-primary px-8 py-6 text-primary bg-white shadow-md">
+		<div className={cn("w-full flex flex-col gap-4 rounded-lg border border-primary px-8 py-6 text-primary bg-white shadow-md", className)}>
 			{children}
 		</div>
 	);
@@ -110,7 +142,6 @@ function QuestionPersistHeader({
 	points,
 	text,
 	onQuestionChange,
-	onDeleteQuestion,
 	questionType,
 	onTypeChange,
 }: {
@@ -118,66 +149,61 @@ function QuestionPersistHeader({
 	points: number;
 	text: string;
 	onQuestionChange: (edit: Partial<any>) => void;
-	onDeleteQuestion: () => void;
 	questionType: 'MCQ' | 'LONG_ANSWER';
 	onTypeChange?: (type: 'MCQ' | 'LONG_ANSWER') => void;
 }) {
+	// Ensure points is a number and not NaN
 	return (
-		<div className="flex items-start gap-4 w-full">
-			{/* Left Info Section */}
-			<div className="w-fit flex flex-col gap-4 items-start justify-center">
-				<div className='flex flex-wrap items-center gap-2 w-full'>
-					<span className="text-sm text-primary-toned-500">Points:</span>
-					<input
-						className="border border-primary rounded-lg font-semibold px-2 py-1 text-primary focus:outline-none w-[50px]"
+		<div className="flex-1 flex flex-col gap-2">
+
+			{/* Question Index and Points */}
+			<div className='flex items-baseline gap-4 w-full'>
+				<MyLabel>{`Question ${index || 0 + 1}:`}</MyLabel>
+				<div className='flex items-baseline gap-2 flex-shrink-0'>
+					<MyInput
+						id='points'
 						type="number"
+						variant={{ size: 'small' }}
+						className='w-[100px] font-semibold'
 						value={points}
 						min="0"
 						step="1"
 						onChange={(e) => onQuestionChange({ points: Number(e.target.value) || 0 })}
 					/>
+					<MyLabel htmlFor='points'>Points</MyLabel>
 				</div>
-				{/* Type Switcher */}
-				<div className="flex gap-2 mt-2">
-					<button
+			</div>
+
+			{/* Question Text */}
+			<MyTextArea
+				value={text}
+				onChange={(e) => onQuestionChange({ text: e.target.value })}
+				placeholder="Question content goes here..."
+				minRows={1}
+				className='mt-2'
+			/>
+
+			{/* Type Switcher */}
+			<div className='flex gap-2 items-center mt-2'>
+				<MyLabel className='text-sm'>Type:</MyLabel>
+				<div className="flex gap-2">
+					<MyButton
 						type="button"
-						className={`px-2 py-1 rounded text-xs font-semibold border ${questionType === 'MCQ' ? 'bg-primary text-white border-primary' : 'bg-white text-primary border-primary-toned-300'}`}
+						variant={questionType === "MCQ" ? "primary" : "outline"}
+						size={"small"}
 						onClick={() => onTypeChange && onTypeChange('MCQ')}
 					>
 						MCQ
-					</button>
-					<button
+					</MyButton>
+					<MyButton
 						type="button"
-						className={`px-2 py-1 rounded text-xs font-semibold border ${questionType === 'LONG_ANSWER' ? 'bg-primary text-white border-primary' : 'bg-white text-primary border-primary-toned-300'}`}
+						variant={questionType === "LONG_ANSWER" ? "primary" : "outline"}
+						size={"small"}
 						onClick={() => onTypeChange && onTypeChange('LONG_ANSWER')}
 					>
 						Long Answer
-					</button>
+					</MyButton>
 				</div>
-			</div>
-			{/* Center Content Section */}
-			<div className="flex-1 flex flex-col gap-2">
-				{/* Question */}
-				<div className="w-11/12 mb-4 flex items-center border border-primary rounded-lg font-bold text-gray-600 bg-gray-50">
-					{typeof index === 'number' && (
-						<span className="pl-3 pr-2 text-primary-toned-600 whitespace-nowrap">Question {index + 1}.</span>
-					)}
-					<TextareaAutosize
-						value={text}
-						onChange={(e) => onQuestionChange({ text: e.target.value })}
-						className="w-full bg-transparent border-none outline-none resize-none overflow-hidden px-4 py-1"
-						placeholder="Question text"
-						minRows={1}
-					/>
-				</div>
-			</div>
-			{/* Right Delete Section */}
-			<div className="w-fit h-fit flex justify-center items-center">
-				<FontAwesomeIcon
-					className="w-5 h-5 cursor-pointer text-red-500 mt-2"
-					icon={faTrashCan}
-					onClick={() => onDeleteQuestion()}
-				/>
 			</div>
 		</div>
 	);

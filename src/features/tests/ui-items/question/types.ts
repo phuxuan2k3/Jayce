@@ -17,3 +17,6 @@ export type QuestionWithOptionalAnswer = {
 	question: QuestionCoreSchema;
 	answer?: AnswerCoreSchema;
 }
+
+export const QuestionTypesAsConst = ["MCQ", "LONG_ANSWER"] as const;
+

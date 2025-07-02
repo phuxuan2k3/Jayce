@@ -1,7 +1,6 @@
 import SummaryCards from "./components/SummaryCards";
 import AddTopicButton from "./components/AddTopicButton";
 import TopicCard from "./components/TopicCard";
-import HelpText from "./components/HelpText";
 import useTopicsManage from "./hooks/useTopicsManage";
 import useGetTotalQuestions from "./hooks/useGetTotalQuestions";
 import { Topic } from "../../common/base-schema";
@@ -30,7 +29,7 @@ export default function Step2({
 
 	const totalQuestions = useGetTotalQuestions({ topics: data.topics });
 	return (
-		<div className="p-6 space-y-6">
+		<div className="space-y-6">
 			<SummaryCards
 				totalTopics={data.topics.length}
 				totalQuestions={totalQuestions}
@@ -39,7 +38,7 @@ export default function Step2({
 			<AddTopicButton onAddTopic={addTopic} />
 
 			{/* Topics List */}
-			<div className="space-y-4">
+			<div className="flex flex-col gap-4">
 				{data.topics.map((topic, index) => (
 					<TopicCard
 						key={index}
@@ -51,8 +50,6 @@ export default function Step2({
 					/>
 				))}
 			</div>
-
-			<HelpText />
 		</div>
 	);
 }

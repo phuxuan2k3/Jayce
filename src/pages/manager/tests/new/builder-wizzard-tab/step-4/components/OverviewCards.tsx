@@ -55,15 +55,15 @@ export default function OverviewCards({ state, totalQuestions }: OverviewCardsPr
 				</div>
 
 				{/* Creativity Level Card */}
-				<div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-lg border border-green-200">
+				<div className="bg-gradient-to-br from-blue-chill-200 to-blue-chill-100 p-6 rounded-lg border border-blue-chill-200">
 					<div className="flex items-center gap-3 mb-3">
-						<div className="p-2 bg-green-500 text-white rounded-lg">
+						<div className="p-2 bg-blue-chill-500 text-white rounded-lg">
 							<Lightbulb className="w-5 h-5" />
 						</div>
-						<h3 className="font-semibold text-green-700">Creativity Level</h3>
+						<h3 className="font-semibold text-blue-chill-700">Creativity Level</h3>
 					</div>
-					<div className="text-2xl font-bold text-green-800">{state.step3.creativity}/10</div>
-					<p className="text-sm text-green-600 mt-1">AI creativity score</p>
+					<div className="text-2xl font-bold text-blue-chill-800">{state.step3.creativity}/10</div>
+					<p className="text-sm text-blue-chill-600 mt-1">AI creativity score</p>
 				</div>
 			</div>
 

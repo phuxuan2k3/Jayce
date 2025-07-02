@@ -37,11 +37,16 @@ export default function MCQPersistDetail({
 
 	return (
 		<div className='flex flex-col gap-2 w-full text-gray-600'>
+			<div className='flex items-center justify-between font-semibold text-sm mb-1'>
+				<span>Options:</span>
+				<span className='mr-2'>Correct</span>
+			</div>
+
 			{/* Options */}
 			{options.map((option: string, optionIndex: number) => (
 				<div key={optionIndex} className="w-full flex flex-row" >
 					<div className="w-11/12 h-fit flex items-center justify-between gap-2 border border-primary bg-gray-50 rounded-lg px-4 py-1">
-						<span className="mr-2">{String.fromCharCode(97 + optionIndex)}.</span>
+						<span className="mr-2 font-semibold">{String.fromCharCode(65 + optionIndex)}.</span>
 						{/* Option text */}
 						<TextareaAutosize
 							value={option}
@@ -71,7 +76,7 @@ export default function MCQPersistDetail({
 			))}
 			{/* Add option button */}
 			<div
-				className="text-sm cursor-pointer font-semibold text-primary underline mt-4"
+				className="text-sm cursor-pointer font-semibold text-primary underline mt-4 w-fit"
 				onClick={() => handleAddOption("")}
 			>
 				<span>+ Add option</span>

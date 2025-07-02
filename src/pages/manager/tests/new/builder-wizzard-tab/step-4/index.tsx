@@ -58,12 +58,14 @@ export default function Step4({
 
 
 	return (
-		<div className="max-w-4xl mx-auto space-y-8">
+		<div className="flex flex-col gap-4">
 			{/* Header */}
 			<div className="text-center">
 				<h2 className="text-3xl font-bold text-primary mb-2">Review Your Exam Configuration</h2>
 				<p className="text-gray-600">Please review all settings before generating your exam</p>
 			</div>
+
+			<hr className="border-primary-toned-300 w-full my-4" />
 
 			{/* Overview Cards */}
 			<OverviewCards state={{

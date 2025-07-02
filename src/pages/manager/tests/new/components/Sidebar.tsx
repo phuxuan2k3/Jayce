@@ -29,16 +29,17 @@ export default function Sidebar({
 				description='Generate questions with AI'
 				onClick={() => onTabChange('generate')}
 			/>
+
+			<hr className="my-2 border-primary-toned-300" />
+
 			<QuickAction
 				icon={<Upload size={18} strokeWidth={2.5} />}
 				title="Publish"
+				variant={"alert"}
 				description="Review and publish your exam"
 				onClick={() => onTabChange('publish')}
 			/>
 
-			<hr className="my-2 border-primary-toned-300" />
-
-			<ManagerSidebar.BackToExams />
 		</ManagerSidebar>
 	)
 }

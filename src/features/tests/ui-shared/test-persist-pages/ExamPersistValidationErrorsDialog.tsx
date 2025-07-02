@@ -1,10 +1,11 @@
 import { AlertTriangle, Settings, Edit3, X } from 'lucide-react';
 import { z } from 'zod';
-import { ExamPersistValidationSchema } from '../../ui-items/test/persist-schema';
 import { useMemo } from 'react';
+import { ExamPersistZodSchemaType } from '../../schemas/exam-persist-zod';
+import MyDialog from '../../ui/MyDialog';
 
 interface ValidationErrorDialogProps {
-	errors: z.ZodError<z.infer<typeof ExamPersistValidationSchema>> | undefined;
+	errors: z.ZodError<ExamPersistZodSchemaType> | undefined;
 	onClose: () => void;
 	onConfigEdit: () => void;
 	onQuestionsEdit: () => void;
@@ -16,16 +17,18 @@ export default function ExamPersistValidationErrorsDialog({
 	onConfigEdit,
 	onQuestionsEdit,
 }: ValidationErrorDialogProps) {
+	console.log(errors);
+
 	const configErrors = useMemo(
-		() => errors?.issues.filter(i => i.path.length === 0).map(i => i.message) ?? [],
-		[errors]
-	);
+		() => errors?.issues.filter(i => i.path.includes("questions") === false).map(i => i.message) ?? []
+		, [errors]);
+
 	const questionsErrors = useMemo(
-		() => errors?.issues.filter(i => i.path.length > 0).map(i => ({
-			index: i.path[0], message: i.message,
-		})) ?? [],
-		[errors]
-	);
+		() => errors?.issues.filter(i => i.path.includes("questions")).map(i => ({
+			index: i.path.at(1),
+			message: i.message,
+		})) ?? []
+		, [errors]);
 
 
 	const hasConfigErrors = configErrors.length > 0;
@@ -35,7 +38,7 @@ export default function ExamPersistValidationErrorsDialog({
 	if (!hasAnyErrors) return null;
 
 	return (
-		<div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+		<MyDialog>
 			<div className="bg-white rounded-lg shadow-lg w-full max-w-2xl relative animate-fade-in max-h-[90vh] overflow-y-auto">
 				{/* Close button */}
 				{onClose && (
@@ -55,14 +58,16 @@ export default function ExamPersistValidationErrorsDialog({
 					</div>
 				</div>
 
+				<h2 className="text-xl font-semibold text-gray-900 text-center mb-2">
+					Validation Issues Found
+				</h2>
+				<p className="text-gray-600 text-center mb-6 leading-relaxed">
+					Please review and fix the following issues before proceeding.
+				</p>
+
+
 				{/* Content */}
-				<div className="px-6 pb-6">
-					<h2 className="text-xl font-semibold text-gray-900 text-center mb-2">
-						Validation Issues Found
-					</h2>
-					<p className="text-gray-600 text-center mb-6 leading-relaxed">
-						Please review and fix the following issues before proceeding.
-					</p>
+				<div className="px-6 pb-6 max-h-[50vh] overflow-y-auto">
 
 					{/* Error Sections */}
 					<div className="space-y-6">
@@ -100,7 +105,8 @@ export default function ExamPersistValidationErrorsDialog({
 								<ul className="list-disc list-inside space-y-1 mb-4 text-amber-700">
 									{questionsErrors.map((error, index) => (
 										<li key={index} className="text-sm">
-											Question {(Number(error.index) || 0) + 1}: {error.message}
+											{(error.index != null) && <span>Question {(Number(error.index) || 0) + 1}: </span>}
+											{error.message}
 										</li>
 									))}
 								</ul>
@@ -116,20 +122,20 @@ export default function ExamPersistValidationErrorsDialog({
 							</div>
 						)}
 					</div>
+				</div>
 
-					{/* Action buttons */}
-					<div className="flex gap-3 mt-6">
-						{onClose && (
-							<button
-								onClick={onClose}
-								className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors font-medium"
-							>
-								Close
-							</button>
-						)}
-					</div>
+				{/* Action buttons */}
+				<div className="flex gap-3 px-6 pb-6">
+					{onClose && (
+						<button
+							onClick={onClose}
+							className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors font-medium"
+						>
+							Close
+						</button>
+					)}
 				</div>
 			</div>
-		</div>
+		</MyDialog>
 	)
 }

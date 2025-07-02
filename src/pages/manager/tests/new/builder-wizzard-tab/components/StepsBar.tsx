@@ -42,7 +42,7 @@ export default function StepsBar({
 		return 'upcoming';
 	};
 	return (
-		<div className="flex items-center justify-center p-4">
+		<div className="flex items-center justify-center p-2">
 			{/* Back Button */}
 			<button
 				onClick={handleBack}

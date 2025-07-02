@@ -42,7 +42,6 @@ const store = configureStore({
 				.concat(authApi.middleware)
 				.concat(testApi.middleware)
 				.concat(promptApi.middleware)
-				.concat(authApi.middleware)
 				.concat(logoutApi.middleware)
 				.concat(interviewApi.middleware)
 				.concat(paymentApi.middleware)

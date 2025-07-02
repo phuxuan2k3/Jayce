@@ -1,10 +1,17 @@
-import { BuilderStep1Type, BuilderStep2Type, BuilderStep3Type } from "./step-schema"
+import z from "zod";
+import { BuilderStep1Schema, BuilderStep1Type, BuilderStep2Schema, BuilderStep2Type, BuilderStep3Schema, BuilderStep3Type } from "./step-schema"
 
 export type AllStepData = {
 	step1: BuilderStep1Type;
 	step2: BuilderStep2Type;
 	step3: BuilderStep3Type;
 }
+
+export const AllStepDataSchemaMap: Record<keyof AllStepData, z.ZodTypeAny> = {
+	step1: BuilderStep1Schema,
+	step2: BuilderStep2Schema,
+	step3: BuilderStep3Schema,
+};
 
 export const StepInfo = {
 	1: {

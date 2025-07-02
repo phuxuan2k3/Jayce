@@ -13,11 +13,11 @@ import useArrayManage from "../../../../../features/tests/hooks/useArrayManage";
 import useDraftValue from "../../../../../features/tests/hooks/useDraftValue";
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import useZodParseLazy from "../../../../../features/tests/hooks/useZodParseLazy";
-import { ExamPersistValidationSchema } from "../../../../../features/tests/ui-items/test/persist-schema";
 import { ExamPersistCoreSchema } from "../../../../../features/tests/ui-items/test/types";
 import ConfigTab from "../../../../../features/tests/ui-shared/test-persist-pages/config-tab";
 import ExamPersistValidationErrorsDialog from "../../../../../features/tests/ui-shared/test-persist-pages/ExamPersistValidationErrorsDialog";
 import QuestionsConfigTab from "../../../../../features/tests/ui-shared/test-persist-pages/questions-config-tab";
+import { ExamPersistZodSchema } from "../../../../../features/tests/schemas/exam-persist-zod";
 
 export default function ManagerTestEditMain({
 	data,
@@ -29,7 +29,7 @@ export default function ManagerTestEditMain({
 	const [tab, setTab] = useState<EditTabs>("info");
 
 	const { setTest } = useDeleteTestModalContext();
-	const { errors, handleParse, clearErrors } = useZodParseLazy(ExamPersistValidationSchema);
+	const { errors, handleParse, clearErrors } = useZodParseLazy(ExamPersistZodSchema);
 
 	const {
 		draftValue,
