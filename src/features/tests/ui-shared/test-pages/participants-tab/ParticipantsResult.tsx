@@ -52,7 +52,6 @@ export default function ParticipantsResult({
 					<div className='flex flex-col gap-4'>
 						<AttemptsTable
 							attempts={paged.data}
-							baseIndex={(filter.page - 1) * filter.perPage}
 						/>
 						<MyPaginationSection
 							totalPages={paged.totalPages}

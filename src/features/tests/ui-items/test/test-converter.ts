@@ -10,6 +10,8 @@ export class TestConverter {
 			...test,
 			detail: {
 				...test._detail,
+				openDate: test._detail.openDate || new Date().toISOString(),
+				closeDate: test._detail.closeDate || new Date().toISOString(),
 				mode: "EXAM",
 			},
 			questions: questions.map(q => QuestionsConverter.questionCoreSchema_2_questionPersistCoreSchema(q)).filter((q): q is QuestionPersistCoreSchema => q !== null),
