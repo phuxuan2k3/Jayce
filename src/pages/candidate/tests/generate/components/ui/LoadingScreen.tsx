@@ -1,9 +1,7 @@
-import { PracticeGenerationLoadingState } from "../../types";
-
 export const LoadingScreen = ({
 	state,
 }: {
-	state: PracticeGenerationLoadingState;
+	state: "none" | "saving" | "generating";
 }) => (
 	state !== "none" && (
 		<div className="flex flex-col items-center justify-center min-h-[400px]">

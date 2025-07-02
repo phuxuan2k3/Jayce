@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import RightLayoutTemplate from '../../../../../../../components/layouts/RightLayoutTemplate';
 import { format } from 'date-fns';
 import { useGetAttemptsByAttemptIdQuery, useGetTestsByTestIdQuery, AttemptCoreSchema, TestFullSchema } from '../../../../../../../features/tests/api/test.api-gen-v2';
@@ -14,8 +13,6 @@ export default function ManagerTestsAttemptPage() {
 	const attemptId = useGetAttemptIdParams();
 	const testId = useGetTestIdParams();
 	const userId = useGetUserId();
-
-	const [showAnswers, setShowAnswers] = useState(false);
 
 	const attemptQuery = useGetAttemptsByAttemptIdQuery({ attemptId });
 	const testQuery = useGetTestsByTestIdQuery({ testId });
@@ -46,21 +43,11 @@ export default function ManagerTestsAttemptPage() {
 								/>
 							}
 							right={
-								<AttemptSidebar
-									showAnswersAvailable={isAllowedToShowAnswer(attempt, test)}
-									setShowAnswers={setShowAnswers}
-									showAnswers={showAnswers}
-									attempt={attempt}
-									test={test}
-								/>
+								<AttemptSidebar />
 							}
 						>
 							<div className="w-full p-4">
-								<AnswersList
-									testId={testId}
-									attemptId={attemptId}
-									viewCorrectAnswer={showAnswers}
-								/>
+								<AnswersList isAllowedToShowAnswer={isAllowedToShowAnswer(attempt, test)} />
 							</div>
 						</RightLayoutTemplate>
 					)}
