@@ -27,7 +27,10 @@ export default function Overlay() {
   const interviewId = location.state?.interviewId;
   console.log("totalQuestion", totalQuestion);
   console.log("questionIndex", questionIndex);
-  const handleAnswerRecorded = async (transcript: string) => {
+  const handleAnswerRecorded = async (
+    transcript: string
+    // base64Audio: string
+  ) => {
     console.log("interviewId từ navigate:", interviewId);
     if (!interviewId) {
       alert("Không tìm thấy interviewId!");
@@ -39,7 +42,7 @@ export default function Overlay() {
         interviewId,
         index: questionIndex,
         answer: transcript,
-        recordProof: "",
+        recordProof: "base64Audio",
       }).unwrap();
       if (questionIndex >= parseInt(totalQuestion)) {
         setShowSubmittingModal(true);

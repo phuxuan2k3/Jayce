@@ -32,7 +32,7 @@ const InterviewPage = () => {
   };
 
   return (
-    <div className="bg-white h-fit mx-12">
+    <div className="bg-white container   h-fit">
       <div className="text-3xl font-black font-arya mt-4 text-primary-toned-600 drop-shadow">
         {t("interview_result_title")}
       </div>
