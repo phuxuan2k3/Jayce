@@ -48,7 +48,7 @@ function _AttemptSidebar({
 					<h3 className="text-2xl font-bold">Attempt #{attempt.order}</h3>
 					<span
 						className={cn(
-							AttemptUtils.status(attempt.status).card,
+							AttemptUtils.status(attempt.status).bandage,
 							"rounded-full text-xs px-4 py-0.5 w-fit font-bold border-2 mt-1 inline-block"
 						)}
 					>

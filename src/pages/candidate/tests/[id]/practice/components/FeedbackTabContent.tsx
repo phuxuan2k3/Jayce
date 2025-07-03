@@ -6,6 +6,9 @@ import { usePostFeedbacksMutation } from '../../../../../../features/tests/api/t
 import useActionStateWatch from '../../../../../../features/tests/hooks/useActionStateWatch';
 import useGetTestIdParams from '../../../../../../features/tests/hooks/useGetTestIdParams';
 import MyButtonWithLoading from '../../../../../../features/tests/ui/buttons/MyButtonWithLoading';
+import { cn } from '../../../../../../app/cn';
+import MyButton from '../../../../../../features/tests/ui/buttons/MyButton';
+import MyTextArea from '../../../../../../features/tests/ui/forms/MyTextArea';
 
 export default function FeedbackTabContent() {
 	const testId = useGetTestIdParams();
@@ -29,121 +32,123 @@ export default function FeedbackTabContent() {
 	});
 
 	return (
-		<div className="flex flex-col gap-6">
-			<div className='bg-white rounded-lg shadow-md p-6 mb-6'>
-				<h2 className="text-2xl font-bold mb-4">Test Feedback</h2>
-				<p className="text-gray-600 mb-4">
-					We value your feedback on this test. Please provide your rating, comments, and any problems you encountered.
-				</p>
-				<p className="text-gray-600 mb-6">
-					Let us know your feedback about this test. Your input helps us improve the quality of our tests and provide a better experience for all users.
-				</p>
+		<div className="flex flex-col gap-2 py-2 px-6">
+			<h2 className="text-2xl font-bold text-primary">Test Feedback</h2>
+			<div className='bg-primary-toned-50 border border-primary-toned-300 text-sm text-primary p-4 rounded-lg mb-4 flex flex-col gap-2 my-4'>
+				<span>
+					Your feedback on this AI-generated test is important to us. Please share your rating, comments, and let us know if you faced any issues.
+				</span>
+				<span>
+					Your input will help us enhance the quality of our AI-generated tests and create a better experience for everyone.
+				</span>
 			</div>
 
-			{/* Rating Section */}
-			<div className="bg-white rounded-lg shadow-md p-6">
-				<h3 className="text-lg font-semibold mb-4 flex items-center">
-					<StarIcon className="mr-2 text-yellow-500" size={20} />
-					Test Rating
-				</h3>
+			<h3 className="my-2 text-lg font-semibold flex items-center text-primary">
+				<StarIcon className="mr-2" size={20} strokeWidth={2.5} />
+				Test Rating
+			</h3>
 
-				<div className="flex items-center mb-6">
-					<div className="flex space-x-1">
-						{[...Array(10)].map((_, index) => (
+			<div className="flex flex-col items-start gap-2">
+				<div className="flex items-center gap-1">
+					{[...Array(10)].map((_, index) => {
+						const starValue = index + 1;
+						return (
 							<button
-								key={index}
-								onClick={() => setRating(index + 1)}
-								className={`w-8 h-8 rounded-full focus:outline-none ${index < rating
-									? 'bg-yellow-500 text-white'
-									: 'bg-gray-200 text-gray-600'
-									}`}
+								key={starValue}
+								type="button"
+								aria-label={`Rate ${starValue}`}
+								onClick={() => setRating(starValue)}
+								className={cn('group w-6 h-6 flex items-center justify-center focus:outline-none', {
+									'text-yellow-500 scale-110': rating === starValue,
+									'text-yellow-400': rating >= starValue,
+									'text-gray-300': rating < starValue
+								})}
 							>
-								{index + 1}
-							</button>
-						))}
-						<button
-							onClick={() => setRating(0)}
-							className={`w-8 h-8 rounded-full focus:outline-none ${rating === 0
-								? 'bg-yellow-500 text-white'
-								: 'bg-gray-200 text-gray-600'
-								}`}
-						>
-							Clear
-						</button>
-					</div>
-					<span className="ml-4 text-lg font-medium">
-						{rating > 0 ? `${rating}/10` : 'Not rated'}
-					</span>
-				</div>
-
-				<div className="mb-4">
-					<label htmlFor="comment" className="mb-2 text-sm font-medium text-gray-700 flex items-center">
-						<MessageSquare className="mr-2 text-primary" size={16} />
-						Your Comments
-					</label>
-					<textarea
-						id="comment"
-						rows={4}
-						className="w-full p-3 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary"
-						placeholder="Share your thoughts about this test..."
-						value={comment || ''}
-						onChange={(e) => setComment(e.target.value)}
-					/>
-				</div>
-
-				<div>
-					<label className="mb-2 text-sm font-medium text-gray-700 flex items-center">
-						<AlertCircle className="mr-2 text-red-500" size={16} />
-						Report a Problem
-					</label>
-					<div className="grid grid-cols-2 gap-2">
-						{PROBLEM_OPTIONS.map(option => (
-							<div
-								key={option.value}
-								className="flex items-center"
-							>
-								<input
-									type="checkbox"
-									id={`problem-${option.value}`}
-									name="problem"
-									value={option.value}
-									checked={problems.findIndex(problem => problem === option.value) !== -1}
-									onChange={() => {
-										setProblems(prev =>
-											prev.includes(option.value)
-												? prev.filter(p => p !== option.value)
-												: [...prev, option.value]
-										);
-									}}
-									className="h-4 w-4 border-gray-300 focus:ring-primary accent-primary"
+								<StarIcon
+									fill={rating >= starValue ? '#facc15' : 'none'}
+									stroke="#facc15"
+									strokeWidth={2.2}
+									size={28}
+									className="transition-transform duration-100 group-hover:scale-125"
 								/>
-								<label htmlFor={`problem-${option.value}`} className="ml-2 text-sm text-gray-700">
-									{option.label}
-								</label>
-							</div>
-						))}
-					</div>
+							</button>
+						);
+					})}
+					<MyButton
+						onClick={() => setRating(0)}
+						type="button"
+						variant={"gray"}
+						size={"small"}
+						className='ml-4'
+					>
+						Clear
+					</MyButton>
 				</div>
+				<span className="text-sm text-gray-700">
+					{rating > 0 ? `You rated: ${rating}/10` : 'No rating selected'}
+				</span>
 			</div>
 
-			<div className="flex justify-between items-center">
-				<p className="text-sm text-gray-500">
-					Your feedback helps us improve the test experience.
-				</p>
-				<MyButtonWithLoading
-					onClick={() => postFeedback({
-						body: {
-							testId,
-							rating,
-							comment,
-							problems,
-						}
-					})}
-					loading={state.isLoading}
-				>
-					{state.isLoading ? 'Submitting...' : 'Submit Feedback'}
-				</MyButtonWithLoading>
+			<h3 className="mt-4 text-lg font-semibold flex items-center text-primary">
+				<MessageSquare className="mr-2" size={18} strokeWidth={2.5} />
+				Your Comments
+			</h3>
+			<MyTextArea
+				isAutoSized={false}
+				rows={4}
+				placeholder="Share your thoughts about this test..."
+				value={comment || ''}
+				onChange={(e) => setComment(e.target.value)}
+			/>
+
+			<h3 className="mt-4 text-lg font-semibold flex items-center text-primary">
+				<AlertCircle className="mr-2 text-red-500" size={18} strokeWidth={2.5} />
+				Report a Problem
+			</h3>
+			<div className="grid grid-cols-2 gap-x-2 gap-y-2 px-6 py-6 border border-gray-200 rounded-lg bg-gray-50 shadow-inner">
+				{PROBLEM_OPTIONS.map(option => (
+					<div
+						key={option.value}
+						className="flex items-center"
+					>
+						<input
+							type="checkbox"
+							id={`problem-${option.value}`}
+							name="problem"
+							value={option.value}
+							checked={problems.findIndex(problem => problem === option.value) !== -1}
+							onChange={() => {
+								setProblems(prev =>
+									prev.includes(option.value)
+										? prev.filter(p => p !== option.value)
+										: [...prev, option.value]
+								);
+							}}
+							className="h-4 w-4 border-gray-300 focus:ring-primary accent-primary"
+						/>
+						<label htmlFor={`problem-${option.value}`} className="ml-2 text-sm text-gray-700">
+							{option.label}
+						</label>
+					</div>
+				))}
 			</div>
+
+			<hr className="my-2 border-gray-200" />
+
+			<MyButtonWithLoading
+				onClick={() => postFeedback({
+					body: {
+						testId,
+						rating,
+						comment,
+						problems,
+					}
+				})}
+				loading={state.isLoading}
+				className='mt-4 w-1/3 self-end'
+			>
+				{state.isLoading ? 'Submitting...' : 'Submit Feedback'}
+			</MyButtonWithLoading>
 		</div >
 	);
 };

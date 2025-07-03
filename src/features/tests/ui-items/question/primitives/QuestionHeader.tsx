@@ -20,7 +20,6 @@ function Text({
 }: BaseComponentProps) {
 	const { question: { text } } = useQuestion();
 	return <div className={cn("font-asap", className)}>
-		<Type className="mx-2 py-0.5 font-semibold" />
 		<span>{text}</span>
 	</div>;
 }

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { AttemptCoreSchema, useGetTestsByTestIdAttemptsQuery } from "../../../api/test.api-gen-v2";
 import useGetTestIdParams from "../../../hooks/useGetTestIdParams";
-import AttemptsTable from "../../../ui-items/attempt/AttemptsTable";
 import FetchStateCover2 from "../../../ui/fetch-states/FetchStateCover2";
 import MyPaginationSection from "../../../ui-sections/MyPaginationSection";
 import { QuerySortValues } from "../../../types/query";
 import MyButton from "../../../ui/buttons/MyButton";
 import { ArrowDownNarrowWide, ArrowUpNarrowWide } from "lucide-react";
 import LoadingCover from "../../../ui/fetch-states/LoadingCover";
+import AttemptsTable from "../../../ui-items/attempt/AttemptsTable";
 
 type Filter = {
 	page: number;
@@ -50,7 +50,7 @@ const AttemptsTab = ({
 						if (data.length === 0) {
 							return (
 								<div className="bg-white rounded-lg shadow-md p-6 text-center">
-									<p className="text-gray-600 mb-4">You haven't attempted this test yet.</p>
+									<p className="text-gray-600 mb-4">There are no attempts for this test yet.</p>
 								</div>
 							);
 						}
@@ -65,7 +65,7 @@ const AttemptsTab = ({
 
 								</div>
 
-								<div className="flex-1 flex relative p-4">
+								<div className="flex-1 flex relative py-2 px-6">
 									<AttemptsTable
 										attempts={data}
 										onItemClick={(data) => onAttemptClick?.(data)}

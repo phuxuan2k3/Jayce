@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useGetAttemptsQuery } from "../../../api/test.api-gen-v2";
 import useGetTestIdParams from "../../../hooks/useGetTestIdParams";
 import { PagingFilter } from "../../../types/query";
-import AttemptsTable from "../../../ui-items/attempt/AttemptsTable";
+import AttemptsList from "../../../ui-items/attempt/AttemptsList";
 import UserCoreCard from "../../../ui-items/user/UserCoreCard";
 import FetchStateCover2 from "../../../ui/fetch-states/FetchStateCover2";
 import MyPaginationSection from "../../../ui-sections/MyPaginationSection";
@@ -50,7 +50,7 @@ export default function ParticipantsResult({
 				fetchState={attemptsQuery}
 				dataComponent={(paged) => (
 					<div className='flex flex-col gap-4'>
-						<AttemptsTable
+						<AttemptsList
 							attempts={paged.data}
 						/>
 						<MyPaginationSection

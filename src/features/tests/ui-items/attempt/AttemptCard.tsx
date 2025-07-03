@@ -1,6 +1,16 @@
+import { cn } from '../../../../app/cn';
 import { AttemptCoreSchema } from '../../api/test.api-gen-v2'
+import { AttemptUtils } from './attempt-utils';
 
-export default function AttemptCard({ attempt }: { attempt: AttemptCoreSchema }) {
+export default function AttemptCard({
+	attempt,
+	onClick,
+	className = '',
+}: {
+	attempt: AttemptCoreSchema;
+	onClick?: (attempt: AttemptCoreSchema) => void;
+	className?: string;
+}) {
 	const { id, order, status, secondsSpent, createdAt, updatedAt, _aggregate, _include } = attempt;
 	const { points, answered, answeredCorrect } = _aggregate;
 	const { test } = _include;
@@ -16,10 +26,14 @@ export default function AttemptCard({ attempt }: { attempt: AttemptCoreSchema })
 	const formatDate = (date: string) => new Date(date).toLocaleString();
 
 	return (
-		<div className="border rounded-lg shadow-sm p-4 bg-white flex flex-col gap-2">
+		<div className={cn(
+			"border border-gray-200 bg-white rounded-lg shadow-md px-6 py-4 flex flex-col gap-2",
+			onClick && "cursor-pointer hover:shadow-md transition-shadow",
+			className
+		)} onClick={() => onClick?.(attempt)}>
 			<div className="flex justify-between items-center">
 				<div className="font-semibold text-lg">Attempt #{order}</div>
-				<span className={`px-2 py-1 rounded text-xs font-medium ${status === 'GRADED' ? 'bg-green-100 text-green-700' : status === 'COMPLETED' ? 'bg-blue-100 text-blue-700' : 'bg-yellow-100 text-yellow-700'}`}>{status}</span>
+				<span className={`px-2 py-1 rounded text-xs font-medium ${AttemptUtils.status(status).bandage}`}>{status}</span>
 			</div>
 			<div className="text-sm text-gray-600">Test: <span className="font-medium">{test.title}</span></div>
 			<div className="flex flex-wrap gap-4 mt-2">

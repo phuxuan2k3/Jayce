@@ -24,13 +24,12 @@ const AttemptsTable: React.FC<Props> = ({
 
 	return (
 		<table className="w-full bg-white rounded-lg border border-gray-200 shadow-md">
-			<thead className="bg-gray-50 text-gray-700">
+			<thead className="bg-gray-50 text-gray-700 font-semibold text-sm">
 				<tr>
-					<th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">#</th>
-					<th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date</th>
-					<th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th>
-					<th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Score</th>
-					<th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Time Spent</th>
+					<th className="px-6 py-3 text-left tracking-wider">Order #</th>
+					<th className="px-6 py-3 text-left tracking-wider">Date</th>
+					<th className="px-6 py-3 text-left tracking-wider">Score</th>
+					<th className="px-6 py-3 text-left tracking-wider">Time Spent</th>
 				</tr>
 			</thead>
 			<tbody className="divide-y divide-gray-200">
@@ -48,10 +47,7 @@ const AttemptsTable: React.FC<Props> = ({
 							<div className="text-xs">{formatDistanceToNow(new Date(attempt.createdAt), { addSuffix: true })}</div>
 						</td>
 						<td className={cn("px-6 py-4 whitespace-nowrap text-sm font-semibold", AttemptUtils.status(attempt.status).fontColor)}>
-							{AttemptUtils.status(attempt.status).text}
-						</td>
-						<td className="px-6 py-4 whitespace-nowrap text-sm text-primary font-bold">
-							{attempt._aggregate.points}
+							{attempt.status === "GRADED" ? attempt._aggregate.points : AttemptUtils.status(attempt.status).text}
 						</td>
 						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 							{formatSeconds(attempt.secondsSpent)}
