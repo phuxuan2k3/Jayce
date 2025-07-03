@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartBar, faUsers, faRepeat } from '@fortawesome/free-solid-svg-icons';
-import MyItemCardTemplate from '../../../../../../../../features/tests/templates/MyItemCardTemplate';
+import MyItemCardTemplate from '../../../../../../../../features/tests/ui-templates/MyItemCardTemplate';
 
 export const ParticipantsOverviewCard = ({
 	totalParticipants,

@@ -6,7 +6,7 @@ import { PagingFilter } from "../../../types/query";
 import AttemptsTable from "../../../ui-items/attempt/AttemptsTable";
 import UserCoreCard from "../../../ui-items/user/UserCoreCard";
 import FetchStateCover2 from "../../../ui/fetch-states/FetchStateCover2";
-import MyPaginationSection from "../../../ui/sections/MyPaginationSection";
+import MyPaginationSection from "../../../ui-sections/MyPaginationSection";
 import ParticipantStatisticCard from "./ParticipantStatistic";
 import { ParticipantUser } from "./type";
 

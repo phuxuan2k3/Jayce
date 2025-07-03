@@ -2,6 +2,7 @@ import { createContext, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import QuickAction from "./QuickAction";
 import paths from "../../../../../router/paths";
+import { ClipboardList } from "lucide-react";
 
 type SidebarActionsContextType = {};
 
@@ -135,26 +136,15 @@ SidebarActions.ReturnToTests = () => {
 	);
 };
 
-SidebarActions.JoinTest = () => {
+SidebarActions.JoinExam = () => {
 	const navigate = useNavigate();
 	return (
 		<QuickAction
 			icon={
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					className="h-5 w-5"
-					viewBox="0 0 20 20"
-					fill="currentColor"
-				>
-					<path
-						fillRule="evenodd"
-						d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-						clipRule="evenodd"
-					/>
-				</svg>
+				<ClipboardList className="w-5 h-5" />
 			}
-			title="Join Test"
-			description="Join a test session"
+			title="Join Exam"
+			description="Join an ongoing exam by room ID"
 			onClick={() => navigate(paths.candidate.tests.JOIN)}
 		/>
 	);

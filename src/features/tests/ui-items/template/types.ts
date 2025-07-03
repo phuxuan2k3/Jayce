@@ -3,12 +3,12 @@ import { TemplateCoreSchema } from "../../api/test.api-gen-v2";
 
 export type TemplatePersistCoreSchema = Omit<TemplateCoreSchema, 'id' | 'createdAt' | 'updatedAt' | 'userId'>;
 
-export const EmptyTemplatePersist: TemplatePersistCoreSchema = {
+export const EMPTY_TEMPLATE_PERSIST: TemplatePersistCoreSchema = {
 	name: '',
 	title: '',
 	description: '',
 	numberOfQuestions: 5,
-	difficulty: "easy",
+	difficulty: "Intern",
 	tags: [],
 	numberOfOptions: 4,
 	outlines: [],

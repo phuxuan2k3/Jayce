@@ -29,6 +29,22 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 	if (data == null) return null;
 
 	const { data: examData, hasJoined } = data;
+	if (examData == null) {
+		return (
+			<div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 p-4">
+				<div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+					<h2 className="text-xl font-bold mb-4">Test Not Found</h2>
+					<p className="text-gray-600 mb-4">No test found with roomId: {roomId}</p>
+					<button
+						onClick={onClose}
+						className="px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-toned-600 transition-colors"
+					>
+						Close
+					</button>
+				</div>
+			</div>
+		);
+	}
 	if (examData._detail.mode !== "EXAM") {
 		return (
 			<div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 p-4">

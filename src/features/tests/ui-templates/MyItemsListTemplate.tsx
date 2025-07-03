@@ -1,6 +1,6 @@
 import { FetchState } from "../types/fetch-state";
 import { PagedResponse } from "../types/response";
-import MyPaginationSection from "../ui/sections/MyPaginationSection";
+import MyPaginationSection from "../ui-sections/MyPaginationSection";
 
 export default function MyItemsListTemplate({
 	heading,

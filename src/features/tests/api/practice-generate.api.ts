@@ -1,5 +1,5 @@
-import promptApi from "../../../../../features/tests/api/prompt.api";
-import { QuestionPersistCoreSchema } from "../../../../../features/tests/ui-items/question/types";
+import promptApi from "./prompt.api";
+import { QuestionPersistCoreSchema } from "../ui-items/question/types";
 
 const practiceGenerateApi = promptApi.injectEndpoints({
 	endpoints: (builder) => ({

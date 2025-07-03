@@ -28,10 +28,11 @@ export const MyInputVariants = cva(
 export type MyInputVariantProps = VariantProps<typeof MyInputVariants>;
 
 type MyInputProps = React.ComponentProps<"input"> & {
-	variant?: MyInputVariantProps
+	variant?: MyInputVariantProps;
+	error?: string | null;
 };
 
-export default function MyInput({ className, type, variant, ...props }: MyInputProps) {
+export default function MyInput({ error, className, type, variant, ...props }: MyInputProps) {
 	return (
 		<input
 			type={type}
@@ -40,6 +41,7 @@ export default function MyInput({ className, type, variant, ...props }: MyInputP
 				commonInputClasses,
 				MyInputVariants(variant),
 				className,
+				error && 'border-red-500'
 			)}
 			{...props}
 		/>

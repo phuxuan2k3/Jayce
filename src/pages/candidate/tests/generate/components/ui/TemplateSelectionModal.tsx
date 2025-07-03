@@ -6,7 +6,7 @@ import { TemplateCoreSchema, useGetTemplatesQuery } from '../../../../../../feat
 import TemplateCard from '../../../../../../features/tests/ui-items/template/TemplateCard';
 import MyDialog from '../../../../../../features/tests/ui/MyDialog';
 import FetchStateCover2 from '../../../../../../features/tests/ui/fetch-states/FetchStateCover2';
-import MyPaginationSection from '../../../../../../features/tests/ui/sections/MyPaginationSection';
+import MyPaginationSection from '../../../../../../features/tests/ui-sections/MyPaginationSection';
 
 type Filter = {
 	searchName: string;

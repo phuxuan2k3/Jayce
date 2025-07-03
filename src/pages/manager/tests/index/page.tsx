@@ -10,8 +10,8 @@ import FetchStateCover2 from "../../../../features/tests/ui/fetch-states/FetchSt
 import QuickAction from "../../../../features/tests/ui/sidebar/primitive/QuickAction";
 import SidebarActions from "../../../../features/tests/ui/sidebar/primitive/SidebarActions";
 import { QuerySortValues } from "../../../../features/tests/types/query";
-import MyItemsListTemplate from "../../../../features/tests/templates/MyItemsListTemplate";
-import MyHeaderTitleSection from "../../../../features/tests/ui/sections/MyHeaderSection";
+import MyItemsListTemplate from "../../../../features/tests/ui-templates/MyItemsListTemplate";
+import MyHeaderTitleSection from "../../../../features/tests/ui-sections/MyHeaderSection";
 
 type Filter = {
 	page: number;

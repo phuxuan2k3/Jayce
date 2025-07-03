@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLazyGetSuggestOutlinesQuery } from '../../api/practice-generate.api';
+import { useLazyGetSuggestOutlinesQuery } from '../../../../../../features/tests/api/practice-generate.api';
 import { PracticeStep3Type } from '../../types';
 
 export default function PracticeGenStep3({

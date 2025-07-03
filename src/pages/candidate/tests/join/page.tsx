@@ -5,6 +5,8 @@ import ExamInfoDialog from "./components/ExamInfoDialog";
 import { parseQueryError } from "../../../../helpers/fetchBaseQuery.error";
 import SidebarActions from "../../../../features/tests/ui/sidebar/primitive/SidebarActions";
 import { useGetTestsFindByRoomQuery } from "../../../../features/tests/api/test.api-gen-v2";
+import OnGoingTestsSection from "./components/OnGoingTestsSection";
+import MyHeaderTitleSection from "../../../../features/tests/ui-sections/MyHeaderSection";
 
 export default function CandidateTestsJoinPage() {
 	const [roomId, setRoomId] = useState<string | null>(null);
@@ -49,9 +51,19 @@ export default function CandidateTestsJoinPage() {
 				</SidebarActions>
 			}
 		>
-			<div className="flex flex-col gap-8">
+			<div className="flex flex-col gap-4 flex-1">
+				<MyHeaderTitleSection
+					title="Join Tests"
+					description="Join tests by roomId or view ongoing tests"
+					className="mb-4"
+				/>
+
 				{/* Join tests by roomId */}
 				<JoinTestSection onJoinTest={handleJoinTest} />
+
+				<hr className="border-primary-toned-300 mt-4" />
+
+				<OnGoingTestsSection />
 
 				{/* Exam Info Dialog */}
 				{roomId &&

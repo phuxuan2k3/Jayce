@@ -9,8 +9,8 @@ import TestCoreCard from "../../../../features/tests/ui-items/test/TestCoreCard"
 import MyButton from "../../../../features/tests/ui/buttons/MyButton";
 import FetchStateCover2 from "../../../../features/tests/ui/fetch-states/FetchStateCover2";
 import SidebarActions from "../../../../features/tests/ui/sidebar/primitive/SidebarActions";
-import MyItemsListTemplate from "../../../../features/tests/templates/MyItemsListTemplate";
-import MyHeaderTitleSection from "../../../../features/tests/ui/sections/MyHeaderSection";
+import MyItemsListTemplate from "../../../../features/tests/ui-templates/MyItemsListTemplate";
+import MyHeaderTitleSection from "../../../../features/tests/ui-sections/MyHeaderSection";
 
 type Filter = PagingFilter & {
 	searchTitle?: string;
@@ -52,7 +52,7 @@ export default function CandidateTestsPage() {
 				<SidebarActions>
 					<SidebarActions.BrowseTemplates />
 					<SidebarActions.GenerateTest />
-					<SidebarActions.JoinTest />
+					<SidebarActions.JoinExam />
 				</SidebarActions>
 			}
 		>

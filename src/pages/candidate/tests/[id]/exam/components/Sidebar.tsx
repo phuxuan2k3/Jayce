@@ -5,7 +5,7 @@ export default function Sidebar() {
 		<SidebarActions>
 			<SidebarActions.BrowseTemplates />
 			<SidebarActions.GenerateTest />
-			<SidebarActions.JoinTest />
+			<SidebarActions.JoinExam />
 		</SidebarActions>
 	);
 }

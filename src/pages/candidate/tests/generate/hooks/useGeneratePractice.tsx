@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { usePostTestsMutation } from '../../../../../features/tests/api/test.api-gen-v2';
-import { useLazyGetSuggestQuestionsQuery } from '../api/practice-generate.api';
+import { useLazyGetSuggestQuestionsQuery } from '../../../../../features/tests/api/practice-generate.api';
 import { useState } from 'react';
 import { PracticeStepAllData } from '../types';
 import paths from '../../../../../router/paths';

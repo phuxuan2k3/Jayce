@@ -5,7 +5,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { formatDate } from '../utils';
 import { TestFullSchema } from '../../../../../../../../features/tests/api/test.api-gen-v2';
-import MyItemCardTemplate from '../../../../../../../../features/tests/templates/MyItemCardTemplate';
+import MyItemCardTemplate from '../../../../../../../../features/tests/ui-templates/MyItemCardTemplate';
 
 export const ExamDetails = ({
 	exam

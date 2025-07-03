@@ -25,7 +25,7 @@ function LeftLayoutTemplate({
 				{aboveMain && <div className='w-full flex-shrink'>
 					{aboveMain}
 				</div>}
-				<main className='flex-1 max-h-full w-full px-6 py-8 bg-white rounded-xl shadow-primary border-r border-b border-primary'>
+				<main className='flex-1 max-h-full w-full px-6 py-8 bg-white rounded-xl shadow-primary border-r border-b border-primary flex flex-col'>
 					{children}
 				</main>
 			</main>

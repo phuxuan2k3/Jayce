@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import MyInput from '../../../../../features/tests/ui/forms/MyInput';
+import MyButton from '../../../../../features/tests/ui/buttons/MyButton';
 
 type JoinTestSectionProps = {
 	onJoinTest: (roomId: string) => void;
@@ -14,27 +16,22 @@ const JoinTestSection = ({ onJoinTest }: JoinTestSectionProps) => {
 	};
 
 	return (
-		<section className="border-b pb-6 border-primary-toned-200">
-			<h2 className="text-2xl font-bold mb-4">Join a Test</h2>
-			<p className="text-primary-toned-700 mb-4">Enter a test Room ID provided by your interviewer or manager to join a hosted test.</p>
+		<div className="flex items-center gap-4">
+			<MyInput
+				type="text"
+				value={joinCode}
+				onChange={(e) => setJoinCode(e.target.value)}
+				placeholder="Enter test Room ID"
+				className='flex-1'
+			/>
+			<MyButton
+				onClick={handleJoinTest}
+				disabled={!joinCode.trim()}
 
-			<div className="flex items-center gap-2">
-				<input
-					type="text"
-					value={joinCode}
-					onChange={(e) => setJoinCode(e.target.value)}
-					placeholder="Enter test roomId"
-					className="border border-primary-toned-300 rounded-lg px-4 py-2 flex-grow"
-				/>
-				<button
-					onClick={handleJoinTest}
-					disabled={!joinCode.trim()}
-					className={`px-4 py-2 rounded-lg font-semibold ${joinCode.trim() ? 'bg-primary text-white' : 'bg-gray-200 text-gray-500'}`}
-				>
-					Join Test
-				</button>
-			</div>
-		</section>
+			>
+				Join Test
+			</MyButton>
+		</div>
 	);
 };
 

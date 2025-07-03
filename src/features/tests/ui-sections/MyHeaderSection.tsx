@@ -1,4 +1,4 @@
-import { cn } from "../../../../app/cn";
+import { cn } from "../../../app/cn";
 
 export default function MyHeaderTitleSection({
 	title,
@@ -29,7 +29,7 @@ export default function MyHeaderTitleSection({
 				<span className="block h-0.5 w-[20%] bg-primary-toned-200 rounded-full mt-1" />
 			</h2>
 			{description && (
-				<p className="text-primary-toned-700 mb-6 leading-relaxed">
+				<p className="text-primary-toned-700 leading-relaxed">
 					{description}
 				</p>
 			)}

@@ -1,5 +1,5 @@
 import React from 'react';
-import TagInput from '../../../templates/components/TagInput';
+import TagInput from '../../../../../../features/tests/ui-shared/practice-gen/TagInput';
 import { PracticeStep2Type } from '../../types';
 import { DifficultiesAsConst } from '../../../../../manager/tests/new/common/base-schema';
 
