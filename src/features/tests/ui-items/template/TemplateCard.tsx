@@ -89,21 +89,20 @@ const TemplateCardContent: React.FC = () => {
 			</div>
 
 			<div className="flex flex-wrap items-center gap-2 mt-2">
-				<Bandage className={difficultyClass}>
-					<ListChecks size={14} />
-					{template.difficulty}
-				</Bandage>
-
-				<Bandage className="bg-blue-100 text-blue-700">
+				<Bandage className="bg-primary-toned-100 text-primary-toned-700">
 					<Clock size={14} />
 					{template.minutesToAnswer} min
 				</Bandage>
 
-				<Bandage className="bg-purple-100 text-purple-700">
+				<Bandage className="bg-primary-toned-100 text-primary-toned-700">
 					<Globe size={14} />
 					{template.language}
 				</Bandage>
 
+				<Bandage className={cn(difficultyClass)}>
+					<ListChecks size={14} />
+					{template.difficulty}
+				</Bandage>
 			</div>
 
 			<div className="flex items-center gap-1 text-primary-toned-600 text-sm mt-2">

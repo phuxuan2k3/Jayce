@@ -9,6 +9,7 @@ import { useGetTemplatesQuery } from "../apis/template.api-enhance";
 
 interface TemplateListProps {
 	searchName: string;
+	// difficultiesFilter?: string[];
 	onSelect: (template: TemplateCoreSchema) => void;
 	onDelete: (template: TemplateCoreSchema) => void;
 }
@@ -17,12 +18,14 @@ const TemplateList: React.FC<TemplateListProps> = ({
 	searchName,
 	onSelect,
 	onDelete,
+	// difficultiesFilter,
 }) => {
 	const [page, setPage] = React.useState(1);
 	const { data: pagedTemplates, isSuccess, isLoading, error } = useGetTemplatesQuery({
 		page: page,
 		perPage: 10,
 		search: searchName,
+		// filterDifficulty: difficultiesFilter ? difficultiesFilter.length > 0 ? difficultiesFilter : undefined : undefined,
 	});
 
 	if (isLoading) return <LoadingCover />
@@ -34,7 +37,7 @@ const TemplateList: React.FC<TemplateListProps> = ({
 	return (
 		<div className="flex flex-col w-full h-full">
 			{templates.length > 0 ? (
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 p-2">
 					{templates.map((template) => (
 						<TemplateCard
 							key={template.id}

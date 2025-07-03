@@ -26,8 +26,6 @@ const AttemptsTab = ({
 	const [filter, setFilter] = useState<Filter>({
 		page: 1,
 		perPage: 10,
-		sortByPoints: "desc",
-		sortByCreatedAt: "desc",
 	});
 
 	const testId = useGetTestIdParams();
@@ -113,6 +111,7 @@ const FilterButtons = ({
 				onClick={() => onFilterChange({
 					...filter,
 					sortByCreatedAt: filter.sortByCreatedAt === "asc" ? "desc" : "asc",
+					sortByPoints: undefined, // Reset points sort when changing date sort
 				})}
 				className="flex items-center gap-1"
 			>
@@ -129,6 +128,7 @@ const FilterButtons = ({
 				onClick={() => onFilterChange({
 					...filter,
 					sortByPoints: filter.sortByPoints === "asc" ? "desc" : "asc",
+					sortByCreatedAt: undefined, // Reset date sort when changing points sort
 				})}
 				className="flex items-center gap-1"
 			>

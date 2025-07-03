@@ -37,7 +37,7 @@ export default function RightLayoutTemplate({
 const Header = ({
 	title,
 	description,
-	backButton,
+	backButton = <RightLayoutTemplate.BackButton />,
 	className = '',
 }: {
 	title: string;
@@ -68,12 +68,12 @@ const BackButton = ({
 	onClick,
 	className = '',
 }: {
-	onClick: () => void;
+	onClick?: () => void;
 	className?: string;
 }) => {
 	return (
 		<button
-			onClick={onClick}
+			onClick={onClick ? onClick : () => window.history.back()}
 			className={cn(`text-primary hover:text-primary-toned-500 transition-colors`, className)}
 		>
 			<span className="sr-only">Go back</span>

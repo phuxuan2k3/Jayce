@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import BottomNavButtons from './components/BottomNavButtons';
-import ErrorMessages from './components/ErrorMessage';
+import MyErrorMessages from '../../../../../features/tests/ui/MyErrorMessage';
 import Header from './components/Header';
-import StepsBar from './components/StepsBar';
+import MyStepsBar from '../../../../../features/tests/ui/MyStepsBar';
 import Step1 from './step-1';
 import Step2 from './step-2';
 import Step3 from './step-3';
@@ -70,9 +70,23 @@ export default function BuilderWizzardTabMain({
 
 	return (
 		<div className="flex flex-col gap-4 p-6 h-full overflow-y-auto">
-			<StepsBar
+			<MyStepsBar
 				step={step}
-				onStepChange={handleSetStep}
+				onStepChange={(newStep) => {
+					if (newStep !== step) {
+						const newStepInfo = newStep as StepInfoKey;
+						if (newStepInfo == null) {
+							toast.error(`Invalid step: ${newStepInfo}`, {
+								autoClose: 5000,
+								position: "top-right",
+								hideProgressBar: false,
+								closeOnClick: true,
+							});
+							return;
+						}
+						handleSetStep(newStepInfo);
+					}
+				}}
 			/>
 
 			<hr className=" border-primary-toned-300 w-full my-4" />
@@ -83,7 +97,7 @@ export default function BuilderWizzardTabMain({
 					description={stepInfo.description}
 				/>}
 
-				<ErrorMessages
+				<MyErrorMessages
 					errorMessages={currentErrorMessages}
 				/>
 			</div>

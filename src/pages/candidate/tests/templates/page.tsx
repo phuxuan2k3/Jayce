@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import TemplateForm from '../../../../features/tests/ui-items/template/TemplateForm';
 import TemplatesSidebar from './components/TemplatesSidebar';
-import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
 import DeleteTemplateModal from './components/DeleteTemplateModal';
 import TemplateList from './components/TemplateList';
 import { EMPTY_TEMPLATE_PERSIST, TemplatePersistCoreSchema } from '../../../../features/tests/ui-items/template/types';
@@ -10,11 +9,15 @@ import { useDeleteTemplatesByTemplateIdMutation, usePostTemplatesMutation, usePu
 import ErrorDialog from '../../../../features/tests/ui/fetch-states/ErrorDialog';
 import LoadingDialog from '../../../../features/tests/ui/fetch-states/LoadingDialog';
 import MyHeaderTitleSection from '../../../../features/tests/ui-sections/MyHeaderSection';
-import MyButton from '../../../../features/tests/ui/buttons/MyButton';
+import RightLayoutTemplate from '../../../../components/layouts/RightLayoutTemplate';
+import { useNavigate } from 'react-router-dom';
+import paths from '../../../../router/paths';
 
 
-const CandidateTestsTemplatesPage: React.FC = () => {
+export default function CandidateTestsTemplatesPage() {
+	const navigate = useNavigate();
 	const [searchTerm, setSearchTerm] = useState<string>('');
+	// const [filters, setFilters] = useState<string[]>([]);
 	const [selectedTemplate, setSelectedTemplate] = useState<TemplateCoreSchema | null>(null);
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [templateToDelete, setTemplateToDelete] = useState<TemplateCoreSchema | null>(null);
@@ -99,18 +102,30 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 	const error = createState.error || editState.error || deleteState.error;
 
 	return (
-		<LeftLayoutTemplate
+		<RightLayoutTemplate
 			header={
-				<LeftLayoutTemplate.Header
+				<RightLayoutTemplate.Header
 					title="Prompt Templates Management"
 					description="Create and manage test prompt templates for generating practice tests"
+					backButton={
+						<RightLayoutTemplate.BackButton
+							onClick={() => navigate(paths.candidate.tests.ROOT)}
+						/>
+					}
 				/>
 			}
-			left={
+			right={
 				<TemplatesSidebar
+					isCreateNew={formData == null}
+					onCreateNew={handleCreateNew}
+					onBackToList={() => {
+						setFormData(null);
+						setSelectedTemplate(null);
+					}}
+					// filters={filters}
+					// onFiltersChange={setFilters}
 					searchTerm={searchTerm}
 					onSearchChange={setSearchTerm}
-					onCreateNew={handleCreateNew}
 				/>
 			}
 		>
@@ -119,19 +134,7 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 					title="Test Templates"
 					description="Create, edit, and manage your test templates for generating practice tests."
 				/>
-				<MyButton
-					variant={formData == null ? "primary" : "outline"}
-					onClick={() => {
-						if (formData != null) {
-							setFormData(null);
-							setSelectedTemplate(null);
-						} else {
-							handleCreateNew();
-						}
-					}}
-				>
-					{formData == null ? "Create New" : "Back to List"}
-				</MyButton>
+
 			</div>
 
 
@@ -147,6 +150,7 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 				/>
 			) : (
 				<TemplateList
+					// difficultiesFilter={filters}
 					searchName={searchTerm}
 					onSelect={handleSelectTemplate}
 					onDelete={handleDeleteTemplate}
@@ -163,8 +167,6 @@ const CandidateTestsTemplatesPage: React.FC = () => {
 			{isLoading && <LoadingDialog />}
 			{error && <ErrorDialog error={error} />}
 
-		</LeftLayoutTemplate>
+		</RightLayoutTemplate>
 	);
 };
-
-export default CandidateTestsTemplatesPage;

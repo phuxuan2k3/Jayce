@@ -1,7 +1,7 @@
 import z from "zod";
 import { DifficultiesAsConst, LanguagesAsConst } from "../../../manager/tests/new/common/base-schema";
 
-export const PracticeStep1Schema = z.object({
+const PracticeStep1Schema = z.object({
 	title: z.string().min(1, 'Title is required'),
 	description: z.string().min(1, 'Description is required'),
 	language: z.enum(LanguagesAsConst),
@@ -37,4 +37,23 @@ export const PracticeStepAllSchemaContainer = {
 	step2: PracticeStep2Schema,
 	step3: PracticeStep3Schema,
 };
+export const PracticeStepsValuesAsConst = [1, 2, 3] as const;
+export type PracticeStepsValuesType = typeof PracticeStepsValuesAsConst[number];
 
+export const PracticeGenStepInfo: Record<PracticeStepsValuesType, {
+	title: string;
+	description: string;
+}> = {
+	1: {
+		title: "Step 1: General Information",
+		description: "This is the first step where you provide general information about the test."
+	},
+	2: {
+		title: "Step 2: Questions Configuration",
+		description: "In this step, you configure the questions for the test."
+	},
+	3: {
+		title: "Step 3: Context Providing",
+		description: "In this step, you provide additional context in the form of outlines for the test."
+	}
+};

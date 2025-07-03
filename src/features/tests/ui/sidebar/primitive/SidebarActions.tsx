@@ -11,7 +11,7 @@ const SidebarActionsContext = createContext<
 >(undefined);
 
 type SidebarActionsProps = {
-	children: ReactNode;
+	children?: ReactNode;
 	title?: string;
 	bottomSection?: ReactNode;
 	topSection?: ReactNode;
@@ -19,14 +19,14 @@ type SidebarActionsProps = {
 
 const SidebarActions = ({
 	children,
-	title = "Quick Actions",
-	bottomSection = <HelpBottomSection />,
+	title,
+	bottomSection,
 	topSection = undefined,
 }: SidebarActionsProps) => {
 	return (
 		<SidebarActionsContext.Provider value={{}}>
 			<div className="sticky top-2 max-h-[96vh] shadow-primary bg-white rounded-lg p-6 flex flex-col gap-6">
-				<h3 className="text-xl font-bold mb-2 text-center">{title}</h3>
+				{title && <h3 className="text-xl font-bold mb-2 text-center">{title}</h3>}
 
 				{topSection}
 

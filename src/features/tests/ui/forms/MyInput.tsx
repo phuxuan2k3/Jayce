@@ -37,6 +37,7 @@ export default function MyInput({ error, className, type, variant, ...props }: M
 		<input
 			type={type}
 			data-slot="input"
+			autoComplete="off"
 			className={cn(
 				commonInputClasses,
 				MyInputVariants(variant),

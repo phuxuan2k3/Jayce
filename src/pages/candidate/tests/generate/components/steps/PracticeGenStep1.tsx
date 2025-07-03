@@ -1,18 +1,28 @@
 import React from 'react';
-import { ListFilter } from 'lucide-react';
+import { CircleX, ListFilter } from 'lucide-react';
 import { TemplateCoreSchema } from '../../../../../../features/tests/api/test.api-gen-v2';
 import { PracticeStep1Type } from '../../types';
+import MyButton from '../../../../../../features/tests/ui/buttons/MyButton';
+import MyFieldLayout from '../../../../../../features/tests/ui/forms/MyFieldLayout';
+import MyLabel from '../../../../../../features/tests/ui/forms/MyLabel';
+import MyInput from '../../../../../../features/tests/ui/forms/MyInput';
+import MyTextArea from '../../../../../../features/tests/ui/forms/MyTextArea';
+import MySelect from '../../../../../../features/tests/ui/forms/MySelect';
+import { LanguagesAsConst, LanguageType } from '../../../../../manager/tests/new/common/base-schema';
+import MyNumberInput from '../../../../../../features/tests/ui/forms/MyNumberInput';
 
 export default function PracticeGenStep1({
 	data: data,
-	onDataChange: onDataChange,
+	onDataChange,
 	selectedTemplate,
 	onSelectTemplateClick,
+	onSelectTemplateClear,
 }: {
 	data: PracticeStep1Type;
 	onDataChange: (info: PracticeStep1Type) => void;
 	selectedTemplate: TemplateCoreSchema | null;
 	onSelectTemplateClick: () => void;
+	onSelectTemplateClear: () => void;
 }) {
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
 		const { name, value } = e.target;
@@ -23,114 +33,107 @@ export default function PracticeGenStep1({
 	};
 
 	return (
-		<div className="space-y-6">
-			<h2 className="text-xl font-semibold text-gray-800">Test Information</h2>
-			<p className="text-gray-600">Start by selecting a template or filling in your test information.</p>
+		<div className="flex flex-col gap-2">
 
-			{/* Template Selection Section */}
-			<div className="bg-primary-toned-50 p-5 rounded-md border border-primary-toned-200 mb-6">
-				<h3 className="text-lg font-medium text-primary-toned-800 mb-3">Choose a Template (Optional)</h3>
-				<p className="text-sm text-primary-toned-600 mb-4">
-					Select a template to automatically fill in test information and prompt settings.
-				</p>
+			<div className='flex flex-col gap-2 mb-4 rounded-md p-4 bg-gray-50 border border-gray-300 shadow-md'>
+				<div className='flex items-center justify-between'>
+					<div className="flex items-center gap-3">
+						<div className="p-2 bg-primary rounded-lg">
+							<ListFilter size={20} className="text-white" />
+						</div>
+						<div>
+							<h3 className="font-semibold text-gray-800">Choose a Template (Optional)</h3>
+							<p className="text-sm text-gray-600">
+								Automatically fill in test information and prompt settings.
+							</p>
+						</div>
+					</div>
 
-				<button
-					onClick={onSelectTemplateClick}
-					className="w-full flex justify-center items-center gap-2 px-4 py-3 bg-white border border-primary-toned-300 text-primary rounded-md hover:bg-primary-toned-50 transition-colors"
-				>
-					<ListFilter size={18} />
-					<span>Browse Available Templates</span>
-				</button>
-
+					<MyButton className='ml-auto flex items-center gap-2'
+						onClick={onSelectTemplateClick}>
+						<ListFilter size={18} />
+						<span className="ml-2">Browse Templates</span>
+					</MyButton>
+				</div>
 				{selectedTemplate && (
-					<div className="mt-4 bg-green-50 p-4 rounded-md border border-green-200">
-						<p className="text-sm text-green-800 flex items-center">
-							<svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-							</svg>
-							<span>Using template: <strong>{selectedTemplate.name || selectedTemplate.title}</strong>. Prompt settings will be pre-filled in the next steps.</span>
+					<div className="mt-4 border-t border-gray-200 pt-4">
+						<p className="text-sm text-gray-600 mb-1">
+							Selected Template: <span className="font-semibold">{selectedTemplate.name}</span>
 						</p>
+						<div className="mt-2 px-6 py-2 bg-primary-toned-50 rounded-md border-l-4 border-primary-toned-200 flex items-center gap-4">
+							<div className='flex-1'>
+								<p className="font-semibold text-primary-toned-700">{selectedTemplate.title}</p>
+								<p className="text-sm text-primary">{selectedTemplate.description}</p>
+							</div>
+							<button className='mr-auto text-primary hover:text-red-500 cursor-pointer transition-colors duration-300' onClick={() => onSelectTemplateClear()}>
+								<CircleX />
+							</button>
+						</div>
+
 					</div>
 				)}
 			</div>
 
 			{/* Form Fields */}
-			<div className="space-y-4">
-				<div>
-					<label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-						Test Title <span className="text-red-500">*</span>
-					</label>
-					<input
+			<div className="flex flex-col gap-4">
+
+				<MyFieldLayout>
+					<MyLabel htmlFor='title'>Test Title</MyLabel>
+					<MyInput
+						id='title'
 						type="text"
-						id="title"
 						name="title"
+						aria-label='Test Title'
 						value={data.title}
 						onChange={handleInputChange}
-						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						placeholder="E.g., React Fundamentals Practice Test"
 						required
 					/>
-				</div>
+				</MyFieldLayout>
 
-				<div>
-					<label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
-						Description <span className="text-red-500">*</span>
-					</label>
-					<textarea
-						id="description"
+				<MyFieldLayout>
+					<MyLabel htmlFor='description'>Description</MyLabel>
+					<MyTextArea
+						id='description'
 						name="description"
+						aria-label='Test Description'
 						value={data.description}
 						onChange={handleInputChange}
-						rows={3}
-						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
 						placeholder="Describe what this test covers and its purpose"
+						rows={3}
 						required
 					/>
-				</div>
+				</MyFieldLayout>
 
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-					<div>
-						<label htmlFor="language" className="block text-sm font-medium text-gray-700 mb-1">
-							Language
-						</label>
-						<select
-							id="language"
-							name="language"
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+					<MyFieldLayout>
+						<MyLabel htmlFor="language">Language</MyLabel>
+						<MySelect
+							options={LanguagesAsConst.map(lang => ({ value: lang, label: lang }))}
 							value={data.language}
-							onChange={handleInputChange}
-							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-						>
-							<option value="English">English</option>
-							<option value="Spanish">Spanish</option>
-							<option value="French">French</option>
-							<option value="German">German</option>
-							<option value="Chinese">Chinese</option>
-							<option value="Japanese">Japanese</option>
-						</select>
-					</div>
+							onChange={(value) => onDataChange({ ...data, language: value as LanguageType || "English" })}
+							id='language'
+							aria-label='Test Language'
+							name='language'
+							placeholder="Select a language"
+							required
+						/>
+					</MyFieldLayout>
 
-					<div>
-						<label htmlFor="minutesToAnswer" className="block text-sm font-medium text-gray-700 mb-1">
-							Time Limit (minutes)
-						</label>
-						<input
-							type="number"
-							id="minutesToAnswer"
+					<MyFieldLayout>
+						<MyLabel htmlFor="minutesToAnswer">Minutes to Answer</MyLabel>
+						<MyNumberInput
+							id='minutesToAnswer'
 							name="minutesToAnswer"
+							aria-label='Minutes to Answer'
 							value={data.minutesToAnswer}
 							onChange={handleInputChange}
-							min={5}
-							max={180}
-							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+							min={1}
+							max={720}
+							placeholder="E.g., 30"
+							required
 						/>
-					</div>
-				</div>
-
-				<div className="bg-yellow-50 p-4 rounded-md border border-yellow-200">
-					<p className="text-sm text-yellow-800">
-						<span className="font-medium">Note:</span> You are creating this test in practice mode, which allows you to
-						see immediate feedback after answering each question.
-					</p>
+					</MyFieldLayout>
 				</div>
 			</div>
 		</div>
