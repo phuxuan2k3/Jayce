@@ -16,7 +16,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import clsx from 'clsx';
 import OrderHistoryDialog from './OrderHistoryDialog';
-import { useGetBalanceMutation } from '../../../../features/auth/api/logout.api';
+import { useGetBalanceMutation, useMeMutation, useUpdateMetadataMutation } from '../../../../features/auth/api/logout.api';
 import { useCreatePaymentLinkMutation } from '../../../../features/payment/api/payment.api';
 import PublicProfile from "./Tabs/PublicProfile";
 import Account from "./Tabs/Account";
@@ -26,6 +26,8 @@ import { Role } from "../../../../features/auth/types/auth";
 import paths from "../../../../router/paths";
 import TransactionHistoryDialog from "./TransactionHistoryDialog";
 import { useLanguage } from "../../../../LanguageProvider";
+import AvatarUploader from "./AvatarUploader";
+import { toast } from 'react-toastify';
 
 const sscOptions = [
     { ssc: 60, vnd: 60000 },
@@ -59,6 +61,19 @@ const Settings = () => {
                 alert("???");
             }
         }
+    }
+
+    const [updateMetadata] = useUpdateMetadataMutation();
+	const [me] = useMeMutation();
+    const handleAvatarUpload = async (base64Image: string) => {
+        try {
+			await updateMetadata({ metadata: { avatarPath: base64Image } }).unwrap();
+			await me().unwrap();
+            toast.success(t("settings_profile_avatar_upload_success"));
+		} catch (error) {
+            toast.error(t("settings_profile_avatar_upload_error"));
+			console.error("Failed to update your infomation", error);
+		}
     }
 
     const [openTopup, setOpenTopup] = React.useState(false);
@@ -123,7 +138,7 @@ const Settings = () => {
             <div className="w-full flex flex-col gap-4 pl-4 pr-4 pt-8 pb-8 lg:pl-12 lg:pr-12">
                 <div className="w-full flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:h-20">
                     <div className="flex items-center justify-center gap-4 w-full lg:w-[18%] lg:justify-start">
-                        <div className="relative flex-shrink-0 w-20 h-20">
+                        {/* <div className="relative flex-shrink-0 w-20 h-20">
                             <img
                                 src={authData.metadata.avatarPath || "/svg/default-avatar.png"}
                                 alt="Avatar"
@@ -134,7 +149,12 @@ const Settings = () => {
                                     {t("settings_balance_premium_label")}
                                 </div>
                             )}
-                        </div>
+                        </div> */}
+                        <AvatarUploader
+                            authData={authData}
+                            authBalance={authBalance}
+                            onConfirm={(base64Image) => handleAvatarUpload(base64Image)}
+                        />
 
                         <div className="flex flex-col justify-center">
                             <h2 className="font-bold text-lg">{authData.metadata.fullname}</h2>

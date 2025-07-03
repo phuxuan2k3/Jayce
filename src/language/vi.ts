@@ -89,7 +89,6 @@ export const vi = {
   summary_overall_feedback: "Nhận xét tổng quan",
   summary_grade_distribution: "Phân bố điểm",
   summary_skill_scores: "Điểm kỹ năng",
-  new: "djshadhs",
 
   // Settings
   settings_tab_public_profile: "Hồ sơ",
@@ -101,6 +100,14 @@ export const vi = {
   settings_balance_topup_history: "Lịch sử nạp tiền",
   settings_balance_transaction_history: "Lịch sử giao dịch",
   settings_balance_premium_label: "PREMIUM",
+  settings_profile_avatar_upload_title: "Cập nhật ảnh đại diện",
+  settings_profile_avatar_upload_no_avatar: "Không có ảnh đại diện",
+  settings_profile_avatar_upload_choose: "Chọn ảnh đại diện",
+  settings_profile_avatar_upload_success: "Cập nhật ảnh đại diện thành công",
+  settings_profile_avatar_upload_error: "Không thể cập nhật ảnh đại diện. Vui lòng thử lại sau.",
+  settings_profile_avatar_upload_processing: "Đang lưu...",
+  settings_profile_avatar_upload_cancel: "Hủy",
+  settings_profile_avatar_upload_confirm: "Xác nhận",
   settings_topup_title: "Chọn gói nạp tiền",
   settings_topup_best_value: "Tốt nhất",
   settings_topup_cancel: "Hủy",
