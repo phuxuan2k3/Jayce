@@ -50,8 +50,8 @@ export default function CandidateTestsPage() {
 			}
 			left={
 				<SidebarActions>
+					<SidebarActions.GenerateTestPremium />
 					<SidebarActions.BrowseTemplates />
-					<SidebarActions.GenerateTest />
 					<SidebarActions.JoinExam />
 				</SidebarActions>
 			}

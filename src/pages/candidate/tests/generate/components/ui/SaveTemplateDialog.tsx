@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { usePostTemplatesMutation } from '../../../templates/apis/template.api-enhance';
 import { parseQueryError } from '../../../../../../helpers/fetchBaseQuery.error';
 import { TemplatePersistCoreSchema } from '../../../../../../features/tests/ui-items/template/types';
@@ -16,12 +16,18 @@ export default function SaveTemplateDialog({
 	onClose: () => void;
 	initializeTemplateCreateData: Omit<TemplatePersistCoreSchema, "name">;
 }) {
-	const [templateForm, setTemplateForm] = React.useState<TemplatePersistCoreSchema>({ ...initializeTemplateCreateData, name: '' });
+	const [templateForm, setTemplateForm] = useState<TemplatePersistCoreSchema>({ ...initializeTemplateCreateData, name: '' });
+
+	useEffect(() => {
+		if (isOpen) {
+			setTemplateForm({ ...initializeTemplateCreateData, name: '' });
+		}
+	}, [isOpen, initializeTemplateCreateData]);
+
 	const [createTemplate, createState] = usePostTemplatesMutation();
+
 	useActionStateWatch(createState, {
 		onSuccess: () => {
-			console.log('Template created successfully');
-			setTemplateForm({ ...initializeTemplateCreateData, name: '' });
 			toast.success('Template created successfully');
 			onClose();
 		},
@@ -35,14 +41,25 @@ export default function SaveTemplateDialog({
 	if (!isOpen) return null;
 	return (
 		<MyDialog>
-			<div className='relative w-full max-w-2xl p-6 bg-white rounded-lg shadow-lg'>
-				<TemplateForm
-					formData={templateForm}
-					selectedTemplate={null}
-					onFormDataChange={setTemplateForm}
-					onCancel={onClose}
-					onSave={() => createTemplate({ body: templateForm })}
+			<div className='p-6 bg-white rounded-lg shadow-lg w-[60vw] h-[90vh] overflow-hidden flex flex-col gap-4'>
+				<MyDialog.Header
+					title='Save Template'
+					description='Save your current test configuration as a template for future use.'
+					onClose={onClose}
 				/>
+
+				<div className='overflow-y-auto border border-gray-200 rounded-lg h-full'>
+					<TemplateForm
+						className='p-4'
+						omitHeader={true}
+						omitAISection={true}
+						formData={templateForm}
+						selectedTemplate={null}
+						onFormDataChange={setTemplateForm}
+						onCancel={onClose}
+						onSave={() => createTemplate({ body: templateForm })}
+					/>
+				</div>
 			</div>
 		</MyDialog>
 	);

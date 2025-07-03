@@ -49,11 +49,11 @@ export const PracticeGenStepInfo: Record<PracticeStepsValuesType, {
 		description: "This is the first step where you provide general information about the test."
 	},
 	2: {
-		title: "Step 2: Questions Configuration",
-		description: "In this step, you configure the questions for the test."
+		title: "Step 2: Prompt Configuration",
+		description: "Configure how the AI will generate questions for your test."
 	},
 	3: {
-		title: "Step 3: Context Providing",
-		description: "In this step, you provide additional context in the form of outlines for the test."
+		title: "Step 3: Add Outlines & Generate",
+		description: "Add specific outlines to guide the AI in generating your questions. More detailed outlines will result in better questions."
 	}
 };

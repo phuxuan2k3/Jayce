@@ -134,7 +134,6 @@ export default function CandidateTestsTemplatesPage() {
 					title="Test Templates"
 					description="Create, edit, and manage your test templates for generating practice tests."
 				/>
-
 			</div>
 
 

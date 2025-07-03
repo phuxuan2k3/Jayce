@@ -24,36 +24,6 @@ export default function usePracticeGenStepsData() {
 		}
 	});
 
-	const handleStep1Change = (value: PracticeStepAllData['step1']) => {
-		setMainValue({
-			...mainValue,
-			step1: {
-				...mainValue.step1,
-				...value,
-			},
-		});
-	}
-
-	const handleStep2Change = (value: PracticeStepAllData['step2']) => {
-		setMainValue({
-			...mainValue,
-			step2: {
-				...mainValue.step2,
-				...value,
-			},
-		});
-	}
-
-	const handleStep3Change = (value: PracticeStepAllData['step3']) => {
-		setMainValue({
-			...mainValue,
-			step3: {
-				...mainValue.step3,
-				...value,
-			},
-		});
-	}
-
 	const handleSetStep = (_newStep: number) => {
 		const newStep = _newStep as PracticeStepsValuesType;
 		if (newStep == null || newStep === undefined) {
@@ -116,9 +86,7 @@ export default function usePracticeGenStepsData() {
 		step,
 		currentErrorMessages,
 		mainValue,
-		handleStep1Change,
-		handleStep2Change,
-		handleStep3Change,
+		setMainValue,
 		handleSetStep,
 		handleNextStep,
 		handlePrevStep,

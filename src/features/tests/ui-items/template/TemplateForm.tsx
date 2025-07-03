@@ -11,6 +11,7 @@ import MyTextArea from '../../ui/forms/MyTextArea';
 import { DifficultiesAsConst, LanguagesAsConst } from '../../../../pages/manager/tests/new/common/base-schema';
 import MySelect from '../../ui/forms/MySelect';
 import MyNumberInput from '../../ui/forms/MyNumberInput';
+import { cn } from '../../../../app/cn';
 
 interface TemplateFormProps {
 	selectedTemplate: TemplateCoreSchema | null;
@@ -18,6 +19,9 @@ interface TemplateFormProps {
 	onFormDataChange: (data: TemplatePersistCoreSchema) => void;
 	onSave: () => void;
 	onCancel: () => void;
+	omitHeader?: boolean;
+	omitAISection?: boolean;
+	className?: string;
 }
 
 const TemplateForm: React.FC<TemplateFormProps> = ({
@@ -26,6 +30,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 	onFormDataChange,
 	onSave,
 	onCancel,
+	omitHeader = false,
+	omitAISection = false,
+	className = '',
 }) => {
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
@@ -38,12 +45,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 	};
 
 	return (
-		<div className='flex flex-col gap-2 mt-4'>
-			<div className='flex justify-center mb-8 bg-primary-toned-100 p-4 rounded-lg shadow-md'>
-				<h2 className="text-2xl text-center font-bold text-primary-toned-700">
-					{selectedTemplate ? `Edit Template: ${selectedTemplate.name}` : 'Create New Template'}
-				</h2>
-			</div>
+		<div className={cn('flex flex-col gap-2 mt-4', className)}>
+			{omitHeader === false && (
+				<div className='flex justify-center mb-8 bg-primary-toned-100 p-4 rounded-lg shadow-md'>
+					<h2 className="text-2xl text-center font-bold text-primary-toned-700">
+						{selectedTemplate ? `Edit Template: ${selectedTemplate.name}` : 'Create New Template'}
+					</h2>
+				</div>
+			)}
 
 			<div className="flex flex-col gap-4">
 				<div className='flex items-center gap-4'>
@@ -148,6 +157,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 				/>
 
 				<OutlinesInput
+					omitAISection={omitAISection}
 					className='mt-4'
 					template={formData}
 					outlines={formData.outlines}

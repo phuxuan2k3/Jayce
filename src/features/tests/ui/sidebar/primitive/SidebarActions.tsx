@@ -2,7 +2,7 @@ import { createContext, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import QuickAction from "./QuickAction";
 import paths from "../../../../../router/paths";
-import { ClipboardList } from "lucide-react";
+import { ArrowRight, BrainCircuit, ClipboardList, Rocket } from "lucide-react";
 
 type SidebarActionsContextType = {};
 
@@ -82,6 +82,48 @@ SidebarActions.GenerateTest = () => {
 			description="Generate a custom test"
 			onClick={() => navigate(paths.candidate.tests.GENERATE)}
 		/>
+	);
+};
+
+SidebarActions.GenerateTestPremium = () => {
+	const navigate = useNavigate();
+	return (
+		<div className="relative group">
+			{/* Introduction Section */}
+			<div className="p-4 bg-gradient-to-r from-primary-toned-50 to-secondary-toned-50 border border-primary-toned-200 rounded-lg">
+				<h4 className="font-bold text-primary-toned-700 mb-2 flex items-center">
+					<BrainCircuit className="w-4 h-4 mr-2" />
+					AI-Powered Test Generation
+				</h4>
+				<p className="text-sm text-primary-toned-600 leading-relaxed mb-4">
+					Transform your learning with intelligent test creation. Our advanced AI analyzes your needs and generates personalized practice tests that adapt to your skill level and learning goals.
+				</p>
+
+				{/* Compact Button */}
+				<button
+					onClick={() => navigate(paths.candidate.tests.GENERATE)}
+					className="w-full relative overflow-hidden bg-gradient-to-r from-primary-toned-500 to-secondary-toned-500 hover:from-primary-toned-600 hover:to-secondary-toned-600 text-white rounded-lg py-3 px-4 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg group"
+				>
+					{/* Animated Background Effect */}
+					<div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-700"></div>
+
+					{/* Content Container */}
+					<div className="relative z-10 flex items-center justify-between">
+						<div className="flex items-center gap-3">
+							<Rocket className="w-5 h-5 text-white" />
+							<div className="text-left">
+								<span className="font-semibold text-white">Generate Practice</span>
+							</div>
+						</div>
+
+						{/* Arrow Icon */}
+						<div className="text-white/80 group-hover:text-white group-hover:translate-x-1 transition-all duration-300">
+							<ArrowRight className="w-5 h-5" />
+						</div>
+					</div>
+				</button>
+			</div>
+		</div>
 	);
 };
 

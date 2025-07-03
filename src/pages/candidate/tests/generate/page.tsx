@@ -17,6 +17,9 @@ import MyErrorMessages from '../../../../features/tests/ui/MyErrorMessage';
 import { DifficultyType, LanguageType } from '../../../manager/tests/new/common/base-schema';
 import MyButton from '../../../../features/tests/ui/buttons/MyButton';
 import RightLayoutTemplate from '../../../../components/layouts/RightLayoutTemplate';
+import { Sparkles } from 'lucide-react';
+
+// Lesson: When I split it into 3 setMainValue (handleStep1, 2, 3...) and call it at the same time in the handleSelectTemplate function, it causes the state to update only the last function call (handleStep3), and override the previous ones.
 
 export default function CandidateTestsGeneratePage() {
 	const [selectedTemplate, setSelectedTemplate] = useState<TemplateCoreSchema | null>(null);
@@ -30,9 +33,7 @@ export default function CandidateTestsGeneratePage() {
 		handleNextStep,
 		handlePrevStep,
 		handleSetStep,
-		handleStep1Change,
-		handleStep2Change,
-		handleStep3Change,
+		setMainValue,
 		mainValue,
 	} = usePracticeGenStepsData();
 
@@ -49,22 +50,25 @@ export default function CandidateTestsGeneratePage() {
 	}, [generationError]);
 
 	const handleSelectTemplate = (template: TemplateCoreSchema) => {
-		console.log("Selected Template:", template);
-		handleStep1Change({
-			title: template.name,
-			description: template.description,
-			language: template.language as LanguageType || "English",
-			minutesToAnswer: template.minutesToAnswer,
-		});
-		handleStep2Change({
-			difficulty: template.difficulty as DifficultyType || "Intern",
-			numberOfOptions: template.numberOfOptions,
-			numberOfQuestions: template.numberOfQuestions,
-			tags: template.tags || [],
-		});
-		handleStep3Change({
-			outlines: template.outlines || [],
-		});
+		const newMainValue = {
+			step1: {
+				title: template.title,
+				description: template.description,
+				language: template.language as LanguageType || "English",
+				minutesToAnswer: template.minutesToAnswer,
+			},
+			step2: {
+				difficulty: template.difficulty as DifficultyType || "Intern",
+				numberOfOptions: template.numberOfOptions,
+				numberOfQuestions: template.numberOfQuestions,
+				tags: template.tags || [],
+			},
+			step3: {
+				outlines: template.outlines || [],
+			},
+		};
+
+		setMainValue(newMainValue);
 		setSelectedTemplate(template);
 	}
 
@@ -74,7 +78,13 @@ export default function CandidateTestsGeneratePage() {
 				return (
 					<PracticeGenStep1
 						data={mainValue.step1}
-						onDataChange={(info) => handleStep1Change(info)}
+						onDataChange={(info) => setMainValue((prev) => ({
+							...prev,
+							step1: {
+								...prev.step1,
+								...info,
+							},
+						}))}
 						selectedTemplate={selectedTemplate}
 						onSelectTemplateClick={() => setShowTemplatesModal(true)}
 						onSelectTemplateClear={() => {
@@ -86,22 +96,38 @@ export default function CandidateTestsGeneratePage() {
 				return (
 					<PracticeGenStep2
 						data={mainValue.step2}
-						onDataChange={(info) => handleStep2Change(info)}
+						onDataChange={(info) => setMainValue((prev) => ({
+							...prev,
+							step2: {
+								...prev.step2,
+								...info,
+							},
+						}))}
 						testTitle={mainValue.step1.title}
 						testDescription={mainValue.step1.description}
+						testLanguage={mainValue.step1.language}
+						testMinutesToAnswer={mainValue.step1.minutesToAnswer}
 					/>
 				);
 			case 3:
 				return (
 					<PracticeGenStep3
 						data={mainValue.step3}
-						onDataChange={(info) => handleStep3Change(info)}
+						onDataChange={(info) => setMainValue((prev) => ({
+							...prev,
+							step3: {
+								...prev.step3,
+								...info,
+							},
+						}))}
 						suggestionData={{
 							title: mainValue.step1.title,
 							description: mainValue.step1.description,
 							tags: mainValue.step2.tags,
 							difficulty: mainValue.step2.difficulty,
 						}}
+						mainValue={mainValue}
+						onSaveTemplateClick={() => setShowSaveTemplateDialog(true)}
 					/>
 				);
 			default:
@@ -181,13 +207,24 @@ export default function CandidateTestsGeneratePage() {
 					>
 						Back
 					</MyButton>
-					<MyButton
-						disabled={step === 3}
-						className={"w-1/4 min-w-fit"}
-						onClick={handleNextStep}
-					>
-						Next
-					</MyButton>
+					{step < 3 && (
+						<MyButton
+							disabled={step === 3}
+							className={"w-1/4 min-w-fit"}
+							onClick={handleNextStep}
+						>
+							Next
+						</MyButton>
+					)}
+					{step === 3 && (
+						<MyButton
+							className="w-1/4 min-w-fit bg-gradient-to-br from-primary to-secondary text-white hover:from-primary-toned-800 hover:to-secondary-toned-800"
+							onClick={() => handleGeneratePractice(mainValue)}
+						>
+							<Sparkles size={18} />
+							Generate Practice
+						</MyButton>
+					)}
 				</div>
 			</div>
 

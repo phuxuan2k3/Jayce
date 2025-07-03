@@ -1,7 +1,7 @@
 import SidebarActions from "../../../../../features/tests/ui/sidebar/primitive/SidebarActions";
 import { TemplateHelpSection } from "../../../../../features/tests/ui-sections/help-sections/TemplateHelpSection";
 import MyInput from "../../../../../features/tests/ui/forms/MyInput";
-import WithSearch from "../../../../../features/tests/ui/forms/WithSearch";
+import MyInputWithSearch from "../../../../../features/tests/ui/forms/MyInputWithSearch";
 // import { DifficultiesAsConst } from "../../../../manager/tests/new/common/base-schema";
 // import MyCheckbox from "../../../../../features/tests/ui/forms/MyCheckbox";
 import QuickAction from "../../../../../features/tests/ui/sidebar/primitive/QuickAction";
@@ -43,7 +43,7 @@ const TemplatesSidebar = ({
 
 			<hr className="border-primary-toned-300 my-4" />
 
-			<WithSearch inputComponent={
+			<MyInputWithSearch inputComponent={
 				<MyInput
 					type="text"
 					id="search"

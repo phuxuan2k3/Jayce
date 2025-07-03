@@ -10,6 +10,7 @@ import MyTextArea from '../../../../../../features/tests/ui/forms/MyTextArea';
 import MySelect from '../../../../../../features/tests/ui/forms/MySelect';
 import { LanguagesAsConst, LanguageType } from '../../../../../manager/tests/new/common/base-schema';
 import MyNumberInput from '../../../../../../features/tests/ui/forms/MyNumberInput';
+import MyIconHeader from '../../../../../../features/tests/ui/MyIconHeader';
 
 export default function PracticeGenStep1({
 	data: data,
@@ -37,17 +38,11 @@ export default function PracticeGenStep1({
 
 			<div className='flex flex-col gap-2 mb-4 rounded-md p-4 bg-gray-50 border border-gray-300 shadow-md'>
 				<div className='flex items-center justify-between'>
-					<div className="flex items-center gap-3">
-						<div className="p-2 bg-primary rounded-lg">
-							<ListFilter size={20} className="text-white" />
-						</div>
-						<div>
-							<h3 className="font-semibold text-gray-800">Choose a Template (Optional)</h3>
-							<p className="text-sm text-gray-600">
-								Automatically fill in test information and prompt settings.
-							</p>
-						</div>
-					</div>
+					<MyIconHeader
+						icon={<ListFilter size={20} className="text-white" />}
+						title="Choose a Template (Optional)"
+						description="Automatically fill in test information and prompt settings."
+					/>
 
 					<MyButton className='ml-auto flex items-center gap-2'
 						onClick={onSelectTemplateClick}>

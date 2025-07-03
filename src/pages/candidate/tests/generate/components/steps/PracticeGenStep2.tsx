@@ -2,17 +2,25 @@ import React from 'react';
 import TagInput from '../../../../../../features/tests/ui-shared/practice-gen/TagInput';
 import { PracticeStep2Type } from '../../types';
 import { DifficultiesAsConst } from '../../../../../manager/tests/new/common/base-schema';
+import MyFieldLayout from '../../../../../../features/tests/ui/forms/MyFieldLayout';
+import MyLabel from '../../../../../../features/tests/ui/forms/MyLabel';
+import MyInput from '../../../../../../features/tests/ui/forms/MyInput';
+import MySelect from '../../../../../../features/tests/ui/forms/MySelect';
 
 export default function PracticeGenStep2({
 	data: data,
 	onDataChange: onDataChange,
 	testTitle,
-	testDescription
+	testDescription,
+	testLanguage,
+	testMinutesToAnswer,
 }: {
 	data: PracticeStep2Type;
 	onDataChange: (data: PracticeStep2Type) => void;
 	testTitle: string;
-	testDescription?: string;
+	testDescription: string;
+	testLanguage: string;
+	testMinutesToAnswer: number;
 }) {
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
 		const { name, value } = e.target;
@@ -25,93 +33,69 @@ export default function PracticeGenStep2({
 	};
 
 	return (
-		<div className="space-y-6">
-			<h2 className="text-xl font-semibold text-gray-800">Prompt Configuration</h2>
-			<p className="text-gray-600">
-				Configure how the AI will generate questions for your test.
-			</p>
-
-			<div className="bg-primary-toned-50 p-4 rounded-md border border-primary-toned-200 mb-4">
-				<h3 className="font-medium text-primary-toned-800 mb-1">Test Information</h3>
-				<div className="space-y-2">
-					<div>
-						<span className="text-sm font-medium text-gray-500">Title:</span>
-						<p className="text-gray-800">{testTitle}</p>
-					</div>
-					<div>
-						<span className="text-sm font-medium text-gray-500">Description:</span>
-						<p className="text-gray-800">{testDescription}</p>
-					</div>
+		<div className="flex flex-col gap-2">
+			<div className="bg-gray-50 rounded-md border border-gray-300 shadow-sm mb-4 flex flex-col gap-2 px-6 py-4">
+				<div className='flex flex-col gap-1'>
+					<span className="font-semibold text-gray-700">{testTitle}</span>
+					<span className="text-sm text-gray-500">{testDescription}</span>
 				</div>
-				<p className="mt-3 text-xs text-primary-toned-600">
-					These details will be used to guide the AI in generating relevant questions.
-				</p>
+
+				<div className='flex flex-col gap-1'>
+					<span className="text-sm font-medium text-gray-500">
+						Language: <span className="font-semibold text-gray-700">{testLanguage}</span>
+					</span>
+					<span className="text-sm font-medium text-gray-500">
+						Minutes to answer: <span className="font-semibold text-gray-700">{testMinutesToAnswer}</span>
+					</span>
+				</div>
 			</div>
 
 			{/* Form Fields */}
-			<div className="space-y-4">
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-					<div>
-						<label htmlFor="numberOfQuestions" className="block text-sm font-medium text-gray-700 mb-1">
-							Number of Questions
-						</label>
-						<input
-							type="number"
-							id="numberOfQuestions"
-							name="numberOfQuestions"
-							value={data.numberOfQuestions}
-							onChange={handleInputChange}
-							min={1}
-							max={50}
-							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-						/>
-					</div>					<div>
-						<label htmlFor="difficulty" className="block text-sm font-medium text-gray-700 mb-1">
-							Difficulty Level
-						</label>
-						<select
-							id="difficulty"
-							name="difficulty"
-							value={data.difficulty}
-							onChange={handleInputChange}
-							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-						>
-							{DifficultiesAsConst.map((difficulty) => (
-								<option key={difficulty} value={difficulty}>
-									{difficulty}
-								</option>
-							))}
-						</select>
-					</div>
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
+				<MyFieldLayout>
+					<MyLabel htmlFor='numberOfQuestions'>
+						Number of Questions
+					</MyLabel>
+					<MyInput
+						id='numberOfQuestions'
+						type="number"
+						aria-label='Number of Questions'
+						name="numberOfQuestions"
+						value={data.numberOfQuestions}
+						onChange={handleInputChange}
+						min={1}
+						max={20}
+					/>
+				</MyFieldLayout>
+				<MyFieldLayout>
+					<MyLabel htmlFor='difficulty'>
+						Difficulty Level
+					</MyLabel>
+					<MySelect
+						options={DifficultiesAsConst.map((difficulty) => ({
+							value: difficulty,
+							label: difficulty.charAt(0).toUpperCase() + difficulty.slice(1),
+						}))}
+						id='difficulty'
+						name="difficulty"
+						aria-label='Difficulty Level'
+						value={data.difficulty}
+						onChange={(value) => onDataChange({ ...data, difficulty: value as typeof DifficultiesAsConst[number] })}
+					/>
+				</MyFieldLayout>
+			</div>
 
-					<div>
-						<label htmlFor="numberOfOptions" className="block text-sm font-medium text-gray-700 mb-1">
-							Options per Question
-						</label>
-						<input
-							type="number"
-							id="numberOfOptions"
-							name="numberOfOptions"
-							value={data.numberOfOptions}
-							onChange={handleInputChange}
-							min={2}
-							max={6}
-							className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-						/>
-					</div>
-				</div>
+			<TagInput
+				className="mt-4"
+				tags={data.tags || []}
+				onTagsChange={(newTags) => onDataChange({ ...data, tags: newTags })}
+			/>
 
-				<TagInput
-					tags={data.tags || []}
-					onTagsChange={(newTags) => onDataChange({ ...data, tags: newTags })}
-				/>
-
-				<div className="bg-primary-toned-50 p-4 rounded-md border border-primary-toned-200">
-					<p className="text-sm text-primary-toned-800">
-						<span className="font-medium">Tip:</span> Add specific tags related to the technologies or
-						concepts you want to be tested on. Tags help the AI generate more relevant questions.
-					</p>
-				</div>
+			<div className="bg-primary-toned-50 p-4 rounded-md border border-primary-toned-200 mt-4">
+				<p className="text-sm text-primary-toned-800">
+					<span className="font-medium">Tip:</span> Add specific tags related to the technologies or
+					concepts you want to be tested on. Tags help the AI generate more relevant questions.
+				</p>
 			</div>
 		</div>
 	);
