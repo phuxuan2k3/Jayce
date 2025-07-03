@@ -90,7 +90,6 @@ export const en = {
   summary_overall_feedback: "Overall Feedback",
   summary_grade_distribution: "Grade Distribution",
   summary_skill_scores: "Skill Scores",
-  new: "djshadhs",
 
   // Settings
   settings_tab_public_profile: "Public profile",
@@ -102,6 +101,13 @@ export const en = {
   settings_balance_topup_history: "Top-Up History",
   settings_balance_transaction_history: "Transaction History",
   settings_balance_premium_label: "PREMIUM",
+  settings_profile_avatar_upload_title: "Update Your Avatar",
+  settings_profile_avatar_upload_no_avatar: "No image selected",
+  settings_profile_avatar_upload_choose: "Choose Image",
+  settings_profile_avatar_upload_success: "Avatar updated successfully!",
+  settings_profile_avatar_upload_error: "Failed to update avatar. Please try again later.",
+  settings_profile_avatar_upload_cancel: "Cancel",
+  settings_profile_avatar_upload_confirm: "Confirm",
   settings_topup_title: "Choose a Top-Up Package",
   settings_topup_best_value: "Best Value",
   settings_topup_cancel: "Cancel",

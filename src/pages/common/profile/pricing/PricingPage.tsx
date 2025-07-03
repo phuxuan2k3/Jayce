@@ -71,41 +71,65 @@ const PricingPage = () => {
                 </div>
             )}
 
-            <div className="flex justify-center gap-32 mt-12">
-                <div className="bg-[#eaf6f8] p-6 rounded-lg w-2/5 shadow-md">
+            <div className="flex flex-col md:flex-row justify-center gap-8 mt-12">
+                <div className="bg-[#eaf6f8] p-6 rounded-lg shadow-md flex-1">
                     <h2 className="text-lg font-semibold text-center text-primary">{t("pricing_monthly_label")}</h2>
-                    <ul className="mt-4 text-gray-700 space-y-2">
-                        <li><CheckIcon className="mr-4" /> {t("pricing_benefit_access_courses")}</li>
-                        <li><CheckIcon className="mr-4" /> {t("pricing_benefit_video_answers")}</li>
-                        <li><CheckIcon className="mr-4" /> {t("pricing_benefit_questions_db")}</li>
-                        <li><CheckIcon className="mr-4" /> {t("pricing_benefit_peer_mock")}</li>
-                        <li><CheckIcon className="mr-4" /> {t("pricing_benefit_course_hours")}</li>
-                        <li><CheckIcon className="mr-4" /> {t("pricing_benefit_referrals")}</li>
+                    <ul className="mt-4 text-gray-700 space-y-2 text-center">
+                        {[
+                            t("pricing_benefit_access_courses"),
+                            t("pricing_benefit_video_answers"),
+                            t("pricing_benefit_questions_db"),
+                            t("pricing_benefit_peer_mock"),
+                            t("pricing_benefit_course_hours"),
+                            t("pricing_benefit_referrals"),
+                        ].map((benefit, index) => (
+                            <li key={index} className="flex items-center justify-center text-left">
+                                <span className="w-6 flex justify-center">
+                                    <CheckIcon className="text-primary" />
+                                </span>
+                                <span className="ml-2">{benefit}</span>
+                            </li>
+                        ))}
                     </ul>
-                    <div className="w-full flex items-center justify-around mt-2">
-                        <p className="text-orange-500 text-xl font-semibold text-center mt-4">{t("pricing_monthly_price")}</p>
-                        <button className="w-1/2 px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={() => handleSetPremium(1)}>
+                    <div className="w-full flex items-center justify-between mt-6">
+                        <p className="text-orange-500 text-xl font-semibold">{t("pricing_monthly_price")}</p>
+                        <button
+                            className="px-4 py-2 font-semibold rounded-lg text-white bg-[var(--primary-color)] hover:bg-primary-dark transition"
+                            onClick={() => handleSetPremium(1)}
+                        >
                             {isLoading ? t("pricing_processing") : balance?.is_premium ? t("pricing_extend") : t("pricing_start_now")}
                         </button>
                     </div>
                 </div>
 
-                <div className="bg-[#eaf6f8] p-6 rounded-lg w-2/5 shadow-md">
+                <div className="bg-[#eaf6f8] p-6 rounded-lg shadow-md flex-1">
                     <h2 className="text-lg font-semibold text-center text-primary">{t("pricing_annual_label")}</h2>
-                    <ul className="mt-4 text-gray-700 space-y-2">
-                        <li><CheckIcon className="mr-4" /> {t("pricing_benefit_access_courses")}</li>
-                        <li><CheckIcon className="mr-4" /> {t("pricing_benefit_video_answers")}</li>
-                        <li><CheckIcon className="mr-4" /> {t("pricing_benefit_questions_db")}</li>
-                        <li><CheckIcon className="mr-4" /> {t("pricing_benefit_peer_mock")}</li>
-                        <li><CheckIcon className="mr-4" /> {t("pricing_benefit_course_hours")}</li>
-                        <li><CheckIcon className="mr-4" /> {t("pricing_benefit_referrals")}</li>
+                    <ul className="mt-4 text-gray-700 space-y-2 text-center">
+                        {[
+                            t("pricing_benefit_access_courses"),
+                            t("pricing_benefit_video_answers"),
+                            t("pricing_benefit_questions_db"),
+                            t("pricing_benefit_peer_mock"),
+                            t("pricing_benefit_course_hours"),
+                            t("pricing_benefit_referrals"),
+                        ].map((benefit, index) => (
+                            <li key={index} className="flex items-center justify-center text-left">
+                                <span className="w-6 flex justify-center">
+                                    <CheckIcon className="text-primary" />
+                                </span>
+                                <span className="ml-2">{benefit}</span>
+                            </li>
+                        ))}
                     </ul>
-                    <div className="w-full flex items-center justify-around mt-2">
-                        <div className="flex flex-col items-center justify-center">
-                            <p className="text-gray-400 text-sm text-center line-through">{t("pricing_annual_price_regular")}</p>
-                            <p className="text-orange-500 text-xl font-semibold text-center">{t("pricing_annual_price_discount")}</p>
+                    <div className="w-full flex items-center justify-between mt-6">
+                        <div className="flex flex-col items-center">
+                            <p className="text-gray-400 text-sm line-through">{t("pricing_annual_price_regular")}</p>
+                            <p className="text-orange-500 text-xl font-semibold">{t("pricing_annual_price_discount")}</p>
                         </div>
-                        <button className="w-1/2 px-3 font-semibold rounded-lg py-2 text-white bg-[var(--primary-color)] cursor-pointer" onClick={() => handleSetPremium(2)}>
+                        <button
+                            className="px-4 py-2 font-semibold rounded-lg text-white bg-[var(--primary-color)] hover:bg-primary-dark transition"
+                            onClick={() => handleSetPremium(2)}
+                        >
                             {isLoading ? t("pricing_processing") : balance?.is_premium ? t("pricing_extend") : t("pricing_start_now")}
                         </button>
                     </div>
