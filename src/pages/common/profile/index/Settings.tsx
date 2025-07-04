@@ -4,8 +4,8 @@ import { useAppSelector } from '../../../../app/hooks';
 import { authSelectors } from '../../../../features/auth/store/authSlice';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
-import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
+// import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
+// import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import SubtitlesOutlinedIcon from '@mui/icons-material/SubtitlesOutlined';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -20,8 +20,8 @@ import { useGetBalanceMutation, useMeMutation, useUpdateMetadataMutation } from 
 import { useCreatePaymentLinkMutation } from '../../../../features/payment/api/payment.api';
 import PublicProfile from "./Tabs/PublicProfile";
 import Account from "./Tabs/Account";
-import ThemePreferences from "./Tabs/ThemePreferences";
-import Notifications from "./Tabs/Notifications";
+// import ThemePreferences from "./Tabs/ThemePreferences";
+// import Notifications from "./Tabs/Notifications";
 import { Role } from "../../../../features/auth/types/auth";
 import paths from "../../../../router/paths";
 import TransactionHistoryDialog from "./TransactionHistoryDialog";
@@ -64,16 +64,16 @@ const Settings = () => {
     }
 
     const [updateMetadata] = useUpdateMetadataMutation();
-	const [me] = useMeMutation();
+    const [me] = useMeMutation();
     const handleAvatarUpload = async (base64Image: string) => {
         try {
-			await updateMetadata({ metadata: { avatarPath: base64Image } }).unwrap();
-			await me().unwrap();
+            await updateMetadata({ metadata: { avatarPath: base64Image } }).unwrap();
+            await me().unwrap();
             toast.success(t("settings_profile_avatar_upload_success"));
-		} catch (error) {
+        } catch (error) {
             toast.error(t("settings_profile_avatar_upload_error"));
-			console.error("Failed to update your infomation", error);
-		}
+            console.error("Failed to update your infomation", error);
+        }
     }
 
     const [openTopup, setOpenTopup] = React.useState(false);
@@ -135,7 +135,7 @@ const Settings = () => {
 
     return (
         <>
-            <div className="w-full flex flex-col gap-4 pl-4 pr-4 pt-8 pb-8 lg:pl-12 lg:pr-12">
+            <div className="w-full flex flex-col gap-6 pl-4 pr-4 pt-8 pb-8 lg:pl-12 lg:pr-12">
                 <div className="w-full flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:h-20">
                     <div className="flex items-center justify-center gap-4 w-full lg:w-[18%] lg:justify-start">
                         {/* <div className="relative flex-shrink-0 w-20 h-20">
@@ -159,6 +159,17 @@ const Settings = () => {
                         <div className="flex flex-col justify-center">
                             <h2 className="font-bold text-lg">{authData.metadata.fullname}</h2>
                             <p className="opacity-70">@{authData.username}</p>
+                            {authData.role && (
+                                <span
+                                    className={`inline-block text-xs font-semibold px-2 py-1 rounded-md text-center
+                                        ${authData.role === Role.Manager
+                                            ? "bg-primary text-white"
+                                            : "bg-primary-toned-400 text-white"
+                                        }`}
+                                >
+                                    {t(`tag_${authData.role.toLowerCase()}`)}
+                                </span>
+                            )}
                         </div>
                     </div>
 
@@ -223,7 +234,7 @@ const Settings = () => {
                                 <SettingsOutlinedIcon className="h-6 w-6 mr-1" /> {t("settings_tab_account")}
                             </div>
 
-                            <div
+                            {/* <div
                                 onClick={() => setSelectedTab('Theme preferences')}
                                 className={`flex-shrink-0 p-2 rounded cursor-pointer text-center lg:text-start ${selectedTab === 'Theme preferences'
                                     ? 'bg-primary-toned-50 font-semibold text-primary opacity-100'
@@ -241,7 +252,7 @@ const Settings = () => {
                                     }`}
                             >
                                 <NotificationsOutlinedIcon className="h-6 w-6 mr-1" /> {t("settings_tab_notifications")}
-                            </div>
+                            </div> */}
 
                             <div
                                 onClick={() => handleGoToPricing()}
@@ -255,8 +266,8 @@ const Settings = () => {
                     <div className="w-full lg:w-[80%]">
                         {selectedTab === 'Public profile' && <PublicProfile authData={authData} />}
                         {selectedTab === 'Account' && <Account authData={authData} />}
-                        {selectedTab === 'Theme preferences' && <ThemePreferences />}
-                        {selectedTab === 'Notifications' && <Notifications authData={authData} />}
+                        {/* {selectedTab === 'Theme preferences' && <ThemePreferences />}
+                        {selectedTab === 'Notifications' && <Notifications authData={authData} />} */}
                     </div>
                 </div>
             </div>

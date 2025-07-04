@@ -1,9 +1,8 @@
 import React from "react";
 import { UserInfo } from "../../../../../features/auth/store/authSlice";
 import { useUpdateMetadataMutation, useMeMutation } from "../../../../../features/auth/api/logout.api";
-import AlertError from "../../../../../components/ui/alert/AlertError";
-import AlertSuccess from "../../../../../components/ui/alert/AlertSuccess";
 import { useLanguage } from "../../../../../LanguageProvider";
+import { toast } from 'react-toastify';
 
 interface PublicProfileProps {
 	authData: UserInfo;
@@ -11,13 +10,12 @@ interface PublicProfileProps {
 
 const PublicProfile: React.FC<PublicProfileProps> = ({ authData }) => {
 	const { t, language } = useLanguage();
-	const [editingField, setEditingField] = React.useState<string | null>(null);
-	const [inputValue, setInputValue] = React.useState<string>("");
+	const [isEditing, setIsEditing] = React.useState(false);
+	const [formState, setFormState] = React.useState(authData.metadata || {});
+	const [initialState, setInitialState] = React.useState(authData.metadata || {});
 	const [updateMetadata] = useUpdateMetadataMutation();
 	const [me] = useMeMutation();
-	const [isLoading, setIsLoading] = React.useState<boolean>(false);
-	const [successMessage, setSuccessMessage] = React.useState<string | null>(null);
-	const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+	const [isLoading, setIsLoading] = React.useState(false);
 
 	const fields = [
 		{ key: "fullname", label: t("profile_label_name") },
@@ -31,163 +29,143 @@ const PublicProfile: React.FC<PublicProfileProps> = ({ authData }) => {
 		{ key: "education", label: t("profile_label_education") },
 	];
 
-	console.log("Auth data", authData);
-
-	const handleEdit = (key: string, currentValue: string) => {
-		let value = currentValue || "";
-
-		if (key === "birthday" && currentValue) {
-			const date = new Date(currentValue);
-
-			const year = date.getFullYear();
-			const month = String(date.getMonth() + 1).padStart(2, "0");
-			const day = String(date.getDate()).padStart(2, "0");
-
-			value = `${year}-${month}-${day}`;
-		}
-
-		setEditingField(key);
-		setInputValue(value);
-		setErrorMessage(null);
-	};
-
-	const handleCancel = () => {
-		setEditingField(null);
-		setInputValue("");
-		setErrorMessage(null);
+	const handleChange = (key: string, value: string) => {
+		setFormState((prev: Record<string, string>) => ({ ...prev, [key]: value }));
 	};
 
 	const handleSave = async () => {
-		setErrorMessage(null);
-		setSuccessMessage(null);
-		if (!editingField) return;
 		if (isLoading) return;
 		setIsLoading(true);
 		try {
-			await updateMetadata({ metadata: { [editingField]: inputValue } }).unwrap();
+			await updateMetadata({ metadata: formState }).unwrap();
 			await me().unwrap();
-			setSuccessMessage(`${t("profile_update_success")} (${editingField})`);
+			toast.success(t("profile_update_success"));
+			setInitialState(formState);
+			setIsEditing(false);
 		} catch (error) {
-			setErrorMessage(t("profile_update_failed"));
-			console.error("Failed to update your infomation", error);
+			toast.error(t("profile_update_failed"));
+			console.error("Failed to update metadata", error);
 		} finally {
-			setEditingField(null);
-			setInputValue("");
 			setIsLoading(false);
 		}
 	};
 
-	const renderRow = (field: { key: string; label: string }) => {
-		let value = authData.metadata[field.key] || t("profile_no_info");
-		const isEditing = editingField === field.key;
+	const handleEdit = () => {
+		setInitialState({ ...formState });
+		setIsEditing(true);
+	};
 
-		if (field.key === "birthday" && value !== t("profile_no_info")) {
-			try {
-				const date = new Date(value.replace(/\//g, "-"));
-				value = date.toLocaleDateString(language === "vi" ? "vi-VN" : "en-US", {
-					year: "numeric",
-					month: "long",
-					day: "numeric",
-				});
-			} catch (e) {
-				console.error("Invalid birthday format:", value);
-			}
-		}
-
-		return (
-			<tr key={field.key} className="border-b border-black w-full">
-				<td className="w-[20%]">{field.label}</td>
-				<td className="w-[70%] p-2 leading-[1.5rem] align-middle">
-					{isEditing ? (
-						field.key === "birthday" ? (
-							<input
-								type="date"
-								className="border px-2 py-0 w-full leading-[1.5rem] align-middle h-6"
-								value={inputValue.replace(/\//g, "-")}
-								onChange={(e) => {
-									const formatted = e.target.value.replace(/-/g, "/");
-									setInputValue(formatted);
-								}}
-							/>
-						) : field.key === "gender" ? (
-							<select
-								className="border px-2 py-0 w-full leading-[1.5rem] align-middle h-6"
-								value={inputValue}
-								onChange={(e) => setInputValue(e.target.value)}
-							>
-								<option value="">{t("profile_gender_select")}</option>
-								<option selected={authData.metadata.gender === "Male"} value="Male">{t("profile_gender_male")}</option>
-								<option selected={authData.metadata.gender === "Female"} value="Female">{t("profile_gender_female")}</option>
-								<option selected={authData.metadata.gender === "Prefer not to say"} value="Prefer not to say">{t("profile_gender_other")}</option>
-							</select>
-						) : (
-							<input
-								type="text"
-								className="border px-2 py-0 w-full leading-[1.5rem] align-middle h-6"
-								value={inputValue}
-								onChange={(e) => setInputValue(e.target.value)}
-							/>
-						)
-					) : (
-						<span className="opacity-70 leading-[1.5rem] align-middle h-6">{value}</span>
-					)}
-				</td>
-				<td className="w-[10%] text-end space-x-2">
-					{isEditing ? (
-						isLoading ? (
-							<span className="text-primary">{t("profile_action_updating")}</span>
-						) : (
-							<>
-								<button
-									className="text-secondary-toned-500 hover:underline"
-									onClick={handleCancel}
-									disabled={isLoading}
-								>
-									{t("profile_action_cancel")}
-								</button>
-								<button
-									className="text-primary-toned-500 hover:underline"
-									onClick={handleSave}
-									disabled={isLoading}
-								>
-									{t("profile_action_save")}
-								</button>
-							</>
-						)
-					) : (
-						<span
-							className="text-primary cursor-pointer hover:underline"
-							onClick={() => handleEdit(field.key, authData.metadata[field.key])}
-						>
-							{t("profile_action_edit")}
-						</span>
-					)}
-				</td>
-			</tr>
-		);
+	const handleCancel = () => {
+		setFormState({ ...initialState });
+		setIsEditing(false);
 	};
 
 	return (
 		<div>
-			{successMessage && <AlertSuccess successMessage={successMessage} />}
-			{errorMessage && <AlertError errorMessage={errorMessage} />}
-			<h2 className="text-xl font-bold mb-4">{t("profile_title_basic")}</h2>
-			<table className="w-full mb-8">
-				<tbody>
-					{fields
-						.slice(0, 7)
-						.map((field) => renderRow(field))}
-				</tbody>
-			</table>
+			<div className="flex justify-between items-center mb-4">
+				<h2 className="text-xl font-bold flex items-center space-x-2">
+					<span>{t("profile_title_basic")}</span>
+				</h2>
+				{!isEditing ? (
+					<button
+						onClick={handleEdit}
+						className="bg-primary text-white px-4 py-1.5 rounded-md font-semibold"
+					>
+						{t("profile_action_edit")}
+					</button>
+				) : (
+					<div className="space-x-4">
+						<button
+							onClick={handleCancel}
+							className="bg-secondary-toned-500 text-white px-4 py-1.5 rounded-md font-semibold"
+						>
+							{t("profile_action_cancel")}
+						</button>
+						<button
+							onClick={handleSave}
+							className="bg-primary text-white px-4 py-1.5 rounded-md font-semibold"
+							disabled={isLoading}
+						>
+							{isLoading ? t("profile_action_updating") : t("profile_action_save")}
+						</button>
+					</div>
+				)}
+			</div>
 
-			<h2 className="text-xl font-bold mb-4">{t("profile_title_experience")}</h2>
-			<table className="w-full">
-				<tbody>
-					{fields
-						.slice(7)
-						.map((field) => renderRow(field))}
-				</tbody>
-			</table>
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+				{fields.map(({ key, label }) => {
+					let value = formState[key] || "";
+
+					if (key === "birthday" && value) {
+						try {
+							const date = new Date(value.replace(/\//g, "-"));
+							value = date.toLocaleDateString(language === "vi" ? "vi-VN" : "en-US", {
+								year: "numeric",
+								month: "long",
+								day: "numeric",
+							});
+						} catch (e) {
+							console.warn("Invalid birthday format:", value);
+						}
+					}
+
+					const formattedDateInput = formState["birthday"]
+						? formState["birthday"].replace(/\//g, "-")
+						: "";
+
+					const inputElement = (() => {
+						if (key === "birthday") {
+							return (
+								<input
+									type="date"
+									className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+									value={formattedDateInput}
+									onChange={(e) => handleChange(key, e.target.value.replace(/-/g, "/"))}
+								/>
+							);
+						}
+
+						if (key === "gender") {
+							return (
+								<select
+									className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+									value={value}
+									onChange={(e) => handleChange(key, e.target.value)}
+								>
+									<option value="">{t("profile_gender_select")}</option>
+									<option value="Male">{t("profile_gender_male")}</option>
+									<option value="Female">{t("profile_gender_female")}</option>
+									<option value="Prefer not to say">{t("profile_gender_other")}</option>
+								</select>
+							);
+						}
+
+						return (
+							<input
+								type="text"
+								className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+								value={value}
+								onChange={(e) => handleChange(key, e.target.value)}
+							/>
+						);
+					})();
+
+					return (
+						<div key={key}>
+							<label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+							<div className="min-h-[44px] flex items-center">
+								{isEditing ? (
+									inputElement
+								) : (
+									<p className="text-gray-600 bg-gray-100 px-3 py-2 rounded-md w-full">
+										{value || t("profile_no_info")}
+									</p>
+								)}
+							</div>
+						</div>
+					);
+				})}
+			</div>
 		</div>
 	);
 };
