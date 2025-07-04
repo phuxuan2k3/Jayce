@@ -8,7 +8,6 @@ import { useEffect, useRef, useState } from "react";
 export default function Record({
   onAnswerRecorded,
 }: {
-  // Bổ sung base64Audio vào callback, giữ transcript như cũ
   onAnswerRecorded: (transcript: string, base64Audio: string) => void;
 }) {
   const {
@@ -21,12 +20,10 @@ export default function Record({
     transcript,
   } = useSpeechRecognition();
 
-  // MediaRecorder setup
   const [audioBase64, setAudioBase64] = useState<string | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunks = useRef<Blob[]>([]);
 
-  // Start media recorder
   const startRecording = async () => {
     if (!navigator.mediaDevices) return;
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -48,13 +45,11 @@ export default function Record({
     mediaRecorder.start();
   };
 
-  // Stop media recorder
   const stopRecording = () => {
     mediaRecorderRef.current?.stop();
   };
 
   useEffect(() => {
-    // Khi transcript hoàn thành và đã có base64 audio, callback trả về cả 2
     if (
       listening === false &&
       finalTranscript !== "" &&
@@ -63,9 +58,8 @@ export default function Record({
     ) {
       onAnswerRecorded(finalTranscript, audioBase64);
       resetTranscript();
-      setAudioBase64(null); // reset
+      setAudioBase64(null);
     }
-    // eslint-disable-next-line
   }, [listening, finalTranscript, transcript, audioBase64]);
 
   const startListening = () => {
@@ -74,7 +68,6 @@ export default function Record({
       browserSupportsContinuousListening &&
       isMicrophoneAvailable
     ) {
-      // Bắt đầu ghi âm song song với speech recognition
       startRecording();
       SpeechRecognition.startListening({
         continuous: true,
@@ -87,7 +80,7 @@ export default function Record({
 
   const stopListening = async () => {
     if (listening === true) {
-      stopRecording(); // Dừng ghi âm
+      stopRecording();
       SpeechRecognition.stopListening().catch((error) => {
         console.error("Error stopping speech recognition:", error);
       });
