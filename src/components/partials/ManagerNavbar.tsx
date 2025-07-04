@@ -1,10 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronDown,
-  faRightToBracket,
-} from "@fortawesome/free-solid-svg-icons";
+import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import logo from "/svg/logo.svg";
 // import skillsharp from "/svg/skillsharp.svg";
 import { useAppSelector } from "../../app/hooks";
@@ -37,25 +34,6 @@ const ManagerNavbar = ({ showNav = true }: { showNav?: boolean }) => {
   const handleLogoClick = () => {
     navigate(paths.manager.ROOT);
   };
-
-  const [openAssessment, setOpenAssessment] = useState(false);
-  const [openHiring, setOpenHiring] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setOpenAssessment(false);
-        setOpenHiring(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   return (
     <nav className="bg-white drop-shadow-lg">
