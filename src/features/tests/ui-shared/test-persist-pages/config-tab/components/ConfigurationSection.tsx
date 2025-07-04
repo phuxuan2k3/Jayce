@@ -26,7 +26,7 @@ export function ConfigurationSection({
 			<div className="grid grid-cols-[2fr_3fr] gap-x-8 gap-y-4 w-full">
 				<MyFieldLayout className="order-1">
 					<MySwitch
-						checked={numberOfAttemptsAllowed !== undefined}
+						checked={numberOfAttemptsAllowed !== undefined && numberOfAttemptsAllowed > 0}
 						onChange={checked => onChange({ numberOfAttemptsAllowed: checked ? 1 : undefined })}
 						id="max-attempts-switch"
 						label={
@@ -48,7 +48,7 @@ export function ConfigurationSection({
 
 				<MyFieldLayout className="order-3">
 					<MySwitch
-						checked={numberOfParticipants !== undefined}
+						checked={numberOfParticipants !== undefined && numberOfParticipants > 0}
 						onChange={checked => onChange({ numberOfParticipants: checked ? 1 : undefined })}
 						id="test-participants-switch"
 						label={

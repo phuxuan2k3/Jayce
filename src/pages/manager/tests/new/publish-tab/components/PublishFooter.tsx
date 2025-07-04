@@ -24,6 +24,13 @@ export const PublishFooter = ({ onPublish }: PublishFooterProps) => {
 						students will be able to access and take this exam according to the configured
 						schedule and settings.
 					</p>
+					<div className="flex flex-items mb-4">
+						<p className="text-secondary-toned-600 text-sm">
+							Make sure to double-check the exam details, accessibility settings, and any
+							other configurations before proceeding. Once published, you cannot edit the
+							exam's settings when there are attempts.
+						</p>
+					</div>
 					<MyButton
 						variant={"primary"}
 						size={"large"}

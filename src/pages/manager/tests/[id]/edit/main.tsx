@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import LeftLayoutTemplateDefault from "../../../../../components/layouts/LeftLayoutTemplateDefault";
 import { parseQueryError } from "../../../../../helpers/fetchBaseQuery.error";
 import paths from "../../../../../router/paths";
 import { useDeleteTestModalContext } from "../components/delete-test-modal.context";
@@ -18,6 +17,7 @@ import ConfigTab from "../../../../../features/tests/ui-shared/test-persist-page
 import ExamPersistValidationErrorsDialog from "../../../../../features/tests/ui-shared/test-persist-pages/ExamPersistValidationErrorsDialog";
 import QuestionsConfigTab from "../../../../../features/tests/ui-shared/test-persist-pages/questions-config-tab";
 import { ExamPersistZodSchema } from "../../../../../features/tests/schemas/exam-persist-zod";
+import RightLayoutTemplate from "../../../../../components/layouts/RightLayoutTemplate";
 
 export default function ManagerTestEditMain({
 	data,
@@ -97,12 +97,14 @@ export default function ManagerTestEditMain({
 	}, [tab, draftValue, add, remove, update, setDraftValue]);
 
 	return (
-		<LeftLayoutTemplateDefault
-			header={{
-				title: data.title,
-				description: data.description,
-			}}
-			left={
+		<RightLayoutTemplate
+			header={
+				<RightLayoutTemplate.Header
+					title={draftValue.title || "Edit Test"}
+					description="Edit the test configuration and questions."
+				/>
+			}
+			right={
 				<Sidebar
 					onModeChange={(tab) => setTab(tab)}
 					tab={tab}
@@ -131,6 +133,6 @@ export default function ManagerTestEditMain({
 					/>
 				)}
 			</>
-		</LeftLayoutTemplateDefault>
+		</RightLayoutTemplate>
 	);
 }
