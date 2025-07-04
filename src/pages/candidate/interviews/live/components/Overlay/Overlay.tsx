@@ -9,6 +9,7 @@ import InterviewStatus from "./InterviewStatus";
 import Record from "./Record";
 import { useState } from "react";
 import ModalSubmitting from "./sub/ModalSubmit";
+import { Alert } from "@mui/material";
 
 // type AnswerData = {
 //   questionIndex: number;
@@ -33,8 +34,19 @@ export default function Overlay() {
   ) => {
     console.log("interviewId từ navigate:", interviewId);
     if (!interviewId) {
-      alert("Không tìm thấy interviewId!");
-      return;
+      // alert("Không tìm thấy interviewId!");
+      return (
+        <Alert
+          sx={{
+            width: "100%",
+            mt: 1,
+            mb: 3,
+          }}
+          severity="success"
+        >
+          Not found interviewId!
+        </Alert>
+      );
     }
 
     try {
@@ -53,8 +65,20 @@ export default function Overlay() {
         goToNextQuestion();
       }
     } catch (e) {
-      alert("Có lỗi khi gửi đáp án. Vui lòng thử lại.");
+      // alert("Có lỗi khi gửi đáp án. Vui lòng thử lại.");
       console.error(e);
+      return (
+        <Alert
+          sx={{
+            width: "100%",
+            mt: 1,
+            mb: 3,
+          }}
+          severity="success"
+        >
+          Submit error!
+        </Alert>
+      );
     }
   };
   return (

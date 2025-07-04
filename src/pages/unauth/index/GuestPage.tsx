@@ -61,7 +61,10 @@ const GuestPage = () => {
         </div>
         <div
           className="relative z-10 text-center flex flex-col justify-center h-[100vh] bg-no-repeat bg-cover bg-center animate-fade-in"
-          style={{ backgroundImage: "url('/svg/landing.svg')" }}
+          style={{
+            background:
+              "linear-gradient(135deg, #bfeaff 0%, #dff6fd 20%, #ffe0ec 60%, #ffd6b0 100%)",
+          }}
         >
           <h1
             className="text-4xl font-black mb-4 animate-fade-in"
