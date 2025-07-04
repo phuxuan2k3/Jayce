@@ -121,7 +121,7 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                 <Link
                   to="/candidate/interviews"
                   className={classNames(
-                    "flex icon-link items-center p-2 hover:text-white hover:rounded-3xl hover:bg-primary-toned-500",
+                    "flex icon-link items-center p-2 hover:text-primary hover:border-b-2 hover:border-primary-toned-500",
                     url.includes("/candidate/interviews")
                       ? "border-b-2 text-primary  border-primary"
                       : ""
@@ -154,7 +154,7 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                 <Link
                   to="/candidate/tests"
                   className={classNames(
-                    "flex icon-link items-center p-2 hover:text-white hover:rounded-3xl hover:bg-primary-toned-500",
+                    "flex icon-link items-center p-2 hover:text-primary hover:border-b-2 hover:border-primary-toned-500",
                     url.includes("/candidate/tests")
                       ? "border-b-2 text-primary  border-primary"
                       : ""
