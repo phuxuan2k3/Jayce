@@ -51,7 +51,9 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
   const url = window.location.pathname;
+
   return (
     <nav className="bg-white drop-shadow-lg z-[100]">
       <div className=" lg:mx-12 px-6   ">

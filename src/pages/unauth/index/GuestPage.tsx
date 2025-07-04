@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import paths from "../../../router/paths";
+import { useEffect } from "react";
 
 const GuestPage = () => {
   const navigate = useNavigate();
@@ -27,6 +28,17 @@ const GuestPage = () => {
     },
   ];
 
+  const hash = window.location.hash;
+
+  useEffect(() => {
+    if (window.location.hash) {
+      const id = window.location.hash.replace("#", "");
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [hash]);
   return (
     <div>
       <section className="relative text-center overflow-hidden">
@@ -88,7 +100,10 @@ const GuestPage = () => {
         </div>
       </section>
 
-      <h2 className="text-center text-4xl font-bold text-primary mt-10 mb-8">
+      <h2
+        id="tests"
+        className="text-center text-4xl font-bold text-primary mt-10 mb-8"
+      >
         SkillSharp - The all-in-one interview prep platforms
       </h2>
       <div className="space-y-10 px-6 md:px-20">
@@ -113,7 +128,10 @@ const GuestPage = () => {
         ))}
       </div>
 
-      <h2 className="text-center text-4xl font-bold text-primary mt-10 mb-8">
+      <h2
+        id="interviews"
+        className="text-center text-4xl font-bold text-primary mt-10 mb-8"
+      >
         Do everything easier with AI assistants!
       </h2>
       <div className="flex justify-center mt-20 mb-20">
