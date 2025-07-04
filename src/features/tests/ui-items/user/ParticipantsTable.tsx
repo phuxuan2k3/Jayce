@@ -59,7 +59,11 @@ export default function ParticipantsTable({
 							</td>
 							<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 								<div className="flex items-center">
-									<img src={user.avatarPath} alt={getUserCore(user).fullname} className="h-8 w-8 rounded-full mr-2" />
+									<img
+										src={user.avatarPath || '/default-avatar.png'}
+										alt={getUserCore(user).fullname}
+										className="h-8 w-8 rounded-full mr-2"
+									/>
 									<span>{getUserCore(user).fullname}</span>
 								</div>
 							</td>
