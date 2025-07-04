@@ -89,13 +89,13 @@ const GuestPage = () => {
           >
             <div
               onClick={() => navigate(paths.auth.REGISTER)}
-              className="px-10 bg-[var(--primary-color)] rounded-lg text-white py-2 font-bold cursor-pointer shadow-lg hover:shadow-[0_0_24px_0_rgba(57,160,173,0.25)] hover:scale-105 transition-all duration-200 active:scale-95 ring-2 ring-transparent hover:ring-[var(--primary-color)]"
+              className="px-16 text-xl bg-[var(--primary-color)] rounded-full text-white py-4 font-bold cursor-pointer shadow-lg hover:shadow-[0_0_24px_0_rgba(57,160,173,0.25)] hover:scale-105 transition-all duration-200 active:scale-95 ring-2 ring-transparent hover:ring-[var(--primary-color)]"
             >
               For Candidates
             </div>
             <div
               onClick={() => navigate(paths.auth.BUSINESS_REGISTER)}
-              className="px-10 border border-[var(--primary-color)] rounded-lg text-primary py-2 font-bold cursor-pointer bg-white shadow hover:shadow-[0_0_24px_0_rgba(57,160,173,0.15)] hover:scale-105 transition-all duration-200 active:scale-95 ring-2 ring-transparent hover:ring-[var(--primary-color)]"
+              className="px-16 text-xl  rounded-full text-primary py-4 font-bold cursor-pointer bg-white shadow hover:shadow-[0_0_24px_0_rgba(57,160,173,0.15)] hover:scale-105 transition-all duration-200 active:scale-95 ring-2 ring-transparent hover:ring-[var(--primary-color)]"
             >
               For Businesses
             </div>
