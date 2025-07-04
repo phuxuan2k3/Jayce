@@ -26,11 +26,9 @@ export default function Overlay() {
   const totalQuestion = localStorage.getItem("totalQuestion") || "5";
   const location = useLocation();
   const interviewId = location.state?.interviewId;
-  console.log("totalQuestion", totalQuestion);
-  console.log("questionIndex", questionIndex);
   const handleAnswerRecorded = async (
-    transcript: string
-    // base64Audio: string
+    transcript: string,
+    base64Audio: string
   ) => {
     console.log("interviewId từ navigate:", interviewId);
     if (!interviewId) {
@@ -54,7 +52,7 @@ export default function Overlay() {
         interviewId,
         index: questionIndex,
         answer: transcript,
-        recordProof: "base64Audio",
+        recordProof: base64Audio,
       }).unwrap();
       if (questionIndex >= parseInt(totalQuestion)) {
         setShowSubmittingModal(true);
