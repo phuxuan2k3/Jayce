@@ -100,41 +100,6 @@ const ManagerNavbar = ({ showNav = true }: { showNav?: boolean }) => {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <div className="border px-2 pt-1 flex rounded-lg border-primary-toned-800 me-12">
-              <svg
-                width="33"
-                height="32"
-                viewBox="0 0 33 32"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.14369 11.3333C6.14369 7.28324 9.42693 4 13.477 4C17.5272 4 20.8104 7.28324 20.8104 11.3333C20.8104 15.3835 17.5272 18.6667 13.477 18.6667C9.42693 18.6667 6.14369 15.3835 6.14369 11.3333ZM13.477 2C8.32237 2 4.14369 6.17868 4.14369 11.3333C4.14369 16.488 8.32237 20.6667 13.477 20.6667C15.6941 20.6667 17.7306 19.8936 19.3318 18.6024L26.4366 25.7071C26.8272 26.0976 27.4602 26.0976 27.8508 25.7071C28.2413 25.3165 28.2413 24.6835 27.8508 24.2929L20.7461 17.1881C22.0373 15.5869 22.8104 13.5504 22.8104 11.3333C22.8104 6.17868 18.6317 2 13.477 2Z"
-                  fill="#19484E"
-                />
-              </svg>
-
-              <input
-                type="text"
-                placeholder="Search"
-                className="focus:outline-none focus:ring-0 w-[20vw]"
-              />
-            </div>
-            <div className="flex text-xl font-bold text-primary-toned-700 px-2 gap-2">
-              <span>Upgrade</span>
-              <svg
-                width="16"
-                height="19"
-                viewBox="0 0 16 19"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0.287675 7.89609C-0.0999453 8.28949 -0.0952554 8.92259 0.298145 9.31019C0.691555 9.69789 1.3247 9.69319 1.71232 9.29979L7.0037 3.92939L7.0037 17.6006C7.0037 18.1529 7.45141 18.6006 8.00371 18.6006C8.55601 18.6006 9.00371 18.1529 9.0037 17.6006L9.0037 3.93599L14.2886 9.29978C14.6762 9.69319 15.3094 9.69789 15.7028 9.31019C16.0962 8.92259 16.1009 8.28949 15.7133 7.89609L8.8909 0.971885C8.4013 0.474985 7.5997 0.474985 7.1101 0.971885L0.287675 7.89609Z"
-                  fill="#226068"
-                />
-              </svg>
-            </div>
             <LanguageSwitcher />
             <svg
               width="40"
