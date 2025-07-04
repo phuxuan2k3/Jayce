@@ -28,24 +28,30 @@ const SetUpPage: React.FC<SetUpPageProps> = ({ position, experience }) => {
   };
 
   const { t } = useLanguage();
-
+  const isValid =
+    !!jobData.position &&
+    !!jobData.experience &&
+    !!jobData.skills &&
+    jobData.skills.trim() !== "";
   return (
     <div className="bg-opacity-5 h-[100%] rounded-3xl">
       <div className=" font-asap flex-wrap flex justify-center w-[800px] mx-auto gap-1.5">
         <div className="flex font-arya items-center font-bold text-[28px] w-full mt-6">
           <div
             onClick={() => setStep(1)}
-            className="size-8 text-white bg-primary text-center items-center flex justify-center text-lg font-bold rounded-3xl"
+            className="size-8 cursor-pointer text-white bg-primary text-center items-center flex justify-center text-lg font-bold rounded-3xl"
           >
             <span>1</span>
           </div>
           <span className="ms-4">{t("job_des")}</span>
           <hr className="flex-1" />
           <div
-            onClick={() => setStep(2)}
+            onClick={() => {
+              if (isValid) setStep(2);
+            }}
             className={`size-8 text-white ${
               step === 1 ? "bg-gray-300" : "bg-primary"
-            } text-center items-center flex justify-center text-lg font-bold rounded-3xl`}
+            } text-center cursor-pointer items-center flex justify-center text-lg font-bold rounded-3xl`}
           >
             2
           </div>
