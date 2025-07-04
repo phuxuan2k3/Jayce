@@ -2,6 +2,7 @@ import { Upload, WandSparkles } from "lucide-react";
 import { CreateTab } from "../common/types";
 import ManagerSidebar from "../../../../../features/tests/ui-shared/sidebar/ManagerSidebar";
 import QuickAction from "../../../../../features/tests/ui/sidebar/primitive/QuickAction";
+import SidebarActions from "../../../../../features/tests/ui/sidebar/primitive/SidebarActions";
 
 export default function Sidebar({
 	tab,
@@ -11,7 +12,7 @@ export default function Sidebar({
 	onTabChange: (tab: CreateTab) => void;
 }) {
 	return (
-		<ManagerSidebar>
+		<SidebarActions className="h-full flex flex-col">
 			<ManagerSidebar.Info
 				active={tab === 'info'}
 				onClick={() => onTabChange('info')}
@@ -26,6 +27,7 @@ export default function Sidebar({
 			<QuickAction
 				icon={<WandSparkles />}
 				title='Assistant'
+				variant={"gradient"}
 				description='Generate questions with AI'
 				onClick={() => onTabChange('generate')}
 			/>
@@ -40,6 +42,6 @@ export default function Sidebar({
 				onClick={() => onTabChange('publish')}
 			/>
 
-		</ManagerSidebar>
+		</SidebarActions>
 	)
 }

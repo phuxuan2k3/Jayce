@@ -30,7 +30,7 @@ export default function BuilderWizzardTabMain({
 
 	useEffect(() => {
 		if (currentErrorMessages.length > 0) {
-			toast.warn(`Constraints: ${currentErrorMessages.join(", ")}`, {
+			toast.warn(`${currentErrorMessages.join(", ")}`, {
 				autoClose: 5000,
 				position: "top-right",
 				hideProgressBar: false,

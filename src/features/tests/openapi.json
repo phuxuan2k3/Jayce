@@ -1540,6 +1540,19 @@
 						"required": false,
 						"name": "sortTitle",
 						"in": "query"
+					},
+					{
+						"schema": {
+							"type": "string",
+							"enum": [
+								"manage",
+								"view"
+							],
+							"default": "manage"
+						},
+						"required": false,
+						"name": "actions",
+						"in": "query"
 					}
 				],
 				"responses": {
@@ -2276,15 +2289,25 @@
 					},
 					{
 						"schema": {
-							"type": "string",
-							"enum": [
-								"IN_PROGRESS",
-								"COMPLETED",
-								"GRADED"
+							"anyOf": [
+								{
+									"type": "array",
+									"items": {
+										"type": "string",
+										"enum": [
+											"IN_PROGRESS",
+											"COMPLETED",
+											"GRADED"
+										]
+									}
+								},
+								{
+									"type": "string"
+								}
 							]
 						},
 						"required": false,
-						"name": "status",
+						"name": "statusFilters",
 						"in": "query"
 					},
 					{
@@ -2579,15 +2602,25 @@
 					},
 					{
 						"schema": {
-							"type": "string",
-							"enum": [
-								"IN_PROGRESS",
-								"COMPLETED",
-								"GRADED"
+							"anyOf": [
+								{
+									"type": "array",
+									"items": {
+										"type": "string",
+										"enum": [
+											"IN_PROGRESS",
+											"COMPLETED",
+											"GRADED"
+										]
+									}
+								},
+								{
+									"type": "string"
+								}
 							]
 						},
 						"required": false,
-						"name": "status",
+						"name": "statusFilters",
 						"in": "query"
 					},
 					{

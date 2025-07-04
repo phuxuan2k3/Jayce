@@ -35,11 +35,13 @@ export default function StepDone({
 		<>
 			<div className="w-full max-w-4xl mx-auto p-6 space-y-6">
 				{/* Header */}
-				<div className="text-center border-b pb-4">
-					<h1 className="text-3xl font-bold text-primary-dark mb-2">Exam Questions Generated Successfully! 🎉</h1>
-					<p className="text-gray-600">You have successfully generated {totalQuestions} questions for your exam.</p>
+				<div className="text-center mb-4">
+					<h1 className="text-3xl font-bold text-primary mb-2">Successfully generated {totalQuestions} questions for your exam</h1>
 					<p className="text-gray-600">Total Points: <span className="font-semibold">{totalPoints}</span></p>
+					<p className="text-gray-600">Feel free to edit this set of questions before adding them to your exam.</p>
 				</div>
+
+				<hr className="border-primary-toned-300 w-full my-4" />
 
 				{/* Questions List */}
 				<div className="space-y-6">
@@ -72,7 +74,7 @@ export default function StepDone({
 				</div>
 
 				{/* Footer */}
-				<div>
+				<div className='flex flex-col items-center mt-8 bg-primary-toned-50 p-6 rounded-lg shadow-md'>
 					<div className="text-center mt-8">
 						<p className="text-gray-600">You can now review and finalize your exam questions.</p>
 						<p className="text-gray-600">Once you're satisfied, you can proceed to the next steps.</p>

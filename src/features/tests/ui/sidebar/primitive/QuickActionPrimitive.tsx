@@ -14,6 +14,7 @@ const QuickActionCVA = cva(
 			variant: {
 				default: "text-primary bg-gradient-to-r from-primary-toned-50 to-primary-toned-100",
 				alert: "text-secondary bg-gradient-to-r from-secondary-toned-50 to-secondary-toned-100",
+				gradient: "text-white bg-gradient-to-br from-primary to-secondary",
 			},
 			active: {
 				true: "shadow-lg",
@@ -95,6 +96,7 @@ const QuickActionIcon = ({
 	<div className={cn("rounded-full p-2 text-white max-w-10 max-h-10 w-10 h-10 flex items-center justify-center", {
 		"bg-primary": useQuickActionContext().variant === 'default',
 		"bg-secondary": useQuickActionContext().variant === 'alert',
+		"bg-none": useQuickActionContext().variant === 'gradient',
 	}, className)}>
 		{icon}
 	</div>

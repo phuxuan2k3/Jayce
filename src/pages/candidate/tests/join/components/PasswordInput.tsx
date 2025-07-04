@@ -20,7 +20,7 @@ export default function PasswordInput({
 	};
 
 	return (<>
-		<div className="mt-4">
+		<div className="mt-4 w-full">
 			<label className="block text-sm font-medium text-gray-700 mb-1">
 				This test is password protected
 			</label>

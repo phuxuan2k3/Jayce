@@ -1,6 +1,5 @@
 import CreativitySlider from './components/CreativitySlider';
 import ContextSection from './components/ContextSection';
-import HelpText from './components/HelpText';
 import { BuilderStep3Type } from '../../common/step-schema';
 
 export default function Step3({
@@ -36,8 +35,6 @@ export default function Step3({
 				context={data.context}
 				onContextChange={handleContextChange}
 			/>
-
-			<HelpText />
 		</div>
 	);
 }

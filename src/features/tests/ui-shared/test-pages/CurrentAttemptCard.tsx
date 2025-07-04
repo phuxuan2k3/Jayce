@@ -16,7 +16,7 @@ export default function CurrentAttemptCard() {
 	const currentAttemptQuery = useGetTestsByTestIdAttemptsQuery({
 		testId,
 		candidateId: userId,
-		status: "IN_PROGRESS"
+		statusFilters: ["IN_PROGRESS"]
 	}, {
 		pollingInterval: 30000,
 		refetchOnMountOrArgChange: true,

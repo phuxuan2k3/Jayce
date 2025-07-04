@@ -56,7 +56,7 @@ const ManagerTestsPage = () => {
 				/>
 			}
 			left={
-				<SidebarActions title='Quick Actions'>
+				<SidebarActions>
 					<QuickAction
 						title='Create exam'
 						icon={<ClipboardPlus size={20} />}

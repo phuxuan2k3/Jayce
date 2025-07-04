@@ -15,21 +15,21 @@ export default function BottomNavButtons({
 	isFirstStep?: boolean;
 }) {
 	return (
-		<div className={cn(`flex items-center justify-between`, className)}>
-			<MyButton
+		<div className={cn(`flex items-center w-full`, className)}>
+			{isFirstStep === false && <MyButton
 				disabled={isFirstStep}
-				className="w-1/4 min-w-fit"
+				className="w-1/4 min-w-fit mr-auto"
 				onClick={onBack}
 			>
 				Back
-			</MyButton>
-			<MyButton
+			</MyButton>}
+			{isLastStep === false && <MyButton
 				disabled={isLastStep}
-				className={cn("w-1/4 min-w-fit")}
+				className={cn("w-1/4 min-w-fit ml-auto")}
 				onClick={onNext}
 			>
 				Next
-			</MyButton>
+			</MyButton>}
 		</div>
 	)
 }

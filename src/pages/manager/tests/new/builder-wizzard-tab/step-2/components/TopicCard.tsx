@@ -1,11 +1,12 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { useMemo } from 'react';
-import TextareaAutosize from 'react-textarea-autosize'
-import { DifficultyType, Topic } from '../../../common/base-schema';
-import { classNameInput } from "../../../common/class-names";
-import { cn } from '../../../../../../../app/cn';
-import { difficultyClassNames } from '../../../common/class-names';
+import { useMemo, useState } from 'react';
+import { DifficultiesAsConst, DifficultyType, Topic } from '../../../common/base-schema';
+import MyFieldLayout from '../../../../../../../features/tests/ui/forms/MyFieldLayout';
+import MyLabel from '../../../../../../../features/tests/ui/forms/MyLabel';
+import MyTextArea from '../../../../../../../features/tests/ui/forms/MyTextArea';
+import MyNumberInput from '../../../../../../../features/tests/ui/forms/MyNumberInput';
+import MySelect from '../../../../../../../features/tests/ui/forms/MySelect';
+import { Trash2 } from 'lucide-react';
+import MyButton from '../../../../../../../features/tests/ui/buttons/MyButton';
 
 interface TopicCardProps {
 	topic: Topic;
@@ -22,18 +23,16 @@ export default function TopicCard({
 	onUpdate,
 	onDelete,
 }: TopicCardProps) {
-	const difficulties = Object.keys(topic.difficultyDistribution) as DifficultyType[];
+	const [currentDifficulty, setCurrentDifficulty] = useState<DifficultyType>(() => {
+		const nonZeroDifficulties = Object.entries(topic.difficultyDistribution).find(
+			([, value]) => value > 0
+		);
+		return nonZeroDifficulties ? (nonZeroDifficulties[0] as DifficultyType) : "Intern";
+	});
 
 	const totalQuestions = useMemo(() => {
 		return Object.values(topic.difficultyDistribution).reduce((sum, value) => sum + value, 0);
 	}, [topic.difficultyDistribution]);
-
-	const difficultiesPercentage = useMemo(() => {
-		return difficulties.reduce((acc, difficulty) => {
-			acc[difficulty] = topic.difficultyDistribution[difficulty] / totalQuestions * 100 || 0;
-			return acc;
-		}, {} as Record<DifficultyType, number>);
-	}, [topic.difficultyDistribution, totalQuestions]);
 
 	return (
 		<div className="bg-white border border-primary-toned-200 rounded-lg p-6 shadow-md">
@@ -41,80 +40,79 @@ export default function TopicCard({
 				{/* Topic Header */}
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-4 flex-1">
-						<div className="flex-1">
-							<label className="block font-semibold text-primary mb-2">
-								Topic #{index + 1}
-							</label>
-							<TextareaAutosize
+						<MyFieldLayout className='w-full'>
+							<MyLabel>Topic #{index + 1}</MyLabel>
+							<MyTextArea
 								value={topic.name}
 								onChange={(e) => onUpdate(index, { name: e.target.value })}
-								placeholder="Describe the topic"
-								className={cn(classNameInput, "focus:ring-primary-toned-300 focus:border-primary-toned-300")}
+								placeholder='Describe the topic'
+								aria-label='Topic description'
 							/>
-						</div>
+						</MyFieldLayout>
 					</div>
-
-					{/* Delete Button */}
-					{canDelete && (
-						<button
-							onClick={() => onDelete(index)}
-							className="ml-4 p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
-							title="Delete topic"
-						>
-							<FontAwesomeIcon icon={faTrashCan} className="w-4 h-4" />
-						</button>
-					)}
 				</div>
 
 				<hr className='border-primary-toned-300' />
 
-				{/* Difficulty Distribution */}
-				<div>
-					<h4 className="text-lg font-semibold text-primary mb-3">Difficulty Distribution</h4>
-					<div className="grid grid-cols-3 gap-4">
-						{difficulties.map((difficulty) => (
-							<div key={difficulty} className="flex flex-col gap-2 border border-gray-200 rounded-lg p-4 shadow-md">
-								<div className='flex items-center justify-between'>
-									<label className="block text-sm font-semibold text-primary">
-										{difficulty}:
-									</label>
-									<div className="flex items-center gap-2">
-										<input
-											type="number"
-											min="0"
-											max="100"
-											value={topic.difficultyDistribution[difficulty]}
-											onChange={(e) => onUpdate(index, {
-												difficultyDistribution: {
-													...topic.difficultyDistribution,
-													[difficulty]: parseInt(e.target.value, 10) || 0
-												}
-											})}
-											className="w-18 border border-gray-300 rounded px-2 py-1 text-center focus:outline-none focus:ring-2 focus:ring-primary-toned-300"
-										/>
-									</div>
-								</div>
-								<div className="w-full bg-gray-200 rounded-full h-2">
-									<div
-										className={cn(
-											`h-2 rounded-full transition-all duration-300`,
-											difficultyClassNames(difficulty).heavyBackground().build()
-										)}
-										style={{ width: `${difficultiesPercentage[difficulty]}%` }}
-									></div>
-								</div>
-							</div>
-						))}
-					</div>
+				<div className='flex items-end gap-8'>
+					<MyFieldLayout className='w-5/12'>
+						<MyLabel>Number of Questions</MyLabel>
+						<MyNumberInput
+							min={1}
+							value={totalQuestions}
+							onChange={(e) => {
+								const newDifficultyDistribution = {
+									...topic.difficultyDistribution,
+								};
+								newDifficultyDistribution[currentDifficulty] = Number(e.target.value) || 0;
+								onUpdate(index, {
+									difficultyDistribution: newDifficultyDistribution
+								});
+							}}
+						/>
+					</MyFieldLayout>
 
-					{/* Distribution Summary */}
-					<div className="mt-6 p-3 bg-primary-toned-50 text-primary rounded-lg">
-						<h5 className=''>
-							Number of Questions: <span className="font-semibold">{totalQuestions}</span>
-						</h5>
-					</div>
+					<MyFieldLayout className='w-5/12'>
+						<MyLabel>Difficulty Level</MyLabel>
+						<MySelect
+							options={DifficultiesAsConst.map((difficulty) => ({
+								value: difficulty,
+								label: difficulty,
+							}))}
+							value={currentDifficulty}
+							onChange={(value) => {
+								const newDifficulty = value as DifficultyType || "Intern";
+								const totalQuestions = topic.difficultyDistribution[currentDifficulty] || 0;
+								const newDifficultyDistribution = {
+									...topic.difficultyDistribution,
+									[currentDifficulty]: 0,
+									[newDifficulty]: totalQuestions
+								};
+								onUpdate(index, {
+									difficultyDistribution: {
+										...newDifficultyDistribution,
+									}
+								});
+								setCurrentDifficulty(newDifficulty);
+							}}
+						/>
+					</MyFieldLayout>
+
+
+					{canDelete && (
+						<MyButton
+							variant={"destructive"}
+							onClick={() => onDelete(index)}
+							title="Delete topic"
+							className='ml-auto p-2 text-red-700 bg-red-50 hover:bg-red-600 hover:text-white rounded-lg transition-colors'
+						>
+							<Trash2 size={18} />
+						</MyButton>
+					)}
 				</div>
 			</div>
 		</div>
 	);
 }
+
+

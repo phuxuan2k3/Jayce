@@ -1,10 +1,11 @@
 import SummaryCards from "./components/SummaryCards";
-import AddTopicButton from "./components/AddTopicButton";
 import TopicCard from "./components/TopicCard";
 import useTopicsManage from "./hooks/useTopicsManage";
 import useGetTotalQuestions from "./hooks/useGetTotalQuestions";
 import { Topic } from "../../common/base-schema";
 import { BuilderStep2Type } from "../../common/step-schema";
+import { Plus } from "lucide-react";
+import MyButton from "../../../../../../features/tests/ui/buttons/MyButton";
 
 export default function Step2({
 	data,
@@ -35,8 +36,6 @@ export default function Step2({
 				totalQuestions={totalQuestions}
 			/>
 
-			<AddTopicButton onAddTopic={addTopic} />
-
 			{/* Topics List */}
 			<div className="flex flex-col gap-4">
 				{data.topics.map((topic, index) => (
@@ -44,12 +43,20 @@ export default function Step2({
 						key={index}
 						topic={topic}
 						index={index}
-						canDelete={data.topics.length > 1}
+						canDelete={true}
 						onUpdate={updateTopic}
 						onDelete={deleteTopic}
 					/>
 				))}
 			</div>
+
+			<MyButton
+				className="w-full"
+				onClick={addTopic}
+			>
+				<Plus className="w-5 h-5" strokeWidth={2.5} />
+				Add Topic
+			</MyButton>
 		</div>
 	);
 }

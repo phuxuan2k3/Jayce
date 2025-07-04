@@ -6,9 +6,11 @@ export type QuickActionProps = {
 	title: string;
 	description: string;
 	onClick: () => void;
+	className?: string;
 } & QuickActionVariantsType;
 
 const QuickAction = ({
+	className = '',
 	icon,
 	title,
 	description,
@@ -18,6 +20,7 @@ const QuickAction = ({
 	<QuickActionPrimitive.Root
 		onClick={onClick}
 		{...variant}
+		className={className}
 	>
 		<QuickActionPrimitive.Icon icon={icon} />
 

@@ -17,14 +17,14 @@ export default function ContextTabs({
 }: ContextTabsProps) {
 	const tabButtonClass = (isActive: boolean) =>
 		cn(
-			'px-4 py-2 font-medium text-sm rounded-t-lg transition-colors',
+			'px-4 py-2 text-sm rounded-t-lg transition-colors font-semibold',
 			isActive
 				? 'bg-primary text-white border-b-2 border-primary'
 				: 'bg-gray-100 text-gray-600 hover:bg-gray-200'
 		);
 
 	return (
-		<div className="flex border-b border-gray-200 mb-4">
+		<div className="flex border-b border-gray-200">
 			<button
 				type="button"
 				onClick={() => onTabChange('text')}

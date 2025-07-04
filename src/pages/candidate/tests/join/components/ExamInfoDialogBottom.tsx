@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import paths from '../../../../../router/paths';
 import { TestFullSchema, usePostTestsByTestIdParticipantsMutation } from '../../../../../features/tests/api/test.api-gen-v2';
+import MyButton from '../../../../../features/tests/ui/buttons/MyButton';
 
 export default function ExamInfoDialogBottom({
 	examData,
@@ -52,17 +53,21 @@ export default function ExamInfoDialogBottom({
 	};
 
 	return (
-		<div className="flex justify-end space-x-3 mt-6">
-			<button
+		<div className="flex justify-between items-center gap-4 w-full">
+			<MyButton
 				onClick={onCancel}
-				className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+				variant={"gray"}
+				className='flex-1'
+				size={"medium"}
 			>
 				Cancel
-			</button>
+			</MyButton>
 
-			<button
+			<MyButton
 				onClick={handleJoin}
-				className="px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-toned-600 transition-colors"
+				variant={"primary"}
+				className='flex-1'
+				size={"medium"}
 			>
 				{hasJoined ? (
 					<span>Back to Test</span>
@@ -74,7 +79,7 @@ export default function ExamInfoDialogBottom({
 				) : (
 					<span>Join Test</span>
 				))}
-			</button>
+			</MyButton>
 		</div>
 	);
 }

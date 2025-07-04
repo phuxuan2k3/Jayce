@@ -14,7 +14,7 @@ export default function useTopicsManage({
 			{
 				name: "",
 				difficultyDistribution: {
-					Intern: 0,
+					Intern: 1,
 					Junior: 0,
 					Middle: 0,
 					Senior: 0,

@@ -143,6 +143,7 @@ const injectedRtkApi = api
             searchTitle: queryArg.searchTitle,
             sortCreatedAt: queryArg.sortCreatedAt,
             sortTitle: queryArg.sortTitle,
+            actions: queryArg.actions,
           },
         }),
         providesTags: ["Tests"],
@@ -234,7 +235,7 @@ const injectedRtkApi = api
             page: queryArg.page,
             perPage: queryArg.perPage,
             candidateId: queryArg.candidateId,
-            status: queryArg.status,
+            statusFilters: queryArg.statusFilters,
             sortByPoints: queryArg.sortByPoints,
             sortByCreatedAt: queryArg.sortByCreatedAt,
             sortBySecondsSpent: queryArg.sortBySecondsSpent,
@@ -286,7 +287,7 @@ const injectedRtkApi = api
             perPage: queryArg.perPage,
             testId: queryArg.testId,
             candidateId: queryArg.candidateId,
-            status: queryArg.status,
+            statusFilters: queryArg.statusFilters,
             sortByPoints: queryArg.sortByPoints,
             sortByCreatedAt: queryArg.sortByCreatedAt,
             sortBySecondsSpent: queryArg.sortBySecondsSpent,
@@ -492,6 +493,7 @@ export type GetTestsApiArg = {
   searchTitle?: string;
   sortCreatedAt?: "asc" | "desc";
   sortTitle?: "asc" | "desc";
+  actions?: "manage" | "view";
 };
 export type PostTestsApiResponse = /** status 200 Success */ {
   testId: string;
@@ -622,7 +624,7 @@ export type GetTestsByTestIdAttemptsApiArg = {
   page?: number;
   perPage?: number | null;
   candidateId?: string;
-  status?: "IN_PROGRESS" | "COMPLETED" | "GRADED";
+  statusFilters?: ("IN_PROGRESS" | "COMPLETED" | "GRADED")[] | string;
   sortByPoints?: "asc" | "desc";
   sortByCreatedAt?: "asc" | "desc";
   sortBySecondsSpent?: "asc" | "desc";
@@ -667,7 +669,7 @@ export type GetAttemptsApiArg = {
   perPage?: number | null;
   testId?: string;
   candidateId?: string;
-  status?: "IN_PROGRESS" | "COMPLETED" | "GRADED";
+  statusFilters?: ("IN_PROGRESS" | "COMPLETED" | "GRADED")[] | string;
   sortByPoints?: "asc" | "desc";
   sortByCreatedAt?: "asc" | "desc";
   sortBySecondsSpent?: "asc" | "desc";

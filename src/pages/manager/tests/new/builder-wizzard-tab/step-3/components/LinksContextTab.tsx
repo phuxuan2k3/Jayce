@@ -1,3 +1,4 @@
+import { CircleX, Link } from "lucide-react";
 import { cn } from "../../../../../../../app/cn";
 import { classNameInput } from "../../../common/class-names";
 
@@ -38,7 +39,7 @@ export default function LinksContextTab({
 				<button
 					type="button"
 					onClick={onAddLink}
-					className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+					className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors text-sm font-semibold"
 				>
 					Add
 				</button>
@@ -50,10 +51,12 @@ export default function LinksContextTab({
 					{links.map((link, index) => (
 						<div
 							key={index}
-							className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+							className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm"
 						>
 							<div className="flex items-center space-x-3">
-								<span className="text-lg">🔗</span>
+								<span className="text-lg">
+									<Link className="w-5 h-5 text-primary" />
+								</span>
 								<a
 									href={link}
 									target="_blank"
@@ -68,7 +71,7 @@ export default function LinksContextTab({
 								onClick={() => onRemoveLink(index)}
 								className="text-red-500 hover:text-red-700 font-medium"
 							>
-								Remove
+								<CircleX className="w-5 h-5" />
 							</button>
 						</div>
 					))}

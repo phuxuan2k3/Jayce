@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import QuickAction from "./QuickAction";
 import paths from "../../../../../router/paths";
 import { ArrowRight, BrainCircuit, ClipboardList, Rocket } from "lucide-react";
+import { cn } from "../../../../../app/cn";
 
 type SidebarActionsContextType = {};
 
@@ -15,9 +16,11 @@ type SidebarActionsProps = {
 	title?: string;
 	bottomSection?: ReactNode;
 	topSection?: ReactNode;
+	className?: string;
 };
 
 const SidebarActions = ({
+	className = '',
 	children,
 	title,
 	bottomSection,
@@ -25,7 +28,7 @@ const SidebarActions = ({
 }: SidebarActionsProps) => {
 	return (
 		<SidebarActionsContext.Provider value={{}}>
-			<div className="sticky top-2 max-h-[96vh] shadow-primary bg-white rounded-lg p-6 flex flex-col gap-6">
+			<div className={cn("sticky top-2 max-h-[96vh] shadow-primary bg-white rounded-lg p-6 flex flex-col gap-6", className)}>
 				{title && <h3 className="text-xl font-bold mb-2 text-center">{title}</h3>}
 
 				{topSection}

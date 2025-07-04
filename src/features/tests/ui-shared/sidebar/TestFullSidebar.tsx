@@ -128,10 +128,6 @@ function ExamDetails({ _detail }: { _detail: any }) {
 					<span className="font-bold">{_detail.hasPassword !== undefined ? (_detail.hasPassword ? "Yes" : "No") : "N/A"}</span>
 				</li>
 				<li className="flex items-center gap-2">
-					<span className="text-primary-toned-600">Password:</span>
-					<span className="font-bold">{_detail.hasPassword ? (_detail.password || "N/A") : "N/A"}</span>
-				</li>
-				<li className="flex items-center gap-2">
 					<span className="text-primary-toned-600">Attempts Allowed:</span>
 					<span className="font-bold">{_detail.numberOfAttemptsAllowed !== undefined ? _detail.numberOfAttemptsAllowed : "N/A"}</span>
 				</li>

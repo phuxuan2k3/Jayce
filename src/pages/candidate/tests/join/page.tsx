@@ -2,32 +2,35 @@ import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplat
 import { useState, useEffect } from "react";
 import JoinTestSection from "./components/JoinTestSection";
 import ExamInfoDialog from "./components/ExamInfoDialog";
-import { parseQueryError } from "../../../../helpers/fetchBaseQuery.error";
 import SidebarActions from "../../../../features/tests/ui/sidebar/primitive/SidebarActions";
 import { useGetTestsFindByRoomQuery } from "../../../../features/tests/api/test.api-gen-v2";
 import OnGoingTestsSection from "./components/OnGoingTestsSection";
 import MyHeaderTitleSection from "../../../../features/tests/ui-sections/MyHeaderSection";
+import FetchStateCover2 from "../../../../features/tests/ui/fetch-states/FetchStateCover2";
+import ErrorDialog from "../../../../features/tests/ui/fetch-states/ErrorDialog";
 
 export default function CandidateTestsJoinPage() {
 	const [roomId, setRoomId] = useState<string | null>(null);
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 	const testFindQuery = useGetTestsFindByRoomQuery({
-		roomId: roomId || ""
+		roomId: roomId?.trim() || ""
 	}, {
-		skip: roomId == null,
+		skip: roomId == null || roomId.trim() === "",
 		refetchOnMountOrArgChange: true,
 	});
 
 	useEffect(() => {
-		if (testFindQuery.isSuccess) {
+		if (
+			testFindQuery.isSuccess === true &&
+			testFindQuery.isFetching === false
+		) {
 			setIsDialogOpen(true);
 		}
-	}, [testFindQuery.isSuccess]);
+	}, [testFindQuery.isSuccess, testFindQuery.isFetching]);
 
 	const handleJoinTest = (roomId: string) => {
 		setRoomId(roomId);
-		setIsDialogOpen(true);
 	};
 
 	const handleCloseDialog = () => {
@@ -59,23 +62,27 @@ export default function CandidateTestsJoinPage() {
 				/>
 
 				{/* Join tests by roomId */}
-				<JoinTestSection onJoinTest={handleJoinTest} />
+				<JoinTestSection onJoinTest={handleJoinTest} isFetching={testFindQuery.isFetching} />
 
 				<hr className="border-primary-toned-300 mt-4" />
 
 				<OnGoingTestsSection />
 
 				{/* Exam Info Dialog */}
-				{roomId &&
-					<ExamInfoDialog
-						isOpen={isDialogOpen}
-						onClose={handleCloseDialog}
-						roomId={roomId}
-						isLoading={testFindQuery.isLoading}
-						data={testFindQuery.data}
-						error={parseQueryError(testFindQuery.error)}
+				{roomId && (
+					<FetchStateCover2
+						fetchState={testFindQuery}
+						errorComponent={(error) => <ErrorDialog error={error} />}
+						dataComponent={(data) => (
+							<ExamInfoDialog
+								isOpen={isDialogOpen}
+								onClose={handleCloseDialog}
+								roomId={roomId}
+								data={data}
+							/>
+						)}
 					/>
-				}
+				)}
 			</div>
 		</LeftLayoutTemplate>
 	);

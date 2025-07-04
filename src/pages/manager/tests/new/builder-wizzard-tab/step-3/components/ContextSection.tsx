@@ -4,6 +4,8 @@ import TextContextTab from './TextContextTab';
 import FilesContextTab from './FilesContextTab';
 import LinksContextTab from './LinksContextTab';
 import { BuilderStep3Type } from '../../../common/step-schema';
+import { toast } from 'react-toastify';
+import { z } from 'zod';
 
 interface ContextSectionProps {
 	context: BuilderStep3Type['context'];
@@ -26,6 +28,11 @@ export default function ContextSection({ context, onContextChange }: ContextSect
 
 	const handleAddLink = () => {
 		if (newLink.trim()) {
+			if (z.string().url().safeParse(newLink).success === false) {
+				toast.warning('Please enter a valid URL');
+				return;
+			}
+
 			onContextChange('links', [...context.links, newLink.trim()]);
 			setNewLink('');
 		}
@@ -49,7 +56,7 @@ export default function ContextSection({ context, onContextChange }: ContextSect
 				linksCount={context.links.length}
 			/>
 
-			<div className="min-h-[200px]">
+			<div className="min-h-[200px] p-4 bg-gray-50 border border-gray-200 rounded-b-lg shadow-inner">
 				{activeTab === 'text' && (
 					<TextContextTab
 						value={context.text}
