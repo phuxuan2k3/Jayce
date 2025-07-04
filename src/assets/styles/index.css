@@ -243,7 +243,7 @@ h6 {
   background: white;
 }
 .icon-link:hover .icon-path {
-  fill: #fff;
+  fill: var(--primary-color);
   transition: fill 0s;
 }
 
