@@ -17,7 +17,7 @@ const withLoading = <P extends { disabled?: boolean; children?: React.ReactNode 
 			>
 				{loading ? (
 					loadingNode ?? (
-						<span className="animate-spin mr-2 inline-block align-middle">⏳</span>
+						<div className="w-5 h-5 border-4 border-white-toned-600 border-t-transparent rounded-full animate-spin"></div>
 					)
 				) : (
 					children

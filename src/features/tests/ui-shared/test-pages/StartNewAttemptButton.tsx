@@ -24,7 +24,7 @@ export default function StartNewAttemptButton({
 		},
 		onError: (error) => {
 			const errorMessage = parseQueryError(error);
-			toast.error(`Error starting new attempt: ${errorMessage || 'Unknown error'}`);
+			toast.error(`${errorMessage || 'Unknown error'}`);
 			console.error('Error starting new attempt:', errorMessage);
 		}
 	});

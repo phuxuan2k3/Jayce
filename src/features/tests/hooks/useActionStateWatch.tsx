@@ -21,11 +21,11 @@ export default function useActionStateWatch<T>(actionState: ActionState<T>, opti
 	const { onLoading, onSuccess, onError, onErrorMessage } = options || {};
 	useEffect(() => {
 		if (isLoading) onLoading?.();
-	}, [isLoading, onLoading]);
+	}, [isLoading]);
 
 	useEffect(() => {
 		if (isSuccess && data !== undefined) onSuccess?.(data);
-	}, [isSuccess, data, onSuccess]);
+	}, [isSuccess, data]);
 
 	useEffect(() => {
 		const errorMessage = parseQueryError(error);
@@ -35,5 +35,5 @@ export default function useActionStateWatch<T>(actionState: ActionState<T>, opti
 		if (errorMessage) {
 			onErrorMessage?.(errorMessage);
 		}
-	}, [error, onError, onErrorMessage]);
+	}, [error]);
 }
