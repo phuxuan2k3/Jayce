@@ -8,6 +8,7 @@ import {
   faArrowRight,
   faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
+import { Alert } from "@mui/material";
 
 export default function AuthResetPasswordPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -21,7 +22,19 @@ export default function AuthResetPasswordPage() {
       await resetPassword({ email }).unwrap();
       setSubmitted(true);
     } catch (error) {
-      alert("Failed to send reset password email. Try again.");
+      // alert("Failed to send reset password email. Try again.");
+      return (
+        <Alert
+          sx={{
+            width: "100%",
+            mt: 1,
+            mb: 3,
+          }}
+          severity="success"
+        >
+          Failed to send reset password email. Try again.
+        </Alert>
+      );
     }
     setLoading(false);
   };

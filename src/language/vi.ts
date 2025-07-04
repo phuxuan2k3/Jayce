@@ -106,7 +106,8 @@ export const vi = {
   settings_profile_avatar_upload_no_avatar: "Không có ảnh đại diện",
   settings_profile_avatar_upload_choose: "Chọn ảnh đại diện",
   settings_profile_avatar_upload_success: "Cập nhật ảnh đại diện thành công",
-  settings_profile_avatar_upload_error: "Không thể cập nhật ảnh đại diện. Vui lòng thử lại sau.",
+  settings_profile_avatar_upload_error:
+    "Không thể cập nhật ảnh đại diện. Vui lòng thử lại sau.",
   settings_profile_avatar_upload_processing: "Đang lưu...",
   settings_profile_avatar_upload_cancel: "Hủy",
   settings_profile_avatar_upload_confirm: "Xác nhận",
@@ -115,7 +116,8 @@ export const vi = {
   settings_topup_cancel: "Hủy",
   settings_topup_confirm: "Xác nhận",
   settings_topup_processing: "Đang xử lý...",
-  settings_topup_failed: "Không thể tạo liên kết thanh toán. Vui lòng thử lại sau.",
+  settings_topup_failed:
+    "Không thể tạo liên kết thanh toán. Vui lòng thử lại sau.",
   settings_user_loading: "Đang tải...",
   settings_topup_history_title: "Lịch sử nạp tiền",
   settings_topup_history_status: "Trạng thái",
@@ -190,23 +192,30 @@ export const vi = {
   change_password_error_new_required: "Cần nhập mật khẩu mới",
   change_password_error_confirm_required: "Cần nhập xác nhận mật khẩu mới",
   change_password_error_min_length: "Mật khẩu mới phải có ít nhất 6 ký tự",
-  change_password_error_uppercase: "Mật khẩu mới phải chứa ít nhất một chữ cái viết hoa",
-  change_password_error_lowercase: "Mật khẩu mới phải chứa ít nhất một chữ cái viết thường",
+  change_password_error_uppercase:
+    "Mật khẩu mới phải chứa ít nhất một chữ cái viết hoa",
+  change_password_error_lowercase:
+    "Mật khẩu mới phải chứa ít nhất một chữ cái viết thường",
   change_password_error_number: "Mật khẩu mới phải chứa ít nhất một chữ số",
-  change_password_error_special: "Mật khẩu mới phải chứa ít nhất một ký tự đặc biệt",
+  change_password_error_special:
+    "Mật khẩu mới phải chứa ít nhất một ký tự đặc biệt",
   change_password_error_confirm_mismatch: "Mật khẩu không khớp",
-  change_password_error_default: "Mật khẩu không đúng hoặc không khớp. Vui lòng thử lại",
-  delete_account_confirm_message: "Bạn có chắc chắn muốn xóa tài khoản của mình không?",
+  change_password_error_default:
+    "Mật khẩu không đúng hoặc không khớp. Vui lòng thử lại",
+  delete_account_confirm_message:
+    "Bạn có chắc chắn muốn xóa tài khoản của mình không?",
   delete_account_confirm_yes: "Có",
   delete_account_confirm_no: "Không",
 
   // Theme Preferences
   settings_theme_mode_title: "Chế độ giao diện",
   settings_theme_light_label: "Giao diện sáng",
-  settings_theme_light_description: 'Giao diện này sẽ được kích hoạt khi hệ thống của bạn đặt ở chế độ "sáng"',
+  settings_theme_light_description:
+    'Giao diện này sẽ được kích hoạt khi hệ thống của bạn đặt ở chế độ "sáng"',
   settings_theme_light_preview: "Light Tritanopia",
   settings_theme_dark_label: "Giao diện tối",
-  settings_theme_dark_description: 'Giao diện này sẽ được kích hoạt khi hệ thống của bạn đặt ở chế độ "tối"',
+  settings_theme_dark_description:
+    'Giao diện này sẽ được kích hoạt khi hệ thống của bạn đặt ở chế độ "tối"',
   settings_theme_dark_preview: "Dark default",
   settings_theme_active: "Đang chọn",
 
@@ -220,8 +229,10 @@ export const vi = {
 
   // Pricing
   pricing_title: "Mở khóa trải nghiệm thành viên (Premium)",
-  pricing_description: "Truy cập tất cả các khóa học, câu trả lời bằng video, phỏng vấn ảo với AI, và nhiều hơn nữa.",
-  pricing_already_premium: "Bạn hiện là thành viên premium. Quyền truy cập của bạn sẽ hết hạn vào",
+  pricing_description:
+    "Truy cập tất cả các khóa học, câu trả lời bằng video, phỏng vấn ảo với AI, và nhiều hơn nữa.",
+  pricing_already_premium:
+    "Bạn hiện là thành viên premium. Quyền truy cập của bạn sẽ hết hạn vào",
   pricing_monthly_label: "Gói tháng",
   pricing_annual_label: "Gói năm",
   pricing_benefit_access_courses: "Truy cập tất cả các khóa học",
@@ -237,11 +248,16 @@ export const vi = {
   pricing_start_now: "Bắt đầu ngay",
   pricing_extend: "Gia hạn",
   pricing_plan_features_title: "Có những gì đi kèm với gói premium?",
-  pricing_feature_1: "Tiếp cận hơn 400 bài học phỏng vấn, câu hỏi, và câu trả lời hoàn chỉnh với video hướng dẫn.",
-  pricing_feature_2: "Các gói đều bao gồm tất cả các khóa học của chúng tôi: PM, Quản lý Kỹ thuật, TPM, Khoa học Dữ liệu, SWE, và nhiều hơn nữa.",
-  pricing_feature_3: "Truy cập hơn 200 giờ video phỏng vấn thực tế, nơi chúng tôi phân tích điều gì đúng hoặc sai.",
-  pricing_error_generic: "Không thể xử lý yêu cầu của bạn. Vui lòng thử lại sau.",
-  pricing_success_activation: "Gói premium của bạn đã được kích hoạt thành công!",
+  pricing_feature_1:
+    "Tiếp cận hơn 400 bài học phỏng vấn, câu hỏi, và câu trả lời hoàn chỉnh với video hướng dẫn.",
+  pricing_feature_2:
+    "Các gói đều bao gồm tất cả các khóa học của chúng tôi: PM, Quản lý Kỹ thuật, TPM, Khoa học Dữ liệu, SWE, và nhiều hơn nữa.",
+  pricing_feature_3:
+    "Truy cập hơn 200 giờ video phỏng vấn thực tế, nơi chúng tôi phân tích điều gì đúng hoặc sai.",
+  pricing_error_generic:
+    "Không thể xử lý yêu cầu của bạn. Vui lòng thử lại sau.",
+  pricing_success_activation:
+    "Gói premium của bạn đã được kích hoạt thành công!",
 
   // Candidate Dashboard
   candidate_home_welcome: "Chào mừng trở lại",

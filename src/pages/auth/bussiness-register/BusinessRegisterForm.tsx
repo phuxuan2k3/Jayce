@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { useRegisterMutation } from "../../../features/auth/api/auth.api";
 import { useVerificationEmailMutation } from "../../../features/auth/api/auth.api";
 import paths from "../../../router/paths";
+import { Alert } from "@mui/material";
 
 const BusinessRegisterForm = () => {
   const navigate = useNavigate();
@@ -113,12 +114,35 @@ const BusinessRegisterForm = () => {
   const handleVerifyEmail = async () => {
     if (!validateForm()) return;
     if (!email) {
-      alert("Please enter your email.");
-      return;
+      // alert("Please enter your email.");
+      return (
+        <Alert
+          sx={{
+            width: "100%",
+            mt: 1,
+            mb: 3,
+          }}
+          severity="success"
+        >
+          Please enter your email.
+        </Alert>
+      );
     }
     try {
       await verificationEmail({ email }).unwrap();
-      alert("Verification email sent successfully!");
+      // alert("Verification email sent successfully!");
+      return (
+        <Alert
+          sx={{
+            width: "100%",
+            mt: 1,
+            mb: 3,
+          }}
+          severity="success"
+        >
+          Verification email sent successfully!
+        </Alert>
+      );
       setIsOpenModal(true);
     } catch (error) {
       console.error("Verification failed:", error);

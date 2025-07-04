@@ -24,8 +24,9 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
     },
   ];
   const [isOpen, setIsopen] = useState<boolean>(false);
-  const { t, language, setLanguage } = useLanguage();
+  const { t } = useLanguage();
 
+  const [language, setLanguage] = useState<string>("English");
   return (
     <>
       <div className="fotn-back text-[32px] font-arya w-full text-center leading-[24px] mt-4">
@@ -42,11 +43,13 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
             </div>
             <select
               value={language}
-              onChange={(e) => setLanguage(e.target.value as "en" | "vi")}
+              onChange={(e) =>
+                setLanguage(e.target.value as "English" | "Vietnamese")
+              }
               className="py-2 pe-12 ps-2  shadow rounded-md focus:outline-none focus:ring focus:ring-teal-300"
             >
-              <option value="en">English</option>
-              <option value="vi">Tiếng Việt</option>
+              <option value="English">English</option>
+              <option value="Vietnamese">Tiếng Việt</option>
             </select>
             <div className="mt-4 mb-2">{t("models_english")}</div>
             <div className="grid grid-cols-2  gap-4">

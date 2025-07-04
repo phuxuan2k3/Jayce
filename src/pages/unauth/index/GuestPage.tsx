@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import paths from "../../../router/paths";
+import { useEffect } from "react";
 
 const GuestPage = () => {
   const navigate = useNavigate();
@@ -27,6 +28,17 @@ const GuestPage = () => {
     },
   ];
 
+  const hash = window.location.hash;
+
+  useEffect(() => {
+    if (window.location.hash) {
+      const id = window.location.hash.replace("#", "");
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [hash]);
   return (
     <div>
       <section className="relative text-center overflow-hidden">
@@ -49,7 +61,10 @@ const GuestPage = () => {
         </div>
         <div
           className="relative z-10 text-center flex flex-col justify-center h-[100vh] bg-no-repeat bg-cover bg-center animate-fade-in"
-          style={{ backgroundImage: "url('/svg/landing.svg')" }}
+          style={{
+            background:
+              "linear-gradient(135deg, #bfeaff 0%, #dff6fd 20%, #ffe0ec 60%, #ffd6b0 100%)",
+          }}
         >
           <h1
             className="text-4xl font-black mb-4 animate-fade-in"
@@ -74,13 +89,13 @@ const GuestPage = () => {
           >
             <div
               onClick={() => navigate(paths.auth.REGISTER)}
-              className="px-10 bg-[var(--primary-color)] rounded-lg text-white py-2 font-bold cursor-pointer shadow-lg hover:shadow-[0_0_24px_0_rgba(57,160,173,0.25)] hover:scale-105 transition-all duration-200 active:scale-95 ring-2 ring-transparent hover:ring-[var(--primary-color)]"
+              className="px-16 text-xl bg-[var(--primary-color)] rounded-full text-white py-4 font-bold cursor-pointer shadow-lg hover:shadow-[0_0_24px_0_rgba(57,160,173,0.25)] hover:scale-105 transition-all duration-200 active:scale-95 ring-2 ring-transparent hover:ring-[var(--primary-color)]"
             >
               For Candidates
             </div>
             <div
               onClick={() => navigate(paths.auth.BUSINESS_REGISTER)}
-              className="px-10 border border-[var(--primary-color)] rounded-lg text-primary py-2 font-bold cursor-pointer bg-white shadow hover:shadow-[0_0_24px_0_rgba(57,160,173,0.15)] hover:scale-105 transition-all duration-200 active:scale-95 ring-2 ring-transparent hover:ring-[var(--primary-color)]"
+              className="px-16 text-xl  rounded-full text-primary py-4 font-bold cursor-pointer bg-white shadow hover:shadow-[0_0_24px_0_rgba(57,160,173,0.15)] hover:scale-105 transition-all duration-200 active:scale-95 ring-2 ring-transparent hover:ring-[var(--primary-color)]"
             >
               For Businesses
             </div>
@@ -88,7 +103,10 @@ const GuestPage = () => {
         </div>
       </section>
 
-      <h2 className="text-center text-4xl font-bold text-primary mt-10 mb-8">
+      <h2
+        id="tests"
+        className="text-center text-4xl font-bold text-primary mt-10 mb-8"
+      >
         SkillSharp - The all-in-one interview prep platforms
       </h2>
       <div className="space-y-10 px-6 md:px-20">
@@ -113,7 +131,10 @@ const GuestPage = () => {
         ))}
       </div>
 
-      <h2 className="text-center text-4xl font-bold text-primary mt-10 mb-8">
+      <h2
+        id="interviews"
+        className="text-center text-4xl font-bold text-primary mt-10 mb-8"
+      >
         Do everything easier with AI assistants!
       </h2>
       <div className="flex justify-center mt-20 mb-20">

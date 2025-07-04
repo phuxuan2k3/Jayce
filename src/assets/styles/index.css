@@ -242,3 +242,12 @@ h6 {
   color: var(--color-primary-toned-600);
   background: white;
 }
+.icon-link:hover .icon-path {
+  fill: #fff;
+  transition: fill 0s;
+}
+
+.icon-select {
+  fill: var(--primary-color);
+  transition: fill 0s;
+}

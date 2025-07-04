@@ -11,6 +11,7 @@ import BackgroundContainer from "./sub/BackgroundContainer";
 // import { Models } from "../../types/render";
 // import { useModelContext } from "../../contexts/model-context";
 import {
+  Alert,
   Button,
   CircularProgress,
   Dialog,
@@ -64,8 +65,19 @@ export default function BottomMenu() {
   const [showSubmittingModal, setShowSubmittingModal] = useState(false);
   const handleSubmitInterview = async () => {
     if (!interviewId) {
-      alert("Không tìm thấy interviewId!");
-      return;
+      // alert("Không tìm thấy interviewId!");
+      return (
+        <Alert
+          sx={{
+            width: "100%",
+            mt: 1,
+            mb: 3,
+          }}
+          severity="success"
+        >
+          Not found interviewId!
+        </Alert>
+      );
     }
 
     try {
@@ -74,7 +86,19 @@ export default function BottomMenu() {
       navigate("/candidate/interviews/result", { state: { interviewId } });
     } catch (error) {
       console.error("Error submitting interview:", error);
-      alert("Đã xảy ra lỗi khi kết thúc phỏng vấn. Vui lòng thử lại.");
+      // alert("Đã xảy ra lỗi khi kết thúc phỏng vấn. Vui lòng thử lại.");
+      return (
+        <Alert
+          sx={{
+            width: "100%",
+            mt: 1,
+            mb: 3,
+          }}
+          severity="success"
+        >
+          Submit error. Please submit again
+        </Alert>
+      );
     } finally {
       setLoading(false);
       setOpen(false);
@@ -84,8 +108,19 @@ export default function BottomMenu() {
   const handleNext = async () => {
     console.log("interviewId từ navigate:", interviewId);
     if (!interviewId) {
-      alert("Không tìm thấy interviewId!");
-      return;
+      // alert("Không tìm thấy interviewId!");
+      return (
+        <Alert
+          sx={{
+            width: "100%",
+            mt: 1,
+            mb: 3,
+          }}
+          severity="success"
+        >
+          Not found interviewId!
+        </Alert>
+      );
     }
 
     try {
@@ -103,8 +138,20 @@ export default function BottomMenu() {
         goToNextQuestion();
       }
     } catch (e) {
-      alert("Có lỗi khi gửi đáp án. Vui lòng thử lại.");
+      // alert("Có lỗi khi gửi đáp án. Vui lòng thử lại.");
       console.error(e);
+      return (
+        <Alert
+          sx={{
+            width: "100%",
+            mt: 1,
+            mb: 3,
+          }}
+          severity="success"
+        >
+          Submit error. Please submit again
+        </Alert>
+      );
     }
   };
   if (showSubmittingModal)
