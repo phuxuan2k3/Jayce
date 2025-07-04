@@ -16,21 +16,9 @@ export default function ExamInformationTab({
 		<FetchStateCover2
 			fetchState={examQuery}
 			dataComponent={(exam) => (
-				<div className="w-full flex flex-col gap-6">
-					<header className="text-center">
-						<h1 className="text-2xl font-bold text-primary-dark">{exam.title}</h1>
-						<p className="text-sm text-gray-600 mt-2 max-w-3xl mx-auto">{exam.description}</p>
-						<p className="text-xs text-gray-500 mt-1">Created on: {new Date(exam.createdAt).toLocaleDateString()}</p>
-						<p className="text-xs text-gray-500 mt-1">Last updated: {new Date(exam.updatedAt).toLocaleDateString()}</p>
-					</header>
-
-					<hr className="border-primary-toned-300" />
-
+				<div className="w-full flex flex-col gap-2 px-2">
 					<ExamDetails exam={exam} />
-
 					<hr className="border-primary-toned-300" />
-
-
 					<div className="flex flex-col gap-2">
 						<h2 className="text-lg font-semibold text-gray-700">Exam Summary</h2>
 						<p className="text-sm text-gray-500">

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import LeftLayoutTemplate from '../../../../../components/layouts/LeftLayoutTemplate'
 import Sidebar from './components/Sidebar';
 import QuestionsTab from './components/questions-tab';
 import ExamInformationTab from './components/exam-information-tab';
@@ -8,12 +7,17 @@ import paths from '../../../../../router/paths';
 import useGetTestIdParams from '../../../../../features/tests/hooks/useGetTestIdParams';
 import AttemptsTab from '../../../../../features/tests/ui-shared/test-pages/attempts-tab';
 import ParticipantsTab from '../../../../../features/tests/ui-shared/test-pages/participants-tab';
+import RightLayoutTemplate from '../../../../../components/layouts/RightLayoutTemplate';
+import FetchStateCover2 from '../../../../../features/tests/ui/fetch-states/FetchStateCover2';
+import { useGetTestsByTestIdQuery } from '../../../../../features/tests/api/test.api-gen-v2';
+import TitleSkeleton from '../../../../../features/tests/ui/skeletons/TitleSkeleton';
 
 export type TabMode = 'info' | 'questions' | 'attempts' | 'participants';
 
 export default function ManagerTestPage() {
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
+	const testQuery = useGetTestsByTestIdQuery({ testId });
 
 	const [mode, setMode] = useState<TabMode>('info');
 
@@ -37,21 +41,28 @@ export default function ManagerTestPage() {
 	}
 
 	return (
-		<LeftLayoutTemplate
+		<RightLayoutTemplate
 			header={
-				<LeftLayoutTemplate.Header
-					title="Exams Management"
-					description="Manage all your exams."
+				<FetchStateCover2
+					fetchState={testQuery}
+					loadingComponent={<TitleSkeleton />}
+					dataComponent={(data) => (
+						<RightLayoutTemplate.Header
+							title={data.title}
+							description={data.description}
+						/>
+					)}
 				/>
+
 			}
-			left={<Sidebar
+			right={<Sidebar
 				testId={testId}
 				onModeChange={(mode) => setMode(mode)}
 				mode={mode}
 			/>}
 		>
 			{getTab(mode)}
-		</LeftLayoutTemplate>
+		</RightLayoutTemplate>
 	);
 }
 
