@@ -8,7 +8,6 @@ import AnswersList from '../../../../../../../features/tests/ui-shared/attempt-p
 import AttemptSidebar from '../../../../../../../features/tests/ui-shared/sidebar/AttemptSidebar';
 import FetchStateCover2 from '../../../../../../../features/tests/ui/fetch-states/FetchStateCover2';
 
-
 export default function ManagerTestsAttemptPage() {
 	const attemptId = useGetAttemptIdParams();
 	const testId = useGetTestIdParams();
