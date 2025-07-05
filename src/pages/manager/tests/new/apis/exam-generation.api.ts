@@ -1,11 +1,12 @@
 import promptApi from "../../../../../features/tests/api/prompt.api";
+import { QuestionPersistCoreSchema } from "../../../../../features/tests/ui-items/question/types";
 import { LanguageType, Topic } from "../common/base-schema";
 
 const promptApiCustom = promptApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getGenerateExamQuestions: builder.query<GetGenerateExamQuestionsApiResponse, GetGenerateExamQuestionsApiRequest>({
 			query: (data) => ({
-				url: "/v1/suggest_exam_question",
+				url: "/v2/suggest_exam_question",
 				method: "POST",
 				body: data,
 			}),
@@ -31,10 +32,5 @@ export type GetGenerateExamQuestionsApiRequest = {
 };
 
 export type GetGenerateExamQuestionsApiResponse = {
-	questions: {
-		text: string;
-		options: string[];
-		points: number;
-		correctOption: number;
-	}[];
+	questions: QuestionPersistCoreSchema[];
 };

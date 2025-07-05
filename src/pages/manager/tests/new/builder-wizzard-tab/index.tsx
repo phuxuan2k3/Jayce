@@ -2,7 +2,7 @@ import { useState } from "react";
 import StepDone from "./step-done";
 import BuilderWizzardTabMain from "./main";
 import { useLazyGetGenerateExamQuestionsQuery } from "../apis/exam-generation.api";
-import { transformAllStepDataToGenerateArgs, transformExamPersistToAllStepData, transformGenerateResponseToQuestionsPersistCore } from "../common/transform";
+import { transformAllStepDataToGenerateArgs, transformExamPersistToAllStepData } from "../common/transform";
 import { AllStepData } from "../common/types";
 import { QuestionPersistCoreSchema } from "../../../../../features/tests/ui-items/question/types";
 import { ExamPersistCoreSchema } from "../../../../../features/tests/ui-items/test/types";
@@ -31,7 +31,7 @@ export default function BuilderWizzardTab({
 
 			{data != null ? (
 				<StepDone
-					questions={transformGenerateResponseToQuestionsPersistCore(data)}
+					questions={data.questions}
 					onRegenerateQuestions={() => {
 						generate(transformAllStepDataToGenerateArgs(mainData));
 					}}
