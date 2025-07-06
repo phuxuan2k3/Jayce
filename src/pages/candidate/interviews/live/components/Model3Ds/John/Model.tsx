@@ -1,12 +1,14 @@
 import * as THREE from "three";
 import React, { useRef, useEffect } from "react";
 import { useGraph } from "@react-three/fiber";
-import { useAnimations, useFBX, useGLTF } from "@react-three/drei";
+import { useGLTF, useFBX, useAnimations } from "@react-three/drei";
 import { GLTF, SkeletonUtils } from "three-stdlib";
 import { useConfigModel } from "../../../hooks/useConfigModel";
 
 type GLTFResult = GLTF & {
   nodes: {
+    Wolf3D_Hair: THREE.SkinnedMesh;
+    Wolf3D_Glasses: THREE.SkinnedMesh;
     Wolf3D_Body: THREE.SkinnedMesh;
     Wolf3D_Outfit_Bottom: THREE.SkinnedMesh;
     Wolf3D_Outfit_Footwear: THREE.SkinnedMesh;
@@ -18,6 +20,8 @@ type GLTFResult = GLTF & {
     Hips: THREE.Bone;
   };
   materials: {
+    Wolf3D_Hair: THREE.MeshStandardMaterial;
+    Wolf3D_Glasses: THREE.MeshStandardMaterial;
     Wolf3D_Body: THREE.MeshStandardMaterial;
     Wolf3D_Outfit_Bottom: THREE.MeshStandardMaterial;
     Wolf3D_Outfit_Footwear: THREE.MeshStandardMaterial;
@@ -30,9 +34,8 @@ type GLTFResult = GLTF & {
 };
 
 export default function Model(props: JSX.IntrinsicElements["group"]) {
-  const { scene, ...gltfRest } = useGLTF("/models/Peter.glb") as GLTFResult;
+  const { scene, ...gltfRest } = useGLTF("/models/Alice.glb") as GLTFResult;
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
-
   const fbx = useFBX("/animations/Stand.fbx");
 
   const group = useRef<THREE.Group>(null);
@@ -50,37 +53,35 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { actions } = useAnimations(animations, group);
   const { nodes, materials } = useGraph(clone) as GLTFResult;
 
+  // Self Inject:
   const groupRef = useRef<THREE.Group>(null);
   useConfigModel({
     modelRender: {
-      nodes: nodes as any,
-      materials: materials as any,
+      nodes,
+      materials,
     },
     groupRef,
   });
+
   useEffect(() => {
     if (actions && Object.values(actions).length > 0) {
       Object.values(actions)[0]?.play();
     }
   }, [actions]);
 
-  // const { scene } = useGLTF("/models/Peter.glb");
-  // const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
-  // const { nodes, materials } = useGraph(clone) as GLTFResult;
-
-  // // Self Inject:
-  // const groupRef = useRef<THREE.Group>(null);
-  // useConfigModel({
-  //   modelRender: {
-  //     nodes: nodes as any,
-  //     materials: materials as any,
-  //   },
-  //   groupRef,
-  // });
-  // const group = useRef<THREE.Group>(null);
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group {...props} ref={group} dispose={null}>
       <primitive object={nodes.Hips} />
+      <skinnedMesh
+        geometry={nodes.Wolf3D_Hair.geometry}
+        material={materials.Wolf3D_Hair}
+        skeleton={nodes.Wolf3D_Hair.skeleton}
+      />
+      <skinnedMesh
+        geometry={nodes.Wolf3D_Glasses.geometry}
+        material={materials.Wolf3D_Glasses}
+        skeleton={nodes.Wolf3D_Glasses.skeleton}
+      />
       <skinnedMesh
         geometry={nodes.Wolf3D_Body.geometry}
         material={materials.Wolf3D_Body}
@@ -137,4 +138,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/models/Peter.glb");
+useGLTF.preload("/models/Alice.glb");
