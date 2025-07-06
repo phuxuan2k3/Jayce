@@ -4,12 +4,14 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import SoundWaveVisualizer from "./sub/SoundWaveVisualizer";
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "../../../../../../LanguageProvider";
 
 export default function Record({
 	onAnswerRecorded,
 }: {
 	onAnswerRecorded: (transcript: string, base64Audio: string) => void;
 }) {
+	const { language } = useLanguage();
 	const {
 		listening,
 		finalTranscript,
@@ -18,9 +20,7 @@ export default function Record({
 		browserSupportsContinuousListening,
 		isMicrophoneAvailable,
 		transcript,
-	} = useSpeechRecognition({
-
-	});
+	} = useSpeechRecognition();
 
 	const [audioBase64, setAudioBase64] = useState<string | null>(null);
 	const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -72,7 +72,7 @@ export default function Record({
 		) {
 			startRecording();
 			SpeechRecognition.startListening({
-				language: "vi-VN", // "en-US" for English, "vi-VN" for Vietnamese
+				language: language === "en" ? "en-US" : "vi-VN",
 				continuous: true,
 				interimResults: false,
 			}).catch((error) => {
