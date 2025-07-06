@@ -28,7 +28,7 @@ const SidebarActions = ({
 }: SidebarActionsProps) => {
 	return (
 		<SidebarActionsContext.Provider value={{}}>
-			<div className={cn("sticky top-2 max-h-[96vh] shadow-primary bg-white rounded-lg p-6 flex flex-col gap-6", className)}>
+			<div className={cn("sticky top-2 max-h-[96vh] h-full shadow-primary bg-white rounded-lg p-6 flex flex-col gap-6", className)}>
 				{title && <h3 className="text-xl font-bold mb-2 text-center">{title}</h3>}
 
 				{topSection}

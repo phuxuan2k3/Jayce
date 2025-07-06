@@ -45,7 +45,6 @@ export default function CandidateTestExamPage() {
 	}, []);
 
 	return (
-
 		<RightLayoutTemplate
 			header={
 				<FetchStateCover2
@@ -57,7 +56,7 @@ export default function CandidateTestExamPage() {
 							description={test.description}
 							backButton={
 								<RightLayoutTemplate.BackButton
-									onClick={() => navigate(paths.candidate.tests.ROOT)}
+									onClick={() => navigate(paths.candidate.tests.JOIN)}
 								/>
 							}
 						/>
@@ -87,34 +86,5 @@ export default function CandidateTestExamPage() {
 				)}
 			/>
 		</RightLayoutTemplate>
-
-
-		// <FetchStateCover2
-		// 	fetchState={testQuery}
-		// 	dataComponent={(test) => (
-		// 		<LeftLayoutTemplate
-		// 			header={
-		// 				<LeftLayoutTemplate.Header
-		// 					title={test.title}
-		// 					description={test.description}
-		// 				/>
-		// 			}
-		// 			left={<Sidebar />}
-		// 		>
-		// 			<div className="flex flex-col gap-8">
-		// 				<div>
-		// 					<TestFullCard test={test} />
-		// 					<UserCard userId={test.authorId} />
-		// 					<CurrentAttemptCard />
-		// 				</div>
-
-		// 				<div className="flex flex-col gap-4">
-		// 					<h2 className="text-xl font-bold">Details</h2>
-		// 					<MyTabs tabs={tabs(test)} defaultTabId="attempts" />
-		// 				</div>
-		// 			</div>
-		// 		</LeftLayoutTemplate>
-		// 	)}
-		// />
 	);
 }

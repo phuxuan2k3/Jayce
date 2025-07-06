@@ -28,7 +28,6 @@ export default function QuestionsTab({
 	);
 }
 
-
 const QuestionManageCard = ({
 	question,
 	index,
@@ -44,3 +43,4 @@ const QuestionManageCard = ({
 		</QuestionPrimitives>
 	)
 }
+

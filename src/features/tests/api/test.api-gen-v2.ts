@@ -144,6 +144,7 @@ const injectedRtkApi = api
             sortCreatedAt: queryArg.sortCreatedAt,
             sortTitle: queryArg.sortTitle,
             actions: queryArg.actions,
+            filterStatuses: queryArg.filterStatuses,
           },
         }),
         providesTags: ["Tests"],
@@ -342,6 +343,17 @@ const injectedRtkApi = api
         }),
         invalidatesTags: ["Attempts"],
       }),
+      patchAttemptsByAttemptIdScore: build.mutation<
+        PatchAttemptsByAttemptIdScoreApiResponse,
+        PatchAttemptsByAttemptIdScoreApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/attempts/${queryArg.attemptId}/score`,
+          method: "PATCH",
+          body: queryArg.body,
+        }),
+        invalidatesTags: ["Attempts"],
+      }),
     }),
     overrideExisting: false,
   });
@@ -494,6 +506,7 @@ export type GetTestsApiArg = {
   sortCreatedAt?: "asc" | "desc";
   sortTitle?: "asc" | "desc";
   actions?: "manage" | "view";
+  filterStatuses?: ("UPCOMING" | "OPEN" | "CLOSED")[] | string;
 };
 export type PostTestsApiResponse = /** status 200 Success */ {
   testId: string;
@@ -696,13 +709,36 @@ export type PostAttemptsByAttemptIdAnswersApiResponse = unknown;
 export type PostAttemptsByAttemptIdAnswersApiArg = {
   attemptId: string;
   body: {
-    questionId: number;
-    answer?: AnswerForQuestionTypeSchema;
+    answers: {
+      questionId: number;
+      answer?: AnswerForQuestionTypeSchema &
+        (
+          | {
+              type: "MCQ";
+              chosenOption: number;
+            }
+          | {
+              type: "LONG_ANSWER";
+              answer: string;
+            }
+          | null
+        );
+    }[];
   };
 };
 export type PatchAttemptsByAttemptIdSubmitApiResponse = unknown;
 export type PatchAttemptsByAttemptIdSubmitApiArg = {
   attemptId: string;
+};
+export type PatchAttemptsByAttemptIdScoreApiResponse = unknown;
+export type PatchAttemptsByAttemptIdScoreApiArg = {
+  attemptId: string;
+  body: {
+    evaluations: {
+      answerId: string;
+      points: number;
+    }[];
+  };
 };
 export type TestCoreSchema = {
   id: string;
@@ -915,4 +951,5 @@ export const {
   useLazyGetAttemptsByAttemptIdAnswersQuery,
   usePostAttemptsByAttemptIdAnswersMutation,
   usePatchAttemptsByAttemptIdSubmitMutation,
+  usePatchAttemptsByAttemptIdScoreMutation,
 } = injectedRtkApi;

@@ -1553,6 +1553,30 @@
 						"required": false,
 						"name": "actions",
 						"in": "query"
+					},
+					{
+						"schema": {
+							"anyOf": [
+								{
+									"type": "array",
+									"items": {
+										"type": "string",
+										"enum": [
+											"UPCOMING",
+											"OPEN",
+											"CLOSED"
+										]
+									}
+								},
+								{
+									"type": "string"
+								}
+							],
+							"default": []
+						},
+						"required": false,
+						"name": "filterStatuses",
+						"in": "query"
 					}
 				],
 				"responses": {
@@ -2825,15 +2849,73 @@
 							"schema": {
 								"type": "object",
 								"properties": {
-									"questionId": {
-										"type": "number"
-									},
-									"answer": {
-										"$ref": "#/components/schemas/AnswerForQuestionTypeSchema"
+									"answers": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"questionId": {
+													"type": "number"
+												},
+												"answer": {
+													"allOf": [
+														{
+															"$ref": "#/components/schemas/AnswerForQuestionTypeSchema"
+														},
+														{
+															"oneOf": [
+																{
+																	"type": "object",
+																	"properties": {
+																		"type": {
+																			"type": "string",
+																			"enum": [
+																				"MCQ"
+																			]
+																		},
+																		"chosenOption": {
+																			"type": "number"
+																		}
+																	},
+																	"required": [
+																		"type",
+																		"chosenOption"
+																	]
+																},
+																{
+																	"type": "object",
+																	"properties": {
+																		"type": {
+																			"type": "string",
+																			"enum": [
+																				"LONG_ANSWER"
+																			]
+																		},
+																		"answer": {
+																			"type": "string"
+																		}
+																	},
+																	"required": [
+																		"type",
+																		"answer"
+																	]
+																},
+																{
+																	"type": "null"
+																}
+															]
+														}
+													]
+												}
+											},
+											"required": [
+												"questionId"
+											]
+										}
 									}
 								},
 								"required": [
-									"questionId"
+									"answers"
 								]
 							}
 						}
@@ -2861,6 +2943,62 @@
 						"in": "path"
 					}
 				],
+				"responses": {
+					"200": {
+						"description": "Success"
+					}
+				}
+			}
+		},
+		"/attempts/{attemptId}/score": {
+			"patch": {
+				"tags": [
+					"Attempts"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "attemptId",
+						"in": "path"
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"evaluations": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"answerId": {
+													"type": "string"
+												},
+												"points": {
+													"type": "integer",
+													"minimum": 0
+												}
+											},
+											"required": [
+												"answerId",
+												"points"
+											]
+										}
+									}
+								},
+								"required": [
+									"evaluations"
+								]
+							}
+						}
+					}
+				},
 				"responses": {
 					"200": {
 						"description": "Success"

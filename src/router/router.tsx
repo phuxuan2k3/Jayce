@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import AuthLoginPage from "../pages/auth/login/AuthLoginPage";
 import AuthRegisterPage from "../pages/auth/register/AuthRegisterPage";
 import ErrorPage from "../components/pages/ErrorPage";
@@ -37,6 +37,7 @@ import ManagerTestLayout from "../pages/manager/tests/[id]/layout";
 import InterviewPage from "../pages/candidate/interviews/setup";
 import CandidateTestAttemptsDoPage from "../pages/candidate/tests/[id]/attempts/[id]/do/page";
 import CandidateTestPage from "../pages/candidate/tests/[id]/index/page";
+import ManagerIndexPage from "../pages/manager/index/page";
 
 const router = createBrowserRouter(
 	[
@@ -197,7 +198,7 @@ const router = createBrowserRouter(
 					children: [
 
 						{
-							element: <Navigate to={paths.manager.tests.ROOT} replace />,
+							element: <ManagerIndexPage />,
 							index: true,
 						},
 

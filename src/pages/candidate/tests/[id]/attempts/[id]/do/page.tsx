@@ -1,43 +1,52 @@
-import { useEffect, useReducer } from "react";
+import { useEffect } from "react";
 import RightLayoutTemplate from "../../../../../../../components/layouts/RightLayoutTemplate";
 import TestDoSidebar from "./components/TestDoSidebar";
 import useTestDoServer from "./hooks/useTestDoServer";
-import { initialState, testDoReducer } from "./model";
+// import { initialState, testDoReducer } from "./model";
 import QuestionDoSection from "./components/QuestionDoSection";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../../../router/paths";
 import FetchStateCover2 from "../../../../../../../features/tests/ui/fetch-states/FetchStateCover2";
 import useGetTestIdParams from "../../../../../../../features/tests/hooks/useGetTestIdParams";
+import { useAppDispatch, useAppSelector } from "../../../../../../../app/hooks";
+import testDoSlice from "../../../../../../../features/tests/stores/testDoSlice";
+import useGetAttemptIdParams from "../../../../../../../features/tests/hooks/useGetAttemptIdParams";
+import TitleSkeleton from "../../../../../../../features/tests/ui/skeletons/TitleSkeleton";
 
 export default function CandidateTestAttemptsDoPage() {
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
+	const attemptId = useGetAttemptIdParams();
+
+	const appDispatch = useAppDispatch();
+	const attemptState = useAppSelector((state) => testDoSlice.selectors.selectAttempt(state, attemptId));
+	const currentQuestionState = useAppSelector((state) => testDoSlice.selectors.selectCurrentQuestion(state, attemptId));
 
 	const serverState = useTestDoServer();
 
-	const [state, dispatch] = useReducer(testDoReducer, initialState);
-
 	useEffect(() => {
-		if (serverState.isSuccess && serverState.data != null) {
-			dispatch({ type: "INITIALIZE_STATE", payload: serverState.data });
-		}
-	}, [serverState.data, serverState.isSuccess]);
-
-	useEffect(() => {
-		if (serverState.data?.attemptAnswers != null) {
-			dispatch({
-				type: "UPDATE_ANSWERS",
-				payload: serverState.data.attemptAnswers
-			});
-		}
-	}, [serverState.data?.attemptAnswers]);
+		if (serverState.data == null || !serverState.isSuccess || attemptState != null) return;
+		const { data: { attempt, test, questions, attemptAnswers } } = serverState;
+		appDispatch(testDoSlice.actions.loadAttempt({
+			attemptId,
+			testId,
+			createdAt: attempt.createdAt,
+			minutesToAnswer: test.minutesToAnswer,
+			questionIds: questions.map((q) => q.id),
+			answers: attemptAnswers.map((answer) => ({
+				questionId: answer.questionId,
+				answer: answer.child || null
+			}))
+		}));
+	}, [serverState.isSuccess, serverState.data]);
 
 	return (
-		<FetchStateCover2
-			fetchState={serverState}
-			dataComponent={({ test, attempt }) => (
-				<RightLayoutTemplate
-					header={
+		<RightLayoutTemplate
+			header={
+				<FetchStateCover2
+					fetchState={serverState}
+					loadingComponent={<TitleSkeleton />}
+					dataComponent={({ test }) => attemptState && (
 						<RightLayoutTemplate.Header
 							title={test.title}
 							description={test.description}
@@ -47,38 +56,71 @@ export default function CandidateTestAttemptsDoPage() {
 								/>
 							}
 						/>
-					}
-					right={
+					)}
+				/>
+			}
+			right={
+				<FetchStateCover2
+					fetchState={serverState}
+					loadingComponent={<TitleSkeleton />}
+					dataComponent={({ test, attempt }) => attemptState && (
 						<TestDoSidebar
 							attempt={attempt}
 							test={test}
-							questionDoState={state.questionsDo}
-							currentQuestionIndex={state.currentIndex}
-							onCurrentQuestionIndexChange={(index) => dispatch({ type: "SET_INDEX", payload: index })}
+							currentQuestionIndex={attemptState.currentQuestionIndex}
+							questionDoState={attemptState.indexedQuestionIds.map((id, index) => {
+								const question = attemptState.questions[id];
+								return {
+									index,
+									isFlagged: question.isFlagged,
+									answer: question.answer
+								};
+							})}
+							onCurrentQuestionIndexChange={(index) => appDispatch(testDoSlice.actions.setCurrentQuestionIndex({
+								attemptId,
+								index,
+							}))}
 						/>
-					}
-				>
+					)}
+				/>
+			}
+		>
+			<FetchStateCover2
+				fetchState={serverState}
+				loadingComponent={<TitleSkeleton />}
+				dataComponent={({ questions }) => (attemptState && currentQuestionState != null) ? (
 					<div className="flex w-full justify-between">
-						{state.questionsDo.length === 0 ? (
+						{attemptState.indexedQuestionIds.length === 0 ? (
 							<div>No questions found</div>
 						) : (
 							<QuestionDoSection
-								totalQuestion={state.questionsDo.length}
-								questionDoState={state.questionsDo[state.currentIndex]}
-								currentQuestionIndex={state.currentIndex}
-								onQuestionIndexChange={(index) => dispatch({
-									type: "SET_INDEX",
-									payload: index
-								})}
-								onQuestionFlagChanged={(isFlagged) => dispatch({
-									type: "SET_FLAG",
-									payload: isFlagged
-								})}
+								totalQuestion={attemptState.indexedQuestionIds.length}
+								index={attemptState.currentQuestionIndex}
+								question={questions[attemptState.currentQuestionIndex]}
+								isFlagged={currentQuestionState.isFlagged}
+								currentQuestionIndex={attemptState.currentQuestionIndex}
+								answer={currentQuestionState.answer}
+								onQuestionIndexChange={(index) => appDispatch(testDoSlice.actions.setCurrentQuestionIndex({
+									attemptId,
+									index
+								}))}
+								onQuestionFlagChanged={() => appDispatch(testDoSlice.actions.toggleFlagQuestion({
+									attemptId,
+								}))}
+								onQuestionAnswerChanged={(answer) => appDispatch(testDoSlice.actions.answer({
+									attemptId,
+									answer: answer || null
+								}))}
 							/>
 						)}
 					</div>
-				</RightLayoutTemplate>
-			)}
-		/>
+				) : (
+					<div className="flex w-full justify-center items-center h-full">
+						<div className="text-gray-500">No question selected</div>
+					</div>
+				)}
+			/>
+
+		</RightLayoutTemplate>
 	);
 }

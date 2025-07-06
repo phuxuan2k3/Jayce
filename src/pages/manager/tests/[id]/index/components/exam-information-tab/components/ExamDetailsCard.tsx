@@ -24,31 +24,31 @@ export const ExamDetails = ({
 					body={
 						<div className="flex flex-col gap-4">
 							<div className="flex items-center">
-								<FontAwesomeIcon icon={faGlobe} className="text-primary-toned-500 w-4 mr-4" />
+								<FontAwesomeIcon icon={faGlobe} className="text-primary w-4 mr-4" />
 								<div>
 									<p className="text-sm text-gray-500">Language:</p>
 									<p className="font-semibold">{exam.language}</p>
 								</div>
 							</div>
 							<div className="flex items-center">
-								<FontAwesomeIcon icon={faClock} className="text-primary-toned-500 w-4 mr-4" />
+								<FontAwesomeIcon icon={faClock} className="text-primary w-4 mr-4" />
 								<div>
 									<p className="text-sm text-gray-500">Duration:</p>
 									<p className="font-semibold">{exam.minutesToAnswer} minutes</p>
 								</div>
 							</div>
 							<div className="flex items-center">
-								<FontAwesomeIcon icon={faUserLock} className="text-primary-toned-500 w-4 mr-4" />
+								<FontAwesomeIcon icon={faUserLock} className="text-primary w-4 mr-4" />
 								<div>
 									<p className="text-sm text-gray-500">Attempts Allowed:</p>
-									<p className="font-semibold">{detail.numberOfAttemptsAllowed === undefined ? "Unlimited" : detail.numberOfAttemptsAllowed}</p>
+									<p className="font-semibold">{detail.numberOfAttemptsAllowed === undefined || detail.numberOfAttemptsAllowed === 0 ? "Unlimited" : detail.numberOfAttemptsAllowed}</p>
 								</div>
 							</div>
 							<div className="flex items-center">
 								<FontAwesomeIcon icon={faUsers} className="text-primary-toned-500 w-4 mr-4" />
 								<div>
 									<p className="text-sm text-gray-500">Participants Allowed:</p>
-									<p className="font-semibold">{detail.numberOfParticipants === undefined ? "Unlimited" : detail.numberOfParticipants}</p>
+									<p className="font-semibold">{detail.numberOfParticipants === undefined || detail.numberOfParticipants === 0 ? "Unlimited" : detail.numberOfParticipants}</p>
 								</div>
 							</div>
 							<div className="flex items-center">

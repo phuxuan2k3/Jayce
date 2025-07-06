@@ -34,7 +34,7 @@ export default function QuestionsTabContent({
 	return (
 		<div className="flex flex-col gap-4 min-h-full">
 			{(numberOfAttempts === 0 && viewQuestions === false) && (
-				<div className="mt-4 text-center">
+				<div className="mt-4 flex flex-col items-center">
 					<p className="text-amber-600 mb-2">
 						Viewing questions may reveal test content. Are you sure you want to continue?
 					</p>

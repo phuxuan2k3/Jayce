@@ -15,13 +15,12 @@ export default function AnswersList({
 }) {
 	const testId = useGetTestIdParams();
 	const attemptId = useGetAttemptIdParams();
-	const [isLoadAnswer, setIsLoadAnswer] = useState(false);
 	const [isShowAllAnswers, setIsShowAllAnswers] = useState(false);
 
 	const answersQuery = useGetAttemptsByAttemptIdAnswersQuery({ attemptId });
 	const questionsQuery = useGetTestsByTestIdQuestionsQuery({
 		testId,
-		viewCorrectAnswer: QueryUtils.fromBoolean(isAllowedToShowAnswer && isLoadAnswer),
+		viewCorrectAnswer: QueryUtils.fromBoolean(isAllowedToShowAnswer),
 	}, {
 		refetchOnMountOrArgChange: true,
 	});
@@ -30,7 +29,7 @@ export default function AnswersList({
 		<div className="flex flex-col w-full gap-4">
 			<div className="flex items-center justify-between">
 				<h2 className="text-lg font-semibold">Your Answers</h2>
-				{(isLoadAnswer === true && questionsQuery.isFetching === false) ? (
+				{isAllowedToShowAnswer === true ? (
 					<MyButton
 						size={"medium"}
 						onClick={() => setIsShowAllAnswers(!isShowAllAnswers)}
@@ -38,13 +37,7 @@ export default function AnswersList({
 						{isShowAllAnswers ? "Hide All Answers" : "Show All Answers"}
 					</MyButton>
 				) : (
-					<MyButton
-						size={"medium"}
-						onClick={() => setIsLoadAnswer(true)}
-						disabled={questionsQuery.isFetching}
-					>
-						Load Correct Answers
-					</MyButton>
+					<p className="text-sm text-gray-500">You cannot view the correct answers.</p>
 				)}
 			</div>
 			<div className="flex flex-1 flex-col gap-4">
@@ -61,6 +54,7 @@ export default function AnswersList({
 								return (
 									questionsWithOptionalAnswers.map((item, index) => (
 										<QuestionWithAnswer
+											key={item.question.id}
 											index={index}
 											question={item.question}
 											withAnswer={item.answer}
