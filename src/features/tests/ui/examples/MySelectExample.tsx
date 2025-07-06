@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import MySelect from './MySelect'
+import MySelect from '../forms/MySelect'
 
 export default function MySelectExample() {
 	const [selectedValue, setSelectedValue] = useState<string | number>('')

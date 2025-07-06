@@ -40,21 +40,27 @@ const buttonVariants = cva(
 type MyButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
 	VariantProps<typeof buttonVariants>
 
-export default function MyButton({
-	className = '',
-	children,
-	variant,
-	size,
-	loading,
-	disabled,
-	...props
-}: MyButtonProps) {
-	return (
-		<button
-			className={cn(buttonVariants({ variant, size, loading, disabled }), className)}
-			{...props}
-		>
-			{children}
-		</button>
-	)
-}
+const MyButton = React.forwardRef<HTMLButtonElement, MyButtonProps>(
+	({
+		className = '',
+		children,
+		variant,
+		size,
+		loading,
+		disabled,
+		...props
+	}, ref) => {
+		return (
+			<button
+				ref={ref}
+				className={cn(buttonVariants({ variant, size, loading, disabled }), className)}
+				{...props}
+			>
+				{children}
+			</button>
+		);
+	}
+);
+MyButton.displayName = 'MyButton';
+
+export default MyButton;

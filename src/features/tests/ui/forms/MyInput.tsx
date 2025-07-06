@@ -9,13 +9,13 @@ export const MyInputVariants = cva(
 		variants: {
 			size: {
 				default: "",
-				small: "h-8 px-2 text-sm",
-				large: "h-12 px-4 text-lg",
+				small: cn("h-8 px-4 text-sm"),
+				large: cn("h-12 px-4 text-lg"),
 			},
 			color: {
 				default: "",
-				secondary: "border-secondary text-secondary focus:ring-secondary",
-				tertiary: "border-tertiary text-tertiary focus:ring-tertiary",
+				secondary: cn("border-secondary text-secondary focus:ring-secondary"),
+				tertiary: cn("border-tertiary text-tertiary focus:ring-tertiary"),
 			},
 		},
 		defaultVariants: {

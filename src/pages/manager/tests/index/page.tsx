@@ -1,17 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../router/paths";
-import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
 import { useCallback, useState } from "react";
-import { ClipboardPlus } from "lucide-react";
+import { FilePlus2 } from "lucide-react";
+
+import ButtonControls from "./components/TestViewControls";
 import { useGetTestsQuery } from "../../../../features/tests/api/test.api-gen-v2";
 import useGetUserId from "../../../../features/tests/hooks/useGetUserId";
-import TestCoreCard from "../../../../features/tests/ui-items/test/TestCoreCard";
 import FetchStateCover2 from "../../../../features/tests/ui/fetch-states/FetchStateCover2";
-import QuickAction from "../../../../features/tests/ui/sidebar/primitive/QuickAction";
-import SidebarActions from "../../../../features/tests/ui/sidebar/primitive/SidebarActions";
 import { QuerySortValues } from "../../../../features/tests/types/query";
-import MyItemsListTemplate from "../../../../features/tests/ui-templates/MyItemsListTemplate";
 import MyHeaderTitleSection from "../../../../features/tests/ui-sections/MyHeaderSection";
+import MyButton from "../../../../features/tests/ui/buttons/MyButton";
+import MyInputWithSearch from "../../../../features/tests/ui/forms/MyInputWithSearch";
+import MyInput from "../../../../features/tests/ui/forms/MyInput";
+import MyPaginationSection from "../../../../features/tests/ui-sections/MyPaginationSection";
+import ExamListViewLayout from "./components/ExamListViewLayout";
+import { Status } from "./types";
+import StatusDropdown from "./components/StatusDropdown";
+import MyButtonWithSort from "../../../../features/tests/ui/buttons/MyButtonWithSort";
+import { Skeleton } from "@mui/material";
 
 type Filter = {
 	page: number;
@@ -24,6 +30,9 @@ type Filter = {
 const ManagerTestsPage = () => {
 	const navigate = useNavigate();
 	const userId = useGetUserId();
+	const [view, setView] = useState<"grid" | "table">("grid");
+
+	const [statuses, setStatuses] = useState<Status[]>([]);
 
 	const [filter, setFilter] = useState<Filter>({
 		page: 1,
@@ -41,6 +50,7 @@ const ManagerTestsPage = () => {
 		searchTitle: filter.searchTitle,
 		sortCreatedAt: filter.sortCreatedAt,
 		sortTitle: filter.sortTitle,
+		filterStatuses: statuses.length > 0 ? statuses : undefined,
 	});
 
 	const handleExamView = useCallback((testId: string) => {
@@ -48,57 +58,103 @@ const ManagerTestsPage = () => {
 	}, []);
 
 	return (
-		<LeftLayoutTemplate
-			header={
-				<LeftLayoutTemplate.Header
-					title="Exams Management"
-					description="Manage all your exams."
-				/>
-			}
-			left={
-				<SidebarActions>
-					<QuickAction
-						title='Create exam'
-						icon={<ClipboardPlus size={20} />}
-						description='Create a new exam'
-						onClick={() => navigate(paths.manager.tests.NEW)}
-					/>
-					<QuickAction
-						title='Manage your exams'
-						icon={<ClipboardPlus size={20} />}
-						description='View and Edit or Delete your exams'
-						onClick={() => { }}
-					/>
-				</SidebarActions>
-			}
-		>
-			<MyItemsListTemplate
-				pagedFetchState={examsQuery}
-				paging={filter}
-				onPageChange={(page: number) => setFilter(prev => ({ ...prev, page }))}
-				heading={
+		<div className="container flex flex-col w-full mx-auto p-4 gap-4">
+			<div className="min-h-32 h-fit w-full flex flex-col gap-4 py-4 px-8 bg-white border rounded-lg shadow-md shadow-primary">
+
+				<div className="flex items-center w-full mb-2">
 					<MyHeaderTitleSection
-						title="Your Exams"
-						description="View and manage the exams you have created."
+						title="Manage Exams"
+						description="Create, view, and manage exams for your organization."
 					/>
-				}
-				body={<FetchStateCover2
-					fetchState={examsQuery}
-					dataComponent={({ data }) => (
-						<div className="flex-1 flex flex-col gap-4 w-full">
-							{data.map((test, index) => (
-								<TestCoreCard
-									className="w-full"
-									key={index}
-									test={test}
-									onClick={() => handleExamView(test.id)}
+
+					<MyButton
+						className="self-end ml-auto px-6"
+						onClick={() => navigate(paths.manager.tests.NEW)}
+					>
+						<FilePlus2 strokeWidth={2.5} className="h-5 w-5" />
+						<span className="hidden md:inline">New Exam</span>
+					</MyButton>
+				</div>
+
+				<div className="flex items-center w-full gap-4">
+					<div className="flex flex-1 items-center gap-2">
+						<MyInputWithSearch
+							className="w-full"
+							inputComponent={
+								<MyInput
+									variant={{
+										size: "small"
+									}}
+									placeholder="Search..."
 								/>
-							))}
-						</div>
+							}
+						/>
+					</div>
+
+					<div className="flex flex-1 gap-2 items-center justify-start">
+						<MyButtonWithSort
+							sort={filter.sortTitle}
+							setSort={
+								(prev) => setFilter((prevFilter) => ({
+									...prevFilter,
+									sortTitle: prev
+								}))
+							}
+						>
+							Name
+						</MyButtonWithSort>
+						<MyButtonWithSort
+							sort={filter.sortCreatedAt}
+							setSort={
+								(prev) => setFilter((prevFilter) => ({
+									...prevFilter,
+									sortCreatedAt: prev
+								}))
+							}
+						>
+							Date
+						</MyButtonWithSort>
+
+						<StatusDropdown statuses={statuses} setStatuses={setStatuses} />
+					</div>
+				</div>
+			</div>
+
+			<div className="p-8 flex-1 flex flex-col gap-4">
+				<div>
+					<ButtonControls view={view} setView={setView} />
+				</div>
+
+				<FetchStateCover2
+					fetchState={examsQuery}
+					loadingComponent={(
+						<Skeleton
+							variant="rectangular"
+							className="w-full h-96 rounded-lg"
+						/>
 					)}
-				/>}
-			/>
-		</LeftLayoutTemplate>
+					dataComponent={({ data }) => (
+						<ExamListViewLayout
+							examList={data}
+							onExamClick={(exam) => handleExamView(exam.id)}
+							view={view}
+						/>
+					)}
+				/>
+			</div>
+
+			<div className="mt-2 border-t border-gray-200 pt-2">
+				<MyPaginationSection
+					onPageChange={(page) => setFilter((prev) => ({ ...prev, page }))}
+					page={filter.page}
+					perPage={filter.perPage}
+					total={examsQuery.data?.total}
+					totalPages={examsQuery.data?.totalPages}
+				/>
+			</div>
+
+
+		</div>
 	);
 }
 
