@@ -3,83 +3,81 @@
 @tailwind utilities;
 
 :root {
-  --background-color: #3e3636;
-  --primary-color: #2e808a;
-  --secondary-color: #c1654d;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	--background-color: #3e3636;
+	--primary-color: #2e808a;
+	--secondary-color: #c1654d;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 /* Custom Scrollbar Styles */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+	width: 10px;
+	height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
-  margin: 4px;
-  border-radius: 4px;
+	background: transparent;
+	margin: 4px;
+	border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-color);
-  border-radius: 10px;
-  border: 2px solid transparent;
-  background-clip: content-box;
-  transition: background 0.2s ease;
+	background: var(--primary-color);
+	border-radius: 10px;
+	border: 2px solid transparent;
+	background-clip: content-box;
+	transition: background 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #206671;
-  border: 2px solid transparent;
-  background-clip: content-box;
+	background: #206671;
+	border: 2px solid transparent;
+	background-clip: content-box;
 }
 
 /* Hide all scrollbar arrows/buttons */
 ::-webkit-scrollbar-button {
-  width: 0;
-  height: 0;
-  display: none;
+	width: 0;
+	height: 0;
+	display: none;
 }
 
 ::-webkit-scrollbar-button:start:decrement,
 ::-webkit-scrollbar-button:end:increment {
-  display: none;
-  width: 0;
-  height: 0;
+	display: none;
+	width: 0;
+	height: 0;
 }
 
 ::-webkit-scrollbar-button:horizontal:decrement,
 ::-webkit-scrollbar-button:horizontal:increment,
 ::-webkit-scrollbar-button:vertical:decrement,
 ::-webkit-scrollbar-button:vertical:increment {
-  display: none;
-  width: 0;
-  height: 0;
+	display: none;
+	width: 0;
+	height: 0;
 }
 
 /* Firefox scrollbar styles */
 * {
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary-color) transparent;
+	scrollbar-width: thin;
+	scrollbar-color: var(--primary-color) transparent;
 }
 
 .text-gradient {
-  background-image: linear-gradient(
-    to right,
-    var(--primary-color),
-    var(--secondary-color)
-  );
-  -webkit-background-clip: text;
-  color: transparent;
+	background-image: linear-gradient(to right,
+			var(--primary-color),
+			var(--secondary-color));
+	-webkit-background-clip: text;
+	color: transparent;
 }
 
 body {
-  margin: 0;
-  @apply font-asap;
+	margin: 0;
+	@apply font-jetbrains-mono;
 }
 
 h1,
@@ -88,166 +86,226 @@ h3,
 h4,
 h5,
 h6 {
-  @apply font-arya font-bold;
+	@apply font-jetbrains-mono font-bold;
 }
 
 @font-face {
-  font-family: "Arya";
-  src: url("./../fonts/Arya/Arya-Regular.ttf") format("truetype");
+	font-family: "Arya";
+	src: url("./../fonts/Arya/Arya-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Arya";
-  src: url("./../fonts/Arya/Arya-Bold.ttf") format("truetype");
-  font-weight: bold;
+	font-family: "Arya";
+	src: url("./../fonts/Arya/Arya-Bold.ttf") format("truetype");
+	font-weight: bold;
 }
 
 @font-face {
-  font-family: "Asap";
-  src: url("./../fonts/Asap/Asap-Regular.ttf") format("truetype");
+	font-family: "Asap";
+	src: url("./../fonts/Asap/Asap-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Asap";
-  src: url("./../fonts/Asap/Asap-Bold.ttf") format("truetype");
-  font-weight: bold;
+	font-family: "Asap";
+	src: url("./../fonts/Asap/Asap-Bold.ttf") format("truetype");
+	font-weight: bold;
 }
 
 @font-face {
-  font-family: "Asap";
-  src: url("./../fonts/Asap-Italic.ttf") format("truetype");
-  font-style: italic;
-  font-weight: normal;
+	font-family: "Asap";
+	src: url("./../fonts/Asap-Italic.ttf") format("truetype");
+	font-style: italic;
+	font-weight: normal;
 }
+
+@font-face {
+	font-family: "Space Mono";
+	src: url("./../fonts/SpaceMono/SpaceMono-Regular.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Space Mono";
+	src: url("./../fonts/SpaceMono/SpaceMono-Bold.ttf") format("truetype");
+	font-weight: bold;
+}
+
+@font-face {
+	font-family: "Space Mono";
+	src: url("./../fonts/SpaceMono/SpaceMono-Italic.ttf") format("truetype");
+	font-style: italic;
+}
+
+@font-face {
+	font-family: "JetBrains Mono";
+	src: url("./../fonts/JetbrainMono/JetBrainsMono-Regular.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "JetBrains Mono";
+	src: url("./../fonts/JetbrainMono/JetBrainsMono-Bold.ttf") format("truetype");
+	font-weight: bold;
+}
+
+@font-face {
+	font-family: "JetBrains Mono";
+	src: url("./../fonts/JetbrainMono/JetBrainsMono-Italic.ttf") format("truetype");
+	font-style: italic;
+}
+
+
 @keyframes ripple {
-  to {
-    transform: scale(2.5);
-    opacity: 0;
-  }
+	to {
+		transform: scale(2.5);
+		opacity: 0;
+	}
 }
+
 .animate-ripple {
-  animation: ripple 0.6s linear;
+	animation: ripple 0.6s linear;
 }
 
 .animate-pulse-slow {
-  animation: pulseGlow 3.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	animation: pulseGlow 3.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
 .animate-pulse-fast {
-  animation: pulseGlow 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	animation: pulseGlow 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
 @keyframes pulseGlow {
-  0%,
-  100% {
-    opacity: 0.7;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.08);
-  }
+
+	0%,
+	100% {
+		opacity: 0.7;
+		transform: scale(1);
+	}
+
+	50% {
+		opacity: 1;
+		transform: scale(1.08);
+	}
 }
+
 .animate-fade-in {
-  animation: fadeIn 0.7s cubic-bezier(0.4, 0, 0.6, 1);
+	animation: fadeIn 0.7s cubic-bezier(0.4, 0, 0.6, 1);
 }
+
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+	from {
+		opacity: 0;
+		transform: translateY(16px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
+
 .text-gradient-animated {
-  background: linear-gradient(90deg, #39a0ad, #f4c5b9, #39a0ad 80%);
-  background-size: 200% 200%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  animation: gradientMove 3s ease-in-out infinite;
+	background: linear-gradient(90deg, #39a0ad, #f4c5b9, #39a0ad 80%);
+	background-size: 200% 200%;
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
+	animation: gradientMove 3s ease-in-out infinite;
 }
+
 @keyframes gradientMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+	0% {
+		background-position: 0% 50%;
+	}
+
+	50% {
+		background-position: 100% 50%;
+	}
+
+	100% {
+		background-position: 0% 50%;
+	}
 }
+
 .animate-pulse-slow {
-  animation: pulseGlow 3.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	animation: pulseGlow 3.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
 .animate-pulse-fast {
-  animation: pulseGlow 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	animation: pulseGlow 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
 @keyframes pulseGlow {
-  0%,
-  100% {
-    opacity: 0.7;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.08);
-  }
+
+	0%,
+	100% {
+		opacity: 0.7;
+		transform: scale(1);
+	}
+
+	50% {
+		opacity: 1;
+		transform: scale(1.08);
+	}
 }
 
 .animate-fade-in {
-  opacity: 0;
-  animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+	opacity: 0;
+	animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.6, 1) forwards;
 }
+
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+	from {
+		opacity: 0;
+		transform: translateY(24px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
+
 @keyframes shine {
-  0% {
-    left: -40%;
-  }
-  60% {
-    left: 100%;
-  }
-  100% {
-    left: 100%;
-  }
+	0% {
+		left: -40%;
+	}
+
+	60% {
+		left: 100%;
+	}
+
+	100% {
+		left: 100%;
+	}
 }
+
 .custom-select {
-  /* Áp dụng text và border tone màu chính */
-  color: var(--color-primary-toned-600);
-  border-color: var(--color-primary-toned-600);
-  background: white;
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s;
+	/* Áp dụng text và border tone màu chính */
+	color: var(--color-primary-toned-600);
+	border-color: var(--color-primary-toned-600);
+	background: white;
+	transition:
+		border-color 0.2s,
+		box-shadow 0.2s;
 }
 
 .custom-select:focus,
 .custom-select:hover {
-  border-color: var(--color-primary-toned-600);
-  box-shadow: 0 0 0 2px var(--color-primary-toned-600, #14b8a6);
+	border-color: var(--color-primary-toned-600);
+	box-shadow: 0 0 0 2px var(--color-primary-toned-600, #14b8a6);
 }
 
 /* Custom option color: chỉ dùng được với Firefox, Chrome không hỗ trợ hoàn toàn */
 .custom-select option {
-  color: var(--color-primary-toned-600);
-  background: white;
+	color: var(--color-primary-toned-600);
+	background: white;
 }
+
 .icon-link:hover .icon-path {
-  fill: var(--primary-color);
-  transition: fill 0s;
+	fill: var(--primary-color);
+	transition: fill 0s;
 }
 
 .icon-select {
-  fill: var(--primary-color);
-  transition: fill 0s;
+	fill: var(--primary-color);
+	transition: fill 0s;
 }

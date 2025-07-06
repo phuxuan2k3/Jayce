@@ -80,6 +80,9 @@ export default function useHandleSubmitAnswers({
 					}),
 				}
 			});
+		} else {
+			// If there are no answers to submit, we can just call onSuccess directly
+			onSuccess?.();
 		}
 	}, [attemptState, attemptId]);
 

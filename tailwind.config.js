@@ -71,6 +71,9 @@ export default {
 			fontFamily: {
 				arya: ['Arya'],
 				asap: ['Asap'],
+				"souce-code-pro": ['Source Code Pro'],
+				"space-mono": ['Space Mono'],
+				"jetbrains-mono": ['JetBrains Mono'],
 			},
 			keyframes: {
 				'fade-in': {
