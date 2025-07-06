@@ -1,36 +1,27 @@
-import { QuestionDoState } from "../types";
-import { usePostAttemptsByAttemptIdAnswersMutation } from "../apis/answer";
-import { toast } from "react-toastify";
-import { parseQueryError } from "../../../../../../../../helpers/fetchBaseQuery.error";
-import { AnswerForQuestionTypeSchema } from "../../../../../../../../features/tests/api/test.api-gen-v2";
-import useActionStateWatch from "../../../../../../../../features/tests/hooks/useActionStateWatch";
-import useGetAttemptIdParams from "../../../../../../../../features/tests/hooks/useGetAttemptIdParams";
+import { AnswerForQuestionTypeSchema, QuestionCoreSchema } from "../../../../../../../../features/tests/api/test.api-gen-v2";
 import { QuestionDo } from "../../../../../../../../features/tests/ui-items/question/views/QuestionDo";
 
 export default function QuestionDoSection({
 	totalQuestion,
-	questionDoState,
+	index,
+	question,
+	isFlagged,
+	answer,
 	currentQuestionIndex,
 	onQuestionIndexChange,
 	onQuestionFlagChanged,
+	onQuestionAnswerChanged,
 }: {
 	totalQuestion: number;
-	questionDoState: QuestionDoState;
+	index: number;
+	question: QuestionCoreSchema;
+	isFlagged: boolean;
+	answer: AnswerForQuestionTypeSchema | null;
 	currentQuestionIndex: number;
 	onQuestionIndexChange: (index: number) => void;
 	onQuestionFlagChanged: (isFlagged: boolean) => void;
+	onQuestionAnswerChanged: (answer: AnswerForQuestionTypeSchema | undefined) => void;
 }) {
-	const attemptId = useGetAttemptIdParams();
-	const { question } = questionDoState;
-	const [postAnswers, postAnswersState] = usePostAttemptsByAttemptIdAnswersMutation();
-	useActionStateWatch(postAnswersState, {
-		onError: (error) => {
-			const errorMessage = parseQueryError(error);
-			console.error("Failed to submit answer:", error);
-			toast.error(`Failed to submit answer: ${errorMessage}`);
-		},
-	});
-
 	const isFirstQuestion = currentQuestionIndex === 0;
 	const isLastQuestion = currentQuestionIndex === totalQuestion - 1;
 
@@ -47,23 +38,17 @@ export default function QuestionDoSection({
 	};
 
 	const handleAnswerQuestion = (answer: AnswerForQuestionTypeSchema | undefined) => {
-		postAnswers({
-			attemptId,
-			body: {
-				questionId: question.id,
-				answer,
-			}
-		});
+		onQuestionAnswerChanged(answer);
 	};
 
 	return (
 		<div className="w-full flex flex-col justify-between">
 			<QuestionDo
 				question={question}
-				doAnswer={questionDoState.answer || undefined}
+				doAnswer={answer || undefined}
 				setDoAnswer={(answer) => handleAnswerQuestion(answer)}
-				index={questionDoState.index}
-				isFlagged={questionDoState.isFlagged}
+				index={index}
+				isFlagged={isFlagged}
 				setIsFlagged={(isFlagged) => onQuestionFlagChanged(isFlagged)}
 			/>
 

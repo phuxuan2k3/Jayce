@@ -1,18 +1,16 @@
 import { AlarmClock } from "lucide-react";
-import { QuestionDoState } from "../types";
-import { AttemptCoreSchema, TestFullSchema, usePatchAttemptsByAttemptIdSubmitMutation } from "../../../../../../../../features/tests/api/test.api-gen-v2";
+import { AnswerForQuestionTypeSchema, AttemptCoreSchema, TestFullSchema } from "../../../../../../../../features/tests/api/test.api-gen-v2";
 import MyButton from "../../../../../../../../features/tests/ui/buttons/MyButton";
 import TestTimer from "./TestTimer";
 import useTimeCountDown from "../../../../../../../../features/tests/hooks/useTimeCountDown";
 import { useEffect, useState } from "react";
 import MyDialog from "../../../../../../../../features/tests/ui/MyDialog";
-import { toast } from "react-toastify";
-import useActionStateWatch from "../../../../../../../../features/tests/hooks/useActionStateWatch";
-import { parseQueryError } from "../../../../../../../../helpers/fetchBaseQuery.error";
 import paths from "../../../../../../../../router/paths";
 import { useNavigate } from "react-router-dom";
 import useGetTestIdParams from "../../../../../../../../features/tests/hooks/useGetTestIdParams";
 import TimesUpDialog from "./TimesUpDialog";
+import useHandleSubmitAnswers from "../hooks/useHandleSubmitAnswers";
+import useHandleSubmitAttempt from "../hooks/useHandleSubmitAttempt";
 
 // The server auto submit when time is up, so we don't need to handle the submit there.
 
@@ -25,29 +23,22 @@ export default function TestDoSidebar({
 }: {
 	attempt: AttemptCoreSchema;
 	test: TestFullSchema;
-	questionDoState: QuestionDoState[];
+	questionDoState: {
+		isFlagged: boolean;
+		answer: AnswerForQuestionTypeSchema | null;
+		index: number;
+	}[];
 	currentQuestionIndex: number;
 	onCurrentQuestionIndexChange: (index: number) => void;
 }) {
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
-	const attemptId = attempt.id;
 
 	const [isTimesUpDialogOpen, setIsTimesUpDialogOpen] = useState(false);
 	const [showSubmitDialog, setShowSubmitDialog] = useState(false);
 
-	const [patchSubmit, submitState] = usePatchAttemptsByAttemptIdSubmitMutation();
-	useActionStateWatch(submitState, {
-		onSuccess: () => {
-			toast.success("Attempt submitted successfully");
-			navigate(paths.candidate.tests.in(testId).ROOT);
-		},
-		onError: (error) => {
-			console.error("Failed to submit attempt:", error);
-			const errorMessage = parseQueryError(error);
-			toast.error("Failed to submit attempt: " + errorMessage);
-		}
-	});
+	const { handleSubmitAnswers } = useHandleSubmitAnswers({});
+	const { handleSubmitAttempt, isSubmitting } = useHandleSubmitAttempt();
 
 	const secondsLeft = useTimeCountDown({
 		endDate: new Date(new Date(attempt.createdAt).getTime() + (test.minutesToAnswer * 60 * 1000)),
@@ -56,6 +47,13 @@ export default function TestDoSidebar({
 	useEffect(() => {
 		if (secondsLeft <= 0) {
 			setIsTimesUpDialogOpen(true);
+		}
+	}, [secondsLeft]);
+
+
+	useEffect(() => {
+		if (secondsLeft % 2 === 0) {
+			handleSubmitAnswers();
 		}
 	}, [secondsLeft]);
 
@@ -71,14 +69,14 @@ export default function TestDoSidebar({
 					{questionDoState == null || questionDoState.length === 0
 						? (
 							<div>No questions found</div>
-						) : (questionDoState.map((question, index) => (
+						) : (questionDoState.sort((q1, q2) => q1.index - q2.index).map(({ answer, isFlagged, index }) => (
 							<button
 								key={index}
 								className={`w-full aspect-square rounded-full text-sm font-bold text-primary border border-primary cursor-pointer ${currentQuestionIndex === index
 									? "bg-primary-toned-600 text-white"
-									: question.isFlagged === true
+									: isFlagged === true
 										? "bg-secondary-toned-200"
-										: question.answer != null
+										: answer != null
 											? "bg-primary-toned-200"
 											: "bg-white"
 									}`}
@@ -103,10 +101,10 @@ export default function TestDoSidebar({
 					<hr className="my-4 border-primary-toned-700/50" />
 					<div className="flex w-full gap-2 mt-auto">
 						<MyButton
-							onClick={() => patchSubmit({ attemptId })} className="flex-1"
-							disabled={submitState.isLoading}
+							onClick={() => handleSubmitAttempt()} className="flex-1"
+							disabled={isSubmitting}
 						>
-							{submitState.isLoading ? "Submitting..." : "Yes, submit"}
+							{isSubmitting ? "Submitting..." : "Yes, submit"}
 						</MyButton>
 						<MyButton variant="secondary" onClick={() => setShowSubmitDialog(false)} className="flex-1">
 							No, cancel

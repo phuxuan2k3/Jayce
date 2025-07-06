@@ -709,8 +709,21 @@ export type PostAttemptsByAttemptIdAnswersApiResponse = unknown;
 export type PostAttemptsByAttemptIdAnswersApiArg = {
   attemptId: string;
   body: {
-    questionId: number;
-    answer?: AnswerForQuestionTypeSchema;
+    answers: {
+      questionId: number;
+      answer?: AnswerForQuestionTypeSchema &
+        (
+          | {
+              type: "MCQ";
+              chosenOption: number;
+            }
+          | {
+              type: "LONG_ANSWER";
+              answer: string;
+            }
+          | null
+        );
+    }[];
   };
 };
 export type PatchAttemptsByAttemptIdSubmitApiResponse = unknown;

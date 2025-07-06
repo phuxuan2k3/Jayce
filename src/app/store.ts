@@ -10,11 +10,17 @@ import fetchSlice from './fetchSlice.ts';
 import paymentApi from '../features/payment/api/payment.api.ts';
 import testApi from '../features/tests/api/test.api.ts';
 import promptApi from '../features/tests/api/prompt.api.ts';
+import testDoSlice from '../features/tests/stores/testDoSlice.ts';
 
 const authPersistConfig = {
 	key: 'auth',
 	storage,
 	blacklist: ['isAuthenticated'],
+};
+
+const testDoPersistConfig = {
+	key: 'testDo',
+	storage,
 };
 
 // Create the root reducer so it can be used in configureStore
@@ -28,6 +34,7 @@ const rootReducer = combineReducers({
 
 	// Custom reducers
 	auth: persistReducer(authPersistConfig, authReducer),
+	[testDoSlice.reducerPath]: persistReducer(testDoPersistConfig, testDoSlice.reducer),
 	[fetchSlice.reducerPath]: fetchSlice.reducer,
 });
 
