@@ -11,7 +11,7 @@ export default function Record({
 }: {
   onAnswerRecorded: (transcript: string, base64Audio: string) => void;
 }) {
-  const {language}=useLanguage();
+  const { language } = useLanguage();
   const {
     listening,
     finalTranscript,
@@ -72,7 +72,7 @@ export default function Record({
     ) {
       startRecording();
       SpeechRecognition.startListening({
-        language:language==="en"?"en-US":"vi-VN";
+        language: language === "en" ? "en-US" : "vi-VN",
         continuous: true,
         interimResults: false,
       }).catch((error) => {
