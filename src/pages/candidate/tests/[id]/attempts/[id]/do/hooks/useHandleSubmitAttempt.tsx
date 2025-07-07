@@ -16,16 +16,17 @@ export default function useSubmitAttempt() {
 	const testId = useGetTestIdParams();
 	const attemptId = useGetAttemptIdParams();
 
-	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [isSubmittingLeftAnswers, setIsSubmittingLeftAnswers] = useState(false);
 
 	const attemptState = useAppSelector((state) => testDoSlice.selectors.selectAttempt(state, attemptId));
+	const pendingQuestions = useAppSelector((state) => testDoSlice.selectors.selectPendingQuestions(state, attemptId));
+
 	const dispatch = useAppDispatch();
 
 	const { handleSubmitAnswers } = useHandleSubmitAnswers({
-		// This will be called after the answers are submitted
 		onSuccess: () => {
-			// We are submitting the attempt now
-			if (isSubmitting) {
+			if (isSubmittingLeftAnswers === true) {
+				setIsSubmittingLeftAnswers(false);
 				patchSubmit({ attemptId });
 			}
 		}
@@ -36,7 +37,6 @@ export default function useSubmitAttempt() {
 		onSuccess: () => {
 			toast.success("Attempt submitted successfully");
 			navigate(paths.candidate.tests.in(testId).ROOT);
-			setIsSubmitting(false);
 			dispatch(testDoSlice.actions.clearAttempt(attemptId));
 		},
 		onError: (error) => {
@@ -51,14 +51,16 @@ export default function useSubmitAttempt() {
 			toast.error("Attempt not found");
 			return;
 		}
-
-		// Handle submitting answers that are not yet sent to the server
-		handleSubmitAnswers();
-		setIsSubmitting(true);
+		if (pendingQuestions.length > 0) {
+			handleSubmitAnswers();
+			setIsSubmittingLeftAnswers(true);
+		} else {
+			patchSubmit({ attemptId });
+		}
 	}, [attemptState]);
 
 	return {
 		handleSubmitAttempt,
-		isSubmitting: isSubmitting || submitState.isLoading,
+		isSubmitting: isSubmittingLeftAnswers === true || submitState.isLoading === true,
 	}
 }

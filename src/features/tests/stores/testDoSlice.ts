@@ -160,6 +160,13 @@ const testDoSlice = createSlice({
 		selectAttempt: (state: TestDoState, attemptId: string) => {
 			return state.attempts[attemptId] || null;
 		},
+		selectPendingQuestions: (state: TestDoState, attemptId: string) => {
+			const attempt = state.attempts[attemptId];
+			if (!attempt) return [];
+			return attempt.indexedQuestionIds
+				.map(id => attempt.questions[id])
+				.filter(question => question && question.isSynced === false);
+		},
 		selectCurrentQuestion: (state: TestDoState, attemptId: string) => {
 			const attempt = state.attempts[attemptId];
 			if (!attempt) return null;
