@@ -58,7 +58,7 @@ const pieOptions = {
       labels: {
         font: {
           size: 16,
-          family: "var(--font-arya, Arial, sans-serif)",
+          family: "var(--  , Arial, sans-serif)",
           weight: "bold" as const,
         },
         color: "#2E808A",
@@ -89,13 +89,13 @@ const Summary: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
             />
             <Typography
               variant="h5"
-              className="font-black text-primary-toned-600 tracking-tight font-arya"
+              className="font-black text-primary-toned-600 tracking-tight   "
             >
               {t("summary_overall_feedback")}
             </Typography>
           </div>
           <Divider />
-          <div className="mt-4 min-h-[120px] whitespace-pre-line bg-gray-50 rounded-lg p-4 text-lg font-asap text-gray-800">
+          <div className="mt-4 min-h-[120px] whitespace-pre-line bg-gray-50 rounded-lg p-4 text-lg    text-gray-800">
             {scoreData.finalComment}
           </div>
         </CardContent>
@@ -112,7 +112,7 @@ const Summary: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
               />
               <Typography
                 variant="subtitle1"
-                className="font-bold text-primary-toned-600 font-arya"
+                className="font-bold text-primary-toned-600   "
               >
                 {t("summary_grade_distribution")}
               </Typography>
@@ -138,7 +138,7 @@ const Summary: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
               />
               <Typography
                 variant="subtitle1"
-                className="font-bold text-primary-toned-600 font-arya"
+                className="font-bold text-primary-toned-600   "
               >
                 {t("summary_skill_scores")}
               </Typography>
@@ -149,7 +149,7 @@ const Summary: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
                 Object.entries(scoreData.skillsScore).map(([skill, grade]) => (
                   <div
                     key={skill}
-                    className="bg-primary-toned-50 text-primary-toned-700 px-4 py-2 rounded-lg font-semibold shadow border border-primary-toned-100 text-base font-asap min-w-[120px] flex items-center gap-2"
+                    className="bg-primary-toned-50 text-primary-toned-700 px-4 py-2 rounded-lg font-semibold shadow border border-primary-toned-100 text-base    min-w-[120px] flex items-center gap-2"
                   >
                     <span className="font-bold">{skill}:</span>
                     <span>{grade}</span>

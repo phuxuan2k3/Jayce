@@ -83,10 +83,10 @@ const ResultPage = () => {
 
   return (
     <div className="bg-white h-fit pb-20 container">
-      <div className="text-[40px] font-black font-arya text-start mt-10 text-primary-toned-600 drop-shadow">
+      <div className="text-[40px] font-black    text-start mt-10 text-primary-toned-600 drop-shadow">
         {t("result_title")}
       </div>
-      <div className="text-start text-[20px] font-arya mb-3 text-gray-700">
+      <div className="text-start text-[20px]    mb-3 text-gray-700">
         <p>{t("result_congrats")}</p>
         <p>{t("result_lets_take_a_look")}</p>
       </div>

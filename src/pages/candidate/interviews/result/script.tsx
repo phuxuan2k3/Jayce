@@ -54,7 +54,7 @@ const Script: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
                     </div>
                     <Typography
                       variant="h6"
-                      className="font-bold text-gray-900 font-arya"
+                      className="font-bold text-gray-900   "
                     >
                       {res.content}
                     </Typography>

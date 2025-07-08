@@ -16,7 +16,7 @@ const SetUpStep1: FC<{
 
   return (
     <>
-      <div className="text-primary-toned-600 text-[32px] leading-[24px] mt-4 font-arya font-black w-full text-center ">
+      <div className="text-primary-toned-600 text-[32px] leading-[24px] mt-4    font-black w-full text-center ">
         {t("job_detail")}
       </div>
       <div className="text-md text-gray-800 w-full text-center ">

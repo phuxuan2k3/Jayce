@@ -10,10 +10,10 @@ export default function Loading() {
           <span className="block w-56 h-56 bg-gradient-to-tr from-[#99d6ea] via-[#92e6a7] to-[#d1ccbb] rounded-full blur-2xl opacity-50 animate-pulse-fast" />
         </div>
 
-        <h1 className="mt-8 text-4xl md:text-5xl font-arya font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] via-[#34c759] to-[#facc15] animate-fade-in">
+        <h1 className="mt-8 text-4xl md:text-5xl    font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] via-[#34c759] to-[#facc15] animate-fade-in">
           {t("loading")}
         </h1>
-        <p className="mt-2 text-lg md:text-xl font-asap text-primary animate-fade-in animate-pulse-slow">
+        <p className="mt-2 text-lg md:text-xl    text-primary animate-fade-in animate-pulse-slow">
           {t("loading_please_wait")}
         </p>
         <div className="flex gap-2 mt-10">

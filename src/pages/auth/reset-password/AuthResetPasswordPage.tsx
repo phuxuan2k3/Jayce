@@ -83,10 +83,10 @@ export default function AuthResetPasswordPage() {
         </div>
         {!submitted ? (
           <div>
-            <div className="font-arya font-extrabold text-2xl text-primary-toned-600 tracking-tight">
+            <div className="   font-extrabold text-2xl text-primary-toned-600 tracking-tight">
               Reset your password
             </div>
-            <div className="text-base text-gray-500 font-asap mb-2">
+            <div className="text-base text-gray-500    mb-2">
               Enter your email to receive a password reset link.
             </div>
             <form
@@ -137,7 +137,7 @@ export default function AuthResetPasswordPage() {
             <div className="text-xl font-bold text-primary-toned-600 mb-1">
               Thanks!
             </div>
-            <div className="text-base text-gray-500 font-asap">
+            <div className="text-base text-gray-500   ">
               Check your email for a reset link.
             </div>
           </div>

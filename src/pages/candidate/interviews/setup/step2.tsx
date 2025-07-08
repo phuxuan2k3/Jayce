@@ -29,7 +29,7 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
   const [language, setLanguage] = useState<string>("English");
   return (
     <>
-      <div className="fotn-back text-[32px] font-arya w-full text-center leading-[24px] mt-4">
+      <div className="fotn-back text-[32px]    w-full text-center leading-[24px] mt-4">
         {t("interview_context_models")}
       </div>
       <div className="text-md text-gray-800 w-full text-center mb-2">

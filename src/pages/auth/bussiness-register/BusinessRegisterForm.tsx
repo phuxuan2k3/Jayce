@@ -152,10 +152,10 @@ const BusinessRegisterForm = () => {
   return (
     <div className="w-full">
       <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg border border-gray-100 px-10 py-8">
-        <div className="text-center text-3xl font-extrabold mb-2 text-primary-toned-600 font-arya tracking-tight">
+        <div className="text-center text-3xl font-extrabold mb-2 text-primary-toned-600    tracking-tight">
           Business Registration
         </div>
-        <div className="text-center text-base text-gray-500 mb-8 font-asap">
+        <div className="text-center text-base text-gray-500 mb-8  ">
           Create your business account to get started.
         </div>
         <form
@@ -428,10 +428,10 @@ const BusinessRegisterForm = () => {
                 </div>
               </div>
             </div>
-            <div className="text-2xl font-extrabold text-primary-toned-600 mb-1 font-arya">
+            <div className="text-2xl font-extrabold text-primary-toned-600 mb-1   ">
               Check your email
             </div>
-            <div className="text-gray-500 font-asap">
+            <div className="text-gray-500  ">
               Enter the verification code sent to
             </div>
             <div className="pb-2 font-semibold text-primary-toned-600 text-base">
@@ -474,7 +474,7 @@ const BusinessRegisterForm = () => {
             >
               Verify email
             </button>
-            <div className="pt-1 text-xs text-gray-500 font-asap">
+            <div className="pt-1 text-xs text-gray-500  ">
               <span>Didn't get a code?</span>{" "}
               <span
                 onClick={handleVerifyEmail}
