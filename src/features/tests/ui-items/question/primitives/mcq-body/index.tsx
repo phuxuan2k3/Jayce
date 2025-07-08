@@ -12,8 +12,10 @@ export function MCQDetail({
 		<div className={cn("flex flex-col gap-4", className)}>
 			<OptionsList />
 			<hr className="my-1 border-gray-300" />
-			<AttemptChosenOption />
-			<CorrectOption />
+			<div className='flex flex-col gap-1'>
+				<AttemptChosenOption />
+				<CorrectOption />
+			</div>
 		</div>
 	);
 }

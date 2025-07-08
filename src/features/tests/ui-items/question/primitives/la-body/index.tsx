@@ -1,6 +1,6 @@
 import { ShowAnswerContext } from '../contexts';
 import { BaseComponentProps } from '../types';
-import { ImageLinks } from './ImageLinks';
+// import { ImageLinks } from './ImageLinks';
 import { ExtraText } from './ExtraText';
 import { CorrectAnswerText } from './CorrectAnswerText';
 import { AttemptAnswerText } from './AttemptAnswerText';
@@ -14,7 +14,7 @@ export function LongAnswerDetail({
 	return (
 		<div className={cn("flex flex-col gap-4", className)}>
 			<ExtraText />
-			<ImageLinks />
+			{/* <ImageLinks /> */}
 			<hr className="border-gray-300" />
 			<AttemptAnswerText />
 			{show && <CorrectAnswerText />}
@@ -28,7 +28,7 @@ export function LongAnswerDo({
 	return (
 		<div className={cn("flex flex-col gap-4", className)}>
 			<ExtraText />
-			<ImageLinks />
+			{/* <ImageLinks /> */}
 			<hr className="border-gray-300" />
 			<DoAnswerText />
 		</div>

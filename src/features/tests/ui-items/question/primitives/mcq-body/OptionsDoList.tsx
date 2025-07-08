@@ -44,7 +44,7 @@ function OptionDoItem({
 			)}>
 				<span>{character}</span>
 			</div>
-			<span className='mt-0'>{options[index]}</span>
+			<span>{options[index]}</span>
 		</li>
 	)
 }

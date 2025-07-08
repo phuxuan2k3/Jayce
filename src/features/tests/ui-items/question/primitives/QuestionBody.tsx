@@ -26,11 +26,18 @@ function QuestionDetailBody({
 			{show && answer && (
 				<>
 					<hr className="my-2 border-gray-300" />
-					<div className="text-sm font-semibold text-gray-800">
-						Poinst received: {answer.pointReceived != null
-							? answer.pointReceived
-							: <span className='italic'>Pending...</span>
-						} / {question.points}
+					<div className='flex flex-col gap-2'>
+						<div className="text-sm font-semibold text-gray-800">
+							Points received: {answer.pointReceived != null
+								? answer.pointReceived
+								: <span className='italic'>Pending...</span>
+							} / {question.points}
+						</div>
+						{answer.comment != null && (
+							<div className="text-sm text-gray-600">
+								Comment: {answer.comment}
+							</div>
+						)}
 					</div>
 				</>
 			)}

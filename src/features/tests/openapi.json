@@ -432,6 +432,12 @@
 							"null"
 						]
 					},
+					"comment": {
+						"type": [
+							"string",
+							"null"
+						]
+					},
 					"createdAt": {
 						"type": "string"
 					},

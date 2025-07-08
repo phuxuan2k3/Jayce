@@ -3,7 +3,10 @@ import { BaseComponentProps } from '../ui-items/question/primitives/types';
 import { cn } from '../../../app/cn';
 
 export function MySlider({
-	className = "", children, trigger, maxHeight = '24rem'
+	className = "",
+	children,
+	trigger,
+	maxHeight = '24rem',
 }: BaseComponentProps & {
 	trigger: ({
 		onClick,
@@ -23,7 +26,7 @@ export function MySlider({
 				isShow: show
 			})}
 			<div className={cn(
-				"transition-all duration-500 ease-in-out overflow-hidden",
+				"transition-all duration-300 ease-in-out overflow-hidden",
 				className
 			)}
 				style={{

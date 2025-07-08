@@ -12,7 +12,8 @@ export function OptionsList({
 			{detail.options.map((_, index) => (
 				<OptionItem
 					key={index}
-					index={index} />
+					index={index}
+				/>
 			))}
 		</ul>
 	);
@@ -88,8 +89,8 @@ const OptionStateAsConst = {
 		label: "Incorrect",
 	},
 	"CHOOSEN": {
-		bg: cn("bg-gray-200 text-gray-800 border border-gray-300 font-semibold"),
-		option: cn("bg-gray-800 text-white border-gray-300"),
+		bg: cn("bg-primary-toned-50 text-gray-800 border border-primary font-semibold"),
+		option: cn("bg-primary text-white"),
 		label: "Not Answered",
 	},
 	"DEFAULT": {

@@ -18,8 +18,13 @@ export function ExtraText({
 					{isShow ? "Hide Extra Description" : "Show Extra Description"}
 				</button>
 			)}
+			maxHeight={200}
 		>
-			<div className={cn(commonBoxClassNames, "border-t-0 mt-0 rounded-t-none text-sm", className)}>
+			<div className={cn(
+				commonBoxClassNames,
+				"border-t-0 mt-0 rounded-t-none text-sm h-[200px] overflow-y-auto",
+				className
+			)}>
 				{extraText ? extraText : <span>No extra description provided.</span>}
 			</div>
 		</MySlider>

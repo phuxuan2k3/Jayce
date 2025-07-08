@@ -38,7 +38,7 @@ export function AttemptAnswerText({
 			</div>
 			{showResult && (
 				<div className={cn(commonBoxClassNames, "font-semibold", status.color)}>
-					Status: {status.text}
+					{status.text}
 				</div>
 			)}
 		</div>

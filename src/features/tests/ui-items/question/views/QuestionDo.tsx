@@ -10,19 +10,25 @@ import { cn } from "../../../../../app/cn";
 function FlagButton({
 	isFlagged,
 	onIsFlaggedChange,
+	className = "",
 }: {
 	isFlagged: boolean;
 	onIsFlaggedChange: (isFlagged: boolean) => void;
+	className?: string;
 }) {
 	return (
-		<div onClick={() => onIsFlaggedChange(!isFlagged)} className="cursor-pointer">
+		<div
+			className={cn("cursor-pointer", className)}
+			onClick={() => onIsFlaggedChange(!isFlagged)}
+		>
 			{isFlagged ? (
-				<div className="flex items-center gap-1 text-secondary">
+				<div className="flex items-center gap-1 hover:underline text-secondary">
 					<span className="font-semibold">Flagged</span>
 					<Flag size={20} strokeWidth={2.5} className="inline" />
 				</div>
 			) : (
-				<div className="text-primary">
+				<div className="flex items-center gap-1 hover:underline text-primary">
+					<span className="font-semibold">Flag this question</span>
 					<Flag size={20} strokeWidth={2.5} />
 				</div>
 			)}
@@ -56,18 +62,15 @@ export function QuestionDo({
 				className={cn("bg-white", className)}
 				index={index}
 			>
-				<QuestionPrimitivesHeader.Layout>
-					<div className="flex flex-col items-stretch gap-1 flex-shrink-0">
-						<QuestionPrimitivesHeader.Index />
-						<QuestionPrimitivesHeader.Points className="w-full text-center" />
-					</div>
-					<QuestionPrimitivesHeader.Text className="flex-1" />
-
-					<FlagButton isFlagged={isFlagged} onIsFlaggedChange={setIsFlagged} />
-				</QuestionPrimitivesHeader.Layout>
-
+				<div className="flex flex-col mb-2">
+					<QuestionPrimitivesHeader />
+					<FlagButton
+						className="self-end"
+						isFlagged={isFlagged}
+						onIsFlaggedChange={setIsFlagged}
+					/>
+				</div>
 				<QuestionPrimitivesDoBody />
-
 			</QuestionPrimitives>
 		</DoQuestionContext.Provider>
 	);

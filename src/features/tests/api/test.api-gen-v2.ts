@@ -902,6 +902,7 @@ export type AnswerCoreSchema = {
   attemptId: string;
   questionId: number;
   pointReceived?: number | null;
+  comment?: string | null;
   createdAt: string;
   updatedAt: string;
   child: AnswerForQuestionTypeSchema;

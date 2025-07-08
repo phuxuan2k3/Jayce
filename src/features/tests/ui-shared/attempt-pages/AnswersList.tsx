@@ -1,12 +1,12 @@
 import { useGetAttemptsByAttemptIdAnswersQuery, useGetTestsByTestIdQuestionsQuery } from "../../api/test.api-gen-v2";
 import { QueryUtils } from "../../types/query";
 import FetchStateCover2 from "../../ui/fetch-states/FetchStateCover2";
-import QuestionWithAnswer from "../../ui-items/question/views/QuestionWithAnswer";
 import { QuestionsConverter } from "../../ui-items/question/questions-converter";
 import { useState } from "react";
 import useGetTestIdParams from "../../hooks/useGetTestIdParams";
 import useGetAttemptIdParams from "../../hooks/useGetAttemptIdParams";
 import MyButton from "../../ui/buttons/MyButton";
+import { QuestionDefault } from "../../ui-items/question/views/QuestionDefault";
 
 export default function AnswersList({
 	isAllowedToShowAnswer,
@@ -65,7 +65,7 @@ export default function AnswersList({
 								});
 								return (
 									questionsWithOptionalAnswers.map((item, index) => (
-										<QuestionWithAnswer
+										<QuestionDefault
 											key={item.question.id}
 											index={index}
 											question={item.question}

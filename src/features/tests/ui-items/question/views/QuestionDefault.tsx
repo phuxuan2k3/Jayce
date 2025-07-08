@@ -7,7 +7,7 @@ export function QuestionDefault({
 	className = "", ...context
 }: PrimitivesProps) {
 	return (
-		<QuestionPrimitives {...context} className={cn("bg-white", className)}>
+		<QuestionPrimitives {...context} className={cn("bg-white flex flex-col gap-4", className)}>
 			<QuestionPrimitivesHeader />
 			<QuestionPrimitivesDetailBody />
 		</QuestionPrimitives>

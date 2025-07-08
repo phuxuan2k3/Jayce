@@ -5,7 +5,7 @@ type QuestionCoreSchemaMinimal = Omit<QuestionCoreSchema, "id" | "testId" | "_ag
 
 export interface QuestionContextProps {
 	question: QuestionCoreSchemaMinimal;
-	withAnswer?: Pick<AnswerCoreSchema, "pointReceived" | "child" | "pointReceived">;
+	withAnswer?: Pick<AnswerCoreSchema, "pointReceived" | "child" | "pointReceived" | "comment">;
 	index?: number;
 }
 

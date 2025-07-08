@@ -10,12 +10,15 @@ export default function DoAnswerText({
 	const { getLongAnswerAnswer, setDoAnswer } = DoQuestionContext.useDoQuestionContext();
 	const longAnswer = getLongAnswerAnswer();
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		if (e.target.value.trim() === '') {
+			setDoAnswer(undefined);
+			return;
+		}
 		setDoAnswer({
 			type: "LONG_ANSWER",
 			answer: e.target.value,
 		});
 	};
-
 
 	return (
 		<MyTextArea
