@@ -56,7 +56,7 @@ const CandidateNavbar = ({ showNav = true }: { showNav?: boolean }) => {
   const url = window.location.pathname;
 
   return (
-    <nav className="bg-white drop-shadow-lg">
+    <nav className="bg-white drop-shadow-lg sticky top-0 z-[10]">
       <div className=" lg:mx-12 px-6   ">
         <div className="relative h-[60px] flex items-center justify-between">
           {showNav && (

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useGetHistoryQuery } from "../../../../features/interviews/api/interview.api";
 import {
   HiOutlineBriefcase,
-  HiOutlineUser,
+  // HiOutlineUser,
   HiOutlineCalendar,
   HiOutlineRefresh,
 } from "react-icons/hi";
@@ -11,12 +11,11 @@ import { useLanguage } from "../../../../LanguageProvider";
 
 const formatDate = (isoString: string) => {
   const date = new Date(isoString);
-  return date.toLocaleString("en-GB", {
+
+  return date.toLocaleDateString("en-US", {
+    month: "short", // viết tắt tháng: Jan, Feb, Mar, ...
+    day: "numeric",
     year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
   });
 };
 
@@ -36,50 +35,59 @@ const ScoreBadges = ({
 }: {
   score: { A: number; B: number; C: number; D: number; F: number };
 }) => (
-  <div className="flex gap-2 flex-wrap items-center">
+  <div className="flex gap-2 flex-wrap items-center flex-[0_0_100%]">
     {Object.entries(score).map(([key, value]) => {
       const style = SCORE_STYLES[key] || {};
-      return (
-        <span
-          key={key}
-          className={`inline-flex items-center px-2 py-0.5 rounded-full text-sm font-semibold font-mono shadow-md ${style.bg} ${style.color} border border-opacity-40 border-gray-300`}
-          title={`Score ${key}`}
-        >
-          {style.label}: {value}
-        </span>
-      );
+      if (value != 0)
+        return (
+          <span
+            key={key}
+            className={`inline-flex items-center hover:bg-slate-300 px-2 py-0.5 rounded-full text-sm font-semibold font-mono shadow  border border-opacity-40 border-gray-300`}
+            title={`Score ${key}`}
+          >
+            {value} {style.label}
+          </span>
+        );
     })}
   </div>
 );
 
 const SkeletonCard = () => (
-  <div className="bg-white shadow rounded-xl p-5 flex flex-col gap-2 border animate-pulse">
-    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-      <div>
-        <div className="h-4 w-32 bg-gray-200 rounded mb-2"></div>
-        <div className="h-6 w-40 bg-gray-300 rounded"></div>
-      </div>
-      <div>
-        <div className="h-4 w-28 bg-gray-200 rounded mb-2"></div>
-        <div className="h-5 w-24 bg-gray-300 rounded"></div>
-      </div>
-    </div>
-    <div className="flex flex-wrap gap-8 mt-2 items-center">
-      <div>
-        <div className="h-4 w-20 bg-gray-200 rounded mb-2"></div>
-        <div className="flex gap-2">
-          {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-6 w-10 bg-gray-200 rounded-full"></div>
-          ))}
+  <div className="relative w-[32%] bg-white border border-gray-200 rounded-2xl shadow animate-pulse">
+    {/* Ảnh header */}
+    <div className="w-full h-48 bg-gray-200 rounded-t-2xl"></div>
+
+    {/* Experience badge */}
+    <div className="absolute top-2 right-2 w-20 h-6 rounded-full bg-gradient-to-r from-green-100 to-blue-100"></div>
+
+    {/* Nội dung bên trong */}
+    <div className="p-6 flex flex-col gap-4">
+      {/* Position row */}
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full bg-gray-200"></div>
+        <div className="flex flex-col gap-2">
+          <div className="w-24 h-3 rounded bg-gray-300"></div>
+          <div className="w-32 h-4 rounded bg-gray-400"></div>
         </div>
       </div>
-      <div>
-        <div className="h-4 w-20 bg-gray-200 rounded mb-2"></div>
-        <div className="h-5 w-24 bg-gray-300 rounded"></div>
+
+      {/* Score badges */}
+      <div className="flex flex-wrap gap-2 mt-2">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div key={i} className="h-6 w-16 rounded-full bg-gray-200"></div>
+        ))}
       </div>
-      <div>
-        <div className="h-4 w-20 bg-gray-200 rounded mb-2"></div>
-        <div className="h-5 w-24 bg-gray-300 rounded"></div>
+
+      {/* Dates */}
+      <div className="flex justify-between mt-2">
+        <div className="flex gap-2 items-center">
+          <div className="w-5 h-5 rounded-full bg-gray-300"></div>
+          <div className="w-20 h-4 rounded bg-gray-200"></div>
+        </div>
+        <div className="flex gap-2 items-center">
+          <div className="w-5 h-5 rounded-full bg-gray-300"></div>
+          <div className="w-20 h-4 rounded bg-gray-200"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -99,11 +107,8 @@ const HistoryPage = () => {
   if (isLoading || isFetching) {
     return (
       <div className=" mx-auto w-full  px-16 py-8">
-        <h2 className="text-2xl font-bold mb-6 text-[#2e808a] text-center">
-          {t("interview_history")}
-        </h2>
-        <div className="flex flex-col gap-4 max-h-[500px] overflow-y-auto pr-2">
-          {[...Array(3)].map((_, idx) => (
+        <div className="flex flex-wrap gap-4 max-h-[500px] overflow-y-auto pr-2">
+          {[...Array(9)].map((_, idx) => (
             <SkeletonCard key={idx} />
           ))}
         </div>
@@ -122,9 +127,9 @@ const HistoryPage = () => {
   }
 
   return (
-    <div className=" w-full px-16 py-8">
+    <div className=" w-full px-8 py-8">
       <h2 className="text-2xl font-bold mb-6 text-[#2e808a] text-center">
-        {t("interview_history")}
+        {/* {t("interview_history")} */}
       </h2>
       {data?.interviews?.length === 0 && (
         <div className="text-center text-gray-500">
@@ -132,8 +137,8 @@ const HistoryPage = () => {
         </div>
       )}
       {data && data?.interviews?.length > 0 && (
-        <div className="flex flex-col gap-5 max-h-[500px] overflow-y-auto pr-2">
-          {data.interviews.map((interview) => (
+        <div className="flex flex-wrap gap-5  pr-2">
+          {data.interviews.slice(0, 9).map((interview) => (
             <div
               onClick={() =>
                 navigate("/candidate/interviews/result", {
@@ -141,73 +146,72 @@ const HistoryPage = () => {
                 })
               }
               key={interview.interviewId}
-              className="cursor-pointer bg-gradient-to-br from-[#f6fafd] via-[#ecf9f8] to-[#e5f7f9]  rounded-2xl p-6  flex flex-col gap-4 border border-[#b3ebef]  hover:shadow-lg transition-all duration-200 group"
+              className="relative w-[32%] cursor-pointer bg-gradient-to-br from-[#f6fafd] via-[#ecf9f8] to-[#e5f7f9]  rounded-2xl  flex flex-col gap-2 border border-[#b3ebef]  hover:shadow-lg transition-all duration-200 group"
             >
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-                <div className="flex items-center gap-3">
-                  <span className="bg-[#e6f4f1] p-2 rounded-full text-[#2e808a] shadow group-hover:scale-110 transition">
-                    <HiOutlineBriefcase className="w-6 h-6" />
-                  </span>
-                  <div>
-                    <span className="text-xs text-gray-500 font-medium">
-                      {t("position")}
-                    </span>
-                    <div className="text-lg font-bold text-[#2e808a]">
-                      {interview.position}
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="bg-[#ffeecb] p-2 rounded-full text-[#eab308] shadow">
-                    <HiOutlineUser className="w-6 h-6" />
-                  </span>
-                  <div>
-                    <span className="text-xs text-gray-500 font-medium">
-                      {t("experience")}
-                    </span>
-                    <div className="text-base font-semibold">
-                      {interview.experience}
-                    </div>
-                  </div>
+              <img
+                className="w-full h-48 rounded-t-xl"
+                src="https://thumbs.dreamstime.com/b/global-connection-internet-satellite-web-data-network-g-telecommunications-world-space-generated-ai-global-connection-internet-316541882.jpg"
+              />
+              <div className="flex items-center gap-2">
+                <div className=" bg-gradient-to-r from-green-100 to-blue-100 absolute top-2 right-2  px-2 py-1 rounded-full bg-white text-base font-semibold">
+                  {interview.experience}
                 </div>
               </div>
-              <div className="flex flex-wrap gap-8 mt-2 items-center">
-                <div>
-                  <span className="text-sm text-gray-500">{t("scores")}</span>
-                  <div className="mt-1">
-                    <ScoreBadges score={interview.totalScore} />
-                  </div>
-                </div>
-                <div className="flex flex-col  gap-2">
-                  <div className="flex">
-                    <span className="text-[#2e808a]">
-                      <HiOutlineCalendar className="w-5 h-5" />
+              <div className="px-6 pb-4 ">
+                <div className="flex  flex-wrap sm:flex-row sm:justify-between sm:items-center ">
+                  <div className="flex items-center gap-3 w-full flex-shrink-0">
+                    <span className="bg-[#e6f4f1] p-2 rounded-full text-[#2e808a] shadow group-hover:scale-110 transition">
+                      <HiOutlineBriefcase className="w-6 h-6" />
                     </span>
-                    <span className="text-sm text-gray-500">
-                      {t("created_at")}
-                    </span>
-                  </div>
-
-                  <div>
-                    <div className="text-base">
-                      {formatDate(interview.baseData.createdAt)}
+                    <div>
+                      <span className="text-xs text-gray-500 font-medium">
+                        {t("position")}
+                      </span>
+                      <div className="text-lg font-bold text-[#2e808a]">
+                        {interview.position}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <div className="flex ">
-                    {" "}
-                    <span className="text-[#2e808a]">
-                      <HiOutlineRefresh className="w-5 h-5" />
-                    </span>
-                    <span className="text-sm text-gray-500">
-                      {t("updated_at")}
-                    </span>
+                  <div className="flex items-center gap-2">
+                    {/* <span className="bg-[#ffeecb] p-2 rounded-full text-[#eab308] shadow">
+                      <HiOutlineUser className="w-2 h-2" />
+                    </span> */}
                   </div>
+                </div>
+                <div className="flex flex-wrap gap-4 mt-2 items-center">
+                  <div className="w-full">
+                    <span className="text-sm text-gray-500">{t("scores")}</span>
+                    <div className="mt-1">
+                      <ScoreBadges score={interview.totalScore} />
+                    </div>
+                  </div>
+                  <div className="flex flex-col  gap-2 mr-auto">
+                    <div className="flex">
+                      <span className="text-[#2e808a]">
+                        <HiOutlineCalendar className="w-5 h-5" />
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        {formatDate(interview.baseData.createdAt)}
+                      </span>
+                    </div>
 
-                  <div>
-                    <div className="text-base">
-                      {formatDate(interview.baseData.updatedAt)}
+                    <div></div>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex ">
+                      {" "}
+                      <span className="text-[#2e808a]">
+                        <HiOutlineRefresh className="w-5 h-5" />
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        {formatDate(interview.baseData.updatedAt)}
+                      </span>
+                    </div>
+
+                    <div>
+                      {/* <div className="text-base">
+                        {formatDate(interview.baseData.updatedAt)}
+                      </div> */}
                     </div>
                   </div>
                 </div>

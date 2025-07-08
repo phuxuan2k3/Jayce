@@ -32,8 +32,8 @@ const InterviewPage = () => {
   };
 
   return (
-    <div className="bg-white container   h-fit">
-      <div className="text-3xl font-black    mt-4 text-primary-toned-600 drop-shadow">
+    <div className="   container   h-fit">
+      <div className="text-3xl font-black    mt-4 text-primary-toned-800 drop-shadow">
         {t("interview_result_title")}
       </div>
       <div className="   mb-4 text-gray-700">
@@ -41,7 +41,7 @@ const InterviewPage = () => {
         <p>{t("interview_result_let_see")}</p>
       </div>
       <Box className="w-full flex justify-center ">
-        <div className="w-[340px] h-[500px] bg-white/90 rounded-3xl shadow p-6 flex flex-col gap-2 items-center mr-10">
+        <div className="  sticky top-20 w-[340px] h-[500px] bg-white/90 rounded-3xl shadow p-6 flex flex-col gap-2 items-center mr-10">
           {navTabKeys.map((item) => {
             const isSelected = tab === item.id;
             return (
