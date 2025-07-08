@@ -3,14 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import logo from "/svg/logo.svg";
-// import skillsharp from "/svg/skillsharp.svg";
+import skillsharp from "/svg/skillsharp.svg";
 import { useAppSelector } from "../../app/hooks";
 import paths from "../../router/paths";
 import { useLogoutMutation } from "../../features/auth/api/logout.api";
 import { authSelectors } from "../../features/auth/store/authSlice";
 import LanguageSwitcher from "./Language";
 import Portal from "../ui/common/Portal";
-
+import PersonIcon from "@mui/icons-material/Person";
+import LogoutIcon from "@mui/icons-material/Logout";
 const ManagerNavbar = ({ showNav = true }: { showNav?: boolean }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -90,13 +91,12 @@ const ManagerNavbar = ({ showNav = true }: { showNav?: boolean }) => {
               onClick={handleLogoClick}
               className="flex shrink-0 items-center cursor-pointer"
             >
-              <img src={logo} alt="logo" className="h-10" />
-              {/* <img
-                className="ml-3 hidden lg:block"
+              <img src={logo} alt="logo" className="size-10" />
+              <img
+                className="ml-3 hidden lg:block h-8"
                 src={skillsharp}
                 alt="project name"
               />
-              <span className="text-[12px] font-bold italic ms-1">Manager</span> */}
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -125,6 +125,7 @@ const ManagerNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                           to={paths.manager.profile._layout}
                           className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
                         >
+                          <PersonIcon className="mr-2" />
                           Profile
                         </Link>
                         <button
@@ -132,6 +133,7 @@ const ManagerNavbar = ({ showNav = true }: { showNav?: boolean }) => {
                           onClick={handleLogout}
                           className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"
                         >
+                          <LogoutIcon className="mr-2" />
                           Logout
                         </button>
                       </div>
