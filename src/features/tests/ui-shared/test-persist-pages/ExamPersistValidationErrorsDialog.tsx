@@ -1,8 +1,9 @@
-import { AlertTriangle, Settings, Edit3, X } from 'lucide-react';
+import { AlertTriangle, Settings, Edit3 } from 'lucide-react';
 import { z } from 'zod';
 import { useMemo } from 'react';
 import { ExamPersistZodSchemaType } from '../../schemas/exam-persist-zod';
 import MyDialog from '../../ui/MyDialog';
+import MyButton from '../../ui/buttons/MyButton';
 
 interface ValidationErrorDialogProps {
 	errors: z.ZodError<ExamPersistZodSchemaType> | undefined;
@@ -37,18 +38,7 @@ export default function ExamPersistValidationErrorsDialog({
 
 	return (
 		<MyDialog>
-			<div className="bg-white rounded-lg shadow-lg w-full max-w-2xl relative animate-fade-in max-h-[90vh] overflow-y-auto">
-				{/* Close button */}
-				{onClose && (
-					<button
-						onClick={onClose}
-						className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-10"
-						aria-label="Close"
-					>
-						<X size={20} />
-					</button>
-				)}
-
+			<MyDialog.Content className='w-[50vw]'>
 				{/* Header with icon */}
 				<div className="flex items-center justify-center pt-8 pb-4">
 					<div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center">
@@ -74,7 +64,7 @@ export default function ExamPersistValidationErrorsDialog({
 							<div className="border border-red-200 rounded-lg p-4 bg-red-50">
 								<div className="flex items-center gap-2 mb-3">
 									<Settings size={20} className="text-red-600" />
-									<h3 className="font-semibold text-red-800">Configuration Issues</h3>
+									<h3 className="font-semibold text-red-800">Configuration Related Issues</h3>
 								</div>
 								<ul className="list-disc list-inside space-y-1 mb-4 text-red-700">
 									{configErrors.map((error, index) => (
@@ -98,7 +88,7 @@ export default function ExamPersistValidationErrorsDialog({
 							<div className="border border-amber-200 rounded-lg p-4 bg-amber-50">
 								<div className="flex items-center gap-2 mb-3">
 									<Edit3 size={20} className="text-amber-600" />
-									<h3 className="font-semibold text-amber-800">Questions Issues</h3>
+									<h3 className="font-semibold text-amber-800">Questions Related Issues</h3>
 								</div>
 								<ul className="list-disc list-inside space-y-1 mb-4 text-amber-700">
 									{questionsErrors.map((error, index) => (
@@ -123,17 +113,18 @@ export default function ExamPersistValidationErrorsDialog({
 				</div>
 
 				{/* Action buttons */}
-				<div className="flex gap-3 px-6 pb-6">
+				<div className="flex gap-3 px-6 pb-6 mt-4">
 					{onClose && (
-						<button
+						<MyButton
 							onClick={onClose}
-							className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors font-medium"
+							variant="outline"
+							className="flex-1"
 						>
 							Close
-						</button>
+						</MyButton>
 					)}
 				</div>
-			</div>
+			</MyDialog.Content>
 		</MyDialog>
 	)
 }

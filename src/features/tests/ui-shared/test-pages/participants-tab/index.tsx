@@ -28,32 +28,41 @@ export default function ParticipantsTab() {
 	});
 
 	return (
-		<FetchStateCover2
-			fetchState={participantsQuery}
-			dataComponent={(paged) => (
-				<div className="border border-gray-200 rounded-lg p-4">
-					<div className={`${selectedParticipant ? "hidden" : ""}`}>
-						<ParticipantsList
-							participants={paged.data}
-							onParticipantClicked={setSelectedPaticipant}
-						/>
+		<>
+			<div className={`${selectedParticipant ? "" : "hidden"}`}>
+				{selectedParticipant && <ParticipantsResult
+					participantUser={selectedParticipant}
+					onBack={() => setSelectedPaticipant(null)}
+				/>}
+			</div>
 
-						<MyPaginationSection
-							onPageChange={(page) => setFilter((prev) => ({ ...prev, page }))}
-							page={filter.page}
-							perPage={filter.perPage}
-							total={paged.total}
-							totalPages={paged.totalPages}
-						/>
-					</div>
-					<div className={`${selectedParticipant ? "" : "hidden"}`}>
-						{selectedParticipant && <ParticipantsResult
-							participantUser={selectedParticipant}
-							onBack={() => setSelectedPaticipant(null)}
-						/>}
-					</div>
+			<div className={`flex flex-col gap-4 h-full ${selectedParticipant ? "hidden" : ""}`}>
+				<div className="flex-1 flex flex-col gap-4">
+					<FetchStateCover2
+						fetchState={participantsQuery}
+						dataComponent={({ data }) => data.length > 0 ? (
+							<ParticipantsList
+								participants={data}
+								onParticipantClicked={setSelectedPaticipant}
+							/>
+						) : (
+							<div className="w-full h-full flex items-center justify-center flex-col">
+								<p className="text-gray-600 mb-4">There are no participants for this test yet.</p>
+							</div>
+						)}
+					/>
 				</div>
-			)}
-		/>
+
+				<hr className="border-gray-200 mt-4" />
+
+				<MyPaginationSection
+					onPageChange={(page) => setFilter((prev) => ({ ...prev, page }))}
+					page={filter.page}
+					perPage={filter.perPage}
+					total={participantsQuery.data?.total}
+					totalPages={participantsQuery.data?.totalPages}
+				/>
+			</div>
+		</>
 	)
 }

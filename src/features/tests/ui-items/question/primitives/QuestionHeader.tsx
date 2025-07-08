@@ -1,5 +1,6 @@
 
-import { BaseComponentProps, TypeMap } from "./types";
+import { BaseComponentProps } from "./types";
+import { TypeMap } from "../types";
 import { QuestionContext } from "./contexts";
 import { cn } from "../../../../../app/cn";
 

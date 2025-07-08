@@ -38,7 +38,7 @@ export default function AnswersList({
 				<div className="flex items-center gap-2">
 					<h2 className="text-lg font-semibold">Your Answers</h2>
 					{pollAnswers && (
-						<p className="text-gray-500 text-xs">Loading answers...</p>
+						<p className="text-gray-500 text-xs">Polling answers...</p>
 					)}
 				</div>
 				{isAllowedToShowAnswer === true ? (

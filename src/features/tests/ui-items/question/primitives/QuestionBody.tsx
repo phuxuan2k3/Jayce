@@ -8,9 +8,7 @@ import { cn } from '../../../../../app/cn';
 function QuestionDetailBody({
 	className = "",
 }: BaseComponentProps) {
-	const { show } = ShowAnswerContext.useShowAnswer();
 	const { question, hasCorrectAnswer } = QuestionContext.useQuestion();
-	const answer = QuestionContext.useAnswer();
 
 	let detailComponent: React.ReactNode = null;
 	if (question.type === "MCQ") {
@@ -23,24 +21,6 @@ function QuestionDetailBody({
 		<div className={cn('flex flex-col gap-4', className)}>
 			{detailComponent}
 			{hasCorrectAnswer && <ShowAnswerButton className="self-end" />}
-			{show && answer && (
-				<>
-					<hr className="my-2 border-gray-300" />
-					<div className='flex flex-col gap-2'>
-						<div className="text-sm font-semibold text-gray-800">
-							Points received: {answer.pointReceived != null
-								? answer.pointReceived
-								: <span className='italic'>Pending...</span>
-							} / {question.points}
-						</div>
-						{answer.comment != null && (
-							<div className="text-sm text-gray-600">
-								Comment: {answer.comment}
-							</div>
-						)}
-					</div>
-				</>
-			)}
 		</div>
 	);
 }

@@ -1,8 +1,8 @@
-import { Upload, WandSparkles } from "lucide-react";
+import { BrainCircuit, Upload, WandSparkles } from "lucide-react";
 import { CreateTab } from "../common/types";
 import ManagerSidebar from "../../../../../features/tests/ui-shared/sidebar/ManagerSidebar";
 import QuickAction from "../../../../../features/tests/ui/sidebar/primitive/QuickAction";
-import SidebarActions from "../../../../../features/tests/ui/sidebar/primitive/SidebarActions";
+import SidebarLayout from "../../../../../features/tests/ui/sidebar/SidebarLayout";
 
 export default function Sidebar({
 	tab,
@@ -12,7 +12,7 @@ export default function Sidebar({
 	onTabChange: (tab: CreateTab) => void;
 }) {
 	return (
-		<SidebarActions className="h-full flex flex-col">
+		<SidebarLayout>
 			<ManagerSidebar.Info
 				active={tab === 'info'}
 				onClick={() => onTabChange('info')}
@@ -22,15 +22,6 @@ export default function Sidebar({
 				onClick={() => onTabChange('questions')}
 			/>
 
-			<hr className="my-2 border-primary-toned-300" />
-
-			<QuickAction
-				icon={<WandSparkles />}
-				title='Assistant'
-				variant={"gradient"}
-				description='Generate questions with AI'
-				onClick={() => onTabChange('generate')}
-			/>
 
 			<hr className="my-2 border-primary-toned-300" />
 
@@ -42,6 +33,30 @@ export default function Sidebar({
 				onClick={() => onTabChange('publish')}
 			/>
 
-		</SidebarActions>
+			<hr className="my-2 border-primary-toned-300" />
+
+			<div className="mt-auto w-full relative group">
+				{/* Introduction Section */}
+				<div className="p-4 bg-gradient-to-r from-primary-toned-50 to-secondary-toned-50 border border-primary-toned-200 rounded-lg">
+					<h4 className="font-bold text-primary-toned-700 mb-2 flex items-center">
+						<BrainCircuit className="w-4 h-4 mr-2" />
+						AI-Powered Test Generation
+					</h4>
+					<p className="text-sm text-primary-toned-600 leading-relaxed mb-4">
+						Use our AI assistant to generate questions and tests quickly. Save time by letting AI suggest relevant questions, or create entire tests in just a few clicks.
+					</p>
+
+					{/* Compact Button */}
+					<QuickAction
+						className="w-full"
+						icon={<WandSparkles />}
+						title='Assistant'
+						variant={"gradient"}
+						description='Generate questions with AI'
+						onClick={() => onTabChange('generate')}
+					/>
+				</div>
+			</div>
+		</SidebarLayout>
 	)
 }

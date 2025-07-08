@@ -32,9 +32,11 @@ export default function ManagerTestPage() {
 					testId={testId}
 				/>;
 			case 'attempts':
-				return <AttemptsTab
-					onAttemptClick={(attempt) => navigate(paths.manager.tests.in(testId).attempts.in(attempt.id).ROOT)}
-				/>;
+				return <div className='flex-1 flex flex-col gap-4 justify-center'>
+					<AttemptsTab
+						onAttemptClick={(attempt) => navigate(paths.manager.tests.in(testId).attempts.in(attempt.id).ROOT)}
+					/>
+				</div>;
 			case 'participants':
 				return <ParticipantsTab />;
 		}

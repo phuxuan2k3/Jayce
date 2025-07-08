@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { CreateTab } from "./common/types";
+import { AllStepData, CreateTab } from "./common/types";
 import { useNavigate } from "react-router-dom";
 import { usePostTestsMutation } from "../../../../features/tests/api/test.api-gen-v2";
 import { QuestionPersistCoreSchema } from "../../../../features/tests/ui-items/question/types";
@@ -16,6 +16,7 @@ import Sidebar from "./components/Sidebar";
 import { z } from "zod";
 import { ExamPersistZodSchema, ExamPersistZodSchemaType } from "../../../../features/tests/schemas/exam-persist-zod";
 import RightLayoutTemplate from "../../../../components/layouts/RightLayoutTemplate";
+import { transformExamPersistToAllStepData } from "./common/transform";
 
 
 export default function ManagerTestNewPage() {
@@ -45,6 +46,11 @@ export default function ManagerTestNewPage() {
 		questions: [],
 	});
 
+	const [generatedQuestions, setGeneratedQuestions] = useState<QuestionPersistCoreSchema[] | null>(null);
+	const [allStepData, setAllStepData] = useState<AllStepData>(() => {
+		return transformExamPersistToAllStepData(examPersist);
+	});
+
 	const [createTest, createTestState] = usePostTestsMutation();
 	useEffect(() => {
 		if (createTestState.isSuccess) {
@@ -54,17 +60,13 @@ export default function ManagerTestNewPage() {
 		}
 	}, [createTestState.isSuccess, createTestState.data, navigate]);
 
-	useEffect(() => {
-		if (tab === "publish") {
-
-		}
-	}, [tab, examPersist]);
-
 	const handleBulkAddQuestions = useCallback((questions: QuestionPersistCoreSchema[]) => {
 		setExamPersist((prev) => ({
 			...prev,
 			questions: [...prev.questions, ...(questions as ExamPersistCoreSchema["questions"])],
 		}));
+		setTab("questions");
+		setGeneratedQuestions(null);
 	}, []);
 
 	const handleReplaceQuestions = useCallback((questions: QuestionPersistCoreSchema[]) => {
@@ -72,6 +74,8 @@ export default function ManagerTestNewPage() {
 			...prev,
 			questions: questions as ExamPersistCoreSchema["questions"],
 		}));
+		setTab("questions");
+		setGeneratedQuestions(null);
 	}, []);
 
 	const handleRemoveQuestion = useCallback((index: number) => {
@@ -115,12 +119,16 @@ export default function ManagerTestNewPage() {
 				/>;
 			case "generate":
 				return <BuilderWizzardTab
+					allStepData={allStepData}
+					setAllStepData={setAllStepData}
 					onBulkAddQuestions={handleBulkAddQuestions}
 					onReplaceQuestions={handleReplaceQuestions}
-					initialExam={examPersist}
 					onGenerationDisposal={() => {
 						setTab("questions");
+						setGeneratedQuestions(null);
 					}}
+					generatedQuestions={generatedQuestions}
+					onGeneratedQuestions={(questions) => setGeneratedQuestions(questions)}
 				/>;
 			case "publish":
 				return <PublishTab
@@ -139,7 +147,7 @@ export default function ManagerTestNewPage() {
 		<RightLayoutTemplate
 			header={
 				<RightLayoutTemplate.Header
-					title="Create your Exam"
+					title="Create Exam"
 					description="Configure your exam settings and questions."
 					backButton={
 						<RightLayoutTemplate.BackButton

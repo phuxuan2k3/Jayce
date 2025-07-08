@@ -12,11 +12,13 @@ import { AllStepData, getStepInfo, StepInfoKey } from '../common/types';
 import { toast } from 'react-toastify';
 
 export default function BuilderWizzardTabMain({
-	initialData,
-	onDataConfirm,
+	stepData,
+	onStepDataChange,
+	onGenerationConfirm,
 }: {
-	initialData?: AllStepData;
-	onDataConfirm: (data: AllStepData) => void;
+	stepData: AllStepData;
+	onStepDataChange: (data: AllStepData) => void;
+	onGenerationConfirm: () => void;
 }) {
 	const {
 		handleValueChangeOfStep,
@@ -26,7 +28,10 @@ export default function BuilderWizzardTabMain({
 		handlePrevStep,
 		handleSetStep,
 		step,
-	} = useBuiderStepsData(initialData);
+	} = useBuiderStepsData({
+		stepData,
+		onStepDataChange,
+	});
 
 	useEffect(() => {
 		if (currentErrorMessages.length > 0) {
@@ -59,7 +64,7 @@ export default function BuilderWizzardTabMain({
 			case 4:
 				return <Step4
 					{...mainValue}
-					onConfirm={() => onDataConfirm(mainValue)}
+					onConfirm={() => onGenerationConfirm()}
 				/>;
 			default:
 				return <div>Invalid Step</div>;

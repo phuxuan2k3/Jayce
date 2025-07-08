@@ -1,14 +1,17 @@
+import { cn } from '../../../../app/cn';
 import { UserInfo } from '../../../auth/store/authSlice';
 import { UserCore, getUserCore } from '../../../auth/types/profile';
 
 export default function UserCoreCard({
 	user,
+	className = '',
 }: {
 	user: UserInfo | UserCore;
+	className?: string;
 }) {
 	let _user = getUserCore(user);
 	return (
-		<div className='rounded-lg p-6 bg-primary-toned-50 shadow-md'>
+		<div className={cn('rounded-lg p-6 bg-primary-toned-50 shadow-md', className)}>
 			<div className='flex items-center'>
 				<img
 					src={_user.avatarPath}
