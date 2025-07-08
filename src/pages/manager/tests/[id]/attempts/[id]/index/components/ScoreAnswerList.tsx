@@ -67,7 +67,7 @@ export default function ScoreAnswerList({
 										withAnswer={item.answer}
 										showAnswer={isShowAllAnswers}
 										hasAnswer={item.answer != null ? {
-											givenPoints: scoreAnswers[item.answer.id].points ?? 0,
+											givenPoints: scoreAnswers[item.answer.id]?.points ?? 0,
 											onGivenPointsChange: (points: number) => {
 												const id = item.answer?.id;
 												if (!id) return;
@@ -79,7 +79,7 @@ export default function ScoreAnswerList({
 													}
 												}));
 											},
-											givenComment: scoreAnswers[item.answer.id].comment ?? "",
+											givenComment: scoreAnswers[item.answer.id]?.comment ?? "",
 											onGivenCommentChange: (comment?: string) => {
 												const id = item.answer?.id;
 												if (!id) return;
