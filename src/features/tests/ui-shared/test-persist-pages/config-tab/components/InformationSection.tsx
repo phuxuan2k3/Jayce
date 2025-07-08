@@ -4,6 +4,9 @@ import MyInput from "../../../../ui/forms/MyInput";
 import MyTextArea from "../../../../ui/forms/MyTextArea";
 import MyFieldLayout from "../../../../ui/forms/MyFieldLayout";
 import MyDescription from "../../../../ui/forms/MyDescription";
+import MyNumberInput from "../../../../ui/forms/MyNumberInput";
+import MySelect from "../../../../ui/forms/MySelect";
+import { LanguagesAsConst, LanguageType } from "../../../../../../pages/manager/tests/new/common/base-schema";
 
 export function InformationSection({
 	title,
@@ -43,23 +46,26 @@ export function InformationSection({
 			<div className="flex items-start gap-8 mt-4">
 				<MyFieldLayout className="flex-1">
 					<MyLabel htmlFor="test-duration">Duration:</MyLabel>
-					<MyInput
+					<MyNumberInput
 						id="test-duration"
-						type="number"
 						placeholder="Enter duration"
 						value={minutesToAnswer}
 						onChange={e => onChange({ minutesToAnswer: Number(e.target.value) || 1 })}
+						min={1}
 					/>
 					<MyDescription text="Time in minutes" />
 				</MyFieldLayout>
 				<MyFieldLayout className="flex-1">
 					<MyLabel htmlFor="test-language">Language:</MyLabel>
-					<MyInput
+					<MySelect
 						id="test-language"
-						type="text"
 						placeholder="Language"
 						value={language}
-						onChange={e => onChange({ language: e.target.value })}
+						options={LanguagesAsConst.map(lang => ({
+							value: lang,
+							label: lang,
+						}))}
+						onChange={(value) => onChange({ language: value as LanguageType || "English" })}
 					/>
 					<MyDescription text="Language of the exam" />
 				</MyFieldLayout>

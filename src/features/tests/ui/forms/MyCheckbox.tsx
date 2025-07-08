@@ -45,9 +45,7 @@ export default function MyCheckbox({ checked, onChange, label, className, id, ..
 				/>
 				<CheckboxBox checked={checked} disabled={rest.disabled} />
 			</div>
-
 			{label}
-
 		</label>
 	);
 };

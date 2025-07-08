@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ExamPersistCoreSchema } from "../../../../ui-items/test/types";
 import MyDescription from "../../../../ui/forms/MyDescription";
 import MyFieldLayout from "../../../../ui/forms/MyFieldLayout";
@@ -22,6 +23,8 @@ export function AccessSection({
 	getDateValue: (dateStr: string | null) => string;
 	getTimeValue: (dateStr: string | null) => string;
 }) {
+	const [passwordDraft, setPasswordDraft] = useState<string>(password || "");
+
 	return (
 		<div className="flex flex-col gap-y-4 w-full">
 			<div className="flex items-start gap-8 w-full">
@@ -43,20 +46,25 @@ export function AccessSection({
 						<MyInput
 							id="test-password"
 							type="text"
-							disabled={password === null || password === undefined}
+							disabled={password == null}
 							placeholder="Enter password"
-							className={`${(password === null || password === undefined) && "bg-gray-200 cursor-not-allowed"}`}
+							className={`${(password == null) && "bg-gray-200 cursor-not-allowed"}`}
 							value={password || ""}
 							onChange={e => {
-								if (password !== null && password !== undefined) {
+								if (password != null) {
 									onChange({ password: e.target.value });
+									setPasswordDraft(e.target.value);
 								}
 							}}
 						/>
 						<MySwitch
 							id="test-password-required"
-							checked={password !== null && password !== undefined}
-							onChange={checked => onChange({ password: checked ? "" : null })}
+							checked={password != null}
+							onChange={checked => onChange({
+								password: checked
+									? passwordDraft
+									: null
+							})}
 							label={
 								<MyLabel htmlFor="test-password-required" className="text-sm text-primary flex-shrink-0 cursor-pointer">
 									Required
