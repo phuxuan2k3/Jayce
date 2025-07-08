@@ -43,20 +43,35 @@ function QuestionScoreFooter({
 	comment?: string;
 	onCommentChange: (comment?: string) => void;
 }) {
+	const error = (points < 0 || points > questionPoints) ? "Points must be between 0 and " + questionPoints : undefined;
 	return (
 		<div className={cn(
 			"grid grid-cols-[auto_1fr] gap-2 p-2 place-items-baseline",
 			className
 		)}>
 			<MyLabel>Given Points: </MyLabel>
-			<MyNumberInput
-				min={0}
-				placeholder='Enter points...'
-				max={questionPoints}
-				value={points}
-				onAbort={() => onPointsChange(0)}
-				onChange={(e) => onPointsChange(e.target.valueAsNumber)}
-			/>
+			<div className="flex flex-col">
+				<div className="flex items-center gap-2">
+					<MyNumberInput
+						min={0}
+						placeholder='Enter points...'
+						className="w-24"
+						max={questionPoints}
+						value={points}
+						error={error}
+						onAbort={() => onPointsChange(0)}
+						onChange={(e) => onPointsChange(e.target.valueAsNumber)}
+					/>
+					<span className="text-sm text-gray-500">
+						/ {questionPoints} points
+					</span>
+				</div>
+				{error && (
+					<div className="text-xs text-red-500 mt-1">
+						{error}
+					</div>
+				)}
+			</div>
 			{allowComment && (
 				<>
 					<MyLabel>Comment: </MyLabel>
