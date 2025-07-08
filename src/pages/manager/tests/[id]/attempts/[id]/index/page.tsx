@@ -55,15 +55,17 @@ export default function ManagerTestsAttemptPage() {
 					scoreAttemptSection={
 						<div className='flex flex-col gap-4'>
 							<hr className=' border-primary-toned-300 my-1' />
-							<MyButton
-								variant={"primary"}
-								size={"medium"}
-								className="w-full"
-								onClick={() => setShowConfirmScoringDialog(true)}
-								disabled={scoreState.isLoading || testWithAttemptQuery.data?.attempt.status === "GRADED"}
-							>
-								{scoreState.isLoading ? "Scoring..." : "Confirm Scoring"}
-							</MyButton>
+							{testWithAttemptQuery.data?.attempt.status === "COMPLETED" && (
+								<MyButton
+									variant={"primary"}
+									size={"medium"}
+									className="w-full"
+									onClick={() => setShowConfirmScoringDialog(true)}
+									disabled={scoreState.isLoading}
+								>
+									{scoreState.isLoading ? "Scoring..." : "Confirm Scoring"}
+								</MyButton>
+							)}
 						</div>
 					}
 				/>
