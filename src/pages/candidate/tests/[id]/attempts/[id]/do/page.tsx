@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import RightLayoutTemplate from "../../../../../../../components/layouts/RightLayoutTemplate";
 import TestDoSidebar from "./components/TestDoSidebar";
 import useTestDoServer from "./hooks/useTestDoServer";
@@ -22,10 +22,13 @@ export default function CandidateTestAttemptsDoPage() {
 	const attemptState = useAppSelector((state) => testDoSlice.selectors.selectAttempt(state, attemptId));
 	const currentQuestionState = useAppSelector((state) => testDoSlice.selectors.selectCurrentQuestion(state, attemptId));
 
+	const isLoadedRef = useRef(false);
 	const serverState = useTestDoServer();
 
 	useEffect(() => {
 		if (serverState.data == null || !serverState.isSuccess || attemptState != null) return;
+		if (isLoadedRef.current === true) return; // Prevent reloading if already loaded
+
 		const { data: { attempt, test, questions, attemptAnswers } } = serverState;
 		appDispatch(testDoSlice.actions.loadAttempt({
 			attemptId,
@@ -38,7 +41,16 @@ export default function CandidateTestAttemptsDoPage() {
 				answer: answer.child || null
 			}))
 		}));
-	}, [serverState.isSuccess, serverState.data]);
+		isLoadedRef.current = true; // Mark as loaded to prevent reloading
+	}, [serverState.isSuccess, serverState.data, attemptState, attemptId, testId]);
+
+	useEffect(() => {
+		// Clear all attempts state when the component unmounts
+		return () => {
+			appDispatch(testDoSlice.actions.clear());
+			isLoadedRef.current = false; // Reset loaded state
+		};
+	}, []);
 
 	return (
 		<RightLayoutTemplate
@@ -88,7 +100,7 @@ export default function CandidateTestAttemptsDoPage() {
 			<FetchStateCover2
 				fetchState={serverState}
 				loadingComponent={<TitleSkeleton />}
-				dataComponent={({ questions }) => (attemptState && currentQuestionState != null) ? (
+				dataComponent={({ questions }) => (attemptState != null && currentQuestionState != null) ? (
 					<div className="flex w-full justify-between">
 						{attemptState.indexedQuestionIds.length === 0 ? (
 							<div>No questions found</div>

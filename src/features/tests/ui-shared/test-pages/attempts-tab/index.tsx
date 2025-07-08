@@ -4,10 +4,9 @@ import useGetTestIdParams from "../../../hooks/useGetTestIdParams";
 import FetchStateCover2 from "../../../ui/fetch-states/FetchStateCover2";
 import MyPaginationSection from "../../../ui-sections/MyPaginationSection";
 import { QuerySortValues } from "../../../types/query";
-import MyButton from "../../../ui/buttons/MyButton";
-import { ArrowDownNarrowWide, ArrowUpNarrowWide } from "lucide-react";
 import LoadingCover from "../../../ui/fetch-states/LoadingCover";
 import AttemptsTable from "../../../ui-items/attempt/AttemptsTable";
+import MyButtonWithSort from "../../../ui/buttons/MyButtonWithSort";
 
 type Filter = {
 	page: number;
@@ -38,6 +37,7 @@ const AttemptsTab = ({
 		sortByPoints: filter.sortByPoints,
 	}, {
 		refetchOnMountOrArgChange: true,
+		pollingInterval: 30000,
 	});
 
 	return (
@@ -56,16 +56,19 @@ const AttemptsTab = ({
 						}
 
 						return (
-							<div className="flex flex-col gap-4 items-center justify-center [&>*]:w-full">
+							<div className="flex flex-col gap-6 items-center justify-center [&>*]:w-full p-4">
 								<div className="flex w-full items-center justify-between">
 									<div className="flex-1">
 										<h3 className="text-lg font-semibold ">Completed Attempts</h3>
 									</div>
-									<FilterButtons filter={filter} onFilterChange={(newFilter) => setFilter(newFilter)} />
+									<FilterButtons
+										filter={filter}
+										onFilterChange={(newFilter) => setFilter(newFilter)}
+									/>
 
 								</div>
 
-								<div className="flex-1 flex relative py-2 px-6">
+								<div className="flex-1 flex relative">
 									<AttemptsTable
 										attempts={data}
 										onItemClick={(data) => onAttemptClick?.(data)}
@@ -81,6 +84,8 @@ const AttemptsTab = ({
 					}}
 				/>
 			</div>
+
+			<hr className="border-gray-200 mt-4" />
 
 			<MyPaginationSection
 				page={filter.page}
@@ -106,39 +111,26 @@ const FilterButtons = ({
 
 	return (
 		<div className="flex items-center gap-2">
-			<MyButton
-				size={"medium"}
-				onClick={() => onFilterChange({
+			<MyButtonWithSort
+				sort={filter.sortByCreatedAt}
+				setSort={(sort) => onFilterChange({
 					...filter,
-					sortByCreatedAt: filter.sortByCreatedAt === "asc" ? "desc" : "asc",
+					sortByCreatedAt: sort,
 					sortByPoints: undefined, // Reset points sort when changing date sort
 				})}
-				className="flex items-center gap-1"
 			>
-				{filter.sortByCreatedAt === "asc" ? (
-					<ArrowUpNarrowWide size={16} className="mr-1" />
-				) : (
-					<ArrowDownNarrowWide size={16} className="mr-1" />
-				)}
 				Date
-			</MyButton>
-
-			<MyButton
-				size={"medium"}
-				onClick={() => onFilterChange({
+			</MyButtonWithSort>
+			<MyButtonWithSort
+				sort={filter.sortByPoints}
+				setSort={(sort) => onFilterChange({
 					...filter,
-					sortByPoints: filter.sortByPoints === "asc" ? "desc" : "asc",
+					sortByPoints: sort,
 					sortByCreatedAt: undefined, // Reset date sort when changing points sort
 				})}
-				className="flex items-center gap-1"
 			>
-				{filter.sortByPoints === "asc" ? (
-					<ArrowUpNarrowWide size={16} className="mr-1" />
-				) : (
-					<ArrowDownNarrowWide size={16} className="mr-1" />
-				)}
-				Points
-			</MyButton>
+				Score
+			</MyButtonWithSort>
 		</div>
 	);
 }

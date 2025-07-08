@@ -76,8 +76,6 @@ const LoginForm = () => {
 
 		try {
 			const response = await login({ email, password });
-			console.log(response.data);
-			console.log(response.error);
 			if (response.data) {
 				dispatch(authActions.setAuthStateFromResponse(response.data));
 				navigate(paths._layout);

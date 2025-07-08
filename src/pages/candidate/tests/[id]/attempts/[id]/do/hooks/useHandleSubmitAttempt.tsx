@@ -36,8 +36,8 @@ export default function useSubmitAttempt() {
 	useActionStateWatch(submitState, {
 		onSuccess: () => {
 			toast.success("Attempt submitted successfully");
-			navigate(paths.candidate.tests.in(testId).ROOT);
 			dispatch(testDoSlice.actions.clearAttempt(attemptId));
+			navigate(paths.candidate.tests.in(testId).attempts.in(attemptId).ROOT);
 		},
 		onError: (error) => {
 			console.error("Failed to submit attempt:", error);

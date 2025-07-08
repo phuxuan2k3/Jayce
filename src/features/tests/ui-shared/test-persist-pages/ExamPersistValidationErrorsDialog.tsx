@@ -17,8 +17,6 @@ export default function ExamPersistValidationErrorsDialog({
 	onConfigEdit,
 	onQuestionsEdit,
 }: ValidationErrorDialogProps) {
-	console.log(errors);
-
 	const configErrors = useMemo(
 		() => errors?.issues.filter(i => i.path.includes("questions") === false).map(i => i.message) ?? []
 		, [errors]);

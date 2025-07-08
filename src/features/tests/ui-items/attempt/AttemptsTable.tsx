@@ -23,39 +23,41 @@ const AttemptsTable: React.FC<Props> = ({
 	}
 
 	return (
-		<table className="w-full bg-white rounded-lg border border-gray-200 shadow-md">
-			<thead className="bg-gray-50 text-gray-700 font-semibold text-sm">
-				<tr>
-					<th className="px-6 py-3 text-left tracking-wider">Order #</th>
-					<th className="px-6 py-3 text-left tracking-wider">Date</th>
-					<th className="px-6 py-3 text-left tracking-wider">Score</th>
-					<th className="px-6 py-3 text-left tracking-wider">Time Spent</th>
-				</tr>
-			</thead>
-			<tbody className="divide-y divide-gray-200">
-				{attempts.map((attempt) => (
-					<tr
-						key={attempt.id}
-						className="hover:bg-gray-50 cursor-pointer"
-						onClick={() => onItemClick?.(attempt)}
-					>
-						<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-							{attempt.order}
-						</td>
-						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-							<div>{format(new Date(attempt.createdAt), "MMM d, yyyy")}</div>
-							<div className="text-xs">{formatDistanceToNow(new Date(attempt.createdAt), { addSuffix: true })}</div>
-						</td>
-						<td className={cn("px-6 py-4 whitespace-nowrap text-sm font-semibold", AttemptUtils.status(attempt.status).fontColor)}>
-							{attempt.status === "GRADED" ? attempt._aggregate.points : AttemptUtils.status(attempt.status).text}
-						</td>
-						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-							{formatSeconds(attempt.secondsSpent)}
-						</td>
+		<div className='overflow-x-auto w-full rounded-lg border border-primary-toned-200 shadow-md'>
+			<table className="w-full bg-white">
+				<thead className="bg-primary-toned-700 text-white font-bold">
+					<tr>
+						<th className="px-6 py-3 text-left tracking-wider">Order #</th>
+						<th className="px-6 py-3 text-left tracking-wider">Date</th>
+						<th className="px-6 py-3 text-left tracking-wider">Score</th>
+						<th className="px-6 py-3 text-left tracking-wider">Time Spent</th>
 					</tr>
-				))}
-			</tbody>
-		</table>
+				</thead>
+				<tbody className="divide-y divide-gray-200">
+					{attempts.map((attempt) => (
+						<tr
+							key={attempt.id}
+							className="hover:bg-gray-50 cursor-pointer"
+							onClick={() => onItemClick?.(attempt)}
+						>
+							<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+								{attempt.order}
+							</td>
+							<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+								<div>{format(new Date(attempt.createdAt), "MMM d, yyyy")}</div>
+								<div className="text-xs">{formatDistanceToNow(new Date(attempt.createdAt), { addSuffix: true })}</div>
+							</td>
+							<td className={cn("px-6 py-4 whitespace-nowrap text-sm font-semibold", AttemptUtils.status(attempt.status).fontColor)}>
+								{attempt.status === "GRADED" ? attempt._aggregate.points : AttemptUtils.status(attempt.status).text}
+							</td>
+							<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+								{formatSeconds(attempt.secondsSpent)}
+							</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</div>
 	);
 };
 

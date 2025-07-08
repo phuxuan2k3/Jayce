@@ -54,6 +54,7 @@ export default function CandidateTestAttemptPage() {
 				dataComponent={({ attempt, test }) => (
 					<AnswersList
 						isAllowedToShowAnswer={isAllowedToShowAnswer(attempt, test)}
+						pollAnswers={attempt.status === "COMPLETED" ? true : false} // Poll answers only if the attempt is completed (waiting for grading)
 					/>
 				)}
 			/>

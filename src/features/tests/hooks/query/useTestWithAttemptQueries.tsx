@@ -3,13 +3,17 @@ import useGetAttemptIdParams from "../useGetAttemptIdParams";
 import useGetTestIdParams from "../useGetTestIdParams";
 import { FetchState } from "../../types/fetch-state";
 
-export default function useTestWithAttemptQueries(): FetchState<{
+export default function useTestWithAttemptQueries(pollAttempt: boolean = false): FetchState<{
 	test: TestFullSchema;
 	attempt: AttemptCoreSchema;
 }> {
 	const attemptId = useGetAttemptIdParams();
 	const testId = useGetTestIdParams();
-	const attemptQuery = useGetAttemptsByAttemptIdQuery({ attemptId });
+	const attemptQuery = useGetAttemptsByAttemptIdQuery({
+		attemptId
+	}, {
+		pollingInterval: pollAttempt ? 10000 : undefined,
+	});
 	const testQuery = useGetTestsByTestIdQuery({ testId });
 
 	const isLoading = attemptQuery.isLoading || testQuery.isLoading;

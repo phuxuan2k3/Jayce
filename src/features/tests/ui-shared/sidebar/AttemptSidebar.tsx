@@ -4,9 +4,22 @@ import { cn } from "../../../../app/cn";
 import { TestSidebarPrimitives } from "./TestSidebarPrimitives";
 import FetchStateCover2 from "../../ui/fetch-states/FetchStateCover2";
 import useTestWithAttemptQueries from "../../hooks/query/useTestWithAttemptQueries";
+import { useEffect, useState } from "react";
 
 export default function AttemptSidebar() {
-	const testWithAttemptQuery = useTestWithAttemptQueries();
+	const [shouldPoll, setShouldPoll] = useState(false);
+	const testWithAttemptQuery = useTestWithAttemptQueries(shouldPoll);
+
+	useEffect(() => {
+		const status = testWithAttemptQuery.data?.attempt.status;
+		if (status == null) return;
+		if (status !== "GRADED") {
+			setShouldPoll(true);
+		}
+		else {
+			setShouldPoll(false);
+		}
+	}, [testWithAttemptQuery.data?.attempt.status]);
 
 	return (
 		<div className="sticky top-2 max-h-[96vh] overflow-y-auto shadow-primary bg-white rounded-xl p-6 flex flex-col gap-6 text-primary border border-primary-toned-200">
@@ -52,45 +65,55 @@ function _AttemptSidebar({
 							"rounded-full text-xs px-4 py-0.5 w-fit font-bold border-2 mt-1 inline-block"
 						)}
 					>
-						{attempt.status}
+						{AttemptUtils.status(attempt.status).text}
 					</span>
 				</div>
-				<div className="flex flex-col items-center justify-center bg-primary text-white rounded-full px-4 py-2 mr-2">
+				{attempt.status === "GRADED" && <div className="flex flex-col items-center justify-center bg-primary text-white rounded-full px-4 py-2 mr-2">
 					<span className="text-3xl font-bold">{points}</span>
 					<span className="text-xs">
 						{" "}
 						/ {totalPoints} pts
 					</span>
-				</div>
+				</div>}
 			</div>
 
-			<div className="flex flex-col gap-1">
-				<div className="flex justify-between text-xs font-medium text-primary-toned-600">
-					<span>Score</span>
-					<span>{getScorePercentage()}%</span>
-				</div>
-				<div className="w-full h-3 bg-primary-toned-100 rounded-full overflow-hidden">
-					<div
-						className="h-full bg-primary transition-all duration-300"
-						style={{ width: `${getScorePercentage()}%` }}
-					/>
-				</div>
-			</div>
+			{attempt.status === "GRADED" ? (
+				<>
+					<div className="flex flex-col gap-1">
+						<div className="flex justify-between text-xs font-medium text-primary-toned-600">
+							<span>Score</span>
+							<span>{getScorePercentage()}%</span>
+						</div>
+						<div className="w-full h-3 bg-primary-toned-100 rounded-full overflow-hidden">
+							<div
+								className="h-full bg-primary transition-all duration-300"
+								style={{ width: `${getScorePercentage()}%` }}
+							/>
+						</div>
+					</div>
 
-			<div className="flex justify-between gap-2 text-center mt-2">
-				<div className="flex-1 bg-primary-toned-50 rounded-lg py-2">
-					<div className="text-lg font-bold">{answeredCorrect}</div>
-					<div className="text-xs text-primary-toned-600">Correct</div>
-				</div>
-				<div className="flex-1 bg-primary-toned-50 rounded-lg py-2">
-					<div className="text-lg font-bold">{answered}</div>
-					<div className="text-xs text-primary-toned-600">Answered</div>
-				</div>
-				<div className="flex-1 bg-primary-toned-50 rounded-lg py-2">
-					<div className="text-lg font-bold">{getAccuracyPercentage()}%</div>
-					<div className="text-xs text-primary-toned-600">Accuracy</div>
-				</div>
-			</div>
+					<div className="flex justify-between gap-2 text-center mt-2">
+						<div className="flex-1 bg-primary-toned-50 rounded-lg py-2">
+							<div className="text-lg font-bold">{answeredCorrect}</div>
+							<div className="text-xs text-primary-toned-600">Correct</div>
+						</div>
+						<div className="flex-1 bg-primary-toned-50 rounded-lg py-2">
+							<div className="text-lg font-bold">{answered}</div>
+							<div className="text-xs text-primary-toned-600">Answered</div>
+						</div>
+						<div className="flex-1 bg-primary-toned-50 rounded-lg py-2">
+							<div className="text-lg font-bold">{getAccuracyPercentage()}%</div>
+							<div className="text-xs text-primary-toned-600">Accuracy</div>
+						</div>
+					</div>
+				</>
+			) : (
+				attempt.status === "COMPLETED" && (
+					<span className="flex items-center gap-1 text-gray-500 text-xs">
+						Waiting to be graded ...
+					</span>
+				)
+			)}
 
 			<hr className="border-primary-toned-300" />
 

@@ -93,7 +93,7 @@ function StatusItem({
 
 ExamCoreItemRow.Header = () => (
 	<thead>
-		<tr className="bg-primary-toned-700 text-white font-asap font-bold">
+		<tr className="bg-primary-toned-700 text-white font-bold">
 			<th className="px-6 py-4 text-left">Title</th>
 			<th className="px-6 py-4 text-left">Last Modified</th>
 			<th className="px-6 py-4 text-left">Room ID</th>
