@@ -4,9 +4,13 @@ import { cn } from "../../../../app/cn";
 import { TestSidebarPrimitives } from "./TestSidebarPrimitives";
 import FetchStateCover2 from "../../ui/fetch-states/FetchStateCover2";
 import useTestWithAttemptQueries from "../../hooks/query/useTestWithAttemptQueries";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-export default function AttemptSidebar() {
+export default function AttemptSidebar({
+	scoreAttemptSection,
+}: {
+	scoreAttemptSection?: React.ReactNode;
+}) {
 	const [shouldPoll, setShouldPoll] = useState(false);
 	const testWithAttemptQuery = useTestWithAttemptQueries(shouldPoll);
 
@@ -32,6 +36,8 @@ export default function AttemptSidebar() {
 					/>
 				)}
 			/>
+
+			{scoreAttemptSection}
 		</div>
 	);
 }

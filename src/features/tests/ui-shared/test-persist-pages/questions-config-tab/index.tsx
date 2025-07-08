@@ -86,10 +86,15 @@ const QuestionsConfigTab = ({
 							</ul>
 						</div>
 						<button
-							className="text-xs flex items-center justify-center bg-red-100 text-red-600 hover:bg-red-200 rounded-full w-8 h-8 transition-colors duration-200 ease-in-out"
+							className="group relative flex items-center justify-center p-0.5 rounded-full focus:outline-none focus:ring-2 focus:ring-red-400 transition-all duration-200"
+							title="Dismiss all errors"
 							onClick={() => setErrors([])}
 						>
-							<X size={16} />
+							<span className="sr-only">Dismiss</span>
+							<div className="flex items-center justify-center bg-red-100 group-hover:bg-red-200 text-red-600 rounded-full w-7 h-7 shadow-md transition-colors duration-200">
+								<X size={20} />
+							</div>
+							<span className="absolute left-full ml-2 opacity-0 group-hover:opacity-100 bg-red-600 text-white text-xs rounded px-2 py-1 transition-opacity duration-200 pointer-events-none whitespace-nowrap shadow-lg">Dismiss</span>
 						</button>
 					</div>
 				)}

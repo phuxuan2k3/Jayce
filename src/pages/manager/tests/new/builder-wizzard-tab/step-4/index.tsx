@@ -84,7 +84,7 @@ export default function Step4({
 					<div className="md:col-span-2">
 						<label className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 block">Description</label>
 						<div className="border border-gray-200 rounded-lg p-4 shadow-sm">
-							<p className="text-gray-700 leading-relaxed">{state.step1.description}</p>
+							<p className="text-gray-500 leading-relaxed">{state.step1.description}</p>
 						</div>
 					</div>
 				</div>

@@ -1,39 +1,51 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import StepDone from "./step-done";
 import BuilderWizzardTabMain from "./main";
 import { useLazyGetGenerateExamQuestionsQuery } from "../apis/exam-generation.api";
-import { transformAllStepDataToGenerateArgs, transformExamPersistToAllStepData } from "../common/transform";
+import { transformAllStepDataToGenerateArgs } from "../common/transform";
 import { AllStepData } from "../common/types";
 import { QuestionPersistCoreSchema } from "../../../../../features/tests/ui-items/question/types";
-import { ExamPersistCoreSchema } from "../../../../../features/tests/ui-items/test/types";
 import ErrorDialog from "../../../../../features/tests/ui/fetch-states/ErrorDialog";
-import LoadingDialog from "../../../../../features/tests/ui/fetch-states/LoadingDialog";
 
 export default function BuilderWizzardTab({
-	initialExam,
+	allStepData,
+	setAllStepData,
 	onBulkAddQuestions,
 	onReplaceQuestions,
 	onGenerationDisposal,
+	generatedQuestions,
+	onGeneratedQuestions,
 }: {
-	initialExam: ExamPersistCoreSchema;
+	allStepData: AllStepData;
+	setAllStepData: (data: AllStepData) => void;
 	onBulkAddQuestions: (questions: QuestionPersistCoreSchema[]) => void;
 	onReplaceQuestions: (questions: QuestionPersistCoreSchema[]) => void;
 	onGenerationDisposal: () => void;
+	generatedQuestions: QuestionPersistCoreSchema[] | null;
+	onGeneratedQuestions: (questions: QuestionPersistCoreSchema[]) => void;
 }) {
-	const [mainData, setMainData] = useState<AllStepData>(transformExamPersistToAllStepData(initialExam));
+	const [generate, { isLoading, isFetching, isSuccess, error, data }] = useLazyGetGenerateExamQuestionsQuery({});
 
-	const [generate, { isLoading, error, data }] = useLazyGetGenerateExamQuestionsQuery();
+	useEffect(() => {
+		if (isSuccess === true && data != null && isFetching === false) {
+			onGeneratedQuestions(data.questions);
+		}
+	}, [isSuccess, data, isFetching]);
 
 	return (
 		<>
-			{isLoading && <LoadingDialog />}
 			{error && <ErrorDialog error={error} />}
 
-			{data != null ? (
+			{(isLoading || isFetching) ? (
+				<div className="flex flex-col items-center justify-center h-full">
+					<div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
+					<p className="mt-4 text-lg text-gray-600">{"Generating questions..."}</p>
+				</div>
+			) : (generatedQuestions != null ? (
 				<StepDone
-					questions={data.questions}
+					questions={generatedQuestions}
 					onRegenerateQuestions={() => {
-						generate(transformAllStepDataToGenerateArgs(mainData));
+						generate(transformAllStepDataToGenerateArgs(allStepData));
 					}}
 					onReplaceQuestions={onReplaceQuestions}
 					onAppendQuestions={onBulkAddQuestions}
@@ -41,13 +53,15 @@ export default function BuilderWizzardTab({
 				/>
 			) : (
 				<BuilderWizzardTabMain
-					initialData={mainData}
-					onDataConfirm={(data) => {
-						setMainData(data);
-						generate(transformAllStepDataToGenerateArgs(data));
+					stepData={allStepData}
+					onStepDataChange={(data) => {
+						setAllStepData(data);
+					}}
+					onGenerationConfirm={() => {
+						generate(transformAllStepDataToGenerateArgs(allStepData));
 					}}
 				/>
-			)}
+			))}
 		</>
 	);
 }

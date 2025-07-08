@@ -49,7 +49,7 @@ const AttemptsTab = ({
 						const { data } = paged;
 						if (data.length === 0) {
 							return (
-								<div className="bg-white rounded-lg shadow-md p-6 text-center">
+								<div className="w-full h-full flex items-center justify-center flex-col">
 									<p className="text-gray-600 mb-4">There are no attempts for this test yet.</p>
 								</div>
 							);

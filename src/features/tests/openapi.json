@@ -2586,6 +2586,43 @@
 				}
 			}
 		},
+		"/tests/{testId}/participants/{participantId}": {
+			"get": {
+				"tags": [
+					"Tests"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "testId",
+						"in": "path"
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"name": "participantId",
+						"in": "path"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CandidateCoreSchema"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
 		"/attempts": {
 			"get": {
 				"tags": [
@@ -2989,6 +3026,9 @@
 												"points": {
 													"type": "integer",
 													"minimum": 0
+												},
+												"comment": {
+													"type": "string"
 												}
 											},
 											"required": [

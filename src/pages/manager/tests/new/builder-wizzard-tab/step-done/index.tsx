@@ -4,6 +4,9 @@ import useArrayPagination from '../../../../../../components/hooks/useArrayPagin
 import MyPagination from '../../../../../../components/ui/common/MyPagination';
 import QuestionPersistCard from '../../../../../../features/tests/ui-items/question/form/QuestionPersist';
 import { QuestionPersistCoreSchema } from '../../../../../../features/tests/ui-items/question/types';
+import MyButton from '../../../../../../features/tests/ui/buttons/MyButton';
+import { PencilLine, Sparkles, Trash2 } from 'lucide-react';
+import DisposeDialog from './components/DisposeDialog';
 
 export default function StepDone({
 	questions,
@@ -19,6 +22,8 @@ export default function StepDone({
 	onRegenerateQuestions: () => void;
 }) {
 	const [isActionsDialogOpen, setIsActionsDialogOpen] = useState(false);
+	const [isDisposeDialogOpen, setIsDisposeDialogOpen] = useState(false);
+
 	const [draftQuestions, setDraftQuestions] = useState<QuestionPersistCoreSchema[]>(questions);
 
 	const totalQuestions = draftQuestions.length;
@@ -33,7 +38,7 @@ export default function StepDone({
 
 	return (
 		<>
-			<div className="w-full max-w-4xl mx-auto p-6 space-y-6">
+			<div className="w-full p-6 flex flex-col gap-6">
 				{/* Header */}
 				<div className="text-center mb-4">
 					<h1 className="text-3xl font-bold text-primary mb-2">Successfully generated {totalQuestions} questions for your exam</h1>
@@ -73,51 +78,72 @@ export default function StepDone({
 					/>
 				</div>
 
-				{/* Footer */}
-				<div className='flex flex-col items-center mt-8 bg-primary-toned-50 p-6 rounded-lg shadow-md'>
-					<div className="text-center mt-8">
-						<p className="text-gray-600">You can now review and finalize your exam questions.</p>
-						<p className="text-gray-600">Once you're satisfied, you can proceed to the next steps.</p>
-					</div>					<div className="flex justify-center mt-6 space-x-4">
-						<button
+				<hr className="border-gray-200 w-full my-4" />
+
+				<div className='grid grid-cols-[auto_1fr] gap-8 p-6 rounded-lg shadow-md border border-primary-toned-300'>
+					<div className='flex flex-col items-stretch justify-center'>
+						<MyButton
 							onClick={() => setIsActionsDialogOpen(true)}
-							className="bg-primary-toned-600 text-white px-6 py-2 rounded hover:bg-primary-toned-700 transition-colors"
 						>
+							<PencilLine className="w-4 h-4 mr-2" />
 							Review Actions
-						</button>
-						<button
+						</MyButton>
+					</div>
+					<div className='flex flex-col gap-2'>
+						<p className='text-sm text-gray-700'>Decide how you want to use these generated questions inside the exam</p>
+					</div>
+
+					<div className='flex flex-col items-stretch justify-center'>
+						<MyButton
 							onClick={onRegenerateQuestions}
-							className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors"
+							variant={"gradient"}
 						>
-							Re-Generate Questions
-						</button>
-						<button
-							onClick={() => window.location.reload()}
-							className="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:bg-gray-400 transition-colors"
+							<Sparkles className="w-4 h-4 mr-2" />
+							Re-Generate
+						</MyButton>
+					</div>
+
+					<div className='flex flex-col gap-2'>
+						<p className='text-sm text-gray-700'>You can regenerate the questions if you want to try different variations.</p>
+					</div>
+
+					<div className='flex flex-col items-stretch justify-center'>
+						<MyButton
+							onClick={() => setIsDisposeDialogOpen(true)}
+							variant={"secondary"}
 						>
-							Cancel
-						</button>
+							<Trash2 className="w-4 h-4 mr-2" />
+							Dispose
+						</MyButton>
+					</div>
+
+					<div className='flex flex-col gap-2'>
+						<p className='text-sm text-gray-700'>Discard the generated questions and use new configuration.</p>
 					</div>
 				</div>
 			</div>
 			{isActionsDialogOpen && (
-				<div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50'>
-					<ActionsDialog
-						onCancel={() => setIsActionsDialogOpen(false)}
-						onReplaceQuestions={() => {
-							onReplaceQuestions(draftQuestions);
-							setIsActionsDialogOpen(false);
-						}}
-						onAppendQuestions={() => {
-							onAppendQuestions(draftQuestions);
-							setIsActionsDialogOpen(false);
-						}}
-						onDisposeQuestions={() => {
-							onGenerationDisposal();
-							setIsActionsDialogOpen(false);
-						}}
-					/>
-				</div>
+				<ActionsDialog
+					onCancel={() => setIsActionsDialogOpen(false)}
+					onReplaceQuestions={() => {
+						onReplaceQuestions(draftQuestions);
+						setIsActionsDialogOpen(false);
+					}}
+					onAppendQuestions={() => {
+						onAppendQuestions(draftQuestions);
+						setIsActionsDialogOpen(false);
+					}}
+				/>
+			)}
+
+			{isDisposeDialogOpen && (
+				<DisposeDialog
+					onCancel={() => setIsDisposeDialogOpen(false)}
+					onConfirm={() => {
+						setIsDisposeDialogOpen(false);
+						onGenerationDisposal();
+					}}
+				/>
 			)}
 		</>
 	);

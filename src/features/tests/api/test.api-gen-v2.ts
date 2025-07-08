@@ -280,6 +280,15 @@ const injectedRtkApi = api
         }),
         invalidatesTags: ["Tests"],
       }),
+      getTestsByTestIdParticipantsAndParticipantId: build.query<
+        GetTestsByTestIdParticipantsAndParticipantIdApiResponse,
+        GetTestsByTestIdParticipantsAndParticipantIdApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/tests/${queryArg.testId}/participants/${queryArg.participantId}`,
+        }),
+        providesTags: ["Tests"],
+      }),
       getAttempts: build.query<GetAttemptsApiResponse, GetAttemptsApiArg>({
         query: (queryArg) => ({
           url: `/attempts`,
@@ -670,6 +679,12 @@ export type DeleteTestsByTestIdParticipantsApiArg = {
     participantId: string;
   };
 };
+export type GetTestsByTestIdParticipantsAndParticipantIdApiResponse =
+  /** status 200 Success */ CandidateCoreSchema;
+export type GetTestsByTestIdParticipantsAndParticipantIdApiArg = {
+  testId: string;
+  participantId: string;
+};
 export type GetAttemptsApiResponse = /** status 200 Success */ {
   page: number;
   perPage: number;
@@ -737,6 +752,7 @@ export type PatchAttemptsByAttemptIdScoreApiArg = {
     evaluations: {
       answerId: string;
       points: number;
+      comment?: string;
     }[];
   };
 };
@@ -943,6 +959,8 @@ export const {
   useLazyGetTestsByTestIdParticipantsQuery,
   usePostTestsByTestIdParticipantsMutation,
   useDeleteTestsByTestIdParticipantsMutation,
+  useGetTestsByTestIdParticipantsAndParticipantIdQuery,
+  useLazyGetTestsByTestIdParticipantsAndParticipantIdQuery,
   useGetAttemptsQuery,
   useLazyGetAttemptsQuery,
   usePostAttemptsMutation,
