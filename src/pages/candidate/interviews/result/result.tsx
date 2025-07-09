@@ -82,16 +82,16 @@ const ResultPage = () => {
   if (!data) return <div>{t("result_no_data")}</div>;
 
   return (
-    <div className="bg-white h-fit pb-20 container">
-      <div className="text-[40px] font-black font-arya text-start mt-10 text-primary-toned-600 drop-shadow">
+    <div className=" h-fit pb-20 container">
+      <div className="text-[40px] font-black    text-start mt-10 text-primary-toned-600 drop-shadow">
         {t("result_title")}
       </div>
-      <div className="text-start text-[20px] font-arya mb-3 text-gray-700">
+      <div className="text-start text-[20px]    mb-3 text-gray-700">
         <p>{t("result_congrats")}</p>
         <p>{t("result_lets_take_a_look")}</p>
       </div>
       <Box className="w-full flex justify-center ">
-        <div className="w-[340px] h-[500px] bg-white/90 rounded-3xl shadow p-6 flex flex-col gap-2 items-center mr-10">
+        <div className="w-[340px] sticky top-20 h-[500px] bg-white/90 rounded-3xl shadow p-6 flex flex-col gap-2 items-center mr-10">
           {navItems.map((item) => {
             const isSelected = tab === item.id;
             return (

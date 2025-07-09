@@ -14,7 +14,7 @@ const Strength: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
   const { t } = useLanguage();
   return (
     <div>
-      <div className="text-center text-2xl font-extrabold mb-2 text-primary-toned-600 font-arya tracking-tight">
+      <div className="text-center text-2xl font-extrabold mb-2 text-primary-toned-600    tracking-tight">
         {t("strength_interview_feedback")}
       </div>
       <div className="flex  gap-6 mb-3">
@@ -25,11 +25,11 @@ const Strength: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
               icon={faCheckCircle}
               className="text-primary-toned-600 text-lg"
             />
-            <span className="font-bold text-primary-toned-600 font-arya tracking-tight text-lg">
+            <span className="font-bold text-primary-toned-600    tracking-tight text-lg">
               {t("strength_strengths")}
             </span>
           </div>
-          <div className="whitespace-pre-line text-base font-asap text-gray-800 min-h-[100px]">
+          <div className="whitespace-pre-line text-base    text-gray-800 min-h-[100px]">
             {scoreData.positiveFeedback}
           </div>
         </div>
@@ -40,11 +40,11 @@ const Strength: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
               icon={faArrowTrendUp}
               className="text-yellow-600 text-lg"
             />
-            <span className="font-bold text-yellow-600 font-arya tracking-tight text-lg">
+            <span className="font-bold text-yellow-600    tracking-tight text-lg">
               {t("strength_areas_of_improvement")}
             </span>
           </div>
-          <div className="whitespace-pre-line text-base font-asap text-yellow-600 min-h-[100px]">
+          <div className="whitespace-pre-line text-base    text-yellow-600 min-h-[100px]">
             {scoreData.actionableFeedback}
           </div>
         </div>
@@ -57,11 +57,11 @@ const Strength: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
             icon={faLightbulb}
             className="text-primary-toned-700 text-lg"
           />
-          <span className="font-bold text-primary-toned-700 font-arya tracking-tight text-lg">
+          <span className="font-bold text-primary-toned-700    tracking-tight text-lg">
             {t("strength_final_comment")}
           </span>
         </div>
-        <div className="whitespace-pre-line text-base font-asap text-primary-toned-600 min-h-[100px]">
+        <div className="whitespace-pre-line text-base    text-primary-toned-600 min-h-[100px]">
           {scoreData.finalComment}
         </div>
       </div>

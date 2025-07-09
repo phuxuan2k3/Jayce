@@ -35,7 +35,7 @@ const ManagerTestsPage = () => {
 
 	const [filter, setFilter] = useState<Filter>({
 		page: 1,
-		perPage: 10,
+		perPage: 12,
 		searchTitle: "",
 		sortCreatedAt: undefined,
 		sortTitle: undefined,

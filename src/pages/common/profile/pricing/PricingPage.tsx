@@ -137,14 +137,14 @@ const PricingPage = () => {
             </div>
 
             <h2 className="text-xl font-semibold text-center mt-8">{t("pricing_plan_features_title")}</h2>
-            <div className="flex justify-center gap-16 mt-4 text-primary">
-                <div className="border-2 border-primary p-4 rounded-lg text-center w-1/3">
+            <div className="flex flex-wrap justify-center gap-4 md:gap-16 mt-4 text-primary">
+                <div className="border-2 border-primary p-4 rounded-lg text-center w-full md:w-1/3">
                     {t("pricing_feature_1")}
                 </div>
-                <div className="border-2 border-primary p-4 rounded-lg text-center w-1/3">
+                <div className="border-2 border-primary p-4 rounded-lg text-center w-full md:w-1/3">
                     {t("pricing_feature_2")}
                 </div>
-                <div className="border-2 border-primary p-4 rounded-lg text-center w-1/3">
+                <div className="border-2 border-primary p-4 rounded-lg text-center w-full md:w-1/3">
                     {t("pricing_feature_3")}
                 </div>
             </div>

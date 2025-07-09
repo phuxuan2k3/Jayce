@@ -121,10 +121,10 @@ export default function AuthNewPasswordPage() {
               />
             </div>
           </div>
-          <div className="font-arya font-extrabold text-2xl text-primary-toned-600 tracking-tight">
+          <div className="   font-extrabold text-2xl text-primary-toned-600 tracking-tight">
             Set a new password
           </div>
-          <div className="text-base text-gray-500 font-asap mb-2">
+          <div className="text-base text-gray-500    mb-2">
             Your new password must be strong and unique.
           </div>
         </div>
@@ -177,7 +177,7 @@ export default function AuthNewPasswordPage() {
             <div className="text-xl font-bold text-primary-toned-600 mb-1">
               Success!
             </div>
-            <div className="text-base text-gray-500 font-asap">
+            <div className="text-base text-gray-500   ">
               Your password has been reset.
               <br />
               You can now log in with your new password.

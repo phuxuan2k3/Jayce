@@ -38,6 +38,7 @@ import InterviewPage from "../pages/candidate/interviews/setup";
 import CandidateTestAttemptsDoPage from "../pages/candidate/tests/[id]/attempts/[id]/do/page";
 import CandidateTestPage from "../pages/candidate/tests/[id]/index/page";
 import ManagerIndexPage from "../pages/manager/index/page";
+import FAQPage from "../pages/common/faq/index";
 
 const router = createBrowserRouter(
 	[
@@ -90,6 +91,18 @@ const router = createBrowserRouter(
 					],
 				},
 
+				// FAQ page
+				{
+					path: paths.FAQ,
+					element: <AuthLayout />,
+					children: [
+						{
+							index: true,
+							element: <FAQPage />,
+						},
+					],
+				},
+
 				// Candidate pages
 
 				{
@@ -101,6 +114,12 @@ const router = createBrowserRouter(
 						{
 							index: true,
 							element: <CandidateHomePage />,
+						},
+
+						// FAQ
+						{
+							path: paths.candidate.faq.ROOT,
+							element: <FAQPage />,
 						},
 
 						// F1 F2 - Tests
@@ -200,6 +219,12 @@ const router = createBrowserRouter(
 						{
 							element: <ManagerIndexPage />,
 							index: true,
+						},
+
+						// FAQ
+						{
+							path: paths.manager.faq.ROOT,
+							element: <FAQPage />,
 						},
 
 						// F1 - Tests

@@ -24,8 +24,8 @@ const RegisterForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [register, { isLoading, error, isSuccess }] = useRegisterMutation();
-  const [ggRegister, {}] = useGoogleRegisterMutation();
-  const [ggLogin, {}] = useGoogleLoginMutation();
+  const [ggRegister, { }] = useGoogleRegisterMutation();
+  const [ggLogin, { }] = useGoogleLoginMutation();
   const [googleError, setGoogleError] = useState<string | null>(null);
   const errorMessage = parseQueryError(
     error as FetchBaseQueryError | SerializedError | undefined
@@ -200,14 +200,14 @@ const RegisterForm = () => {
             (response.error as FetchBaseQueryError)?.data &&
             (response.error as { data: { code: number } }).data.code === 2 &&
             (response.error as { data: { message: string } }).data.message ===
-              "google account is exist"
+            "google account is exist"
           ) {
             const loginResponse = await ggLogin({ credential: idToken });
             if (loginResponse.data) {
               dispatch(
                 authActions.setAuthStateFromResponse(loginResponse.data)
               );
-              navigate(paths._layout);
+              navigate(paths.candidate.ROOT);
             } else {
               setGoogleError(
                 "Something went wrong with Google authentication."
@@ -230,10 +230,10 @@ const RegisterForm = () => {
 
   return (
     <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-lg border border-gray-100 px-8 pb-4 pt-8">
-      <div className="text-center text-3xl font-extrabold mb-2 text-primary-toned-600 font-arya tracking-tight">
+      <div className="text-center text-3xl font-extrabold mb-2 text-primary-toned-600    tracking-tight">
         SkillSharp
       </div>
-      <div className="text-center text-base text-gray-500 mb-8 font-asap">
+      <div className="text-center text-base text-gray-500 mb-8   ">
         Create your account to get started.
       </div>
       {/* Nút chuyển tab Log In / Sign Up */}
@@ -284,7 +284,7 @@ const RegisterForm = () => {
 
       <div className="flex items-center my-6">
         <hr className="flex-grow border-t border-gray-200" />
-        <span className="mx-3 text-gray-400 font-asap text-sm">or</span>
+        <span className="mx-3 text-gray-400    text-sm">or</span>
         <hr className="flex-grow border-t border-gray-200" />
       </div>
 
@@ -466,10 +466,10 @@ const RegisterForm = () => {
                 </div>
               </div>
             </div>
-            <div className="text-2xl font-extrabold text-primary-toned-600 mb-1 font-arya">
+            <div className="text-2xl font-extrabold text-primary-toned-600 mb-1   ">
               Check your email
             </div>
-            <div className="text-gray-500 font-asap">
+            <div className="text-gray-500   ">
               Enter the verification code sent to
             </div>
             <div className="pb-2 font-semibold text-primary-toned-600 text-base">
@@ -513,7 +513,7 @@ const RegisterForm = () => {
             >
               Verify email
             </button>
-            <div className="pt-1 text-xs text-gray-500 font-asap">
+            <div className="pt-1 text-xs text-gray-500   ">
               <span>Didn't get a code?</span>{" "}
               <span
                 onClick={handleVerifyEmail}

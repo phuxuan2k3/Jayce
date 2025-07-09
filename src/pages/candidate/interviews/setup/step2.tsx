@@ -29,7 +29,7 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
   const [language, setLanguage] = useState<string>("English");
   return (
     <>
-      <div className="fotn-back text-[32px] font-arya w-full text-center leading-[24px] mt-4">
+      <div className="fotn-back text-[32px]    w-full text-center leading-[24px] mt-4">
         {t("interview_context_models")}
       </div>
       <div className="text-md text-gray-800 w-full text-center mb-2">
@@ -52,7 +52,7 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
               <option value="Vietnamese">Tiếng Việt</option>
             </select>
             <div className="mt-4 mb-2">{t("models_english")}</div>
-            <div className="grid grid-cols-2  gap-4">
+            <div className="flex  gap-4">
               {models.map((model) => (
                 <div
                   key={model.key}
@@ -60,7 +60,7 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
                     size-[200px] rounded-lg bg-gray-300 cursor-pointer transition-all
                     ${
                       selectedModel === model.key
-                        ? "border-4 border-primary"
+                        ? "border-[6px] rounded-[9px] border-primary"
                         : "border-2 border-transparent opacity-80 hover:border-primary-toned-600"
                     }
                   `}

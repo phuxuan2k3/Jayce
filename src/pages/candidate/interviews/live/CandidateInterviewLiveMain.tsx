@@ -26,7 +26,7 @@ export default function CandidateInterviewLiveMain() {
       <div className="absolute left-0 top-0 w-full h-full flex items-center justify-center z-10">
         {isStarting === false ? (
           <button
-            className="bg-primary-toned-600 text-white font-semibold px-4 py-2 font-asap rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out"
+            className="bg-primary-toned-600 text-white font-semibold px-4 py-2    rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out"
             onClick={() => setIsStarting(!isStarting)}
           >
             Let's Start

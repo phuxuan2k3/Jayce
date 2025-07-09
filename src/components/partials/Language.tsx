@@ -17,8 +17,12 @@ export default function LanguageSwitcher() {
   }, [open]);
 
   const options = [
-    { value: "en", label: "English", emoji: "🇬🇧" },
-    { value: "vi", label: "Tiếng Việt", emoji: "🇻🇳" },
+    { value: "en", label: "English", flag: "https://flagcdn.com/w40/gb.png" },
+    {
+      value: "vi",
+      label: "Tiếng Việt",
+      flag: "https://flagcdn.com/w40/vn.png",
+    },
   ];
 
   const current = options.find((o) => o.value === language);
@@ -32,11 +36,11 @@ export default function LanguageSwitcher() {
         type="button"
       >
         <img
-          src="https://cdn-icons-png.flaticon.com/512/1383/1383676.png"
-          sizes="40px"
-          className="h-5"
+          src={current?.flag}
+          alt={current?.label}
+          className="h-5 w-5 object-cover rounded-full"
         />
-        <span className="ml-1">{current?.emoji}</span>
+        {current?.label}
       </button>
       {open && (
         <div className="absolute right-0 z-20 mt-2 w-40 rounded-lg bg-white border shadow-lg py-2 ">
@@ -51,7 +55,11 @@ export default function LanguageSwitcher() {
                 setOpen(false);
               }}
             >
-              <span className="mr-2">{opt.emoji}</span>
+              <img
+                src={opt.flag}
+                alt={opt.label}
+                className="mr-2 h-5 w-5 object-cover rounded-full"
+              />
               {opt.label}
               {language === opt.value && (
                 <svg

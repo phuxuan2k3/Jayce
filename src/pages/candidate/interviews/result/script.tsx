@@ -35,8 +35,8 @@ const Script: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
   const { t } = useLanguage();
 
   return (
-    <div className="max-w-4xl mx-auto overflow-auto">
-      <div className="w-full h-[500px]">
+    <div className="max-w-4xl mx-auto ">
+      <div className="w-full ">
         <CardContent>
           <div className="mt-8 flex flex-col gap-8">
             {scoreData.submissions?.map((res, index) => (
@@ -54,7 +54,7 @@ const Script: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
                     </div>
                     <Typography
                       variant="h6"
-                      className="font-bold text-gray-900 font-arya"
+                      className="font-bold text-gray-900   "
                     >
                       {res.content}
                     </Typography>

@@ -21,7 +21,7 @@ export default function ExamCoreItemCard({
 	return (
 		<div
 			className={cn(
-				"flex flex-col bg-white border border-primary-toned-300 border-l-4 border-l-primary-toned-300 p-4 rounded-lg shadow-md",
+				"flex flex-col bg-white border border-primary border-l-4 border-l-primary p-4 rounded-lg shadow-md",
 				onClick && "cursor-pointer hover:bg-gray-100",
 				className
 			)}
