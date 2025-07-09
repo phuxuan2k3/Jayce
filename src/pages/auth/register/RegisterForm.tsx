@@ -19,6 +19,7 @@ import { authActions } from "../../../features/auth/store/authSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { Alert } from "@mui/material";
+import { toast } from "react-toastify";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -36,6 +37,7 @@ const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [isSending, setIsSending] = useState(false);
   const [errors, setErrors] = useState({
     username: "",
     email: "",
@@ -120,6 +122,7 @@ const RegisterForm = () => {
   };
 
   const handleVerifyEmail = async () => {
+    if (isSending) return;
     if (!validateForm()) return;
     console.log("1");
     if (!email) {
@@ -139,6 +142,7 @@ const RegisterForm = () => {
       );
     }
     try {
+      setIsSending(true);
       //   console.log("3");
       await verificationEmail({ email }).unwrap();
       //   alert("Verification email sent successfully!");
@@ -155,8 +159,12 @@ const RegisterForm = () => {
           Verification email sent successfully!
         </Alert>
       );
-    } catch (error) {
+    } catch (error: any) {
       console.error("Verification failed:", error);
+      // display the error message:
+      toast.error(error?.data?.message || "Failed to send verification email.");
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -409,9 +417,9 @@ const RegisterForm = () => {
         <button
           type="submit"
           className="w-full bg-[var(--primary-color)] text-lg font-bold text-white py-3 rounded-full mt-6 transition-all duration-150 hover:bg-[#2E808A] flex items-center justify-center gap-2"
-          disabled={isLoading}
+          disabled={isLoading || isSending}
         >
-          Sign Up <FontAwesomeIcon icon={faArrowRight} />
+          {isSending ? "Loading..." : "Sign Up"} <FontAwesomeIcon icon={faArrowRight} />
         </button>
         <div className="w-full text-center text-xs text-gray-500 mt-2">
           By creating an account, you agree to our{" "}

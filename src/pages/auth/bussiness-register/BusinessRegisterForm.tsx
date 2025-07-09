@@ -5,7 +5,6 @@ import {
   faEnvelope,
   faGlobe,
   faIdBadge,
-  faImage,
   faLock,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
@@ -16,6 +15,7 @@ import { useRegisterMutation } from "../../../features/auth/api/auth.api";
 import { useVerificationEmailMutation } from "../../../features/auth/api/auth.api";
 import paths from "../../../router/paths";
 import { Alert } from "@mui/material";
+import { toast } from "react-toastify";
 
 const BusinessRegisterForm = () => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const BusinessRegisterForm = () => {
   const [company, setCompany] = useState("");
   const [country, setCountry] = useState("");
   const [job, setJob] = useState("");
-  const [avatar, setAvatar] = useState("");
+  const [isSending, setIsSending] = useState(false);
   const [errors, setErrors] = useState({
     username: "",
     email: "",
@@ -105,13 +105,14 @@ const BusinessRegisterForm = () => {
         company: company,
         country: country,
         jobTitle: job,
-        avatarPath: avatar,
+        avatarPath: "",
       },
       role: 2,
     });
   };
 
   const handleVerifyEmail = async () => {
+    if (isSending) return;
     if (!validateForm()) return;
     if (!email) {
       // alert("Please enter your email.");
@@ -129,6 +130,7 @@ const BusinessRegisterForm = () => {
       );
     }
     try {
+      setIsSending(true);
       await verificationEmail({ email }).unwrap();
       // alert("Verification email sent successfully!");
       setIsOpenModal(true);
@@ -144,8 +146,11 @@ const BusinessRegisterForm = () => {
           Verification email sent successfully!
         </Alert>
       );
-    } catch (error) {
+    } catch (error: any) {
       console.error("Verification failed:", error);
+      toast.error(error?.data?.message || "Failed to send verification email.");
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -322,7 +327,7 @@ const BusinessRegisterForm = () => {
             </label>
           </div>
           {/* Avatar */}
-          <div className="relative col-span-1">
+          {/* <div className="relative col-span-1">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
               <FontAwesomeIcon icon={faImage} />
             </span>
@@ -341,14 +346,15 @@ const BusinessRegisterForm = () => {
             >
               Avatar URL
             </label>
-          </div>
+          </div> */}
           {/* Submit button */}
           <div className="col-span-1 md:col-span-2 mt-4">
             <button
               type="submit"
               className="w-full bg-[var(--primary-color)] text-lg font-bold text-white py-3 rounded-full transition-all duration-150 hover:bg-[#2E808A] flex items-center justify-center gap-2"
+              disabled={isSending}
             >
-              Sign Up <FontAwesomeIcon icon={faArrowRight} />
+              {isSending ? "Loading..." : "Sign Up"} <FontAwesomeIcon icon={faArrowRight} />
             </button>
             <div className="w-full text-center text-xs text-gray-500 mt-2">
               By creating an account, you agree to our{" "}
