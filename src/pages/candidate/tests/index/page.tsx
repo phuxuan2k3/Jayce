@@ -86,7 +86,7 @@ export default function CandidateTestsPage() {
 									/>
 								))
 							) : (
-								<div className="text-center p-8 bg-gray-50 rounded-lg">
+								<div className="w-full h-full flex flex-col gap-4 min-h-full items-center justify-center">
 									<p className="text-gray-500">You haven't generated any tests yet.</p>
 									<MyButton onClick={() => navigate(paths.candidate.tests.GENERATE)}>
 										Create Your First Test
