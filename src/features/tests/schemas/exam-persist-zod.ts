@@ -15,8 +15,8 @@ export const ExamPersistZodSchema = z.object({
 		mode: z.literal("EXAM"),
 		roomId: z.string().trim().min(1, "Room ID is required").max(100, "Room ID cannot exceed 100 characters"),
 		password: z.string().nullable().optional(),
-		numberOfAttemptsAllowed: z.number().min(0).nullish(),
-		numberOfParticipants: z.number().min(0).nullish(),
+		numberOfAttemptsAllowed: z.number().min(0).optional(),
+		numberOfParticipants: z.number().min(0).optional(),
 		isAnswerVisible: z.boolean(),
 		isAllowedToSeeOtherResults: z.boolean(),
 		openDate: z.string().datetime().refine((date) => {

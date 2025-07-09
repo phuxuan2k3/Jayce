@@ -203,10 +203,10 @@ const LoginForm = () => {
 
 	return (
 		<div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-lg border border-gray-100 px-8 pb-4 pt-8 ">
-			<div className="text-center text-3xl font-extrabold mb-2 text-primary-toned-600 font-arya tracking-tight">
+			<h1 className="text-center text-3xl font-extrabold mb-2 text-primary-toned-600 tracking-tight">
 				SkillSharp
-			</div>
-			<div className="text-center text-base text-gray-500 mb-8 font-asap">
+			</h1>
+			<div className="text-center text-base text-gray-500 mb-8">
 				Welcome back! Please login to your account.
 			</div>
 			{/* Nút chuyển tab Log In / Sign Up */}
@@ -257,7 +257,7 @@ const LoginForm = () => {
 
 			<div className="flex items-center my-6">
 				<hr className="flex-grow border-t border-gray-200" />
-				<span className="mx-3 text-gray-400 font-asap text-sm">or</span>
+				<span className="mx-3 text-gray-400 text-sm">or</span>
 				<hr className="flex-grow border-t border-gray-200" />
 			</div>
 
