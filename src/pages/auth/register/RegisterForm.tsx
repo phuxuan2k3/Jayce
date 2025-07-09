@@ -38,6 +38,8 @@ const RegisterForm = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
+
   const [errors, setErrors] = useState({
     username: "",
     email: "",
@@ -49,6 +51,16 @@ const RegisterForm = () => {
       navigate(paths._layout);
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (cooldown > 0) {
+      timer = setInterval(() => {
+        setCooldown((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [cooldown]);
 
   const validateForm = () => {
     let newErrors = { username: "", email: "", password: "" };
@@ -123,6 +135,10 @@ const RegisterForm = () => {
 
   const handleVerifyEmail = async () => {
     if (isSending) return;
+    if (cooldown > 0) {
+      toast.error("Please wait before requesting a new verification email.");
+      return;
+    }
     if (!validateForm()) return;
     console.log("1");
     if (!email) {
@@ -147,6 +163,8 @@ const RegisterForm = () => {
       await verificationEmail({ email }).unwrap();
       //   alert("Verification email sent successfully!");
       setIsOpenModal(true);
+      setCooldown(30);
+      toast.success("Verification email sent successfully!");
       return (
         <Alert
           sx={{
@@ -524,10 +542,10 @@ const RegisterForm = () => {
             <div className="pt-1 text-xs text-gray-500   ">
               <span>Didn't get a code?</span>{" "}
               <span
-                onClick={handleVerifyEmail}
+                onClick={cooldown > 0 ? undefined : handleVerifyEmail}
                 className="underline text-primary-toned-600 cursor-pointer font-semibold hover:text-primary-toned-800"
               >
-                Resend
+                {cooldown > 0 ? `Resend in ${cooldown}s` : "Resend code"}
               </span>
             </div>
           </div>
