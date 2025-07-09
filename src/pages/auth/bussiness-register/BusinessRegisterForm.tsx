@@ -131,6 +131,7 @@ const BusinessRegisterForm = () => {
     try {
       await verificationEmail({ email }).unwrap();
       // alert("Verification email sent successfully!");
+      setIsOpenModal(true);
       return (
         <Alert
           sx={{
@@ -143,7 +144,6 @@ const BusinessRegisterForm = () => {
           Verification email sent successfully!
         </Alert>
       );
-      setIsOpenModal(true);
     } catch (error) {
       console.error("Verification failed:", error);
     }
