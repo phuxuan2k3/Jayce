@@ -2,6 +2,7 @@ const paths = {
 	_layout: "/",
 	ABOUT: "/about",
 	PRICING: "/pricing",
+	FAQ: "/faq",
 	auth: {
 		_layout: "/auth",
 		LOGIN: "/auth/login",
@@ -43,6 +44,9 @@ const paths = {
 			_layout: "/candidate/profile/",
 			PRICING: "/candidate/profile/pricing/",
 		},
+		faq: {
+			ROOT: "/candidate/faq/",
+		}
 	},
 	manager: {
 		ROOT: "/manager",
@@ -63,6 +67,9 @@ const paths = {
 			_layout: "/manager/profile/",
 			PRICING: "/manager/profile/pricing/",
 		},
+		faq: {
+			ROOT: "/manager/faq/",
+		}
 	},
 };
 

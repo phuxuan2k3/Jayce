@@ -180,7 +180,7 @@ const LoginForm = () => {
 							dispatch(
 								authActions.setAuthStateFromResponse(registerResponse.data)
 							);
-							navigate(paths._layout);
+							navigate(paths.candidate.ROOT);
 						} else {
 							setGoogleError(
 								"Something went wrong with Google authentication."

@@ -24,8 +24,8 @@ const RegisterForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [register, { isLoading, error, isSuccess }] = useRegisterMutation();
-  const [ggRegister, {}] = useGoogleRegisterMutation();
-  const [ggLogin, {}] = useGoogleLoginMutation();
+  const [ggRegister, { }] = useGoogleRegisterMutation();
+  const [ggLogin, { }] = useGoogleLoginMutation();
   const [googleError, setGoogleError] = useState<string | null>(null);
   const errorMessage = parseQueryError(
     error as FetchBaseQueryError | SerializedError | undefined
@@ -200,14 +200,14 @@ const RegisterForm = () => {
             (response.error as FetchBaseQueryError)?.data &&
             (response.error as { data: { code: number } }).data.code === 2 &&
             (response.error as { data: { message: string } }).data.message ===
-              "google account is exist"
+            "google account is exist"
           ) {
             const loginResponse = await ggLogin({ credential: idToken });
             if (loginResponse.data) {
               dispatch(
                 authActions.setAuthStateFromResponse(loginResponse.data)
               );
-              navigate(paths._layout);
+              navigate(paths.candidate.ROOT);
             } else {
               setGoogleError(
                 "Something went wrong with Google authentication."
