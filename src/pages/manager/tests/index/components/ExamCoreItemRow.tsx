@@ -21,15 +21,15 @@ export default function ExamCoreItemRow({ test, onClick, className = '' }: ExamC
 			className={`hover:bg-primary-toned-50 transition-all duration-200 ${onClick ? 'cursor-pointer hover:shadow-sm' : ''} ${className}`}
 			onClick={() => onClick?.(test)}
 		>
-			<td className="px-6 py-4 font-asap font-semibold text-gray-800">{title}</td>
-			<td className="px-6 py-4 text-sm font-asap text-primary-toned-600">{formatDate(updatedAt)}</td>
+			<td className="px-6 py-4 font-semibold text-gray-800">{title}</td>
+			<td className="px-6 py-4 text-sm text-primary-toned-600">{formatDate(updatedAt)}</td>
 			<td className="px-6 py-4 font-mono text-sm text-gray-700 rounded-md mx-1">{roomId}</td>
 			<td className="px-6 py-4 text-center">{booleanIcon(hasPassword)}</td>
 			<td className="px-6 py-4 text-center">{booleanIcon(isPublic)}</td>
 			<td className="px-6 py-4 text-center">
 				<StatusItem openDate={openDate} closeDate={closeDate} />
 			</td>
-			<td className="px-6 py-4 text-right font-asap font-medium text-primary-toned-700">{totalCandidates}</td>
+			<td className="px-6 py-4 text-right font-medium text-primary-toned-700">{totalCandidates}</td>
 		</tr>
 	);
 }

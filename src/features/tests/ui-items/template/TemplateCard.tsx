@@ -48,7 +48,9 @@ const TemplateCardHeader: React.FC = () => {
 		<div className="flex flex-col gap-2 rounded-t-lg bg-primary-toned-50 pl-4 pr-4 py-4 border-b border-primary-toned-200">
 			<div className="flex justify-between items-center">
 				<div className="flex flex-col items-start gap-1">
-					<h3 className="font-bold text-lg text-primary-toned-700">Template: {template.name}</h3>
+					<h3 className="font-bold text-lg text-primary-toned-700">Template: {template.name.trim() === "" ? (
+						<span className="text-gray-400 italic">No name provided</span>
+					) : template.name}</h3>
 					<div className="flex text-primary items-center justify-end text-xs">
 						<Calendar size={12} className="mr-1" />
 						Last updated: {timeAgo}
