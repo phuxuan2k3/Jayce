@@ -3,7 +3,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../../../features/auth/api/auth.api";
 import { useEffect, useState } from "react";
-import { parseQueryError } from "../../../helpers/fetchBaseQuery.error";
+import { isFetchBaseQueryError, parseQueryError } from "../../../helpers/fetchBaseQuery.error";
 import AlertError from "../../../components/ui/alert/AlertError";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
@@ -113,7 +113,7 @@ const RegisterForm = () => {
   // TODO: Fullfill the data
   const handleFormSubmit = async () => {
     setGoogleError(null);
-    register({
+    const response = await register({
       local: {
         username,
         email,
@@ -122,15 +122,32 @@ const RegisterForm = () => {
         otp,
       },
       metadata: {
-        fullname: "I Am Miboy",
-        company: "Cty",
-        country: "Viet Nam",
-        jobTitle: "CEO",
+        fullname: "",
+        company: "",
+        country: "",
+        jobTitle: "",
         avatarPath:
-          "https://thumbs.dreamstime.com/b/female-avatar-icon-women-clipart-png-vector-girl-avatar-women-clipart-bor-bisiness-icon-png-vector-233362315.jpg",
+          "",
       },
       role: 1,
     });
+
+    if ('error' in response) {
+      const err = response.error;
+
+      if (
+        isFetchBaseQueryError(err) &&
+        typeof err.data === 'object' &&
+        err.data !== null &&
+        'message' in err.data
+      ) {
+        toast.error((err.data as any).message ?? 'Registration failed.');
+      } else {
+        toast.error('Registration failed.');
+      }
+
+      return;
+    }
   };
 
   const handleVerifyEmail = async () => {

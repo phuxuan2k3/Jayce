@@ -16,6 +16,7 @@ import { useVerificationEmailMutation } from "../../../features/auth/api/auth.ap
 import paths from "../../../router/paths";
 import { Alert } from "@mui/material";
 import { toast } from "react-toastify";
+import { isFetchBaseQueryError } from "../../../helpers/fetchBaseQuery.error";
 
 const BusinessRegisterForm = () => {
   const navigate = useNavigate();
@@ -103,7 +104,7 @@ const BusinessRegisterForm = () => {
   };
 
   const handleFormSubmit = async () => {
-    register({
+    const response = await register({
       local: {
         username,
         email,
@@ -120,6 +121,23 @@ const BusinessRegisterForm = () => {
       },
       role: 2,
     });
+
+    if ('error' in response) {
+      const err = response.error;
+
+      if (
+        isFetchBaseQueryError(err) &&
+        typeof err.data === 'object' &&
+        err.data !== null &&
+        'message' in err.data
+      ) {
+        toast.error((err.data as any).message ?? 'Registration failed.');
+      } else {
+        toast.error('Registration failed.');
+      }
+
+      return;
+    }
   };
 
   const handleVerifyEmail = async () => {
