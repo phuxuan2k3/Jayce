@@ -41,8 +41,8 @@ export default function ExamPersistValidationErrorsDialog({
 			<MyDialog.Content className='w-[50vw]'>
 				{/* Header with icon */}
 				<div className="flex items-center justify-center pt-8 pb-4">
-					<div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center">
-						<AlertTriangle size={32} className="text-amber-500" />
+					<div className="w-16 h-16 bg-secondary-toned-100 rounded-full flex items-center justify-center">
+						<AlertTriangle size={32} className="text-secondary-toned-500" />
 					</div>
 				</div>
 
@@ -53,7 +53,6 @@ export default function ExamPersistValidationErrorsDialog({
 					Please review and fix the following issues before proceeding.
 				</p>
 
-
 				{/* Content */}
 				<div className="px-6 pb-6 max-h-[50vh] overflow-y-auto">
 
@@ -61,12 +60,12 @@ export default function ExamPersistValidationErrorsDialog({
 					<div className="space-y-6">
 						{/* Config Errors Section */}
 						{hasConfigErrors && (
-							<div className="border border-red-200 rounded-lg p-4 bg-red-50">
+							<div className="border border-secondary-toned-200 rounded-lg p-4 bg-secondary-toned-50">
 								<div className="flex items-center gap-2 mb-3">
-									<Settings size={20} className="text-red-600" />
-									<h3 className="font-semibold text-red-800">Configuration Related Issues</h3>
+									<Settings size={20} className="text-secondary-toned-600" />
+									<h3 className="font-semibold text-secondary-toned-800">Configuration Related Issues</h3>
 								</div>
-								<ul className="list-disc list-inside space-y-1 mb-4 text-red-700">
+								<ul className="list-disc list-inside space-y-1 mb-4 text-secondary-toned-700">
 									{configErrors.map((error, index) => (
 										<li key={index} className="text-sm">{error}</li>
 									))}
@@ -74,7 +73,7 @@ export default function ExamPersistValidationErrorsDialog({
 								{onConfigEdit && (
 									<button
 										onClick={onConfigEdit}
-										className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors text-sm font-medium"
+										className="inline-flex items-center gap-2 px-4 py-2 bg-secondary-toned-600 text-white rounded-md hover:bg-secondary-toned-700 transition-colors text-sm font-medium"
 									>
 										<Settings size={16} />
 										Edit Configuration
@@ -85,12 +84,12 @@ export default function ExamPersistValidationErrorsDialog({
 
 						{/* Questions Errors Section */}
 						{hasQuestionsErrors && (
-							<div className="border border-amber-200 rounded-lg p-4 bg-amber-50">
+							<div className="border border-secondary-toned-200 rounded-lg p-4 bg-secondary-toned-50">
 								<div className="flex items-center gap-2 mb-3">
-									<Edit3 size={20} className="text-amber-600" />
-									<h3 className="font-semibold text-amber-800">Questions Related Issues</h3>
+									<Edit3 size={20} className="text-secondary-toned-600" />
+									<h3 className="font-semibold text-secondary-toned-800">Questions Related Issues</h3>
 								</div>
-								<ul className="list-disc list-inside space-y-1 mb-4 text-amber-700">
+								<ul className="list-disc list-inside space-y-1 mb-4 text-secondary-toned-700">
 									{questionsErrors.map((error, index) => (
 										<li key={index} className="text-sm">
 											{(error.index != null) && <span>Question {(Number(error.index) || 0) + 1}: </span>}
@@ -101,7 +100,7 @@ export default function ExamPersistValidationErrorsDialog({
 								{onQuestionsEdit && (
 									<button
 										onClick={onQuestionsEdit}
-										className="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors text-sm font-medium"
+										className="inline-flex items-center gap-2 px-4 py-2 bg-secondary-toned-600 text-white rounded-md hover:bg-secondary-toned-700 transition-colors text-sm font-medium"
 									>
 										<Edit3 size={16} />
 										Edit Questions
@@ -117,7 +116,7 @@ export default function ExamPersistValidationErrorsDialog({
 					{onClose && (
 						<MyButton
 							onClick={onClose}
-							variant="outline"
+							variant="gray"
 							className="flex-1"
 						>
 							Close

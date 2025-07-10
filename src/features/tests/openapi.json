@@ -94,7 +94,8 @@
 						]
 					},
 					"roomId": {
-						"type": "string"
+						"type": "string",
+						"minLength": 1
 					},
 					"hasPassword": {
 						"type": "boolean"
@@ -595,19 +596,19 @@
 								"minimum": 0
 							},
 							"averageScore": {
-								"type": "integer",
+								"type": "number",
 								"minimum": 0
 							},
 							"highestScore": {
-								"type": "integer",
+								"type": "number",
 								"minimum": 0
 							},
 							"lowestScore": {
-								"type": "integer",
+								"type": "number",
 								"minimum": 0
 							},
 							"averageTime": {
-								"type": "integer",
+								"type": "number",
 								"minimum": 0
 							}
 						},
@@ -1669,7 +1670,8 @@
 														]
 													},
 													"roomId": {
-														"type": "string"
+														"type": "string",
+														"minLength": 1
 													},
 													"password": {
 														"type": [
@@ -2069,7 +2071,8 @@
 														]
 													},
 													"roomId": {
-														"type": "string"
+														"type": "string",
+														"minLength": 1
 													},
 													"password": {
 														"type": [
@@ -2616,6 +2619,58 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/CandidateCoreSchema"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/tests/suggest-roomid": {
+			"get": {
+				"description": "Suggest a unique roomId for an exam based on the provided date range",
+				"tags": [
+					"Tests"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": [
+								"string",
+								"null"
+							]
+						},
+						"required": false,
+						"name": "startDate",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": [
+								"string",
+								"null"
+							]
+						},
+						"required": false,
+						"name": "endDate",
+						"in": "query"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"roomId": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"roomId"
+									]
 								}
 							}
 						}

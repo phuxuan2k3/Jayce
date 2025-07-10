@@ -1,21 +1,14 @@
-import { TriangleAlertIcon } from "lucide-react";
 import MyButton from "../../../../../../features/tests/ui/buttons/MyButton";
+import { cn } from "../../../../../../app/cn";
 
 interface PublishFooterProps {
 	onPublish: () => void;
+	isLoading: boolean;
 }
 
-export const PublishFooter = ({ onPublish }: PublishFooterProps) => {
+export const PublishFooter = ({ onPublish, isLoading }: PublishFooterProps) => {
 	return (
 		<div className="flex flex-col gap-4 mt-6">
-			<div className="flex flex-items mb-4 bg-yellow-50 border border-yellow-200 rounded-lg p-3 shadow-md">
-				<TriangleAlertIcon className="w-6 h-6 text-secondary-toned-600 mr-3" />
-				<p className="text-secondary-toned-600 text-sm">
-					Make sure to double-check the exam details, accessibility settings, and any
-					other configurations before proceeding. Once published, you cannot edit the
-					exam's settings when there are attempts.
-				</p>
-			</div>
 			<div className="bg-primary-toned-50 border border-primary-toned-200 rounded-lg p-4 shadow-md">
 				<div className="flex items-start gap-3">
 					<div className="text-primary-toned-600 mt-0.5">
@@ -37,10 +30,12 @@ export const PublishFooter = ({ onPublish }: PublishFooterProps) => {
 
 						<div className="flex justify-end">
 							<MyButton
+								loading={isLoading}
 								variant={"primary"}
 								onClick={onPublish}
+								className={cn(isLoading && "cursor-not-allowed bg-gray-300 text-gray-600 pointer-events-none")}
 							>
-								Publish Exam
+								{isLoading ? "Publishing Exam..." : "Publish Exam"}
 							</MyButton>
 						</div>
 					</div>

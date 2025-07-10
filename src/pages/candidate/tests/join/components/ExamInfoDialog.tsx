@@ -98,7 +98,7 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 
 					<div className="w-full px-4 py-2 bg-gray-50 border border-gray-300 shadow-sm rounded-lg grid grid-cols-[auto_1fr] [&>*:nth-child(even)]:justify-self-end gap-1 text-gray-700 text-sm">
 						<span className="font-medium mr-2">Max number of attempts allowed:</span>
-						<span>{numberOfAttemptsAllowed}</span>
+						<span>{numberOfAttemptsAllowed === 0 ? "Unlimited" : numberOfAttemptsAllowed}</span>
 
 						<span className="font-medium mr-2">Answers visible:</span>
 						<span>{isAnswerVisible ? 'Yes' : 'No'}</span>
@@ -107,7 +107,7 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 						<span>{isAllowedToSeeOtherResults ? "Yes" : "No"}</span>
 
 						<span className="font-medium mr-2">Max number of participants:</span>
-						<span>{numberOfParticipants}</span>
+						<span>{numberOfParticipants === 0 ? "Unlimited" : numberOfParticipants}</span>
 
 						<span className="font-medium mr-2">Public:</span>
 						<span>{isPublic ? 'Yes' : 'No'}</span>

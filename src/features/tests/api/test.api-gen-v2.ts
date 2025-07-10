@@ -289,6 +289,19 @@ const injectedRtkApi = api
         }),
         providesTags: ["Tests"],
       }),
+      getTestsSuggestRoomid: build.query<
+        GetTestsSuggestRoomidApiResponse,
+        GetTestsSuggestRoomidApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/tests/suggest-roomid`,
+          params: {
+            startDate: queryArg.startDate,
+            endDate: queryArg.endDate,
+          },
+        }),
+        providesTags: ["Tests"],
+      }),
       getAttempts: build.query<GetAttemptsApiResponse, GetAttemptsApiArg>({
         query: (queryArg) => ({
           url: `/attempts`,
@@ -685,6 +698,13 @@ export type GetTestsByTestIdParticipantsAndParticipantIdApiArg = {
   testId: string;
   participantId: string;
 };
+export type GetTestsSuggestRoomidApiResponse = /** status 200 Success */ {
+  roomId: string;
+};
+export type GetTestsSuggestRoomidApiArg = {
+  startDate?: string | null;
+  endDate?: string | null;
+};
 export type GetAttemptsApiResponse = /** status 200 Success */ {
   page: number;
   perPage: number;
@@ -961,6 +981,8 @@ export const {
   useDeleteTestsByTestIdParticipantsMutation,
   useGetTestsByTestIdParticipantsAndParticipantIdQuery,
   useLazyGetTestsByTestIdParticipantsAndParticipantIdQuery,
+  useGetTestsSuggestRoomidQuery,
+  useLazyGetTestsSuggestRoomidQuery,
   useGetAttemptsQuery,
   useLazyGetAttemptsQuery,
   usePostAttemptsMutation,

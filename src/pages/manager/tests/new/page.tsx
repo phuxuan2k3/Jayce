@@ -1,13 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { AllStepData, CreateTab } from "./common/types";
 import { useNavigate } from "react-router-dom";
-import { usePostTestsMutation } from "../../../../features/tests/api/test.api-gen-v2";
 import { QuestionPersistCoreSchema } from "../../../../features/tests/ui-items/question/types";
 import { ExamPersistCoreSchema } from "../../../../features/tests/ui-items/test/types";
 import ConfigTab from "../../../../features/tests/ui-shared/test-persist-pages/config-tab";
 import ExamPersistValidationErrorsDialog from "../../../../features/tests/ui-shared/test-persist-pages/ExamPersistValidationErrorsDialog";
-import ErrorDialog from "../../../../features/tests/ui/fetch-states/ErrorDialog";
-import LoadingDialog from "../../../../features/tests/ui/fetch-states/LoadingDialog";
 import paths from "../../../../router/paths";
 import BuilderWizzardTab from "./builder-wizzard-tab";
 import PublishTab from "./publish-tab";
@@ -17,12 +14,14 @@ import { z } from "zod";
 import { ExamPersistZodSchema, ExamPersistZodSchemaType } from "../../../../features/tests/schemas/exam-persist-zod";
 import RightLayoutTemplate from "../../../../components/layouts/RightLayoutTemplate";
 import { transformExamPersistToAllStepData } from "./common/transform";
-
+import MyTabs from "../../../../features/tests/ui/MyTabs";
+import useBuilderStepsData from "./builder-wizzard-tab/hooks/useBuilderStepsData";
 
 export default function ManagerTestNewPage() {
 	const navigate = useNavigate();
-	const [tab, setTab] = useState<CreateTab>("info");
-	const [isPostingExam, setIsPostingExam] = useState(false);
+	const [tab, setTab] = useState<CreateTab>("exam");
+	const [examTabs, setExamTabs] = useState<"info" | "questions">("info");
+
 	const [zodErrors, setZodErrors] = useState<z.ZodError<ExamPersistZodSchemaType> | undefined>(undefined);
 
 	const [examPersist, setExamPersist] = useState<ExamPersistCoreSchema>({
@@ -50,22 +49,20 @@ export default function ManagerTestNewPage() {
 	const [allStepData, setAllStepData] = useState<AllStepData>(() => {
 		return transformExamPersistToAllStepData(examPersist);
 	});
-
-	const [createTest, createTestState] = usePostTestsMutation();
-	useEffect(() => {
-		if (createTestState.isSuccess) {
-			setIsPostingExam(false);
-			const { testId } = createTestState.data;
-			navigate(paths.manager.tests.in(testId).ROOT);
-		}
-	}, [createTestState.isSuccess, createTestState.data, navigate]);
+	const builderAllStepData = useBuilderStepsData({
+		stepData: allStepData,
+		onStepDataChange: (data) => {
+			setAllStepData(data);
+		},
+	});
 
 	const handleBulkAddQuestions = useCallback((questions: QuestionPersistCoreSchema[]) => {
 		setExamPersist((prev) => ({
 			...prev,
 			questions: [...prev.questions, ...(questions as ExamPersistCoreSchema["questions"])],
 		}));
-		setTab("questions");
+		setTab("exam");
+		setExamTabs("questions");
 		setGeneratedQuestions(null);
 	}, []);
 
@@ -74,7 +71,8 @@ export default function ManagerTestNewPage() {
 			...prev,
 			questions: questions as ExamPersistCoreSchema["questions"],
 		}));
-		setTab("questions");
+		setTab("exam");
+		setExamTabs("questions");
 		setGeneratedQuestions(null);
 	}, []);
 
@@ -103,45 +101,17 @@ export default function ManagerTestNewPage() {
 		});
 	}, []);
 
-	const getTab = (tab: CreateTab) => {
-		switch (tab) {
-			case "info":
-				return <ConfigTab
-					examPersist={examPersist}
-					onExamPersistChange={(patch) => setExamPersist((prev) => ({ ...prev, ...patch }))}
-				/>;
-			case "questions":
-				return <QuestionsConfigTab
-					questions={examPersist.questions}
-					onQuestionDelete={(index) => handleRemoveQuestion(index)}
-					onQuuestionAdd={(question) => handleAddQuestion(question)}
-					onQuestionUpdate={(index, question) => handleUpdateQuestion(index, question)}
-				/>;
-			case "generate":
-				return <BuilderWizzardTab
-					allStepData={allStepData}
-					setAllStepData={setAllStepData}
-					onBulkAddQuestions={handleBulkAddQuestions}
-					onReplaceQuestions={handleReplaceQuestions}
-					onGenerationDisposal={() => {
-						setTab("questions");
-						setGeneratedQuestions(null);
-					}}
-					generatedQuestions={generatedQuestions}
-					onGeneratedQuestions={(questions) => setGeneratedQuestions(questions)}
-				/>;
-			case "publish":
-				return <PublishTab
-					examPersist={examPersist}
-					onPublish={() => {
-						setIsPostingExam(true);
-						createTest({ body: examPersist });
-					}}
-				/>
-			default:
-				return null;
+	const validateExamPersist = useCallback(() => {
+		const result = ExamPersistZodSchema.safeParse(examPersist);
+		if (!result.success) {
+			setZodErrors(result.error);
+			return false;
 		}
-	}
+		setZodErrors(undefined);
+		setAllStepData(transformExamPersistToAllStepData(result.data));
+		setExamPersist(result.data);
+		return true;
+	}, [examPersist]);
 
 	return (
 		<RightLayoutTemplate
@@ -158,49 +128,106 @@ export default function ManagerTestNewPage() {
 			}
 			right={
 				<Sidebar
+					builderStep={builderAllStepData.step}
 					tab={tab}
-					onTabChange={(tab) => {
-						if (tab === "publish") {
-							const result = ExamPersistZodSchema.safeParse(examPersist);
-							if (!result.success) {
-								setZodErrors(result.error);
-								setIsPostingExam(false);
-								return;
+					onTabChange={(newTab) => {
+						if (newTab === "publish") {
+							if (validateExamPersist() === true) {
+								setTab(newTab);
 							}
-							setZodErrors(undefined);
+						} else {
+							setTab(newTab);
 						}
-						setTab(tab);
 					}}
 				/>
 			}
 		>
-			{getTab(tab)}
+			<style>
+				{`
+				@keyframes fadeIn {
+					0% { opacity: 0; }
+					100% { opacity: 1; }
+				}
+				`}
+			</style>
+
+			{/* Exam Tabs */}
+			{tab === "exam" && (
+				<MyTabs
+					tabs={[
+						{
+							label: "Configuration",
+							id: "info",
+							content: <ConfigTab
+								examPersist={examPersist}
+								onExamPersistChange={(patch) => setExamPersist((prev) => ({ ...prev, ...patch }))}
+							/>
+						},
+						{
+							label: "Questions",
+							id: "questions",
+							content: <QuestionsConfigTab
+								questions={examPersist.questions}
+								onQuestionDelete={(index) => handleRemoveQuestion(index)}
+								onQuuestionAdd={(question) => handleAddQuestion(question)}
+								onQuestionUpdate={(index, question) => handleUpdateQuestion(index, question)}
+							/>
+						}
+					]}
+					activeTabIdInject={examTabs}
+				/>
+			)}
+
+
+			{tab === "publish" && (
+				<div style={{
+					animation: "fadeIn 0.2s ease-in-out",
+					animationFillMode: "forwards",
+				}}>
+					<PublishTab
+						examPersist={examPersist}
+					/>
+				</div>
+			)}
+
+			{tab === "generate" && (
+				<div style={{
+					animation: "fadeIn 0.2s ease-in-out",
+					animationFillMode: "forwards",
+				}}>
+					<BuilderWizzardTab
+						builderStepData={builderAllStepData}
+						allStepData={allStepData}
+						onBulkAddQuestions={handleBulkAddQuestions}
+						onReplaceQuestions={handleReplaceQuestions}
+						onGenerationDisposal={() => {
+							setTab("exam");
+							setExamTabs("questions");
+							setGeneratedQuestions(null);
+						}}
+						generatedQuestions={generatedQuestions}
+						onGeneratedQuestions={(questions) => setGeneratedQuestions(questions)}
+					/>
+				</div>
+			)}
 
 			{zodErrors != undefined && (
 				<ExamPersistValidationErrorsDialog
 					errors={zodErrors}
 					onClose={() => {
 						setZodErrors(undefined);
-						setIsPostingExam(false);
 					}}
 					onConfigEdit={() => {
 						setZodErrors(undefined);
-						setTab("info");
-						setIsPostingExam(false);
+						setTab("exam");
+						setExamTabs("info");
 					}}
 					onQuestionsEdit={() => {
 						setZodErrors(undefined);
-						setTab("questions");
-						setIsPostingExam(false);
+						setTab("exam");
+						setExamTabs("questions");
 					}}
 				/>
-			)}
-
-			{(isPostingExam) && (
-				<>
-					{createTestState.isLoading && <LoadingDialog />}
-					{createTestState.error && <ErrorDialog error={createTestState.error} />}
-				</>
 			)}
 		</RightLayoutTemplate>
 	);

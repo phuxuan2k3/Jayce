@@ -6,23 +6,24 @@ import { transformAllStepDataToGenerateArgs } from "../common/transform";
 import { AllStepData } from "../common/types";
 import { QuestionPersistCoreSchema } from "../../../../../features/tests/ui-items/question/types";
 import ErrorDialog from "../../../../../features/tests/ui/fetch-states/ErrorDialog";
+import useBuilderStepsData from "./hooks/useBuilderStepsData";
 
 export default function BuilderWizzardTab({
 	allStepData,
-	setAllStepData,
 	onBulkAddQuestions,
 	onReplaceQuestions,
 	onGenerationDisposal,
 	generatedQuestions,
 	onGeneratedQuestions,
+	builderStepData,
 }: {
 	allStepData: AllStepData;
-	setAllStepData: (data: AllStepData) => void;
 	onBulkAddQuestions: (questions: QuestionPersistCoreSchema[]) => void;
 	onReplaceQuestions: (questions: QuestionPersistCoreSchema[]) => void;
 	onGenerationDisposal: () => void;
 	generatedQuestions: QuestionPersistCoreSchema[] | null;
 	onGeneratedQuestions: (questions: QuestionPersistCoreSchema[]) => void;
+	builderStepData: ReturnType<typeof useBuilderStepsData>;
 }) {
 	const [generate, { isLoading, isFetching, isSuccess, error, data }] = useLazyGetGenerateExamQuestionsQuery({});
 
@@ -53,10 +54,7 @@ export default function BuilderWizzardTab({
 				/>
 			) : (
 				<BuilderWizzardTabMain
-					stepData={allStepData}
-					onStepDataChange={(data) => {
-						setAllStepData(data);
-					}}
+					builderAllStepData={builderStepData}
 					onGenerationConfirm={() => {
 						generate(transformAllStepDataToGenerateArgs(allStepData));
 					}}

@@ -1,7 +1,7 @@
 import { InformationSection } from "./components/InformationSection";
 import { AccessSection } from "./components/AccessSection";
 import { ConfigurationSection } from "./components/ConfigurationSection";
-import { ExamPersistCoreSchema } from "../../../ui-items/test/types";
+import { ExamPersistCoreSchema } from "../../../../../../../features/tests/ui-items/test/types";
 
 export default function ConfigTab({
 	examPersist,

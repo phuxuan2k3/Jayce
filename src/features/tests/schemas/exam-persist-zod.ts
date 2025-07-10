@@ -5,7 +5,7 @@ import { QuestionPersistZodSchema } from "./question-persist-zod";
 export const ExamPersistZodSchema = z.object({
 	// From PostTestsApiArg["body"] excluding "detail" and "questions"
 	title: z.string().trim().min(1, "Title is required").max(100, "Title cannot exceed 100 characters"),
-	description: z.string().trim().min(1, "Description is required").max(500, "Description cannot exceed 500 characters"),
+	description: z.string().max(500, "Description cannot exceed 500 characters"),
 	minutesToAnswer: z.number().min(1).max(720, "Minutes to answer must be between 1 and 720 minutes (12 hours)"),
 	language: z.enum(LanguagesAsConst),
 	mode: z.literal("EXAM"),
@@ -19,39 +19,32 @@ export const ExamPersistZodSchema = z.object({
 		numberOfParticipants: z.number().min(0).optional(),
 		isAnswerVisible: z.boolean(),
 		isAllowedToSeeOtherResults: z.boolean(),
-		openDate: z.string().datetime().refine((date) => {
-			const openDate = new Date(date);
-			if (Date.now() > openDate.getTime()) {
-				return false; // Open date must be in the future
-			}
-			return true;
-		}, {
-			message: "Open date must be in the future",
-		}),
-		closeDate: z.string().datetime().refine((date) => {
-			const closeDate = new Date(date);
-			if (Date.now() > closeDate.getTime()) {
-				return false; // Close date must be in the future
-			}
-			return true;
-		}, {
-			message: "Close date must be in the future",
-		}),
+		openDate: z.string().datetime(),
+		closeDate: z.string().datetime(),
 		isPublic: z.boolean().optional(),
-	}).refine((data) => {
+	}).superRefine((data, ctx) => {
 		const openDate = new Date(data.openDate);
 		const closeDate = new Date(data.closeDate);
 		if (openDate.getTime() >= closeDate.getTime()) {
-			return false; // Open date must be before close date
+			ctx.addIssue({
+				code: z.ZodIssueCode.custom,
+				message: "Open date must be before close date",
+				path: ["detail", "openDate", "closeDate"],
+			});
 		}
-		return true;
-	}, {
-		message: "Open date must be before close date",
+		const distance = closeDate.getTime() - openDate.getTime();
+		if (distance > 1000 * 60 * 60 * 24 * 60) { // 60 days in milliseconds
+			ctx.addIssue({
+				code: z.ZodIssueCode.custom,
+				message: "The exam duration cannot exceed 60 days",
+				path: ["detail", "openDate", "closeDate"],
+			});
+		}
 	}),
 
 	// questions: QuestionPersistCoreSchema[]
 	// Based on QuestionCoreSchema omitting "id", "testId", "_aggregate_test"
-	questions: z.array(QuestionPersistZodSchema).min(1).max(1000),
+	questions: z.array(QuestionPersistZodSchema).min(1, "You must have at least 1 question in an exam").max(100, "You must have at least 1 question and at most 100 questions in an exam"),
 });
 
 export type ExamPersistZodSchemaType = z.infer<typeof ExamPersistZodSchema>;

@@ -37,7 +37,7 @@ const ManagerTestsPage = () => {
 		page: 1,
 		perPage: 12,
 		searchTitle: "",
-		sortCreatedAt: undefined,
+		sortCreatedAt: "desc",
 		sortTitle: undefined,
 	});
 

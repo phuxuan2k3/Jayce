@@ -7,18 +7,16 @@ import Step1 from './step-1';
 import Step2 from './step-2';
 import Step3 from './step-3';
 import Step4 from './step-4';
-import useBuiderStepsData from './hooks/useBuilderStepsData';
-import { AllStepData, getStepInfo, StepInfoKey } from '../common/types';
+import { getStepInfo, StepInfoKey } from '../common/types';
 import { toast } from 'react-toastify';
+import useBuilderStepsData from './hooks/useBuilderStepsData';
 
 export default function BuilderWizzardTabMain({
-	stepData,
-	onStepDataChange,
+	builderAllStepData,
 	onGenerationConfirm,
 }: {
-	stepData: AllStepData;
-	onStepDataChange: (data: AllStepData) => void;
 	onGenerationConfirm: () => void;
+	builderAllStepData: ReturnType<typeof useBuilderStepsData>;
 }) {
 	const {
 		handleValueChangeOfStep,
@@ -28,10 +26,7 @@ export default function BuilderWizzardTabMain({
 		handlePrevStep,
 		handleSetStep,
 		step,
-	} = useBuiderStepsData({
-		stepData,
-		onStepDataChange,
-	});
+	} = builderAllStepData;
 
 	useEffect(() => {
 		if (currentErrorMessages.length > 0) {

@@ -14,6 +14,7 @@ const QuickActionCVA = cva(
 			variant: {
 				default: "text-primary bg-gradient-to-r from-primary-toned-50 to-primary-toned-100",
 				alert: "text-secondary bg-gradient-to-r from-secondary-toned-50 to-secondary-toned-100",
+				danger: "text-red-500 bg-gradient-to-r from-red-50 to-red-100",
 				gradient: "text-white bg-gradient-to-br from-primary to-secondary",
 			},
 			active: {
@@ -25,7 +26,7 @@ const QuickActionCVA = cva(
 			{
 				variant: 'default',
 				active: true,
-				className: "bg-primary-toned-200 shadow-lg",
+				className: "bg-primary text-white",
 			},
 			{
 				variant: 'alert',
@@ -77,7 +78,7 @@ const QuickActionRoot = ({
 		value={{ variant, active }}>
 		<button
 			className={cn(
-				QuickActionCVA({ variant }),
+				QuickActionCVA({ variant, active }),
 				className,
 			)}
 			onClick={onClick}>
@@ -96,6 +97,7 @@ const QuickActionIcon = ({
 	<div className={cn("rounded-full p-2 text-white max-w-10 max-h-10 w-10 h-10 flex items-center justify-center", {
 		"bg-primary": useQuickActionContext().variant === 'default',
 		"bg-secondary": useQuickActionContext().variant === 'alert',
+		"bg-red-500": useQuickActionContext().variant === 'danger',
 		"bg-none": useQuickActionContext().variant === 'gradient',
 	}, className)}>
 		{icon}
@@ -116,8 +118,9 @@ const QuickActionDescription = ({
 	description: string;
 }) => (
 	<div className={cn("text-xs", {
-		"text-primary-toned-500": useQuickActionContext().variant === 'default',
-		"text-secondary-toned-500": useQuickActionContext().variant === 'alert',
+		"text-primary-toned-500": useQuickActionContext().variant === 'default' && useQuickActionContext().active === false,
+		"text-secondary-toned-500": useQuickActionContext().variant === 'alert' && useQuickActionContext().active === false,
+		"text-red-500": useQuickActionContext().variant === 'danger' && useQuickActionContext().active === false,
 	})}>{description}</div>
 );
 

@@ -10,13 +10,40 @@ export default function MyDialog({
 	className?: string;
 	children?: React.ReactNode;
 }) {
+	// Fade-in animation using Tailwind and custom keyframes
 	return createPortal(
-		<div className={cn("fixed inset-0 flex items-center justify-center bg-black/50 z-10", className)}>
-			{children}
-		</div>
-		,
+		<div
+			className={cn(
+				"fixed inset-0 flex items-center justify-center bg-black/50 z-10",
+				className
+			)}
+		>
+			<div style={{
+				animation: "transitionFadeIn 0.3s ease-in-out",
+			}}>{children}</div>
+		</div>,
 		document.body
-	)
+	);
+}
+
+// Add fade-in keyframes to the document head if not already present
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+	const styleId = 'mydialog-fadein-keyframes';
+	if (!document.getElementById(styleId)) {
+		const style = document.createElement('style');
+		style.id = styleId;
+		style.innerHTML = `@keyframes transitionFadeIn { 
+		0% {
+			opacity: 0;
+			transform: translateY(10px);
+		}
+		100% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}`;
+		document.head.appendChild(style);
+	}
 }
 
 const Header: React.FC<{

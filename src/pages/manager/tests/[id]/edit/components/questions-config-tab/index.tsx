@@ -1,9 +1,9 @@
 import { Plus, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import QuestionPersistCard from "../../../ui-items/question/form/QuestionPersist";
-import { QuestionPersistCoreSchema } from "../../../ui-items/question/types";
-import { QuestionPersistZodSchema } from "../../../schemas/question-persist-zod";
 import { toast } from "react-toastify";
+import { QuestionPersistZodSchema } from "../../../../../../../features/tests/schemas/question-persist-zod";
+import QuestionPersistCard from "../../../../../../../features/tests/ui-items/question/form/QuestionPersist";
+import { QuestionPersistCoreSchema } from "../../../../../../../features/tests/ui-items/question/types";
 
 const QuestionsConfigTab = ({
 	questions,
@@ -67,9 +67,6 @@ const QuestionsConfigTab = ({
 
 	return (
 		<div className="w-full h-full py-4 px-2 flex flex-col items-center justify-center">
-
-
-
 			<div className="w-full flex-1 flex flex-col gap-4 items-center justify-start">
 				{/* Question List */}
 				{questions.map((_, index) => (
@@ -93,7 +90,6 @@ const QuestionsConfigTab = ({
 			</div>
 
 			<hr className="w-full border-t border-primary-toned-300 my-4" />
-
 
 
 			<div className="w-full flex flex-col">

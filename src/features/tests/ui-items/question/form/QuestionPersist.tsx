@@ -158,7 +158,7 @@ function QuestionPersistHeader({
 
 			{/* Question Index and Points */}
 			<div className='flex items-baseline gap-4 w-full'>
-				<MyLabel>{`Question ${index || 0 + 1}:`}</MyLabel>
+				<MyLabel>{`Question ${index == null ? "#" + 1 : index + 1}:`}</MyLabel>
 				<div className='flex items-baseline gap-2 flex-shrink-0'>
 					<MyInput
 						id='points'

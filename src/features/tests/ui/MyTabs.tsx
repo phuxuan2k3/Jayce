@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { CSSProperties } from "react";
 import { cn } from "../../../app/cn";
 
@@ -10,6 +10,7 @@ type Tab = {
 
 type TabsComponentProps = {
 	tabs: Tab[];
+	activeTabIdInject?: string;
 	defaultTabId?: string;
 	tabClassName?: string;
 	className?: string;
@@ -27,9 +28,18 @@ const tabStyles = {
 	// so we'll inject a style element for the animations
 };
 
-const MyTabs = ({ tabs, defaultTabId, className = '', tabClassName = '' }: TabsComponentProps) => {
+const MyTabs = ({ tabs, activeTabIdInject, defaultTabId, className = '', tabClassName = '' }: TabsComponentProps) => {
 	const [activeTabId, setActiveTabId] = useState(defaultTabId || tabs[0]?.id);
 	const [prevTabId, setPrevTabId] = useState(defaultTabId || tabs[0]?.id);
+
+	useEffect(() => {
+		if (
+			activeTabIdInject != null &&
+			tabs.some((tab) => tab.id === activeTabIdInject)
+		) {
+			setActiveTabId(activeTabIdInject);
+		}
+	}, [activeTabIdInject]);
 
 	const handleTabClick = (tabId: string) => {
 		if (tabId !== activeTabId) {

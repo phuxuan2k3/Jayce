@@ -42,4 +42,4 @@ export const getStepInfo = (step: StepInfoKey): StepInfoType => {
 	};
 };
 
-export type CreateTab = "info" | "questions" | "generate" | "publish";
+export type CreateTab = "exam" | "generate" | "publish";

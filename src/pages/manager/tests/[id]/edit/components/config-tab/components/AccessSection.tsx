@@ -1,17 +1,16 @@
-import { useEffect, useState } from "react";
-import { ExamPersistCoreSchema } from "../../../../ui-items/test/types";
-import MyDescription from "../../../../ui/forms/MyDescription";
-import MyFieldLayout from "../../../../ui/forms/MyFieldLayout";
-import MyInput from "../../../../ui/forms/MyInput";
-import MyLabel from "../../../../ui/forms/MyLabel";
-import MySwitch from "../../../../ui/forms/MySwitch";
-import MyDateInput from "../../../../ui/forms/MyDateInput";
-import MyTimeInput from "../../../../ui/forms/MyTimeInput";
-import { Dices } from "lucide-react";
-import { useLazyGetTestsSuggestRoomidQuery } from "../../../../api/test.api-gen-v2";
-import { cn } from "../../../../../../app/cn";
+import { useState } from "react";
+import { ExamPersistCoreSchema } from "../../../../../../../../features/tests/ui-items/test/types";
+import MyDateInput from "../../../../../../../../features/tests/ui/forms/MyDateInput";
+import MyDescription from "../../../../../../../../features/tests/ui/forms/MyDescription";
+import MyFieldLayout from "../../../../../../../../features/tests/ui/forms/MyFieldLayout";
+import MyInput from "../../../../../../../../features/tests/ui/forms/MyInput";
+import MyLabel from "../../../../../../../../features/tests/ui/forms/MyLabel";
+import MySwitch from "../../../../../../../../features/tests/ui/forms/MySwitch";
+import MyTimeInput from "../../../../../../../../features/tests/ui/forms/MyTimeInput";
+import { InfoIcon } from "lucide-react";
 
 export function AccessSection({
+	initialValues,
 	roomId,
 	password,
 	openDate,
@@ -20,6 +19,7 @@ export function AccessSection({
 	getDateValue,
 	getTimeValue,
 }: {
+	initialValues?: Partial<ExamPersistCoreSchema["detail"]>;
 	roomId: string;
 	password?: string | null;
 	openDate: string | null;
@@ -29,47 +29,20 @@ export function AccessSection({
 	getTimeValue: (dateStr: string | null) => string;
 }) {
 	const [passwordDraft, setPasswordDraft] = useState<string>(password || "");
-	const [genRoomId, { isFetching, isSuccess, error, data }] = useLazyGetTestsSuggestRoomidQuery();
-
-	useEffect(() => {
-		if (isSuccess && data) {
-			onChange({ roomId: data.roomId });
-		}
-	}, [isSuccess, data]);
 
 	return (
 		<div className="flex flex-col gap-y-4 w-full">
 			<div className="flex items-start gap-8 w-full">
 				<MyFieldLayout className="flex-1">
-					<div className="flex items-baseline justify-between w-full">
-						<MyLabel htmlFor="test-room-id">Room ID:</MyLabel>
-						{error == null ? (
-							<MyDescription text="Regenerate" />
-						) : (
-							<MyDescription className="text-red-500" text="Error fetching room ID" />
-						)}
-					</div>
-					<div className="flex items-center gap-x-2 w-full">
-						<MyInput
-							id="test-room-id"
-							type="text"
-							placeholder="Room ID"
-							value={roomId}
-							onChange={e => onChange({ roomId: e.target.value })}
-						/>
-						<div className="rounded-lg bg-primary/10 p-2 cursor-pointer hover:bg-primary/20 transition-colors text-primary"
-							onClick={() => {
-								if (isFetching) return;
-								genRoomId({
-									endDate: closeDate || new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-									startDate: openDate || new Date(Date.now()).toISOString(),
-								});
-							}}>
-							<Dices className={cn(
-								(isFetching) && "animate-spin text-primary/50",
-							)} />
-						</div>
-					</div>
+					<MyLabel htmlFor="test-room-id">Room ID:</MyLabel>
+					<MyInput
+						id="test-room-id"
+						type="text"
+						placeholder="Room ID"
+						disabled
+						value={roomId}
+						onChange={e => onChange({ roomId: e.target.value })}
+					/>
 					<MyDescription text="Room ID for candidate to join" />
 				</MyFieldLayout>
 
@@ -109,6 +82,13 @@ export function AccessSection({
 				</MyFieldLayout>
 			</div>
 
+			<div className="flex p-4 bg-primary-toned-50 rounded-md mt-4">
+				<div className="flex items-center gap-2 w-full">
+					<InfoIcon className="text-primary w-5 h-5" />
+					<span className="text-primary-toned-700 text-sm">You can only extends the exam time range when modifying the exam accessibility.</span>
+				</div>
+			</div>
+
 			<div className="grid grid-cols-[auto_1fr_auto_1fr] gap-x-8 gap-y-4 items-center w-full mt-4">
 				<MyLabel htmlFor="test-open-date">From Date:</MyLabel>
 				<MyDateInput
@@ -120,6 +100,7 @@ export function AccessSection({
 						prev.setFullYear(Number(year), Number(month) - 1, Number(day));
 						onChange({ openDate: prev.toISOString() });
 					}}
+					max={initialValues?.openDate ? new Date(initialValues.openDate).toISOString().split("T")[0] : undefined}
 				/>
 				<MyLabel htmlFor="test-open-time">Time:</MyLabel>
 				<MyTimeInput
@@ -132,6 +113,7 @@ export function AccessSection({
 						onChange({ openDate: prev.toISOString() });
 					}}
 					format="12"
+					max={initialValues?.openDate ? new Date(initialValues.openDate).toISOString().split("T")[1].slice(0, 5) : undefined}
 				/>
 				<MyLabel htmlFor="test-close-date">To Date:</MyLabel>
 				<MyDateInput
@@ -143,6 +125,7 @@ export function AccessSection({
 						prev.setFullYear(Number(year), Number(month) - 1, Number(day));
 						onChange({ closeDate: prev.toISOString() });
 					}}
+					min={initialValues?.closeDate ? new Date(initialValues.closeDate).toISOString().split("T")[0] : undefined}
 				/>
 				<MyLabel htmlFor="test-close-time">Time:</MyLabel>
 				<MyTimeInput
@@ -155,6 +138,7 @@ export function AccessSection({
 						onChange({ closeDate: prev.toISOString() });
 					}}
 					format="12"
+					min={initialValues?.closeDate ? new Date(initialValues.closeDate).toISOString().split("T")[1].slice(0, 5) : undefined}
 				/>
 			</div>
 		</div>

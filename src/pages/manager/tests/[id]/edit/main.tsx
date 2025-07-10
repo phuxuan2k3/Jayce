@@ -1,23 +1,24 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { parseQueryError } from "../../../../../helpers/fetchBaseQuery.error";
 import paths from "../../../../../router/paths";
-import { useDeleteTestModalContext } from "../components/delete-test-modal.context";
 import { EditTabs } from "./page";
 import Sidebar from "./components/Sidebar";
-import { usePutTestsByTestIdMutation, testApiGenV2 } from "../../../../../features/tests/api/test.api-gen-v2";
+import { usePutTestsByTestIdMutation, testApiGenV2, useDeleteTestsByTestIdMutation } from "../../../../../features/tests/api/test.api-gen-v2";
 import useActionStateWatch from "../../../../../features/tests/hooks/useActionStateWatch";
 import useArrayManage from "../../../../../features/tests/hooks/useArrayManage";
 import useDraftValue from "../../../../../features/tests/hooks/useDraftValue";
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import useZodParseLazy from "../../../../../features/tests/hooks/useZodParseLazy";
 import { ExamPersistCoreSchema } from "../../../../../features/tests/ui-items/test/types";
-import ConfigTab from "../../../../../features/tests/ui-shared/test-persist-pages/config-tab";
 import ExamPersistValidationErrorsDialog from "../../../../../features/tests/ui-shared/test-persist-pages/ExamPersistValidationErrorsDialog";
-import QuestionsConfigTab from "../../../../../features/tests/ui-shared/test-persist-pages/questions-config-tab";
 import { ExamPersistZodSchema } from "../../../../../features/tests/schemas/exam-persist-zod";
 import RightLayoutTemplate from "../../../../../components/layouts/RightLayoutTemplate";
+import ConfigTab from "./components/config-tab";
+import QuestionsConfigTab from "./components/questions-config-tab";
+import EditExamDialog from "./components/EditExamDialog";
+import DeleteExamDialog from "./components/DeleteExamDialog";
+import ErrorDialog from "../../../../../features/tests/ui/fetch-states/ErrorDialog";
 
 export default function ManagerTestEditMain({
 	data,
@@ -27,8 +28,10 @@ export default function ManagerTestEditMain({
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
 	const [tab, setTab] = useState<EditTabs>("info");
+	const [showEditDialog, setShowEditDialog] = useState(false);
+	const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+	const [editData, setEditData] = useState<ExamPersistCoreSchema>(data);
 
-	const { setTest } = useDeleteTestModalContext();
 	const { errors, handleParse, clearErrors } = useZodParseLazy(ExamPersistZodSchema);
 
 	const {
@@ -36,16 +39,15 @@ export default function ManagerTestEditMain({
 		setDraftValue,
 		confirmDraft,
 	} = useDraftValue({
-		value: data, onValueConfirm: (value) => {
+		value: data,
+		onValueConfirm: (value) => {
 			const parsed = handleParse(value);
 			if (!parsed) {
 				toast.error("Validation failed. Please fix the errors.");
 				return;
 			}
-			updateTest({
-				testId,
-				body: parsed,
-			});
+			setEditData(parsed);
+			setShowEditDialog(true);
 		}
 	});
 
@@ -64,13 +66,21 @@ export default function ManagerTestEditMain({
 		onSuccess: () => {
 			toast.success("Test updated successfully");
 			testApiGenV2.util.invalidateTags(["Tests"]);
+			setShowEditDialog(false);
 			navigate(paths.manager.tests.in(testId).ROOT);
 		},
-		onError: (error) => {
-			const message = parseQueryError(error);
-			toast.error(`Failed to update test: ${message}`);
+	});
+
+	const [deleteTest, deleteState] = useDeleteTestsByTestIdMutation();
+	useActionStateWatch(deleteState, {
+		onSuccess: () => {
+			toast.success("Test deleted successfully");
+			testApiGenV2.util.invalidateTags(["Tests"]);
+			navigate(paths.manager.tests.ROOT);
 		},
 	});
+
+	const apiError = deleteState.error || updateState.error;
 
 	const getTabComponent = useCallback(() => {
 		switch (tab) {
@@ -109,30 +119,52 @@ export default function ManagerTestEditMain({
 					onModeChange={(tab) => setTab(tab)}
 					tab={tab}
 					onSave={() => confirmDraft()}
-					onDelete={() => setTest({
-						id: testId,
-						title: data.title,
-					})}
+					onDelete={() => setShowDeleteDialog(true)}
 				/>
 			}
 		>
-			<>
-				{getTabComponent()}
-				{errors != null && (
-					<ExamPersistValidationErrorsDialog
-						errors={errors}
-						onClose={() => clearErrors()}
-						onConfigEdit={() => {
-							clearErrors();
-							setTab("info");
-						}}
-						onQuestionsEdit={() => {
-							clearErrors();
-							setTab("questions");
-						}}
-					/>
-				)}
-			</>
+			{getTabComponent()}
+
+			{errors != null && (
+				<ExamPersistValidationErrorsDialog
+					errors={errors}
+					onClose={() => clearErrors()}
+					onConfigEdit={() => {
+						clearErrors();
+						setTab("info");
+					}}
+					onQuestionsEdit={() => {
+						clearErrors();
+						setTab("questions");
+					}}
+				/>
+			)}
+
+			{showEditDialog && (
+				<EditExamDialog
+					isLoading={updateState.isLoading}
+					onCancel={() => setShowEditDialog(false)}
+					onConfirm={() => updateTest({
+						testId,
+						body: editData,
+					})}
+				/>
+			)}
+
+			{showDeleteDialog && (
+				<DeleteExamDialog
+					isLoading={deleteState.isLoading}
+					onCancel={() => setShowDeleteDialog(false)}
+					onConfirm={() => deleteTest({
+						testId,
+					})}
+				/>
+			)}
+
+			{apiError && (
+				<ErrorDialog error={apiError} />
+			)}
+
 		</RightLayoutTemplate>
 	);
 }

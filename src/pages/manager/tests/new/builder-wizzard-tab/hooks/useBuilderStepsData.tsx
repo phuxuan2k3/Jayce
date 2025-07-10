@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { BuilderStep1Schema, BuilderStep2Schema, BuilderStep3Schema } from '../../common/step-schema';
 import { AllStepData, StepInfoKey } from '../../common/types';
 
-export default function useBuiderStepsData({
+export default function useBuilderStepsData({
 	stepData,
 	onStepDataChange,
 }: {

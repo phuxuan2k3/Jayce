@@ -2,8 +2,9 @@ import { SerializedError } from '@reduxjs/toolkit'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import React from 'react'
 import MyButton from '../buttons/MyButton';
-import { parseQueryError } from '../../../../helpers/fetchBaseQuery.error';
+import { parseQueryError, parseQueryStatus } from '../../../../helpers/fetchBaseQuery.error';
 import MyDialog from '../MyDialog';
+import { CircleAlert } from 'lucide-react';
 
 export default function ErrorDialog({ error }: { error?: FetchBaseQueryError | SerializedError }) {
 	const [isError, setIsError] = React.useState(false);
@@ -18,22 +19,70 @@ export default function ErrorDialog({ error }: { error?: FetchBaseQueryError | S
 		return null;
 	}
 	const errorMessage = parseQueryError(error) || "An unexpected error occurred. Please try again.";
+	let queryStatus = parseQueryStatus(error);
 
 	return (
 		<MyDialog>
-			<div className="text-red-500 text-center bg-red-50 border border-red-200 rounded-lg p-4 shadow-md">
-				<p className="text-lg font-semibold">An error occurred</p>
-				<p className="mt-2">{errorMessage}</p>
+			<MyDialog.Content className='flex flex-col gap-4 items-center'>
+				<div className='w-full flex items-center justify-start gap-2'>
+					<CircleAlert className="w-6 h-6 text-red-500 flex-shrink-0" />
+					{queryStatus === "PAYMENT_REQUIRED" ? (
+						<span className="font-semibold text-red-600">
+							Payment Required
+						</span>
+					) : queryStatus === "BAD_REQUEST" ? (
+						<span className='font-semibold text-red-600'>
+							Invalid Request
+						</span>
+					) : (
+						<span className='font-semibold text-red-600'>
+							An Error Ocurred
+						</span>
+					)}
+				</div>
 
-				<div className='mt-4'>
+
+				{queryStatus === "PAYMENT_REQUIRED" && (
+					<div className="w-full flex flex-col items-center gap-3 p-4 bg-yellow-50 border border-yellow-300 rounded-md shadow-md">
+						<p className="text-sm text-yellow-800 text-center">
+							Your current balance isn't sufficient for this operation. To continue, you'll need to refill your account.
+						</p>
+					</div>
+				)}
+
+				{queryStatus === "BAD_REQUEST" && (
+					<div className="w-full text-red-500 p-4 bg-red-50 border border-red-200 rounded-md shadow-md">
+						{errorMessage}
+					</div>
+				)}
+
+				{queryStatus !== "PAYMENT_REQUIRED" ? (
 					<MyButton
-						variant={"primary"}
+						className='w-full mt-4'
+						variant={"gray"}
 						onClick={() => setIsError(false)}
 					>
 						Close
 					</MyButton>
-				</div>
-			</div>
+				) : (
+					<div className='w-full flex items-center gap-4'>
+						<MyButton
+							className='flex-1'
+							variant={"gray"}
+							onClick={() => setIsError(false)}
+						>
+							Close
+						</MyButton>
+						<MyButton className='flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold shadow-md'
+							onClick={() => { }}
+						>
+							Go to Payment
+						</MyButton>
+					</div>
+				)}
+
+
+			</MyDialog.Content>
 		</MyDialog>
 	)
 }
