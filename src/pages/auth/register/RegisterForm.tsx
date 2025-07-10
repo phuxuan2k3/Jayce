@@ -3,7 +3,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../../../features/auth/api/auth.api";
 import { useEffect, useState } from "react";
-import { parseQueryError } from "../../../helpers/fetchBaseQuery.error";
+import { isFetchBaseQueryError, parseQueryError } from "../../../helpers/fetchBaseQuery.error";
 import AlertError from "../../../components/ui/alert/AlertError";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
@@ -38,6 +38,8 @@ const RegisterForm = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
+
   const [errors, setErrors] = useState({
     username: "",
     email: "",
@@ -49,6 +51,16 @@ const RegisterForm = () => {
       navigate(paths._layout);
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (cooldown > 0) {
+      timer = setInterval(() => {
+        setCooldown((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [cooldown]);
 
   const validateForm = () => {
     let newErrors = { username: "", email: "", password: "" };
@@ -101,7 +113,7 @@ const RegisterForm = () => {
   // TODO: Fullfill the data
   const handleFormSubmit = async () => {
     setGoogleError(null);
-    register({
+    const response = await register({
       local: {
         username,
         email,
@@ -110,19 +122,40 @@ const RegisterForm = () => {
         otp,
       },
       metadata: {
-        fullname: "I Am Miboy",
-        company: "Cty",
-        country: "Viet Nam",
-        jobTitle: "CEO",
+        fullname: "",
+        company: "",
+        country: "",
+        jobTitle: "",
         avatarPath:
-          "https://thumbs.dreamstime.com/b/female-avatar-icon-women-clipart-png-vector-girl-avatar-women-clipart-bor-bisiness-icon-png-vector-233362315.jpg",
+          "",
       },
       role: 1,
     });
+
+    if ('error' in response) {
+      const err = response.error;
+
+      if (
+        isFetchBaseQueryError(err) &&
+        typeof err.data === 'object' &&
+        err.data !== null &&
+        'message' in err.data
+      ) {
+        toast.error((err.data as any).message ?? 'Registration failed.');
+      } else {
+        toast.error('Registration failed.');
+      }
+
+      return;
+    }
   };
 
   const handleVerifyEmail = async () => {
     if (isSending) return;
+    if (cooldown > 0) {
+      toast.error("Please wait before requesting a new verification email.");
+      return;
+    }
     if (!validateForm()) return;
     console.log("1");
     if (!email) {
@@ -147,6 +180,8 @@ const RegisterForm = () => {
       await verificationEmail({ email }).unwrap();
       //   alert("Verification email sent successfully!");
       setIsOpenModal(true);
+      setCooldown(30);
+      toast.success("Verification email sent successfully!");
       return (
         <Alert
           sx={{
@@ -524,10 +559,10 @@ const RegisterForm = () => {
             <div className="pt-1 text-xs text-gray-500   ">
               <span>Didn't get a code?</span>{" "}
               <span
-                onClick={handleVerifyEmail}
+                onClick={cooldown > 0 ? undefined : handleVerifyEmail}
                 className="underline text-primary-toned-600 cursor-pointer font-semibold hover:text-primary-toned-800"
               >
-                Resend
+                {cooldown > 0 ? `Resend in ${cooldown}s` : "Resend code"}
               </span>
             </div>
           </div>
