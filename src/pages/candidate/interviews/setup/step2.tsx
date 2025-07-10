@@ -6,8 +6,11 @@ import { useLanguage } from "../../../../LanguageProvider";
 const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
   const [speechRate, setSpeechRate] = useState(0);
   const [numQuestion, setNumQuestion] = useState(4);
-  const [skipIntro, setSkipIntro] = useState(false);
-  const [skipCode, setSkipCode] = useState(false);
+  // const [skipIntro, setSkipIntro] = useState(true);
+  // const [skipCode, setSkipCode] = useState(true);
+  const skipIntro = true;
+  const skipCode = true;
+
   const [selectedModel, setSelectedModel] = useState<"alice" | "peter">(
     "alice"
   );
@@ -29,7 +32,8 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
   const [language, setLanguage] = useState<string>("English");
   return (
     <>
-      <div className="fotn-back text-[32px]    w-full text-center leading-[24px] mt-4">
+      {/* <div className="fotn-back text-[32px]    w-full text-center leading-[24px] mt-4"> */}
+      <div className="text-primary-toned-600 text-[32px] leading-[24px] mt-4    font-black w-full text-center ">
         {t("interview_context_models")}
       </div>
       <div className="text-md text-gray-800 w-full text-center mb-2">
@@ -82,7 +86,9 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
           </div>
         </div>
         <div className="w-5/12 text-lg text-primary font-semibold">
-          <div className="leading-[20px]">{t("speech_rate")}</div>
+          <div className="leading-[20px]">
+            {t("speech_rate")} ({speechRate})
+          </div>
           <input
             type="range"
             min="-20"
@@ -91,12 +97,13 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
             onChange={(e) => setSpeechRate(Number(e.target.value))}
             className="range h-5 [--range-thumb-size:40px]  [--range-p:3px]   [--range-thumb:#2e808a] text-primary "
           />
-          <div className="flex text-sm justify-between  mb-3 font-medium text-primary-toned-700">
+          <div className="flex text-sm justify-between  mb-8 font-medium text-primary-toned-700">
             <div>{t("low")}</div>
             <div>{t("fast")}</div>
           </div>
-          <div className="text-lg leading-[20px]">
-            {t("number_of_questions")}
+
+          <div className="text-lg leading-[20px] ">
+            {t("number_of_questions")} ({numQuestion})
           </div>
           <input
             type="range"
@@ -110,7 +117,7 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
             <div>1</div>
             <div>16</div>
           </div>
-          <div className="flex justify-between">
+          {/* <div className="flex justify-between">
             <span>{t("skip_intro")}</span>
             <input
               type="checkbox"
@@ -132,7 +139,7 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
               onChange={(e) => setSkipCode(e.target.checked)}
               className="checkbox checked:bg-primary checked:text-white size-8"
             />
-          </div>
+          </div> */}
         </div>
       </div>
       <div

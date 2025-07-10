@@ -14,6 +14,39 @@ const SetUpStep1: FC<{
     !!data.skills &&
     data.skills.trim() !== "";
 
+  const positions = [
+    "Software Engineer",
+    "Data Analyst",
+    "DevOps Engineer",
+    "Cybersecurity Analyst",
+    "Cloud Engineer",
+    "Full-Stack Developer",
+    "Frontend Developer",
+    "Backend Developer",
+    "Mobile Developer (iOS/Android)",
+    "Machine Learning Engineer",
+    "AI Engineer",
+    "Data Scientist",
+    "Product Manager",
+    "Project Manager (IT)",
+    "UI/UX Designer",
+    "Network Engineer",
+    "System Administrator",
+    "Database Administrator (DBA)",
+    "QA Engineer / Test Automation Engineer",
+    "Business Analyst (IT)",
+    "Solutions Architect",
+    "Technical Support Specialist",
+    "IT Consultant",
+    "Scrum Master",
+    "Site Reliability Engineer (SRE)",
+    "Embedded Systems Engineer",
+    "Game Developer",
+    "Blockchain Developer",
+    "Robotics Engineer",
+    "IT Auditor",
+  ];
+
   return (
     <>
       <div className="text-primary-toned-600 text-[32px] leading-[24px] mt-4    font-black w-full text-center ">
@@ -31,14 +64,12 @@ const SetUpStep1: FC<{
             onChange={(e) => onChange({ position: e.target.value })}
             className="py-2 pe-12 ps-2 text-md shadow rounded-md focus:outline-none focus:ring focus:ring-teal-300"
           >
-            <option value="">{t("select_position")}</option>
-            <option value="Software Engineer">
-              {t("position_software_engineer")}
-            </option>
-            <option value="Data Analyst">{t("position_data_analyst")}</option>
-            <option value="Project Manager">
-              {t("position_project_manager")}
-            </option>
+            {/* <option value="">{t("select_position")}</option> */}
+            {positions.map((pos) => (
+              <option key={pos} value={pos}>
+                {pos}
+              </option>
+            ))}
           </select>
         </div>
         <div className=" text-primary-toned-600">
