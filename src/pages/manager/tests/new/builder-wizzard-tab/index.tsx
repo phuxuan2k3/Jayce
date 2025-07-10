@@ -38,7 +38,7 @@ export default function BuilderWizzardTab({
 			{error && <ErrorDialog error={error} />}
 
 			{(isLoading || isFetching) ? (
-				<div className="flex flex-col items-center justify-center h-full">
+				<div className="flex flex-col items-center justify-center h-full w-full">
 					<div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
 					<p className="mt-4 text-lg text-gray-600">{"Generating questions..."}</p>
 				</div>

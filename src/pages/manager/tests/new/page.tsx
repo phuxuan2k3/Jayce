@@ -183,7 +183,9 @@ export default function ManagerTestNewPage() {
 				<div style={{
 					animation: "fadeIn 0.2s ease-in-out",
 					animationFillMode: "forwards",
-				}}>
+				}}
+					className="w-full h-full flex flex-col"
+				>
 					<PublishTab
 						examPersist={examPersist}
 					/>
@@ -194,7 +196,9 @@ export default function ManagerTestNewPage() {
 				<div style={{
 					animation: "fadeIn 0.2s ease-in-out",
 					animationFillMode: "forwards",
-				}}>
+				}}
+					className="w-full h-full flex flex-col"
+				>
 					<BuilderWizzardTab
 						builderStepData={builderAllStepData}
 						allStepData={allStepData}

@@ -8,6 +8,8 @@ import MyButton from '../../../../../../features/tests/ui/buttons/MyButton';
 import { PencilLine, Sparkles, Trash2 } from 'lucide-react';
 import DisposeDialog from './components/DisposeDialog';
 
+const perPage = 5;
+
 export default function StepDone({
 	questions,
 	onReplaceQuestions,
@@ -34,7 +36,7 @@ export default function StepDone({
 		setPage,
 		pageItems,
 		totalPages,
-	} = useArrayPagination(draftQuestions, 5);
+	} = useArrayPagination(draftQuestions, perPage);
 
 	return (
 		<>
@@ -53,7 +55,7 @@ export default function StepDone({
 					{pageItems.map((question, index) => (
 						<QuestionPersistCard
 							key={index}
-							index={index}
+							index={index + (page - 1) * perPage}
 							onDeleteQuestion={() => {
 								const updatedQuestions = draftQuestions.filter((_, i) => i !== index);
 								setDraftQuestions(updatedQuestions);

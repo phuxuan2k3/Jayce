@@ -56,7 +56,7 @@ export default function ActionsDialog({
 								</div>
 							</div>
 							<div className="flex-grow">
-								<h3 className="font-medium text-gray-900 mb-1">Replace All Questions</h3>
+								<h3 className="font-semibold text-gray-900 mb-1">Replace All Questions</h3>
 								<p className="text-xs text-gray-500">
 									This will completely replace your current test questions with the newly generated ones.
 									Your previous questions will be permanently removed.
@@ -84,7 +84,7 @@ export default function ActionsDialog({
 								</div>
 							</div>
 							<div className="flex-grow">
-								<h3 className="font-medium text-gray-900 mb-1">Add to Existing Questions</h3>
+								<h3 className="font-semibold text-gray-900 mb-1">Add to Existing Questions</h3>
 								<p className="text-xs text-gray-500">
 									This will add the new questions to your existing test, keeping all your current questions
 									and expanding your question pool.
