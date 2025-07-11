@@ -153,7 +153,9 @@ export default function ManagerTestEditMain({
 						testId,
 						body: {
 							...editData,
-							questions: hasAttempts === true ? editData.questions : undefined,
+							questions: hasAttempts === true
+								? undefined
+								: editData.questions,
 						},
 					})}
 				/>

@@ -34,27 +34,35 @@ const ParticipantCard: React.FC<ParticipantCardProps> = ({ user, participant }) 
 
 					<div className='flex-1 min-w-0'>
 						<div className="flex items-center space-x-2 mb-1">
-							<h3 className='font-bold text-lg text-gray-800 truncate'>{user.metadata.fullname}</h3>
-							<div className="px-2 py-1 bg-primary-toned-100 text-primary-toned-700 rounded-md text-xs font-medium">
-								Participant
-							</div>
+							<h3 className='font-bold text-lg text-gray-800 truncate'>{user.metadata.fullname || "Unknown User"}</h3>
 						</div>
 
 						<div className='space-y-1'>
 							<p className='text-sm text-gray-600 truncate flex items-center'>
 								<span className="w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
-								{user.username}
+								<span>Username:</span>
+								<span className='ml-1 font-semibold text-gray-800 truncate'>
+									{user.username}
+								</span>
 							</p>
+
 							{user.metadata.company && (
 								<p className='text-xs text-gray-500 truncate flex items-center'>
 									<span className="w-1.5 h-1.5 bg-gray-300 rounded-full mr-2"></span>
-									{user.metadata.company}
+									<span>Company:</span>
+									<span className='ml-1 font-semibold text-gray-800 truncate'>
+										{user.metadata.company}
+									</span>
 								</p>
 							)}
+
 							{user.metadata.jobTitle && (
 								<p className='text-xs text-gray-500 truncate flex items-center'>
 									<span className="w-1.5 h-1.5 bg-gray-300 rounded-full mr-2"></span>
-									{user.metadata.jobTitle}
+									<span>Job Title:</span>
+									<span className='ml-1 font-semibold text-gray-800 truncate'>
+										{user.metadata.jobTitle}
+									</span>
 								</p>
 							)}
 						</div>
