@@ -15,5 +15,5 @@ export default function ManagerLayout() {
 				<FooterShort />
 			</div>
 		</RoleGuard>
-	)
+	);
 }

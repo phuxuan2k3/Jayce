@@ -56,6 +56,22 @@ export default function ErrorDialog({ error }: { error?: FetchBaseQueryError | S
 					</div>
 				)}
 
+				{queryStatus === "NOT_FOUND" && (
+					<div className="w-full text-red-500 p-4 bg-red-50 border border-red-200 rounded-md shadow-md">
+						<p className="text-sm">
+							The requested resource was not found. Please check the details and try again.
+						</p>
+					</div>
+				)}
+
+				{queryStatus === "TOO_MANY_REQUESTS" && (
+					<div className="w-full text-red-500 p-4 bg-red-50 border border-red-200 rounded-md shadow-md">
+						<p className="text-sm">
+							You have made too many requests in a short period. Please wait a moment before trying again.
+						</p>
+					</div>
+				)}
+
 				{queryStatus !== "PAYMENT_REQUIRED" ? (
 					<MyButton
 						className='w-full mt-4'

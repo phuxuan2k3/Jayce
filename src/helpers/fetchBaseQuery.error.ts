@@ -71,7 +71,17 @@ export function parseQueryError(error: FetchBaseQueryError | SerializedError | u
 }
 
 
-export type QueryStatus = "FETCH_ERROR" | "TIMEOUT_ERROR" | "UNAUTHORIZED" | "SERVER_ERROR" | "BAD_REQUEST" | "PAYMENT_REQUIRED" | "UNKNOWN_ERROR";
+export type QueryStatus =
+	"FETCH_ERROR" |
+	"TIMEOUT_ERROR" |
+	"UNAUTHORIZED" |
+	"SERVER_ERROR" |
+	"BAD_REQUEST" |
+	"PAYMENT_REQUIRED" |
+	"NOT_FOUND" |
+	"TOO_MANY_REQUESTS" |
+	"UNKNOWN_ERROR"
+	;
 
 export function parseQueryStatus(error: FetchBaseQueryError | SerializedError | undefined): QueryStatus {
 	if (isFetchBaseQueryError(error)) {
@@ -92,6 +102,12 @@ export function parseQueryStatus(error: FetchBaseQueryError | SerializedError | 
 		}
 		else if (error.status === 402) {
 			return 'PAYMENT_REQUIRED';
+		}
+		else if (error.status === 404) {
+			return 'NOT_FOUND';
+		}
+		else if (error.status === 429) {
+			return 'TOO_MANY_REQUESTS';
 		}
 		return 'UNKNOWN_ERROR';
 	} else if (isErrorWithMessage(error)) {
