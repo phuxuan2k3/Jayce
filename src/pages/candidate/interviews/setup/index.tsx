@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChartPie, faHistory, faQuestion } from "@fortawesome/free-solid-svg-icons";
+import { faChartPie, faHistory, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import SetUpPage from "./setup";
 import HistoryPage from "./history";
 import { useLanguage } from "../../../../LanguageProvider";
@@ -11,7 +11,7 @@ import PublicQuestionsPage from "./PublicQuestions";
 const navTabKeys = [
   { id: "Interview", labelKey: "tab_interview", icon: faChartPie },
   { id: "History", labelKey: "tab_history", icon: faHistory },
-  { id: "PublicQuestions", labelKey: "tab_public_questions", icon: faQuestion },
+  { id: "PublicQuestions", labelKey: "tab_public_questions", icon: faQuestionCircle },
 ];
 
 const InterviewPage = () => {
