@@ -10,6 +10,7 @@ interface Props {
 	attempts: AttemptCoreSchema[];
 	onItemClick?: (attempt: AttemptCoreSchema) => void;
 	showCandidate?: boolean;
+	baseIndex?: number;
 }
 
 type AttemptCandidateMap = {
@@ -24,6 +25,7 @@ const AttemptsTable: React.FC<Props> = ({
 	attempts,
 	onItemClick,
 	showCandidate = false,
+	baseIndex = 0, // Base index for pagination
 }) => {
 	const candidateIds = attempts.reduce((acc: Set<string>, attempt) => {
 		if (attempt.candidateId) {
@@ -53,7 +55,6 @@ const AttemptsTable: React.FC<Props> = ({
 					<thead className="bg-primary-toned-700 text-white font-bold">
 						<tr>
 							<th className="px-6 py-3 text-left tracking-wider">Order #</th>
-
 							<th className="px-6 py-3 text-left tracking-wider">Date</th>
 							<th className="px-6 py-3 text-left tracking-wider">Score</th>
 							<th className="px-6 py-3 text-left tracking-wider">Time Spent</th>
@@ -115,14 +116,14 @@ const AttemptsTable: React.FC<Props> = ({
 								</tr>
 							</thead>
 							<tbody className="divide-y divide-gray-200">
-								{attempts.map((attempt) => (
+								{attempts.map((attempt, index) => (
 									<tr
 										key={attempt.id}
 										className="hover:bg-gray-50 cursor-pointer"
 										onClick={() => onItemClick?.(attempt)}
 									>
 										<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-											{attempt.order}
+											{index + 1 + (baseIndex)}
 										</td>
 										<td className='px-6 py-4 whitespace-nowrap'>
 											<div className="flex flex-col items-start">

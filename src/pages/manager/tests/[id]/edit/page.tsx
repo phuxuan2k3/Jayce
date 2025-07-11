@@ -46,7 +46,10 @@ export default function ManagerTestEditPage() {
 			dataComponent={(data) => {
 				if (!data) throw new Error("Test is not in EXAM mode!");
 				return (
-					<ManagerTestEditMain data={data} />
+					<ManagerTestEditMain
+						data={data}
+						hasAttempts={data.hasAttempts === true}
+					/>
 				);
 			}}
 		/>

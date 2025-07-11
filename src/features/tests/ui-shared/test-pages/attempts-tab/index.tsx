@@ -18,9 +18,11 @@ type Filter = {
 const AttemptsTab = ({
 	candidateId = undefined,
 	onAttemptClick = undefined,
+	showCandidate = false,
 }: {
 	candidateId?: string | undefined;
 	onAttemptClick?: (attempt: AttemptCoreSchema) => void;
+	showCandidate?: boolean;
 }) => {
 	const [filter, setFilter] = useState<Filter>({
 		page: 1,
@@ -72,7 +74,8 @@ const AttemptsTab = ({
 									<AttemptsTable
 										attempts={data}
 										onItemClick={(data) => onAttemptClick?.(data)}
-										showCandidate
+										showCandidate={showCandidate}
+										baseIndex={(filter.page - 1) * filter.perPage}
 									/>
 									{attemptsQuery.isFetching && <div className="absolute inset-0 bg-white/50">
 										<div className="flex items-center justify-center h-full">

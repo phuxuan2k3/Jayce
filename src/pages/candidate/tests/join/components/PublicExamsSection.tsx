@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { useGetTestsQuery } from "../../../../../features/tests/api/test.api-gen-v2"
-import useGetUserId from "../../../../../features/tests/hooks/useGetUserId"
 import FetchStateCover2 from "../../../../../features/tests/ui/fetch-states/FetchStateCover2";
 import paths from "../../../../../router/paths";
 import MyPaginationSection from "../../../../../features/tests/ui-sections/MyPaginationSection";
@@ -12,7 +11,6 @@ import TestListSkeleton from "../../../../../features/tests/ui/skeletons/TestLis
 type Filter = PagingFilter;
 
 export default function PublicExamsSection() {
-	const userId = useGetUserId();
 	const navigate = useNavigate();
 
 	const [filter, setFilter] = useState<Filter>({
@@ -21,7 +19,6 @@ export default function PublicExamsSection() {
 	});
 
 	const testsQuery = useGetTestsQuery({
-		candidateId: userId,
 		mode: "EXAM",
 		page: filter.page,
 		perPage: filter.perPage,
