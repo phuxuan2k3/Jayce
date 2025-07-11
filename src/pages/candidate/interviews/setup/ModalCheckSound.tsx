@@ -50,7 +50,7 @@ const ModalCheckSound: FC<ModalCheckSoundProps> = ({
             : "vi-VN-NamMinhNeural"
           : model === "alice"
             ? "en-US-JennyNeural"
-            : "en-IN-PrabhatNeural",
+            : "en-US-GuyNeural",
       speed: speechRate,
       skills: [data?.skills],
       totalQuestions: numQuestion,

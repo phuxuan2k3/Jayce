@@ -29,7 +29,6 @@ export const AudioContextProvider: React.FC<ProviderProps> = ({ children }) => {
   const { questionIndex } = useQuestionContext();
   const location = useLocation();
   const interviewId = location.state?.interviewId;
-  console.log("interviewId1", interviewId);
 
   const { data, error } = useGetQuestionQuery(
     {

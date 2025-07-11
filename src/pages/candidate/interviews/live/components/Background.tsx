@@ -1,19 +1,19 @@
-import { useThree } from '@react-three/fiber';
-import { useTexture } from '@react-three/drei';
-import { Backgrounds } from '../types/render';
+import { useThree } from "@react-three/fiber";
+import { useTexture } from "@react-three/drei";
+import { Backgrounds } from "../types/render";
 
 export default function Background({
-	backgroundId = 1,
+  backgroundId = 1,
 }: {
-	backgroundId?: Backgrounds;
+  backgroundId?: Backgrounds;
 }) {
-	const viewport = useThree((state) => state.viewport);
-	const texture = useTexture(`/textures/room${backgroundId}.jpeg`);
+  const viewport = useThree((state) => state.viewport);
+  const texture = useTexture(`/textures/room${backgroundId}.jpeg`);
 
-	return (
-		<mesh>
-			<planeGeometry args={[viewport.width, viewport.height]} />
-			<meshBasicMaterial map={texture} />
-		</mesh>
-	)
+  return (
+    <mesh>
+      <planeGeometry args={[viewport.width, viewport.height]} />
+      <meshBasicMaterial map={texture} />
+    </mesh>
+  );
 }

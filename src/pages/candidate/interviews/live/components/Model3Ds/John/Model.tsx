@@ -34,7 +34,7 @@ type GLTFResult = GLTF & {
 };
 
 export default function Model(props: JSX.IntrinsicElements["group"]) {
-  const { scene, ...gltfRest } = useGLTF("/models/Peter.glb") as GLTFResult;
+  const { scene, ...gltfRest } = useGLTF("/models/John.glb") as GLTFResult;
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const fbx = useFBX("/animations/Stand.fbx");
 
@@ -138,4 +138,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/models/Peter.glb");
+useGLTF.preload("/models/John.glb");
