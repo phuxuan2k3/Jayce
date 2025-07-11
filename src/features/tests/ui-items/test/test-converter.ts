@@ -15,6 +15,7 @@ export class TestConverter {
 				mode: "EXAM",
 			},
 			questions: questions.map(q => QuestionsConverter.questionCoreSchema_2_questionPersistCoreSchema(q)).filter((q): q is QuestionPersistCoreSchema => q !== null),
+			hasAttempts: test._aggregate.totalAttempts > 0,
 		};
 	}
 }

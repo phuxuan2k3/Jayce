@@ -181,6 +181,19 @@ const injectedRtkApi = api
         }),
         providesTags: ["Tests"],
       }),
+      getTestsSuggestRoomid: build.query<
+        GetTestsSuggestRoomidApiResponse,
+        GetTestsSuggestRoomidApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/tests/suggest-roomid`,
+          params: {
+            startDate: queryArg.startDate,
+            endDate: queryArg.endDate,
+          },
+        }),
+        providesTags: ["Tests"],
+      }),
       getTestsByTestId: build.query<
         GetTestsByTestIdApiResponse,
         GetTestsByTestIdApiArg
@@ -286,19 +299,6 @@ const injectedRtkApi = api
       >({
         query: (queryArg) => ({
           url: `/tests/${queryArg.testId}/participants/${queryArg.participantId}`,
-        }),
-        providesTags: ["Tests"],
-      }),
-      getTestsSuggestRoomid: build.query<
-        GetTestsSuggestRoomidApiResponse,
-        GetTestsSuggestRoomidApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/tests/suggest-roomid`,
-          params: {
-            startDate: queryArg.startDate,
-            endDate: queryArg.endDate,
-          },
         }),
         providesTags: ["Tests"],
       }),
@@ -594,6 +594,13 @@ export type GetTestsFindByRoomApiResponse = /** status 200 Success */ {
 export type GetTestsFindByRoomApiArg = {
   roomId: string;
 };
+export type GetTestsSuggestRoomidApiResponse = /** status 200 Success */ {
+  roomId: string;
+};
+export type GetTestsSuggestRoomidApiArg = {
+  startDate?: string | null;
+  endDate?: string | null;
+};
 export type GetTestsByTestIdApiResponse =
   /** status 200 Success */ TestFullSchema;
 export type GetTestsByTestIdApiArg = {
@@ -623,7 +630,7 @@ export type PutTestsByTestIdApiArg = {
           isPublic?: boolean;
         }
       | PracticeDetailCommonSchema;
-    questions: {
+    questions?: {
       text: string;
       points: number;
       type: "MCQ" | "LONG_ANSWER";
@@ -697,13 +704,6 @@ export type GetTestsByTestIdParticipantsAndParticipantIdApiResponse =
 export type GetTestsByTestIdParticipantsAndParticipantIdApiArg = {
   testId: string;
   participantId: string;
-};
-export type GetTestsSuggestRoomidApiResponse = /** status 200 Success */ {
-  roomId: string;
-};
-export type GetTestsSuggestRoomidApiArg = {
-  startDate?: string | null;
-  endDate?: string | null;
 };
 export type GetAttemptsApiResponse = /** status 200 Success */ {
   page: number;
@@ -967,6 +967,8 @@ export const {
   useLazyGetTestsSuggestedQuery,
   useGetTestsFindByRoomQuery,
   useLazyGetTestsFindByRoomQuery,
+  useGetTestsSuggestRoomidQuery,
+  useLazyGetTestsSuggestRoomidQuery,
   useGetTestsByTestIdQuery,
   useLazyGetTestsByTestIdQuery,
   usePutTestsByTestIdMutation,
@@ -981,8 +983,6 @@ export const {
   useDeleteTestsByTestIdParticipantsMutation,
   useGetTestsByTestIdParticipantsAndParticipantIdQuery,
   useLazyGetTestsByTestIdParticipantsAndParticipantIdQuery,
-  useGetTestsSuggestRoomidQuery,
-  useLazyGetTestsSuggestRoomidQuery,
   useGetAttemptsQuery,
   useLazyGetAttemptsQuery,
   usePostAttemptsMutation,

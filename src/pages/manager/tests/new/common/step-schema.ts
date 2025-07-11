@@ -9,6 +9,14 @@ export const BuilderStep1Schema = z.object({
 
 export const BuilderStep2Schema = z.object({
 	topics: z.array(TopicSchema).min(1, "At least one topic is required"),
+}).refine((schema) => {
+	const totalSum = schema.topics.reduce((acc, topic) => {
+		const sum = Object.values(topic.difficultyDistribution).reduce((sum, count) => sum + count, 0);
+		return acc + sum;
+	}, 0);
+	return totalSum <= 30;
+}, {
+	message: "Total questions must be less than or equal to 30",
 });
 
 export const BuilderStep3Schema = z.object({

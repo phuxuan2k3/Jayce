@@ -5,11 +5,14 @@ import { useState } from 'react';
 import { PracticeStepAllData } from '../types';
 import paths from '../../../../../router/paths';
 import { parseQueryError } from '../../../../../helpers/fetchBaseQuery.error';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { SerializedError } from '@reduxjs/toolkit';
 
 export default function useGeneratePractice() {
 	const navigate = useNavigate();
-	const [generationError, setGenerationError] = useState<string | null>(null);
+	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [loadingState, setLoadingState] = useState<"none" | "generating" | "saving">("none");
+	const [error, setError] = useState<FetchBaseQueryError | SerializedError | undefined>(undefined);
 
 	const [getGeneratedQuestions] = useLazyGetSuggestQuestionsQuery();
 	const [createTest] = usePostTestsMutation();
@@ -20,6 +23,8 @@ export default function useGeneratePractice() {
 			const { difficulty, numberOfOptions, numberOfQuestions, tags } = allStepData.step2;
 			const { outlines } = allStepData.step3;
 
+			setErrorMessage(null);
+			setError(undefined);
 			setLoadingState("generating");
 
 			const { questions } = await getGeneratedQuestions({
@@ -36,7 +41,7 @@ export default function useGeneratePractice() {
 
 			if (questions.length === 0) {
 				setLoadingState("none");
-				setGenerationError("No questions generated. Please try again with different parameters.");
+				setErrorMessage("No questions generated. Please try again with different parameters.");
 				return;
 			}
 
@@ -63,20 +68,22 @@ export default function useGeneratePractice() {
 
 			setLoadingState("none");
 			navigate(paths.candidate.tests.in(testId).PRACTICE);
-
 		} catch (error: any) {
 			const errorMessage = parseQueryError(error);
 			if (errorMessage) {
-				setGenerationError(errorMessage);
+				setErrorMessage(errorMessage);
 			} else {
-				setGenerationError("An unknown error occurred");
+				setErrorMessage("An unknown error occurred");
 			}
+			setError(error as FetchBaseQueryError | SerializedError);
+			setLoadingState("none");
 		}
 	};
 
 	return {
 		handleGeneratePractice,
-		generationError,
+		errorMessage,
 		loadingState,
+		error,
 	}
 }

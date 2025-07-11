@@ -49,6 +49,7 @@ export default function ManagerTestNewPage() {
 	const [allStepData, setAllStepData] = useState<AllStepData>(() => {
 		return transformExamPersistToAllStepData(examPersist);
 	});
+
 	const builderAllStepData = useBuilderStepsData({
 		stepData: allStepData,
 		onStepDataChange: (data) => {
@@ -135,7 +136,13 @@ export default function ManagerTestNewPage() {
 							if (validateExamPersist() === true) {
 								setTab(newTab);
 							}
-						} else {
+						} else if (newTab === "generate" && generatedQuestions === null) {
+							setAllStepData(
+								transformExamPersistToAllStepData(examPersist, allStepData)
+							);
+							setTab(newTab);
+						}
+						else {
 							setTab(newTab);
 						}
 					}}

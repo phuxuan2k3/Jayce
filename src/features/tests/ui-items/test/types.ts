@@ -9,5 +9,6 @@ type ExamPersistDetailSchema = Extract<PostTestsApiArg["body"]["detail"], { mode
 export type ExamPersistCoreSchema = Omit<PostTestsApiArg["body"], "detail" | "questions"> & {
 	detail: ExamPersistDetailSchema;
 	questions: QuestionPersistCoreSchema[];
+	hasAttempts?: boolean; // Optional field to indicate if the test has attempts
 };
 

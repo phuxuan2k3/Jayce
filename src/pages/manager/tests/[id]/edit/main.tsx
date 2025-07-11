@@ -22,11 +22,14 @@ import ErrorDialog from "../../../../../features/tests/ui/fetch-states/ErrorDial
 
 export default function ManagerTestEditMain({
 	data,
+	hasAttempts,
 }: {
 	data: ExamPersistCoreSchema;
+	hasAttempts: boolean;
 }) {
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
+
 	const [tab, setTab] = useState<EditTabs>("info");
 	const [showEditDialog, setShowEditDialog] = useState(false);
 	const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -86,6 +89,7 @@ export default function ManagerTestEditMain({
 		switch (tab) {
 			case "info":
 				return <ConfigTab
+					initialValue={data}
 					examPersist={draftValue}
 					onExamPersistChange={(configEdit) => {
 						setDraftValue((prev) => ({
@@ -120,6 +124,7 @@ export default function ManagerTestEditMain({
 					tab={tab}
 					onSave={() => confirmDraft()}
 					onDelete={() => setShowDeleteDialog(true)}
+					hasAttempts={hasAttempts}
 				/>
 			}
 		>
@@ -146,7 +151,10 @@ export default function ManagerTestEditMain({
 					onCancel={() => setShowEditDialog(false)}
 					onConfirm={() => updateTest({
 						testId,
-						body: editData,
+						body: {
+							...editData,
+							questions: hasAttempts === true ? editData.questions : undefined,
+						},
 					})}
 				/>
 			)}

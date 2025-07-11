@@ -100,7 +100,7 @@ export function AccessSection({
 						prev.setFullYear(Number(year), Number(month) - 1, Number(day));
 						onChange({ openDate: prev.toISOString() });
 					}}
-					max={initialValues?.openDate ? new Date(initialValues.openDate).toISOString().split("T")[0] : undefined}
+					max={initialValues?.openDate ? getDateValue(initialValues.openDate) : undefined}
 				/>
 				<MyLabel htmlFor="test-open-time">Time:</MyLabel>
 				<MyTimeInput
@@ -113,7 +113,12 @@ export function AccessSection({
 						onChange({ openDate: prev.toISOString() });
 					}}
 					format="12"
-					max={initialValues?.openDate ? new Date(initialValues.openDate).toISOString().split("T")[1].slice(0, 5) : undefined}
+					max={initialValues?.openDate
+						? getDateValue(initialValues.openDate) === getDateValue(openDate)
+							? getTimeValue(initialValues.openDate)
+							: undefined
+						: undefined
+					}
 				/>
 				<MyLabel htmlFor="test-close-date">To Date:</MyLabel>
 				<MyDateInput
@@ -125,7 +130,7 @@ export function AccessSection({
 						prev.setFullYear(Number(year), Number(month) - 1, Number(day));
 						onChange({ closeDate: prev.toISOString() });
 					}}
-					min={initialValues?.closeDate ? new Date(initialValues.closeDate).toISOString().split("T")[0] : undefined}
+					min={initialValues?.closeDate ? getDateValue(initialValues.closeDate) : undefined}
 				/>
 				<MyLabel htmlFor="test-close-time">Time:</MyLabel>
 				<MyTimeInput
@@ -138,7 +143,12 @@ export function AccessSection({
 						onChange({ closeDate: prev.toISOString() });
 					}}
 					format="12"
-					min={initialValues?.closeDate ? new Date(initialValues.closeDate).toISOString().split("T")[1].slice(0, 5) : undefined}
+					min={initialValues?.closeDate
+						? getDateValue(initialValues.closeDate) === getDateValue(closeDate)
+							? getTimeValue(initialValues.closeDate)
+							: undefined
+						: undefined
+					}
 				/>
 			</div>
 		</div>

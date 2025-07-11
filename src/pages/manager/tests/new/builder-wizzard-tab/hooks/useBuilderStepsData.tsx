@@ -24,8 +24,10 @@ export default function useBuilderStepsData({
 	};
 
 	const handleSetStep = (newStep: StepInfoKey) => {
+		console.log(1)
 		if (newStep >= 1 && newStep <= 4 && newStep <= stepReached + 1) {
 			setCurrentErrorMessages([]);
+			console.log(2)
 			// Allow going back to previous steps without validation
 			if (newStep < step) {
 				setStep(newStep);
@@ -41,8 +43,13 @@ export default function useBuilderStepsData({
 				}
 			}
 			if (step === 2) {
+				console.log(3)
+				console.log(stepData.step2)
+
 				const validationResult = BuilderStep2Schema.safeParse(stepData.step2);
 				if (!validationResult.success) {
+					console.log(4)
+
 					setCurrentErrorMessages(validationResult.error.errors.map(err => err.message));
 					return;
 				}

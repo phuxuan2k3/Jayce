@@ -35,6 +35,7 @@ export default function ManagerTestPage() {
 				return <div className='flex-1 flex flex-col gap-4 justify-center'>
 					<AttemptsTab
 						onAttemptClick={(attempt) => navigate(paths.manager.tests.in(testId).attempts.in(attempt.id).ROOT)}
+						showCandidate={true}
 					/>
 				</div>;
 			case 'participants':

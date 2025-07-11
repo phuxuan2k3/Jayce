@@ -4,9 +4,11 @@ import { ConfigurationSection } from "./components/ConfigurationSection";
 import { ExamPersistCoreSchema } from "../../../../../../../features/tests/ui-items/test/types";
 
 export default function ConfigTab({
+	initialValue,
 	examPersist,
 	onExamPersistChange,
 }: {
+	initialValue: ExamPersistCoreSchema;
 	examPersist: ExamPersistCoreSchema;
 	onExamPersistChange: (configEdit: Partial<ExamPersistCoreSchema>) => void;
 }) {
@@ -47,6 +49,7 @@ export default function ConfigTab({
 			</h3>
 
 			<AccessSection
+				initialValues={initialValue.detail}
 				openDate={examPersist.detail.openDate}
 				closeDate={examPersist.detail.closeDate}
 				roomId={examPersist.detail.roomId}

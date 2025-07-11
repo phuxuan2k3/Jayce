@@ -72,6 +72,13 @@ const interviewApi = createApi({
     >({
       query: ({ interviewId }) => `/interviews/${interviewId}/submit`,
     }),
+    getPublicQuestions: builder.query<
+      GetPublicQuestionResponse,
+      { pos: string; lang: string, exp: string, page: number }
+    >({
+      query: ({ pos, exp, lang, page }) =>
+        `/interviews/public-questions?pos=${pos}&lang=${lang}&exp=${exp}&page=${page}`,
+    }),
   }),
 });
 
@@ -83,6 +90,7 @@ export const {
   useGetInterviewHistoryQuery,
   useLazyGetInterviewOutroQuery,
   useGetHistoryQuery,
+  useGetPublicQuestionsQuery,
 } = interviewApi;
 
 export default interviewApi;
@@ -217,6 +225,23 @@ export interface InterviewHistoryResponse {
   perPage: number;
   totalPages: number;
   interviews: InterviewSummary[];
+}
+
+export interface GetPublicQuestionResponse {
+  questions: {
+    content: string;
+    position: string;
+    experience: string;
+    language: string;
+    baseData: {
+      createdAt: string;
+      updatedAt: string;
+    };
+  }[];
+  page: number;
+  perPage: number;
+  totalPages: number;
+  totalCount: number;
 }
 
 export interface InterviewSummary {

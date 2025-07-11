@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import TestGenerationSidebar from "./components/ui/TestGenerationSidebar";
 import TemplateSelectionModal from "./components/ui/TemplateSelectionModal";
 import SaveTemplateDialog from "./components/ui/SaveTemplateDialog";
 import PracticeGenStep1 from './components/steps/PracticeGenStep1';
 import PracticeGenStep2 from './components/steps/PracticeGenStep2';
 import { LoadingScreen } from './components/ui/LoadingScreen';
-import ApiErrorDialog from './components/ui/ApiErrorDialog';
 import { PracticeGenStepInfo, PracticeStepsValuesType } from './types';
 import { TemplateCoreSchema } from '../../../../features/tests/api/test.api-gen-v2';
 import PracticeGenStep3 from './components/steps/PracticeGenStep3';
@@ -18,6 +17,7 @@ import { DifficultyType, LanguageType } from '../../../manager/tests/new/common/
 import MyButton from '../../../../features/tests/ui/buttons/MyButton';
 import RightLayoutTemplate from '../../../../components/layouts/RightLayoutTemplate';
 import { Sparkles } from 'lucide-react';
+import ErrorDialog from '../../../../features/tests/ui/fetch-states/ErrorDialog';
 
 // Lesson: When I split it into 3 setMainValue (handleStep1, 2, 3...) and call it at the same time in the handleSelectTemplate function, it causes the state to update only the last function call (handleStep3), and override the previous ones.
 
@@ -25,7 +25,6 @@ export default function CandidateTestsGeneratePage() {
 	const [selectedTemplate, setSelectedTemplate] = useState<TemplateCoreSchema | null>(null);
 	const [showTemplatesModal, setShowTemplatesModal] = useState(false);
 	const [showSaveTemplateDialog, setShowSaveTemplateDialog] = useState(false);
-	const [showApiErrorDialog, setShowApiErrorDialog] = useState(false);
 
 	const {
 		step,
@@ -39,15 +38,9 @@ export default function CandidateTestsGeneratePage() {
 
 	const {
 		handleGeneratePractice,
-		generationError,
 		loadingState,
+		error,
 	} = useGeneratePractice();
-
-	useEffect(() => {
-		if (generationError != null) {
-			setShowApiErrorDialog(true);
-		}
-	}, [generationError]);
 
 	const handleSelectTemplate = (template: TemplateCoreSchema) => {
 		const newMainValue = {
@@ -220,6 +213,7 @@ export default function CandidateTestsGeneratePage() {
 						<MyButton
 							className="w-1/4 min-w-fit bg-gradient-to-br from-primary to-secondary text-white hover:from-primary-toned-800 hover:to-secondary-toned-800"
 							onClick={() => handleGeneratePractice(mainValue)}
+							disabled={loadingState === "generating" || loadingState === "saving"}
 						>
 							<Sparkles size={18} />
 							Generate Practice
@@ -247,12 +241,7 @@ export default function CandidateTestsGeneratePage() {
 				}}
 			/>
 
-			<ApiErrorDialog
-				error={generationError}
-				onClose={() => setShowApiErrorDialog(false)}
-				onRetry={() => handleGeneratePractice(mainValue)}
-				isOpen={showApiErrorDialog}
-			/>
+			{error && (<ErrorDialog error={error} />)}
 		</RightLayoutTemplate>
 	);
 };

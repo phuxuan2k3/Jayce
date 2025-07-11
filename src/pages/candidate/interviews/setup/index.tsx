@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChartPie, faHistory } from "@fortawesome/free-solid-svg-icons";
+import { faChartPie, faHistory, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import SetUpPage from "./setup";
 import HistoryPage from "./history";
 import { useLanguage } from "../../../../LanguageProvider";
 import { useLocation } from "react-router-dom";
+import PublicQuestionsPage from "./PublicQuestions";
 
 const navTabKeys = [
   { id: "Interview", labelKey: "tab_interview", icon: faChartPie },
   { id: "History", labelKey: "tab_history", icon: faHistory },
+  { id: "PublicQuestions", labelKey: "tab_public_questions", icon: faQuestionCircle },
 ];
 
 const InterviewPage = () => {
@@ -26,6 +28,8 @@ const InterviewPage = () => {
         return <SetUpPage position={position} experience={experience} />;
       case "History":
         return <HistoryPage />;
+      case "PublicQuestions":
+        return <PublicQuestionsPage />
       default:
         return <SetUpPage position={position} experience={experience} />;
     }
@@ -41,7 +45,7 @@ const InterviewPage = () => {
         <p>{t("interview_result_let_see")}</p>
       </div>
       <Box className="w-full flex justify-center ">
-        <div className="  sticky top-20 w-[340px] h-[500px] bg-white/90 rounded-3xl shadow p-6 flex flex-col gap-2 items-center mr-10">
+        <div className=" mb-8 sticky top-20 w-[340px] h-[500px] bg-white/90 rounded-3xl shadow p-6 flex flex-col gap-2 items-center mr-10">
           {navTabKeys.map((item) => {
             const isSelected = tab === item.id;
             return (

@@ -1,8 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import { useGetTestsQuery } from "../../../../../features/tests/api/test.api-gen-v2"
-import useGetUserId from "../../../../../features/tests/hooks/useGetUserId"
+import { TestFullSchema, useGetTestsQuery } from "../../../../../features/tests/api/test.api-gen-v2"
 import FetchStateCover2 from "../../../../../features/tests/ui/fetch-states/FetchStateCover2";
-import paths from "../../../../../router/paths";
 import MyPaginationSection from "../../../../../features/tests/ui-sections/MyPaginationSection";
 import { PagingFilter } from "../../../../../features/tests/types/query";
 import { useState } from "react";
@@ -11,17 +8,17 @@ import TestListSkeleton from "../../../../../features/tests/ui/skeletons/TestLis
 
 type Filter = PagingFilter;
 
-export default function PublicExamsSection() {
-	const userId = useGetUserId();
-	const navigate = useNavigate();
-
+export default function PublicExamsSection({
+	onExamClick,
+}: {
+	onExamClick: (exam: TestFullSchema) => void;
+}) {
 	const [filter, setFilter] = useState<Filter>({
 		page: 1,
 		perPage: 5,
 	});
 
 	const testsQuery = useGetTestsQuery({
-		candidateId: userId,
 		mode: "EXAM",
 		page: filter.page,
 		perPage: filter.perPage,
@@ -38,7 +35,7 @@ export default function PublicExamsSection() {
 				<FetchStateCover2
 					fetchState={testsQuery}
 					loadingComponent={<TestListSkeleton />}
-					dataComponent={({ data }) => (data.length === 0 || true) ? (
+					dataComponent={({ data }) => (data.length === 0) ? (
 						<div className="flex flex-col items-center justify-center min-h-fit h-32 text-gray-500">
 							<p className="text-lg">No publicly available tests found.</p>
 							<p className="text-sm">You can join a test using a room ID or create your own.</p>
@@ -50,7 +47,7 @@ export default function PublicExamsSection() {
 									className="w-full"
 									key={test.id}
 									test={test}
-									onClick={() => navigate(paths.candidate.tests.in(test.id).ROOT)}
+									onClick={() => onExamClick(test)}
 								/>
 							))}
 						</div>
