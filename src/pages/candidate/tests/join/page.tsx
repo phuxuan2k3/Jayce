@@ -66,7 +66,14 @@ export default function CandidateTestsJoinPage() {
 				<hr className="border-primary-toned-300 mt-4" />
 
 				{tab === "ONGOING" && (<OnGoingExamsSection />)}
-				{tab === "PUBLIC" && (<PublicExamsSection />)}
+				{tab === "PUBLIC" && (<PublicExamsSection
+					onExamClick={(exam) => {
+						if (exam._detail.mode === "EXAM") {
+							setRoomId(exam._detail.roomId);
+							testFindQuery.refetch();
+						}
+					}}
+				/>)}
 				{tab === "HISTORY" && (<HistoryExamsSection />)}
 
 				{/* Exam Info Dialog */}

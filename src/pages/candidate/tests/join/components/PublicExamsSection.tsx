@@ -1,7 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import { useGetTestsQuery } from "../../../../../features/tests/api/test.api-gen-v2"
+import { TestFullSchema, useGetTestsQuery } from "../../../../../features/tests/api/test.api-gen-v2"
 import FetchStateCover2 from "../../../../../features/tests/ui/fetch-states/FetchStateCover2";
-import paths from "../../../../../router/paths";
 import MyPaginationSection from "../../../../../features/tests/ui-sections/MyPaginationSection";
 import { PagingFilter } from "../../../../../features/tests/types/query";
 import { useState } from "react";
@@ -10,9 +8,11 @@ import TestListSkeleton from "../../../../../features/tests/ui/skeletons/TestLis
 
 type Filter = PagingFilter;
 
-export default function PublicExamsSection() {
-	const navigate = useNavigate();
-
+export default function PublicExamsSection({
+	onExamClick,
+}: {
+	onExamClick: (exam: TestFullSchema) => void;
+}) {
 	const [filter, setFilter] = useState<Filter>({
 		page: 1,
 		perPage: 5,
@@ -47,7 +47,7 @@ export default function PublicExamsSection() {
 									className="w-full"
 									key={test.id}
 									test={test}
-									onClick={() => navigate(paths.candidate.tests.in(test.id).ROOT)}
+									onClick={() => onExamClick(test)}
 								/>
 							))}
 						</div>
