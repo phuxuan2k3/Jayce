@@ -107,7 +107,7 @@ const HistoryPage = () => {
   if (isLoading || isFetching) {
     return (
       <div className=" mx-auto w-full  px-16 py-8">
-        <div className="flex flex-wrap gap-4 max-h-[500px] overflow-y-auto pr-2">
+        <div className="flex flex-wrap gap-3 max-h-[500px] overflow-y-auto pr-2">
           {[...Array(9)].map((_, idx) => (
             <SkeletonCard key={idx} />
           ))}
@@ -129,7 +129,7 @@ const HistoryPage = () => {
   return (
     <div className=" w-full px-8 py-8">
       <h2 className="text-2xl font-bold mb-6 text-[#2e808a] text-center">
-        {/* {t("interview_history")} */}
+        {t("interview_history")}
       </h2>
       {data?.interviews?.length === 0 && (
         <div className="text-center text-gray-500">
@@ -137,7 +137,7 @@ const HistoryPage = () => {
         </div>
       )}
       {data && data?.interviews?.length > 0 && (
-        <div className="flex flex-wrap gap-5  pr-2">
+        <div className="flex flex-wrap gap-4 pr-2">
           {data.interviews.slice(0, 9).map((interview) => (
             <div
               onClick={() =>

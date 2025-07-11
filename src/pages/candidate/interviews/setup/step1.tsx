@@ -64,7 +64,7 @@ const SetUpStep1: FC<{
             onChange={(e) => onChange({ position: e.target.value })}
             className="py-2 pe-12 ps-2 text-md shadow rounded-md focus:outline-none focus:ring focus:ring-teal-300"
           >
-            {/* <option value="">{t("select_position")}</option> */}
+            <option value="">{t("select_position")}</option>
             {positions.map((pos) => (
               <option key={pos} value={pos}>
                 {pos}

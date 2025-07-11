@@ -8,15 +8,15 @@ import SpinnerLoading from "../../../components/ui/loading/SpinnerLoading";
 import { useLanguage } from "../../../LanguageProvider";
 
 const SuggestedInterviewPositions = [
-	{ position: "software_engineer", experience: "intern" },
-	{ position: "software_engineer", experience: "junior" },
-	{ position: "data_analyst", experience: "fresher" },
-	{ position: "project_manager", experience: "mid" },
-	{ position: "software_engineer", experience: "senior" },
-	{ position: "data_analyst", experience: "lead" },
-	{ position: "project_manager", experience: "manager" },
-	{ position: "software_engineer", experience: "director" },
-	{ position: "data_analyst", experience: "senior" },
+	{ position: "Software Engineer", experience: "intern" },
+	{ position: "Full-Stack Developer", experience: "junior" },
+	{ position: "DevOps Engineer", experience: "fresher" },
+	{ position: "AI Engineer", experience: "mid" },
+	{ position: "UI/UX Designer", experience: "senior" },
+	{ position: "Network Engineer", experience: "lead" },
+	{ position: "Game Developer", experience: "manager" },
+	{ position: "Project Manager (IT)", experience: "director" },
+	{ position: "Data Scientist", experience: "senior" },
 ];
 
 const CandidateHomePage = () => {
@@ -222,17 +222,14 @@ const CandidateHomePage = () => {
 									onClick={() =>
 										navigate(paths.candidate.interview.SETUP, {
 											state: {
-												position: item.position
-													.split("_")
-													.map(word => word.charAt(0).toUpperCase() + word.slice(1))
-													.join(" "),
+												position: item.position,
 												experience: item.experience,
 											},
 										})
 									}
 									className="cursor-pointer border p-4 rounded-lg shadow-sm hover:bg-gray-50 transition bg-white"
 								>
-									<div className="font-semibold text-lg">{t("position_" + item.position)}</div>
+									<div className="font-semibold text-lg">{item.position}</div>
 									<div className="text-sm text-gray-600">{t("experience_" + item.experience)}</div>
 								</div>
 							))}
