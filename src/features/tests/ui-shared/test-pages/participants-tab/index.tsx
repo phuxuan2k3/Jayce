@@ -2,7 +2,7 @@ import { useState } from "react";
 import ParticipantsList from "./ParticipantsList";
 import { ParticipantUser } from "./type";
 import ParticipantsResult from "./ParticipantsResult";
-import { useGetTestsByTestIdParticipantsQuery } from "../../../api/test.api-gen-v2";
+import { AttemptCoreSchema, useGetTestsByTestIdParticipantsQuery } from "../../../api/test.api-gen-v2";
 import useGetTestIdParams from "../../../hooks/useGetTestIdParams";
 import { PagingFilter, QuerySortValues } from "../../../types/query";
 import FetchStateCover2 from "../../../ui/fetch-states/FetchStateCover2";
@@ -13,7 +13,11 @@ type Filter = PagingFilter & {
 	sortByRank: QuerySortValues;
 }
 
-export default function ParticipantsTab() {
+export default function ParticipantsTab({
+	onAttemptClick,
+}: {
+	onAttemptClick: (attempt: AttemptCoreSchema) => void;
+}) {
 	const testId = useGetTestIdParams();
 
 	const [selectedParticipant, setSelectedPaticipant] = useState<ParticipantUser | null>(null);
@@ -32,6 +36,7 @@ export default function ParticipantsTab() {
 		<>
 			<div className={`${selectedParticipant ? "" : "hidden"}`}>
 				{selectedParticipant && <ParticipantsResult
+					onAttemptClick={onAttemptClick}
 					participantUser={selectedParticipant}
 					onBack={() => setSelectedPaticipant(null)}
 				/>}

@@ -47,7 +47,9 @@ export default function CandidateTestExamPage() {
 			tabs.push({
 				id: "participants",
 				label: "Participants",
-				content: <ParticipantsTab />,
+				content: <ParticipantsTab
+					onAttemptClick={(attempt) => navigate(paths.candidate.tests.in(testId).attempts.in(attempt.id).ROOT)}
+				/>,
 			});
 		}
 		return tabs;

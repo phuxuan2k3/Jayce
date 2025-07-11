@@ -2,19 +2,18 @@ import { useState } from 'react'
 import FetchStateCover2 from '../../../ui/fetch-states/FetchStateCover2'
 import useGetTestIdParams from '../../../hooks/useGetTestIdParams';
 import { PagingFilter } from '../../../types/query';
-import { useGetAttemptsQuery } from '../../../api/test.api-gen-v2';
+import { AttemptCoreSchema, useGetAttemptsQuery } from '../../../api/test.api-gen-v2';
 import MyPaginationSection from '../../../ui-sections/MyPaginationSection';
 import AttemptsTable from '../../../ui-items/attempt/AttemptsTable';
-import { useNavigate } from 'react-router-dom';
-import paths from '../../../../../router/paths';
 
 export default function ParticipantAttempts({
 	candidateId,
+	onAttemptClick,
 }: {
 	candidateId: string;
+	onAttemptClick: (attempt: AttemptCoreSchema) => void;
 }) {
 	const testId = useGetTestIdParams();
-	const navigate = useNavigate();
 
 	const [filter, setFilter] = useState<PagingFilter>({
 		page: 1,
@@ -33,9 +32,7 @@ export default function ParticipantAttempts({
 					<div className='flex flex-col gap-4'>
 						<AttemptsTable
 							attempts={data}
-							onItemClick={(attempt) => {
-								navigate(paths.manager.tests.in(testId).attempts.in(attempt.id).ROOT);
-							}}
+							onItemClick={(attempt) => onAttemptClick(attempt)}
 						/>
 					</div>
 				) : (

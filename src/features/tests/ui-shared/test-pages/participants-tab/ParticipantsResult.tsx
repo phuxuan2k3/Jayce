@@ -5,15 +5,17 @@ import MyButton from "../../../ui/buttons/MyButton";
 import MyTabs from "../../../ui/MyTabs";
 import ParticipantCard from "../../../ui-items/user/ParticipantCard";
 import ParticipantAttempts from "./ParticipantAttempts";
+import { AttemptCoreSchema } from "../../../api/test.api-gen-v2";
 
 export default function ParticipantsResult({
 	participantUser: { user, participant },
 	onBack,
+	onAttemptClick,
 }: {
 	participantUser: ParticipantUser;
 	onBack: () => void;
+	onAttemptClick: (attempt: AttemptCoreSchema) => void;
 }) {
-
 	return (
 		<div className='flex flex-col gap-4 h-full'>
 			<div className='flex items-center justify-between'>
@@ -36,6 +38,7 @@ export default function ParticipantsResult({
 						id: "attempts",
 						content: <ParticipantAttempts
 							candidateId={participant.candidateId}
+							onAttemptClick={onAttemptClick}
 						/>
 					},
 					{

@@ -39,7 +39,9 @@ export default function ManagerTestPage() {
 					/>
 				</div>;
 			case 'participants':
-				return <ParticipantsTab />;
+				return <ParticipantsTab
+					onAttemptClick={(attempt) => navigate(paths.manager.tests.in(testId).attempts.in(attempt.id).ROOT)}
+				/>;
 		}
 	}
 
