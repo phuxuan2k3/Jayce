@@ -129,11 +129,11 @@ function ExamDetails({ _detail }: { _detail: any }) {
 				</li>
 				<li className="flex items-center gap-2">
 					<span className="text-primary-toned-600">Attempts Allowed:</span>
-					<span className="font-bold">{_detail.numberOfAttemptsAllowed !== undefined ? _detail.numberOfAttemptsAllowed : "N/A"}</span>
+					<span className="font-bold">{_detail.numberOfAttemptsAllowed !== 0 ? _detail.numberOfAttemptsAllowed : "Unlimited"}</span>
 				</li>
 				<li className="flex items-center gap-2">
 					<span className="text-primary-toned-600">Participants:</span>
-					<span className="font-bold">{_detail.numberOfParticipants !== undefined ? _detail.numberOfParticipants : "N/A"}</span>
+					<span className="font-bold">{_detail.numberOfParticipants !== 0 ? _detail.numberOfParticipants : "Unlimited"}</span>
 				</li>
 				<li className="flex items-center gap-2">
 					<span className="text-primary-toned-600">Answer Visible:</span>

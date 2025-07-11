@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AllStepData, CreateTab } from "./common/types";
 import { useNavigate } from "react-router-dom";
 import { QuestionPersistCoreSchema } from "../../../../features/tests/ui-items/question/types";
@@ -49,12 +49,21 @@ export default function ManagerTestNewPage() {
 	const [allStepData, setAllStepData] = useState<AllStepData>(() => {
 		return transformExamPersistToAllStepData(examPersist);
 	});
+
 	const builderAllStepData = useBuilderStepsData({
 		stepData: allStepData,
 		onStepDataChange: (data) => {
 			setAllStepData(data);
 		},
 	});
+
+	useEffect(() => {
+		if (tab === "generate" && generatedQuestions === null) {
+			setAllStepData(
+				transformExamPersistToAllStepData(examPersist, allStepData)
+			);
+		}
+	}, [tab, generatedQuestions, examPersist, allStepData]);
 
 	const handleBulkAddQuestions = useCallback((questions: QuestionPersistCoreSchema[]) => {
 		setExamPersist((prev) => ({

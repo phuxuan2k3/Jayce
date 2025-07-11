@@ -86,6 +86,7 @@ export default function ManagerTestEditMain({
 		switch (tab) {
 			case "info":
 				return <ConfigTab
+					initialValue={data}
 					examPersist={draftValue}
 					onExamPersistChange={(configEdit) => {
 						setDraftValue((prev) => ({

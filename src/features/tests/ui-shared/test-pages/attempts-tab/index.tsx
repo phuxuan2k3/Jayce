@@ -72,6 +72,7 @@ const AttemptsTab = ({
 									<AttemptsTable
 										attempts={data}
 										onItemClick={(data) => onAttemptClick?.(data)}
+										showCandidate
 									/>
 									{attemptsQuery.isFetching && <div className="absolute inset-0 bg-white/50">
 										<div className="flex items-center justify-center h-full">

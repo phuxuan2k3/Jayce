@@ -18,17 +18,17 @@ export function transformAllStepDataToGenerateArgs(allStepData: AllStepData): Ge
 	};
 }
 
-export function transformExamPersistToAllStepData(exam: ExamPersistCoreSchema): AllStepData {
+export function transformExamPersistToAllStepData(exam: ExamPersistCoreSchema, intialData?: AllStepData): AllStepData {
 	return {
 		step1: {
 			title: exam.title,
 			description: exam.description,
 			language: exam.language as LanguageType || "English",
 		},
-		step2: {
+		step2: intialData?.step2 || {
 			topics: [],
 		},
-		step3: {
+		step3: intialData?.step3 || {
 			creativity: 5,
 			context: {
 				files: [],
