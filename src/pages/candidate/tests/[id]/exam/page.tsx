@@ -20,6 +20,15 @@ export default function CandidateTestExamPage() {
 
 	const testQuery = useGetTestsByTestIdQuery({ testId });
 
+	const isTestOngoing = (test: TestFullSchema) => {
+		if (test._detail.mode !== "EXAM") return true; // Only check for ongoing status if the test is an exam
+		if (!test._detail.openDate || !test._detail.closeDate) return true; // If no dates are set, consider it ongoing
+		const now = new Date();
+		const openDate = new Date(test._detail.openDate);
+		const closeDate = new Date(test._detail.closeDate);
+		return now >= openDate && now <= closeDate;
+	}
+
 	const tabs = useCallback((test: TestFullSchema) => {
 		if (test._detail.mode !== "EXAM") return [];
 		const tabs = [
@@ -70,7 +79,15 @@ export default function CandidateTestExamPage() {
 				dataComponent={(test) => (
 					<div className="flex-1 flex flex-col gap-8">
 						<div className="flex flex-col gap-2">
-							<CurrentAttemptCard />
+							{isTestOngoing(test) === true ? (
+								<CurrentAttemptCard />
+							) : (
+								<div className="flex flex-col items-center justify-center min-h-fit h-32 text-gray-500">
+									<div className="bg-gray-100 p-4 rounded-lg shadow-md border border-gray-300">
+										<p className="text-lg">This exam is not currently <span className="font-semibold">ongoing</span>.</p>
+									</div>
+								</div>
+							)}
 						</div>
 
 						<div className="flex-1 flex flex-col gap-4">

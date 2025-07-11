@@ -2,7 +2,6 @@ import { createContext, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import QuickAction from "./QuickAction";
 import paths from "../../../../../router/paths";
-import { ArrowRight, BrainCircuit, ClipboardList, Rocket } from "lucide-react";
 import { cn } from "../../../../../app/cn";
 
 type SidebarActionsContextType = {};
@@ -42,27 +41,6 @@ const SidebarActions = ({
 	);
 };
 
-SidebarActions.BrowseTemplates = () => {
-	const navigate = useNavigate();
-	return (
-		<QuickAction
-			icon={
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					className="h-5 w-5"
-					viewBox="0 0 20 20"
-					fill="currentColor"
-				>
-					<path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
-				</svg>
-			}
-			title="Browse Templates"
-			description="Explore test templates"
-			onClick={() => navigate(paths.candidate.tests.TEMPLATES)}
-		/>
-	);
-};
-
 SidebarActions.GenerateTest = () => {
 	const navigate = useNavigate();
 	return (
@@ -85,48 +63,6 @@ SidebarActions.GenerateTest = () => {
 			description="Generate a custom test"
 			onClick={() => navigate(paths.candidate.tests.GENERATE)}
 		/>
-	);
-};
-
-SidebarActions.GenerateTestPremium = () => {
-	const navigate = useNavigate();
-	return (
-		<div className="relative group">
-			{/* Introduction Section */}
-			<div className="p-4 bg-gradient-to-r from-primary-toned-50 to-secondary-toned-50 border border-primary-toned-200 rounded-lg">
-				<h4 className="font-bold text-primary-toned-700 mb-2 flex items-center">
-					<BrainCircuit className="w-4 h-4 mr-2" />
-					AI-Powered Test Generation
-				</h4>
-				<p className="text-sm text-primary-toned-600 leading-relaxed mb-4">
-					Transform your learning with intelligent test creation. Our advanced AI analyzes your needs and generates personalized practice tests that adapt to your skill level and learning goals.
-				</p>
-
-				{/* Compact Button */}
-				<button
-					onClick={() => navigate(paths.candidate.tests.GENERATE)}
-					className="w-full relative overflow-hidden bg-gradient-to-r from-primary-toned-500 to-secondary-toned-500 hover:from-primary-toned-600 hover:to-secondary-toned-600 text-white rounded-lg py-3 px-4 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg group"
-				>
-					{/* Animated Background Effect */}
-					<div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-700"></div>
-
-					{/* Content Container */}
-					<div className="relative z-10 flex items-center justify-between">
-						<div className="flex items-center gap-3">
-							<Rocket className="w-5 h-5 text-white" />
-							<div className="text-left">
-								<span className="font-semibold text-white">Generate Practice</span>
-							</div>
-						</div>
-
-						{/* Arrow Icon */}
-						<div className="text-white/80 group-hover:text-white group-hover:translate-x-1 transition-all duration-300">
-							<ArrowRight className="w-5 h-5" />
-						</div>
-					</div>
-				</button>
-			</div>
-		</div>
 	);
 };
 
@@ -177,20 +113,6 @@ SidebarActions.ReturnToTests = () => {
 			title="Return to Tests"
 			description="Go back to tests dashboard"
 			onClick={() => navigate(paths.candidate.tests.ROOT)}
-		/>
-	);
-};
-
-SidebarActions.JoinExam = () => {
-	const navigate = useNavigate();
-	return (
-		<QuickAction
-			icon={
-				<ClipboardList className="w-5 h-5" />
-			}
-			title="Join Exam"
-			description="Join an ongoing exam by room ID"
-			onClick={() => navigate(paths.candidate.tests.JOIN)}
 		/>
 	);
 };

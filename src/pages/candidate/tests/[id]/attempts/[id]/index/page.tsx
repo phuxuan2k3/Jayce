@@ -30,7 +30,6 @@ export default function CandidateTestAttemptPage() {
 	}, [userId]);
 
 	return (
-
 		<RightLayoutTemplate
 			header={
 				<FetchStateCover2

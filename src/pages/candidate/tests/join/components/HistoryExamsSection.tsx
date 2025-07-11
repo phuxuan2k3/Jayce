@@ -6,17 +6,18 @@ import paths from "../../../../../router/paths";
 import MyPaginationSection from "../../../../../features/tests/ui-sections/MyPaginationSection";
 import { PagingFilter } from "../../../../../features/tests/types/query";
 import { useState } from "react";
-import TestCoreCard from "../../../../../features/tests/ui-items/test/TestCoreCard";
+import ExamCard from "./ExamCard";
+import TestListSkeleton from "../../../../../features/tests/ui/skeletons/TestListSkeleton";
 
 type Filter = PagingFilter;
 
-export default function OnGoingTestsSection() {
+export default function HistoryExamsSection() {
 	const userId = useGetUserId();
 	const navigate = useNavigate();
 
 	const [filter, setFilter] = useState<Filter>({
 		page: 1,
-		perPage: 10,
+		perPage: 5,
 	});
 
 	const testsQuery = useGetTestsQuery({
@@ -24,26 +25,28 @@ export default function OnGoingTestsSection() {
 		mode: "EXAM",
 		page: filter.page,
 		perPage: filter.perPage,
+		filterStatuses: ["CLOSED"],
 	});
 
 	return (
 		<div className="flex-1 justify-between flex flex-col gap-8">
-			<h2 className="text-xl font-semibold text-primary">
-				Ongoing Exams
+			<h2 className="text-2xl font-semibold text-primary">
+				Exam History
 			</h2>
 
 			<div className="flex-1 items-center flex flex-col gap-4">
 				<FetchStateCover2
 					fetchState={testsQuery}
-					dataComponent={({ data }) => data.length === 0 ? (
-						<div className="text-center text-gray-500">
-							<p className="text-lg">No ongoing tests found.</p>
+					loadingComponent={<TestListSkeleton />}
+					dataComponent={({ data }) => (data.length === 0) ? (
+						<div className="flex flex-col items-center justify-center min-h-fit h-32 text-gray-500">
+							<p className="text-lg">No completed tests found.</p>
 							<p className="text-sm">You can join a test using a room ID or create your own.</p>
 						</div>
 					) : (
 						<div className="flex flex-col gap-4 w-full">
 							{data.map((test) => (
-								<TestCoreCard
+								<ExamCard
 									className="w-full"
 									key={test.id}
 									test={test}

@@ -5,12 +5,12 @@ import { useState } from "react";
 import { useGetTestsQuery } from "../../../../features/tests/api/test.api-gen-v2";
 import useGetUserId from "../../../../features/tests/hooks/useGetUserId";
 import { PagingFilter, QuerySortValues } from "../../../../features/tests/types/query";
-import TestCoreCard from "../../../../features/tests/ui-items/test/TestCoreCard";
+import PracticeCoreCard from "../../../../features/tests/ui-items/test/PracticeCoreCard";
 import MyButton from "../../../../features/tests/ui/buttons/MyButton";
 import FetchStateCover2 from "../../../../features/tests/ui/fetch-states/FetchStateCover2";
-import SidebarActions from "../../../../features/tests/ui/sidebar/primitive/SidebarActions";
 import MyItemsListTemplate from "../../../../features/tests/ui-templates/MyItemsListTemplate";
 import MyHeaderTitleSection from "../../../../features/tests/ui-sections/MyHeaderSection";
+import Sidebar from "./components/Sidebar";
 
 type Filter = PagingFilter & {
 	searchTitle?: string;
@@ -49,11 +49,7 @@ export default function CandidateTestsPage() {
 				/>
 			}
 			left={
-				<SidebarActions>
-					<SidebarActions.GenerateTestPremium />
-					<SidebarActions.BrowseTemplates />
-					<SidebarActions.JoinExam />
-				</SidebarActions>
+				<Sidebar />
 			}
 		>
 			<MyItemsListTemplate
@@ -78,7 +74,7 @@ export default function CandidateTestsPage() {
 						dataComponent={({ data: tests }) => (
 							tests.length > 0 ? (
 								tests.map(test => (
-									<TestCoreCard
+									<PracticeCoreCard
 										className="w-full"
 										key={test.id}
 										test={test}
@@ -97,7 +93,6 @@ export default function CandidateTestsPage() {
 					/>
 				}
 			/>
-
 
 		</LeftLayoutTemplate >
 	);

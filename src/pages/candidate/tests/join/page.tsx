@@ -1,17 +1,21 @@
-import LeftLayoutTemplate from "../../../../components/layouts/LeftLayoutTemplate";
 import { useState, useEffect } from "react";
 import JoinTestSection from "./components/JoinTestSection";
 import ExamInfoDialog from "./components/ExamInfoDialog";
-import SidebarActions from "../../../../features/tests/ui/sidebar/primitive/SidebarActions";
 import { useGetTestsFindByRoomQuery } from "../../../../features/tests/api/test.api-gen-v2";
-import OnGoingTestsSection from "./components/OnGoingTestsSection";
+import OnGoingExamsSection from "./components/OnGoingExamsSection";
 import MyHeaderTitleSection from "../../../../features/tests/ui-sections/MyHeaderSection";
 import FetchStateCover2 from "../../../../features/tests/ui/fetch-states/FetchStateCover2";
 import ErrorDialog from "../../../../features/tests/ui/fetch-states/ErrorDialog";
+import RightLayoutTemplate from "../../../../components/layouts/RightLayoutTemplate";
+import Sidebar from "./components/Sidebar";
+import { JoinTabType } from "./types";
+import PublicExamsSection from "./components/PublicExamsSection";
+import HistoryExamsSection from "./components/HistoryExamsSection";
 
 export default function CandidateTestsJoinPage() {
 	const [roomId, setRoomId] = useState<string | null>(null);
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
+	const [tab, setTab] = useState<JoinTabType>("PUBLIC");
 
 	const testFindQuery = useGetTestsFindByRoomQuery({
 		roomId: roomId?.trim() || ""
@@ -31,6 +35,7 @@ export default function CandidateTestsJoinPage() {
 
 	const handleJoinTest = (roomId: string) => {
 		setRoomId(roomId);
+		testFindQuery.refetch();
 	};
 
 	const handleCloseDialog = () => {
@@ -39,24 +44,18 @@ export default function CandidateTestsJoinPage() {
 	};
 
 	return (
-		<LeftLayoutTemplate
+		<RightLayoutTemplate
 			header={
-				<LeftLayoutTemplate.Header
-					title="Skillsharp Tests"
-					description="Join hosted tests or generate your own practice tests from templates"
+				<RightLayoutTemplate.Header
+					title="Exam Tests"
+					description="Join hosted exams from managers and compete with others"
 				/>
 			}
-			left={
-				<SidebarActions>
-					<SidebarActions.BrowseTemplates />
-					<SidebarActions.GenerateTest />
-					<SidebarActions.YourTests />
-				</SidebarActions>
-			}
+			right={<Sidebar tab={tab} onTabChange={setTab} />}
 		>
 			<div className="flex flex-col gap-4 flex-1">
 				<MyHeaderTitleSection
-					title="Join Tests"
+					title="Join Hosted Exams"
 					description="Join tests by roomId or view ongoing tests"
 					className="mb-4"
 				/>
@@ -66,7 +65,9 @@ export default function CandidateTestsJoinPage() {
 
 				<hr className="border-primary-toned-300 mt-4" />
 
-				<OnGoingTestsSection />
+				{tab === "ONGOING" && (<OnGoingExamsSection />)}
+				{tab === "PUBLIC" && (<PublicExamsSection />)}
+				{tab === "HISTORY" && (<HistoryExamsSection />)}
 
 				{/* Exam Info Dialog */}
 				{roomId && (
@@ -84,6 +85,6 @@ export default function CandidateTestsJoinPage() {
 					/>
 				)}
 			</div>
-		</LeftLayoutTemplate>
+		</RightLayoutTemplate>
 	);
 };

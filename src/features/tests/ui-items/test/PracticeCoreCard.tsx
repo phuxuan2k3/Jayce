@@ -3,7 +3,7 @@ import { Clock, Calendar } from "lucide-react";
 import { TestUtils } from "./test-utils";
 import { cn } from "../../../../app/cn";
 
-export default function TestCoreCard({
+export default function PracticeCoreCard({
 	test,
 	onClick,
 	className = "",

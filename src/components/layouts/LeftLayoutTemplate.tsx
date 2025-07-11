@@ -1,18 +1,26 @@
 import React from 'react'
+import { cn } from '../../app/cn';
+import { commonGridLayoutClassname, commonHeaderClassname } from './commonClassname';
 
 function LeftLayoutTemplate({
 	header,
 	children,
 	left,
 	aboveMain,
+	className = '',
 }: {
 	header?: React.ReactNode;
 	children: React.ReactNode;
 	left: React.ReactNode;
 	aboveMain?: React.ReactNode;
+	className?: string;
 }) {
 	return (
-		<div className="container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-[auto_1fr] gap-4 lg:gap-8 mx-auto mt-4 mb-8 h-full">
+		<div className={cn(
+			commonGridLayoutClassname,
+			"lg:grid-cols-[2fr_5fr]",
+			className
+		)}>
 			{header && <header className="flex gap-x-4 lg:col-span-2">
 				{header}
 			</header>}
@@ -36,20 +44,24 @@ function LeftLayoutTemplate({
 const Header = ({
 	title,
 	description,
+	className = '',
 }: {
 	title: string;
 	description?: string;
+	className?: string;
 }) => {
 	return (
-		<div className='mt-2 flex-1 flex flex-col'>
-			<div className="flex justify-between items-center">
-				<h1 className="text-2xl md:text-3xl font-bold">{title}</h1>
+		<div className={cn(commonHeaderClassname, className)}>
+			<div className='flex-1 flex flex-col'>
+				<div className="flex justify-between items-center">
+					<h1 className="text-2xl md:text-3xl font-bold">{title}</h1>
+				</div>
+				{description && (
+					<span className="text-sm text-primary-toned-500 line-clamp-2 overflow-hidden text-ellipsis">
+						{description}
+					</span>
+				)}
 			</div>
-			{description && (
-				<span className="text-sm text-primary-toned-500 line-clamp-2 overflow-hidden text-ellipsis">
-					{description}
-				</span>
-			)}
 		</div>
 	)
 }

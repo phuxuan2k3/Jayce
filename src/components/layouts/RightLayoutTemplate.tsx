@@ -1,5 +1,6 @@
 import React from 'react'
 import { cn } from '../../app/cn';
+import { commonGridLayoutClassname, commonHeaderClassname } from './commonClassname';
 
 export default function RightLayoutTemplate({
 	header,
@@ -8,17 +9,21 @@ export default function RightLayoutTemplate({
 	aboveMain,
 	className = '',
 }: {
-	header: React.ReactNode;
+	header?: React.ReactNode;
 	children: React.ReactNode;
 	right: React.ReactNode;
 	aboveMain?: React.ReactNode;
 	className?: string;
 }) {
 	return (
-		<div className={cn("container grid grid-cols-1 lg:grid-cols-[5fr_2fr] grid-rows-[auto_1fr] gap-4 lg:gap-8 mx-auto mt-4 mb-8 h-full", className)}>
-			{header && <header className="flex gap-x-4 lg:col-span-2">
+		<div className={cn(
+			commonGridLayoutClassname,
+			"lg:grid-cols-[5fr_2fr]",
+			className
+		)}>
+			<header className="flex gap-x-4 lg:col-span-2">
 				{header}
-			</header>}
+			</header>
 
 			<aside className="lg:row-start-2 lg:col-start-2">
 				{right}
@@ -46,21 +51,19 @@ const Header = ({
 	className?: string;
 }) => {
 	return (
-		<>
-			<header className={cn(`flex items-center justify-between`, className)}>
-				{backButton}
-			</header>
-			<div className={cn(`flex flex-col gap-2`, className)}>
+		<div className={cn(commonHeaderClassname, className)}>
+			{backButton}
+			<div className={cn(`flex flex-col`, className)}>
 				<div className="flex justify-between items-center">
 					<h1 className="text-2xl md:text-3xl font-bold">{title}</h1>
 				</div>
 				{description && (
-					<span className="text-sm text-primary-toned-500 line-clamp-2 overflow-hidden text-ellipsis">
+					<span className="text-sm text-primary-toned-700 line-clamp-2 overflow-hidden text-ellipsis">
 						{description}
 					</span>
 				)}
 			</div>
-		</>
+		</div>
 	);
 }
 
@@ -74,7 +77,7 @@ const BackButton = ({
 	return (
 		<button
 			onClick={onClick ? onClick : () => window.history.back()}
-			className={cn(`text-primary hover:text-primary-toned-500 transition-colors`, className)}
+			className={cn(`text-primary hover:text-primary-toned-500 hover:bg-primary-toned-200 rounded-lg transition-colors`, className)}
 		>
 			<span className="sr-only">Go back</span>
 			<svg
