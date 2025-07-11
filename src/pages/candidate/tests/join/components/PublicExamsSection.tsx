@@ -35,7 +35,7 @@ export default function PublicExamsSection() {
 				<FetchStateCover2
 					fetchState={testsQuery}
 					loadingComponent={<TestListSkeleton />}
-					dataComponent={({ data }) => (data.length === 0 || true) ? (
+					dataComponent={({ data }) => (data.length === 0) ? (
 						<div className="flex flex-col items-center justify-center min-h-fit h-32 text-gray-500">
 							<p className="text-lg">No publicly available tests found.</p>
 							<p className="text-sm">You can join a test using a room ID or create your own.</p>
