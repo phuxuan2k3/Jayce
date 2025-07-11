@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { AllStepData, CreateTab } from "./common/types";
 import { useNavigate } from "react-router-dom";
 import { QuestionPersistCoreSchema } from "../../../../features/tests/ui-items/question/types";
@@ -56,14 +56,6 @@ export default function ManagerTestNewPage() {
 			setAllStepData(data);
 		},
 	});
-
-	useEffect(() => {
-		if (tab === "generate" && generatedQuestions === null) {
-			setAllStepData(
-				transformExamPersistToAllStepData(examPersist, allStepData)
-			);
-		}
-	}, [tab, generatedQuestions, examPersist, allStepData]);
 
 	const handleBulkAddQuestions = useCallback((questions: QuestionPersistCoreSchema[]) => {
 		setExamPersist((prev) => ({
@@ -144,7 +136,13 @@ export default function ManagerTestNewPage() {
 							if (validateExamPersist() === true) {
 								setTab(newTab);
 							}
-						} else {
+						} else if (newTab === "generate" && generatedQuestions === null) {
+							setAllStepData(
+								transformExamPersistToAllStepData(examPersist, allStepData)
+							);
+							setTab(newTab);
+						}
+						else {
 							setTab(newTab);
 						}
 					}}
