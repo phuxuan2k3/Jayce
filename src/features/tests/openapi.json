@@ -1976,6 +1976,58 @@
 				}
 			}
 		},
+		"/tests/suggest-roomid": {
+			"get": {
+				"description": "Suggest a unique roomId for an exam based on the provided date range",
+				"tags": [
+					"Tests"
+				],
+				"parameters": [
+					{
+						"schema": {
+							"type": [
+								"string",
+								"null"
+							]
+						},
+						"required": false,
+						"name": "startDate",
+						"in": "query"
+					},
+					{
+						"schema": {
+							"type": [
+								"string",
+								"null"
+							]
+						},
+						"required": false,
+						"name": "endDate",
+						"in": "query"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"roomId": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"roomId"
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
 		"/tests/{testId}": {
 			"get": {
 				"tags": [
@@ -2197,8 +2249,7 @@
 									"minutesToAnswer",
 									"language",
 									"mode",
-									"detail",
-									"questions"
+									"detail"
 								]
 							}
 						}
@@ -2619,58 +2670,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/CandidateCoreSchema"
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/tests/suggest-roomid": {
-			"get": {
-				"description": "Suggest a unique roomId for an exam based on the provided date range",
-				"tags": [
-					"Tests"
-				],
-				"parameters": [
-					{
-						"schema": {
-							"type": [
-								"string",
-								"null"
-							]
-						},
-						"required": false,
-						"name": "startDate",
-						"in": "query"
-					},
-					{
-						"schema": {
-							"type": [
-								"string",
-								"null"
-							]
-						},
-						"required": false,
-						"name": "endDate",
-						"in": "query"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"roomId": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"roomId"
-									]
 								}
 							}
 						}

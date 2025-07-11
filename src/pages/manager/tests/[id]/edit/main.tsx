@@ -151,7 +151,10 @@ export default function ManagerTestEditMain({
 					onCancel={() => setShowEditDialog(false)}
 					onConfirm={() => updateTest({
 						testId,
-						body: editData,
+						body: {
+							...editData,
+							questions: hasAttempts === true ? editData.questions : undefined,
+						},
 					})}
 				/>
 			)}
