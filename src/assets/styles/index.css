@@ -92,7 +92,7 @@ h3,
 h4,
 h5,
 h6 {
-  @apply font-inconsolata font-bold;
+  @apply font-lexend font-bold;
 }
 
 @font-face {
@@ -209,12 +209,12 @@ h6 {
 }
 
 .text-gradient-animated {
-  background: linear-gradient(90deg, #39a0ad, #f4c5b9, #39a0ad 80%);
+  background: linear-gradient(90deg, #003d46, #cc8c7c, #03abc2 80%);
   background-size: 200% 200%;
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  animation: gradientMove 3s ease-in-out infinite;
+  animation: gradientMove 7s ease-in-out infinite;
 }
 
 @keyframes gradientMove {
