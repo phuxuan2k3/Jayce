@@ -101,7 +101,7 @@ export default function Record({
   }
 
   return (
-    <div className="font-semibold text-white">
+    <div className="font-semibold text-white ">
       {listening === false ? (
         <button
           className={`flex items-center px-4 py-2 gap-x-2 rounded-lg
@@ -122,7 +122,7 @@ export default function Record({
           className={`flex flex-col items-center px-4 py-2 gap-x-2 rounded-lg bg-transparent border-2 border-primary shadow-lg hover:shadow-lg hover:shadow-primary/80 transition-all duration-200 ease-in-out cursor-pointer`}
           onClick={stopListening}
         >
-          <div className="flex items-center px-4 py-2 gap-x-2 rounded-lg">
+          <div className="flex items-center  px-4 py-2 gap-x-2 rounded-lg">
             <span>Stop</span>
             <StopCircle size={20} />
           </div>
