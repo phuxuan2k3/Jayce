@@ -27,33 +27,15 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { useQuestionContext } from "../../contexts/question-context";
 import ModalSubmitting from "./sub/ModalSubmit";
+import { useAudioContext } from "../../contexts/audio.context";
 
 export default function BottomMenu() {
   const [isSelectingBackground, setIsSelectingBackground] = useState(false);
-  //   const { model, setModel } = useModelContext();
+  const { isPlaying } = useAudioContext();
   const { goToNextQuestion, questionIndex } = useQuestionContext();
   const [postAnswer] = usePostAnswerMutation();
-  //   const models: Models[] = ["Alice", "Jenny"];
   const totalQuestion = localStorage.getItem("totalQuestion") || "5";
-  //   const handleModelChange = () => {
-  //     const currentIndex = models.indexOf(model);
-  //     const nextIndex = (currentIndex + 1) % models.length;
-  //     setModel(models[nextIndex]);
-  //   };
 
-  // const handleContinue = () => {
-  //   const interviewInfo = JSON.parse(
-  //     localStorage.getItem("interviewInfo") || "{}"
-  //   );
-  //   const interviewId = interviewInfo?.interviewId;
-  //   if (!interviewId) {
-  //     alert("Không tìm thấy interviewId!");
-  //     return;
-  //   }
-  //   // const { data, isLoading, error } = useGetInterviewOutroQuery({
-  //   //   interviewId,
-  //   // });
-  // };
   const location = useLocation();
   const interviewId = location.state?.interviewId;
   const [open, setOpen] = useState(false);
@@ -159,7 +141,18 @@ export default function BottomMenu() {
   return (
     <div className="flex items-center px-2 py-1 gap-x-4 w-full h-fit ">
       <div className="bg-white/80 rounded-lg shadow-md flex items-center justify-between flex-1 p-1 relative">
-        <CommonButton onClick={() => handleNext()}>
+        <CommonButton
+          onClick={() => handleNext()}
+          disabled={isPlaying}
+          className={`
+            ${
+              isPlaying
+                ? "opacity-50 cursor-not-allowed bg-gray-300 text-gray-500 transform-none hover:bg-gray-300 hover:text-gray-500 hover:scale-100"
+                : "hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+            }
+            transition-all duration-200 ease-in-out
+          `}
+        >
           <span>Continue</span>
           <ArrowRight size={20} />
         </CommonButton>

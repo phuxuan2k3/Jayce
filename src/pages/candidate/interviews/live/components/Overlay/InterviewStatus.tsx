@@ -1,6 +1,7 @@
 import { memo, useEffect, useRef } from "react";
 import { Repeat } from "lucide-react";
 import { useQuestionContext } from "../../contexts/question-context";
+import { useAudioContext } from "../../contexts/audio.context";
 
 export default memo(function InterviewStatus({
   currentQuestion,
@@ -24,13 +25,19 @@ export default memo(function InterviewStatus({
     totalBarRef.current,
   ]);
   const { questionIndex } = useQuestionContext();
+  const { playAudio } = useAudioContext();
+
+  const handleRepeat = () => {
+    playAudio();
+  };
+
   return (
     <div className="bg-transparent text-white border-2 border-white rounded-lg shadow-lg flex items-center justify-center flex-col w-full h-full px-8 py-4 hover:bg-white hover:text-primary-toned-700 hover:shadow-primary/80 hover:border-transparent transition-all duration-300 ease-in-out gap-y-4 group">
       <div className="flex items-center w-full">
         <span className="font-semibold ">
           Question {questionIndex} of {totalQuestion}
         </span>
-        <button className="ml-auto">
+        <button className="ml-auto" onClick={() => handleRepeat()}>
           <Repeat size={20} />
         </button>
       </div>

@@ -14,6 +14,9 @@ import { useLocation } from "react-router-dom";
 interface AudioContextType {
   audio: HTMLAudioElement;
   mouthCues: MouthCue[];
+  refetch: () => void;
+  playAudio: () => void;
+  isPlaying: boolean;
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -27,8 +30,8 @@ export const AudioContextProvider: React.FC<ProviderProps> = ({ children }) => {
   const { questionIndex } = useQuestionContext();
   const location = useLocation();
   const interviewId = location.state?.interviewId;
-
-  const { data, error } = useGetQuestionQuery(
+  const [isPlaying, setIsPlaying] = useState(false);
+  const { data, error, refetch } = useGetQuestionQuery(
     {
       interviewId,
       questionIndex,
@@ -46,6 +49,21 @@ export const AudioContextProvider: React.FC<ProviderProps> = ({ children }) => {
     audio.preload = "none";
     return audio;
   }, [data?.audio]);
+  useEffect(() => {
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+    const handleEnded = () => setIsPlaying(false);
+
+    audio.addEventListener("play", handlePlay);
+    audio.addEventListener("pause", handlePause);
+    audio.addEventListener("ended", handleEnded);
+
+    return () => {
+      audio.removeEventListener("play", handlePlay);
+      audio.removeEventListener("pause", handlePause);
+      audio.removeEventListener("ended", handleEnded);
+    };
+  }, [audio]);
 
   useEffect(() => {
     const hasAudio = !!data?.audio?.length;
@@ -58,6 +76,12 @@ export const AudioContextProvider: React.FC<ProviderProps> = ({ children }) => {
     }
   }, [data?.lipsync?.mouthCues, data?.audio]);
 
+  const playAudio = () => {
+    if (audio) {
+      audio.currentTime = 0;
+      audio.play().catch(console.error);
+    }
+  };
   if (error) {
     return (
       <div className="text-red-500 p-4">
@@ -72,6 +96,9 @@ export const AudioContextProvider: React.FC<ProviderProps> = ({ children }) => {
       value={{
         audio,
         mouthCues: data?.lipsync?.mouthCues || [],
+        refetch,
+        playAudio,
+        isPlaying,
       }}
     >
       {children}

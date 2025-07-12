@@ -11,11 +11,6 @@ import { useState } from "react";
 import ModalSubmitting from "./sub/ModalSubmit";
 import { Alert } from "@mui/material";
 
-// type AnswerData = {
-//   questionIndex: number;
-//   answer: string;
-//   recordProof: string;
-// };
 export default function Overlay() {
   const { goToNextQuestion, questionIndex } = useQuestionContext();
   const [postAnswer] = usePostAnswerMutation();
