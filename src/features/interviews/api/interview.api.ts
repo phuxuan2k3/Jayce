@@ -232,7 +232,6 @@ export interface GetPublicQuestionResponse {
     content: string;
     position: string;
     experience: string;
-    language: string;
     baseData: {
       createdAt: string;
       updatedAt: string;
