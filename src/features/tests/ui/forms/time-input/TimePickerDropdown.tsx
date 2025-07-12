@@ -8,7 +8,7 @@ interface TimePickerDropdownProps {
 	period: 'AM' | 'PM';
 	step: number;
 	format: '12' | '24';
-	minMunutes?: number;
+	minMinutes?: number;
 	maxMinutes?: number;
 	isOpen: boolean;
 	onHoursChange: (hours: number) => void;
@@ -23,7 +23,7 @@ export default function TimePickerDropdown({
 	step,
 	format,
 	isOpen,
-	minMunutes,
+	minMinutes,
 	maxMinutes,
 	onHoursChange,
 	onMinutesChange,
@@ -56,20 +56,22 @@ export default function TimePickerDropdown({
 	}, [isOpen, hours, minutes, format, step]);
 
 	const isInvalidHour = useCallback((hour: number): boolean => {
-		const currentTotalMinutes = hour * 60 + minutes;
-		if (currentTotalMinutes < (minMunutes || 0) || currentTotalMinutes > (maxMinutes || Infinity)) {
+		const hourValue = format === "12" ? period === "PM" ? hour + 12 : hour : hour;
+		const currentTotalMinutes = hourValue * 60 + minutes;
+		if (currentTotalMinutes < (minMinutes || 0) || currentTotalMinutes > (maxMinutes || Infinity)) {
 			return true;
 		}
 		return false;
-	}, [minMunutes, maxMinutes, minutes]);
+	}, [minMinutes, maxMinutes, minutes]);
 
 	const isInvalidMinute = useCallback((minute: number): boolean => {
-		const currentTotalMinutes = hours * 60 + minute;
-		if (currentTotalMinutes < (minMunutes || 0) || currentTotalMinutes > (maxMinutes || Infinity)) {
+		const hourValue = format === "12" ? period === "PM" ? hours + 12 : hours : hours;
+		const currentTotalMinutes = hourValue * 60 + minute;
+		if (currentTotalMinutes < (minMinutes || 0) || currentTotalMinutes > (maxMinutes || Infinity)) {
 			return true;
 		}
 		return false;
-	}, [minMunutes, maxMinutes, hours]);
+	}, [minMinutes, maxMinutes, hours]);
 
 	if (!isOpen) return null;
 

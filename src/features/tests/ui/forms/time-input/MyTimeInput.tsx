@@ -79,7 +79,7 @@ export default function MyTimeInput({
 				period={timeState.period}
 				step={step}
 				format={format}
-				minMunutes={minMinutes}
+				minMinutes={minMinutes}
 				maxMinutes={maxMinutes}
 				isOpen={isOpen}
 				onHoursChange={handleHoursChange}
