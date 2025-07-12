@@ -33,5 +33,20 @@
   "key_skills_desc": "Các kỹ năng cần thiết cho vị trí này (ngăn cách bởi dấu phẩy)",
   "paste_job_desc": "Hoặc dán mô tả công việc",
   "skills_placeholder": "ví dụ: SQL, Python, C++",
-  "next": "Tiếp tục"
+  "next": "Tiếp tục",
+  "sort_by": "Sắp xếp theo:",
+  "sort_recently_rated": "Đánh giá gần đây nhất",
+  "sort_least_recently_rated": "Đánh giá cũ nhất",
+  "sort_most_total_questions": "Nhiều câu hỏi nhất",
+  "sort_fewest_total_questions": "Ít câu hỏi nhất",
+  "sort_max_score": "Điểm cao nhất",
+  "sort_min_score": "Điểm thấp nhất",
+  "search_by_position_or_skill": "Tìm kiếm theo vị trí hoặc kỹ năng...",
+  "interview_history": "Lịch sử phỏng vấn",
+  "failed_to_load_interview_history": "Tải lịch sử phỏng vấn thất bại.",
+  "no_interview_history": "Không có lịch sử phỏng vấn.",
+  "scores": "Điểm số",
+  "newest": "Mới nhất",
+  "highest_score": "Điểm cao nhất",
+  "lowest_score": "Điểm thấp nhất"
 }

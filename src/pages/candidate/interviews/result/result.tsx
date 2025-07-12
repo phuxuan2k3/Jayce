@@ -76,7 +76,7 @@ const ResultPage = () => {
     }
   };
 
-  if (!isLoading || (data && !data.finalComment)) {
+  if (isLoading || (data && !data.finalComment)) {
     return <Loading />;
   }
   if (!data) return <div>{t("result_no_data")}</div>;

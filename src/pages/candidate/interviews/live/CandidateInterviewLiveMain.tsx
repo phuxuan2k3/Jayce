@@ -7,12 +7,15 @@ import Overlay from "./components/Overlay/Overlay";
 import { useBackgroundContext } from "./contexts/background-context";
 // import { useModelContext } from "./contexts/model-context";
 import { useLocation } from "react-router-dom";
+import { useAudioContext } from "./contexts/audio.context";
 
 export default function CandidateInterviewLiveMain() {
   const [isStarting, setIsStarting] = useState(false);
   const { background } = useBackgroundContext();
   const location = useLocation();
   const model = location.state?.model || "alice";
+
+  const { script } = useAudioContext();
 
   return (
     <div
@@ -40,6 +43,9 @@ export default function CandidateInterviewLiveMain() {
             }
           >
             {/* Overlay menu */}
+            <div className="absolute bottom-20 left-1/2 -translate-x-1/2 text-white">
+              {script}
+            </div>
             <div className="absolute top-0 left-0 w-full h-full">
               <Overlay />
             </div>

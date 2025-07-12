@@ -1,17 +1,35 @@
-import { memo, useEffect, useRef } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { Repeat } from "lucide-react";
 import { useQuestionContext } from "../../contexts/question-context";
 import { useAudioContext } from "../../contexts/audio.context";
+import Record from "./Record";
+import { Alert } from "@mui/material";
+import {
+  useLazyGetInterviewOutroQuery,
+  usePostAnswerMutation,
+} from "../../../../../../features/interviews/api/interview.api";
+import { useLocation, useNavigate } from "react-router-dom";
+import ModalSubmitting from "./sub/ModalSubmit";
 
 export default memo(function InterviewStatus({
   currentQuestion,
-  totalQuestion,
 }: {
   currentQuestion: number;
-  totalQuestion: number;
 }) {
   const progressBarRef = useRef<HTMLDivElement | null>(null);
   const totalBarRef = useRef<HTMLDivElement | null>(null);
+  const { goToNextQuestion, questionIndex } = useQuestionContext();
+  const [postAnswer] = usePostAnswerMutation();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const totalQuestion: number = parseInt(
+    localStorage.getItem("totalQuestion") || "5"
+  );
+
+  const interviewId = location.state?.interviewId;
+  const [triggerSubmit] = useLazyGetInterviewOutroQuery();
+  const [showSubmittingModal, setShowSubmittingModal] = useState(false);
+
   useEffect(() => {
     if (progressBarRef.current && totalBarRef.current) {
       const totalWidth = totalBarRef.current.clientWidth;
@@ -24,11 +42,64 @@ export default memo(function InterviewStatus({
     progressBarRef.current,
     totalBarRef.current,
   ]);
-  const { questionIndex } = useQuestionContext();
   const { playAudio } = useAudioContext();
 
   const handleRepeat = () => {
     playAudio();
+  };
+
+  const handleAnswerRecorded = async (
+    transcript: string,
+    base64Audio: string
+  ) => {
+    console.log("interviewId từ navigate:", interviewId);
+    if (!interviewId) {
+      // alert("Không tìm thấy interviewId!");
+      return (
+        <Alert
+          sx={{
+            width: "100%",
+            mt: 1,
+            mb: 3,
+          }}
+          severity="success"
+        >
+          Not found interviewId!
+        </Alert>
+      );
+    }
+
+    try {
+      await postAnswer({
+        interviewId,
+        index: questionIndex,
+        answer: transcript,
+        recordProof: base64Audio,
+      }).unwrap();
+      if (questionIndex >= totalQuestion) {
+        setShowSubmittingModal(true);
+        await triggerSubmit({ interviewId }).unwrap();
+        setShowSubmittingModal(false);
+        navigate("/candidate/interviews/result", { state: { interviewId } });
+      } else {
+        goToNextQuestion();
+      }
+    } catch (e) {
+      // alert("Có lỗi khi gửi đáp án. Vui lòng thử lại.");
+      console.error(e);
+      return (
+        <Alert
+          sx={{
+            width: "100%",
+            mt: 1,
+            mb: 3,
+          }}
+          severity="success"
+        >
+          Submit error!
+        </Alert>
+      );
+    }
   };
 
   return (
@@ -51,6 +122,10 @@ export default memo(function InterviewStatus({
           ref={progressBarRef}
         ></div>
       </div>
+      <div className="col-start-10 col-end-10 row-start-3 row-end-3 flex items-center justify-center">
+        <Record onAnswerRecorded={handleAnswerRecorded} />
+      </div>
+      <ModalSubmitting isOpen={showSubmittingModal} />
     </div>
   );
 });

@@ -17,6 +17,7 @@ interface AudioContextType {
   refetch: () => void;
   playAudio: () => void;
   isPlaying: boolean;
+  script: string;
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -99,6 +100,7 @@ export const AudioContextProvider: React.FC<ProviderProps> = ({ children }) => {
         refetch,
         playAudio,
         isPlaying,
+        script: data?.content!,
       }}
     >
       {children}
