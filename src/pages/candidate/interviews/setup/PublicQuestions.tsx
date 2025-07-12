@@ -77,6 +77,8 @@ const PublicQuestionsPage = () => {
         page
     });
 
+    console.log("PublicQuestionsPage data:", data);
+
     const formatDate = (iso: string) => {
         return new Date(iso).toLocaleDateString(language === "en" ? "en-US" : "vi-VN", {
             month: "short",
@@ -134,55 +136,51 @@ const PublicQuestionsPage = () => {
                 </select>
             </div>
 
-            {(isLoading || isFetching) && (
+            {isLoading || isFetching ? (
                 <div className="flex flex-wrap gap-4">
                     {[...Array(2)].map((_, idx) => <SkeletonCard key={idx} />)}
                 </div>
-            )}
-
-            {error && (
+            ) : error ? (
                 <div className="text-center text-red-600 font-semibold">
                     {t("failed_to_load_questions")}
                 </div>
-            )}
-
-            {data?.questions?.length === 0 && !isLoading && !isFetching && (
+            ) : data?.questions?.length === 0 ? (
                 <div className="text-center text-gray-500">
                     {t("no_questions_found")}
                 </div>
+            ) : (
+                <div className="space-y-4">
+                    {data?.questions.map((q, idx) => (
+                        <div
+                            key={idx}
+                            className="w-full p-4 rounded-xl border border-[#b3ebef] bg-gradient-to-r from-[#f6fafd] via-[#ecf9f8] to-[#e5f7f9] shadow-sm hover:shadow transition"
+                        >
+                            <div className="mb-1">
+                                <div className="text-sm font-semibold text-[#2e808a]">{q.position}</div>
+                                <div className="inline-block mt-1 px-2 py-0.5 bg-primary-toned-100 text-primary-toned-700 text-xs rounded-full">
+                                    {t(`experience_${q.experience}`)}
+                                </div>
+                            </div>
+
+                            <p className="text-sm text-gray-800 mb-2" title={q.content}>
+                                {q.content}
+                            </p>
+
+                            <div className="flex justify-between text-xs text-gray-500">
+                                <div className="italic">{lang}</div>
+                                <div className="flex items-center gap-1">
+                                    <HiOutlineCalendar className="w-4 h-4 text-[#2e808a]" />
+                                    {formatDate(q.baseData.createdAt)}
+                                </div>
+                                <div className="flex items-center gap-1">
+                                    <HiOutlineRefresh className="w-4 h-4 text-[#2e808a]" />
+                                    {formatDate(q.baseData.updatedAt)}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             )}
-
-            <div className="space-y-4">
-                {data?.questions.map((q, idx) => (
-                    <div
-                        key={idx}
-                        className="w-full p-4 rounded-xl border border-[#b3ebef] bg-gradient-to-r from-[#f6fafd] via-[#ecf9f8] to-[#e5f7f9] shadow-sm hover:shadow transition"
-                    >
-                        <div className="mb-1">
-                            <div className="text-sm font-semibold text-[#2e808a]">{q.position}</div>
-                            <div className="inline-block mt-1 px-2 py-0.5 bg-primary-toned-100 text-primary-toned-700 text-xs rounded-full">
-                                {t(`experience_${q.experience}`)}
-                            </div>
-                        </div>
-
-                        <p className="text-sm text-gray-800 mb-2" title={q.content}>
-                            {q.content}
-                        </p>
-
-                        <div className="flex justify-between text-xs text-gray-500">
-                            <div className="italic">{q.language}</div>
-                            <div className="flex items-center gap-1">
-                                <HiOutlineCalendar className="w-4 h-4 text-[#2e808a]" />
-                                {formatDate(q.baseData.createdAt)}
-                            </div>
-                            <div className="flex items-center gap-1">
-                                <HiOutlineRefresh className="w-4 h-4 text-[#2e808a]" />
-                                {formatDate(q.baseData.updatedAt)}
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </div>
 
             {/* Pagination */}
             {data && data.totalPages > 1 && (
