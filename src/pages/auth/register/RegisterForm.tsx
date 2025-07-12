@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faEnvelope, faIdBadge, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../../../features/auth/api/auth.api";
 import { useEffect, useState } from "react";
@@ -37,6 +37,7 @@ const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [fullname, setFullname] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [cooldown, setCooldown] = useState(0);
 
@@ -44,6 +45,7 @@ const RegisterForm = () => {
     username: "",
     email: "",
     password: "",
+    fullname: "",
   });
 
   useEffect(() => {
@@ -63,7 +65,7 @@ const RegisterForm = () => {
   }, [cooldown]);
 
   const validateForm = () => {
-    let newErrors = { username: "", email: "", password: "" };
+    let newErrors = { username: "", email: "", password: "", fullname: "" };
     let isValid = true;
 
     if (!username.trim()) {
@@ -71,6 +73,11 @@ const RegisterForm = () => {
       isValid = false;
     } else if (username.length < 3) {
       newErrors.username = "Username must be at least 3 characters long.";
+      isValid = false;
+    }
+
+    if (!fullname.trim()) {
+      newErrors.fullname = "Fullname is required.";
       isValid = false;
     }
 
@@ -122,12 +129,7 @@ const RegisterForm = () => {
         otp,
       },
       metadata: {
-        fullname: "",
-        company: "",
-        country: "",
-        jobTitle: "",
-        avatarPath:
-          "",
+        fullname,
       },
       role: 1,
     });
@@ -349,17 +351,7 @@ const RegisterForm = () => {
         {/* Username */}
         <div className="relative">
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-            {/* User icon */}
-            <svg
-              width="20"
-              height="20"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            >
-              <circle cx="10" cy="7" r="4" />
-              <path d="M2 18c0-3.314 3.134-6 7-6s7 2.686 7 6" />
-            </svg>
+            <FontAwesomeIcon icon={faUser} />
           </span>
           <input
             type="text"
@@ -380,20 +372,34 @@ const RegisterForm = () => {
         {errors.username && (
           <span className="text-red-400 text-sm">{errors.username}</span>
         )}
+        {/* Fullname */}
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <FontAwesomeIcon icon={faIdBadge} />
+          </span>
+          <input
+            type="text"
+            value={fullname}
+            onChange={(e) => setFullname(e.target.value)}
+            placeholder=" "
+            className="peer block w-full rounded-lg border border-gray-300 pl-10 pr-3 pb-2.5 pt-4 text-base text-gray-900 bg-gray-50 focus:border-primary-toned-600 focus:outline-none focus:ring-0 transition"
+          />
+          <label
+            className={`absolute left-10 top-1/2 -translate-y-1/2 text-gray-500 text-base pointer-events-none transition-all
+        peer-focus:top-2 peer-focus:text-xs peer-focus:text-primary-toned-600
+        ${fullname ? "top-2 text-xs text-primary-toned-600" : ""}
+      `}
+          >
+            Fullname
+          </label>
+        </div>
+        {errors.fullname && (
+          <span className="text-red-400 text-sm">{errors.fullname}</span>
+        )}
         {/* Email */}
         <div className="relative">
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-            {/* Email icon */}
-            <svg
-              width="20"
-              height="20"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            >
-              <rect x="3" y="5" width="14" height="10" rx="2" />
-              <path d="M3 7l7 5 7-5" />
-            </svg>
+            <FontAwesomeIcon icon={faEnvelope} />
           </span>
           <input
             type="text"
@@ -417,18 +423,7 @@ const RegisterForm = () => {
         {/* Password */}
         <div className="relative">
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-            {/* Lock icon */}
-            <svg
-              width="20"
-              height="20"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            >
-              <rect x="5" y="9" width="10" height="7" rx="2" />
-              <path d="M7 9V7a3 3 0 1 1 6 0v2" />
-              <circle cx="10" cy="13" r="1" />
-            </svg>
+            <FontAwesomeIcon icon={faLock} />
           </span>
           <input
             type="password"
