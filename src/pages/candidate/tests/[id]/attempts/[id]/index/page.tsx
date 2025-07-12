@@ -50,15 +50,16 @@ export default function CandidateTestAttemptPage() {
 		>
 			<FetchStateCover2
 				fetchState={testWithAttemptQuery}
-				dataComponent={({ attempt, test }) => (
-					<AnswersList
-						isAllowedToShowAnswer={isAllowedToShowAnswer(attempt, test)}
-						pollAnswers={attempt.status === "COMPLETED" ? true : false} // Poll answers only if the attempt is completed (waiting for grading)
-					/>
-				)}
+				dataComponent={({ attempt, test }) => {
+					return (
+						<AnswersList
+							isAllowedToShowAnswer={isAllowedToShowAnswer(attempt, test)}
+							pollAnswers={attempt.status === "COMPLETED" ? true : false} // Poll answers only if the attempt is completed (waiting for grading)
+						/>
+					)
+				}}
 			/>
 		</RightLayoutTemplate>
 	);
 }
-
 

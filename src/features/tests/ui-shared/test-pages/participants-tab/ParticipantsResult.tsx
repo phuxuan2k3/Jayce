@@ -6,6 +6,7 @@ import MyTabs from "../../../ui/MyTabs";
 import ParticipantCard from "../../../ui-items/user/ParticipantCard";
 import ParticipantAttempts from "./ParticipantAttempts";
 import { AttemptCoreSchema } from "../../../api/test.api-gen-v2";
+import ParticipantDetailCard from "../../../ui-items/user/ParticipantDetailCard";
 
 export default function ParticipantsResult({
 	participantUser: { user, participant },
@@ -47,6 +48,14 @@ export default function ParticipantsResult({
 						content: <ParticipantStatisticCard
 							participant={participant}
 						/>
+					},
+					{
+						label: "Details",
+						id: "details",
+						content: <ParticipantDetailCard
+							metadata={user.metadata}
+						/>
+
 					}
 				]}>
 			</MyTabs>

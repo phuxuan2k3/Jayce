@@ -7,6 +7,7 @@ import { AllStepData } from "../common/types";
 import { QuestionPersistCoreSchema } from "../../../../../features/tests/ui-items/question/types";
 import ErrorDialog from "../../../../../features/tests/ui/fetch-states/ErrorDialog";
 import useBuilderStepsData from "./hooks/useBuilderStepsData";
+import { mcqOptionsRemoveOptionalLabel } from "../../../../../helpers/string";
 
 export default function BuilderWizzardTab({
 	allStepData,
@@ -29,7 +30,23 @@ export default function BuilderWizzardTab({
 
 	useEffect(() => {
 		if (isSuccess === true && data != null && isFetching === false) {
-			onGeneratedQuestions(data.questions);
+			// Preprocess the generated questions
+			const processedQuestions = data.questions.map((question) => {
+				// Remove optional labels from MCQ options
+				if (question.detail.type === "MCQ") {
+					const newOptions = question.detail.options.map(option => mcqOptionsRemoveOptionalLabel(option));
+					return {
+						...question,
+						detail: {
+							...question.detail,
+							options: newOptions,
+						},
+					};
+				}
+				return question;
+			});
+
+			onGeneratedQuestions(processedQuestions);
 		}
 	}, [isSuccess, data, isFetching]);
 

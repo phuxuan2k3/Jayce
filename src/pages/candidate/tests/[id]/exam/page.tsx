@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../router/paths";
-import { useCallback } from "react";
-import { useGetTestsByTestIdQuery, TestFullSchema } from "../../../../../features/tests/api/test.api-gen-v2";
+import { useCallback, useState } from "react";
+import { useGetTestsByTestIdQuery, TestFullSchema, useGetTestsByTestIdParticipantsAndParticipantIdQuery } from "../../../../../features/tests/api/test.api-gen-v2";
 import useGetTestIdParams from "../../../../../features/tests/hooks/useGetTestIdParams";
 import useGetUserId from "../../../../../features/tests/hooks/useGetUserId";
 import AttemptsTab from "../../../../../features/tests/ui-shared/test-pages/attempts-tab";
@@ -12,13 +12,23 @@ import MyTabs from "../../../../../features/tests/ui/MyTabs";
 import RightLayoutTemplate from "../../../../../components/layouts/RightLayoutTemplate";
 import TitleSkeleton from "../../../../../features/tests/ui/skeletons/TitleSkeleton";
 import TestFullSidebar from "../../../../../features/tests/ui-shared/sidebar/TestFullSidebar";
+import InvalidDialog from "./components/InvalidDialog";
 
 export default function CandidateTestExamPage() {
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
 	const userId = useGetUserId();
 
+	const [invalidMessage, setInvalidMessage] = useState<string | null>(null);
+
 	const testQuery = useGetTestsByTestIdQuery({ testId });
+	const userInTestQuery = useGetTestsByTestIdParticipantsAndParticipantIdQuery({
+		testId,
+		participantId: userId
+	}, {
+		skip: !userId, // Skip if userId is not available
+		pollingInterval: 10000, // Poll every 10 seconds
+	})
 
 	const isTestOngoing = (test: TestFullSchema) => {
 		if (test._detail.mode !== "EXAM") return true; // Only check for ongoing status if the test is an exam
@@ -29,14 +39,16 @@ export default function CandidateTestExamPage() {
 		return now >= openDate && now <= closeDate;
 	}
 
-	const tabs = useCallback((test: TestFullSchema) => {
+	const tabs = useCallback((test: TestFullSchema, attemptsCount: number) => {
 		if (test._detail.mode !== "EXAM") return [];
 		const tabs = [
 			{
 				id: "attempts",
 				label: "Your Attempts",
 				content: <AttemptsTab
-					onAttemptClick={(attempt) => navigate(paths.candidate.tests.in(testId).attempts.in(attempt.id).ROOT)}
+					onAttemptClick={(attempt) => {
+						navigate(paths.candidate.tests.in(testId).attempts.in(attempt.id).ROOT);
+					}}
 					candidateId={userId}
 				/>
 			},
@@ -48,7 +60,13 @@ export default function CandidateTestExamPage() {
 				id: "participants",
 				label: "Participants",
 				content: <ParticipantsTab
-					onAttemptClick={(attempt) => navigate(paths.candidate.tests.in(testId).attempts.in(attempt.id).ROOT)}
+					onAttemptClick={(attempt) => {
+						if (attempt.candidateId !== userId && attemptsCount === 0) {
+							setInvalidMessage("You are not allowed to view this attempt.");
+							return;
+						}
+						navigate(paths.candidate.tests.in(testId).attempts.in(attempt.id).ROOT);
+					}}
 				/>,
 			});
 		}
@@ -94,16 +112,28 @@ export default function CandidateTestExamPage() {
 
 						<div className="flex-1 flex flex-col gap-4">
 							<h2 className="text-xl font-bold">Details</h2>
-							<MyTabs
-								tabs={tabs(test)}
-								tabClassName="flex-1"
-								defaultTabId="attempts"
-								className="flex-1"
+							<FetchStateCover2
+								fetchState={userInTestQuery}
+								dataComponent={(userInTest) => (
+									<MyTabs
+										tabs={tabs(test, userInTest._aggregate.totalAttempts)}
+										tabClassName="flex-1"
+										defaultTabId="attempts"
+										className="flex-1"
+									/>
+								)}
 							/>
 						</div>
 					</div>
 				)}
 			/>
+
+			{invalidMessage && (
+				<InvalidDialog
+					message={invalidMessage}
+					onClose={() => setInvalidMessage(null)}
+				/>
+			)}
 		</RightLayoutTemplate>
 	);
 }

@@ -56,3 +56,18 @@ export type Metadata = {
 	jobTitle: string;
 	avatarPath: string;
 };
+
+export type Metadata2 = {
+	fullname?: string;
+	company?: string;
+	country?: string;
+	jobTitle?: string;
+	avatarPath?: string;
+	gender?: string;
+	birthday?: string;
+	summary?: string;
+	website?: string;
+	linkedIn?: string;
+	education?: string;
+};
+

@@ -8,8 +8,11 @@ export default function ExamInformationTab({
 }: {
 	testId: string;
 }) {
-	const examQuery = useGetTestsByTestIdQuery({ testId });
-
+	const examQuery = useGetTestsByTestIdQuery({
+		testId
+	}, {
+		pollingInterval: 10000, // Poll every 10 seconds
+	});
 
 	return (
 		<FetchStateCover2

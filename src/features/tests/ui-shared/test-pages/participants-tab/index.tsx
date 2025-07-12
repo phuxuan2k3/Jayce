@@ -30,6 +30,8 @@ export default function ParticipantsTab({
 	const participantsQuery = useGetTestsByTestIdParticipantsQuery({
 		testId,
 		...filter,
+	}, {
+		pollingInterval: 10000,
 	});
 
 	return (
