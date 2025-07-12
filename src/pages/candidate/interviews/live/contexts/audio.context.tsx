@@ -21,8 +21,6 @@ const AudioContext = createContext<AudioContextType | undefined>(undefined);
 interface ProviderProps {
   children: ReactNode;
 }
-// const interviewInfo = JSON.parse(localStorage.getItem("interviewInfo") || "{}");
-// const interviewId = interviewInfo.interviewId || "1";
 
 export const AudioContextProvider: React.FC<ProviderProps> = ({ children }) => {
   const [needPolling, setNeedPolling] = useState(false);

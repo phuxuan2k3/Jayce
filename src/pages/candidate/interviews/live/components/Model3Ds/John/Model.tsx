@@ -36,7 +36,7 @@ type GLTFResult = GLTF & {
 export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { scene, ...gltfRest } = useGLTF("/models/Mike.glb") as GLTFResult;
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
-  const fbx = useFBX("/animations/Stand.fbx");
+  const fbx = useFBX("/animations/Standing Greeting.fbx");
 
   const group = useRef<THREE.Group>(null);
 

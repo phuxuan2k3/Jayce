@@ -8,45 +8,45 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 
-const interviewQuestions = [
-  { title: "Top 50 React Interview Questions", url: "/interview/react" },
-  { title: "JavaScript Interview Q&A", url: "/interview/javascript" },
-  { title: "SQL Interview Questions", url: "/interview/sql" },
-];
+// const interviewQuestions = [
+//   { title: "Top 50 React Interview Questions", url: "" },
+//   { title: "JavaScript Interview Q&A", url: "" },
+//   { title: "SQL Interview Questions", url: "" },
+// ];
 
-const courses = [
-  { title: "React for Beginners", url: "/courses/react-beginners" },
-  { title: "Advanced JavaScript", url: "/courses/advanced-js" },
-  { title: "Backend with Node.js", url: "/courses/nodejs" },
-];
+// const courses = [
+//   { title: "React for Beginners", url: "" },
+//   { title: "Advanced JavaScript", url: "" },
+//   { title: "Backend with Node.js", url: "" },
+// ];
 
-const articles = [
-  {
-    title: "How to Ace Your Coding Interview",
-    url: "/articles/ace-coding-interview",
-  },
-  { title: "Mastering JavaScript Closures", url: "/articles/js-closures" },
-  { title: "CSS Grid vs Flexbox", url: "/articles/css-grid-flexbox" },
-];
+// const articles = [
+//   {
+//     title: "How to Ace Your Coding Interview",
+//     url: "/articles/ace-coding-interview",
+//   },
+//   { title: "Mastering JavaScript Closures", url: "" },
+//   { title: "CSS Grid vs Flexbox", url: "" },
+// ];
 
 const socialLinks = [
   {
     icon: (
       <FaFacebook className="text-white text-2xl cursor-pointer hover:text-gray-400" />
     ),
-    url: "https://facebook.com/skillsharp",
+    url: "https://www.facebook.com/VNUHCM.US",
   },
   {
     icon: (
       <FaInstagram className="text-white text-2xl cursor-pointer hover:text-gray-400" />
     ),
-    url: "https://instagram.com/skillsharp",
+    url: "https://www.instagram.com/explore/locations/1536226829925551/ai-hoc-khoa-hoc-tu-nhien-hqg-tphcm/",
   },
   {
     icon: (
       <FaYoutube className="text-white text-2xl cursor-pointer hover:text-gray-400" />
     ),
-    url: "https://youtube.com/skillsharp",
+    url: "https://www.youtube.com/channel/UCYtIjCGvl-VNizt_XWk9Uzg",
   },
 ];
 
@@ -75,7 +75,7 @@ const FooterLong: React.FC = () => {
   return (
     <footer className="bg-black text-white py-8 mt-auto">
       <div className="container mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+        <div className="flex justify-between gap-6">
           {/* Logo Section */}
           <div>
             <div className="flex items-center space-x-2">
@@ -100,57 +100,6 @@ const FooterLong: React.FC = () => {
                 ))}
               </div>
             </div>
-          </div>
-
-          {/* Interview Questions */}
-          <div>
-            <h4 className="font-bold mb-3">Interview Questions</h4>
-            <ul className="space-y-2">
-              {interviewQuestions.map((item, index) => (
-                <li key={index}>
-                  <a
-                    href={item.url}
-                    className="hover:text-gray-400 cursor-pointer transition-colors"
-                  >
-                    {item.title}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Courses */}
-          <div>
-            <h4 className="font-bold mb-3">Courses</h4>
-            <ul className="space-y-2">
-              {courses.map((item, index) => (
-                <li key={index}>
-                  <a
-                    href={item.url}
-                    className="hover:text-gray-400 cursor-pointer transition-colors"
-                  >
-                    {item.title}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Popular Articles */}
-          <div>
-            <h4 className="font-bold mb-3">Popular Articles</h4>
-            <ul className="space-y-2">
-              {articles.map((item, index) => (
-                <li key={index}>
-                  <a
-                    href={item.url}
-                    className="hover:text-gray-400 cursor-pointer transition-colors"
-                  >
-                    {item.title}
-                  </a>
-                </li>
-              ))}
-            </ul>
           </div>
 
           {/* Contact Info */}
