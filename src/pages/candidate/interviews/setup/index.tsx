@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,7 +9,7 @@ import {
 import SetUpPage from "./setup";
 import HistoryPage from "./history";
 import { useLanguage } from "../../../../LanguageProvider";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import PublicQuestionsPage from "./PublicQuestions";
 
 const navTabKeys = [
@@ -29,6 +29,20 @@ const InterviewPage = () => {
 
   const [tab, setTab] = useState("Interview");
   const { t } = useLanguage();
+  const [searchParams] = useSearchParams();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const tabParam = searchParams.get("tab");
+    if (tabParam === "Interview") {
+      setTab("Interview");
+    } else if (tabParam === "History") {
+      setTab("History");
+    } else if (tabParam === "PublicQuestions") {
+      setTab("PublicQuestions");
+    }
+  }, [searchParams]);
 
   const renderTabContent = () => {
     switch (tab) {
@@ -52,7 +66,7 @@ const InterviewPage = () => {
             return (
               <button
                 key={item.id}
-                onClick={() => setTab(item.id)}
+                onClick={() => navigate(`?tab=${item.id}`)}
                 className={`w-full flex items-center gap-4 py-4 px-6 rounded-2xl text-lg font-bold transition-all duration-150 mb-2
                   ${
                     isSelected

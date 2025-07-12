@@ -76,20 +76,13 @@ const ResultPage = () => {
     }
   };
 
-  if (isLoading || (data && !data.finalComment)) {
+  if (!isLoading || (data && !data.finalComment)) {
     return <Loading />;
   }
   if (!data) return <div>{t("result_no_data")}</div>;
 
   return (
-    <div className=" h-fit pb-20 container">
-      <div className="text-[40px] font-black    text-start mt-10 text-primary-toned-600 drop-shadow">
-        {t("result_title")}
-      </div>
-      <div className="text-start text-[20px]    mb-3 text-gray-700">
-        <p>{t("result_congrats")}</p>
-        <p>{t("result_lets_take_a_look")}</p>
-      </div>
+    <div className=" h-fit py-20 container">
       <Box className="w-full flex justify-center ">
         <div className="w-[340px] sticky top-20 h-[500px] bg-white/90 rounded-3xl shadow p-6 flex flex-col gap-2 items-center mr-10">
           {navItems.map((item) => {
@@ -123,7 +116,7 @@ const ResultPage = () => {
           })}
         </div>
         <Box className="flex-1 bg-transparent h-fit  ">
-          <div className="rounded-3xl shadow-lg bg-white/80 p-8 h-full">
+          <div className="rounded-3xl sticky top-20 shadow-lg bg-white/80 p-8 h-full">
             {renderTabContent()}
           </div>
         </Box>
