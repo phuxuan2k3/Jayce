@@ -97,7 +97,7 @@ const SkeletonCard = () => (
 const HistoryPage = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const [sort, setSort] = useState(2);
+  const [sort, setSort] = useState(1);
   const [query, setQuery] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [getHistory, { data, isLoading, isError }] = useGetHistoryMutation();
