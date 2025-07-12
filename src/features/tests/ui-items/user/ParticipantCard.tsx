@@ -49,9 +49,9 @@ const ParticipantCard: React.FC<ParticipantCardProps> = ({ user, participant }) 
 							{user.metadata.company && (
 								<p className='text-xs text-gray-500 truncate flex items-center'>
 									<span className="w-1.5 h-1.5 bg-gray-300 rounded-full mr-2"></span>
-									<span>Company:</span>
+									<span>Email:</span>
 									<span className='ml-1 font-semibold text-gray-800 truncate'>
-										{user.metadata.company}
+										{user.email}
 									</span>
 								</p>
 							)}
@@ -59,9 +59,9 @@ const ParticipantCard: React.FC<ParticipantCardProps> = ({ user, participant }) 
 							{user.metadata.jobTitle && (
 								<p className='text-xs text-gray-500 truncate flex items-center'>
 									<span className="w-1.5 h-1.5 bg-gray-300 rounded-full mr-2"></span>
-									<span>Job Title:</span>
+									<span>Country:</span>
 									<span className='ml-1 font-semibold text-gray-800 truncate'>
-										{user.metadata.jobTitle}
+										{user.metadata.country}
 									</span>
 								</p>
 							)}

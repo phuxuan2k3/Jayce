@@ -5,9 +5,17 @@ import MyButton from '../buttons/MyButton';
 import { parseQueryError, parseQueryStatus } from '../../../../helpers/fetchBaseQuery.error';
 import MyDialog from '../MyDialog';
 import { CircleAlert } from 'lucide-react';
+import { useAppSelector } from '../../../../app/hooks';
+import { authSelectors } from '../../../auth/store/authSlice';
+import { Role } from '../../../auth/types/auth';
+import { useNavigate } from 'react-router-dom';
+import paths from '../../../../router/paths';
 
 export default function ErrorDialog({ error }: { error?: FetchBaseQueryError | SerializedError }) {
+	const navigate = useNavigate();
+
 	const [isError, setIsError] = React.useState(false);
+	const role = useAppSelector(authSelectors.selectRole);
 
 	React.useEffect(() => {
 		if (error) {
@@ -90,7 +98,13 @@ export default function ErrorDialog({ error }: { error?: FetchBaseQueryError | S
 							Close
 						</MyButton>
 						<MyButton className='flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold shadow-md'
-							onClick={() => { }}
+							onClick={() => {
+								if (role === Role.Candidate) {
+									navigate(paths.candidate.profile.PRICING);
+								} else if (role === Role.Manager) {
+									navigate(paths.manager.profile.PRICING);
+								}
+							}}
 						>
 							Go to Payment
 						</MyButton>
