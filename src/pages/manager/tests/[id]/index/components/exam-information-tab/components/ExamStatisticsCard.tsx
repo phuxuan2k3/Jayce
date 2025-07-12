@@ -115,20 +115,20 @@ export const ExamStatisticsCard = ({
 									icon={faChartLine}
 									label="Average Score"
 									value={averageScore}
-									isPercentage={true}
+									isPercentage={false}
 								/>
 							</div>
 							<StatItem
 								icon={faTrophy}
 								label="Highest Score"
 								value={highestScore}
-								isPercentage={true}
+								isPercentage={false}
 							/>
 							<StatItem
 								icon={faChartBar}
 								label="Lowest Score"
 								value={lowestScore}
-								isPercentage={true}
+								isPercentage={false}
 							/>
 							<div className="col-span-2">
 								<StatItem
