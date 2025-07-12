@@ -1,19 +1,20 @@
-import { useState } from "react";
-import { useGetHistoryQuery } from "../../../../features/interviews/api/interview.api";
+import { useEffect, useState } from "react";
 import {
   HiOutlineBriefcase,
   // HiOutlineUser,
   HiOutlineCalendar,
   HiOutlineRefresh,
+  HiOutlineSearch,
 } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../../../LanguageProvider";
-
+import { useGetHistoryMutation } from "../../../../features/interviews/api/interview.api";
+import FilterListIcon from "@mui/icons-material/FilterList";
 const formatDate = (isoString: string) => {
   const date = new Date(isoString);
 
   return date.toLocaleDateString("en-US", {
-    month: "short", // viết tắt tháng: Jan, Feb, Mar, ...
+    month: "short",
     day: "numeric",
     year: "numeric",
   });
@@ -94,29 +95,37 @@ const SkeletonCard = () => (
 );
 
 const HistoryPage = () => {
-  const [page, setPage] = useState(1);
-
   const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  const [sort, setSort] = useState(2);
+  const [query, setQuery] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [getHistory, { data, isLoading, isError }] = useGetHistoryMutation();
 
-  const { data, isLoading, isFetching, error } = useGetHistoryQuery({
-    pageIndex: page,
-  });
+  useEffect(() => {
+    getHistory({
+      pageIndex: 1,
+      sort,
+      query,
+    });
+  }, []);
+
+  useEffect(() => {
+    getHistory({
+      pageIndex: page,
+      sort,
+      query,
+    });
+  }, [page, sort, query]);
 
   const { t } = useLanguage();
 
-  if (isLoading || isFetching) {
-    return (
-      <div className=" mx-auto w-full  px-16 py-8">
-        <div className="flex flex-wrap gap-3 max-h-[500px] overflow-y-auto pr-2">
-          {[...Array(9)].map((_, idx) => (
-            <SkeletonCard key={idx} />
-          ))}
-        </div>
-      </div>
-    );
-  }
+  const handleFilterChange = () => {
+    setPage(1);
+    setQuery(inputValue);
+  };
 
-  if (error) {
+  if (isError) {
     return (
       <div className="w-full flex justify-center items-center py-10">
         <span className="text-lg text-red-600 font-semibold">
@@ -131,9 +140,66 @@ const HistoryPage = () => {
       <h2 className="text-2xl font-bold mb-6 text-[#2e808a] text-center">
         {t("interview_history")}
       </h2>
+      <div className="flex flex-wrap items-center gap-4 mb-6 px-4 py-3 bg-white rounded-2xl shadow">
+        {/* Search input */}
+        <div className="flex items-center gap-2 flex-1 min-w-[180px]">
+          <div onClick={() => handleFilterChange()}>
+            <HiOutlineSearch className="w-5 h-5 cursor-pointer text-gray-400" />
+          </div>
+          <input
+            className="rounded px-3 focus:outline-none focus:ring-2 focus:ring-[#2e808a] transition w-full"
+            placeholder={"Search by position or skill..."}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+          />
+        </div>
+        <FilterListIcon fontSize="medium" sx={{ color: "#2e808a" }} />
+        <div className="flex items-center gap-1">
+          <select
+            className="border border-gray-300 rounded px-2 py-1 outline-none  transition"
+            value={sort}
+            onChange={(e) => {
+              setSort(Number(e.target.value));
+              handleFilterChange();
+            }}
+          >
+            <option value={1}>
+              {t("sort_recently_rated") || "Recently rated (Mới đánh giá nhất)"}
+            </option>
+            <option value={2}>
+              {t("sort_least_recently_rated") ||
+                "Least recently rated (Cũ nhất)"}
+            </option>
+            <option value={3}>
+              {t("sort_most_total_questions") ||
+                "Most total questions (Nhiều câu hỏi nhất)"}
+            </option>
+            <option value={4}>
+              {t("sort_fewest_total_questions") ||
+                "Fewest total questions (Ít câu hỏi nhất)"}
+            </option>
+            <option value={5}>
+              {t("sort_max_score") || "Max score (Điểm cao nhất)"}
+            </option>
+            <option value={6}>
+              {t("sort_min_score") || "Min score (Điểm thấp nhất)"}
+            </option>
+          </select>
+        </div>
+      </div>
+
       {data?.interviews?.length === 0 && (
         <div className="text-center text-gray-500">
           {t("no_interview_history")}
+        </div>
+      )}
+      {isLoading && (
+        <div className=" mx-auto w-full  px-16 py-8">
+          <div className="flex flex-wrap gap-3 max-h-[500px] overflow-y-auto pr-2">
+            {[...Array(9)].map((_, idx) => (
+              <SkeletonCard key={idx} />
+            ))}
+          </div>
         </div>
       )}
       {data && data?.interviews?.length > 0 && (
@@ -164,7 +230,7 @@ const HistoryPage = () => {
                       <HiOutlineBriefcase className="w-6 h-6" />
                     </span>
                     <div>
-                      <span className="text-xs text-gray-500 font-medium">
+                      <span className="text-xs  text-gray-500 font-medium">
                         {t("position")}
                       </span>
                       <div className="text-lg font-bold text-[#2e808a]">

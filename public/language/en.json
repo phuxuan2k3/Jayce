@@ -33,5 +33,17 @@
   "key_skills_desc": "Key skills required for this position (comma separated)",
   "paste_job_desc": "Or paste job description",
   "skills_placeholder": "eg: SQL, Python, C++",
-  "next": "Next"
+  "next": "Next",
+  "sort_by": "Sort by:",
+  "sort_recently_rated": "Recently rated",
+  "sort_least_recently_rated": "Least recently rated",
+  "sort_most_total_questions": "Most total questions",
+  "sort_fewest_total_questions": "Fewest total questions",
+  "sort_max_score": "Max score",
+  "sort_min_score": "Min score",
+  "search_by_position_or_skill": "Search by position or skill...",
+  "scores": "Scores",
+  "newest": "Newest",
+  "highest_score": "Highest Score",
+  "lowest_score": "Lowest Score"
 }

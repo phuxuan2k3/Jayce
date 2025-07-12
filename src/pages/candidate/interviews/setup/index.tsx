@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChartPie, faHistory, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChartPie,
+  faHistory,
+  faQuestionCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import SetUpPage from "./setup";
 import HistoryPage from "./history";
 import { useLanguage } from "../../../../LanguageProvider";
@@ -11,7 +15,11 @@ import PublicQuestionsPage from "./PublicQuestions";
 const navTabKeys = [
   { id: "Interview", labelKey: "tab_interview", icon: faChartPie },
   { id: "History", labelKey: "tab_history", icon: faHistory },
-  { id: "PublicQuestions", labelKey: "tab_public_questions", icon: faQuestionCircle },
+  {
+    id: "PublicQuestions",
+    labelKey: "tab_public_questions",
+    icon: faQuestionCircle,
+  },
 ];
 
 const InterviewPage = () => {
@@ -29,7 +37,7 @@ const InterviewPage = () => {
       case "History":
         return <HistoryPage />;
       case "PublicQuestions":
-        return <PublicQuestionsPage />
+        return <PublicQuestionsPage />;
       default:
         return <SetUpPage position={position} experience={experience} />;
     }
@@ -37,13 +45,6 @@ const InterviewPage = () => {
 
   return (
     <div className="   container   h-fit">
-      <div className="text-3xl font-black    mt-4 text-primary-toned-800 drop-shadow">
-        {t("interview_result_title")}
-      </div>
-      <div className="   mb-4 text-gray-700">
-        <p>{t("interview_result_congrats")}</p>
-        <p>{t("interview_result_let_see")}</p>
-      </div>
       <Box className="w-full flex justify-center ">
         <div className=" mb-8 sticky top-20 w-[340px] h-[500px] bg-white/90 rounded-3xl shadow p-6 flex flex-col gap-2 items-center mr-10">
           {navTabKeys.map((item) => {
@@ -76,8 +77,8 @@ const InterviewPage = () => {
             );
           })}
         </div>
-        <Box className="flex-1 bg-transparent h-fit mb-10 ">
-          <div className="rounded-3xl shadow-lg bg-white/80  h-full">
+        <Box className="flex-1  bg-transparent h-fit mb-10 mt-5">
+          <div className="rounded-3xl  shadow-lg bg-white/80  h-full">
             {renderTabContent()}
           </div>
         </Box>

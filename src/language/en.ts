@@ -3,7 +3,7 @@ export const en = {
   choose_ai:
     "Then, choose AI interviewer & set up informations for the interview session.",
   language: "Language",
-  models_english: "Models (English)",
+  models_english: "Models",
   speech_rate: "Speech rate",
   low: "Low",
   fast: "Fast",
@@ -93,7 +93,17 @@ export const en = {
   summary_overall_feedback: "Overall Feedback",
   summary_grade_distribution: "Grade Distribution",
   summary_skill_scores: "Skill Scores",
-
+  sort_by: "Sort by:",
+  sort_recently_rated: "Recently rated",
+  sort_least_recently_rated: "Least recently rated",
+  sort_most_total_questions: "Most total questions",
+  sort_fewest_total_questions: "Fewest total questions",
+  sort_max_score: "Max score",
+  sort_min_score: "Min score",
+  search_by_position_or_skill: "Search by position or skill...",
+  newest: "Newest",
+  highest_score: "Highest Score",
+  lowest_score: "Lowest Score",
   // Settings
   tag_role_business_manager: "Business Manager",
   tag_role_candidate: "Candidate",
@@ -110,7 +120,8 @@ export const en = {
   settings_profile_avatar_upload_no_avatar: "No image selected",
   settings_profile_avatar_upload_choose: "Choose Image",
   settings_profile_avatar_upload_success: "Avatar updated successfully!",
-  settings_profile_avatar_upload_error: "Failed to update avatar. Please try again later.",
+  settings_profile_avatar_upload_error:
+    "Failed to update avatar. Please try again later.",
   settings_profile_avatar_upload_cancel: "Cancel",
   settings_profile_avatar_upload_confirm: "Confirm",
   settings_topup_title: "Choose a Top-Up Package",
@@ -118,7 +129,8 @@ export const en = {
   settings_topup_cancel: "Cancel",
   settings_topup_confirm: "Confirm",
   settings_topup_processing: "Processing...",
-  settings_topup_failed: "Failed to create payment link. Please try again later.",
+  settings_topup_failed:
+    "Failed to create payment link. Please try again later.",
   settings_user_loading: "Loading...",
   settings_topup_history_title: "Top-Up History",
   settings_topup_history_status: "Status",
@@ -192,11 +204,15 @@ export const en = {
   change_password_error_old_required: "Old password is required",
   change_password_error_new_required: "New password is required",
   change_password_error_confirm_required: "Confirm new password is required",
-  change_password_error_min_length: "New password must be at least 6 characters long",
-  change_password_error_uppercase: "New password must contain at least one uppercase letter",
-  change_password_error_lowercase: "New password must contain at least one lowercase letter",
+  change_password_error_min_length:
+    "New password must be at least 6 characters long",
+  change_password_error_uppercase:
+    "New password must contain at least one uppercase letter",
+  change_password_error_lowercase:
+    "New password must contain at least one lowercase letter",
   change_password_error_number: "New password must contain at least one number",
-  change_password_error_special: "New password must contain at least one special character",
+  change_password_error_special:
+    "New password must contain at least one special character",
   change_password_error_confirm_mismatch: "Passwords do not match",
   change_password_error_default: "Invalid password. Please try again",
   delete_account_confirm_message: "Do you really want to delete your account?",
@@ -206,10 +222,12 @@ export const en = {
   // Theme Preferences
   settings_theme_mode_title: "Theme Mode",
   settings_theme_light_label: "Day theme",
-  settings_theme_light_description: 'This theme will be active when your system is set to "light mode"',
+  settings_theme_light_description:
+    'This theme will be active when your system is set to "light mode"',
   settings_theme_light_preview: "Light Tritanopia",
   settings_theme_dark_label: "Night theme",
-  settings_theme_dark_description: 'This theme will be active when your system is set to "dark mode"',
+  settings_theme_dark_description:
+    'This theme will be active when your system is set to "dark mode"',
   settings_theme_dark_preview: "Dark default",
   settings_theme_active: "Active",
 
@@ -223,8 +241,10 @@ export const en = {
 
   // Pricing
   pricing_title: "Unlock the full member experience",
-  pricing_description: "Get access to all courses, video answers, peer mock interviews, and more.",
-  pricing_already_premium: "You are currently a premium member. Your access expires on",
+  pricing_description:
+    "Get access to all courses, video answers, peer mock interviews, and more.",
+  pricing_already_premium:
+    "You are currently a premium member. Your access expires on",
   pricing_monthly_label: "Monthly",
   pricing_annual_label: "Annual",
   pricing_benefit_access_courses: "Access to all courses",
@@ -240,15 +260,21 @@ export const en = {
   pricing_start_now: "Start now",
   pricing_extend: "Extend",
   pricing_plan_features_title: "What comes with my plan?",
-  pricing_feature_1: "Look for a total of 400+ interview lessons, questions, and complete answers with video walkthroughs.",
-  pricing_feature_2: "All plans include all of our courses: PM, Engineering Management, TPM, Data Science, SWE, and more.",
-  pricing_feature_3: "Get access to 200+ hours of real interview videos, where we analyze what went right or wrong.",
-  pricing_error_generic: "Failed to process your request. Please try again later.",
-  pricing_success_activation: "Your premium membership has been successfully activated!",
+  pricing_feature_1:
+    "Look for a total of 400+ interview lessons, questions, and complete answers with video walkthroughs.",
+  pricing_feature_2:
+    "All plans include all of our courses: PM, Engineering Management, TPM, Data Science, SWE, and more.",
+  pricing_feature_3:
+    "Get access to 200+ hours of real interview videos, where we analyze what went right or wrong.",
+  pricing_error_generic:
+    "Failed to process your request. Please try again later.",
+  pricing_success_activation:
+    "Your premium membership has been successfully activated!",
 
   // Candidate Dashboard
   candidate_home_welcome: "Welcome back",
-  candidate_home_subtitle: "Continue learning with our recommendations based on your career goals and recent activity.",
+  candidate_home_subtitle:
+    "Continue learning with our recommendations based on your career goals and recent activity.",
   candidate_home_suggested_tests_title: "Suggested Tests",
   candidate_home_suggested_tests_see_more: "See more",
   candidate_home_suggested_tests_empty: "No tests available.",

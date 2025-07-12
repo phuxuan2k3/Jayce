@@ -58,13 +58,28 @@ const interviewApi = createApi({
     >({
       query: ({ interviewId }) => `/interviews/history/${interviewId}`,
     }),
-    getHistory: builder.query<
+    getHistory: builder.mutation<
       InterviewHistoryResponse,
       {
         pageIndex: number;
+        sort?: number;
+        query?: string;
       }
     >({
-      query: (query) => `/interviews/history?page=${query.pageIndex}`,
+      query: (params) => {
+        const searchParams = new URLSearchParams();
+        searchParams.append("page", String(params.pageIndex));
+        if (typeof params.sort === "number") {
+          searchParams.append("sort", String(params.sort));
+        }
+        if (params.query) {
+          searchParams.append("query", params.query);
+        }
+        return {
+          url: `/interviews/history?${searchParams.toString()}`,
+          method: "GET",
+        };
+      },
     }),
     getInterviewOutro: builder.query<
       InterviewOutroResponse,
@@ -74,7 +89,7 @@ const interviewApi = createApi({
     }),
     getPublicQuestions: builder.query<
       GetPublicQuestionResponse,
-      { pos: string; lang: string, exp: string, page: number }
+      { pos: string; lang: string; exp: string; page: number }
     >({
       query: ({ pos, exp, lang, page }) =>
         `/interviews/public-questions?pos=${pos}&lang=${lang}&exp=${exp}&page=${page}`,
@@ -89,8 +104,8 @@ export const {
   usePostGetScoreMutation,
   useGetInterviewHistoryQuery,
   useLazyGetInterviewOutroQuery,
-  useGetHistoryQuery,
   useGetPublicQuestionsQuery,
+  useGetHistoryMutation,
 } = interviewApi;
 
 export default interviewApi;
