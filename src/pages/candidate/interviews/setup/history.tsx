@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../../../LanguageProvider";
 import { useGetHistoryMutation } from "../../../../features/interviews/api/interview.api";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import MySelect from "../../../../features/tests/ui/forms/MySelect";
 const formatDate = (isoString: string) => {
   const date = new Date(isoString);
 
@@ -120,6 +121,37 @@ const HistoryPage = () => {
 
   const { t } = useLanguage();
 
+  const sortOptions = [
+    {
+      value: 1,
+      label: t("sort_recently_rated") || "Recently rated (Mới đánh giá nhất)",
+    },
+    {
+      value: 2,
+      label: t("sort_least_recently_rated") || "Least recently rated (Cũ nhất)",
+    },
+    {
+      value: 3,
+      label:
+        t("sort_most_total_questions") ||
+        "Most total questions (Nhiều câu hỏi nhất)",
+    },
+    {
+      value: 4,
+      label:
+        t("sort_fewest_total_questions") ||
+        "Fewest total questions (Ít câu hỏi nhất)",
+    },
+    {
+      value: 5,
+      label: t("sort_max_score") || "Max score (Điểm cao nhất)",
+    },
+    {
+      value: 6,
+      label: t("sort_min_score") || "Min score (Điểm thấp nhất)",
+    },
+  ];
+
   const handleFilterChange = () => {
     setPage(1);
     setQuery(inputValue);
@@ -155,36 +187,17 @@ const HistoryPage = () => {
         </div>
         <FilterListIcon fontSize="medium" sx={{ color: "#2e808a" }} />
         <div className="flex items-center gap-1">
-          <select
-            className="border border-gray-300 rounded px-2 py-1 outline-none  transition"
+          <MySelect
+            options={sortOptions}
             value={sort}
-            onChange={(e) => {
-              setSort(Number(e.target.value));
+            onChange={(value) => {
+              setSort(Number(value));
               handleFilterChange();
             }}
-          >
-            <option value={1}>
-              {t("sort_recently_rated") || "Recently rated (Mới đánh giá nhất)"}
-            </option>
-            <option value={2}>
-              {t("sort_least_recently_rated") ||
-                "Least recently rated (Cũ nhất)"}
-            </option>
-            <option value={3}>
-              {t("sort_most_total_questions") ||
-                "Most total questions (Nhiều câu hỏi nhất)"}
-            </option>
-            <option value={4}>
-              {t("sort_fewest_total_questions") ||
-                "Fewest total questions (Ít câu hỏi nhất)"}
-            </option>
-            <option value={5}>
-              {t("sort_max_score") || "Max score (Điểm cao nhất)"}
-            </option>
-            <option value={6}>
-              {t("sort_min_score") || "Min score (Điểm thấp nhất)"}
-            </option>
-          </select>
+            className="w-auto min-w-[200px]"
+            size="md"
+            placeholder="Select sorting option"
+          />
         </div>
       </div>
 
