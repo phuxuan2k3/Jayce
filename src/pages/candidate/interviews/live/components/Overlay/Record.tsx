@@ -4,7 +4,6 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import SoundWaveVisualizer from "./sub/SoundWaveVisualizer";
 import { useEffect, useRef, useState } from "react";
-import { useLanguage } from "../../../../../../LanguageProvider";
 import { useAudioContext } from "../../contexts/audio.context";
 
 export default function Record({
@@ -12,7 +11,7 @@ export default function Record({
 }: {
   onAnswerRecorded: (transcript: string, base64Audio: string) => void;
 }) {
-  const { language } = useLanguage();
+  const language = localStorage.getItem("language") || "English";
   const {
     listening,
     finalTranscript,
@@ -74,7 +73,7 @@ export default function Record({
     ) {
       startRecording();
       SpeechRecognition.startListening({
-        language: language === "en" ? "en-US" : "vi-VN",
+        language: language === "English" ? "en-US" : "vi-VN",
         continuous: true,
         interimResults: false,
       }).catch((error) => {

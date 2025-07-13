@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { JobSetupData } from "./setup";
 import ModalCheckSound from "./ModalCheckSound";
 import { useLanguage } from "../../../../LanguageProvider";
@@ -30,6 +30,10 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
   const { t } = useLanguage();
 
   const [language, setLanguage] = useState<string>("English");
+
+  useEffect(() => {
+    localStorage.setItem("language", language);
+  }, [language]);
   return (
     <>
       {/* <div className="fotn-back text-[32px]    w-full text-center leading-[24px] mt-4"> */}
