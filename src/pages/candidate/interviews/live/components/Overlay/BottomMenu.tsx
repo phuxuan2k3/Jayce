@@ -153,7 +153,7 @@ export default function BottomMenu() {
             transition-all duration-200 ease-in-out
           `}
         >
-          <span>Continue</span>
+          <span>Skip</span>
           <ArrowRight size={20} />
         </CommonButton>
         {/* <div className="flex items-start mx-2 gap-x-1">
