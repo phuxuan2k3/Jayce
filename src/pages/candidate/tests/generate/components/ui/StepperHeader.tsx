@@ -1,5 +1,6 @@
 import { Check } from 'lucide-react';
 import { PracticeSteps } from '../../types';
+import { useLanguage } from '../../../../../../LanguageProvider';
 
 const StepsEnum: PracticeSteps[] = [
 	"step1",
@@ -14,9 +15,9 @@ const NumberedSteps: Record<PracticeSteps, number> = {
 };
 
 const StepsLabels: Record<PracticeSteps, string> = {
-	step1: 'Test Information',
-	step2: 'Prompt Configuration',
-	step3: 'Add Outlines & Generate',
+	step1: 'stepper_label_step1',
+	step2: 'stepper_label_step2',
+	step3: 'stepper_label_step3',
 };
 
 const stepCompare = (a: PracticeSteps, b: PracticeSteps) => {
@@ -24,6 +25,8 @@ const stepCompare = (a: PracticeSteps, b: PracticeSteps) => {
 }
 
 export default function StepperHeader({ step }: { step: PracticeSteps }) {
+	const { t } = useLanguage();
+
 	return (
 		<div className="flex items-center justify-between mb-8">
 			{StepsEnum.map((key, index) => (
@@ -44,7 +47,7 @@ export default function StepperHeader({ step }: { step: PracticeSteps }) {
 						)}
 					</div>
 					<p className={`mt-2 text-sm font-medium ${step === key ? 'text-primary-toned-600' : 'text-gray-500'}`}>
-						{StepsLabels[key]}
+						{t(StepsLabels[key])}
 					</p>
 				</div>
 			))}

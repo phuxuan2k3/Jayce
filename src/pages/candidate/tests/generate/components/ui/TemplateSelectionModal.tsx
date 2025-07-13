@@ -10,6 +10,7 @@ import MyPaginationSection from '../../../../../../features/tests/ui-sections/My
 import MyButton from '../../../../../../features/tests/ui/buttons/MyButton';
 import MyInputWithSearch from '../../../../../../features/tests/ui/forms/MyInputWithSearch';
 import MyInput from '../../../../../../features/tests/ui/forms/MyInput';
+import { useLanguage } from '../../../../../../LanguageProvider';
 
 type Filter = {
 	searchName: string;
@@ -27,6 +28,8 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 	onClose,
 	onSelectTemplate,
 }) => {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 	const [filters, setFilters] = useState<Filter>({
 		searchName: '',
@@ -68,7 +71,7 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 			<div className="bg-white rounded-lg shadow-lg w-full max-w-[70vw] h-[90vh] flex flex-col p-4">
 				<div className='flex flex-col w-full gap-6 p-4'>
 					<div className="flex justify-between items-center">
-						<h2 className="text-xl font-semibold text-primary">Choose a Template</h2>
+						<h2 className="text-xl font-semibold text-primary">{t("template_modal_title")}</h2>
 						<button
 							onClick={onClose}
 							className="text-gray-500 hover:text-gray-700"
@@ -83,7 +86,7 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 							inputComponent={
 								<MyInput
 									type="text"
-									placeholder="Search templates..."
+									placeholder={t("template_modal_search_placeholder")}
 									value={filters.searchName}
 									onChange={(e) => handleSearch(e.target.value)}
 									onKeyDown={handleKeyPress}
@@ -96,7 +99,7 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 							onClick={handleManageTemplates}
 						>
 							<Settings size={14} />
-							Manage Templates
+							{t("template_modal_manage_button")}
 						</MyButton>
 					</div>
 				</div>
@@ -108,13 +111,13 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 						dataComponent={({ data }) => (
 							data.length === 0 ? (
 								<div className="text-center py-8">
-									<p className="text-gray-500 mb-4">No templates available</p>
+									<p className="text-gray-500 mb-4">{t("template_modal_empty_text")}</p>
 									<button
 										onClick={handleManageTemplates}
 										className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-toned-700 inline-flex items-center gap-2"
 									>
 										<Settings size={16} />
-										Manage Templates
+										{t("template_modal_manage_button")}
 									</button>
 								</div>
 							) : (

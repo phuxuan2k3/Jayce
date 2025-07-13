@@ -16,8 +16,11 @@ import RightLayoutTemplate from "../../../../components/layouts/RightLayoutTempl
 import { transformExamPersistToAllStepData } from "./common/transform";
 import MyTabs from "../../../../features/tests/ui/MyTabs";
 import useBuilderStepsData from "./builder-wizzard-tab/hooks/useBuilderStepsData";
+import { useLanguage } from "../../../../LanguageProvider";
 
 export default function ManagerTestNewPage() {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 	const [tab, setTab] = useState<CreateTab>("exam");
 	const [examTabs, setExamTabs] = useState<"info" | "questions">("info");
@@ -118,8 +121,8 @@ export default function ManagerTestNewPage() {
 		<RightLayoutTemplate
 			header={
 				<RightLayoutTemplate.Header
-					title="Create Exam"
-					description="Configure your exam settings and questions."
+					title={t("manager_test_new_title")}
+					description={t("manager_test_new_description")}
 					backButton={
 						<RightLayoutTemplate.BackButton
 							onClick={() => navigate(paths.manager.tests.ROOT)}
@@ -163,7 +166,7 @@ export default function ManagerTestNewPage() {
 				<MyTabs
 					tabs={[
 						{
-							label: "Configuration",
+							label: t("manager_test_new_tab_config"),
 							id: "info",
 							content: <ConfigTab
 								examPersist={examPersist}
@@ -171,7 +174,7 @@ export default function ManagerTestNewPage() {
 							/>
 						},
 						{
-							label: "Questions",
+							label: t("manager_test_new_tab_questions"),
 							id: "questions",
 							content: <QuestionsConfigTab
 								questions={examPersist.questions}

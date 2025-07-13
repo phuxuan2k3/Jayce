@@ -7,12 +7,15 @@ import { AnswerForQuestionTypeSchema } from '../../../../../../../../features/te
 import { toast } from 'react-toastify';
 import { parseQueryError } from '../../../../../../../../helpers/fetchBaseQuery.error';
 import { useCallback, useState } from 'react';
+import { useLanguage } from '../../../../../../../../LanguageProvider';
 
 export default function useHandleSubmitAnswers({
 	onSuccess,
 }: {
 	onSuccess?: () => void;
 }) {
+	const { t } = useLanguage();
+
 	const attemptId = useGetAttemptIdParams();
 	const attemptState = useAppSelector((state) => testDoSlice.selectors.selectAttempt(state, attemptId));
 	const dispatch = useAppDispatch();
@@ -30,7 +33,7 @@ export default function useHandleSubmitAnswers({
 		},
 		onError: (error) => {
 			const message = parseQueryError(error);
-			toast.error("Failed to submit answers: " + message);
+			toast.error(t("submit_answers_failed") + ": " + message);
 			console.error("Failed to submit answers:", error);
 		}
 	});

@@ -2,6 +2,7 @@ import { InformationSection } from "./components/InformationSection";
 import { AccessSection } from "./components/AccessSection";
 import { ConfigurationSection } from "./components/ConfigurationSection";
 import { ExamPersistCoreSchema } from "../../../ui-items/test/types";
+import { useLanguage } from "../../../../../LanguageProvider";
 
 export default function ConfigTab({
 	examPersist,
@@ -10,6 +11,8 @@ export default function ConfigTab({
 	examPersist: ExamPersistCoreSchema;
 	onExamPersistChange: (configEdit: Partial<ExamPersistCoreSchema>) => void;
 }) {
+	const { t } = useLanguage();
+
 	const handleDetailChange = (detailPatch: Partial<ExamPersistCoreSchema["detail"]>) => {
 		onExamPersistChange({
 			detail: { ...examPersist.detail, ...detailPatch },
@@ -30,7 +33,7 @@ export default function ConfigTab({
 	return (
 		<div className="flex flex-col gap-4 p-6 ">
 			<h3 className="text-2xl font-semibold text-primary mb-4">
-				General Information
+				{t("config_tab_section_info")}
 			</h3>
 
 			<InformationSection
@@ -43,7 +46,7 @@ export default function ConfigTab({
 
 			<hr className="border-primary-toned-300 w-full my-2" />
 			<h3 className="text-2xl font-semibold text-primary mb-4">
-				Accessibility
+				{t("config_tab_section_access")}
 			</h3>
 
 			<AccessSection
@@ -58,7 +61,7 @@ export default function ConfigTab({
 
 			<hr className="border-primary-toned-300 w-full my-2" />
 			<h3 className="text-2xl font-semibold text-primary mb-4">
-				Configuration
+				{t("config_tab_section_config")}
 			</h3>
 
 			<ConfigurationSection

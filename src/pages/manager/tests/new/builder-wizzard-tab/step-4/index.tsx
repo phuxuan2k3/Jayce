@@ -4,6 +4,7 @@ import { BuilderStep1Type, BuilderStep2Type, BuilderStep3Type } from "../../comm
 import { DifficultiesAsConst, DifficultyType } from "../../common/base-schema";
 import { AllStepData } from "../../common/types";
 import { Bolt, File, Info, Link, SlidersVertical } from "lucide-react";
+import { useLanguage } from "../../../../../../LanguageProvider";
 
 export default function Step4({
 	onConfirm,
@@ -16,6 +17,8 @@ export default function Step4({
 	step3: BuilderStep3Type;
 	onConfirm: () => void;
 }) {
+	const { t } = useLanguage();
+
 	const totalQuestions = useMemo(() => {
 		return step2.topics.reduce((total, topic) => {
 			return total + Object.values(topic.difficultyDistribution).reduce((sum, count) => sum + count, 0);
@@ -50,13 +53,12 @@ export default function Step4({
 		step3,
 	};
 
-
 	return (
 		<div className="flex flex-col gap-4">
 			{/* Header */}
 			<div className="text-center">
-				<h2 className="text-3xl font-bold text-primary mb-2">Review Your Exam Configuration</h2>
-				<p className="text-gray-600">Please review all settings before generating your exam</p>
+				<h2 className="text-3xl font-bold text-primary mb-2">{t("step4_title_")}</h2>
+				<p className="text-gray-600">{t("step4_description_")}</p>
 			</div>
 
 			<hr className="border-primary-toned-300 w-full my-4" />
@@ -67,22 +69,22 @@ export default function Step4({
 					<div className="p-2 bg-primary text-white rounded-lg">
 						<Info className="w-5 h-5" />
 					</div>
-					<h3 className="text-xl font-semibold text-gray-800">Basic Information</h3>
+					<h3 className="text-xl font-semibold text-gray-800">{t("step4_basic_info")}</h3>
 				</div>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 					<div>
-						<label className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 block">Test Title</label>
+						<label className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 block">{t("step4_test_title")}</label>
 						<p className="text-lg font-medium text-gray-800">{state.step1.title}</p>
 					</div>
 					<div>
-						<label className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 block">Language</label>
+						<label className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 block">{t("step4_language")}</label>
 						<span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-primary-toned-100 text-primary-toned-800">
 							{state.step1.language}
 						</span>
 					</div>
 					<div className="md:col-span-2">
-						<label className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 block">Description</label>
+						<label className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 block">{t("step4_description_label")}</label>
 						<div className="border border-gray-200 rounded-lg p-4 shadow-sm">
 							<p className="text-gray-500 leading-relaxed">{state.step1.description}</p>
 						</div>
@@ -96,7 +98,7 @@ export default function Step4({
 					<div className="p-2 bg-primary text-white rounded-lg">
 						<Bolt className="w-5 h-5" />
 					</div>
-					<h3 className="text-xl font-semibold text-gray-800">Exam Blueprint</h3>
+					<h3 className="text-xl font-semibold text-gray-800">{t("step4_exam_blueprint")}</h3>
 				</div>
 
 				<div className="space-y-6">
@@ -104,18 +106,18 @@ export default function Step4({
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
 						<div className="bg-primary-toned-100 rounded-lg p-4 text-center">
 							<div className="text-2xl font-bold text-primary-toned-600">{state.step2.topics.length}</div>
-							<div className="text-sm text-primary-toned-700">Total Topics</div>
+							<div className="text-sm text-primary-toned-700">{t("step4_total_topics")}</div>
 						</div>
 						<div className="bg-primary-toned-100 rounded-lg p-4 text-center">
 							<div className="text-2xl font-bold text-primary-toned-600">{totalQuestions}</div>
-							<div className="text-sm text-primary-toned-700">Total Questions</div>
+							<div className="text-sm text-primary-toned-700">{t("step4_total_questions")}</div>
 						</div>
 					</div>
 
 					{/* Difficulty Distribution */}
 					<div>
 						<label className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4 block">
-							Difficulty Distribution
+							{t("step4_difficulty_distribution")}
 						</label>
 						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
 							{difficultySum.map(({ difficulty, number }) => (
@@ -138,7 +140,7 @@ export default function Step4({
 					{/* Topics Breakdown */}
 					<div>
 						<label className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4 block">
-							Topics Breakdown
+							{t("step4_topics_breakdown")}
 						</label>
 						<div className="space-y-3">
 							{state.step2.topics.map((topic, index) => {
@@ -154,7 +156,7 @@ export default function Step4({
 										<div className="flex flex-col gap-1">
 											<h4 className="font-semibold text-lg text-primary-toned-700">{topic.name}</h4>
 											<span className="text-sm text-gray-500">
-												{topicTotal} questions
+												{topicTotal} {t("step4_questions")}
 											</span>
 										</div>
 										<span className="text-sm font-medium text-primary-toned-700 bg-primary-toned-100 px-3 py-1 rounded-full">
@@ -174,12 +176,12 @@ export default function Step4({
 					<div className="p-2 bg-primary text-white rounded-lg">
 						<SlidersVertical className="w-5 h-5" />
 					</div>
-					<h3 className="text-xl font-semibold text-gray-800">Refinement Settings</h3>
+					<h3 className="text-xl font-semibold text-gray-800">{t("step4_refinement_settings")}</h3>
 				</div>
 
 				<div className="space-y-4">
 					<div>
-						<label className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 block">Creativity Level</label>
+						<label className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 block">{t("step4_creativity_level")}</label>
 						<div className="flex items-center gap-4">
 							<div className="flex-1 bg-gray-200 rounded-full h-3">
 								<div
@@ -190,14 +192,13 @@ export default function Step4({
 							<span className="text-lg font-bold text-primary">{state.step3.creativity}/10</span>
 						</div>
 						<p className="text-sm text-gray-600 mt-1">
-							{state.step3.creativity <= 3 ? 'Conservative' :
-								state.step3.creativity <= 7 ? 'Balanced' : 'Creative'} approach to question generation
+							{t(`step4_creativity_level_${state.step3.creativity <= 3 ? 'conservative' : state.step3.creativity <= 7 ? 'balanced' : 'creative'}`)}
 						</p>
 					</div>
 
 					{state.step3.context.text && (
 						<div>
-							<label className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 block">Additional Context</label>
+							<label className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 block">{t("step4_additional_context")}</label>
 							<div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
 								<p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{state.step3.context.text}</p>
 							</div>
@@ -206,7 +207,7 @@ export default function Step4({
 
 					{state.step3.context.files.length > 0 && (
 						<div>
-							<label className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 block">Uploaded Files</label>
+							<label className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 block">{t("step4_uploaded_files")}</label>
 							<div className="space-y-2">
 								{state.step3.context.files.map((file, index) => (
 									<div key={index} className="flex items-center gap-3 p-3 bg-gray-50 border border-gray-300 rounded-lg shadow-sm">
@@ -223,7 +224,7 @@ export default function Step4({
 
 					{state.step3.context.links.length > 0 && (
 						<div>
-							<label className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 block">Reference Links</label>
+							<label className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 block">{t("step4_reference_links")}</label>
 							<div className="space-y-2">
 								{state.step3.context.links.map((link, index) => (
 									<div key={index} className="flex items-center gap-3 p-3 bg-gray-50 border border-gray-300 rounded-lg shadow-sm">

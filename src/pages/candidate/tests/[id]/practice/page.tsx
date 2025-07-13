@@ -13,8 +13,11 @@ import RightLayoutTemplate from "../../../../../components/layouts/RightLayoutTe
 import TestFullSidebar from "../../../../../features/tests/ui-shared/sidebar/TestFullSidebar";
 import CurrentAttemptCard from "../../../../../features/tests/ui-shared/test-pages/CurrentAttemptCard";
 import TitleSkeleton from "../../../../../features/tests/ui/skeletons/TitleSkeleton";
+import { useLanguage } from "../../../../../LanguageProvider";
 
 export default function CandidatePracticePage() {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
 	const testQuery = useGetTestsByTestIdQuery({ testId });
@@ -23,7 +26,7 @@ export default function CandidatePracticePage() {
 	const tabs = useCallback((test: TestFullSchema) => [
 		{
 			id: "attempts",
-			label: "Attempts",
+			label: t("candidate_test_tab_attempts"),
 			content: <AttemptsTab
 				onAttemptClick={(attempt) => {
 					if (attempt.status === "IN_PROGRESS") {
@@ -37,12 +40,12 @@ export default function CandidatePracticePage() {
 		},
 		{
 			id: "questions",
-			label: "Questions",
+			label: t("candidate_test_tab_questions"),
 			content: <QuestionsTabContent numberOfAttempts={test._aggregate.totalAttempts} />
 		},
 		{
 			id: "feedback",
-			label: "Feedback",
+			label: t("candidate_test_tab_feedback"),
 			content: <FeedbackTabContent />
 		}
 	], []);
@@ -77,7 +80,7 @@ export default function CandidatePracticePage() {
 						</div>
 
 						<div className="flex-1 flex flex-col gap-4">
-							<h2 className="text-xl font-bold">Details</h2>
+							<h2 className="text-xl font-bold">{t("candidate_test_details_heading")}</h2>
 							<MyTabs
 								tabs={tabs(test)}
 								tabClassName="flex-1"

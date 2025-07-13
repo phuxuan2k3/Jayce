@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { QuestionPersistZodSchema } from "../../../../../../../features/tests/schemas/question-persist-zod";
 import QuestionPersistCard from "../../../../../../../features/tests/ui-items/question/form/QuestionPersist";
 import { QuestionPersistCoreSchema } from "../../../../../../../features/tests/ui-items/question/types";
+import { useLanguage } from "../../../../../../../LanguageProvider";
 
 const QuestionsConfigTab = ({
 	questions,
@@ -16,6 +17,8 @@ const QuestionsConfigTab = ({
 	onQuestionUpdate: (index: number, question: Partial<QuestionPersistCoreSchema>) => void;
 	onQuestionDelete: (index: number) => void;
 }) => {
+	const { t } = useLanguage();
+
 	const [errors, setErrors] = useState<{
 		index: number;
 		messages: string[];
@@ -49,7 +52,7 @@ const QuestionsConfigTab = ({
 			return "";
 		}).filter((err) => err !== ""));
 		if (!isAllValid) {
-			toast.warn("Please fix the errors in the questions before adding a new one.");
+			toast.warn(t("question_config_toast_fix_errors"));
 			return;
 		}
 		onQuuestionAdd({
@@ -98,7 +101,7 @@ const QuestionsConfigTab = ({
 						<div className="flex-1">
 							<ul className="list-disc text-sm list-inside pl-2">
 								{errors.map((error) => error.messages.map(errorMessage => (
-									<li key={error.index}>{`Question ${error.index + 1}:`} {errorMessage}</li>
+									<li key={error.index}>{`${t("question_config_error_prefix")} ${error.index + 1}:`} {errorMessage}</li>
 								)))}
 							</ul>
 						</div>
@@ -107,7 +110,7 @@ const QuestionsConfigTab = ({
 							title="Dismiss all errors"
 							onClick={() => setErrors([])}
 						>
-							<span className="sr-only">Dismiss</span>
+							<span className="sr-only">{t("dismiss")}</span>
 							<div className="flex items-center justify-center bg-red-100 group-hover:bg-red-200 text-red-600 rounded-full w-7 h-7 shadow-md transition-colors duration-200">
 								<X size={20} />
 							</div>
@@ -120,7 +123,7 @@ const QuestionsConfigTab = ({
 					onClick={() => handleAddQuestion()}
 				>
 					<Plus size={20} strokeWidth={2.5} />
-					<span>Add Question</span>
+					<span>{t("question_config_add_button")}</span>
 				</div>
 			</div>
 		</div>

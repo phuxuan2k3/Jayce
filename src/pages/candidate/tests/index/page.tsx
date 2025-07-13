@@ -11,6 +11,7 @@ import FetchStateCover2 from "../../../../features/tests/ui/fetch-states/FetchSt
 import MyItemsListTemplate from "../../../../features/tests/ui-templates/MyItemsListTemplate";
 import MyHeaderTitleSection from "../../../../features/tests/ui-sections/MyHeaderSection";
 import Sidebar from "./components/Sidebar";
+import { useLanguage } from "../../../../LanguageProvider";
 
 type Filter = PagingFilter & {
 	searchTitle?: string;
@@ -19,6 +20,8 @@ type Filter = PagingFilter & {
 }
 
 export default function CandidateTestsPage() {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 	const userId = useGetUserId();
 
@@ -44,8 +47,8 @@ export default function CandidateTestsPage() {
 		<LeftLayoutTemplate
 			header={
 				<LeftLayoutTemplate.Header
-					title="Skillsharp Tests"
-					description="Join hosted tests or generate your own practice tests from templates"
+					title={t("candidate_tests_header_title")}
+					description={t("candidate_tests_header_desc")}
 				/>
 			}
 			left={
@@ -58,8 +61,8 @@ export default function CandidateTestsPage() {
 				onPageChange={(page) => setFilters(prev => ({ ...prev, page }))}
 				heading={
 					<MyHeaderTitleSection
-						title="Your Generated Tests"
-						description="View and manage the practice tests you've generated."
+						title={t("candidate_tests_heading_title")}
+						description={t("candidate_tests_heading_desc")}
 					/>
 				}
 				body={
@@ -83,9 +86,9 @@ export default function CandidateTestsPage() {
 								))
 							) : (
 								<div className="w-full h-full flex flex-col gap-4 min-h-full items-center justify-center">
-									<p className="text-gray-500">You haven't generated any tests yet.</p>
+									<p className="text-gray-500">{t("candidate_tests_empty_msg")}</p>
 									<MyButton onClick={() => navigate(paths.candidate.tests.GENERATE)}>
-										Create Your First Test
+										{t("candidate_tests_create_button")}
 									</MyButton>
 								</div>
 							)

@@ -7,24 +7,27 @@ import { toast } from 'react-toastify';
 import { parseQueryError } from '../../../../helpers/fetchBaseQuery.error';
 import paths from '../../../../router/paths';
 import { cn } from '../../../../app/cn';
+import { useLanguage } from '../../../../LanguageProvider';
 
 export default function StartNewAttemptButton({
 	className = '',
 }: {
 	className?: string;
 }) {
+	const { t } = useLanguage();
+	
 	const testId = useGetTestIdParams();
 	const navigate = useNavigate();
 
 	const [postAttempts, state] = usePostAttemptsMutation();
 	useActionStateWatch(state, {
 		onSuccess: ({ attemptId }) => {
-			toast.success('New attempt started successfully');
+			toast.success(t("start_attempt_success"));
 			navigate(paths.candidate.tests.in(testId).attempts.in(attemptId).DO);
 		},
 		onError: (error) => {
 			const errorMessage = parseQueryError(error);
-			toast.error(`${errorMessage || 'Unknown error'}`);
+			toast.error(`${errorMessage || t("unknown_error")}`);
 			console.error('Error starting new attempt:', errorMessage);
 		}
 	});
@@ -35,7 +38,7 @@ export default function StartNewAttemptButton({
 			loading={state.isLoading}
 			onClick={() => postAttempts({ body: { testId } })}
 		>
-			Start New Attempt
+			{t("start_attempt_button")}
 		</MyButtonWithLoading>
 	)
 }

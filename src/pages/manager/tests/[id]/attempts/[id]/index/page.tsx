@@ -15,8 +15,11 @@ import useGetAttemptIdParams from '../../../../../../../features/tests/hooks/use
 import useActionStateWatch from '../../../../../../../features/tests/hooks/useActionStateWatch';
 import { toast } from 'react-toastify';
 import { parseQueryError } from '../../../../../../../helpers/fetchBaseQuery.error';
+import { useLanguage } from '../../../../../../../LanguageProvider';
 
 export default function ManagerTestsAttemptPage() {
+	const { t } = useLanguage();
+
 	const attemptId = useGetAttemptIdParams();
 
 	const [isShowAllAnswers, setIsShowAllAnswers] = useState(false);
@@ -27,12 +30,12 @@ export default function ManagerTestsAttemptPage() {
 	const [scoreAttempt, scoreState] = usePatchAttemptsByAttemptIdScoreMutation();
 	useActionStateWatch(scoreState, {
 		onSuccess: () => {
-			toast.success("Attempt scored successfully");
+			toast.success(t("attempt_scored_successfully"));
 			testApiGenV2.util.invalidateTags(["Attempts", "Tests"]);
 		},
 		onError: (error) => {
 			const errorMessage = parseQueryError(error);
-			toast.error(`Failed to score attempt: ${errorMessage}`);
+			toast.error(`${t("attempt_scored_error")}: ${errorMessage}`);
 		}
 	});
 
@@ -44,8 +47,8 @@ export default function ManagerTestsAttemptPage() {
 					loadingComponent={<TitleSkeleton />}
 					dataComponent={({ attempt, test }) => (
 						<RightLayoutTemplate.Header
-							title={`Attempt ${attempt.order} - ${test.title}`}
-							description={`Started at ${format(new Date(attempt.createdAt), "dd MMM yyyy, HH:mm")}`}
+							title={`${t("attempt_title")} ${attempt.order} - ${test.title}`}
+							description={`${t("attempt_started_at")} ${format(new Date(attempt.createdAt), "dd MMM yyyy, HH:mm")}`}
 						/>
 					)}
 				/>
@@ -63,7 +66,7 @@ export default function ManagerTestsAttemptPage() {
 									onClick={() => setShowConfirmScoringDialog(true)}
 									disabled={scoreState.isLoading}
 								>
-									{scoreState.isLoading ? "Scoring..." : "Confirm Scoring"}
+									{scoreState.isLoading ? t("scoring") : t("confirm_scoring")}
 								</MyButton>
 							)}
 						</div>
@@ -79,12 +82,12 @@ export default function ManagerTestsAttemptPage() {
 					)}
 				/>
 				<div className="flex items-center justify-between">
-					<h2 className="text-lg font-semibold">Attempt Answers</h2>
+					<h2 className="text-lg font-semibold">{t("attempt_answers_title")}</h2>
 					<MyButton
 						size={"medium"}
 						onClick={() => setIsShowAllAnswers(!isShowAllAnswers)}
 					>
-						{isShowAllAnswers ? "Hide All Answers" : "Show All Answers"}
+						{isShowAllAnswers ? t("hide_all_answers") : t("show_all_answers")}
 					</MyButton>
 				</div>
 

@@ -1,7 +1,10 @@
+import { useLanguage } from "../../../LanguageProvider";
 import { useGetUsersQuery } from "../../auth/api/auth-profile.api";
 import FetchStateCover2 from "../ui/fetch-states/FetchStateCover2";
 
 export function SmallUserInfo({ userId }: { userId: string; }) {
+	const { t } = useLanguage();
+	
 	const userQuery = useGetUsersQuery({ user_ids: [userId] });
 
 	return (
@@ -15,10 +18,10 @@ export function SmallUserInfo({ userId }: { userId: string; }) {
 				<div className="flex items-center gap-2 mt-2">
 					<img
 						src={user.users.at(0)?.avatarPath || "/avatar/default.png"}
-						alt={user.users.at(0)?.metadata.fullname || "Unknown Author"}
+						alt={user.users.at(0)?.metadata.fullname || t("small_user_info_unknown_author")}
 						className="w-8 h-8 rounded-full" />
 					<span className="text-sm font-semibold font-arya text-primary-toned-700">
-						{user.users.at(0)?.metadata.fullname || "Unknown Author"}
+						{user.users.at(0)?.metadata.fullname || t("small_user_info_unknown_author")}
 					</span>
 				</div>
 			)} />

@@ -7,8 +7,11 @@ import paths from '../../../../../router/paths';
 import { parseQueryError } from '../../../../../helpers/fetchBaseQuery.error';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
+import { useLanguage } from '../../../../../LanguageProvider';
 
 export default function useGeneratePractice() {
+	const { t } = useLanguage();
+	
 	const navigate = useNavigate();
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [loadingState, setLoadingState] = useState<"none" | "generating" | "saving">("none");
@@ -41,7 +44,7 @@ export default function useGeneratePractice() {
 
 			if (questions.length === 0) {
 				setLoadingState("none");
-				setErrorMessage("No questions generated. Please try again with different parameters.");
+				setErrorMessage(t("use_generate_practice_error_no_questions"));
 				return;
 			}
 
@@ -73,7 +76,7 @@ export default function useGeneratePractice() {
 			if (errorMessage) {
 				setErrorMessage(errorMessage);
 			} else {
-				setErrorMessage("An unknown error occurred");
+				setErrorMessage(t("use_generate_practice_error_unknown"));
 			}
 			setError(error as FetchBaseQueryError | SerializedError);
 			setLoadingState("none");

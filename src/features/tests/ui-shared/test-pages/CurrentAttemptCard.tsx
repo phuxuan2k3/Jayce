@@ -8,8 +8,11 @@ import { AlarmClock, ArrowRight, Calendar, History } from 'lucide-react';
 import MyButton from '../../ui/buttons/MyButton';
 import { useNavigate } from 'react-router-dom';
 import paths from '../../../../router/paths';
+import { useLanguage } from '../../../../LanguageProvider';
 
 export default function CurrentAttemptCard() {
+	const { t } = useLanguage();
+
 	const testId = useGetTestIdParams();
 	const userId = useGetUserId();
 
@@ -36,9 +39,9 @@ export default function CurrentAttemptCard() {
 				</div>
 			) : (
 				<div className="flex flex-col gap-2 items-center justify-center p-6 bg-primary-toned-50 rounded-lg shadow-md text-sm text-primary-toned-600">
-					<h2 className="text-xl font-semibold text-primary-toned-800 mb-4">No current attempts</h2>
-					<p>You haven't started any attempts for this test yet.</p>
-					<p>Click the button below to start a new attempt.</p>
+					<h2 className="text-xl font-semibold text-primary-toned-800 mb-4">{t("no_current_attempts")}</h2>
+					<p>{t("no_attempts_text_1")}</p>
+					<p>{t("no_attempts_text_2")}</p>
 					<hr className="my-2 w-full border-primary-toned-300/50" />
 					<StartNewAttemptButton className='mb-4' />
 				</div>
@@ -48,6 +51,8 @@ export default function CurrentAttemptCard() {
 }
 
 function CurrentAttemptCardItem({ attempt }: { attempt: AttemptCoreSchema }) {
+	const { t } = useLanguage();
+	
 	const testId = useGetTestIdParams();
 	const navigate = useNavigate();
 	const { order, createdAt, updatedAt, _include } = attempt;
@@ -74,11 +79,11 @@ function CurrentAttemptCardItem({ attempt }: { attempt: AttemptCoreSchema }) {
 				<span className="font-semibold text-xl tracking-wide">{title}</span>
 			</div>
 			<div className="flex items-center gap-4 mt-1">
-				<span className="font-medium text-base">Time left:</span>
+				<span className="font-medium text-base">{t("time_left")}:</span>
 				{secondsLeft === 0 ? (
 					<span className="flex items-center gap-2 text-lg font-semibold px-4 py-2 rounded-lg border border-red-400 bg-red-100 text-red-700 shadow animate-bounce">
 						<AlarmClock size={20} className="inline-block" />
-						Time's up!
+						{t("times_up")}
 					</span>
 				) : (
 					<span className="text-lg font-mono bg-secondary/10 px-3 py-1 rounded text-secondary border border-secondary/20">{formatTime(secondsLeft)}</span>
@@ -94,18 +99,18 @@ function CurrentAttemptCardItem({ attempt }: { attempt: AttemptCoreSchema }) {
 					className="ml-4 flex items-center gap-2"
 					onClick={() => navigate(paths.candidate.tests.in(testId).attempts.in(attempt.id).DO)}
 				>
-					Continue Attempt
+					{t("continue_attempt")}
 					<ArrowRight strokeWidth={3} />
 				</MyButton>
 			</div>
 			<div className="flex flex-wrap gap-6 text-sm text-secondary-toned-700 mt-3 border-t border-secondary-toned-300 pt-3">
 				<div className="flex items-center gap-1">
 					<Calendar size={16} className="inline-block" />
-					<span>Started: {formatDate(createdAt)}</span>
+					<span>{t("started")}: {formatDate(createdAt)}</span>
 				</div>
 				<div className="flex items-center gap-1">
 					<History size={16} className="inline-block" />
-					<span>Last answered: {formatDate(updatedAt)}</span>
+					<span>{t("last_answered")}: {formatDate(updatedAt)}</span>
 				</div>
 			</div>
 		</div>

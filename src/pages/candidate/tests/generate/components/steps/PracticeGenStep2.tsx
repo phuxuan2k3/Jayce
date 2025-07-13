@@ -6,6 +6,7 @@ import MyFieldLayout from '../../../../../../features/tests/ui/forms/MyFieldLayo
 import MyLabel from '../../../../../../features/tests/ui/forms/MyLabel';
 import MyInput from '../../../../../../features/tests/ui/forms/MyInput';
 import MySelect from '../../../../../../features/tests/ui/forms/MySelect';
+import { useLanguage } from '../../../../../../LanguageProvider';
 
 export default function PracticeGenStep2({
 	data: data,
@@ -22,6 +23,8 @@ export default function PracticeGenStep2({
 	testLanguage: string;
 	testMinutesToAnswer: number;
 }) {
+	const { t } = useLanguage();
+
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
 		const { name, value } = e.target;
 		onDataChange({
@@ -42,10 +45,10 @@ export default function PracticeGenStep2({
 
 				<div className='flex flex-col gap-1'>
 					<span className="text-sm font-medium text-gray-500">
-						Language: <span className="font-semibold text-gray-700">{testLanguage}</span>
+						{t("gen_step2_language_label")}: <span className="font-semibold text-gray-700">{testLanguage}</span>
 					</span>
 					<span className="text-sm font-medium text-gray-500">
-						Minutes to answer: <span className="font-semibold text-gray-700">{testMinutesToAnswer}</span>
+						{t("gen_step2_minutes_label")}: <span className="font-semibold text-gray-700">{testMinutesToAnswer}</span>
 					</span>
 				</div>
 			</div>
@@ -54,12 +57,12 @@ export default function PracticeGenStep2({
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
 				<MyFieldLayout>
 					<MyLabel htmlFor='numberOfQuestions'>
-						Number of Questions
+						{t("gen_step2_field_number_of_questions")}
 					</MyLabel>
 					<MyInput
 						id='numberOfQuestions'
 						type="number"
-						aria-label='Number of Questions'
+						aria-label={t("gen_step2_field_number_of_questions")}
 						name="numberOfQuestions"
 						value={data.numberOfQuestions}
 						onChange={handleInputChange}
@@ -69,7 +72,7 @@ export default function PracticeGenStep2({
 				</MyFieldLayout>
 				<MyFieldLayout>
 					<MyLabel htmlFor='difficulty'>
-						Difficulty Level
+						{t("gen_step2_field_difficulty")}
 					</MyLabel>
 					<MySelect
 						options={DifficultiesAsConst.map((difficulty) => ({
@@ -78,7 +81,7 @@ export default function PracticeGenStep2({
 						}))}
 						id='difficulty'
 						name="difficulty"
-						aria-label='Difficulty Level'
+						aria-label={t("gen_step2_field_difficulty")}
 						value={data.difficulty}
 						onChange={(value) => onDataChange({ ...data, difficulty: value as typeof DifficultiesAsConst[number] })}
 					/>
@@ -93,8 +96,7 @@ export default function PracticeGenStep2({
 
 			<div className="bg-primary-toned-50 p-4 rounded-md border border-primary-toned-200 mt-4">
 				<p className="text-sm text-primary-toned-800">
-					<span className="font-medium">Tip:</span> Add specific tags related to the technologies or
-					concepts you want to be tested on. Tags help the AI generate more relevant questions.
+					<span className="font-medium">{t("gen_step2_tip_label")}</span> {t("gen_step2_tip_text")}
 				</p>
 			</div>
 		</div>

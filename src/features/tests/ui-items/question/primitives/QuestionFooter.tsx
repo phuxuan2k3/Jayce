@@ -1,10 +1,13 @@
 import { cn } from '../../../../../app/cn';
+import { useLanguage } from '../../../../../LanguageProvider';
 import MyLabel from '../../../ui/forms/MyLabel';
 import MyNumberInput from '../../../ui/forms/MyNumberInput';
 import MyTextArea from '../../../ui/forms/MyTextArea';
 import { QuestionContext, ShowAnswerContext } from './contexts';
 
 function QuestionFooter() {
+	const { t } = useLanguage();
+
 	const { show } = ShowAnswerContext.useShowAnswer();
 	const { question } = QuestionContext.useQuestion();
 	const answer = QuestionContext.useAnswer();
@@ -12,14 +15,14 @@ function QuestionFooter() {
 	return (
 		<div className='flex flex-col gap-2'>
 			<div className="text-sm font-semibold text-gray-800">
-				Points received: {answer.pointReceived != null
+				{t("points_received")}: {answer.pointReceived != null
 					? answer.pointReceived
-					: <span className='italic'>Pending...</span>
+					: <span className='italic'>{t("pending_review")}</span>
 				} / {question.points}
 			</div>
 			{answer.comment != null && (
 				<div className="text-sm text-gray-600">
-					Comment: {answer.comment}
+					{t("comment_label")}: {answer.comment}
 				</div>
 			)}
 		</div>
@@ -43,18 +46,20 @@ function QuestionScoreFooter({
 	comment?: string;
 	onCommentChange: (comment?: string) => void;
 }) {
-	const error = (points < 0 || points > questionPoints) ? "Points must be between 0 and " + questionPoints : undefined;
+	const { t } = useLanguage();
+
+	const error = (points < 0 || points > questionPoints) ? t("points_error") + questionPoints : undefined;
 	return (
 		<div className={cn(
 			"grid grid-cols-[auto_1fr] gap-2 p-2 place-items-baseline",
 			className
 		)}>
-			<MyLabel>Given Points: </MyLabel>
+			<MyLabel>{t("given_points")}: </MyLabel>
 			<div className="flex flex-col">
 				<div className="flex items-center gap-2">
 					<MyNumberInput
 						min={0}
-						placeholder='Enter points...'
+						placeholder={t("points_placeholder")}
 						className="w-24"
 						max={questionPoints}
 						value={points}
@@ -63,7 +68,7 @@ function QuestionScoreFooter({
 						onChange={(e) => onPointsChange(e.target.valueAsNumber)}
 					/>
 					<span className="text-sm text-gray-500">
-						/ {questionPoints} points
+						/ {questionPoints} {t("points_suffix")}
 					</span>
 				</div>
 				{error && (
@@ -74,7 +79,7 @@ function QuestionScoreFooter({
 			</div>
 			{allowComment && (
 				<>
-					<MyLabel>Comment: </MyLabel>
+					<MyLabel>{t("comment_label")}: </MyLabel>
 					<MyTextArea
 						value={comment}
 						onChange={(e) => {
@@ -87,7 +92,7 @@ function QuestionScoreFooter({
 							}
 						}}
 						onAbort={() => onCommentChange(undefined)}
-						placeholder="Enter your comment here..."
+						placeholder={t("comment_placeholder")}
 						className="flex-1"
 					/>
 				</>

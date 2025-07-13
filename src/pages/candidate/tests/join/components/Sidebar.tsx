@@ -4,6 +4,7 @@ import QuickAction from '../../../../../features/tests/ui/sidebar/primitive/Quic
 import { JoinTabType } from '../types'
 import { History, Earth, ClipboardList, ArrowLeft } from 'lucide-react'
 import paths from '../../../../../router/paths';
+import { useLanguage } from '../../../../../LanguageProvider';
 
 export default function Sidebar({
 	tab,
@@ -12,30 +13,32 @@ export default function Sidebar({
 	tab: JoinTabType;
 	onTabChange: (tab: JoinTabType) => void;
 }) {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 
 	return (
 		<SidebarLayout className='flex flex-col gap-4'>
 			<QuickAction
 				icon={<ClipboardList className='h-5 w-5' />}
-				title='Ongoing Exams'
-				description='View your ongoing exams'
+				title={t("sidebar_ongoing_title")}
+				description={t("sidebar_ongoing_description")}
 				onClick={() => onTabChange('ONGOING')}
 				active={tab === 'ONGOING'}
 			/>
 
 			<QuickAction
 				icon={<Earth className='h-5 w-5' />}
-				title='Public Exams'
-				description='Join publicly available exams'
+				title={t("sidebar_public_title")}
+				description={t("sidebar_public_description")}
 				onClick={() => onTabChange('PUBLIC')}
 				active={tab === 'PUBLIC'}
 			/>
 
 			<QuickAction
 				icon={<History className='h-5 w-5' />}
-				title='Exam History'
-				description='View your completed exams'
+				title={t("sidebar_history_title")}
+				description={t("sidebar_history_description")}
 				onClick={() => onTabChange('HISTORY')}
 				active={tab === 'HISTORY'}
 			/>
@@ -43,8 +46,8 @@ export default function Sidebar({
 			<QuickAction
 				className='mt-auto'
 				icon={<ArrowLeft className='h-5 w-5' />}
-				title='Back to Tests'
-				description='Return to the tests overview'
+				title={t("sidebar_back_title")}
+				description={t("sidebar_back_description")}
 				onClick={() => navigate(paths.candidate.tests.ROOT)}
 				variant={"alert"}
 			/>

@@ -4,6 +4,7 @@ import paths from '../../../../../../router/paths';
 import ManagerSidebar from '../../../../../../features/tests/ui-shared/sidebar/ManagerSidebar';
 import QuickAction from '../../../../../../features/tests/ui/sidebar/primitive/QuickAction';
 import { TabMode } from '../page';
+import { useLanguage } from '../../../../../../LanguageProvider';
 
 export default function Sidebar({
 	testId,
@@ -14,6 +15,8 @@ export default function Sidebar({
 	mode: TabMode;
 	onModeChange: (mode: TabMode) => void;
 }) {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 
 	return (
@@ -41,14 +44,14 @@ export default function Sidebar({
 
 			<QuickAction
 				icon={<HelpCircle />}
-				title="Edit"
-				description="Edit the exam."
+				title={t("sidebar_edit")}
+				description={t("sidebar_edit_description")}
 				onClick={() => navigate(paths.manager.tests.in(testId).EDIT)}
 			/>
 			<QuickAction
 				icon={<ArrowLeft />}
-				title="Back to Exams"
-				description="Return to the exams list."
+				title={t("sidebar_back_to_exams")}
+				description={t("sidebar_back_to_exams_description")}
 				onClick={() => navigate(paths.manager.tests.ROOT)}
 			/>
 		</ManagerSidebar>

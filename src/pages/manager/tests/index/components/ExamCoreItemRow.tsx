@@ -2,6 +2,7 @@ import { TestFullSchema } from '../../../../../features/tests/api/test.api-gen-v
 import { Check, X } from 'lucide-react';
 import { statusEnum } from './utils';
 import { cn } from '../../../../../app/cn';
+import { useLanguage } from '../../../../../LanguageProvider';
 
 interface ExamCoreItemRowProps {
 	test: TestFullSchema;
@@ -91,19 +92,23 @@ function StatusItem({
 }
 
 
-ExamCoreItemRow.Header = () => (
-	<thead>
-		<tr className="bg-primary-toned-700 text-white font-bold">
-			<th className="px-6 py-4 text-left">Title</th>
-			<th className="px-6 py-4 text-left">Last Modified</th>
-			<th className="px-6 py-4 text-left">Room ID</th>
-			<th className="px-6 py-4 text-center">Password</th>
-			<th className="px-6 py-4 text-center">Public</th>
-			<th className="px-6 py-4 text-center">Status</th>
-			<th className="px-6 py-4 text-right">Candidates</th>
-		</tr>
-	</thead>
-);
+ExamCoreItemRow.Header = () => {
+	const { t } = useLanguage();
+
+	return (
+		<thead>
+			<tr className="bg-primary-toned-700 text-white font-bold">
+				<th className="px-6 py-4 text-left">{t("exam_table_title")}</th>
+				<th className="px-6 py-4 text-left">{t("exam_table_modified")}</th>
+				<th className="px-6 py-4 text-left">{t("exam_table_room_id")}</th>
+				<th className="px-6 py-4 text-center">{t("exam_table_password")}</th>
+				<th className="px-6 py-4 text-center">{t("exam_table_public")}</th>
+				<th className="px-6 py-4 text-center">{t("exam_table_status")}</th>
+				<th className="px-6 py-4 text-right">{t("exam_table_candidates")}</th>
+			</tr>
+		</thead>
+	)
+};
 
 ExamCoreItemRow.Body = ({
 	examList,

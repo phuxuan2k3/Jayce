@@ -6,6 +6,7 @@ import TemplateForm from '../../../../../../features/tests/ui-items/template/Tem
 import MyDialog from '../../../../../../features/tests/ui/MyDialog';
 import useActionStateWatch from '../../../../../../features/tests/hooks/useActionStateWatch';
 import { toast } from 'react-toastify';
+import { useLanguage } from '../../../../../../LanguageProvider';
 
 export default function SaveTemplateDialog({
 	isOpen,
@@ -16,6 +17,8 @@ export default function SaveTemplateDialog({
 	onClose: () => void;
 	initializeTemplateCreateData: Omit<TemplatePersistCoreSchema, "name">;
 }) {
+	const { t } = useLanguage();
+
 	const [templateForm, setTemplateForm] = useState<TemplatePersistCoreSchema>({ ...initializeTemplateCreateData, name: '' });
 
 	useEffect(() => {
@@ -28,13 +31,13 @@ export default function SaveTemplateDialog({
 
 	useActionStateWatch(createState, {
 		onSuccess: () => {
-			toast.success('Template created successfully');
+			toast.success(t('template_created_success'));
 			onClose();
 		},
 		onError: (error) => {
 			const errorMessage = parseQueryError(error);
 			console.error('Failed to create template:', errorMessage);
-			toast.error(`Failed to create template: ${errorMessage}`);
+			toast.error(`${t("template_created_error")}: ${errorMessage}`);
 		},
 	})
 
@@ -43,8 +46,8 @@ export default function SaveTemplateDialog({
 		<MyDialog>
 			<div className='p-6 bg-white rounded-lg shadow-lg w-[60vw] h-[90vh] overflow-hidden flex flex-col gap-4'>
 				<MyDialog.Header
-					title='Save Template'
-					description='Save your current test configuration as a template for future use.'
+					title={t('save_template_title')}
+					description={t('save_template_description')}
 					onClose={onClose}
 				/>
 

@@ -1,10 +1,13 @@
 import { cn } from '../../../../../../app/cn';
+import { useLanguage } from '../../../../../../LanguageProvider';
 import { QuestionContext, ShowAnswerContext } from '../contexts';
 import { BaseComponentProps } from '../types';
 
 export function CorrectOption({
 	className = "",
 }: BaseComponentProps) {
+	const { t } = useLanguage();
+
 	const correctOption = QuestionContext.useMCQDetail()?.correctOption;
 	const { show: showResult } = ShowAnswerContext.useShowAnswer();
 
@@ -14,7 +17,7 @@ export function CorrectOption({
 
 	return (
 		<div className={cn("text-sm font-semibold text-green-600", className)}>
-			Correct Option: {characterCode}
+			{t("correct_option")}: {characterCode}
 		</div>
 	);
 }

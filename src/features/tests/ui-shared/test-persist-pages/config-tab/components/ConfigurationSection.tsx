@@ -6,6 +6,7 @@ import MyLabel from "../../../../ui/forms/MyLabel";
 import MyCheckbox from "../../../../ui/forms/MyCheckbox";
 import MySwitch from "../../../../ui/forms/MySwitch";
 import { useState } from "react";
+import { useLanguage } from "../../../../../../LanguageProvider";
 
 export function ConfigurationSection({
 	numberOfAttemptsAllowed,
@@ -22,6 +23,8 @@ export function ConfigurationSection({
 	isPublic?: boolean;
 	onChange: (patch: Partial<ExamPersistCoreSchema["detail"]>) => void;
 }) {
+	const { t } = useLanguage();
+	
 	const [numberOfAttemptsAllowedDraft, setNumberOfAttemptsAllowedDraft] = useState<number>(numberOfAttemptsAllowed || 1);
 	const [numberOfParticipantsDraft, setNumberOfParticipantsDraft] = useState<number>(numberOfParticipants || 1);
 
@@ -38,7 +41,7 @@ export function ConfigurationSection({
 						})}
 						id="max-attempts-switch"
 						label={
-							<MyLabel htmlFor="max-attempts">Maximum Attempts:</MyLabel>
+							<MyLabel htmlFor="max-attempts">{t("config_section_max_attempts_label")}:</MyLabel>
 						}
 						className="flex-row-reverse items-end justify-between w-full mb-1"
 					/>
@@ -46,7 +49,7 @@ export function ConfigurationSection({
 						id="max-attempts"
 						type="number"
 						min="1"
-						placeholder="Number of attempts"
+						placeholder={t("config_section_max_attempts_placeholder")}
 						disabled={numberOfAttemptsAllowed === undefined}
 						value={numberOfAttemptsAllowed || ''}
 						onChange={e => {
@@ -54,7 +57,7 @@ export function ConfigurationSection({
 							setNumberOfAttemptsAllowedDraft(Number(e.target.value));
 						}}
 					/>
-					<MyDescription text="Maximum number of attempts allowed for each participant" />
+					<MyDescription text={t("config_section_max_attempts_description")} />
 				</MyFieldLayout>
 
 				<MyFieldLayout className="order-3">
@@ -67,7 +70,7 @@ export function ConfigurationSection({
 						})}
 						id="test-participants-switch"
 						label={
-							<MyLabel htmlFor="test-participants">Number of Participants:</MyLabel>
+							<MyLabel htmlFor="test-participants">{t("config_section_max_participants_label")}:</MyLabel>
 						}
 						className="flex-row-reverse items-end justify-between w-full mb-1"
 					/>
@@ -76,7 +79,7 @@ export function ConfigurationSection({
 						id="test-participants"
 						type="number"
 						min="1"
-						placeholder="Number of participants"
+						placeholder={t("config_section_max_participants_placeholder")}
 						disabled={numberOfParticipants === undefined}
 						value={numberOfParticipants || ''}
 						onChange={e => {
@@ -84,12 +87,12 @@ export function ConfigurationSection({
 							setNumberOfParticipantsDraft(Number(e.target.value));
 						}}
 					/>
-					<MyDescription text="Maximum participants allowed" />
+					<MyDescription text={t("config_section_max_participants_description")} />
 				</MyFieldLayout>
 
 
 				<div className="order-2 row-span-2 flex flex-col gap-4 w-full h-full items-start justify-center bg-primary-toned-50 px-8 py-8 rounded-lg text-wrap">
-					<h3 className="text-xl font-semibold text-primary-toned-700 mb-2">Exam's options</h3>
+					<h3 className="text-xl font-semibold text-primary-toned-700 mb-2">{t("config_section_exam_options")}</h3>
 
 					<MyCheckbox
 						id="show-results"
@@ -98,7 +101,7 @@ export function ConfigurationSection({
 						label={
 							<MyDescription
 								flexShrink0={false}
-								text="Allow participants to see their results after completion"
+								text={t("config_section_checkbox_see_result")}
 							/>
 						}
 					/>
@@ -110,7 +113,7 @@ export function ConfigurationSection({
 						label={
 							<MyDescription
 								flexShrink0={false}
-								text="Allow participants to see other participants' results"
+								text={t("config_section_checkbox_see_others")}
 							/>
 						}
 					/>
@@ -122,7 +125,7 @@ export function ConfigurationSection({
 						label={
 							<MyDescription
 								flexShrink0={false}
-								text="Make this exam public, allowing anyone to access it"
+								text={t("config_section_checkbox_is_public")}
 							/>
 						}
 					/>

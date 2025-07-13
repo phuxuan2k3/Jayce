@@ -6,6 +6,7 @@ import LinksContextTab from './LinksContextTab';
 import { BuilderStep3Type } from '../../../common/step-schema';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
+import { useLanguage } from '../../../../../../../LanguageProvider';
 
 interface ContextSectionProps {
 	context: BuilderStep3Type['context'];
@@ -13,6 +14,8 @@ interface ContextSectionProps {
 }
 
 export default function ContextSection({ context, onContextChange }: ContextSectionProps) {
+	const { t } = useLanguage();
+
 	const [activeTab, setActiveTab] = useState<TabType>('text');
 	const [newLink, setNewLink] = useState('');
 
@@ -29,7 +32,7 @@ export default function ContextSection({ context, onContextChange }: ContextSect
 	const handleAddLink = () => {
 		if (newLink.trim()) {
 			if (z.string().url().safeParse(newLink).success === false) {
-				toast.warning('Please enter a valid URL');
+				toast.warning(t("context_section_invalid_url"));
 				return;
 			}
 
@@ -46,7 +49,7 @@ export default function ContextSection({ context, onContextChange }: ContextSect
 	return (
 		<div className="mb-6">
 			<h3 className="text-lg font-semibold text-primary mb-2">
-				Context Information
+				{t("context_section_title")}
 			</h3>
 
 			<ContextTabs

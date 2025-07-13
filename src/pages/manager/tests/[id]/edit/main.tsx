@@ -19,6 +19,7 @@ import QuestionsConfigTab from "./components/questions-config-tab";
 import EditExamDialog from "./components/EditExamDialog";
 import DeleteExamDialog from "./components/DeleteExamDialog";
 import ErrorDialog from "../../../../../features/tests/ui/fetch-states/ErrorDialog";
+import { useLanguage } from "../../../../../LanguageProvider";
 
 export default function ManagerTestEditMain({
 	data,
@@ -27,6 +28,8 @@ export default function ManagerTestEditMain({
 	data: ExamPersistCoreSchema;
 	hasAttempts: boolean;
 }) {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
 
@@ -46,7 +49,7 @@ export default function ManagerTestEditMain({
 		onValueConfirm: (value) => {
 			const parsed = handleParse(value);
 			if (!parsed) {
-				toast.error("Validation failed. Please fix the errors.");
+				toast.error(t("validation_failed_toast"));
 				return;
 			}
 			setEditData(parsed);
@@ -67,7 +70,7 @@ export default function ManagerTestEditMain({
 	const [updateTest, updateState] = usePutTestsByTestIdMutation();
 	useActionStateWatch(updateState, {
 		onSuccess: () => {
-			toast.success("Test updated successfully");
+			toast.success(t("test_update_success"));
 			testApiGenV2.util.invalidateTags(["Tests"]);
 			setShowEditDialog(false);
 			navigate(paths.manager.tests.in(testId).ROOT);
@@ -77,7 +80,7 @@ export default function ManagerTestEditMain({
 	const [deleteTest, deleteState] = useDeleteTestsByTestIdMutation();
 	useActionStateWatch(deleteState, {
 		onSuccess: () => {
-			toast.success("Test deleted successfully");
+			toast.success(t("test_delete_success"));
 			testApiGenV2.util.invalidateTags(["Tests"]);
 			navigate(paths.manager.tests.ROOT);
 		},
@@ -114,8 +117,8 @@ export default function ManagerTestEditMain({
 		<RightLayoutTemplate
 			header={
 				<RightLayoutTemplate.Header
-					title={draftValue.title || "Edit Test"}
-					description="Edit the test configuration and questions."
+					title={draftValue.title || t("edit_test_title")}
+					description={t("edit_test_description")}
 				/>
 			}
 			right={

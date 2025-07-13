@@ -4,6 +4,7 @@ import { LongAnswerDetail, LongAnswerDo } from './la-body';
 import { MCQDetail, MCQDo } from './mcq-body';
 import { BaseComponentProps } from './types';
 import { cn } from '../../../../../app/cn';
+import { useLanguage } from '../../../../../LanguageProvider';
 
 function QuestionDetailBody({
 	className = "",
@@ -28,6 +29,8 @@ function QuestionDetailBody({
 function QuestionDoBody({
 	className = "",
 }: BaseComponentProps) {
+	const { t } = useLanguage();
+
 	const { question } = QuestionContext.useQuestion();
 	const { setDoAnswer } = DoQuestionContext.useDoQuestionContext();
 	let detailComponent: React.ReactNode = null;
@@ -47,7 +50,7 @@ function QuestionDoBody({
 				variant="secondary"
 				onClick={() => setDoAnswer(undefined)}
 			>
-				Clear Answer
+				{t("clear_answer")}
 			</MyButton>
 		</div>
 	);
@@ -63,6 +66,8 @@ export { QuestionDoBody as QuestionPrimitivesDoBody };
 function ShowAnswerButton({
 	className = "",
 }: BaseComponentProps) {
+	const { t } = useLanguage();
+
 	const { show, setShow } = ShowAnswerContext.useShowAnswer();
 	return (
 		<MyButton
@@ -71,7 +76,7 @@ function ShowAnswerButton({
 			variant={show ? "secondary" : "primary"}
 			onClick={() => setShow(!show)}
 		>
-			{show ? "Hide Answer" : "Show Answer"}
+			{t(show ? "hide_answer" : "show_answer")}
 		</MyButton>
 	);
 }

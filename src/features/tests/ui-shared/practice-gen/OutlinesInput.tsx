@@ -7,6 +7,7 @@ import MyButton from '../../ui/buttons/MyButton';
 import MyLabel from '../../ui/forms/MyLabel';
 import MyDescription from '../../ui/forms/MyDescription';
 import MyInput from '../../ui/forms/MyInput';
+import { useLanguage } from '../../../../LanguageProvider';
 
 interface Props {
 	template: TemplatePersistCoreSchema;
@@ -25,6 +26,8 @@ const OutlinesInput: React.FC<Props> = ({
 	maxOutlines = 5,
 	omitAISection = false,
 }) => {
+	const { t } = useLanguage();
+
 	const [newOutline, setNewOutline] = useState<string>('');
 	const [isGeneratingSuggestions, setIsGeneratingSuggestions] =
 		useState<boolean>(false);
@@ -36,7 +39,7 @@ const OutlinesInput: React.FC<Props> = ({
 	const handleAddOutline = () => {
 		if (newOutline.trim()) {
 			if (outlines.length >= maxOutlines) {
-				setMaxOutlinesError(`You can only add up to ${maxOutlines} outlines.`);
+				setMaxOutlinesError(t("outlines_error_max").replace('{{max}}', maxOutlines.toString()));
 				return;
 			}
 			setMaxOutlinesError(null);
@@ -94,16 +97,16 @@ const OutlinesInput: React.FC<Props> = ({
 		<div className={cn('flex flex-col gap-1', className)}>
 			<div className='flex items-baseline gap-2'>
 				<MyLabel>
-					Outlines
+					{t("outlines_label")}
 				</MyLabel>
-				<MyDescription className='text-gray-500' text="(You can add up to 5 outlines)" />
+				<MyDescription className='text-gray-500' text={t("outlines_hint")} />
 			</div>
 
 			<div className="flex flex-col gap-2">
 				<div className='flex items-center gap-2'>
 					<MyInput
 						type="text"
-						placeholder="Enter outline text..."
+						placeholder={t("outlines_input_placeholder")}
 						value={newOutline}
 						onChange={(e) => setNewOutline(e.target.value)}
 						onKeyDown={(e) => {
@@ -117,9 +120,9 @@ const OutlinesInput: React.FC<Props> = ({
 					<MyButton
 						onClick={handleAddOutline}
 						disabled={!newOutline.trim() || outlines.length >= maxOutlines}
-						className={cn('flex-shrink-0 flex items-center gap-2	', outlines.length >= maxOutlines && 'bg-gray-400 cursor-not-allowed')}
+						className={cn('flex-shrink-0 flex items-center gap-2', outlines.length >= maxOutlines && 'bg-gray-400 cursor-not-allowed')}
 					>
-						<span>Add</span>
+						<span>{t("outlines_add")}</span>
 						<Plus size={18} strokeWidth={3} />
 					</MyButton>
 				</div>
@@ -131,7 +134,7 @@ const OutlinesInput: React.FC<Props> = ({
 			<div className='flex flex-col items-stretch justify-center gap-4 px-6 py-4 border border-gray-300 bg-gray-50 rounded-md shadow-sm my-2'>
 				{outlines.length > 0 ? (
 					<div className='flex flex-col gap-2'>
-						<h3 className='font-semibold text-primary-toned-700 mb-1'>Added Outlines ({outlines.length}):</h3>
+						<h3 className='font-semibold text-primary-toned-700 mb-1'>{t("outlines_added")} ({outlines.length}):</h3>
 						{outlines.map((outline, idx) => (
 							<li
 								key={idx}
@@ -153,7 +156,7 @@ const OutlinesInput: React.FC<Props> = ({
 						))}
 					</div>
 				) : (
-					<p className="text-sm text-gray-500 text-center">No outlines added yet.</p>
+					<p className="text-sm text-gray-500 text-center">{t("outlines_empty")}</p>
 				)}
 			</div>
 			{/* 
@@ -180,11 +183,11 @@ const OutlinesInput: React.FC<Props> = ({
 										<Sparkles size={20} className="text-white" />
 									</div>
 									<div>
-										<h3 className="font-semibold text-gray-800">AI Outline Suggestions</h3>
+										<h3 className="font-semibold text-gray-800">{t("outlines_ai_title")}</h3>
 										<p className="text-sm text-gray-600">
 											{isSuggestionsVisible
-												? "Click to hide suggestions panel"
-												: "Click to show AI-powered outline suggestions"
+												? t("outlines_ai_toggle_hide")
+												: t("outlines_ai_toggle_show")
 											}
 										</p>
 									</div>
@@ -197,7 +200,6 @@ const OutlinesInput: React.FC<Props> = ({
 									)}
 									<div className="p-2 bg-white rounded-lg shadow-sm">
 										<ChevronDown size={20} className={cn("text-gray-600 transition-all", isSuggestionsVisible && "rotate-180")} />
-
 									</div>
 								</div>
 							</div>
@@ -225,7 +227,7 @@ const OutlinesInput: React.FC<Props> = ({
 									variant={"secondary"}
 								>
 									<Sparkles size={20} strokeWidth={2.5} className={isGeneratingSuggestions ? 'animate-spin' : ''} />
-									{isGeneratingSuggestions ? 'Generating Suggestions...' : 'Suggest Outlines'}
+									{isGeneratingSuggestions ? t("outlines_ai_generating") : t("outlines_ai_generate")}
 								</MyButton>
 
 								{suggestions.length === 0 ? (
@@ -233,15 +235,15 @@ const OutlinesInput: React.FC<Props> = ({
 										<div className="mb-4">
 											<Sparkles size={48} className="text-gray-300 mx-auto" />
 										</div>
-										<h4 className="text-lg font-medium text-gray-700 mb-2">No suggestions yet</h4>
+										<h4 className="text-lg font-medium text-gray-700 mb-2">{t("outlines_ai_no_suggestions_title")}</h4>
 										<p className="text-gray-500 max-w-md mx-auto">
-											Click "Generate AI Suggestions" to get outline ideas based on your template
+											{t("outlines_ai_no_suggestions_desc")}
 										</p>
 									</div>
 								) : (
 									<div className="space-y-4">
 										<h4 className="font-semibold text-gray-600">
-											Suggested Outlines ({suggestions.length})
+											{t("outlines_at_suggested")} ({suggestions.length})
 										</h4>
 
 										<div className="flex flex-col gap-3">
@@ -263,7 +265,7 @@ const OutlinesInput: React.FC<Props> = ({
 														size={"small"}
 														className="flex items-center gap-1"
 													>
-														Add
+														{t("outlines_ai_add")}
 														<Plus size={12} strokeWidth={2.5} />
 													</MyButton>
 												</div>
@@ -277,7 +279,7 @@ const OutlinesInput: React.FC<Props> = ({
 												variant={"gray"}
 												className='px-4 py-2 font-semibold'
 											>
-												Clear
+												{t("outlines_ai_clear")}
 											</MyButton>
 
 											<MyButton
@@ -286,7 +288,7 @@ const OutlinesInput: React.FC<Props> = ({
 												size={"small"}
 												disabled={suggestions.length === 0 || outlines.length >= maxOutlines}
 											>
-												Add All ({suggestions.length})
+												{t("outlines_ai_add_all")} ({suggestions.length})
 											</MyButton>
 										</div>
 									</div>

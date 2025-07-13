@@ -6,6 +6,7 @@ import { Topic } from "../../common/base-schema";
 import { BuilderStep2Type } from "../../common/step-schema";
 import { Plus } from "lucide-react";
 import MyButton from "../../../../../../features/tests/ui/buttons/MyButton";
+import { useLanguage } from "../../../../../../LanguageProvider";
 
 export default function Step2({
 	data,
@@ -14,6 +15,8 @@ export default function Step2({
 	data: BuilderStep2Type;
 	onDataChange: (data: BuilderStep2Type) => void;
 }) {
+	const { t } = useLanguage();
+
 	const {
 		addTopic,
 		updateTopic,
@@ -55,7 +58,7 @@ export default function Step2({
 				onClick={addTopic}
 			>
 				<Plus className="w-5 h-5" strokeWidth={2.5} />
-				Add Topic
+				{t("step2_add_topic")}
 			</MyButton>
 		</div>
 	);

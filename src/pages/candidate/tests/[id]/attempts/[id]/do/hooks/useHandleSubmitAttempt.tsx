@@ -10,8 +10,11 @@ import testDoSlice from '../../../../../../../../features/tests/stores/testDoSli
 import useGetAttemptIdParams from '../../../../../../../../features/tests/hooks/useGetAttemptIdParams';
 import { useAppDispatch, useAppSelector } from '../../../../../../../../app/hooks';
 import { useCallback, useState } from 'react';
+import { useLanguage } from '../../../../../../../../LanguageProvider';
 
 export default function useSubmitAttempt() {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
 	const attemptId = useGetAttemptIdParams();
@@ -35,20 +38,20 @@ export default function useSubmitAttempt() {
 	const [patchSubmit, submitState] = usePatchAttemptsByAttemptIdSubmitMutation();
 	useActionStateWatch(submitState, {
 		onSuccess: () => {
-			toast.success("Attempt submitted successfully");
+			toast.success(t("submit_attempt_success"));
 			dispatch(testDoSlice.actions.clearAttempt(attemptId));
 			navigate(paths.candidate.tests.in(testId).attempts.in(attemptId).ROOT);
 		},
 		onError: (error) => {
 			console.error("Failed to submit attempt:", error);
 			const errorMessage = parseQueryError(error);
-			toast.error("Failed to submit attempt: " + errorMessage);
+			toast.error(t("submit_attempt_failed") + ": " + errorMessage);
 		}
 	});
 
 	const handleSubmitAttempt = useCallback(() => {
 		if (attemptState == null) {
-			toast.error("Attempt not found");
+			toast.error(t("submit_attempt_not_found"));
 			return;
 		}
 		if (pendingQuestions.length > 0) {

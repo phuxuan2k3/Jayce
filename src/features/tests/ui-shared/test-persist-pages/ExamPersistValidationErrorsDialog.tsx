@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import { ExamPersistZodSchemaType } from '../../schemas/exam-persist-zod';
 import MyDialog from '../../ui/MyDialog';
 import MyButton from '../../ui/buttons/MyButton';
+import { useLanguage } from '../../../../LanguageProvider';
 
 interface ValidationErrorDialogProps {
 	errors: z.ZodError<ExamPersistZodSchemaType> | undefined;
@@ -18,6 +19,8 @@ export default function ExamPersistValidationErrorsDialog({
 	onConfigEdit,
 	onQuestionsEdit,
 }: ValidationErrorDialogProps) {
+	const { t } = useLanguage();
+
 	const configErrors = useMemo(
 		() => errors?.issues.filter(i => i.path.includes("questions") === false).map(i => i.message) ?? []
 		, [errors]);
@@ -47,10 +50,10 @@ export default function ExamPersistValidationErrorsDialog({
 				</div>
 
 				<h2 className="text-xl font-semibold text-gray-900 text-center mb-2">
-					Validation Issues Found
+					{t("exam_validation_title")}
 				</h2>
 				<p className="text-gray-600 text-center mb-6 leading-relaxed">
-					Please review and fix the following issues before proceeding.
+					{t("exam_validation_description")}
 				</p>
 
 				{/* Content */}
@@ -63,7 +66,7 @@ export default function ExamPersistValidationErrorsDialog({
 							<div className="border border-secondary-toned-200 rounded-lg p-4 bg-secondary-toned-50">
 								<div className="flex items-center gap-2 mb-3">
 									<Settings size={20} className="text-secondary-toned-600" />
-									<h3 className="font-semibold text-secondary-toned-800">Configuration Related Issues</h3>
+									<h3 className="font-semibold text-secondary-toned-800">{t("exam_validation_config_header")}</h3>
 								</div>
 								<ul className="list-disc list-inside space-y-1 mb-4 text-secondary-toned-700">
 									{configErrors.map((error, index) => (
@@ -76,7 +79,7 @@ export default function ExamPersistValidationErrorsDialog({
 										className="inline-flex items-center gap-2 px-4 py-2 bg-secondary-toned-600 text-white rounded-md hover:bg-secondary-toned-700 transition-colors text-sm font-medium"
 									>
 										<Settings size={16} />
-										Edit Configuration
+										{t("exam_validation_edit_config")}
 									</button>
 								)}
 							</div>
@@ -87,7 +90,7 @@ export default function ExamPersistValidationErrorsDialog({
 							<div className="border border-secondary-toned-200 rounded-lg p-4 bg-secondary-toned-50">
 								<div className="flex items-center gap-2 mb-3">
 									<Edit3 size={20} className="text-secondary-toned-600" />
-									<h3 className="font-semibold text-secondary-toned-800">Questions Related Issues</h3>
+									<h3 className="font-semibold text-secondary-toned-800">{t("exam_validation_questions_header")}</h3>
 								</div>
 								<ul className="list-disc list-inside space-y-1 mb-4 text-secondary-toned-700">
 									{questionsErrors.map((error, index) => (
@@ -103,7 +106,7 @@ export default function ExamPersistValidationErrorsDialog({
 										className="inline-flex items-center gap-2 px-4 py-2 bg-secondary-toned-600 text-white rounded-md hover:bg-secondary-toned-700 transition-colors text-sm font-medium"
 									>
 										<Edit3 size={16} />
-										Edit Questions
+										{t("exam_validation_edit_questions")}
 									</button>
 								)}
 							</div>
@@ -119,7 +122,7 @@ export default function ExamPersistValidationErrorsDialog({
 							variant="gray"
 							className="flex-1"
 						>
-							Close
+							{t("close")}
 						</MyButton>
 					)}
 				</div>

@@ -13,8 +13,11 @@ import RightLayoutTemplate from "../../../../../components/layouts/RightLayoutTe
 import TitleSkeleton from "../../../../../features/tests/ui/skeletons/TitleSkeleton";
 import TestFullSidebar from "../../../../../features/tests/ui-shared/sidebar/TestFullSidebar";
 import InvalidDialog from "./components/InvalidDialog";
+import { useLanguage } from "../../../../../LanguageProvider";
 
 export default function CandidateTestExamPage() {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
 	const userId = useGetUserId();
@@ -44,7 +47,7 @@ export default function CandidateTestExamPage() {
 		const tabs = [
 			{
 				id: "attempts",
-				label: "Your Attempts",
+				label: t("tab_your_attempts"),
 				content: <AttemptsTab
 					onAttemptClick={(attempt) => {
 						navigate(paths.candidate.tests.in(testId).attempts.in(attempt.id).ROOT);
@@ -58,11 +61,11 @@ export default function CandidateTestExamPage() {
 		if (test._detail.isAllowedToSeeOtherResults) {
 			tabs.push({
 				id: "participants",
-				label: "Participants",
+				label: t("tab_participants"),
 				content: <ParticipantsTab
 					onAttemptClick={(attempt) => {
 						if (attempt.candidateId !== userId && attemptsCount === 0) {
-							setInvalidMessage("You are not allowed to view this attempt.");
+							setInvalidMessage(t("tab_participants_forbidden"));
 							return;
 						}
 						navigate(paths.candidate.tests.in(testId).attempts.in(attempt.id).ROOT);
@@ -104,14 +107,14 @@ export default function CandidateTestExamPage() {
 							) : (
 								<div className="flex flex-col items-center justify-center min-h-fit h-32 text-gray-500">
 									<div className="bg-gray-100 p-4 rounded-lg shadow-md border border-gray-300">
-										<p className="text-lg">This exam is not currently <span className="font-semibold">ongoing</span>.</p>
+										<p className="text-lg">{t("exam_not_ongoing_1")} <span className="font-semibold">{t("exam_not_ongoing_2")}</span>.</p>
 									</div>
 								</div>
 							)}
 						</div>
 
 						<div className="flex-1 flex flex-col gap-4">
-							<h2 className="text-xl font-bold">Details</h2>
+							<h2 className="text-xl font-bold">{t("exam_details_section")}</h2>
 							<FetchStateCover2
 								fetchState={userInTestQuery}
 								dataComponent={(userInTest) => (

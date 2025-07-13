@@ -18,10 +18,13 @@ import MyButton from '../../../../features/tests/ui/buttons/MyButton';
 import RightLayoutTemplate from '../../../../components/layouts/RightLayoutTemplate';
 import { Sparkles } from 'lucide-react';
 import ErrorDialog from '../../../../features/tests/ui/fetch-states/ErrorDialog';
+import { useLanguage } from '../../../../LanguageProvider';
 
 // Lesson: When I split it into 3 setMainValue (handleStep1, 2, 3...) and call it at the same time in the handleSelectTemplate function, it causes the state to update only the last function call (handleStep3), and override the previous ones.
 
 export default function CandidateTestsGeneratePage() {
+	const { t } = useLanguage();
+
 	const [selectedTemplate, setSelectedTemplate] = useState<TemplateCoreSchema | null>(null);
 	const [showTemplatesModal, setShowTemplatesModal] = useState(false);
 	const [showSaveTemplateDialog, setShowSaveTemplateDialog] = useState(false);
@@ -124,7 +127,7 @@ export default function CandidateTestsGeneratePage() {
 					/>
 				);
 			default:
-				return 'Unknown step';
+				return t("gen_step_invalid");
 		}
 	};
 
@@ -132,8 +135,8 @@ export default function CandidateTestsGeneratePage() {
 		<RightLayoutTemplate
 			header={
 				<RightLayoutTemplate.Header
-					title="Generate Practice Test"
-					description="Create a customized test using AI."
+					title={t("gen_page_header_title")}
+					description={t("gen_page_header_description")}
 				/>
 			}
 			right={
@@ -152,7 +155,7 @@ export default function CandidateTestsGeneratePage() {
 						if (newStep !== step) {
 							const newStepInfo = newStep as PracticeStepsValuesType;
 							if (newStepInfo == null) {
-								toast.error(`Invalid step: ${newStepInfo}`, {
+								toast.error(`${t("gen_step_invalid")}: ${newStepInfo}`, {
 									autoClose: 5000,
 									position: "top-right",
 									hideProgressBar: false,
@@ -170,14 +173,14 @@ export default function CandidateTestsGeneratePage() {
 
 				<MyErrorMessages
 					className='mx-2 mb-4'
-					errorMessages={currentErrorMessages}
+					errorMessages={currentErrorMessages.map(k => t(k))}
 				/>
 
 				<div className='flex flex-col gap-1'>
 					<h3 className='font-bold text-2xl text-primary'>
-						{PracticeGenStepInfo[step].title}
+						{t(PracticeGenStepInfo[step].title)}
 					</h3>
-					<p className='text-gray-500'>{PracticeGenStepInfo[step].description}</p>
+					<p className='text-gray-500'>{t(PracticeGenStepInfo[step].description)}</p>
 				</div>
 
 				<hr className='my-4 border-primary-toned-300' />
@@ -198,7 +201,7 @@ export default function CandidateTestsGeneratePage() {
 						className="w-1/4 min-w-fit"
 						onClick={handlePrevStep}
 					>
-						Back
+						{t("gen_step_prev")}
 					</MyButton>
 					{step < 3 && (
 						<MyButton
@@ -206,7 +209,7 @@ export default function CandidateTestsGeneratePage() {
 							className={"w-1/4 min-w-fit"}
 							onClick={handleNextStep}
 						>
-							Next
+							{t("gen_step_next")}
 						</MyButton>
 					)}
 					{step === 3 && (
@@ -216,7 +219,7 @@ export default function CandidateTestsGeneratePage() {
 							disabled={loadingState === "generating" || loadingState === "saving"}
 						>
 							<Sparkles size={18} />
-							Generate Practice
+							{t("gen_step_generate")}
 						</MyButton>
 					)}
 				</div>

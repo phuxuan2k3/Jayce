@@ -1,3 +1,4 @@
+import { useLanguage } from "../../../../LanguageProvider";
 import { useGetTestsByTestIdQuery } from "../../api/test.api-gen-v2"
 import FetchStateCover2 from "../../ui/fetch-states/FetchStateCover2";
 import { TestSidebarPrimitives } from "./TestSidebarPrimitives";
@@ -7,6 +8,8 @@ export default function TestFullSidebar({
 }: {
 	testId: string;
 }) {
+	const { t } = useLanguage();
+
 	const testQuery = useGetTestsByTestIdQuery({ testId });
 
 	const formatDate = (date: string) => {
@@ -56,11 +59,11 @@ export default function TestFullSidebar({
 
 							<div className="flex flex-col gap-1">
 								<div className="justify-end flex text-sm items-baseline gap-2 text-primary-700 font-arya">
-									<span>Created:</span>
+									<span>{t("test_sidebar_created")}:</span>
 									<span className="font-semibold">{formatDate(createdAt)}</span>
 								</div>
 								<div className="justify-end flex text-sm items-baseline gap-2 text-primary-700 font-arya">
-									<span>Last Updated:</span>
+									<span>{t("test_sidebar_updated")}:</span>
 									<span className="font-semibold">{formatDate(updatedAt)}</span>
 								</div>
 							</div>
@@ -73,31 +76,33 @@ export default function TestFullSidebar({
 }
 
 function PracticeDetails({ _detail }: { _detail: any }) {
+	const { t } = useLanguage();
+
 	return (
 		<div className="flex flex-col gap-3">
-			<h3 className="text-lg font-semibold text-primary-toned-700">Practice Details</h3>
+			<h3 className="text-lg font-semibold text-primary-toned-700">{t("test_sidebar_title_practice")}</h3>
 			<hr className="border-primary-toned-300" />
 			<ul className="text-sm space-y-2">
 				<li className="flex items-center gap-2">
-					<span className="text-primary-toned-600">Difficulty:</span>
+					<span className="text-primary-toned-600">{t("test_sidebar_difficulty")}:</span>
 					<span className="font-bold">{_detail.difficulty || "N/A"}</span>
 				</li>
 				<li className="flex items-center gap-2 flex-wrap">
-					<span className="text-primary-toned-600">Tags:</span>
+					<span className="text-primary-toned-600">{t("test_sidebar_tags")}:</span>
 					{_detail.tags && _detail.tags.length > 0 ? _detail.tags.map((tag: string, idx: number) => (
 						<span key={idx} className="bg-primary-toned-100 text-primary-toned-700 px-2 py-0.5 rounded-full text-xs font-medium border border-primary-toned-200">{tag}</span>
-					)) : <span className="text-primary-toned-400">None</span>}
+					)) : <span className="text-primary-toned-400">{t("test_sidebar_none")}</span>}
 				</li>
 				<li className="flex items-center gap-2">
-					<span className="text-primary-toned-600">Questions:</span>
+					<span className="text-primary-toned-600">{t("test_sidebar_questions")}:</span>
 					<span className="font-bold">{_detail.numberOfQuestions !== undefined ? _detail.numberOfQuestions : "N/A"}</span>
 				</li>
 				<li className="flex items-center gap-2">
-					<span className="text-primary-toned-600">Options per Question:</span>
+					<span className="text-primary-toned-600">{t("test_sidebar_options")}:</span>
 					<span className="font-bold">{_detail.numberOfOptions !== undefined ? _detail.numberOfOptions : "N/A"}</span>
 				</li>
 				<li className="flex flex-col gap-1 w-full">
-					<span className="text-primary-toned-600 mb-1">Outlines:</span>
+					<span className="text-primary-toned-600 mb-1">{t("test_sidebar_outlines")}:</span>
 					{_detail.outlines && _detail.outlines.length > 0 ? (
 						<ul className="list-disc pl-5">
 							{_detail.outlines.map((outline: string, idx: number) => (
@@ -106,7 +111,7 @@ function PracticeDetails({ _detail }: { _detail: any }) {
 								</li>
 							))}
 						</ul>
-					) : <span className="text-primary-toned-400">None</span>}
+					) : <span className="text-primary-toned-400">{t("test_sidebar_none")}</span>}
 				</li>
 			</ul>
 		</div>
@@ -114,46 +119,48 @@ function PracticeDetails({ _detail }: { _detail: any }) {
 }
 
 function ExamDetails({ _detail }: { _detail: any }) {
+	const { t } = useLanguage();
+
 	return (
 		<div className="flex flex-col gap-3">
-			<h3 className="text-lg font-semibold text-primary-toned-700">Exam Details</h3>
+			<h3 className="text-lg font-semibold text-primary-toned-700">{t("test_sidebar_title_exam")}</h3>
 			<hr className="border-primary-toned-300" />
 			<ul className="text-sm space-y-2">
 				<li className="flex items-center gap-2">
-					<span className="text-primary-toned-600">Room ID:</span>
+					<span className="text-primary-toned-600">{t("test_sidebar_room_id")}:</span>
 					<span className="font-bold">{_detail.roomId || "N/A"}</span>
 				</li>
 				<li className="flex items-center gap-2">
-					<span className="text-primary-toned-600">Password Protected:</span>
-					<span className="font-bold">{_detail.hasPassword !== undefined ? (_detail.hasPassword ? "Yes" : "No") : "N/A"}</span>
+					<span className="text-primary-toned-600">{t("test_sidebar_password_protected")}:</span>
+					<span className="font-bold">{_detail.hasPassword !== undefined ? (_detail.hasPassword ? t("yes") : t("no")) : "N/A"}</span>
 				</li>
 				<li className="flex items-center gap-2">
-					<span className="text-primary-toned-600">Attempts Allowed:</span>
-					<span className="font-bold">{_detail.numberOfAttemptsAllowed !== 0 ? _detail.numberOfAttemptsAllowed : "Unlimited"}</span>
+					<span className="text-primary-toned-600">{t("test_sidebar_attempts_allowed")}:</span>
+					<span className="font-bold">{_detail.numberOfAttemptsAllowed !== 0 ? _detail.numberOfAttemptsAllowed : t("test_sidebar_unlimited")}</span>
 				</li>
 				<li className="flex items-center gap-2">
-					<span className="text-primary-toned-600">Participants:</span>
-					<span className="font-bold">{_detail.numberOfParticipants !== 0 ? _detail.numberOfParticipants : "Unlimited"}</span>
+					<span className="text-primary-toned-600">{t("test_sidebar_participants")}:</span>
+					<span className="font-bold">{_detail.numberOfParticipants !== 0 ? _detail.numberOfParticipants : t("test_sidebar_unlimited")}</span>
 				</li>
 				<li className="flex items-center gap-2">
-					<span className="text-primary-toned-600">Answer Visible:</span>
-					<span className="font-bold">{_detail.isAnswerVisible !== undefined ? (_detail.isAnswerVisible ? "Yes" : "No") : "N/A"}</span>
+					<span className="text-primary-toned-600">{t("test_sidebar_answer_visible")}:</span>
+					<span className="font-bold">{_detail.isAnswerVisible !== undefined ? (_detail.isAnswerVisible ? t("yes") : t("no")) : "N/A"}</span>
 				</li>
 				<li className="flex items-center gap-2">
-					<span className="text-primary-toned-600">See Other Results:</span>
-					<span className="font-bold">{_detail.isAllowedToSeeOtherResults !== undefined ? (_detail.isAllowedToSeeOtherResults ? "Yes" : "No") : "N/A"}</span>
+					<span className="text-primary-toned-600">{t("test_sidebar_see_other_results")}:</span>
+					<span className="font-bold">{_detail.isAllowedToSeeOtherResults !== undefined ? (_detail.isAllowedToSeeOtherResults ? t("yes") : t("no")) : "N/A"}</span>
 				</li>
 				<li className="flex items-center gap-2">
-					<span className="text-primary-toned-600">Open Date:</span>
+					<span className="text-primary-toned-600">{t("test_sidebar_open_date")}:</span>
 					<span className="font-bold">{_detail.openDate ? new Date(_detail.openDate).toLocaleString() : "N/A"}</span>
 				</li>
 				<li className="flex items-center gap-2">
-					<span className="text-primary-toned-600">Close Date:</span>
+					<span className="text-primary-toned-600">{t("test_sidebar_close_date")}:</span>
 					<span className="font-bold">{_detail.closeDate ? new Date(_detail.closeDate).toLocaleString() : "N/A"}</span>
 				</li>
 				<li className="flex items-center gap-2">
-					<span className="text-primary-toned-600">Is Public:</span>
-					<span className="font-bold">{_detail.isPublic !== undefined ? (_detail.isPublic ? "Yes" : "No") : "N/A"}</span>
+					<span className="text-primary-toned-600">{t("test_sidebar_is_public")}:</span>
+					<span className="font-bold">{_detail.isPublic !== undefined ? (_detail.isPublic ? t("yes") : t("no")) : "N/A"}</span>
 				</li>
 			</ul>
 		</div>

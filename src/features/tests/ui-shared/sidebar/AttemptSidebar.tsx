@@ -5,6 +5,7 @@ import { TestSidebarPrimitives } from "./TestSidebarPrimitives";
 import FetchStateCover2 from "../../ui/fetch-states/FetchStateCover2";
 import useTestWithAttemptQueries from "../../hooks/query/useTestWithAttemptQueries";
 import React, { useEffect, useState } from "react";
+import { useLanguage } from "../../../../LanguageProvider";
 
 export default function AttemptSidebar({
 	scoreAttemptSection,
@@ -49,6 +50,8 @@ function _AttemptSidebar({
 	attempt: AttemptCoreSchema;
 	test: TestFullSchema;
 }) {
+	const { t } = useLanguage();
+
 	const { points, answered, answeredCorrect } = attempt._aggregate;
 	const { totalPoints } = test._aggregate;
 
@@ -64,7 +67,7 @@ function _AttemptSidebar({
 		<>
 			<div className="flex items-center justify-between">
 				<div>
-					<h3 className="text-2xl font-bold">Attempt #{attempt.order}</h3>
+					<h3 className="text-2xl font-bold">{t("attempt_sidebar_attempt_number")} #{attempt.order}</h3>
 					<span
 						className={cn(
 							AttemptUtils.status(attempt.status).bandage,
@@ -87,7 +90,7 @@ function _AttemptSidebar({
 				<>
 					<div className="flex flex-col gap-1">
 						<div className="flex justify-between text-xs font-medium text-primary-toned-600">
-							<span>Score</span>
+							<span>{t("attempt_sidebar_score")}</span>
 							<span>{getScorePercentage()}%</span>
 						</div>
 						<div className="w-full h-3 bg-primary-toned-100 rounded-full overflow-hidden">
@@ -101,22 +104,22 @@ function _AttemptSidebar({
 					<div className="flex justify-between gap-2 text-center mt-2">
 						<div className="flex-1 bg-primary-toned-50 rounded-lg py-2">
 							<div className="text-lg font-bold">{answeredCorrect}</div>
-							<div className="text-xs text-primary-toned-600">Correct</div>
+							<div className="text-xs text-primary-toned-600">{t("attempt_sidebar_correct")}</div>
 						</div>
 						<div className="flex-1 bg-primary-toned-50 rounded-lg py-2">
 							<div className="text-lg font-bold">{answered}</div>
-							<div className="text-xs text-primary-toned-600">Answered</div>
+							<div className="text-xs text-primary-toned-600">{t("attempt_sidebar_answered")}</div>
 						</div>
 						<div className="flex-1 bg-primary-toned-50 rounded-lg py-2">
 							<div className="text-lg font-bold">{getAccuracyPercentage()}%</div>
-							<div className="text-xs text-primary-toned-600">Accuracy</div>
+							<div className="text-xs text-primary-toned-600">{t("attempt_sidebar_accuracy")}</div>
 						</div>
 					</div>
 				</>
 			) : (
 				attempt.status === "COMPLETED" && (
 					<span className="flex items-center gap-1 text-gray-500 text-xs">
-						Waiting to be graded ...
+						{t("attempt_sidebar_waiting_to_be_graded")}
 					</span>
 				)
 			)}

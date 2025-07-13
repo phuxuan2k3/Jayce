@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { BuilderStep1Schema, BuilderStep2Schema, BuilderStep3Schema } from '../../common/step-schema';
 import { AllStepData, StepInfoKey } from '../../common/types';
+import { useLanguage } from '../../../../../../LanguageProvider';
 
 export default function useBuilderStepsData({
 	stepData,
@@ -9,6 +10,8 @@ export default function useBuilderStepsData({
 	stepData: AllStepData;
 	onStepDataChange: (data: AllStepData) => void;
 }) {
+	const { t } = useLanguage();
+	
 	const [step, setStep] = useState<StepInfoKey>(1);
 	const [stepReached, setStepReached] = useState<StepInfoKey>(1);
 	const [currentErrorMessages, setCurrentErrorMessages] = useState<string[]>([]);
@@ -36,21 +39,21 @@ export default function useBuilderStepsData({
 			if (step === 1) {
 				const validationResult = BuilderStep1Schema.safeParse(stepData.step1);
 				if (!validationResult.success) {
-					setCurrentErrorMessages(validationResult.error.errors.map(err => err.message));
+					setCurrentErrorMessages(validationResult.error.errors.map(err => t(err.message)));
 					return;
 				}
 			}
 			if (step === 2) {
 				const validationResult = BuilderStep2Schema.safeParse(stepData.step2);
 				if (!validationResult.success) {
-					setCurrentErrorMessages(validationResult.error.errors.map(err => err.message));
+					setCurrentErrorMessages(validationResult.error.errors.map(err => t(err.message)));
 					return;
 				}
 			}
 			if (step === 3) {
 				const validationResult = BuilderStep3Schema.safeParse(stepData.step3);
 				if (!validationResult.success) {
-					setCurrentErrorMessages(validationResult.error.errors.map(err => err.message));
+					setCurrentErrorMessages(validationResult.error.errors.map(err => t(err.message)));
 					return;
 				}
 			}

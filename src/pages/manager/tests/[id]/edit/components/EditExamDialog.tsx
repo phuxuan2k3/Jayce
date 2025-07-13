@@ -1,6 +1,7 @@
 import { AlertTriangle } from 'lucide-react';
 import MyDialog from '../../../../../../features/tests/ui/MyDialog';
 import MyButton from '../../../../../../features/tests/ui/buttons/MyButton';
+import { useLanguage } from '../../../../../../LanguageProvider';
 
 export default function EditExamDialog({
 	isLoading,
@@ -11,6 +12,8 @@ export default function EditExamDialog({
 	onConfirm: () => void;
 	onCancel: () => void;
 }) {
+	const { t } = useLanguage();
+
 	return (
 		<MyDialog>
 			<MyDialog.Content className='flex flex-col items-center'>
@@ -20,11 +23,11 @@ export default function EditExamDialog({
 
 				{/* Title */}
 				<h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
-					Edit Exam Confirmation
+					{t("edit_exam_dialog_title")}
 				</h2>
 
 				<p className='text-gray-600 text-center mb-6 leading-relaxed'>
-					You are about to edit the exam. Please ensure all details are correct before proceeding.
+					{t("edit_exam_dialog_description")}
 				</p>
 
 				<div className='flex justify-between w-full mt-4'>
@@ -32,14 +35,14 @@ export default function EditExamDialog({
 						onClick={onCancel}
 						variant={"gray"}
 					>
-						Cancel
+						{t("cancel")}
 					</MyButton>
 					<MyButton
 						onClick={onConfirm}
 						variant={"primary"}
 						loading={isLoading}
 					>
-						{isLoading ? "Saving..." : "Save Changes"}
+						{isLoading ? t("saving") : t("dialog_save_changes")}
 					</MyButton>
 				</div>
 			</MyDialog.Content>

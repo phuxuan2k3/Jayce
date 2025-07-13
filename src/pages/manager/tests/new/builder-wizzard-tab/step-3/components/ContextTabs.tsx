@@ -1,4 +1,5 @@
 import { cn } from "../../../../../../../app/cn";
+import { useLanguage } from "../../../../../../../LanguageProvider";
 
 export type TabType = 'text' | 'files' | 'links';
 
@@ -15,6 +16,8 @@ export default function ContextTabs({
 	filesCount,
 	linksCount
 }: ContextTabsProps) {
+	const { t } = useLanguage();
+	
 	const tabButtonClass = (isActive: boolean) =>
 		cn(
 			'px-4 py-2 text-sm rounded-t-lg transition-colors font-semibold',
@@ -30,21 +33,21 @@ export default function ContextTabs({
 				onClick={() => onTabChange('text')}
 				className={tabButtonClass(activeTab === 'text')}
 			>
-				Text
+				{t("context_tab_text")}
 			</button>
 			<button
 				type="button"
 				onClick={() => onTabChange('files')}
 				className={tabButtonClass(activeTab === 'files')}
 			>
-				Files ({filesCount})
+				{t("context_tab_files")} ({filesCount})
 			</button>
 			<button
 				type="button"
 				onClick={() => onTabChange('links')}
 				className={tabButtonClass(activeTab === 'links')}
 			>
-				Links ({linksCount})
+				{t("context_tab_links")} ({linksCount})
 			</button>
 		</div>
 	);

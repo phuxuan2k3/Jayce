@@ -1,5 +1,6 @@
 import { cn } from "../../../../../../app/cn";
 import MyButton from "../../../../../../features/tests/ui/buttons/MyButton";
+import { useLanguage } from "../../../../../../LanguageProvider";
 
 export default function BottomNavButtons({
 	className = "",
@@ -14,6 +15,8 @@ export default function BottomNavButtons({
 	isLastStep?: boolean;
 	isFirstStep?: boolean;
 }) {
+	const { t } = useLanguage();
+
 	return (
 		<div className={cn(`flex items-center w-full`, className)}>
 			{isFirstStep === false && <MyButton
@@ -21,14 +24,14 @@ export default function BottomNavButtons({
 				className="w-1/4 min-w-fit mr-auto"
 				onClick={onBack}
 			>
-				Back
+				{t("builder_back")}
 			</MyButton>}
 			{isLastStep === false && <MyButton
 				disabled={isLastStep}
 				className={cn("w-1/4 min-w-fit ml-auto")}
 				onClick={onNext}
 			>
-				Next
+				{t("builder_next")}
 			</MyButton>}
 		</div>
 	)

@@ -11,6 +11,7 @@ import useGetTestIdParams from "../../../../../../../../features/tests/hooks/use
 import TimesUpDialog from "./TimesUpDialog";
 import useHandleSubmitAnswers from "../hooks/useHandleSubmitAnswers";
 import useHandleSubmitAttempt from "../hooks/useHandleSubmitAttempt";
+import { useLanguage } from "../../../../../../../../LanguageProvider";
 
 // The server auto submit when time is up, so we don't need to handle the submit there.
 
@@ -31,6 +32,8 @@ export default function TestDoSidebar({
 	currentQuestionIndex: number;
 	onCurrentQuestionIndexChange: (index: number) => void;
 }) {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
 
@@ -64,11 +67,11 @@ export default function TestDoSidebar({
 				<TestTimer timeLeft={secondsLeft} />
 			</div>
 			<div className="bg-white rounded-lg shadow-primary p-6 border-r border-b border-primary">
-				<div className="mb-4 font-semibold text-primary text-xl">Questions</div>
+				<div className="mb-4 font-semibold text-primary text-xl">{t("questions")}</div>
 				<div className="grid grid-cols-5 gap-4 lg:grid-cols-7 lg:gap-2">
 					{questionDoState == null || questionDoState.length === 0
 						? (
-							<div>No questions found</div>
+							<div>{t("no_questions_found")}</div>
 						) : (questionDoState.sort((q1, q2) => q1.index - q2.index).map(({ answer, isFlagged, index }) => (
 							<button
 								key={index}
@@ -91,23 +94,23 @@ export default function TestDoSidebar({
 			<hr className="mt-auto mb-2 border-primary-toned-700/50" />
 
 			<MyButton onClick={() => setShowSubmitDialog(true)} className="w-full" variant="primary">
-				Submit
+				{t("submit")}
 			</MyButton>
 
 
 			{showSubmitDialog && <MyDialog>
 				<div className="flex flex-col w-[500px] h-32 justify-between items-center p-4 bg-white rounded-lg shadow-lg">
-					<h1>Do you want to submit your answers?</h1>
+					<h1>{t("submit_confirm_title")}</h1>
 					<hr className="my-4 border-primary-toned-700/50" />
 					<div className="flex w-full gap-2 mt-auto">
 						<MyButton
 							onClick={() => handleSubmitAttempt()} className="flex-1"
 							disabled={isSubmitting}
 						>
-							{isSubmitting ? "Submitting..." : "Yes, submit"}
+							{isSubmitting ? t("submitting") : t("submit_yes")}
 						</MyButton>
 						<MyButton variant="secondary" onClick={() => setShowSubmitDialog(false)} className="flex-1">
-							No, cancel
+							{t("submit_no")}
 						</MyButton>
 					</div>
 				</div>

@@ -11,8 +11,11 @@ import { AttemptCoreSchema, TestFullSchema } from "../../../../../../../features
 import { useCallback } from "react";
 import useGetUserId from "../../../../../../../features/tests/hooks/useGetUserId";
 import TitleSkeleton from "../../../../../../../features/tests/ui/skeletons/TitleSkeleton";
+import { useLanguage } from "../../../../../../../LanguageProvider";
 
 export default function CandidateTestAttemptPage() {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 	const userId = useGetUserId();
 	const testId = useGetTestIdParams();
@@ -37,8 +40,8 @@ export default function CandidateTestAttemptPage() {
 					loadingComponent={<TitleSkeleton />}
 					dataComponent={({ attempt, test }) => (
 						<RightLayoutTemplate.Header
-							title={`Attempt #${attempt.order} - ${test.title}`}
-							description={`Started at ${format(new Date(attempt.createdAt), "dd MMM yyyy, HH:mm")}`}
+							title={`${t("attempt_title_prefix")} #${attempt.order} - ${test.title}`}
+							description={`${t("attempt_start_time")} ${format(new Date(attempt.createdAt), "dd MMM yyyy, HH:mm")}`}
 							backButton={<RightLayoutTemplate.BackButton onClick={() => navigate(paths.candidate.tests.in(testId).ROOT)} />}
 						/>
 					)}

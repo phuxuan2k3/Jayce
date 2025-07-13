@@ -5,6 +5,7 @@ import { PagingFilter } from '../../../types/query';
 import { AttemptCoreSchema, useGetAttemptsQuery } from '../../../api/test.api-gen-v2';
 import MyPaginationSection from '../../../ui-sections/MyPaginationSection';
 import AttemptsTable from '../../../ui-items/attempt/AttemptsTable';
+import { useLanguage } from '../../../../../LanguageProvider';
 
 export default function ParticipantAttempts({
 	candidateId,
@@ -13,6 +14,8 @@ export default function ParticipantAttempts({
 	candidateId: string;
 	onAttemptClick: (attempt: AttemptCoreSchema) => void;
 }) {
+	const { t } = useLanguage();
+
 	const testId = useGetTestIdParams();
 
 	const [filter, setFilter] = useState<PagingFilter>({
@@ -37,7 +40,7 @@ export default function ParticipantAttempts({
 					</div>
 				) : (
 					<div className='w-full h-full flex items-center justify-center flex-col'>
-						<p className='text-gray-600 mb-4'>There are no attempts for this participant yet.</p>
+						<p className='text-gray-600 mb-4'>{t("participant_attempts_empty")}</p>
 					</div>
 				)}
 			/>

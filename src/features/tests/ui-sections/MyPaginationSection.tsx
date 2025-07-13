@@ -1,4 +1,5 @@
 import { Pagination as MUIPagination, ThemeProvider, createTheme } from "@mui/material";
+import { useLanguage } from "../../../LanguageProvider";
 
 declare module '@mui/material/styles' {
 	interface Palette {
@@ -41,6 +42,8 @@ export default function MyPaginationSection({
 	totalPages?: number;
 	onPageChange: (page: number) => void;
 }) {
+	const { t } = useLanguage();
+
 	const isLoading = totalPages == null || total == null;
 	return (
 		<div className="flex flex-col items-center justify-center w-full p-4">
@@ -55,7 +58,7 @@ export default function MyPaginationSection({
 			</ThemeProvider>
 
 			<span className="text-sm text-gray-500 mt-4 italic w-full text-center">
-				Total {total} items, showing {perPage} per page.
+				{t("pagination_total_items").replace("{{total}}", total?.toString() || "0").replace("{{perPage}}", perPage.toString())}
 			</span>
 		</div>
 	)

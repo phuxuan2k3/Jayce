@@ -1,4 +1,5 @@
 import { cn } from '../../../../../app/cn';
+import { useLanguage } from '../../../../../LanguageProvider';
 import { MySlider } from '../../../ui/MySlider';
 import { ArrowUpCircleIcon, ChartLine, CopyCheckIcon, PercentCircle, Users } from 'lucide-react';
 
@@ -11,28 +12,30 @@ export default function QuestionAggregate({
 		numberOfCorrectAnswers: number;
 	};
 }) {
+	const { t } = useLanguage();
+
 	const correctRate = aggregate.numberOfAnswers > 0
 		? (aggregate.numberOfCorrectAnswers / aggregate.numberOfAnswers) * 100
 		: 0;
 
 	const AggregateList = [
 		{
-			label: 'Average Score',
+			label: t("question_aggregate_average_score"),
 			value: aggregate.averageScore.toFixed(2),
 			icon: <ChartLine className='w-4 h-4' />,
 		},
 		{
-			label: 'No. Answers',
+			label: t("question_aggregate_number_of_answers"),
 			value: aggregate.numberOfAnswers,
 			icon: <Users className='w-4 h-4' />,
 		},
 		{
-			label: 'Correct Answers',
+			label: t("question_aggregate_number_of_correct_answers"),
 			value: aggregate.numberOfCorrectAnswers,
 			icon: <CopyCheckIcon className='w-4 h-4' />,
 		},
 		{
-			label: 'Correct Rate',
+			label: t("question_aggregate_correct_rate"),
 			value: `${correctRate.toFixed(2)}%`,
 			icon: <PercentCircle className='w-4 h-4' />,
 		},
@@ -44,7 +47,7 @@ export default function QuestionAggregate({
 				<div className='flex flex-row items-center gap-4'>
 					<hr className='border-gray-300 flex-1' />
 					<button onClick={onClick} className={cn("flex items-center gap-2 bg-white border border-gray-300 shadow-sm rounded-md px-4 py-1 font-semibold text-sm")} >
-						{isShow ? 'Hide Statistics' : 'Show Statistics'}
+						{isShow ? t("question_aggregate_hide_statistics") : t("question_aggregate_show_statistics")}
 						<ArrowUpCircleIcon className={cn('w-4 h-4 transition-all duration-300 ease-in-out', isShow && "rotate-180")} />
 					</button>
 					<hr className='border-gray-300 flex-1' />

@@ -8,6 +8,7 @@ import { PagingFilter, QuerySortValues } from "../../../types/query";
 import FetchStateCover2 from "../../../ui/fetch-states/FetchStateCover2";
 import MyPaginationSection from "../../../ui-sections/MyPaginationSection";
 import MyButtonWithSort from "../../../ui/buttons/MyButtonWithSort";
+import { useLanguage } from "../../../../../LanguageProvider";
 
 type Filter = PagingFilter & {
 	sortByRank: QuerySortValues;
@@ -18,6 +19,8 @@ export default function ParticipantsTab({
 }: {
 	onAttemptClick: (attempt: AttemptCoreSchema) => void;
 }) {
+	const { t } = useLanguage();
+
 	const testId = useGetTestIdParams();
 
 	const [selectedParticipant, setSelectedPaticipant] = useState<ParticipantUser | null>(null);
@@ -55,7 +58,7 @@ export default function ParticipantsTab({
 										sort={filter.sortByRank}
 										setSort={(sort) => setFilter((prev) => ({ ...prev, sortByRank: sort }))}
 									>
-										Sort by Rank
+										{t("participants_tab_sort_by_rank")}
 									</MyButtonWithSort>
 								</div>
 								<div className="flex-1">
@@ -68,7 +71,7 @@ export default function ParticipantsTab({
 
 						) : (
 							<div className="w-full h-full flex items-center justify-center flex-col">
-								<p className="text-gray-600 mb-4">There are no participants for this test yet.</p>
+								<p className="text-gray-600 mb-4">{t("participants_tab_empty")}</p>
 							</div>
 						)}
 					/>

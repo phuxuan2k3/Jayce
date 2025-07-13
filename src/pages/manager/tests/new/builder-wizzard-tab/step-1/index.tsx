@@ -5,6 +5,7 @@ import MyFieldLayout from "../../../../../../features/tests/ui/forms/MyFieldLayo
 import MyInput from "../../../../../../features/tests/ui/forms/MyInput";
 import MyTextArea from "../../../../../../features/tests/ui/forms/MyTextArea";
 import MySelect from "../../../../../../features/tests/ui/forms/MySelect";
+import { useLanguage } from "../../../../../../LanguageProvider";
 
 export default function Step1({
 	data,
@@ -13,15 +14,17 @@ export default function Step1({
 	data: BuilderStep1Type;
 	onDataChange: (data: BuilderStep1Type) => void;
 }) {
+	const { t } = useLanguage();
+
 	return (
 		<div className="text-base w-full h-full flex flex-col gap-4">
 
 			<MyFieldLayout>
-				<MyLabel htmlFor="test-title">Title:</MyLabel>
+				<MyLabel htmlFor="test-title">{t("step1_title_label")}:</MyLabel>
 				<MyInput
 					id="test-title"
 					name="title"
-					aria-label="Test Title"
+					aria-label={t("step1_title_aria")}
 					value={data.title}
 					onChange={(e) =>
 						onDataChange({
@@ -29,21 +32,21 @@ export default function Step1({
 							title: e.target.value,
 						})
 					}
-					placeholder="Title"
+					placeholder={t("step1_title_placeholder")}
 				/>
 			</MyFieldLayout>
 
 			<MyFieldLayout>
 				<MyLabel htmlFor="test-description">
-					Description:
+					{t("step1_description_label")}:
 				</MyLabel>
 				<MyTextArea
 					id="test-description"
 					isAutoSized={false}
 					name="description"
-					aria-label="Test Description"
+					aria-label={t("step1_description_aria")}
 					rows={3}
-					placeholder="Describe your test"
+					placeholder={t("step1_description_placeholder")}
 					value={data.description}
 					onChange={(e) =>
 						onDataChange({
@@ -55,14 +58,14 @@ export default function Step1({
 			</MyFieldLayout>
 
 			<MyFieldLayout>
-				<MyLabel htmlFor="test-language">Language:</MyLabel>
+				<MyLabel htmlFor="test-language">{t("step1_language_label")}:</MyLabel>
 				<MySelect
 					options={LanguagesAsConst.map((lang) => ({
 						value: lang,
 						label: lang,
 					}))}
 					id="test-language"
-					aria-label="Test Language"
+					aria-label={t("step1_language_aria")}
 					name="language"
 					value={data.language}
 					onChange={(e) =>

@@ -9,8 +9,11 @@ import MyButtonWithLoading from '../../../../../../features/tests/ui/buttons/MyB
 import { cn } from '../../../../../../app/cn';
 import MyButton from '../../../../../../features/tests/ui/buttons/MyButton';
 import MyTextArea from '../../../../../../features/tests/ui/forms/MyTextArea';
+import { useLanguage } from '../../../../../../LanguageProvider';
 
 export default function FeedbackTabContent() {
+	const { t } = useLanguage();
+
 	const testId = useGetTestIdParams();
 
 	const [rating, setRating] = React.useState(0);
@@ -20,32 +23,28 @@ export default function FeedbackTabContent() {
 	const [postFeedback, state] = usePostFeedbacksMutation();
 	useActionStateWatch(state, {
 		onSuccess: () => {
-			toast.success('Feedback submitted successfully!');
+			toast.success(t("feedback_submitted_successfully"));
 			setRating(0);
 			setComment('');
 			setProblems([]);
 		},
 		onError: (error) => {
 			toast.error(`Error submitting feedback: ${parseQueryError(error)}`);
-			console.error('Error submitting feedback:', parseQueryError(error));
+			console.error(`${t("feedback_submitted_error")}:`, parseQueryError(error));
 		}
 	});
 
 	return (
 		<div className="flex flex-col gap-2 py-2 px-6">
-			<h2 className="text-2xl font-bold text-primary">Test Feedback</h2>
+			<h2 className="text-2xl font-bold text-primary">{t("feedback_title")}</h2>
 			<div className='bg-primary-toned-50 border border-primary-toned-300 text-sm text-primary p-4 rounded-lg mb-4 flex flex-col gap-2 my-4'>
-				<span>
-					Your feedback on this AI-generated test is important to us. Please share your rating, comments, and let us know if you faced any issues.
-				</span>
-				<span>
-					Your input will help us enhance the quality of our AI-generated tests and create a better experience for everyone.
-				</span>
+				<span>{t("feedback_note_1")}</span>
+				<span>{t("feedback_note_2")}</span>
 			</div>
 
 			<h3 className="my-2 text-lg font-semibold flex items-center text-primary">
 				<StarIcon className="mr-2" size={20} strokeWidth={2.5} />
-				Test Rating
+				{t("feedback_rating_label")}
 			</h3>
 
 			<div className="flex flex-col items-start gap-2">
@@ -81,29 +80,29 @@ export default function FeedbackTabContent() {
 						size={"small"}
 						className='ml-4'
 					>
-						Clear
+						{t("feedback_clear_rating")}
 					</MyButton>
 				</div>
 				<span className="text-sm text-gray-700">
-					{rating > 0 ? `You rated: ${rating}/10` : 'No rating selected'}
+					{rating > 0 ? `${t("feedback_your_rating")}: ${rating}/10` : t("feedback_no_rating")}
 				</span>
 			</div>
 
 			<h3 className="mt-4 text-lg font-semibold flex items-center text-primary">
 				<MessageSquare className="mr-2" size={18} strokeWidth={2.5} />
-				Your Comments
+				{t("feedback_comment_label")}
 			</h3>
 			<MyTextArea
 				isAutoSized={false}
 				rows={4}
-				placeholder="Share your thoughts about this test..."
+				placeholder={t("feedback_comment_placeholder")}
 				value={comment || ''}
 				onChange={(e) => setComment(e.target.value)}
 			/>
 
 			<h3 className="mt-4 text-lg font-semibold flex items-center text-primary">
 				<AlertCircle className="mr-2 text-red-500" size={18} strokeWidth={2.5} />
-				Report a Problem
+				{t("feedback_report_problem_label")}
 			</h3>
 			<div className="grid grid-cols-2 gap-x-2 gap-y-2 px-6 py-6 border border-gray-200 rounded-lg bg-gray-50 shadow-inner">
 				{PROBLEM_OPTIONS.map(option => (
@@ -127,7 +126,7 @@ export default function FeedbackTabContent() {
 							className="h-4 w-4 border-gray-300 focus:ring-primary accent-primary"
 						/>
 						<label htmlFor={`problem-${option.value}`} className="ml-2 text-sm text-gray-700">
-							{option.label}
+							{t(option.label)}
 						</label>
 					</div>
 				))}
@@ -147,20 +146,20 @@ export default function FeedbackTabContent() {
 				loading={state.isLoading}
 				className='mt-4 w-1/3 self-end'
 			>
-				{state.isLoading ? 'Submitting...' : 'Submit Feedback'}
+				{state.isLoading ? t("feedback_submitting") : t("feedback_submit")}
 			</MyButtonWithLoading>
 		</div >
 	);
 };
 
 const PROBLEM_OPTIONS = [
-	{ value: 'inaccurate', label: 'Inaccurate Content' },
-	{ value: 'un-related', label: 'Unrelated to Topic' },
-	{ value: 'poor content', label: 'Poor Quality Content' },
-	{ value: 'incomplete', label: 'Incomplete Content' },
-	{ value: 'repeated', label: 'Repeated Questions' },
-	{ value: 'error', label: 'Technical Error' },
-	{ value: 'other', label: 'Other' }
+	{ value: 'inaccurate', label: 'feedback_problem_inaccurate' },
+	{ value: 'un-related', label: 'feedback_problem_unrelated' },
+	{ value: 'poor content', label: 'feedback_problem_poor_content' },
+	{ value: 'incomplete', label: 'feedback_problem_incomplete' },
+	{ value: 'repeated', label: 'feedback_problem_repeated' },
+	{ value: 'error', label: 'feedback_problem_error' },
+	{ value: 'other', label: 'feedback_problem_other' }
 ] as const;
 
 type ProblemOption = (typeof PROBLEM_OPTIONS)[number]['value'];

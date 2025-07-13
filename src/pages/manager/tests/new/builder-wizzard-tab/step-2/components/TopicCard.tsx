@@ -7,6 +7,7 @@ import MyNumberInput from '../../../../../../../features/tests/ui/forms/MyNumber
 import MySelect from '../../../../../../../features/tests/ui/forms/MySelect';
 import { Trash2 } from 'lucide-react';
 import MyButton from '../../../../../../../features/tests/ui/buttons/MyButton';
+import { useLanguage } from '../../../../../../../LanguageProvider';
 
 interface TopicCardProps {
 	topic: Topic;
@@ -23,6 +24,8 @@ export default function TopicCard({
 	onUpdate,
 	onDelete,
 }: TopicCardProps) {
+	const { t } = useLanguage();
+
 	const [currentDifficulty, setCurrentDifficulty] = useState<DifficultyType>(() => {
 		const nonZeroDifficulties = Object.entries(topic.difficultyDistribution).find(
 			([, value]) => value > 0
@@ -41,12 +44,12 @@ export default function TopicCard({
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-4 flex-1">
 						<MyFieldLayout className='w-full'>
-							<MyLabel>Topic #{index + 1}</MyLabel>
+							<MyLabel>{t("topic_card_topic_number")} #{index + 1}</MyLabel>
 							<MyTextArea
 								value={topic.name}
 								onChange={(e) => onUpdate(index, { name: e.target.value })}
-								placeholder='Describe the topic'
-								aria-label='Topic description'
+								placeholder={t("topic_card_topic_placeholder")}
+								aria-label={t("topic_card_topic_description")}
 							/>
 						</MyFieldLayout>
 					</div>
@@ -56,7 +59,7 @@ export default function TopicCard({
 
 				<div className='flex items-end gap-8'>
 					<MyFieldLayout className='w-5/12'>
-						<MyLabel>Number of Questions</MyLabel>
+						<MyLabel>{t("topic_card_num_questions")}</MyLabel>
 						<MyNumberInput
 							min={1}
 							value={totalQuestions}
@@ -73,15 +76,15 @@ export default function TopicCard({
 					</MyFieldLayout>
 
 					<MyFieldLayout className='w-5/12'>
-						<MyLabel>Difficulty Level</MyLabel>
+						<MyLabel>{t("topic_card_difficulty")}</MyLabel>
 						<MySelect
 							options={DifficultiesAsConst.map((difficulty) => ({
 								value: difficulty,
-								label: difficulty,
+								label: t(`difficulty_${difficulty}`)
 							}))}
 							value={currentDifficulty}
 							onChange={(value) => {
-								const newDifficulty = value as DifficultyType || "Intern";
+								const newDifficulty = value as DifficultyType || t(`difficulty_Intern`);
 								const totalQuestions = topic.difficultyDistribution[currentDifficulty] || 0;
 								const newDifficultyDistribution = {
 									...topic.difficultyDistribution,
@@ -103,7 +106,7 @@ export default function TopicCard({
 						<MyButton
 							variant={"destructive"}
 							onClick={() => onDelete(index)}
-							title="Delete topic"
+							title={t("topic_card_delete")}
 							className='ml-auto p-2 text-red-700 bg-red-50 hover:bg-red-600 hover:text-white rounded-lg transition-colors'
 						>
 							<Trash2 size={18} />

@@ -11,6 +11,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { formatTime } from '../utils';
 import MyItemCardTemplate from '../../../../../../../../features/tests/ui-templates/MyItemCardTemplate';
+import { useLanguage } from '../../../../../../../../LanguageProvider';
 
 interface StatItemProps {
 	icon: any;
@@ -50,11 +51,13 @@ export const ExamStatisticsCard = ({
 	lowestScore: number;
 	averageTime: number;
 }) => {
+	const { t } = useLanguage();
+
 	const averageAttemptsPerCandidate = totalCandidates > 0 ? (totalAttempts / totalCandidates).toFixed(1) : '0';
 
 	return (
 		<MyItemCardTemplate
-			header='Exam Statistics'
+			header={t("exam_statistics_title")}
 			icon={<FontAwesomeIcon icon={faChartBar} className="text-primary mr-3" />}
 			body={
 				<div className="space-y-6 p-2">
@@ -62,17 +65,17 @@ export const ExamStatisticsCard = ({
 					<div>
 						<h4 className="font-semibold text-gray-700 mb-3 flex items-center gap-2">
 							<FontAwesomeIcon icon={faQuestionCircle} className="w-4 text-primary" />
-							Content Overview
+							{t("exam_statistics_content_title")}
 						</h4>
 						<div className="grid grid-cols-2 gap-3">
 							<StatItem
 								icon={faQuestionCircle}
-								label="Questions"
+								label={t("exam_statistics_questions")}
 								value={numberOfQuestions}
 							/>
 							<StatItem
 								icon={faBullseye}
-								label="Total Points"
+								label={t("exam_statistics_total_points")}
 								value={totalPoints}
 							/>
 						</div>
@@ -82,22 +85,22 @@ export const ExamStatisticsCard = ({
 					<div>
 						<h4 className="font-semibold text-gray-700 mb-3 flex items-center gap-2">
 							<FontAwesomeIcon icon={faUsers} className="w-4 text-primary" />
-							Participation
+							{t("exam_statistics_participation_title")}
 						</h4>
 						<div className="grid grid-cols-3 gap-3">
 							<StatItem
 								icon={faUsers}
-								label="Candidates"
+								label={t("exam_statistics_candidates")}
 								value={totalCandidates}
 							/>
 							<StatItem
 								icon={faRepeat}
-								label="Total Attempts"
+								label={t("exam_statistics_total_attempts")}
 								value={totalAttempts}
 							/>
 							<StatItem
 								icon={faChartLine}
-								label="Avg Attempts/Candidate"
+								label={t("exam_statistics_avg_attempts_per_candidate")}
 								value={averageAttemptsPerCandidate}
 							/>
 						</div>
@@ -107,33 +110,33 @@ export const ExamStatisticsCard = ({
 					<div>
 						<h4 className="font-semibold text-gray-700 mb-3 flex items-center gap-2">
 							<FontAwesomeIcon icon={faTrophy} className="w-4 text-primary" />
-							Performance
+							{t("exam_statistics_performance_title")}
 						</h4>
 						<div className="grid grid-cols-2 gap-3">
 							<div className="col-span-2">
 								<StatItem
 									icon={faChartLine}
-									label="Average Score"
+									label={t("exam_statistics_avg_score")}
 									value={averageScore}
 									isPercentage={false}
 								/>
 							</div>
 							<StatItem
 								icon={faTrophy}
-								label="Highest Score"
+								label={t("exam_statistics_highest_score")}
 								value={highestScore}
 								isPercentage={false}
 							/>
 							<StatItem
 								icon={faChartBar}
-								label="Lowest Score"
+								label={t("exam_statistics_lowest_score")}
 								value={lowestScore}
 								isPercentage={false}
 							/>
 							<div className="col-span-2">
 								<StatItem
 									icon={faHourglassHalf}
-									label="Average Time"
+									label={t("exam_statistics_avg_time")}
 									value={formatTime(averageTime)}
 								/>
 							</div>

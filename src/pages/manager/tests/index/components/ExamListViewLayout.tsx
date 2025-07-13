@@ -3,6 +3,7 @@ import { TestFullSchema } from "../../../../../features/tests/api/test.api-gen-v
 import ExamCoreItemCard from "./ExamCoreItemCard";
 import ExamCoreItemRow from "./ExamCoreItemRow";
 import MyButton from "../../../../../features/tests/ui/buttons/MyButton";
+import { useLanguage } from "../../../../../LanguageProvider";
 
 
 export default function ExamListViewLayout({
@@ -16,6 +17,8 @@ export default function ExamListViewLayout({
 	onExamClick?: (exam: TestFullSchema) => void;
 	className?: string;
 }) {
+	const { t } = useLanguage();
+
 	let component = null;
 
 	if (view === "table") {
@@ -37,13 +40,13 @@ export default function ExamListViewLayout({
 			<div className="flex items-center justify-center h-full text-gray-500">
 				<div className="flex flex-col items-center">
 					<ClipboardList className="h-12 w-12 mb-4" />
-					<p className="text-lg font-semibold">You have no exams available at the moment.</p>
-					<p className="text-sm text-gray-400">Create a new exam to get started.</p>
+					<p className="text-lg font-semibold">{t("manager_tests_empty_title")}</p>
+					<p className="text-sm text-gray-400">{t("manager_tests_empty_description")}</p>
 
 					<MyButton size={"normal"}
 						onClick={() => { }}
 					>
-						Create Exam
+						{t("manager_tests_create_button")}
 					</MyButton>
 				</div>
 			</div>

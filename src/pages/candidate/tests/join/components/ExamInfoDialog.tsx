@@ -7,6 +7,7 @@ import { GetTestsFindByRoomApiResponse } from '../../../../../features/tests/api
 import MyDialog from '../../../../../features/tests/ui/MyDialog';
 import MyButton from '../../../../../features/tests/ui/buttons/MyButton';
 import { SmallUserInfo } from '../../../../../features/tests/ui-shared/SmallUserInfo';
+import { useLanguage } from '../../../../../LanguageProvider';
 
 interface ExamInfoDialogProps {
 	isOpen: boolean;
@@ -21,6 +22,8 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 	roomId,
 	data
 }) => {
+	const { t } = useLanguage();
+
 	const [password, setPassword] = useState('');
 	const [passwordError, setPasswordError] = useState<string | null>(null);
 
@@ -36,14 +39,14 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 						<div className="bg-red-100 p-3 rounded-full mb-4">
 							<AlertCircle size={40} className="text-red-500" />
 						</div>
-						<h3 className="text-xl font-semibold text-gray-800 mb-2">Test Not Found</h3>
-						<p className="text-gray-600 text-center mb-6">No test found with the provided roomId: {roomId}</p>
+						<h3 className="text-xl font-semibold text-gray-800 mb-2">{t("exam_info_not_found_title")}</h3>
+						<p className="text-gray-600 text-center mb-6">{t("exam_info_not_found_description")} {roomId}</p>
 						<MyButton
 							className='w-full'
 							variant={"gray"}
 							onClick={onClose}
 						>
-							Close
+							{t("exam_info_close")}
 						</MyButton>
 					</div>
 				</MyDialog.Content>
@@ -57,7 +60,7 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 		<MyDialog>
 			<MyDialog.Content>
 				<MyDialog.Header
-					title="Exam Information"
+					title={t("exam_info_title")}
 					description={`Room ID: ${roomId}`}
 					onClose={onClose}
 				/>
@@ -75,7 +78,7 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 					<div className='flex items-center gap-2 w-full'>
 						<div className="flex items-center gap-2 text-xs font-semibold px-4 py-0.5 bg-primary-toned-100 rounded-full w-fit h-fit text-primary-toned-700">
 							<AlarmClock size={14} />
-							<span>{examData.minutesToAnswer} min(s)</span>
+							<span>{examData.minutesToAnswer} {t("exam_info_time_unit")}</span>
 						</div>
 
 						<div className="flex items-center gap-2 text-xs font-semibold px-4 py-0.5 bg-primary-toned-100 rounded-full w-fit h-fit text-primary-toned-700">
@@ -85,32 +88,32 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 					</div>
 
 					<div className='flex flex-col items-start w-full mt-2'>
-						<span className="font-semibold text-sm text-primary mr-2">Available:</span>
+						<span className="font-semibold text-sm text-primary mr-2">{t("exam_info_available")}:</span>
 						<span className='text-sm text-gray-500'>{formatDate(openDate)} - {formatDate(closeDate)}</span>
 					</div>
 
 					<div className='flex flex-col items-start w-full mt-2'>
-						<span className="font-semibold text-sm text-primary mr-2">Participants count:</span>
+						<span className="font-semibold text-sm text-primary mr-2">{t("exam_info_participant_count")}:</span>
 						<span className='text-sm text-gray-500'>{detail.participants.length}</span>
 					</div>
 
 					<hr className='w-full border-gray-200 my-1' />
 
 					<div className="w-full px-4 py-2 bg-gray-50 border border-gray-300 shadow-sm rounded-lg grid grid-cols-[auto_1fr] [&>*:nth-child(even)]:justify-self-end gap-1 text-gray-700 text-sm">
-						<span className="font-medium mr-2">Max number of attempts allowed:</span>
-						<span>{numberOfAttemptsAllowed === 0 ? "Unlimited" : numberOfAttemptsAllowed}</span>
+						<span className="font-medium mr-2">{t("exam_info_max_attempts")}:</span>
+						<span>{numberOfAttemptsAllowed === 0 ? t("exam_info_unlimited") : numberOfAttemptsAllowed}</span>
 
-						<span className="font-medium mr-2">Answers visible:</span>
-						<span>{isAnswerVisible ? 'Yes' : 'No'}</span>
+						<span className="font-medium mr-2">{t("exam_info_answers_visible")}:</span>
+						<span>{isAnswerVisible ? t("yes") : t("no")}</span>
 
-						<span className="font-medium mr-2">See other results:</span>
-						<span>{isAllowedToSeeOtherResults ? "Yes" : "No"}</span>
+						<span className="font-medium mr-2">{t("exam_info_see_results")}:</span>
+						<span>{isAllowedToSeeOtherResults ? t("yes") : t("no")}</span>
 
-						<span className="font-medium mr-2">Max number of participants:</span>
-						<span>{numberOfParticipants === 0 ? "Unlimited" : numberOfParticipants}</span>
+						<span className="font-medium mr-2">{t("exam_info_max_participants")}:</span>
+						<span>{numberOfParticipants === 0 ? t("exam_info_unlimited") : numberOfParticipants}</span>
 
-						<span className="font-medium mr-2">Public:</span>
-						<span>{isPublic ? 'Yes' : 'No'}</span>
+						<span className="font-medium mr-2">{t("exam_info_public")}:</span>
+						<span>{isPublic ? t("yes") : t("no")}</span>
 					</div>
 				</div>
 

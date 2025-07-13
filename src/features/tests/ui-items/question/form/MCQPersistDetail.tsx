@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import TextareaAutosize from 'react-textarea-autosize';
 import { MCQDetail } from '../types';
+import { useLanguage } from '../../../../../LanguageProvider';
 
 export default function MCQPersistDetail({
 	detail,
@@ -12,6 +13,8 @@ export default function MCQPersistDetail({
 	questionId: number;
 	onQuestionChange: (edit: Partial<MCQDetail>) => void;
 }) {
+	const { t } = useLanguage();
+
 	const options = detail.options;
 	const correctOption = detail.correctOption;
 
@@ -38,8 +41,8 @@ export default function MCQPersistDetail({
 	return (
 		<div className='flex flex-col gap-2 w-full text-gray-600'>
 			<div className='flex items-center justify-between font-semibold text-sm mb-1'>
-				<span>Options:</span>
-				<span className='mr-2'>Correct</span>
+				<span>{t("mcq_options_label")}:</span>
+				<span className='mr-2'>{t("mcq_correct_label")}</span>
 			</div>
 
 			{/* Options */}
@@ -52,7 +55,7 @@ export default function MCQPersistDetail({
 							value={option}
 							onChange={(e) => handleOptionChange(optionIndex, e.target.value)}
 							className="flex-grow bg-transparent border-none outline-none resize-none overflow-hidden"
-							placeholder="Option text"
+							placeholder={t("mcq_option_placeholder")}
 							minRows={1}
 						/>
 						{/* Delete option button */}
@@ -79,7 +82,7 @@ export default function MCQPersistDetail({
 				className="text-sm cursor-pointer font-semibold text-primary underline mt-4 w-fit"
 				onClick={() => handleAddOption("")}
 			>
-				<span>+ Add option</span>
+				<span>{t("mcq_add_option")}</span>
 			</div>
 		</div>
 	);

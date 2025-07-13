@@ -1,5 +1,6 @@
 import MyButton from "../../../../../../features/tests/ui/buttons/MyButton";
 import { cn } from "../../../../../../app/cn";
+import { useLanguage } from "../../../../../../LanguageProvider";
 
 interface PublishFooterProps {
 	onPublish: () => void;
@@ -7,6 +8,8 @@ interface PublishFooterProps {
 }
 
 export const PublishFooter = ({ onPublish, isLoading }: PublishFooterProps) => {
+	const { t } = useLanguage();
+
 	return (
 		<div className="flex flex-col gap-4 mt-6">
 			<div className="bg-primary-toned-50 border border-primary-toned-200 rounded-lg p-4 shadow-md">
@@ -21,11 +24,9 @@ export const PublishFooter = ({ onPublish, isLoading }: PublishFooterProps) => {
 						</svg>
 					</div>
 					<div className="flex-1">
-						<h4 className="font-semibold text-primary-toned-800 mb-1">Ready to Publish</h4>
+						<h4 className="font-semibold text-primary-toned-800 mb-1">{t("publish_footer_title")}</h4>
 						<p className="text-primary-toned-700 text-sm mb-4">
-							Review all the information above before publishing your exam. Once published,
-							students will be able to access and take this exam according to the configured
-							schedule and settings.
+							{t("publish_footer_description")}
 						</p>
 
 						<div className="flex justify-end">
@@ -35,7 +36,7 @@ export const PublishFooter = ({ onPublish, isLoading }: PublishFooterProps) => {
 								onClick={onPublish}
 								className={cn(isLoading && "cursor-not-allowed bg-gray-300 text-gray-600 pointer-events-none")}
 							>
-								{isLoading ? "Publishing Exam..." : "Publish Exam"}
+								{isLoading ? t("publish_footer_button_loading") : t("publish_footer_button")}
 							</MyButton>
 						</div>
 					</div>

@@ -12,9 +12,11 @@ import MyHeaderTitleSection from '../../../../features/tests/ui-sections/MyHeade
 import RightLayoutTemplate from '../../../../components/layouts/RightLayoutTemplate';
 import { useNavigate } from 'react-router-dom';
 import paths from '../../../../router/paths';
+import { useLanguage } from '../../../../LanguageProvider';
 
 
 export default function CandidateTestsTemplatesPage() {
+	const { t } = useLanguage();
 	const navigate = useNavigate();
 	const [searchTerm, setSearchTerm] = useState<string>('');
 	// const [filters, setFilters] = useState<string[]>([]);
@@ -105,8 +107,8 @@ export default function CandidateTestsTemplatesPage() {
 		<RightLayoutTemplate
 			header={
 				<RightLayoutTemplate.Header
-					title="Prompt Templates Management"
-					description="Create and manage test prompt templates for generating practice tests"
+					title={t("prompt_templates_title")}
+					description={t("prompt_templates_description")}
 					backButton={
 						<RightLayoutTemplate.BackButton
 							onClick={() => navigate(paths.candidate.tests.ROOT)}
@@ -131,11 +133,10 @@ export default function CandidateTestsTemplatesPage() {
 		>
 			<div className='flex items-end justify-between'>
 				<MyHeaderTitleSection
-					title="Test Templates"
-					description="Create, edit, and manage your test templates for generating practice tests."
+					title={t("test_template_title")}
+					description={t("test_template_description")}
 				/>
 			</div>
-
 
 			<hr className="border-primary-toned-300 my-4" />
 

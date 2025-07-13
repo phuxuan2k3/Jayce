@@ -3,8 +3,11 @@ import QuickAction from "../../../../../features/tests/ui/sidebar/primitive/Quic
 import SidebarLayout from "../../../../../features/tests/ui/sidebar/SidebarLayout";
 import paths from "../../../../../router/paths";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../../../../../LanguageProvider";
 
 export default function Sidebar() {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 
 	return (
@@ -14,10 +17,10 @@ export default function Sidebar() {
 				<div className="p-4 bg-gradient-to-r from-primary-toned-50 to-secondary-toned-50 border border-primary-toned-200 rounded-lg">
 					<h4 className="font-bold text-primary-toned-700 mb-2 flex items-center">
 						<BrainCircuit className="w-4 h-4 mr-2" />
-						AI-Powered Test Generation
+						{t("sidebar_ai_title")}
 					</h4>
 					<p className="text-sm text-primary-toned-600 leading-relaxed mb-4">
-						Transform your learning with intelligent test creation. Our advanced AI analyzes your needs and generates personalized practice tests that adapt to your skill level and learning goals.
+						{t("sidebar_ai_description")}
 					</p>
 
 					{/* Compact Button */}
@@ -33,7 +36,7 @@ export default function Sidebar() {
 							<div className="flex items-center gap-3">
 								<Rocket className="w-5 h-5 text-white" />
 								<div className="text-left">
-									<span className="font-semibold text-white">Generate Practice</span>
+									<span className="font-semibold text-white">{t("sidebar_generate_button")}</span>
 								</div>
 							</div>
 
@@ -49,15 +52,15 @@ export default function Sidebar() {
 			<hr className="border-primary-toned-200 my-2" />
 			<QuickAction
 				icon={<ClipboardList className="w-5 h-5" />}
-				title="Join Exam"
-				description="Join an ongoing exam by room ID"
+				title={t("sidebar_join_exam_title")}
+				description={t("sidebar_join_exam_desc")}
 				onClick={() => navigate(paths.candidate.tests.JOIN)}
 			/>
 
 			<QuickAction
 				icon={<BookOpenText className="w-5 h-5" />}
-				title="Browse Templates"
-				description="Explore test templates"
+				title={t("sidebar_browse_templates_title")}
+				description={t("sidebar_browse_templates_desc")}
 				onClick={() => navigate(paths.candidate.tests.TEMPLATES)}
 			/>
 		</SidebarLayout>

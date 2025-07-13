@@ -1,6 +1,7 @@
 import { CircleX, Link } from "lucide-react";
 import { cn } from "../../../../../../../app/cn";
 import { classNameInput } from "../../../common/class-names";
+import { useLanguage } from "../../../../../../../LanguageProvider";
 
 
 interface LinksContextTabProps {
@@ -18,6 +19,8 @@ export default function LinksContextTab({
 	onAddLink,
 	onRemoveLink
 }: LinksContextTabProps) {
+	const { t } = useLanguage();
+	
 	const handleKeyPress = (e: React.KeyboardEvent) => {
 		if (e.key === 'Enter') {
 			e.preventDefault();
@@ -41,13 +44,13 @@ export default function LinksContextTab({
 					onClick={onAddLink}
 					className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors text-sm font-semibold"
 				>
-					Add
+					{t("add_button")}
 				</button>
 			</div>
 
 			{links.length > 0 && (
 				<div className="space-y-2">
-					<h4 className="font-medium text-gray-700">Added Links:</h4>
+					<h4 className="font-medium text-gray-700">{t("added_links_label")}:</h4>
 					{links.map((link, index) => (
 						<div
 							key={index}

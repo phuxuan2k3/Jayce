@@ -3,6 +3,7 @@ import { EditTabs } from '../page';
 import ManagerSidebar from '../../../../../../features/tests/ui-shared/sidebar/ManagerSidebar';
 import QuickAction from '../../../../../../features/tests/ui/sidebar/primitive/QuickAction';
 import SidebarLayout from '../../../../../../features/tests/ui/sidebar/SidebarLayout';
+import { useLanguage } from '../../../../../../LanguageProvider';
 
 export default function Sidebar({
 	tab,
@@ -17,6 +18,8 @@ export default function Sidebar({
 	onDelete: () => void;
 	hasAttempts: boolean;
 }) {
+	const { t } = useLanguage();
+
 	return (
 		<SidebarLayout className='min-h-[96vh]'>
 			<ManagerSidebar.Info
@@ -31,24 +34,24 @@ export default function Sidebar({
 				/>
 			) : (
 				<div className="flex items-center gap-2 p-4 text-sm text-primary bg-primary-toned-50 rounded-md border border-primary-toned-200 shadow-md">
-					<p>You cannot modify exam's questions after attempts have been made</p>
+					<p>{t("exam_sidebar_attempts_warning")}</p>
 				</div>
 			)}
 
 			<div className="mt-auto flex flex-col gap-4">
 				<QuickAction
 					icon={<ArrowDownToLine />}
-					title='Save'
+					title={t("save_changes")}
 					variant={"alert"}
-					description='Save changes to the exam'
+					description={t("save_changes_description")}
 					onClick={onSave}
 				/>
 
 				<QuickAction
 					icon={<Trash2 />}
-					title='Delete Exam'
+					title={t("delete_exam")}
 					variant={"danger"}
-					description='Remove this exam permanently'
+					description={t("delete_exam_description")}
 					onClick={onDelete}
 				/>
 			</div>

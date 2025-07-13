@@ -15,20 +15,20 @@ export const AllStepDataSchemaMap: Record<keyof AllStepData, z.ZodTypeAny> = {
 
 export const StepInfo = {
 	1: {
-		title: "Step 1: Basic Information",
-		description: "Provide the basic information for your test, including title, description, language and seniourity.",
+		title: "step1_title",
+		description: "step1_description",
 	},
 	2: {
-		title: "Step 2: Exam's Blueprint",
-		description: "Define the topics and their difficulty levels for your test.",
+		title: "step2_title",
+		description: "step2_description",
 	},
 	3: {
-		title: "Step 3: Refinement",
-		description: "Adjust the model's creativity and provide more contexts.",
+		title: "step3_title",
+		description: "step3_description",
 	},
 	4: {
-		title: "Step 4: Review and Submit",
-		description: "Review your test details and submit it for processing.",
+		title: "step4_title",
+		description: "step4_description",
 	},
 } as const;
 
@@ -37,8 +37,8 @@ export type StepInfoKey = keyof typeof StepInfo;
 
 export const getStepInfo = (step: StepInfoKey): StepInfoType => {
 	return StepInfo[step] || {
-		title: "Unknown Step",
-		description: "No information available for this step.",
+		title: "step_unknown_title",
+		description: "step_unknown_description",
 	};
 };
 

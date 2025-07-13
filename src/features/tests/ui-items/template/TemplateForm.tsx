@@ -14,6 +14,7 @@ import MyNumberInput from '../../ui/forms/MyNumberInput';
 import { cn } from '../../../../app/cn';
 import { ZodError } from 'zod';
 import MyErrorMessages from '../../ui/MyErrorMessage';
+import { useLanguage } from '../../../../LanguageProvider';
 
 interface TemplateFormProps {
 	selectedTemplate: TemplateCoreSchema | null;
@@ -38,6 +39,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 	className = '',
 	isSaving = false,
 }) => {
+	const { t } = useLanguage();
 	const [error, setError] = useState<ZodError<TemplatePersistCoreSchema> | null>(null);
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
@@ -65,21 +67,21 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 			{omitHeader === false && (
 				<div className='flex justify-center mb-8 bg-primary-toned-100 p-4 rounded-lg shadow-md'>
 					<h2 className="text-2xl text-center font-bold text-primary-toned-700">
-						{selectedTemplate ? `Edit Template: ${selectedTemplate.name}` : 'Create New Template'}
+						{selectedTemplate ? `${t("template_form_title_edit")}: ${selectedTemplate.name}` : t("template_form_title_create")}
 					</h2>
 				</div>
 			)}
 
 			<div className="flex flex-col gap-4">
 				<div className='flex items-center gap-4'>
-					<MyLabel htmlFor='template-name'>Template Name: </MyLabel>
+					<MyLabel htmlFor='template-name'>{t("template_form_name")}: </MyLabel>
 					<MyInput
 						id='template-name'
-						aria-label='Template Name'
+						aria-label={t("template_form_name")}
 						value={formData.name}
 						onChange={handleInputChange}
 						name="name"
-						placeholder="Enter template name"
+						placeholder={t("template_form_name_placeholder")}
 						error={error?.formErrors.fieldErrors.name?.at(0)}
 					/>
 				</div>
@@ -88,26 +90,26 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 
 				<div className='flex flex-col gap-4 my-4'>
 					<MyFieldLayout>
-						<MyLabel htmlFor='test-title'>Test Title:</MyLabel>
+						<MyLabel htmlFor='test-title'>{t("template_form_title")}:</MyLabel>
 						<MyInput
 							id='test-title'
-							aria-label='Test Title'
+							aria-label={t("template_form_title")}
 							value={formData.title}
 							onChange={handleInputChange}
 							name="title"
-							placeholder="Enter test title"
+							placeholder={t("template_form_title_placeholder")}
 							error={error?.formErrors.fieldErrors.title?.at(0)}
 						/>
 					</MyFieldLayout>
 					<MyFieldLayout>
-						<MyLabel htmlFor='template-description'>Test Description:</MyLabel>
+						<MyLabel htmlFor='template-description'>{t("template_form_description")}:</MyLabel>
 						<MyTextArea
 							id='template-description'
-							aria-label='Template Description'
+							aria-label={t("template_form_description")}
 							value={formData.description}
 							onChange={handleInputChange}
 							name="description"
-							placeholder="Enter template description"
+							placeholder={t("template_form_description_placeholder")}
 							rows={3}
 							error={error?.formErrors.fieldErrors.description?.at(0)}
 						/>
@@ -115,10 +117,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 
 					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-4 gap-x-8 mt-4'>
 						<MyFieldLayout>
-							<MyLabel htmlFor='minutes-to-answer'>Minutes to answer:</MyLabel>
+							<MyLabel htmlFor='minutes-to-answer'>{t("template_form_minutes_to_answer")}:</MyLabel>
 							<MyNumberInput
 								id='minutes-to-answer'
-								aria-label='Minutes to Answer'
+								aria-label={t("template_form_minutes_to_answer")}
 								name="minutesToAnswer"
 								value={formData.minutesToAnswer}
 								onChange={handleInputChange}
@@ -129,10 +131,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 						</MyFieldLayout>
 
 						<MyFieldLayout>
-							<MyLabel htmlFor='number-of-questions'>Number of Questions:</MyLabel>
+							<MyLabel htmlFor='number-of-questions'>{t("template_form_number_of_questions")}:</MyLabel>
 							<MyNumberInput
 								id='number-of-questions'
-								aria-label='Number of Questions'
+								aria-label={t("template_form_number_of_questions")}
 								name="numberOfQuestions"
 								value={formData.numberOfQuestions}
 								onChange={handleInputChange}
@@ -143,14 +145,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 						</MyFieldLayout>
 
 						<MyFieldLayout>
-							<MyLabel htmlFor='languages'>Languages</MyLabel>
+							<MyLabel htmlFor='languages'>{t("template_form_languages")}</MyLabel>
 							<MySelect
 								id='languages'
 								name="languages"
 								value={formData.language}
-								aria-label="Languages"
+								aria-label={t("template_form_languages")}
 								options={LanguagesAsConst.map(lang => ({ value: lang, label: lang }))}
-								placeholder="Select language"
+								placeholder={t("template_form_language_placeholder")}
 								onChange={(value) => onFormDataChange({
 									...formData,
 									language: value as string
@@ -160,7 +162,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 						</MyFieldLayout>
 
 						<MyFieldLayout>
-							<MyLabel htmlFor='difficulty'>Difficulty</MyLabel>
+							<MyLabel htmlFor='difficulty'>{t("template_form_difficulty")}</MyLabel>
 							<MySelect
 								id='difficulty'
 								name="difficulty"
@@ -202,7 +204,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 						variant={"outline"}
 						onClick={onCancel}
 					>
-						Cancel
+						{t("template_form_cancel")}
 					</MyButton>
 
 					<MyButton
@@ -210,7 +212,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 						onClick={handleSave}
 						loading={isSaving}
 					>
-						{isSaving ? "Saving..." : "Save"}
+						{isSaving ? t("template_form_saving") : t("template_form_save")}
 					</MyButton>
 				</div>
 			</div>

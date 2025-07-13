@@ -5,6 +5,7 @@ import { AttemptUtils } from './attempt-utils';
 import { cn } from '../../../../app/cn';
 import { useGetUsersQuery } from '../../../auth/api/auth-profile.api';
 import FetchStateCover2 from '../../ui/fetch-states/FetchStateCover2';
+import { useLanguage } from '../../../../LanguageProvider';
 
 interface Props {
 	attempts: AttemptCoreSchema[];
@@ -27,6 +28,8 @@ const AttemptsTable: React.FC<Props> = ({
 	showCandidate = false,
 	baseIndex = 0, // Base index for pagination
 }) => {
+	const { t } = useLanguage();
+
 	const candidateIds = attempts.reduce((acc: Set<string>, attempt) => {
 		if (attempt.candidateId) {
 			acc.add(attempt.candidateId);
@@ -43,7 +46,7 @@ const AttemptsTable: React.FC<Props> = ({
 	if (attempts.length === 0) {
 		return (
 			<div className="bg-white rounded-lg shadow-md p-6 text-center">
-				<p className="text-gray-600 mb-4">You don't have any completed attempts yet.</p>
+				<p className="text-gray-600 mb-4">{t("attempts_table_empty_message")}</p>
 			</div>
 		);
 	}
@@ -54,10 +57,10 @@ const AttemptsTable: React.FC<Props> = ({
 				<table className="w-full bg-white">
 					<thead className="bg-primary-toned-700 text-white font-bold">
 						<tr>
-							<th className="px-6 py-3 text-left tracking-wider">Order #</th>
-							<th className="px-6 py-3 text-left tracking-wider">Date</th>
-							<th className="px-6 py-3 text-left tracking-wider">Score</th>
-							<th className="px-6 py-3 text-left tracking-wider">Time Spent</th>
+							<th className="px-6 py-3 text-left tracking-wider">{t("attempts_table_order")}</th>
+							<th className="px-6 py-3 text-left tracking-wider">{t("attempts_table_date")}</th>
+							<th className="px-6 py-3 text-left tracking-wider">{t("attempts_table_score")}</th>
+							<th className="px-6 py-3 text-left tracking-wider">{t("attempts_table_time_spent")}</th>
 						</tr>
 					</thead>
 					<tbody className="divide-y divide-gray-200">
@@ -97,7 +100,7 @@ const AttemptsTable: React.FC<Props> = ({
 					users.forEach(user => {
 						userMap[user.id] = {
 							candidateId: user.id,
-							candidateName: user.metadata.fullname || 'Unknown User',
+							candidateName: user.metadata.fullname || t("attempts_table_status_unknown_user"),
 							candidateAvatar: user.metadata.avatarPath || undefined,
 						};
 					});
@@ -107,12 +110,12 @@ const AttemptsTable: React.FC<Props> = ({
 						<table className="w-full bg-white">
 							<thead className="bg-primary-toned-700 text-white font-bold">
 								<tr>
-									<th className="px-6 py-3 text-left tracking-wider">#</th>
-									<th className="px-6 py-3 text-left tracking-wider">Candidate</th>
-									<th className="px-6 py-3 text-left tracking-wider">Order #</th>
-									<th className="px-6 py-3 text-left tracking-wider">Date</th>
-									<th className="px-6 py-3 text-left tracking-wider">Score</th>
-									<th className="px-6 py-3 text-left tracking-wider">Time Spent</th>
+									<th className="px-6 py-3 text-left tracking-wider">{t("attempts_table_index")}</th>
+									<th className="px-6 py-3 text-left tracking-wider">{t("attempts_table_candidate")}</th>
+									<th className="px-6 py-3 text-left tracking-wider">{t("attempts_table_order")}</th>
+									<th className="px-6 py-3 text-left tracking-wider">{t("attempts_table_date")}</th>
+									<th className="px-6 py-3 text-left tracking-wider">{t("attempts_table_score")}</th>
+									<th className="px-6 py-3 text-left tracking-wider">{t("attempts_table_time_spent")}</th>
 								</tr>
 							</thead>
 							<tbody className="divide-y divide-gray-200">
@@ -130,7 +133,7 @@ const AttemptsTable: React.FC<Props> = ({
 												{userMap[attempt.candidateId] ? (
 													<UserInfo user={userMap[attempt.candidateId]} />
 												) : (
-													<span className="text-gray-500">Unknown User</span>
+													<span className="text-gray-500">{t("attempts_table_status_unknown_user")}</span>
 												)}
 											</div>
 										</td>
