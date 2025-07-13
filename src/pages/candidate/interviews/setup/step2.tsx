@@ -3,6 +3,7 @@ import { JobSetupData } from "./setup";
 import ModalCheckSound from "./ModalCheckSound";
 import { useLanguage } from "../../../../LanguageProvider";
 import MySelect from "../../../../features/tests/ui/forms/MySelect";
+import { Button } from "@mui/material";
 
 const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
   const [speechRate, setSpeechRate] = useState(0);
@@ -150,14 +151,20 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
           </div> */}
         </div>
       </div>
-      <div
+      <Button
+        sx={{
+          textAlign: "left",
+          justifyContent: "flex-start",
+          fontFamily: "Space Grotesk, sans-serif",
+          textTransform: "none",
+        }}
         onClick={() => {
           setIsopen(true);
         }}
         className="mb-4 bg-primary text-center text-white px-24 py-1.5 rounded-lg cursor-pointer"
       >
         {t("start")}
-      </div>
+      </Button>
       <ModalCheckSound
         isOpen={isOpen}
         onClose={() => setIsopen(false)}

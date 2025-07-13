@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChartPie,
@@ -72,7 +72,13 @@ const InterviewPage = () => {
           {navTabKeys.map((item) => {
             const isSelected = tab === item.id;
             return (
-              <button
+              <Button
+                sx={{
+                  textAlign: "left",
+                  justifyContent: "flex-start",
+                  fontFamily: "Space Grotesk, sans-serif",
+                  textTransform: "none",
+                }}
                 key={item.id}
                 onClick={() => navigate(`?tab=${item.id}`)}
                 className={`w-full flex items-center gap-4 py-4 px-6 rounded-2xl text-lg font-bold transition-all duration-150 mb-2
@@ -95,7 +101,7 @@ const InterviewPage = () => {
                   }`}
                 />
                 <span>{t(item.labelKey)}</span>
-              </button>
+              </Button>
             );
           })}
         </div>

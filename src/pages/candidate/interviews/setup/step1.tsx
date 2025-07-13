@@ -2,6 +2,7 @@ import { FC } from "react";
 import { JobSetupData } from "./setup";
 import { useLanguage } from "../../../../LanguageProvider";
 import MySelect from "../../../../features/tests/ui/forms/MySelect";
+import { Button } from "@mui/material";
 
 const SetUpStep1: FC<{
   onNext: () => void;
@@ -115,14 +116,20 @@ const SetUpStep1: FC<{
         onChange={(e) => onChange({ skills: e.target.value })}
         className="w-full py-2 px-4 border rounded-lg"
       />
-      <button
+      <Button
+        sx={{
+          textAlign: "left",
+          justifyContent: "flex-start",
+          fontFamily: "Space Grotesk, sans-serif",
+          textTransform: "none",
+        }}
         onClick={onNext}
         disabled={!isValid}
         className={`my-[72px] bg-primary text-center text-white px-24 py-1.5 rounded-lg transition
           ${!isValid ? "opacity-50 cursor-not-allowed" : "hover:bg-primary-dark"}`}
       >
         {t("next")}
-      </button>
+      </Button>
     </>
   );
 };
