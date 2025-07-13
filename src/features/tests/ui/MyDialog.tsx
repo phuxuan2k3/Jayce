@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '../../../app/cn';
 import { XCircle } from 'lucide-react';
@@ -10,11 +10,19 @@ export default function MyDialog({
 	className?: string;
 	children?: React.ReactNode;
 }) {
+	// Prevent body scroll when dialog is open
+	useEffect(() => {
+		document.body.classList.add('overflow-hidden');
+		return () => {
+			document.body.classList.remove('overflow-hidden');
+		};
+	}, []);
+
 	// Fade-in animation using Tailwind and custom keyframes
 	return createPortal(
 		<div
 			className={cn(
-				"fixed inset-0 flex items-center justify-center bg-black/50 z-10",
+				"fixed inset-0 flex items-center justify-center bg-black/50 z-10 overscroll-none",
 				className
 			)}
 		>

@@ -156,15 +156,21 @@ const OutlinesInput: React.FC<Props> = ({
 					<p className="text-sm text-gray-500 text-center">No outlines added yet.</p>
 				)}
 			</div>
-
+			{/* 
+			<div className='w-full flex items-start gap-2 text-primary-toned-700 p-4 bg-primary-toned-50 rounded-md shadow-md'>
+				<Info size={20} className="text-primary-toned-600" />
+				<span className='text-sm text-primary-toned-600'>
+					Use our AI to suggest outlines that will help you create a more structured and comprehensive test.
+				</span>
+			</div> */}
 
 			{/* AI Suggestions Section */}
 
 			{omitAISection === false && (
-				<div className="w-full">
+				<div className="w-full mt-2">
 					{/* Toggle Header */}
 					<div
-						className="w-full border border-gray-300 rounded-md shadow-sm overflow-hidden cursor-pointer"
+						className="w-full border border-gray-300 rounded-lg shadow-md overflow-hidden cursor-pointer"
 						onClick={toggleSuggestionsVisibility}
 					>
 						<div className="bg-gradient-to-r from-primary-50 to-secondary-50 px-6 py-4 border-b border-gray-100">
@@ -211,14 +217,15 @@ const OutlinesInput: React.FC<Props> = ({
 								<MyButton
 									onClick={handleGenerateSuggestions}
 									disabled={isGeneratingSuggestions}
+									size={"large"}
 									className={cn(
 										'w-full flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-secondary text-white hover:shadow-lg transition-all duration-200 mb-4',
 										isGeneratingSuggestions && 'opacity-70 cursor-not-allowed'
 									)}
 									variant={"secondary"}
 								>
-									<Sparkles size={16} className={isGeneratingSuggestions ? 'animate-spin' : ''} />
-									{isGeneratingSuggestions ? 'Generating Suggestions...' : 'Generate AI Suggestions'}
+									<Sparkles size={20} strokeWidth={2.5} className={isGeneratingSuggestions ? 'animate-spin' : ''} />
+									{isGeneratingSuggestions ? 'Generating Suggestions...' : 'Suggest Outlines'}
 								</MyButton>
 
 								{suggestions.length === 0 ? (
