@@ -19,29 +19,20 @@ const CandidateHomePage = () => {
 					<RightLayoutTemplate.Header
 						title={`${t("candidate_home_welcome")}, ${authData?.metadata.fullname || authData?.username}`}
 						description={t("candidate_home_subtitle")}
-						backButton={undefined}
-
+						backButton={null}
 					/>
 				}
 				right={
-					<div className="w-full lg:w-1/4 flex flex-col gap-4 lg:sticky lg:top-10 self-start mb-8">
-						<div className="hidden lg:block">
-							<QuickNavigation />
-						</div>
+					<div className="flex flex-col gap-4 p-4 bg-white sticky top-16 shadow-primary rounded-lg">
+						<QuickNavigation />
 						<AdBanner />
 					</div>
 				}
 			>
-				<div className="lg:hidden mb-4">
-					<QuickNavigation />
-				</div>
-
-				<div className="flex flex-col lg:flex-row gap-8">
-					<div className="w-full lg:w-3/4 flex flex-col">
-						<SuggestedTests />
-						<RecentTemplates />
-						<SuggestedPositions />
-					</div>
+				<div className="flex flex-col">
+					<SuggestedTests />
+					<RecentTemplates />
+					<SuggestedPositions />
 				</div>
 			</RightLayoutTemplate>
 		</>
