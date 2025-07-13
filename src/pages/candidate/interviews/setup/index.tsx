@@ -59,8 +59,16 @@ const InterviewPage = () => {
 
   return (
     <div className="   container   h-fit">
+      <div className=" mt-4  h-[104px] bg-white/90 rounded-3xl shadow p-6 flex flex-col gap-2">
+        <h2 className="text-2xl md:text-3xl font-bold">
+          {t("interview_tilte")}
+        </h2>
+        <div className="text-sm text-primary-toned-500">
+          {t("interview_description")}
+        </div>
+      </div>
       <Box className="w-full flex justify-center ">
-        <div className=" mb-8 sticky top-20 w-[340px] h-[500px] bg-white/90 rounded-3xl shadow p-6 flex flex-col gap-2 items-center mr-10">
+        <div className=" mb-8 mt-4 sticky top-20 w-[340px] h-[500px] bg-white/90 rounded-3xl shadow p-6 flex flex-col gap-2 items-center mr-10">
           {navTabKeys.map((item) => {
             const isSelected = tab === item.id;
             return (

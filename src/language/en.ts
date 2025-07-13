@@ -104,6 +104,10 @@ export const en = {
   newest: "Newest",
   highest_score: "Highest Score",
   lowest_score: "Lowest Score",
+  interview_tilte: "Technical Interviews",
+  interview_description:
+    "Practice mock interviews with realistic scenarios to boost your confidence and impress potential employers.",
+
   // Settings
   tag_role_business_manager: "Business Manager",
   tag_role_candidate: "Candidate",

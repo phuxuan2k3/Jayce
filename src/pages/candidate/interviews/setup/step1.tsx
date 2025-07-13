@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { JobSetupData } from "./setup";
 import { useLanguage } from "../../../../LanguageProvider";
+import MySelect from "../../../../features/tests/ui/forms/MySelect";
 
 const SetUpStep1: FC<{
   onNext: () => void;
@@ -47,6 +48,21 @@ const SetUpStep1: FC<{
     "IT Auditor",
   ];
 
+  const positionOptions = positions.map((pos) => ({
+    value: pos,
+    label: pos,
+  }));
+
+  const experienceOptions = [
+    { value: "intern", label: t("experience_intern") },
+    { value: "fresher", label: t("experience_fresher") },
+    { value: "junior", label: t("experience_junior") },
+    { value: "mid", label: t("experience_mid") },
+    { value: "senior", label: t("experience_senior") },
+    { value: "lead", label: t("experience_lead") },
+    { value: "manager", label: t("experience_manager") },
+    { value: "director", label: t("experience_director") },
+  ];
   return (
     <>
       <div className="text-primary-toned-600 text-[32px] leading-[24px] mt-4    font-black w-full text-center ">
@@ -59,36 +75,28 @@ const SetUpStep1: FC<{
       <div className="flex justify-between w-full mt-2">
         <div className="mb-4 text-[var(--primary-color)] ">
           <div className="font-medium text-lg w-full">{t("position")}</div>
-          <select
+          <MySelect
+            label={""}
+            options={positionOptions}
             value={data.position}
-            onChange={(e) => onChange({ position: e.target.value })}
-            className="py-2 pe-12 ps-2 text-md shadow rounded-md focus:outline-none focus:ring focus:ring-teal-300"
-          >
-            <option value="">{t("select_position")}</option>
-            {positions.map((pos) => (
-              <option key={pos} value={pos}>
-                {pos}
-              </option>
-            ))}
-          </select>
+            placeholder={t("select_position")}
+            onChange={(value) => onChange({ position: value as string })}
+            className="w-[280px]"
+            size="md"
+          />
         </div>
         <div className=" text-primary-toned-600">
           <div className="font-medium text-lg ">{t("experience")}</div>
-          <select
+          <MySelect
+            label={""}
+            options={experienceOptions}
             value={data.experience}
-            onChange={(e) => onChange({ experience: e.target.value })}
-            className="require text-md py-2 pe-12 ps-2 shadow rounded-md focus:outline-none focus:ring focus:ring-teal-300"
-          >
-            <option value="">{t("select_experience")}</option>
-            <option value="intern">{t("experience_intern")}</option>
-            <option value="fresher">{t("experience_fresher")}</option>
-            <option value="junior">{t("experience_junior")}</option>
-            <option value="mid">{t("experience_mid")}</option>
-            <option value="senior">{t("experience_senior")}</option>
-            <option value="lead">{t("experience_lead")}</option>
-            <option value="manager">{t("experience_manager")}</option>
-            <option value="director">{t("experience_director")}</option>
-          </select>
+            placeholder={t("select_experience")}
+            onChange={(value) => onChange({ experience: value as string })}
+            className="w-[280px]"
+            size="md"
+            required
+          />
         </div>
       </div>
 

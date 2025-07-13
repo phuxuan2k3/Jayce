@@ -103,6 +103,9 @@ export const vi = {
   newest: "Mới nhất",
   highest_score: "Điểm cao nhất",
   lowest_score: "Điểm thấp nhất",
+  interview_tilte: "Phỏng vấn kỹ thuật",
+  interview_description:
+    "Thực hành các buổi phỏng vấn giả lập với nhiều tình huống thực tế, giúp bạn tự tin chinh phục nhà tuyển dụng.",
   // Settings
   tag_role_business_manager: "Quản lý doanh nghiệp",
   tag_role_candidate: "Ứng viên",

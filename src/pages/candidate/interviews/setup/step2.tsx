@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { JobSetupData } from "./setup";
 import ModalCheckSound from "./ModalCheckSound";
 import { useLanguage } from "../../../../LanguageProvider";
+import MySelect from "../../../../features/tests/ui/forms/MySelect";
 
 const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
   const [speechRate, setSpeechRate] = useState(0);
@@ -31,6 +32,11 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
 
   const [language, setLanguage] = useState<string>("English");
 
+  const languageOptions = [
+    { value: "English", label: "English" },
+    { value: "Vietnamese", label: "Tiếng Việt" },
+  ];
+
   useEffect(() => {
     localStorage.setItem("language", language);
   }, [language]);
@@ -49,16 +55,14 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
             <div className="font-medium mb-1 text-lg w-full">
               {t("language")}
             </div>
-            <select
+            <MySelect
+              label={""}
+              options={languageOptions}
               value={language}
-              onChange={(e) =>
-                setLanguage(e.target.value as "English" | "Vietnamese")
-              }
-              className="py-2 pe-12 ps-2  shadow rounded-md focus:outline-none focus:ring focus:ring-teal-300"
-            >
-              <option value="English">English</option>
-              <option value="Vietnamese">Tiếng Việt</option>
-            </select>
+              onChange={(value) => setLanguage(value as string)}
+              className="w-64"
+              size="md"
+            />
             <div className="mt-4 mb-2">{t("models_english")}</div>
             <div className="flex  gap-4">
               {models.map((model) => (

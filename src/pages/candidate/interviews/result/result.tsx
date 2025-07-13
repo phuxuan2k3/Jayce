@@ -82,7 +82,13 @@ const ResultPage = () => {
   if (!data) return <div>{t("result_no_data")}</div>;
 
   return (
-    <div className=" h-fit py-20 container">
+    <div className=" h-fit container">
+      <div className=" my-4  h-[104px] bg-white/90 rounded-3xl shadow p-6 flex flex-col gap-2">
+        <h2 className="text-2xl md:text-3xl font-bold">{t("result_title")}</h2>
+        <div className="text-sm text-primary-toned-500">
+          {t("result_congrats")}
+        </div>
+      </div>
       <Box className="w-full flex justify-center ">
         <div className="w-[340px] sticky top-20 h-[500px] bg-white/90 rounded-3xl shadow p-6 flex flex-col gap-2 items-center mr-10">
           {navItems.map((item) => {
