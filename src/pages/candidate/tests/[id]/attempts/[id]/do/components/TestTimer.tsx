@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLanguage } from '../../../../../../../../LanguageProvider';
 
 interface TestTimerProps {
 	timeLeft: number | null;
@@ -9,6 +10,7 @@ const TestTimer: React.FC<TestTimerProps> = ({
 	className,
 	timeLeft,
 }) => {
+	const { t } = useLanguage();
 	const [displayTime, setDisplayTime] = useState<string>("--:--");
 	const [isTimeUp, setIsTimeUp] = useState<boolean>(false);
 
@@ -63,7 +65,7 @@ const TestTimer: React.FC<TestTimerProps> = ({
 		<div className={`test-timer ${className || ''} ${isTimeUp ? 'time-up' : ''}`}>
 			<div className="timer-display">
 				{isTimeUp ? (
-					<div className="time-up-message">Time's up!</div>
+					<div className="time-up-message">{t("times_up_title")}</div>
 				) : (
 					<div className="countdown">{displayTime}</div>
 				)}

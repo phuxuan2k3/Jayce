@@ -7,6 +7,7 @@ import ParticipantCard from "../../../ui-items/user/ParticipantCard";
 import ParticipantAttempts from "./ParticipantAttempts";
 import { AttemptCoreSchema } from "../../../api/test.api-gen-v2";
 import ParticipantDetailCard from "../../../ui-items/user/ParticipantDetailCard";
+import { useLanguage } from "../../../../../LanguageProvider";
 
 export default function ParticipantsResult({
 	participantUser: { user, participant },
@@ -17,6 +18,8 @@ export default function ParticipantsResult({
 	onBack: () => void;
 	onAttemptClick: (attempt: AttemptCoreSchema) => void;
 }) {
+	const { t } = useLanguage();
+
 	return (
 		<div className='flex flex-col gap-4 h-full'>
 			<div className='flex items-center justify-between'>
@@ -26,7 +29,7 @@ export default function ParticipantsResult({
 					size={"medium"}
 				>
 					<ArrowLeft className="w-4 h-4" />
-					<span>Back</span>
+					<span>{t("back")}</span>
 				</MyButton>
 			</div>
 
@@ -35,7 +38,7 @@ export default function ParticipantsResult({
 			<MyTabs
 				tabs={[
 					{
-						label: "Attempts",
+						label: t("attempts"),
 						id: "attempts",
 						content: <ParticipantAttempts
 							candidateId={participant.candidateId}
@@ -43,14 +46,14 @@ export default function ParticipantsResult({
 						/>
 					},
 					{
-						label: "Statistic",
+						label: t("statistic"),
 						id: "statistic",
 						content: <ParticipantStatisticCard
 							participant={participant}
 						/>
 					},
 					{
-						label: "Details",
+						label: t("details"),
 						id: "details",
 						content: <ParticipantDetailCard
 							metadata={user.metadata}

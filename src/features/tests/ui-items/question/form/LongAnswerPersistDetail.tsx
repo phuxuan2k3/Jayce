@@ -1,6 +1,7 @@
 import { LongAnswerDetail } from '../types';
 import MyTextArea from '../../../ui/forms/MyTextArea';
 import MyFieldLayout from '../../../ui/forms/MyFieldLayout';
+import { useLanguage } from '../../../../../LanguageProvider';
 
 export default function LongAnswerPersistDetail({
 	detail,
@@ -9,6 +10,8 @@ export default function LongAnswerPersistDetail({
 	detail: LongAnswerDetail;
 	onQuestionChange: (edit: Partial<LongAnswerDetail>) => void;
 }) {
+	const { t } = useLanguage();
+
 	const correctAnswer = detail.correctAnswer ?? '';
 	const imageLinks = detail.imageLinks ?? [];
 	const extraText = detail.extraText ?? '';
@@ -36,11 +39,11 @@ export default function LongAnswerPersistDetail({
 		<div className="flex flex-col gap-4 w-full text-gray-600">
 			{/* Correct Answer */}
 			<MyFieldLayout>
-				<span className='font-semibold text-sm'>Correct Answer</span>
+				<span className='font-semibold text-sm'>{t("long_answer_correct_answer")}</span>
 				<MyTextArea
 					value={correctAnswer || ''}
 					onChange={(e) => handleCorrectAnswerChange(e.target.value)}
-					placeholder="Provide the correct answer here..."
+					placeholder={t("long_answer_correct_answer_placeholder")}
 					minRows={2}
 				/>
 			</MyFieldLayout>
@@ -48,11 +51,11 @@ export default function LongAnswerPersistDetail({
 			{/* Extra Information */}
 			<div className='flex flex-col gap-4 w-full'>
 				<div className="flex flex-col gap-1">
-					<span className="text-sm font-semibold">Extra Text (optional)</span>
+					<span className="text-sm font-semibold">{t("long_answer_extra_text")}</span>
 					<MyTextArea
 						value={extraText || ''}
 						onChange={(e) => handleExtraTextChange(e.target.value)}
-						placeholder="Extra information, hints, etc. (optional)"
+						placeholder={t("long_answer_extra_text_placeholder")}
 						minRows={1}
 					/>
 				</div>

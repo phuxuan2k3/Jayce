@@ -1,6 +1,7 @@
 import React from "react";
 import { CandidateCoreSchema } from "../../api/test.api-gen-v2";
 import { UserInfo } from "../../../auth/store/authSlice";
+import { useLanguage } from "../../../../LanguageProvider";
 
 // "username": "quocankg2611@gmail.com",
 // "email": "quocankg2611@gmail.com",
@@ -20,6 +21,8 @@ interface ParticipantCardProps {
 }
 
 const ParticipantCard: React.FC<ParticipantCardProps> = ({ user, participant }) => {
+	const { t } = useLanguage();
+	
 	return (
 		<div className='flex-1 w-full flex items-center justify-center'>
 			<div className='relative bg-primary-toned-50 rounded-2xl p-6 shadow-md border border-primary-toned-200 transition-all duration-300 w-full'>
@@ -34,13 +37,13 @@ const ParticipantCard: React.FC<ParticipantCardProps> = ({ user, participant }) 
 
 					<div className='flex-1 min-w-0'>
 						<div className="flex items-center space-x-2 mb-1">
-							<h3 className='font-bold text-lg text-gray-800 truncate'>{user.metadata.fullname || "Unknown User"}</h3>
+							<h3 className='font-bold text-lg text-gray-800 truncate'>{user.metadata.fullname || t("unknown_user")}</h3>
 						</div>
 
 						<div className='space-y-1'>
 							<p className='text-sm text-gray-600 truncate flex items-center'>
 								<span className="w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
-								<span>Username:</span>
+								<span>{t("username")}:</span>
 								<span className='ml-1 font-semibold text-gray-800 truncate'>
 									{user.username}
 								</span>
@@ -49,7 +52,7 @@ const ParticipantCard: React.FC<ParticipantCardProps> = ({ user, participant }) 
 							{user.metadata.country && (
 								<p className='text-xs text-gray-500 truncate flex items-center'>
 									<span className="w-1.5 h-1.5 bg-gray-300 rounded-full mr-2"></span>
-									<span>Country:</span>
+									<span>{t("country")}:</span>
 									<span className='ml-1 font-semibold text-gray-800 truncate'>
 										{user.metadata.country}
 									</span>
@@ -63,7 +66,7 @@ const ParticipantCard: React.FC<ParticipantCardProps> = ({ user, participant }) 
 						<div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-toned-400 to-primary-toned-600 flex items-center justify-center text-white font-bold text-sm shadow-lg">
 							#{participant._aggregate?.rank || '-'}
 						</div>
-						<span className="text-xs text-gray-500 mt-1">Rank</span>
+						<span className="text-xs text-gray-500 mt-1">{t("rank")}</span>
 					</div>
 				</div>
 			</div>

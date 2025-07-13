@@ -3,6 +3,7 @@ import OutlinesInput from '../../../../../../features/tests/ui-shared/practice-g
 import MyIconHeader from '../../../../../../features/tests/ui/MyIconHeader';
 import { Download, Save } from 'lucide-react';
 import MyButton from '../../../../../../features/tests/ui/buttons/MyButton';
+import { useLanguage } from '../../../../../../LanguageProvider';
 
 export default function PracticeGenStep3({
 	data,
@@ -22,6 +23,8 @@ export default function PracticeGenStep3({
 	};
 	onSaveTemplateClick: () => void;
 }) {
+	const { t } = useLanguage();
+
 	return (
 		<div className="flex flex-col gap-4">
 			<OutlinesInput
@@ -44,15 +47,15 @@ export default function PracticeGenStep3({
 			<div className='flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-md mt-4'>
 				<MyIconHeader
 					icon={<Save size={20} className="text-white" />}
-					title='Save Your Template'
-					description='You can save this information as a template for future use!'
+					title={t("gen_step3_save_template_title")}
+					description={t("gen_step3_save_template_description")}
 				/>
 
 				<MyButton
 					className='ml-auto flex items-center gap-2'
 					onClick={onSaveTemplateClick}>
 					<Download size={18} />
-					<span>Save Template</span>
+					<span>{t("gen_step3_save_template_button")}</span>
 				</MyButton>
 			</div>
 		</div>

@@ -5,10 +5,13 @@ import { QuestionContext } from '../contexts';
 import { BaseComponentProps } from '../types';
 import { commonSliderButtonClassNames, commonBoxClassNames } from './type';
 import { cn } from '../../../../../../app/cn';
+import { useLanguage } from '../../../../../../LanguageProvider';
 
 export function ImageLinks({
 	className = "",
 }: BaseComponentProps) {
+	const { t } = useLanguage();
+	
 	const imageLinks = QuestionContext.useLongAnswerDetail().imageLinks;
 	const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -20,7 +23,7 @@ export function ImageLinks({
 						className={cn(commonSliderButtonClassNames(isShow), className)}
 						onClick={onClick}
 					>
-						{isShow ? "Hide Images" : "Show Images"}
+						{isShow ? t("image_links_hide") : t("image_links_show")}
 					</button>
 				)}
 			>
@@ -29,7 +32,7 @@ export function ImageLinks({
 					'w-full border-t-0 rounded-t-none grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 overflow-clip'
 				)}>
 					{imageLinks == null || imageLinks.length === 0 ? (
-						<span>No images provided.</span>
+						<span>{t("image_links_empty")}</span>
 					) : (
 						imageLinks.map((link, index) => (
 							<div

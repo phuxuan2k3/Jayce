@@ -1,4 +1,5 @@
 import { cn } from '../../../../app/cn';
+import { useLanguage } from '../../../../LanguageProvider';
 import { AttemptCoreSchema } from '../../api/test.api-gen-v2'
 import { AttemptUtils } from './attempt-utils';
 
@@ -11,6 +12,8 @@ export default function AttemptCard({
 	onClick?: (attempt: AttemptCoreSchema) => void;
 	className?: string;
 }) {
+	const { t } = useLanguage();
+
 	const { id, order, status, secondsSpent, createdAt, updatedAt, _aggregate, _include } = attempt;
 	const { points, answered, answeredCorrect } = _aggregate;
 	const { test } = _include;
@@ -32,28 +35,28 @@ export default function AttemptCard({
 			className
 		)} onClick={() => onClick?.(attempt)}>
 			<div className="flex justify-between items-center">
-				<div className="font-semibold text-lg">Attempt #{order}</div>
+				<div className="font-semibold text-lg">{t("attempt_card_title")} #{order}</div>
 				<span className={`px-2 py-1 rounded text-xs font-medium ${AttemptUtils.status(status).bandage}`}>{status}</span>
 			</div>
-			<div className="text-sm text-gray-600">Test: <span className="font-medium">{test.title}</span></div>
+			<div className="text-sm text-gray-600">{t("attempt_card_test")}: <span className="font-medium">{test.title}</span></div>
 			<div className="flex flex-wrap gap-4 mt-2">
 				<div>
-					<span className="font-medium">Points:</span> {points}
+					<span className="font-medium">{t("attempt_card_points")}:</span> {points}
 				</div>
 				<div>
-					<span className="font-medium">Answered:</span> {answered}
+					<span className="font-medium">{t("attempt_card_answered")}:</span> {answered}
 				</div>
 				<div>
-					<span className="font-medium">Correct:</span> {answeredCorrect}
+					<span className="font-medium">{t("attempt_card_correct")}:</span> {answeredCorrect}
 				</div>
 				<div>
-					<span className="font-medium">Time Spent:</span> {formatTime(secondsSpent)}
+					<span className="font-medium">{t("attempt_card_time_spent")}:</span> {formatTime(secondsSpent)}
 				</div>
 			</div>
 			<div className="flex flex-wrap gap-4 text-xs text-gray-400 mt-2">
-				<div>Started: {formatDate(createdAt)}</div>
-				<div>Updated: {formatDate(updatedAt)}</div>
-				<div>Attempt ID: {id}</div>
+				<div>{t("attempt_card_started")}: {formatDate(createdAt)}</div>
+				<div>{t("attempt_card_updated")}: {formatDate(updatedAt)}</div>
+				<div>{t("attempt_card_id")}: {id}</div>
 			</div>
 		</div>
 	);

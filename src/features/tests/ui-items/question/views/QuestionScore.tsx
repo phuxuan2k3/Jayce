@@ -1,4 +1,5 @@
 import { cn } from "../../../../../app/cn";
+import { useLanguage } from "../../../../../LanguageProvider";
 import QuestionPrimitives, { PrimitivesProps } from "../primitives";
 import { QuestionPrimitivesDetailBody } from "../primitives/QuestionBody";
 import { QuestionPrimitivesScoreFooter } from "../primitives/QuestionFooter";
@@ -16,6 +17,8 @@ export function QuestionScore({
 		onGivenCommentChange: (comment?: string) => void;
 	} | undefined;
 }) {
+	const { t } = useLanguage();
+
 	const allowComment = context.question?.type === "LONG_ANSWER"; // Only allow comments for long answer questions
 	const questionPoints = context.question.points;
 
@@ -34,7 +37,7 @@ export function QuestionScore({
 				/>
 			) : (
 				<div className="flex items-center justify-center h-32 text-gray-500">
-					<p className="text-sm">No answer provided for this question.</p>
+					<p className="text-sm">{t("no_answer_provided")}</p>
 				</div>
 			)}
 		</QuestionPrimitives>

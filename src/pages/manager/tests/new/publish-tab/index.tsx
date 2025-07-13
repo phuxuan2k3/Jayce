@@ -10,12 +10,15 @@ import QuestionCarousel from './components/QuestionCarousel';
 import WarningDialog from './components/WarningDialog';
 import { PublishFooter } from './components/PublishFooter';
 import { StatCard } from './components/StatCard';
+import { useLanguage } from '../../../../../LanguageProvider';
 
 export default function PublishTab({
 	examPersist,
 }: {
 	examPersist: ExamPersistCoreSchema;
 }) {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 	const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
 
@@ -56,29 +59,29 @@ export default function PublishTab({
 				<hr className="border-primary-toned-300 my-2" />
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-					<InfoItem label="Language" value={config.language} />
-					<InfoItem label="Duration" value={`${config.minutesToAnswer} minutes`} />
-					<InfoItem label="Room ID" value={config.detail.roomId} />
-					<InfoItem label="Password" value={<NullableSpan value={config.detail.password} />} />
-					<InfoItem label="Attempts Allowed" value={<NullableSpan value={config.detail.numberOfAttemptsAllowed} />} />
-					<InfoItem label="Number of participants" value={<NullableSpan value={config.detail.numberOfParticipants} />} />
-					<InfoItem label='Publicly Visible' value={config.detail.isPublic ? "Yes" : "No"} />
-					<InfoItem label={`Show others's results`} value={config.detail.isAllowedToSeeOtherResults ? "Enabled" : "Disabled"} />
-					<InfoItem label={`Show exam's answer`} value={config.detail.isAnswerVisible ? "Enabled" : "Disabled"} />
+					<InfoItem label={t("publish_label_language")} value={config.language} />
+					<InfoItem label={t("publish_label_duration")} value={`${config.minutesToAnswer} ${t("publish_label_duration_unit")}`} />
+					<InfoItem label={t("publish_label_room_id")} value={config.detail.roomId} />
+					<InfoItem label={t("publish_label_password")} value={<NullableSpan value={config.detail.password} />} />
+					<InfoItem label={t("publish_label_attempts_allowed")} value={<NullableSpan value={config.detail.numberOfAttemptsAllowed} />} />
+					<InfoItem label={t("publish_label_number_of_participants")} value={<NullableSpan value={config.detail.numberOfParticipants} />} />
+					<InfoItem label={t("publish_label_publicly_visible")} value={config.detail.isPublic ? t("publish_label_publicly_visible_yes") : t("publish_label_publicly_visible_no")} />
+					<InfoItem label={t("publish_label_show_others_results")} value={config.detail.isAllowedToSeeOtherResults ? t("publish_label_show_enabled") : t("publish_label_show_disabled")} />
+					<InfoItem label={t("publish_label_show_exam_answer")} value={config.detail.isAnswerVisible ? t("publish_label_show_enabled") : t("publish_label_show_disabled")} />
 
 				</div>
 
 				<hr className="md:col-span-2 border-primary-toned-300 my-2" />
 
 				<div className="md:col-span-2 space-y-3">
-					<h3 className="text-2xl font-semibold text-primary">Schedule</h3>
+					<h3 className="text-2xl font-semibold text-primary">{t("publish_title_schedule")}</h3>
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 						<div className="bg-primary-toned-50 rounded-lg p-4 font-semibold text-pretty text-primary">
-							<div className="font-normal text-primary-toned-600 mb-1">Opens At:</div>
+							<div className="font-normal text-primary-toned-600 mb-1">{t("publish_label_opens_at")}:</div>
 							<div className="text-gray-800">{formatDateDisplay(new Date(config.detail.openDate))}</div>
 						</div>
 						<div className="bg-primary-toned-50 rounded-lg p-4 font-semibold text-pretty text-primary">
-							<div className="font-normal text-primary-toned-600 mb-1">Closes At:</div>
+							<div className="font-normal text-primary-toned-600 mb-1">{t("publish_label_closes_at")}:</div>
 							<div className="text-gray-800">{formatDateDisplay(new Date(config.detail.closeDate))}</div>
 						</div>
 					</div>
@@ -88,13 +91,13 @@ export default function PublishTab({
 
 
 				<div className="flex flex-col gap-4">
-					<h2 className="text-2xl font-semibold text-primary">Questions</h2>
+					<h2 className="text-2xl font-semibold text-primary">{t("publish_title_questions")}</h2>
 
 					<div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-						<StatCard value={examStats.totalQuestions} label="Questions" />
-						<StatCard value={examStats.totalPoints} label="Total Points" />
-						<StatCard value={examStats.averagePoints} label="Avg Points/Question" />
-						<StatCard value={examStats.duration} label="Minutes" />
+						<StatCard value={examStats.totalQuestions} label={t("publish_label_stat_questions")} />
+						<StatCard value={examStats.totalPoints} label={t("publish_label_stat_total_points")} />
+						<StatCard value={examStats.averagePoints} label={t("publish_label_stat_avg_points")} />
+						<StatCard value={examStats.duration} label={t("publish_label_stat_minutes")} />
 					</div>
 
 					<QuestionCarousel questions={questions} />

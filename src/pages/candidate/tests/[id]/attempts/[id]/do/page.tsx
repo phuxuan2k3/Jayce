@@ -12,8 +12,11 @@ import { useAppDispatch, useAppSelector } from "../../../../../../../app/hooks";
 import testDoSlice from "../../../../../../../features/tests/stores/testDoSlice";
 import useGetAttemptIdParams from "../../../../../../../features/tests/hooks/useGetAttemptIdParams";
 import TitleSkeleton from "../../../../../../../features/tests/ui/skeletons/TitleSkeleton";
+import { useLanguage } from "../../../../../../../LanguageProvider";
 
 export default function CandidateTestAttemptsDoPage() {
+	const { t } = useLanguage();
+	
 	const navigate = useNavigate();
 	const testId = useGetTestIdParams();
 	const attemptId = useGetAttemptIdParams();
@@ -103,7 +106,7 @@ export default function CandidateTestAttemptsDoPage() {
 				dataComponent={({ questions }) => (attemptState != null && currentQuestionState != null) ? (
 					<div className="flex w-full justify-between">
 						{attemptState.indexedQuestionIds.length === 0 ? (
-							<div>No questions found</div>
+							<div>{t("test_do_no_questions")}</div>
 						) : (
 							<QuestionDoSection
 								totalQuestion={attemptState.indexedQuestionIds.length}
@@ -128,7 +131,7 @@ export default function CandidateTestAttemptsDoPage() {
 					</div>
 				) : (
 					<div className="flex w-full justify-center items-center h-full">
-						<div className="text-gray-500">No question selected</div>
+						<div className="text-gray-500">{t("test_do_no_question_selected")}</div>
 					</div>
 				)}
 			/>

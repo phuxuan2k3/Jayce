@@ -10,6 +10,7 @@ import Step4 from './step-4';
 import { getStepInfo, StepInfoKey } from '../common/types';
 import { toast } from 'react-toastify';
 import useBuilderStepsData from './hooks/useBuilderStepsData';
+import { useLanguage } from '../../../../../LanguageProvider';
 
 export default function BuilderWizzardTabMain({
 	builderAllStepData,
@@ -18,6 +19,8 @@ export default function BuilderWizzardTabMain({
 	onGenerationConfirm: () => void;
 	builderAllStepData: ReturnType<typeof useBuilderStepsData>;
 }) {
+	const { t } = useLanguage();
+
 	const {
 		handleValueChangeOfStep,
 		mainValue,
@@ -62,7 +65,7 @@ export default function BuilderWizzardTabMain({
 					onConfirm={() => onGenerationConfirm()}
 				/>;
 			default:
-				return <div>Invalid Step</div>;
+				return <div>{t("builder_step_invalid_step")}</div>;
 		}
 	}, [step, mainValue, handleSetStep]);
 
@@ -76,7 +79,7 @@ export default function BuilderWizzardTabMain({
 					if (newStep !== step) {
 						const newStepInfo = newStep as StepInfoKey;
 						if (newStepInfo == null) {
-							toast.error(`Invalid step: ${newStepInfo}`, {
+							toast.error(`${t("builder_step_invalid_step")}: ${newStepInfo}`, {
 								autoClose: 5000,
 								position: "top-right",
 								hideProgressBar: false,
@@ -93,8 +96,8 @@ export default function BuilderWizzardTabMain({
 
 			<div className="flex flex-col gap-2">
 				{step !== 4 && <Header
-					title={stepInfo.title}
-					description={stepInfo.description}
+					title={t(stepInfo.title)}
+					description={t(stepInfo.description)}
 				/>}
 
 				<MyErrorMessages

@@ -6,6 +6,7 @@ import LoadingCover from "../../../../../features/tests/ui/fetch-states/LoadingC
 import NoDataAvailibleCover from "../../../../../features/tests/ui/fetch-states/NoDataAvailibleCover";
 import MyPaginationSection from "../../../../../features/tests/ui-sections/MyPaginationSection";
 import { useGetTemplatesQuery } from "../apis/template.api-enhance";
+import { useLanguage } from "../../../../../LanguageProvider";
 
 interface TemplateListProps {
 	searchName: string;
@@ -20,6 +21,7 @@ const TemplateList: React.FC<TemplateListProps> = ({
 	onDelete,
 	// difficultiesFilter,
 }) => {
+	const { t } = useLanguage();
 	const [page, setPage] = React.useState(1);
 	const { data: pagedTemplates, isSuccess, isLoading, error } = useGetTemplatesQuery({
 		page: page,
@@ -49,7 +51,7 @@ const TemplateList: React.FC<TemplateListProps> = ({
 				</div>
 			) : (
 				<div className="h-full w-full flex items-center justify-center text-gray-500">
-					{searchName ? "No templates match your search" : "No templates available"}
+					{searchName ? t("template_list_no_match") : t("template_list_no_templates")}
 				</div>
 			)}
 

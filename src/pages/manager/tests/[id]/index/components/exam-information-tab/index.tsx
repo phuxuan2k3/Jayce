@@ -2,12 +2,15 @@ import { ExamDetails } from './components/ExamDetailsCard';
 import { ExamStatisticsCard } from './components/ExamStatisticsCard';
 import FetchStateCover2 from '../../../../../../../features/tests/ui/fetch-states/FetchStateCover2';
 import { useGetTestsByTestIdQuery } from '../../../../../../../features/tests/api/test.api-gen-v2';
+import { useLanguage } from '../../../../../../../LanguageProvider';
 
 export default function ExamInformationTab({
 	testId,
 }: {
 	testId: string;
 }) {
+	const { t } = useLanguage();
+
 	const examQuery = useGetTestsByTestIdQuery({
 		testId
 	}, {
@@ -20,9 +23,9 @@ export default function ExamInformationTab({
 			dataComponent={(exam) => exam._detail.mode === "EXAM" && (
 				<div className="w-full flex flex-col gap-2 p-2">
 					<div className="flex flex-col gap-2 mb-2">
-						<h2 className="text-2xl font-semibold text-primary">Information</h2>
+						<h2 className="text-2xl font-semibold text-primary">{t("exam_info_title")}</h2>
 						<p className="text-sm text-gray-500">
-							Here you can find the details about the exam, including its name, description, and other configurations.
+							{t("exam_info_description")}
 						</p>
 					</div>
 
@@ -31,9 +34,9 @@ export default function ExamInformationTab({
 					<hr className="border-primary-toned-300 my-4" />
 
 					<div className="flex flex-col gap-2 mb-2">
-						<h2 className="text-2xl font-semibold text-primary">Statistics</h2>
+						<h2 className="text-2xl font-semibold text-primary">{t("exam_stats_title")}</h2>
 						<p className="text-sm text-gray-500">
-							Comprehensive overview of exam content, participation, and performance metrics.
+							{t("exam_stats_description")}
 						</p>
 					</div>
 

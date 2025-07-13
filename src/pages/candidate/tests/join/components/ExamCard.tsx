@@ -3,6 +3,7 @@ import { Clock, Calendar, DoorOpen, Lock } from "lucide-react";
 import { cn } from "../../../../../app/cn";
 import { useGetUsersQuery } from "../../../../../features/auth/api/auth-profile.api";
 import FetchStateCover2 from "../../../../../features/tests/ui/fetch-states/FetchStateCover2";
+import { useLanguage } from "../../../../../LanguageProvider";
 
 export default function ExamCard({
 	test,
@@ -13,6 +14,8 @@ export default function ExamCard({
 	onClick?: (test: TestFullSchema) => void;
 	className?: string;
 }) {
+	const { t } = useLanguage();
+
 	if (test._detail.mode !== "EXAM") return null;
 
 	const authorQuery = useGetUsersQuery({
@@ -41,15 +44,15 @@ export default function ExamCard({
 
 				<FetchStateCover2
 					fetchState={authorQuery}
-					loadingComponent={<span className="text-sm text-primary-toned-600">Loading author...</span>}
+					loadingComponent={<span className="text-sm text-primary-toned-600">{t("exam_card_loading_author")}</span>}
 					dataComponent={({ users: data }) => (
 						<>
 							<span className="text-sm text-primary-toned-600">
-								Author:
+								{t("exam_card_author")}:
 							</span>
 							&nbsp;
 							<span className="text-sm text-primary-toned-600 font-semibold">
-								{data.length > 0 ? data[0].metadata.fullname : "Unknown Author"}
+								{data.length > 0 ? data[0].metadata.fullname : t("exam_card_unknown_author")}
 							</span>
 						</>
 					)}
@@ -63,7 +66,7 @@ export default function ExamCard({
 					<div className="grid grid-cols-2 gap-y-1 gap-x-4 items-center">
 						<div className="flex items-center gap-2 text-primary-toned-600">
 							<Calendar size={16} className="text-primary-toned-400" />
-							<span>Start:</span>
+							<span>{t("exam_card_start")}:</span>
 						</div>
 						<span className="font-semibold">
 							{formatDate(test._detail.openDate)}
@@ -71,7 +74,7 @@ export default function ExamCard({
 
 						<div className="flex items-center gap-2 text-primary-toned-600">
 							<Calendar size={16} className="text-primary-toned-400" />
-							<span>End:</span>
+							<span>{t("exam_card_end")}:</span>
 						</div>
 						<span className="font-semibold">
 							{formatDate(test._detail.closeDate)}
@@ -79,7 +82,7 @@ export default function ExamCard({
 
 						<div className="flex items-center gap-2 text-primary-toned-600">
 							<DoorOpen size={16} className="text-primary-toned-400" />
-							<span>Room:</span>
+							<span>{t("exam_card_room")}:</span>
 						</div>
 						<span className="font-semibold">
 							{test._detail.roomId}
@@ -89,7 +92,7 @@ export default function ExamCard({
 					<div className="flex flex-col items-end gap-2">
 						<div className="flex items-center gap-2">
 							<Clock size={16} className="text-primary-toned-400" />
-							<span>{test.minutesToAnswer} min</span>
+							<span>{test.minutesToAnswer} {t("exam_card_time_unit")}</span>
 						</div>
 						<div>
 							<span className="text-xs font-bold bg-primary-toned-200 text-primary-toned-800 px-2 py-1 rounded-full tracking-wide">
@@ -98,7 +101,7 @@ export default function ExamCard({
 						</div>
 						<div className="flex items-center gap-2">
 							<Lock size={16} className="text-primary-toned-400" />
-							<span>{test._detail.hasPassword === true ? "Has password" : "No password"}</span>
+							<span>{test._detail.hasPassword === true ? t("exam_card_has_password") : t("exam_card_no_password")}</span>
 						</div>
 					</div>
 				</div>
@@ -106,7 +109,7 @@ export default function ExamCard({
 
 			{/* Footer */}
 			<div className="flex items-center justify-between px-6 py-3 bg-primary-toned-50 border-t border-primary-toned-100 text-xs text-primary-toned-500">
-				<span>Last Modified: {formatDate(test.updatedAt)}</span>
+				<span>{t("exam_card_last_modified")}: {formatDate(test.updatedAt)}</span>
 			</div>
 		</div>
 	);

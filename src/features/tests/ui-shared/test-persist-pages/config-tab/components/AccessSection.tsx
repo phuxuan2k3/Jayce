@@ -10,6 +10,7 @@ import MyTimeInput from "../../../../ui/forms/MyTimeInput";
 import { Dices } from "lucide-react";
 import { useLazyGetTestsSuggestRoomidQuery } from "../../../../api/test.api-gen-v2";
 import { cn } from "../../../../../../app/cn";
+import { useLanguage } from "../../../../../../LanguageProvider";
 
 export function AccessSection({
 	roomId,
@@ -28,6 +29,8 @@ export function AccessSection({
 	getDateValue: (dateStr: string | null) => string;
 	getTimeValue: (dateStr: string | null) => string;
 }) {
+	const { t } = useLanguage();
+	
 	const [passwordDraft, setPasswordDraft] = useState<string>(password || "");
 	const [genRoomId, { isFetching, isSuccess, error, data }] = useLazyGetTestsSuggestRoomidQuery();
 
@@ -42,9 +45,9 @@ export function AccessSection({
 			<div className="flex items-start gap-8 w-full">
 				<MyFieldLayout className="flex-1">
 					<div className="flex items-baseline justify-between w-full">
-						<MyLabel htmlFor="test-room-id">Room ID:</MyLabel>
+						<MyLabel htmlFor="test-room-id">{t("access_section_room_id_label")}:</MyLabel>
 						{error == null ? (
-							<MyDescription text="Regenerate" />
+							<MyDescription text={t("access_section_room_id_generate")} />
 						) : (
 							<MyDescription className="text-red-500" text="Error fetching room ID" />
 						)}
@@ -53,7 +56,7 @@ export function AccessSection({
 						<MyInput
 							id="test-room-id"
 							type="text"
-							placeholder="Room ID"
+							placeholder={t("access_section_room_id_placeholder")}
 							value={roomId}
 							onChange={e => onChange({ roomId: e.target.value })}
 						/>
@@ -70,17 +73,17 @@ export function AccessSection({
 							)} />
 						</div>
 					</div>
-					<MyDescription text="Room ID for candidate to join" />
+					<MyDescription text={t("access_section_room_id_description")} />
 				</MyFieldLayout>
 
 				<MyFieldLayout className="flex-1">
-					<MyLabel htmlFor="test-password">Password:</MyLabel>
+					<MyLabel htmlFor="test-password">{t("access_section_password_label")}:</MyLabel>
 					<div className="flex items-center gap-x-2 w-full">
 						<MyInput
 							id="test-password"
 							type="text"
 							disabled={password == null}
-							placeholder="Enter password"
+							placeholder={t("access_section_password_placeholder")}
 							className={`${(password == null) && "bg-gray-200 cursor-not-allowed"}`}
 							value={password || ""}
 							onChange={e => {
@@ -100,17 +103,17 @@ export function AccessSection({
 							})}
 							label={
 								<MyLabel htmlFor="test-password-required" className="text-sm text-primary flex-shrink-0 cursor-pointer">
-									Required
+									{t("access_section_password_required")}
 								</MyLabel>
 							}
 						/>
 					</div>
-					<MyDescription text="Password for candidates to join the test. (Optional)" />
+					<MyDescription text={t("access_section_password_description")} />
 				</MyFieldLayout>
 			</div>
 
 			<div className="grid grid-cols-[auto_1fr_auto_1fr] gap-x-8 gap-y-4 items-center w-full mt-4">
-				<MyLabel htmlFor="test-open-date">From Date:</MyLabel>
+				<MyLabel htmlFor="test-open-date">{t("access_section_from_date")}:</MyLabel>
 				<MyDateInput
 					id="test-open-date"
 					value={getDateValue(openDate)}
@@ -121,7 +124,7 @@ export function AccessSection({
 						onChange({ openDate: prev.toISOString() });
 					}}
 				/>
-				<MyLabel htmlFor="test-open-time">Time:</MyLabel>
+				<MyLabel htmlFor="test-open-time">{t("access_section_from_time")}:</MyLabel>
 				<MyTimeInput
 					id="test-open-time"
 					value={getTimeValue(openDate)}
@@ -133,7 +136,7 @@ export function AccessSection({
 					}}
 					format="12"
 				/>
-				<MyLabel htmlFor="test-close-date">To Date:</MyLabel>
+				<MyLabel htmlFor="test-close-date">{t("access_section_to_date")}:</MyLabel>
 				<MyDateInput
 					id="test-close-date"
 					value={getDateValue(closeDate)}
@@ -144,7 +147,7 @@ export function AccessSection({
 						onChange({ closeDate: prev.toISOString() });
 					}}
 				/>
-				<MyLabel htmlFor="test-close-time">Time:</MyLabel>
+				<MyLabel htmlFor="test-close-time">{t("access_section_to_time")}:</MyLabel>
 				<MyTimeInput
 					id="test-close-time"
 					value={getTimeValue(closeDate)}

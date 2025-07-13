@@ -1,5 +1,6 @@
 import { Eye, EyeOff, LockIcon } from 'lucide-react';
 import React, { useState } from 'react'
+import { useLanguage } from '../../../../../LanguageProvider';
 
 export default function PasswordInput({
 	password,
@@ -12,6 +13,8 @@ export default function PasswordInput({
 	passwordError: string | null;
 	onPasswordErrorChange: (error: string | null) => void;
 }) {
+	const { t } = useLanguage();
+
 	const [showPassword, setShowPassword] = useState(false);
 
 	const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +25,7 @@ export default function PasswordInput({
 	return (<>
 		<div className="mt-4 w-full">
 			<label className="block text-sm font-medium text-gray-700 mb-1">
-				This test is password protected
+				{t("password_input_label")}
 			</label>
 			<div className="relative">
 				<div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -34,7 +37,7 @@ export default function PasswordInput({
 					onChange={handlePasswordChange}
 					className={`pl-10 pr-10 py-2 w-full border ${passwordError ? 'border-red-500' : 'border-gray-300'
 						} rounded-md focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary`}
-					placeholder="Enter password to join"
+					placeholder={t("password_input_placeholder")}
 				/>
 				<button
 					type="button"

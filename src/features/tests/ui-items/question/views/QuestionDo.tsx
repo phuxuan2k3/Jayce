@@ -6,6 +6,7 @@ import { AnswerForQuestionTypeSchema, QuestionCoreSchema } from "../../../api/te
 import { DoQuestionContext } from "../primitives/contexts";
 import { Flag } from "lucide-react";
 import { cn } from "../../../../../app/cn";
+import { useLanguage } from "../../../../../LanguageProvider";
 
 function FlagButton({
 	isFlagged,
@@ -16,6 +17,8 @@ function FlagButton({
 	onIsFlaggedChange: (isFlagged: boolean) => void;
 	className?: string;
 }) {
+	const { t } = useLanguage();
+
 	return (
 		<div
 			className={cn("cursor-pointer", className)}
@@ -23,12 +26,12 @@ function FlagButton({
 		>
 			{isFlagged ? (
 				<div className="flex items-center gap-1 hover:underline text-secondary">
-					<span className="font-semibold">Flagged</span>
+					<span className="font-semibold">{t("flagged")}</span>
 					<Flag size={20} strokeWidth={2.5} className="inline" />
 				</div>
 			) : (
 				<div className="flex items-center gap-1 hover:underline text-primary">
-					<span className="font-semibold">Flag this question</span>
+					<span className="font-semibold">{t("flag_this_question")}</span>
 					<Flag size={20} strokeWidth={2.5} />
 				</div>
 			)}

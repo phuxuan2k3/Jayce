@@ -3,8 +3,11 @@ import { toast } from 'react-toastify';
 import { parseQueryError } from '../../../../../helpers/fetchBaseQuery.error';
 import { useDeleteTestsByTestIdMutation } from '../../../../../features/tests/api/test.api-gen-v2';
 import useActionStateWatch from '../../../../../features/tests/hooks/useActionStateWatch';
+import { useLanguage } from '../../../../../LanguageProvider';
 
 export default function DeleteExamDialog() {
+	const { t } = useLanguage();
+
 	const { test, setTest } = useDeleteTestModalContext();
 	const [deleteTest, deleteState] = useDeleteTestsByTestIdMutation();
 	useActionStateWatch(deleteState, {
@@ -24,22 +27,22 @@ export default function DeleteExamDialog() {
 			<div className="absolute inset-0 bg-black opacity-50 -z-10" onClick={() => setTest(null)}></div>
 
 			<div className="bg-white rounded-lg shadow-lg p-6">
-				<h2 className="text-xl font-semibold mb-4">Delete Exam</h2>
+				<h2 className="text-xl font-semibold mb-4">{t("delete_exam_title")}</h2>
 
-				<p>Are you sure you want to delete the exam <span>"{test.title}"</span>?</p>
+				<p>{t("delete_exam_confirm_message")} <span>"{test.title}"</span>?</p>
 
 				<div className="flex justify-between mt-6">
 					<button
 						className="bg-gray-300 text-gray-700 px-4 py-2 rounded"
 						onClick={() => setTest(null)}>
-						Cancel
+						{t("cancel")}
 					</button>
 					<button
 						className="bg-red-600 text-white px-4 py-2 rounded mr-2"
 						onClick={() => {
 							deleteTest({ testId: test.id });
 						}}>
-						Delete
+						{t("delete")}
 					</button>
 				</div>
 			</div>

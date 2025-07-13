@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import QuickAction from "./QuickAction";
 import paths from "../../../../../router/paths";
 import { cn } from "../../../../../app/cn";
+import { useLanguage } from "../../../../../LanguageProvider";
 
 type SidebarActionsContextType = {};
 
@@ -42,6 +43,8 @@ const SidebarActions = ({
 };
 
 SidebarActions.GenerateTest = () => {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 	return (
 		<QuickAction
@@ -59,8 +62,8 @@ SidebarActions.GenerateTest = () => {
 					/>
 				</svg>
 			}
-			title="Create New Test"
-			description="Generate a custom test"
+			title={t("sidebar_actions_create_test_title")}
+			description={t("sidebar_actions_create_test_description")}
 			onClick={() => navigate(paths.candidate.tests.GENERATE)}
 		/>
 	);
@@ -122,6 +125,8 @@ SidebarActions.CreateNewTemplate = ({
 }: {
 	onCreateNewTemplate?: () => void;
 }) => {
+	const { t } = useLanguage();
+
 	return (
 		<QuickAction
 			icon={
@@ -138,29 +143,30 @@ SidebarActions.CreateNewTemplate = ({
 					/>
 				</svg>
 			}
-			title="Create New Template"
-			description="Generate a new test template"
+			title={t("sidebar_actions_create_template_title")}
+			description={t("sidebar_actions_create_template_description")}
 			onClick={onCreateNewTemplate}
 		/>
 	);
 };
 
 export const HelpBottomSection = () => {
+	const { t } = useLanguage();
+
 	return (
 		<div className="mt-4 border-t border-primary-toned-200 pt-4">
 			<div className="bg-primary-toned-100 rounded-lg p-4">
 				<h4 className="font-semibold text-primary-toned-700 mb-2">
-					Need Help?
+					{t("sidebar_help_title")}
 				</h4>
 				<p className="text-sm text-primary-toned-600 mb-3">
-					Learn how to effectively use test templates and get the most out of
-					your practice sessions.
+					{t("sidebar_help_description")}
 				</p>
 				<a
 					href="#"
 					className="text-primary text-sm font-semibold flex items-center"
 				>
-					View Guide
+					{t("sidebar_help_link")}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						className="h-4 w-4 ml-1"

@@ -2,6 +2,7 @@ import { TestFullSchema } from '../../../../../features/tests/api/test.api-gen-v
 import { cn } from '../../../../../app/cn';
 import { Check, X } from 'lucide-react';
 import { statusEnum } from './utils';
+import { useLanguage } from '../../../../../LanguageProvider';
 
 export default function ExamCoreItemCard({
 	test,
@@ -12,6 +13,8 @@ export default function ExamCoreItemCard({
 	className?: string;
 	onClick?: (test: TestFullSchema) => void;
 }) {
+	const { t } = useLanguage();
+
 	if (test.mode !== "EXAM" || test._detail.mode !== "EXAM") return null;
 
 	const { title, updatedAt, _detail, _aggregate } = test;
@@ -33,7 +36,7 @@ export default function ExamCoreItemCard({
 						{title}
 					</span>
 					<span className='text-gray-400 text-xs'>
-						Last modified: {formatDate(updatedAt)}
+						{t("exam_card_last_modified")}: {formatDate(updatedAt)}
 					</span>
 				</div>
 			</div>
@@ -42,19 +45,19 @@ export default function ExamCoreItemCard({
 
 			<div className='flex flex-col w-full text-sm px-2'>
 				<div className='flex items-center justify-between'>
-					<span className='text-gray-500'>Room ID:</span>
+					<span className='text-gray-500'>{t("exam_card_room_id")}:</span>
 					<span className='font-mono font-semibold truncate max-w-[140px] overflow-ellipsis whitespace-nowrap'>{roomId}</span>
 				</div>
 				<div className='flex items-center justify-between'>
-					<span className='text-gray-500'>Has password:</span>
+					<span className='text-gray-500'>{t("exam_card_has_password")}:</span>
 					<span>{booleanIcon(hasPassword)}</span>
 				</div>
 				<div className='flex items-center justify-between'>
-					<span className='text-gray-500'>Public:</span>
+					<span className='text-gray-500'>{t("exam_card_public")}:</span>
 					<span>{booleanIcon(isPublic)}</span>
 				</div>
 				<div className='flex items-center justify-between'>
-					<span className='text-gray-500'>Status:</span>
+					<span className='text-gray-500'>{t("exam_card_status")}:</span>
 					<StatusItem openDate={openDate} closeDate={closeDate} />
 				</div>
 			</div>
@@ -63,7 +66,7 @@ export default function ExamCoreItemCard({
 
 			<div className='flex flex-col w-full text-sm px-2'>
 				<div className='flex items-center justify-between'>
-					<span className='text-gray-500'>Total candidates:</span>
+					<span className='text-gray-500'>{t("exam_card_total_candidates")}:</span>
 					<span className='truncate max-w-[140px] overflow-ellipsis whitespace-nowrap'>{totalCandidates}</span>
 				</div>
 			</div>

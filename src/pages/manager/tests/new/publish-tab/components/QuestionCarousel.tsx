@@ -3,12 +3,15 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { QuestionPersistCoreSchema } from '../../../../../../features/tests/ui-items/question/types';
 import { cn } from '../../../../../../app/cn';
 import { QuestionDefault } from '../../../../../../features/tests/ui-items/question/views/QuestionDefault';
+import { useLanguage } from '../../../../../../LanguageProvider';
 
 export default function QuestionCarousel({
 	questions,
 }: {
 	questions: QuestionPersistCoreSchema[];
 }) {
+	const { t } = useLanguage();
+
 	const [index, setIndex] = useState(0);
 	const [prevIndex, setPrevIndex] = useState(0);
 	const [isAnimating, setIsAnimating] = useState(false);
@@ -33,7 +36,7 @@ export default function QuestionCarousel({
 					className='bg-primary rounded-full p-2 text-white hover:bg-primary-toned-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed'
 					disabled={index === 0}
 					onClick={() => handleIndexChange(Math.max(index - 1, 0))}
-					aria-label="Previous Question"
+					aria-label={t("question_carousel_prev")}
 				>
 					<ArrowLeft />
 				</button>
@@ -42,7 +45,7 @@ export default function QuestionCarousel({
 				})}>
 					{questions.length === 0 ? (
 						<div className="text-center py-8 text-gray-500">
-							<p>No questions have been added yet.</p>
+							<p>{t("question_carousel_no_question")}</p>
 						</div>
 					) : (
 						<>
@@ -89,7 +92,7 @@ export default function QuestionCarousel({
 					className='bg-primary rounded-full p-2 text-white hover:bg-primary-toned-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed'
 					disabled={index === questions.length - 1}
 					onClick={() => handleIndexChange(Math.min(index + 1, questions.length - 1))}
-					aria-label="Next Question"
+					aria-label={t("question_carousel_next")}
 				>
 					<ArrowRight />
 				</button>
@@ -111,7 +114,7 @@ export default function QuestionCarousel({
 									}
 								)}
 								onClick={() => handleIndexChange(questionIndex)}
-								aria-label={`Go to question ${questionIndex + 1}`}
+								aria-label={`${t("question_carousel_go_to")} ${questionIndex + 1}`}
 								disabled={isAnimating}
 							>
 								{questionIndex + 1}

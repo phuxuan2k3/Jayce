@@ -17,6 +17,7 @@ import { Status } from "./types";
 import StatusDropdown from "./components/StatusDropdown";
 import MyButtonWithSort from "../../../../features/tests/ui/buttons/MyButtonWithSort";
 import { Skeleton } from "@mui/material";
+import { useLanguage } from "../../../../LanguageProvider";
 
 type Filter = {
 	page: number;
@@ -27,6 +28,8 @@ type Filter = {
 }
 
 const ManagerTestsPage = () => {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 	const userId = useGetUserId();
 	const [view, setView] = useState<"grid" | "table">("grid");
@@ -62,8 +65,8 @@ const ManagerTestsPage = () => {
 
 				<div className="flex items-center w-full mb-2">
 					<MyHeaderTitleSection
-						title="Manage Exams"
-						description="Create, view, and manage exams for your organization."
+						title={t("manager_tests_title")}
+						description={t("manager_tests_description")}
 					/>
 
 					<MyButton
@@ -71,7 +74,7 @@ const ManagerTestsPage = () => {
 						onClick={() => navigate(paths.manager.tests.NEW)}
 					>
 						<FilePlus2 strokeWidth={2.5} className="h-5 w-5" />
-						<span className="hidden md:inline">New Exam</span>
+						<span className="hidden md:inline">{t("manager_tests_new_exam")}</span>
 					</MyButton>
 				</div>
 
@@ -84,7 +87,7 @@ const ManagerTestsPage = () => {
 									variant={{
 										size: "small"
 									}}
-									placeholder="Search..."
+									placeholder={t("manager_tests_search_placeholder")}
 								/>
 							}
 						/>
@@ -100,7 +103,7 @@ const ManagerTestsPage = () => {
 								}))
 							}
 						>
-							Name
+							{t("manager_tests_sort_name")}
 						</MyButtonWithSort>
 						<MyButtonWithSort
 							sort={filter.sortCreatedAt}
@@ -111,7 +114,7 @@ const ManagerTestsPage = () => {
 								}))
 							}
 						>
-							Date
+							{t("manager_tests_sort_date")}
 						</MyButtonWithSort>
 
 						<StatusDropdown statuses={statuses} setStatuses={setStatuses} />

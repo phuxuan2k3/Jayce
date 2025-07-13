@@ -7,12 +7,15 @@ import MyButton from "../../../../../../features/tests/ui/buttons/MyButton";
 import FetchStateCover2 from "../../../../../../features/tests/ui/fetch-states/FetchStateCover2";
 import MyPaginationSection from "../../../../../../features/tests/ui-sections/MyPaginationSection";
 import { arrayPagination } from "../../../../../../helpers/array";
+import { useLanguage } from "../../../../../../LanguageProvider";
 
 export default function QuestionsTabContent({
 	numberOfAttempts,
 }: {
 	numberOfAttempts: number;
 }) {
+	const { t } = useLanguage();
+
 	const testId = useGetTestIdParams();
 
 	const [showAllAnswers, setShowAllAnswers] = React.useState<boolean>(false);
@@ -36,10 +39,10 @@ export default function QuestionsTabContent({
 			{(numberOfAttempts === 0 && viewQuestions === false) && (
 				<div className="mt-4 flex flex-col items-center">
 					<p className="text-amber-600 mb-2">
-						Viewing questions may reveal test content. Are you sure you want to continue?
+						{t("questions_tab_view_warning")}
 					</p>
 					<MyButton onClick={() => setViewQuestions(true)}>
-						View Questions
+						{t("questions_tab_view_button")}
 					</MyButton>
 				</div>
 			)}
@@ -51,12 +54,12 @@ export default function QuestionsTabContent({
 						return (
 							questionsData.length === 0 ? (
 								<div className="flex justify-center items-center h-40">
-									<p className="text-gray-500">No questions available.</p>
+									<p className="text-gray-500">{t("questions_tab_no_questions")}</p>
 								</div>
 							) : (
 								<div className="bg-white rounded-lg shadow-md p-6">
 									<div className="flex justify-between items-center mb-4">
-										<h3 className="text-lg font-semibold">Total {questionsData.length} Questions</h3>
+										<h3 className="text-lg font-semibold">{t("questions_tab_total_questions").replace("{{count}}", questionsData.length.toString())}</h3>
 										<div className="flex items-center gap-2">
 											<MyButton
 												onClick={() => setViewCorrectAnswer("1")}
@@ -64,9 +67,9 @@ export default function QuestionsTabContent({
 												size={"medium"}
 											>
 												{questionsQuery.isFetching ? (
-													"Loading..."
+													t("questions_tab_loading")
 												) : (
-													"Load Correct Answers"
+													t("questions_tab_load_correct_answers")
 												)}
 											</MyButton>
 											{viewCorrectAnswer === "1" && (
@@ -74,7 +77,7 @@ export default function QuestionsTabContent({
 													variant="secondary"
 													size={"medium"}
 												>
-													{showAllAnswers ? "Hide All Answers" : "Show All Answers"}
+													{showAllAnswers ? t("questions_tab_hide_all_answers") : t("questions_tab_show_all_answers")}
 												</MyButton>
 											)}
 										</div>

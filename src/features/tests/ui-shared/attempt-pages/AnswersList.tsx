@@ -7,6 +7,7 @@ import useGetTestIdParams from "../../hooks/useGetTestIdParams";
 import useGetAttemptIdParams from "../../hooks/useGetAttemptIdParams";
 import MyButton from "../../ui/buttons/MyButton";
 import { QuestionDefault } from "../../ui-items/question/views/QuestionDefault";
+import { useLanguage } from "../../../../LanguageProvider";
 
 export default function AnswersList({
 	isAllowedToShowAnswer,
@@ -15,6 +16,8 @@ export default function AnswersList({
 	isAllowedToShowAnswer: boolean;
 	pollAnswers?: boolean;
 }) {
+	const { t } = useLanguage();
+
 	const testId = useGetTestIdParams();
 	const attemptId = useGetAttemptIdParams();
 	const [isShowAllAnswers, setIsShowAllAnswers] = useState(false);
@@ -36,9 +39,9 @@ export default function AnswersList({
 		<div className="flex flex-col w-full gap-4">
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
-					<h2 className="text-lg font-semibold">Your Answers</h2>
+					<h2 className="text-lg font-semibold">{t("answers_list_title")}</h2>
 					{pollAnswers && (
-						<p className="text-gray-500 text-xs">Polling answers...</p>
+						<p className="text-gray-500 text-xs">{t("answers_list_polling")}</p>
 					)}
 				</div>
 				{isAllowedToShowAnswer === true ? (
@@ -46,10 +49,10 @@ export default function AnswersList({
 						size={"medium"}
 						onClick={() => setIsShowAllAnswers(!isShowAllAnswers)}
 					>
-						{isShowAllAnswers ? "Hide All Answers" : "Show All Answers"}
+						{isShowAllAnswers ? t("answers_list_hide_all") : t("answers_list_show_all")}
 					</MyButton>
 				) : (
-					<p className="text-sm text-gray-500">You cannot view the correct answers.</p>
+					<p className="text-sm text-gray-500">{t("answers_list_not_allowed")}</p>
 				)}
 			</div>
 			<div className="flex flex-1 flex-col gap-4">

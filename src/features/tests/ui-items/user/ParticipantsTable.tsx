@@ -1,3 +1,4 @@
+import { useLanguage } from '../../../../LanguageProvider';
 import { UserInfo } from '../../../auth/store/authSlice';
 import { getUserCore } from '../../../auth/types/profile';
 import { CandidateCoreSchema } from '../../api/test.api-gen-v2';
@@ -19,6 +20,8 @@ export default function ParticipantsTable({
 		participant: CandidateCoreSchema;
 	}) => void;
 }) {
+	const { t } = useLanguage();
+
 	const data = useMapUsers({
 		users,
 		objects: participants,
@@ -31,16 +34,16 @@ export default function ParticipantsTable({
 				<thead className="bg-primary-toned-700 text-white font-bold">
 					<tr>
 						<th scope="col" className="px-6 py-3 text-left tracking-wider">
-							Rank
+							{t("participant_table_rank")}
 						</th>
 						<th scope="col" className="px-6 py-3 text-left tracking-wider">
-							Profile
+							{t("participant_table_profile")}
 						</th>
 						<th scope="col" className="px-6 py-3 text-left tracking-wider">
-							Highest Score
+							{t("participant_table_highest_score")}
 						</th>
 						<th scope="col" className="px-6 py-3 text-left tracking-wider">
-							Total Attempts
+							{t("participant_table_total_attempts")}
 						</th>
 					</tr>
 				</thead>

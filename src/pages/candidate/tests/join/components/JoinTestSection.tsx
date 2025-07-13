@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import MyInput from '../../../../../features/tests/ui/forms/MyInput';
 import MyButton from '../../../../../features/tests/ui/buttons/MyButton';
+import { useLanguage } from '../../../../../LanguageProvider';
 
 type JoinTestSectionProps = {
 	onJoinTest: (roomId: string) => void;
@@ -8,6 +9,8 @@ type JoinTestSectionProps = {
 };
 
 const JoinTestSection = ({ onJoinTest, isFetching }: JoinTestSectionProps) => {
+	const { t } = useLanguage();
+
 	const [joinCode, setJoinCode] = useState<string>("");
 
 	const handleJoinTest = () => {
@@ -28,7 +31,7 @@ const JoinTestSection = ({ onJoinTest, isFetching }: JoinTestSectionProps) => {
 						e.preventDefault();
 					}
 				}}
-				placeholder="Enter test Room ID"
+				placeholder={t("join_test_input_placeholder")}
 				className='flex-1'
 			/>
 			<MyButton
@@ -36,7 +39,7 @@ const JoinTestSection = ({ onJoinTest, isFetching }: JoinTestSectionProps) => {
 				disabled={!joinCode.trim()}
 				loading={isFetching === true}
 			>
-				Join Test
+				{t("join_test_button_label")}
 				{isFetching && <div className="animate-spin border-b-2 w-4 h-4 rounded-full border-white"></div>}
 			</MyButton>
 		</div>

@@ -1,4 +1,5 @@
 import { cn } from '../../../../../../app/cn';
+import { useLanguage } from '../../../../../../LanguageProvider';
 import { QuestionContext, ShowAnswerContext } from '../contexts';
 import { BaseComponentProps } from '../types';
 import { commonBoxClassNames } from './type';
@@ -7,6 +8,8 @@ import { TextAnswerAsConst } from './type';
 export function AttemptAnswerText({
 	className = "",
 }: BaseComponentProps) {
+	const { t } = useLanguage();
+
 	const answerDetail = QuestionContext.useLongAnswerAnswerDetail();
 	const answer = QuestionContext.useAnswer();
 	const { question } = QuestionContext.useQuestion();
@@ -33,12 +36,12 @@ export function AttemptAnswerText({
 	return (
 		<div className={cn("flex flex-col gap-4", className)}>
 			<div className={cn(commonBoxClassNames, "px-6 py-3")}>
-				<h1 className='text-base mb-2'>Your answer:</h1>
-				{answerDetail.answer ? answerDetail.answer : "No answer provided."}
+				<h1 className='text-base mb-2'>{t("attempt_answer_text_title")}:</h1>
+				{answerDetail.answer ? answerDetail.answer : t("attempt_answer_text_empty")}
 			</div>
 			{showResult && (
 				<div className={cn(commonBoxClassNames, "font-semibold", status.color)}>
-					{status.text}
+					{t(status.text)}
 				</div>
 			)}
 		</div>

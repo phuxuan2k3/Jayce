@@ -4,6 +4,7 @@ import { Status, StatusesAsConst } from '../types';
 import { CheckboxIcon } from '../../../../../components/icons/CheckboxIcon';
 import MyButton from '../../../../../features/tests/ui/buttons/MyButton';
 import { cn } from '../../../../../app/cn';
+import { useLanguage } from '../../../../../LanguageProvider';
 
 export default function StatusDropdown({
 	statuses,
@@ -12,6 +13,8 @@ export default function StatusDropdown({
 	statuses: Status[];
 	setStatuses: React.Dispatch<React.SetStateAction<Status[]>>;
 }) {
+	const { t } = useLanguage();
+
 	const isChecked = (status: Status) => statuses.includes(status);
 
 	return (
@@ -52,7 +55,7 @@ export default function StatusDropdown({
 					variant="outline"
 					size="medium"
 				>
-					Status
+					{t("manager_tests_status")}
 				</MyButton>
 			}
 		/>

@@ -2,21 +2,24 @@ import z from "zod";
 import { DifficultiesAsConst, LanguagesAsConst } from "../../../manager/tests/new/common/base-schema";
 
 const PracticeStep1Schema = z.object({
-	title: z.string().min(1, 'Title is required'),
-	description: z.string().min(1, 'Description is required'),
+	title: z.string().min(1, 'validation_title_required'),
+	description: z.string().min(1, 'validation_description_required'),
 	language: z.enum(LanguagesAsConst),
-	minutesToAnswer: z.number().min(5, 'Minimum 5 minutes').max(180, 'Maximum 180 minutes'),
+	minutesToAnswer: z
+		.number()
+		.min(5, 'validation_minutes_min')
+		.max(180, 'validation_minutes_max'),
 });
 
 const PracticeStep2Schema = z.object({
 	difficulty: z.enum(DifficultiesAsConst),
-	numberOfQuestions: z.number().min(1).max(50),
-	numberOfOptions: z.number().min(2).max(6),
+	numberOfQuestions: z.number().min(1, 'validation_questions_min').max(50, 'validation_questions_max'),
+	numberOfOptions: z.number().min(2, 'validation_options_min').max(6, 'validation_options_max'),
 	tags: z.array(z.string()),
-})
+});
 
 const PracticeStep3Schema = z.object({
-	outlines: z.array(z.string()).min(1, 'At least one outline is required'),
+	outlines: z.array(z.string()).min(1, 'validation_outlines_required'),
 });
 
 export type PracticeStep1Type = z.infer<typeof PracticeStep1Schema>;
@@ -45,15 +48,15 @@ export const PracticeGenStepInfo: Record<PracticeStepsValuesType, {
 	description: string;
 }> = {
 	1: {
-		title: "Step 1: General Information",
-		description: "This is the first step where you provide general information about the test."
+		title: "gen_step1_title",
+		description: "gen_step1_description",
 	},
 	2: {
-		title: "Step 2: Prompt Configuration",
-		description: "Configure how the AI will generate questions for your test."
+		title: "gen_step2_title",
+		description: "gen_step2_description",
 	},
 	3: {
-		title: "Step 3: Add Outlines & Generate",
-		description: "Add specific outlines to guide the AI in generating your questions. More detailed outlines will result in better questions."
-	}
+		title: "gen_step3_title",
+		description: "gen_step3_description",
+	},
 };

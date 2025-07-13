@@ -11,6 +11,7 @@ import MySelect from '../../../../../../features/tests/ui/forms/MySelect';
 import { LanguagesAsConst, LanguageType } from '../../../../../manager/tests/new/common/base-schema';
 import MyNumberInput from '../../../../../../features/tests/ui/forms/MyNumberInput';
 import MyIconHeader from '../../../../../../features/tests/ui/MyIconHeader';
+import { useLanguage } from '../../../../../../LanguageProvider';
 
 export default function PracticeGenStep1({
 	data: data,
@@ -25,6 +26,8 @@ export default function PracticeGenStep1({
 	onSelectTemplateClick: () => void;
 	onSelectTemplateClear: () => void;
 }) {
+	const { t } = useLanguage();
+
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
 		const { name, value } = e.target;
 		onDataChange({
@@ -40,20 +43,20 @@ export default function PracticeGenStep1({
 				<div className='flex items-center justify-between'>
 					<MyIconHeader
 						icon={<ListFilter size={20} className="text-white" />}
-						title="Choose a Template (Optional)"
-						description="Automatically fill in test information and prompt settings."
+						title={t("gen_step1_choose_template_title")}
+						description={t("gen_step1_choose_template_description")}
 					/>
 
 					<MyButton className='ml-auto flex items-center gap-2'
 						onClick={onSelectTemplateClick}>
 						<ListFilter size={18} />
-						<span className="ml-2">Browse Templates</span>
+						<span className="ml-2">{t("gen_step1_browse_templates_button")}</span>
 					</MyButton>
 				</div>
 				{selectedTemplate && (
 					<div className="mt-4 border-t border-gray-200 pt-4">
 						<p className="text-sm text-gray-600 mb-1">
-							Selected Template: <span className="font-semibold">{selectedTemplate.name}</span>
+							{t("gen_step1_selected_template")}: <span className="font-semibold">{selectedTemplate.name}</span>
 						</p>
 						<div className="mt-2 px-6 py-2 bg-primary-toned-50 rounded-md border-l-4 border-primary-toned-200 flex items-center gap-4">
 							<div className='flex-1'>
@@ -73,28 +76,28 @@ export default function PracticeGenStep1({
 			<div className="flex flex-col gap-4">
 
 				<MyFieldLayout>
-					<MyLabel htmlFor='title'>Test Title</MyLabel>
+					<MyLabel htmlFor='title'>{t("gen_step1_field_title")}</MyLabel>
 					<MyInput
 						id='title'
 						type="text"
 						name="title"
-						aria-label='Test Title'
+						aria-label={t("gen_step1_field_title")}
 						value={data.title}
 						onChange={handleInputChange}
-						placeholder="E.g., React Fundamentals Practice Test"
+						placeholder={t("gen_step1_field_title_placeholder")}
 						required
 					/>
 				</MyFieldLayout>
 
 				<MyFieldLayout>
-					<MyLabel htmlFor='description'>Description</MyLabel>
+					<MyLabel htmlFor='description'>{t("gen_step1_field_description")}</MyLabel>
 					<MyTextArea
 						id='description'
 						name="description"
-						aria-label='Test Description'
+						aria-label={t("gen_step1_field_description")}
 						value={data.description}
 						onChange={handleInputChange}
-						placeholder="Describe what this test covers and its purpose"
+						placeholder={t("gen_step1_field_description_placeholder")}
 						rows={3}
 						required
 					/>
@@ -102,30 +105,30 @@ export default function PracticeGenStep1({
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
 					<MyFieldLayout>
-						<MyLabel htmlFor="language">Language</MyLabel>
+						<MyLabel htmlFor="language">{t("gen_step1_field_language")}</MyLabel>
 						<MySelect
 							options={LanguagesAsConst.map(lang => ({ value: lang, label: lang }))}
 							value={data.language}
 							onChange={(value) => onDataChange({ ...data, language: value as LanguageType || "English" })}
 							id='language'
-							aria-label='Test Language'
+							aria-label={t("gen_step1_field_language")}
 							name='language'
-							placeholder="Select a language"
+							placeholder={t("gen_step1_field_language_placeholder")}
 							required
 						/>
 					</MyFieldLayout>
 
 					<MyFieldLayout>
-						<MyLabel htmlFor="minutesToAnswer">Minutes to Answer</MyLabel>
+						<MyLabel htmlFor="minutesToAnswer">{t("gen_step1_field_minutes")}</MyLabel>
 						<MyNumberInput
 							id='minutesToAnswer'
 							name="minutesToAnswer"
-							aria-label='Minutes to Answer'
+							aria-label={t("gen_step1_field_minutes")}
 							value={data.minutesToAnswer}
 							onChange={handleInputChange}
 							min={1}
 							max={720}
-							placeholder="E.g., 30"
+							placeholder={t("gen_step1_field_minutes_placeholder")}
 							required
 						/>
 					</MyFieldLayout>

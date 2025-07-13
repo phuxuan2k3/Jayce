@@ -5,6 +5,7 @@ import MyButton from '../../ui/buttons/MyButton';
 import { Plus, X } from 'lucide-react';
 import { cn } from '../../../../app/cn';
 import MyDescription from '../../ui/forms/MyDescription';
+import { useLanguage } from '../../../../LanguageProvider';
 
 interface TagInputProps {
 	tags: string[];
@@ -14,6 +15,8 @@ interface TagInputProps {
 }
 
 const TagInput: React.FC<TagInputProps> = ({ className = '', tags, onTagsChange, maxTags = 5 }) => {
+	const { t } = useLanguage();
+
 	const [newTag, setNewTag] = useState('');
 	const [tagsError, setTagsError] = useState<string | null>(null);
 
@@ -23,9 +26,9 @@ const TagInput: React.FC<TagInputProps> = ({ className = '', tags, onTagsChange,
 			setNewTag('');
 			setTagsError(null);
 		} else if (tags.length >= maxTags) {
-			setTagsError(`You can only add up to ${maxTags} tags.`);
+			setTagsError(t("tag_input_error_max").replace('{{max}}', maxTags.toString()));
 		} else if (tags.includes(newTag.trim())) {
-			setTagsError('Tag already exists');
+			setTagsError(t("tag_input_error_duplicate"));
 		}
 	};
 
@@ -37,10 +40,10 @@ const TagInput: React.FC<TagInputProps> = ({ className = '', tags, onTagsChange,
 		<div className={cn('flex flex-col gap-1', className)}>
 			<div className='flex items-baseline gap-2'>
 				<MyLabel htmlFor='tag-input'>
-					Tags
+					{t("tag_input_label")}
 				</MyLabel>
 				<MyDescription className='text-gray-500'>
-					(You can add up to {maxTags} tags)
+					{t("tag_input_hint").replace('{{max}}', maxTags.toString())}
 				</MyDescription>
 			</div>
 
@@ -48,7 +51,7 @@ const TagInput: React.FC<TagInputProps> = ({ className = '', tags, onTagsChange,
 				<MyInput
 					id='tag-input'
 					type="text"
-					placeholder="Add a tag..."
+					placeholder={t("tag_input_placeholder")}
 					value={newTag}
 					onChange={(e) => setNewTag(e.target.value)}
 					onKeyDown={(e) => {
@@ -64,7 +67,7 @@ const TagInput: React.FC<TagInputProps> = ({ className = '', tags, onTagsChange,
 					onClick={handleAddTag}
 					className={cn('flex-shrink-0 flex items-center gap-2', tags.length >= maxTags && 'bg-gray-400 cursor-not-allowed')}
 				>
-					<span>Add</span>
+					<span>{t("tag_input_add")}</span>
 					<Plus size={18} strokeWidth={3} />
 				</MyButton>
 			</div>

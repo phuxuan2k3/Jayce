@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../../../../../../LanguageProvider';
 
 interface StepperNavigationProps {
 	isFinalStep: boolean;
@@ -17,6 +18,8 @@ const StepperNavigation: React.FC<StepperNavigationProps> = ({
 	onNext,
 	onFinish,
 }) => {
+	const { t } = useLanguage();
+
 	return (
 		<div className="flex justify-between mt-6">
 			<button
@@ -26,7 +29,7 @@ const StepperNavigation: React.FC<StepperNavigationProps> = ({
 					? 'bg-gray-100 text-gray-400 cursor-not-allowed'
 					: 'bg-white text-gray-700 hover:bg-gray-50'}`}
 			>
-				Back
+				{t("stepper_back")}
 			</button>
 
 			<button
@@ -36,7 +39,7 @@ const StepperNavigation: React.FC<StepperNavigationProps> = ({
 					? 'bg-primary-toned-300 cursor-not-allowed'
 					: 'bg-primary-toned-600 hover:bg-primary-toned-700 text-white'}`}
 			>
-				{isFinalStep ? 'Generate Test' : 'Next'}
+				{isFinalStep ? t("stepper_generate") : t("stepper_next")}
 			</button>
 		</div>
 	);

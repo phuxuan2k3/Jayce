@@ -7,6 +7,7 @@ import { QuestionPersistCoreSchema } from '../../../../../../features/tests/ui-i
 import MyButton from '../../../../../../features/tests/ui/buttons/MyButton';
 import { PencilLine, Sparkles, Trash2 } from 'lucide-react';
 import DisposeDialog from './components/DisposeDialog';
+import { useLanguage } from '../../../../../../LanguageProvider';
 
 const perPage = 5;
 
@@ -23,6 +24,8 @@ export default function StepDone({
 	onGenerationDisposal: () => void;
 	onRegenerateQuestions: () => void;
 }) {
+	const { t } = useLanguage();
+
 	const [isActionsDialogOpen, setIsActionsDialogOpen] = useState(false);
 	const [isDisposeDialogOpen, setIsDisposeDialogOpen] = useState(false);
 
@@ -43,9 +46,9 @@ export default function StepDone({
 			<div className="w-full p-6 flex flex-col gap-6">
 				{/* Header */}
 				<div className="text-center mb-4">
-					<h1 className="text-3xl font-bold text-primary mb-2">Successfully generated {totalQuestions} questions for your exam</h1>
-					<p className="text-gray-600">Total Points: <span className="font-semibold">{totalPoints}</span></p>
-					<p className="text-gray-600">Feel free to edit this set of questions before adding them to your exam.</p>
+					<h1 className="text-3xl font-bold text-primary mb-2">{t("step_done_generated_questions").replace("{{count}}", totalQuestions.toString())}</h1>
+					<p className="text-gray-600">{t("step_done_total_points")}: <span className="font-semibold">{totalPoints}</span></p>
+					<p className="text-gray-600">{t("step_done_edit_message")}</p>
 				</div>
 
 				<hr className="border-primary-toned-300 w-full my-4" />
@@ -88,11 +91,11 @@ export default function StepDone({
 							onClick={() => setIsActionsDialogOpen(true)}
 						>
 							<PencilLine className="w-4 h-4 mr-2" />
-							Review Actions
+							{t("step_done_review_actions")}
 						</MyButton>
 					</div>
 					<div className='flex flex-col gap-2'>
-						<p className='text-sm text-gray-700'>Decide how you want to use these generated questions inside the exam</p>
+						<p className='text-sm text-gray-700'>{t("step_done_review_description")}</p>
 					</div>
 
 					<div className='flex flex-col items-stretch justify-center'>
@@ -101,12 +104,12 @@ export default function StepDone({
 							variant={"gradient"}
 						>
 							<Sparkles className="w-4 h-4 mr-2" />
-							Re-Generate
+							{t("step_done_regenerate")}
 						</MyButton>
 					</div>
 
 					<div className='flex flex-col gap-2'>
-						<p className='text-sm text-gray-700'>You can regenerate the questions if you want to try different variations.</p>
+						<p className='text-sm text-gray-700'>{t("step_done_regenerate_description")}</p>
 					</div>
 
 					<div className='flex flex-col items-stretch justify-center'>
@@ -115,12 +118,12 @@ export default function StepDone({
 							variant={"secondary"}
 						>
 							<Trash2 className="w-4 h-4 mr-2" />
-							Dispose
+							{t("step_done_dispose")}
 						</MyButton>
 					</div>
 
 					<div className='flex flex-col gap-2'>
-						<p className='text-sm text-gray-700'>Discard the generated questions and use new configuration.</p>
+						<p className='text-sm text-gray-700'>{t("step_done_dispose_description")}</p>
 					</div>
 				</div>
 			</div>

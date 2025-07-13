@@ -9,6 +9,7 @@ import MyLabel from '../../../ui/forms/MyLabel';
 import MyTextArea from '../../../ui/forms/MyTextArea';
 import MyButton from '../../../ui/buttons/MyButton';
 import { cn } from '../../../../../app/cn';
+import { useLanguage } from '../../../../../LanguageProvider';
 
 export default function QuestionPersistCard({
 	index,
@@ -21,6 +22,8 @@ export default function QuestionPersistCard({
 	onQuestionChange: (edit: Partial<QuestionPersistCoreSchema>) => void;
 	onDeleteQuestion: () => void;
 }) {
+	const { t } = useLanguage();
+
 	// Store details for both types, now type-safe
 	const [mcqDetail, setMcqDetail] = useState<MCQDetail>(() =>
 		question.detail.type === 'MCQ'
@@ -117,7 +120,7 @@ export default function QuestionPersistCard({
 							onClick={onDeleteQuestion}
 						>
 							<FontAwesomeIcon icon={faTrashCan} className="mr-2" />
-							Delete Question
+							{t("question_delete_button")}
 						</MyButton>
 					</div>
 				</>
@@ -152,13 +155,15 @@ function QuestionPersistHeader({
 	questionType: 'MCQ' | 'LONG_ANSWER';
 	onTypeChange?: (type: 'MCQ' | 'LONG_ANSWER') => void;
 }) {
+	const { t } = useLanguage();
+
 	// Ensure points is a number and not NaN
 	return (
 		<div className="flex-1 flex flex-col gap-2">
 
 			{/* Question Index and Points */}
 			<div className='flex items-baseline gap-4 w-full'>
-				<MyLabel>{`Question ${index == null ? "#" + 1 : index + 1}:`}</MyLabel>
+				<MyLabel>{`${t("question_label")} ${index == null ? "#" + 1 : index + 1}:`}</MyLabel>
 				<div className='flex items-baseline gap-2 flex-shrink-0'>
 					<MyInput
 						id='points'
@@ -170,7 +175,7 @@ function QuestionPersistHeader({
 						step="1"
 						onChange={(e) => onQuestionChange({ points: Number(e.target.value) || 0 })}
 					/>
-					<MyLabel htmlFor='points'>Points</MyLabel>
+					<MyLabel htmlFor='points'>{t("question_points_label")}</MyLabel>
 				</div>
 			</div>
 
@@ -178,14 +183,14 @@ function QuestionPersistHeader({
 			<MyTextArea
 				value={text}
 				onChange={(e) => onQuestionChange({ text: e.target.value })}
-				placeholder="Question content goes here..."
+				placeholder={t("question_text_placeholder")}
 				minRows={1}
 				className='mt-2'
 			/>
 
 			{/* Type Switcher */}
 			<div className='flex gap-2 items-center mt-2'>
-				<MyLabel className='text-sm'>Type:</MyLabel>
+				<MyLabel className='text-sm'>{t("question_type_label")}:</MyLabel>
 				<div className="flex gap-2">
 					<MyButton
 						type="button"

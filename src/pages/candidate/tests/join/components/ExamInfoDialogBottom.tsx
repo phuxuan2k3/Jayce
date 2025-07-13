@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import paths from '../../../../../router/paths';
 import { TestFullSchema, usePostTestsByTestIdParticipantsMutation } from '../../../../../features/tests/api/test.api-gen-v2';
 import MyButton from '../../../../../features/tests/ui/buttons/MyButton';
+import { useLanguage } from '../../../../../LanguageProvider';
 
 export default function ExamInfoDialogBottom({
 	examData,
@@ -17,6 +18,8 @@ export default function ExamInfoDialogBottom({
 	onJoinError: (error: string) => void;
 	onCancel: () => void;
 }) {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 	const [join, joinState] = usePostTestsByTestIdParticipantsMutation();
 
@@ -34,7 +37,7 @@ export default function ExamInfoDialogBottom({
 		// If the test requires a password but none was provided
 		if (examData._detail.mode === "EXAM" && examData._detail.hasPassword) {
 			if (!password) {
-				onJoinError('Please enter the password to join this test');
+				onJoinError(t("exam_info_password_required"));
 			} else {
 				join({
 					testId: examData.id,
@@ -60,7 +63,7 @@ export default function ExamInfoDialogBottom({
 				className='flex-1'
 				size={"medium"}
 			>
-				Cancel
+				{t("exam_info_cancel_button")}
 			</MyButton>
 
 			<MyButton
@@ -70,14 +73,14 @@ export default function ExamInfoDialogBottom({
 				size={"medium"}
 			>
 				{hasJoined ? (
-					<span>Back to Test</span>
+					<span>{t("exam_info_back_to_test")}</span>
 				) : (joinState.isLoading ? (
 					<span className="flex items-center">
 						<span className="mr-2 h-4 w-4 border-2 border-t-transparent border-white rounded-full animate-spin"></span>
-						Joining...
+						{t("exam_info_joining")}
 					</span>
 				) : (
-					<span>Join Test</span>
+					<span>{t("exam_info_join_button")}</span>
 				))}
 			</MyButton>
 		</div>

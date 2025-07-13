@@ -11,18 +11,18 @@ export const commonSliderButtonClassNames = (isShow: boolean) => cn(
 export const TextAnswerAsConst = {
 	"CORRECT": {
 		color: cn("bg-green-100 border-green-500 text-green-800"),
-		text: "Correct Answer",
+		text: "attempt_answer_status_correct",
 	},
 	"PARTIALLY_CORRECT": {
 		color: cn("bg-yellow-100 border-yellow-500 text-yellow-800"),
-		text: "Partially Correct Answer",
+		text: "attempt_answer_status_partially_correct",
 	},
 	"INCORRECT": {
 		color: cn("bg-red-100 border-red-500 text-red-800"),
-		text: "Incorrect Answer",
+		text: "attempt_answer_status_incorrect",
 	},
 	"PENDING_REVIEW": {
 		color: cn("bg-blue-100 border-blue-500 text-blue-800"),
-		text: "Pending Review",
+		text: "attempt_answer_status_pending",
 	},
 };

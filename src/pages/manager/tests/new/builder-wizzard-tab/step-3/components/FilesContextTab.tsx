@@ -1,4 +1,5 @@
 import { CircleX, File, FolderOpen } from "lucide-react";
+import { useLanguage } from "../../../../../../../LanguageProvider";
 
 interface FilesContextTabProps {
 	files: File[];
@@ -11,6 +12,8 @@ export default function FilesContextTab({
 	onFileUpload,
 	onFileRemove
 }: FilesContextTabProps) {
+	const { t } = useLanguage();
+
 	return (
 		<div className="space-y-4">
 			<div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
@@ -32,9 +35,9 @@ export default function FilesContextTab({
 								<FolderOpen className="w-5 h-5" />
 							</div>
 						</div>
-						<div className="font-medium">Click to upload files</div>
+						<div className="font-medium">{t("file_upload_click_to_upload")}</div>
 						<div className="text-sm text-gray-500">
-							Supports: TXT, PDF, DOC, DOCX
+							{t("file_upload_supported_formats")}
 						</div>
 					</div>
 				</label>
@@ -42,7 +45,7 @@ export default function FilesContextTab({
 
 			{files.length > 0 && (
 				<div className="space-y-2">
-					<h4 className="font-medium text-gray-700">Uploaded Files:</h4>
+					<h4 className="font-medium text-gray-700">{t("file_upload_uploaded_files")}:</h4>
 					{files.map((file, index) => (
 						<div
 							key={index}

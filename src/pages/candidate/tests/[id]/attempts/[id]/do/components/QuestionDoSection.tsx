@@ -1,5 +1,6 @@
 import { AnswerForQuestionTypeSchema, QuestionCoreSchema } from "../../../../../../../../features/tests/api/test.api-gen-v2";
 import { QuestionDo } from "../../../../../../../../features/tests/ui-items/question/views/QuestionDo";
+import { useLanguage } from "../../../../../../../../LanguageProvider";
 
 export default function QuestionDoSection({
 	totalQuestion,
@@ -22,6 +23,8 @@ export default function QuestionDoSection({
 	onQuestionFlagChanged: (isFlagged: boolean) => void;
 	onQuestionAnswerChanged: (answer: AnswerForQuestionTypeSchema | undefined) => void;
 }) {
+	const { t } = useLanguage();
+
 	const isFirstQuestion = currentQuestionIndex === 0;
 	const isLastQuestion = currentQuestionIndex === totalQuestion - 1;
 
@@ -60,7 +63,7 @@ export default function QuestionDoSection({
 					onClick={handlePreviousQuestion}
 					disabled={isFirstQuestion}
 				>
-					Previous
+					{t("previous")}
 				</button>
 
 				<button
@@ -68,7 +71,7 @@ export default function QuestionDoSection({
 					onClick={handleNextQuestion}
 					disabled={isLastQuestion}
 				>
-					Next
+					{t("next")}
 				</button>
 			</div>
 		</div>

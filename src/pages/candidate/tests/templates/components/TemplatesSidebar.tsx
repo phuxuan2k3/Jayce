@@ -6,6 +6,7 @@ import MyInputWithSearch from "../../../../../features/tests/ui/forms/MyInputWit
 // import MyCheckbox from "../../../../../features/tests/ui/forms/MyCheckbox";
 import QuickAction from "../../../../../features/tests/ui/sidebar/primitive/QuickAction";
 import { ArrowLeft } from "lucide-react";
+import { useLanguage } from "../../../../../LanguageProvider";
 
 interface TemplatesSidebarProps {
 	// filters: string[];
@@ -26,6 +27,8 @@ const TemplatesSidebar = ({
 	onCreateNew,
 	onBackToList,
 }: TemplatesSidebarProps) => {
+	const { t } = useLanguage();
+	
 	return (
 		<SidebarActions
 			title={undefined}
@@ -34,10 +37,10 @@ const TemplatesSidebar = ({
 				onCreateNewTemplate={onCreateNew}
 			/>) : (
 				<QuickAction
-					title="Back to List"
+					title={t("templates_sidebar_back_to_list")}
 					onClick={onBackToList}
 					icon={<ArrowLeft className="h-5 w-5" />}
-					description="Return to the list of templates"
+					description={t("templates_sidebar_back_to_list_description")}
 				/>
 			)}
 
@@ -49,7 +52,7 @@ const TemplatesSidebar = ({
 					id="search"
 					value={searchTerm}
 					onChange={(e) => onSearchChange(e.target.value)}
-					placeholder="Search templates..."
+					placeholder={t("templates_sidebar_search_placeholder")}
 				/>
 			} />
 

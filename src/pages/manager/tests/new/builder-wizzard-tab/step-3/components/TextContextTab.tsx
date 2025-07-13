@@ -1,6 +1,7 @@
 import TextareaAutosize from 'react-textarea-autosize';
 import { cn } from '../../../../../../../app/cn';
 import { classNameInput } from "../../../common/class-names";
+import { useLanguage } from '../../../../../../../LanguageProvider';
 
 interface TextContextTabProps {
 	value: string;
@@ -8,11 +9,13 @@ interface TextContextTabProps {
 }
 
 export default function TextContextTab({ value, onChange }: TextContextTabProps) {
+	const { t } = useLanguage();
+
 	return (
 		<div>
 			<TextareaAutosize
 				minRows={6}
-				placeholder="Provide context information that the AI can use to generate relevant questions..."
+				placeholder={t("text_context_placeholder")}
 				className={cn(classNameInput)}
 				value={value}
 				onChange={(e) => onChange(e.target.value)}

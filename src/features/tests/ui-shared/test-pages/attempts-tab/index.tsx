@@ -7,6 +7,7 @@ import { QuerySortValues } from "../../../types/query";
 import LoadingCover from "../../../ui/fetch-states/LoadingCover";
 import AttemptsTable from "../../../ui-items/attempt/AttemptsTable";
 import MyButtonWithSort from "../../../ui/buttons/MyButtonWithSort";
+import { useLanguage } from "../../../../../LanguageProvider";
 
 type Filter = {
 	page: number;
@@ -24,6 +25,8 @@ const AttemptsTab = ({
 	onAttemptClick?: (attempt: AttemptCoreSchema) => void;
 	showCandidate?: boolean;
 }) => {
+	const { t } = useLanguage();
+
 	const [filter, setFilter] = useState<Filter>({
 		page: 1,
 		perPage: 10,
@@ -52,7 +55,7 @@ const AttemptsTab = ({
 						if (data.length === 0) {
 							return (
 								<div className="w-full h-full flex items-center justify-center flex-col">
-									<p className="text-gray-600 mb-4">There are no attempts for this test yet.</p>
+									<p className="text-gray-600 mb-4">{t("attempts_tab_empty")}</p>
 								</div>
 							);
 						}
@@ -61,7 +64,7 @@ const AttemptsTab = ({
 							<div className="flex flex-col gap-6 items-center justify-center [&>*]:w-full p-4">
 								<div className="flex w-full items-center justify-between">
 									<div className="flex-1">
-										<h3 className="text-lg font-semibold ">Completed Attempts</h3>
+										<h3 className="text-lg font-semibold ">{t("attempts_tab_completed_attempts")}</h3>
 									</div>
 									<FilterButtons
 										filter={filter}
@@ -112,6 +115,7 @@ const FilterButtons = ({
 	filter: Filter;
 	onFilterChange: (newFilter: Filter) => void;
 }) => {
+	const { t } = useLanguage();
 
 	return (
 		<div className="flex items-center gap-2">
@@ -123,7 +127,7 @@ const FilterButtons = ({
 					sortByPoints: undefined, // Reset points sort when changing date sort
 				})}
 			>
-				Date
+				{t("attempts_tab_sort_date")}
 			</MyButtonWithSort>
 			<MyButtonWithSort
 				sort={filter.sortByPoints}
@@ -133,7 +137,7 @@ const FilterButtons = ({
 					sortByCreatedAt: undefined, // Reset date sort when changing points sort
 				})}
 			>
-				Score
+				{t("attempts_tab_sort_score")}
 			</MyButtonWithSort>
 		</div>
 	);

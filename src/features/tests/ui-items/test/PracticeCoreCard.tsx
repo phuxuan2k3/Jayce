@@ -2,6 +2,7 @@ import { TestCoreSchema } from "../../api/test.api-gen-v2";
 import { Clock, Calendar } from "lucide-react";
 import { TestUtils } from "./test-utils";
 import { cn } from "../../../../app/cn";
+import { useLanguage } from "../../../../LanguageProvider";
 
 export default function PracticeCoreCard({
 	test,
@@ -12,6 +13,8 @@ export default function PracticeCoreCard({
 	onClick?: (test: TestCoreSchema) => void;
 	className?: string;
 }) {
+	const { t } = useLanguage();
+
 	const modeClass = TestUtils.getBandageClassName(test.mode);
 	const formatDate = (dateString: string) => {
 		return new Date(dateString).toLocaleDateString();
@@ -42,11 +45,11 @@ export default function PracticeCoreCard({
 				<div className="flex flex-wrap gap-6 mt-2 text-sm text-primary-toned-600">
 					<div className="flex items-center gap-2">
 						<Clock size={16} className="text-primary-toned-400" />
-						<span>{test.minutesToAnswer} min</span>
+						<span>{test.minutesToAnswer} {t("practice_card_time_unit")}</span>
 					</div>
 					<div className="flex items-center gap-2">
 						<Calendar size={16} className="text-primary-toned-400" />
-						<span>Created {formatDate(test.createdAt)}</span>
+						<span>{t("practice_card_created")} {formatDate(test.createdAt)}</span>
 					</div>
 					<div>
 						<span className="text-xs font-bold bg-primary-toned-200 text-primary-toned-800 px-2 py-1 rounded-full tracking-wide">
@@ -58,7 +61,7 @@ export default function PracticeCoreCard({
 
 			{/* Footer */}
 			<div className="flex items-center justify-between px-6 py-3 bg-primary-toned-50 border-t border-primary-toned-100 text-xs text-primary-toned-500">
-				<span>Updated: {formatDate(test.updatedAt)}</span>
+				<span>{t("practice_card_updated")}: {formatDate(test.updatedAt)}</span>
 			</div>
 		</div>
 	);

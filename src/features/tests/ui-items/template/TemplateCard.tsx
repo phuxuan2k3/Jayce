@@ -13,6 +13,7 @@ import {
 import { formatDistanceToNow } from "date-fns";
 import { DifficultyType } from "../../../../pages/manager/tests/new/common/base-schema";
 import { cn } from "../../../../app/cn";
+import { useLanguage } from "../../../../LanguageProvider";
 
 // Context for sharing template and handlers
 interface TemplateCardContextProps {
@@ -39,6 +40,8 @@ const DifficultyColors: Record<DifficultyType, string> = {
 
 // Header
 const TemplateCardHeader: React.FC = () => {
+	const { t } = useLanguage();
+
 	const { template, onDelete } = useTemplateCardContext();
 
 	const lastUpdated = new Date(template.updatedAt);
@@ -48,12 +51,12 @@ const TemplateCardHeader: React.FC = () => {
 		<div className="flex flex-col gap-2 rounded-t-lg bg-primary-toned-50 pl-4 pr-4 py-4 border-b border-primary-toned-200">
 			<div className="flex justify-between items-center">
 				<div className="flex flex-col items-start gap-1">
-					<h3 className="font-bold text-lg text-primary-toned-700">Template: {template.name.trim() === "" ? (
-						<span className="text-gray-400 italic">No name provided</span>
+					<h3 className="font-bold text-lg text-primary-toned-700">{t("template_label")}: {template.name.trim() === "" ? (
+						<span className="text-gray-400 italic">{t("no_name_provided")}</span>
 					) : template.name}</h3>
 					<div className="flex text-primary items-center justify-end text-xs">
 						<Calendar size={12} className="mr-1" />
-						Last updated: {timeAgo}
+						{t("last_updated")}: {timeAgo}
 					</div>
 				</div>
 
@@ -76,6 +79,8 @@ const TemplateCardHeader: React.FC = () => {
 
 // Tags and content section
 const TemplateCardContent: React.FC = () => {
+	const { t } = useLanguage();
+
 	const { template } = useTemplateCardContext();
 	const difficultyClass = DifficultyColors[template.difficulty as DifficultyType] || "bg-gray-100 text-gray-700";
 
@@ -93,7 +98,7 @@ const TemplateCardContent: React.FC = () => {
 			<div className="flex flex-wrap items-center gap-2 mt-2">
 				<Bandage className="bg-primary-toned-100 text-primary-toned-700">
 					<Clock size={14} />
-					{template.minutesToAnswer} min
+					{template.minutesToAnswer} {t("minutes")}
 				</Bandage>
 
 				<Bandage className="bg-primary-toned-100 text-primary-toned-700">
@@ -109,7 +114,7 @@ const TemplateCardContent: React.FC = () => {
 
 			<div className="flex items-center gap-1 text-primary-toned-600 text-sm mt-2">
 				<MessageCircleQuestion size={16} />
-				<span className="">Total Questions: {template.numberOfQuestions}</span>
+				<span className="">{t("total_questions")}: {template.numberOfQuestions}</span>
 			</div>
 
 			{/* Outlines (collapsible) */}
@@ -125,7 +130,7 @@ const TemplateCardContent: React.FC = () => {
 						aria-expanded={showOutlines}
 					>
 						<FileText size={14} />
-						<span>Show Outlines: ({template.outlines.length})</span>
+						<span>{t("show_outlines")}: ({template.outlines.length})</span>
 						<span className={`ml-1 transition-transform ${showOutlines ? 'rotate-90' : ''}`}> ▶</span>
 					</button>
 					<div className={cn("bg-primary-toned-50 rounded-lg transition-all duration-200", showOutlines ? "h-24 p-3" : "h-0 opacity-0")}>
@@ -143,12 +148,14 @@ const TemplateCardContent: React.FC = () => {
 
 // Footer
 const TemplateCardFooter: React.FC = () => {
+	const { t } = useLanguage();
+
 	const { template, onGenerate } = useTemplateCardContext();
 	return (
 		<div className="flex justify-between items-center px-4 py-2 border-t border-primary-toned-200">
 			{template.tags && template.tags.length > 0 && (
 				<div className="flex items-baseline gap-2 text-primary-toned-600 text-sm">
-					<span>Tags:</span>
+					<span>{t("tags_label")}:</span>
 					<div className="flex flex-wrap gap-1">
 						{template.tags.map(tag => (
 							<span key={tag} className="flex items-center gap-1 text-xs bg-blue-chill-100 text-blue-chill-700 px-2 py-1 rounded-full">
@@ -168,7 +175,7 @@ const TemplateCardFooter: React.FC = () => {
 					}}
 					className="px-3 py-1 bg-primary text-white rounded-lg text-sm hover:bg-primary-dark transition-colors"
 				>
-					Generate
+					{t("generate_button")}
 				</button>
 			)}
 		</div>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import MyButton from '../../../../../../../features/tests/ui/buttons/MyButton';
 import MyDialog from '../../../../../../../features/tests/ui/MyDialog';
+import { useLanguage } from '../../../../../../../LanguageProvider';
 
 type ActionType = 'replace' | 'append' | null;
 
@@ -13,6 +14,8 @@ export default function ActionsDialog({
 	onAppendQuestions: () => void;
 	onCancel: () => void;
 }) {
+	const { t } = useLanguage();
+
 	const [selectedAction, setSelectedAction] = useState<ActionType>(null);
 
 	const handleConfirm = () => {
@@ -30,9 +33,9 @@ export default function ActionsDialog({
 		<MyDialog>
 			<MyDialog.Content>
 				<div className="mb-6">
-					<h2 className="text-xl font-bold text-primary-toned-800 mb-2">Choose Your Next Action</h2>
+					<h2 className="text-xl font-bold text-primary-toned-800 mb-2">{t("actions_dialog_title")}</h2>
 					<p className="text-gray-600 text-sm">
-						You've successfully generated new questions. Select how you'd like to proceed with your test.
+						{t("actions_dialog_description")}
 					</p>
 				</div>
 
@@ -56,10 +59,9 @@ export default function ActionsDialog({
 								</div>
 							</div>
 							<div className="flex-grow">
-								<h3 className="font-semibold text-gray-900 mb-1">Replace All Questions</h3>
+								<h3 className="font-semibold text-gray-900 mb-1">{t("actions_dialog_replace_title")}</h3>
 								<p className="text-xs text-gray-500">
-									This will completely replace your current test questions with the newly generated ones.
-									Your previous questions will be permanently removed.
+									{t("actions_dialog_replace_description")}
 								</p>
 							</div>
 						</div>
@@ -84,10 +86,9 @@ export default function ActionsDialog({
 								</div>
 							</div>
 							<div className="flex-grow">
-								<h3 className="font-semibold text-gray-900 mb-1">Add to Existing Questions</h3>
+								<h3 className="font-semibold text-gray-900 mb-1">{t("actions_dialog_append_title")}</h3>
 								<p className="text-xs text-gray-500">
-									This will add the new questions to your existing test, keeping all your current questions
-									and expanding your question pool.
+									{t("actions_dialog_append_description")}
 								</p>
 							</div>
 						</div>
@@ -99,13 +100,13 @@ export default function ActionsDialog({
 						onClick={onCancel}
 						variant={"gray"}
 					>
-						Cancel
+						{t("actions_dialog_cancel")}
 					</MyButton>
 					<MyButton
 						onClick={handleConfirm}
 						disabled={!selectedAction}
 					>
-						Confirm
+						{t("actions_dialog_confirm")}
 					</MyButton>
 				</div>
 			</MyDialog.Content>

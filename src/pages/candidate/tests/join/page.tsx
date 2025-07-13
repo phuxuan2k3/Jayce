@@ -11,8 +11,11 @@ import Sidebar from "./components/Sidebar";
 import { JoinTabType } from "./types";
 import PublicExamsSection from "./components/PublicExamsSection";
 import HistoryExamsSection from "./components/HistoryExamsSection";
+import { useLanguage } from "../../../../LanguageProvider";
 
 export default function CandidateTestsJoinPage() {
+	const { t } = useLanguage();
+
 	const [roomId, setRoomId] = useState<string | null>(null);
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [tab, setTab] = useState<JoinTabType>("PUBLIC");
@@ -47,16 +50,16 @@ export default function CandidateTestsJoinPage() {
 		<RightLayoutTemplate
 			header={
 				<RightLayoutTemplate.Header
-					title="Exam Tests"
-					description="Join hosted exams from managers and compete with others"
+					title={t("candidate_tests_join_title")}
+					description={t("candidate_tests_join_description")}
 				/>
 			}
 			right={<Sidebar tab={tab} onTabChange={setTab} />}
 		>
 			<div className="flex flex-col gap-4 flex-1">
 				<MyHeaderTitleSection
-					title="Join Hosted Exams"
-					description="Join tests by roomId or view ongoing tests"
+					title={t("candidate_tests_join_header")}
+					description={t("candidate_tests_join_subtitle")}
 					className="mb-4"
 				/>
 

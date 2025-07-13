@@ -3,6 +3,7 @@ import QuickAction from '../../ui/sidebar/primitive/QuickAction';
 import SidebarActions from '../../ui/sidebar/primitive/SidebarActions'
 import { useNavigate } from 'react-router-dom';
 import paths from '../../../../router/paths';
+import { useLanguage } from '../../../../LanguageProvider';
 
 export default function ManagerSidebar({
 	children
@@ -25,11 +26,13 @@ ManagerSidebar.Info = ({
 	active?: boolean;
 	onClick: () => void;
 }) => {
+	const { t } = useLanguage();
+
 	return (
 		<QuickAction
 			icon={<Info />}
-			title="Info"
-			description="Information and Stats."
+			title={t("manager_sidebar_info_title")}
+			description={t("manager_sidebar_info_desc")}
 			active={active}
 			onClick={onClick}
 		/>
@@ -43,12 +46,14 @@ ManagerSidebar.Questions = ({
 	active: boolean;
 	onClick: () => void;
 }) => {
+	const { t } = useLanguage();
+
 	return (
 		<QuickAction
 			icon={<HelpCircle />}
 			active={active}
-			title="Questions"
-			description="Questions in this exam."
+			title={t("manager_sidebar_questions_title")}
+			description={t("manager_sidebar_questions_desc")}
 			onClick={onClick}
 		/>
 	);
@@ -61,13 +66,15 @@ ManagerSidebar.Attempts = ({
 	active: boolean;
 	onClick: () => void;
 }) => {
+	const { t } = useLanguage();
+
 	return (
 		<QuickAction
 			onClick={onClick}
 			active={active}
 			icon={<ClipboardList />}
-			title="Attempts"
-			description="View all attempts for this exam."
+			title={t("manager_sidebar_attempts_title")}
+			description={t("manager_sidebar_attempts_desc")}
 		/>
 	);
 }
@@ -79,24 +86,27 @@ ManagerSidebar.Participants = ({
 	active: boolean;
 	onClick: () => void;
 }) => {
+	const { t } = useLanguage();
+
 	return (
 		<QuickAction
 			onClick={onClick}
 			active={active}
 			icon={<Users />}
-			title="Participants"
-			description="Candidates who participated in this exam."
+			title={t("manager_sidebar_participants_title")}
+			description={t("manager_sidebar_participants_desc")}
 		/>
 	);
 }
 
 ManagerSidebar.BackToExams = () => {
+	const { t } = useLanguage();
 	const navigate = useNavigate();
 	return (
 		<QuickAction
 			icon={<Users />}
-			title="Back to Exams"
-			description="Return to the exams list."
+			title={t("manager_sidebar_back_title")}
+			description={t("manager_sidebar_back_desc")}
 			onClick={() => navigate(paths.manager.tests.ROOT)}
 		/>
 	);

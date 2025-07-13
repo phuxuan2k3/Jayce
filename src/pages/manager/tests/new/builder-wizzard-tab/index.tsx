@@ -8,6 +8,7 @@ import { QuestionPersistCoreSchema } from "../../../../../features/tests/ui-item
 import ErrorDialog from "../../../../../features/tests/ui/fetch-states/ErrorDialog";
 import useBuilderStepsData from "./hooks/useBuilderStepsData";
 import { mcqOptionsRemoveOptionalLabel } from "../../../../../helpers/string";
+import { useLanguage } from "../../../../../LanguageProvider";
 
 export default function BuilderWizzardTab({
 	allStepData,
@@ -26,6 +27,8 @@ export default function BuilderWizzardTab({
 	onGeneratedQuestions: (questions: QuestionPersistCoreSchema[]) => void;
 	builderStepData: ReturnType<typeof useBuilderStepsData>;
 }) {
+	const { t } = useLanguage();
+
 	const [generate, { isLoading, isFetching, isSuccess, error, data }] = useLazyGetGenerateExamQuestionsQuery({});
 
 	useEffect(() => {
@@ -57,7 +60,7 @@ export default function BuilderWizzardTab({
 			{(isLoading || isFetching) ? (
 				<div className="flex flex-col items-center justify-center h-full w-full">
 					<div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
-					<p className="mt-4 text-lg text-gray-600">{"Generating questions..."}</p>
+					<p className="mt-4 text-lg text-gray-600">{t("builder_generating_questions")}</p>
 				</div>
 			) : (generatedQuestions != null ? (
 				<StepDone
