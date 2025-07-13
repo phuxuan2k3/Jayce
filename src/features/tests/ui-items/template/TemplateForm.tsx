@@ -1,5 +1,5 @@
-import React from 'react';
-import { TemplatePersistCoreSchema } from './types';
+import React, { useState } from 'react';
+import { TemplatePersistCoreSchema, TemplatePersistZodSchema } from './types';
 import TagInput from '../../ui-shared/practice-gen/TagInput';
 import OutlinesInput from '../../ui-shared/practice-gen/OutlinesInput';
 import { TemplateCoreSchema } from '../../api/test.api-gen-v2';
@@ -12,16 +12,19 @@ import { DifficultiesAsConst, LanguagesAsConst } from '../../../../pages/manager
 import MySelect from '../../ui/forms/MySelect';
 import MyNumberInput from '../../ui/forms/MyNumberInput';
 import { cn } from '../../../../app/cn';
+import { ZodError } from 'zod';
+import MyErrorMessages from '../../ui/MyErrorMessage';
 
 interface TemplateFormProps {
 	selectedTemplate: TemplateCoreSchema | null;
 	formData: TemplatePersistCoreSchema;
 	onFormDataChange: (data: TemplatePersistCoreSchema) => void;
-	onSave: () => void;
+	onSave: (data: TemplatePersistCoreSchema) => void;
 	onCancel: () => void;
 	omitHeader?: boolean;
 	omitAISection?: boolean;
 	className?: string;
+	isSaving?: boolean;
 }
 
 const TemplateForm: React.FC<TemplateFormProps> = ({
@@ -33,7 +36,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 	omitHeader = false,
 	omitAISection = false,
 	className = '',
+	isSaving = false,
 }) => {
+	const [error, setError] = useState<ZodError<TemplatePersistCoreSchema> | null>(null);
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
 		onFormDataChange({
@@ -43,6 +48,17 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 				: value
 		});
 	};
+
+	const handleSave = () => {
+		const validationResult = TemplatePersistZodSchema.safeParse(formData);
+		console.log('Validation Result:', validationResult);
+		if (!validationResult.success) {
+			setError(validationResult.error);
+			return;
+		}
+		setError(null);
+		onSave(validationResult.data);
+	}
 
 	return (
 		<div className={cn('flex flex-col gap-2 mt-4', className)}>
@@ -64,6 +80,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 						onChange={handleInputChange}
 						name="name"
 						placeholder="Enter template name"
+						error={error?.formErrors.fieldErrors.name?.at(0)}
 					/>
 				</div>
 
@@ -79,6 +96,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 							onChange={handleInputChange}
 							name="title"
 							placeholder="Enter test title"
+							error={error?.formErrors.fieldErrors.title?.at(0)}
 						/>
 					</MyFieldLayout>
 					<MyFieldLayout>
@@ -91,6 +109,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 							name="description"
 							placeholder="Enter template description"
 							rows={3}
+							error={error?.formErrors.fieldErrors.description?.at(0)}
 						/>
 					</MyFieldLayout>
 
@@ -105,6 +124,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 								onChange={handleInputChange}
 								min={1}
 								max={720}
+								error={error?.formErrors.fieldErrors.minutesToAnswer?.at(0)}
 							/>
 						</MyFieldLayout>
 
@@ -118,6 +138,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 								onChange={handleInputChange}
 								min={1}
 								max={20}
+								error={error?.formErrors.fieldErrors.numberOfQuestions?.at(0)}
 							/>
 						</MyFieldLayout>
 
@@ -130,7 +151,11 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 								aria-label="Languages"
 								options={LanguagesAsConst.map(lang => ({ value: lang, label: lang }))}
 								placeholder="Select language"
-								onChange={(value) => onFormDataChange({ ...formData, language: value as string })}
+								onChange={(value) => onFormDataChange({
+									...formData,
+									language: value as string
+								})}
+								error={error?.formErrors.fieldErrors.language?.at(0)}
 							/>
 						</MyFieldLayout>
 
@@ -140,8 +165,12 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 								id='difficulty'
 								name="difficulty"
 								value={formData.difficulty}
-								onChange={(value) => onFormDataChange({ ...formData, difficulty: value as string })}
+								onChange={(value) => onFormDataChange({
+									...formData,
+									difficulty: value as string
+								})}
 								options={DifficultiesAsConst.map(diff => ({ value: diff, label: diff }))}
+								error={error?.formErrors.fieldErrors.difficulty?.at(0)}
 							/>
 						</MyFieldLayout>
 					</div>
@@ -164,6 +193,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 					onOutlinesChange={(newOutlines) => onFormDataChange({ ...formData, outlines: newOutlines })}
 				/>
 
+				{error != null && (
+					<MyErrorMessages errorMessages={error.issues.map(i => i.message)} />
+				)}
+
 				<div className="flex justify-between space-x-3 pt-8 border-t border-primary-toned-300">
 					<MyButton
 						variant={"outline"}
@@ -174,9 +207,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({
 
 					<MyButton
 						variant={"primary"}
-						onClick={onSave}
+						onClick={handleSave}
+						loading={isSaving}
 					>
-						Save
+						{isSaving ? "Saving..." : "Save"}
 					</MyButton>
 				</div>
 			</div>

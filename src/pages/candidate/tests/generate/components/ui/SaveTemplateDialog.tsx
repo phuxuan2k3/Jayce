@@ -57,7 +57,8 @@ export default function SaveTemplateDialog({
 						selectedTemplate={null}
 						onFormDataChange={setTemplateForm}
 						onCancel={onClose}
-						onSave={() => createTemplate({ body: templateForm })}
+						onSave={(data) => createTemplate({ body: data })}
+						isSaving={createState.isLoading}
 					/>
 				</div>
 			</div>

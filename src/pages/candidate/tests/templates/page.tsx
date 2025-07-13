@@ -45,12 +45,12 @@ export default function CandidateTestsTemplatesPage() {
 	};
 
 	// Handle save template
-	const handleSaveTemplate = () => {
+	const handleSaveTemplate = (data: TemplatePersistCoreSchema) => {
 		if (!formData) return;
 		if (selectedTemplate) {
 			editTemplate({
 				templateId: selectedTemplate.id,
-				body: formData,
+				body: data,
 			})
 				.unwrap()
 				.then(() => {
@@ -62,7 +62,7 @@ export default function CandidateTestsTemplatesPage() {
 				});
 		} else {
 			createTemplate({
-				body: formData,
+				body: data,
 			})
 				.unwrap()
 				.then(() => {
@@ -144,8 +144,9 @@ export default function CandidateTestsTemplatesPage() {
 					selectedTemplate={selectedTemplate}
 					formData={formData}
 					onFormDataChange={setFormData}
-					onSave={handleSaveTemplate}
+					onSave={(data) => handleSaveTemplate(data)}
 					onCancel={() => setFormData(null)}
+					isSaving={isLoading}
 				/>
 			) : (
 				<TemplateList

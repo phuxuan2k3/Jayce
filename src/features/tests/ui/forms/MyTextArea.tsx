@@ -7,16 +7,18 @@ import { MyInputVariantProps, MyInputVariants } from "./MyInput";
 type MyTextAreaProps = TextareaAutosizeProps & {
 	variant?: MyInputVariantProps;
 	isAutoSized?: boolean; // Optional prop to control auto-sizing
+	error?: string; // Optional prop for error messages
 };
 
 const MyTextArea = React.forwardRef<HTMLTextAreaElement, MyTextAreaProps>(
-	({ className, variant, isAutoSized = true, ...props }, ref) => {
+	({ className, variant, isAutoSized = true, error, ...props }, ref) => {
 		return (
 			isAutoSized ? (
 				<TextareaAutosize
 					ref={ref}
 					className={cn(
 						commonInputClasses,
+						error && "border-red-500",
 						MyInputVariants(variant),
 						className
 					)}
@@ -28,6 +30,7 @@ const MyTextArea = React.forwardRef<HTMLTextAreaElement, MyTextAreaProps>(
 					ref={ref}
 					className={cn(
 						commonInputClasses,
+						error && "border-red-500",
 						MyInputVariants(variant),
 						className
 					)}

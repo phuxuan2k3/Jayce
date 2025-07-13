@@ -53,6 +53,7 @@ const MyButton = React.forwardRef<HTMLButtonElement, MyButtonProps>(
 		return (
 			<button
 				ref={ref}
+				disabled={disabled || (loading ? true : false)}
 				className={cn(buttonVariants({ variant, size, loading, disabled }), className)}
 				{...props}
 			>
