@@ -139,7 +139,7 @@ const GuestPage = () => {
             variants={fadeUp}
           >
             <h1 className="text-5xl md:text-6xl font-black mb-6 leading-tight">
-              <span className="block text-gradient-animated font-black">
+              <span className="block text-gradient-animated font-black pb-2">
                 <p>{t("landing_hero_title_line1")}</p>
                 {t("landing_hero_title_line2")}
               </span>
