@@ -203,8 +203,12 @@ const GuestPage = () => {
                   className="w-40 h-40 mb-4 object-contain"
                   loading="lazy"
                 />
-                <h4 className="text-xl font-bold mb-2">{t(`landing_step_${i + 1}_title`)}</h4>
-                <p className="text-md text-gray-600">{t(`landing_step_${i + 1}_description`)}</p>
+                <h4 className="text-xl font-bold mb-2">
+                  {t(`landing_step_${i + 1}_title`)}
+                </h4>
+                <p className="text-md text-gray-600">
+                  {t(`landing_step_${i + 1}_description`)}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -237,11 +241,17 @@ const GuestPage = () => {
                     className="w-14 h-14 rounded-full object-cover border-2 border-primary"
                   />
                   <div>
-                    <div className="font-bold text-lg">{t(`landing_testimonial_${i + 1}_name`)}</div>
-                    <div className="text-sm text-gray-500">{t(`landing_testimonial_${i + 1}_role`)}</div>
+                    <div className="font-bold text-lg">
+                      {t(`landing_testimonial_${i + 1}_name`)}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      {t(`landing_testimonial_${i + 1}_role`)}
+                    </div>
                   </div>
                 </div>
-                <p className="text-lg text-gray-700 italic">“{t(`landing_testimonial_${i + 1}_text`)}”</p>
+                <p className="text-lg text-gray-700 italic">
+                  “{t(`landing_testimonial_${i + 1}_text`)}”
+                </p>
               </motion.div>
             ))}
           </div>
@@ -292,8 +302,12 @@ const GuestPage = () => {
               variants={fadeUp}
             >
               <div className="flex-1">
-                <h3 className="text-2xl font-bold mb-2">{t(`landing_feature_${index + 1}_title`)}</h3>
-                <p className="mb-3 text-gray-700">{t(`landing_feature_${index + 1}_description`)}</p>
+                <h3 className="text-2xl font-bold mb-2">
+                  {t(`landing_feature_${index + 1}_title`)}
+                </h3>
+                <p className="mb-3 text-gray-700">
+                  {t(`landing_feature_${index + 1}_description`)}
+                </p>
                 <a
                   href="#"
                   className="text-primary-tone-800 font-medium hover:underline"
@@ -334,13 +348,17 @@ const GuestPage = () => {
                 animate="visible"
               >
                 <div className="flex justify-between items-center">
-                  <h4 className="font-semibold text-lg">{t(`landing_faq_${i + 1}_question`)}</h4>
+                  <h4 className="font-semibold text-lg">
+                    {t(`landing_faq_${i + 1}_question`)}
+                  </h4>
                   <span className="text-primary-tone-800 font-bold text-2xl">
                     {openFAQ === i ? "-" : "+"}
                   </span>
                 </div>
                 {openFAQ === i && (
-                  <p className="mt-4 text-gray-700">{t(`landing_faq_${i + 1}_answer`)}</p>
+                  <p className="mt-4 text-gray-700">
+                    {t(`landing_faq_${i + 1}_answer`)}
+                  </p>
                 )}
               </motion.div>
             ))}
