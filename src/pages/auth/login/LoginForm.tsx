@@ -18,8 +18,10 @@ import paths from "../../../router/paths";
 import React from "react";
 import { authActions } from "../../../features/auth/store/authSlice";
 import axios from "axios";
+import { useLanguage } from "../../../LanguageProvider";
 
 const LoginForm = () => {
+	const { t } = useLanguage();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [login, { isLoading, error }] = useLoginMutation();
@@ -38,25 +40,22 @@ const LoginForm = () => {
 		let isValid = true;
 
 		if (!password.trim()) {
-			newErrors.password = "Password is required.";
+			newErrors.password = t("login_password_required");
 			isValid = false;
 		} else if (password.length < 6) {
-			newErrors.password = "Password must be at least 6 characters long.";
+			newErrors.password = t("login_password_min");
 			isValid = false;
 		} else if (!/[A-Z]/.test(password)) {
-			newErrors.password =
-				"Password must contain at least one uppercase letter.";
+			newErrors.password = t("login_password_upper");
 			isValid = false;
 		} else if (!/[a-z]/.test(password)) {
-			newErrors.password =
-				"Password must contain at least one lowercase letter.";
+			newErrors.password = t("login_password_lower");
 			isValid = false;
 		} else if (!/[0-9]/.test(password)) {
-			newErrors.password = "Password must contain at least one number.";
+			newErrors.password = t("login_password_digit");
 			isValid = false;
 		} else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-			newErrors.password =
-				"Password must contain at least one special character.";
+			newErrors.password = t("login_password_special");
 			isValid = false;
 		}
 
@@ -162,7 +161,7 @@ const LoginForm = () => {
 							navigate(paths._layout);
 						} else {
 							setGoogleError(
-								"Something went wrong with Google authentication."
+								t("login_google_error")
 							);
 						}
 					} else if (
@@ -183,31 +182,31 @@ const LoginForm = () => {
 							navigate(paths.candidate.ROOT);
 						} else {
 							setGoogleError(
-								"Something went wrong with Google authentication."
+								t("login_google_error")
 							);
 						}
 					} else {
-						setGoogleError("Something went wrong with Google authentication.");
+						setGoogleError(t("login_google_error"));
 					}
 				}
 			} catch (error) {
 				console.error("Failed to get ID token:", error);
-				setGoogleError("Something went wrong with Google authentication.");
+				setGoogleError(t("login_google_error"));
 			}
 		},
 		onError: (error) => {
 			console.error("Login Error:", error);
-			setGoogleError("Google authentication failed");
+			setGoogleError(t("login_google_failed"));
 		},
 	});
 
 	return (
 		<div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-lg border border-gray-100 px-8 pb-4 pt-8 ">
 			<h1 className="text-center text-3xl font-extrabold mb-2 text-primary-toned-600 tracking-tight">
-				SkillSharp
+				{t("login_title")}
 			</h1>
 			<div className="text-center text-base text-gray-500 mb-8">
-				Welcome back! Please login to your account.
+				{t("login_subtitle")}
 			</div>
 			{/* Nút chuyển tab Log In / Sign Up */}
 			{/* <div className="flex mb-8">
@@ -252,12 +251,12 @@ const LoginForm = () => {
 						></path>
 					</g>
 				</svg>
-				Sign in with Google
+				{t("login_google")}
 			</button>
 
 			<div className="flex items-center my-6">
 				<hr className="flex-grow border-t border-gray-200" />
-				<span className="mx-3 text-gray-400 text-sm">or</span>
+				<span className="mx-3 text-gray-400 text-sm">{t("login_or")}</span>
 				<hr className="flex-grow border-t border-gray-200" />
 			</div>
 
@@ -297,7 +296,7 @@ const LoginForm = () => {
             ${email ? "top-2 text-xs text-primary-toned-600" : ""}
           `}
 					>
-						Email
+						{t("login_email")}
 					</label>
 				</div>
 				{errors.email && (
@@ -332,7 +331,7 @@ const LoginForm = () => {
             ${password ? "top-2 text-xs text-primary-toned-600" : ""}
           `}
 					>
-						Password
+						{t("login_password")}
 					</label>
 				</div>
 				{errors.password && (
@@ -344,7 +343,7 @@ const LoginForm = () => {
 						className="text-primary-toned-600 hover:underline"
 						to={paths.auth.RESET_PASSWORD}
 					>
-						Forgot your password?
+						{t("login_forgot")}
 					</Link>
 				</div>
 				{/* Login button */}
@@ -353,17 +352,17 @@ const LoginForm = () => {
 					className="w-full bg-[var(--primary-color)] text-lg font-bold text-white py-3 rounded-full mt-2 transition-all duration-150 hover:bg-[#2E808A] flex items-center justify-center gap-2"
 					disabled={isLoading}
 				>
-					Login <FontAwesomeIcon icon={faArrowRight} />
+					{t("login_button")} <FontAwesomeIcon icon={faArrowRight} />
 				</button>
 			</form>
 			{/* Đăng ký nhanh cho mobile */}
 			<div className="mt-8 text-center text-gray-500 text-sm">
-				Don't have an account?{" "}
+				{t("login_no_account")}{" "}
 				<span
 					className="text-primary-toned-600 font-semibold cursor-pointer hover:underline"
 					onClick={toSignUp}
 				>
-					Sign up
+					{t("login_signup")}
 				</span>
 			</div>
 		</div>

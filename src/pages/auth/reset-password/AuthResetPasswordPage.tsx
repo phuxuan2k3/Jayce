@@ -9,8 +9,10 @@ import {
   faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import { Alert } from "@mui/material";
+import { useLanguage } from "../../../LanguageProvider";
 
 export default function AuthResetPasswordPage() {
+  const { t } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
   const [email, setEmail] = useState("");
   const [resetPassword] = useReqResetPasswordMutation();
@@ -32,7 +34,7 @@ export default function AuthResetPasswordPage() {
           }}
           severity="success"
         >
-          Failed to send reset password email. Try again.
+          {t("auth_reset_failed_alert")}
         </Alert>
       );
     }
@@ -84,10 +86,10 @@ export default function AuthResetPasswordPage() {
         {!submitted ? (
           <div>
             <div className="   font-extrabold text-2xl text-primary-toned-600 tracking-tight">
-              Reset your password
+              {t("auth_reset_title")}
             </div>
             <div className="text-base text-gray-500    mb-2">
-              Enter your email to receive a password reset link.
+              {t("auth_reset_subtitle")}
             </div>
             <form
               className="w-full mt-6 space-y-6"
@@ -114,7 +116,7 @@ export default function AuthResetPasswordPage() {
                   ${email ? "top-2 text-xs text-primary-toned-600" : ""}
                 `}
                 >
-                  Email
+                  {t("auth_reset_email_label")}
                 </label>
               </div>
               <button
@@ -126,7 +128,7 @@ export default function AuthResetPasswordPage() {
                   <span className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></span>
                 ) : (
                   <>
-                    Submit <FontAwesomeIcon icon={faArrowRight} />
+                    {t("auth_reset_submit_button")} <FontAwesomeIcon icon={faArrowRight} />
                   </>
                 )}
               </button>
@@ -135,10 +137,10 @@ export default function AuthResetPasswordPage() {
         ) : (
           <div className="flex flex-col items-center mt-8 gap-2 animate-fade-in">
             <div className="text-xl font-bold text-primary-toned-600 mb-1">
-              Thanks!
+              {t("auth_reset_success_title")}
             </div>
             <div className="text-base text-gray-500   ">
-              Check your email for a reset link.
+              {t("auth_reset_success_message")}
             </div>
           </div>
         )}
@@ -147,7 +149,7 @@ export default function AuthResetPasswordPage() {
           className="flex items-center gap-2 underline text-primary-toned-600 mt-6 font-semibold hover:text-primary-toned-800 transition"
         >
           <FontAwesomeIcon icon={faArrowLeft} />
-          Or go back
+          {t("auth_reset_back_link")}
         </button>
       </div>
       <img

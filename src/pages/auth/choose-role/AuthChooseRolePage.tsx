@@ -4,8 +4,11 @@ import { useNavigate } from "react-router-dom";
 import GradientBorder from "../../../components/ui/border/GradientBorder";
 import paths from "../../../router/paths";
 import { Alert } from "@mui/material";
+import { useLanguage } from "../../../LanguageProvider";
 
 export default function AuthChooseRolePage() {
+  const { t } = useLanguage();
+
   const navigate = useNavigate();
   const [tab, setTab] = useState<"candidate" | "business" | "">("");
   return (
@@ -15,9 +18,9 @@ export default function AuthChooseRolePage() {
         className=" absolute right-[20px] top-[120px] w-1/3"
       />
       <div className="font-arya text-3xl font-black mx-20 mt-28">
-        How do you want to use SkillSharp?
+        {t("auth_choose_role_title")}
       </div>
-      <div onClick={() => setTab("business")}>
+      <div onClick={() => setTab("business")} className="cursor-pointer">
         <GradientBorder
           className={`mx-20 mt-10 border w-[600px] p-[1px]  rounded-lg ${tab === "business" ? "" : "opacity-50"}`}
         >
@@ -29,16 +32,16 @@ export default function AuthChooseRolePage() {
             />
             <div>
               <div className="font-bold text-lg">
-                I’m here to hire potential talent for my companies
+                {t("auth_choose_role_business_title")}
               </div>
               <div className="text-md text-[var(--primary-color)]">
-                Evaluate tech talent with scalable assessments
+                {t("auth_choose_role_business_subtitle")}
               </div>
             </div>
           </div>
         </GradientBorder>
       </div>
-      <div onClick={() => setTab("candidate")}>
+      <div onClick={() => setTab("candidate")} className="cursor-pointer">
         <GradientBorder
           className={`mx-20 mt-10 border w-[600px] p-[1px]  rounded-lg ${tab === "candidate" ? "" : "opacity-50"}`}
         >
@@ -50,10 +53,10 @@ export default function AuthChooseRolePage() {
             />
             <div>
               <div className="font-bold text-lg">
-                I’m here to train and prepare for my interviews
+                {t("auth_choose_role_candidate_title")}
               </div>
               <div className="text-md text-[var(--primary-color)]">
-                Handle problems and learn new skills
+                {t("auth_choose_role_candidate_subtitle")}
               </div>
             </div>
           </div>
@@ -77,15 +80,15 @@ export default function AuthChooseRolePage() {
                 }}
                 severity="success"
               >
-                Please select a role to continue
+                {t("auth_choose_role_select_warning")}
               </Alert>
             );
           }
         }}
-        className={`bg-[var(--primary-color)] py-2 text-white font-bold  mt-12 w-fit mx-20 rounded-lg px-28
+        className={`bg-[var(--primary-color)] py-2 text-white font-bold cursor-pointer mt-12 w-fit mx-20 rounded-lg px-28
                 ${tab ? "" : "opacity-50"}`}
       >
-        Create account
+        {t("auth_choose_role_create_account")}
       </div>
       <img
         src={logo}

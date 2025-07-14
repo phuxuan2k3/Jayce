@@ -11,8 +11,11 @@ import {
   faArrowRight,
   faLock,
 } from "@fortawesome/free-solid-svg-icons";
+import { useLanguage } from "../../../LanguageProvider";
 
 export default function AuthNewPasswordPage() {
+  const { t } = useLanguage();
+
   const [email, setEmail] = useState("");
   const [searchParams] = useSearchParams();
   const resetCodeFromURL = searchParams.get("key") || "";
@@ -29,22 +32,22 @@ export default function AuthNewPasswordPage() {
     let isValid = true;
 
     if (!newPassword.trim()) {
-      newErrors = "Password is required.";
+      newErrors = t("new_password_required");
       isValid = false;
     } else if (newPassword.length < 6) {
-      newErrors = "Password must be at least 6 characters long.";
+      newErrors = t("new_password_min");
       isValid = false;
     } else if (!/[A-Z]/.test(newPassword)) {
-      newErrors = "Password must contain at least one uppercase letter.";
+      newErrors = t("new_password_upper");
       isValid = false;
     } else if (!/[a-z]/.test(newPassword)) {
-      newErrors = "Password must contain at least one lowercase letter.";
+      newErrors = t("new_password_lower");
       isValid = false;
     } else if (!/[0-9]/.test(newPassword)) {
-      newErrors = "Password must contain at least one number.";
+      newErrors = t("new_password_digit");
       isValid = false;
     } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(newPassword)) {
-      newErrors = "Password must contain at least one special character.";
+      newErrors = t("new_password_special");
       isValid = false;
     }
 
@@ -67,7 +70,7 @@ export default function AuthNewPasswordPage() {
       await resetPassword({ email, resetCode, newPassword }).unwrap();
       setSuccess(true);
     } catch (error) {
-      setErrors("Failed to reset password.");
+      setErrors(t("new_password_failed"));
     }
     setLoading(false);
   };
@@ -122,10 +125,10 @@ export default function AuthNewPasswordPage() {
             </div>
           </div>
           <div className="   font-extrabold text-2xl text-primary-toned-600 tracking-tight">
-            Set a new password
+            {t("new_password_title")}
           </div>
-          <div className="text-base text-gray-500    mb-2">
-            Your new password must be strong and unique.
+          <div className="text-base text-gray-500 mb-2">
+            {t("new_password_subtitle")}
           </div>
         </div>
         {!success ? (
@@ -154,7 +157,7 @@ export default function AuthNewPasswordPage() {
                   ${newPassword ? "top-2 text-xs text-primary-toned-600" : ""}
                 `}
               >
-                New Password
+                {t("new_password_label")}
               </label>
             </div>
             {errors && <span className="text-red-400 text-sm">{errors}</span>}
@@ -167,7 +170,7 @@ export default function AuthNewPasswordPage() {
                 <span className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></span>
               ) : (
                 <>
-                  Submit <FontAwesomeIcon icon={faArrowRight} />
+                  {t("new_password_button")} <FontAwesomeIcon icon={faArrowRight} />
                 </>
               )}
             </button>
@@ -175,18 +178,18 @@ export default function AuthNewPasswordPage() {
         ) : (
           <div className="flex flex-col items-center mt-8 gap-2 animate-fade-in">
             <div className="text-xl font-bold text-primary-toned-600 mb-1">
-              Success!
+              {t("new_password_success_title")}
             </div>
             <div className="text-base text-gray-500   ">
-              Your password has been reset.
-              <br />
-              You can now log in with your new password.
+              {t("new_password_success_text")}
+              {/* <br />
+              You can now log in with your new password. */}
             </div>
             <button
               onClick={() => navigate("/auth/login")}
               className="w-full bg-[var(--primary-color)] text-white font-bold py-2 rounded-full mt-4 flex items-center justify-center gap-2 hover:bg-[#2E808A] transition"
             >
-              Go to Login <FontAwesomeIcon icon={faArrowRight} />
+              {t("new_password_go_login")} <FontAwesomeIcon icon={faArrowRight} />
             </button>
           </div>
         )}
@@ -195,7 +198,7 @@ export default function AuthNewPasswordPage() {
           className="flex items-center gap-2 underline text-primary-toned-600 mt-6 font-semibold hover:text-primary-toned-800 transition"
         >
           <FontAwesomeIcon icon={faArrowLeft} />
-          Or go back
+          {t("new_password_go_back")}
         </button>
       </div>
       <img

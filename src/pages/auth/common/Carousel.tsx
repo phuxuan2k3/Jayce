@@ -1,49 +1,49 @@
 import classNames from "classnames";
 import { useState, useEffect } from "react";
 import { FaQuoteLeft } from "react-icons/fa";
-
-const slides = [
-  {
-    quote:
-      "Unlock your potential with SkillSharp. Learn, grow, and break your own limits every day.",
-    image: (
-      <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
-        <circle cx="90" cy="90" r="90" fill="#39A0AD" opacity="0.12" />
-        <rect x="40" y="60" width="100" height="60" rx="18" fill="#39A0AD" />
-        <rect x="60" y="80" width="60" height="20" rx="8" fill="#fff" />
-        <rect x="75" y="110" width="30" height="8" rx="4" fill="#fff" />
-      </svg>
-    ),
-  },
-  {
-    quote:
-      "A dynamic learning community, connect with like-minded people and grow together.",
-    image: (
-      <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
-        <circle cx="90" cy="90" r="90" fill="#F59E42" opacity="0.12" />
-        <ellipse cx="90" cy="110" rx="50" ry="20" fill="#F59E42" />
-        <circle cx="70" cy="90" r="15" fill="#fff" />
-        <circle cx="110" cy="90" r="15" fill="#fff" />
-        <circle cx="90" cy="80" r="18" fill="#F59E42" />
-      </svg>
-    ),
-  },
-  {
-    quote:
-      "Track your progress, get feedback, and achieve your learning goals with smart tools.",
-    image: (
-      <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
-        <circle cx="90" cy="90" r="90" fill="#4CAF50" opacity="0.12" />
-        <rect x="60" y="70" width="60" height="40" rx="12" fill="#4CAF50" />
-        <rect x="80" y="90" width="20" height="20" rx="6" fill="#fff" />
-        <rect x="70" y="80" width="40" height="8" rx="4" fill="#fff" />
-      </svg>
-    ),
-  },
-];
+import { useLanguage } from "../../../LanguageProvider";
 
 export default function Carousel({ className }: { className?: string }) {
+  const { t } = useLanguage();
+
   const [current, setCurrent] = useState(0);
+
+  const slides = [
+    {
+      quote: t("carousel_quote_1"),
+      image: (
+        <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+          <circle cx="90" cy="90" r="90" fill="#39A0AD" opacity="0.12" />
+          <rect x="40" y="60" width="100" height="60" rx="18" fill="#39A0AD" />
+          <rect x="60" y="80" width="60" height="20" rx="8" fill="#fff" />
+          <rect x="75" y="110" width="30" height="8" rx="4" fill="#fff" />
+        </svg>
+      ),
+    },
+    {
+      quote: t("carousel_quote_2"),
+      image: (
+        <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+          <circle cx="90" cy="90" r="90" fill="#F59E42" opacity="0.12" />
+          <ellipse cx="90" cy="110" rx="50" ry="20" fill="#F59E42" />
+          <circle cx="70" cy="90" r="15" fill="#fff" />
+          <circle cx="110" cy="90" r="15" fill="#fff" />
+          <circle cx="90" cy="80" r="18" fill="#F59E42" />
+        </svg>
+      ),
+    },
+    {
+      quote: t("carousel_quote_3"),
+      image: (
+        <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+          <circle cx="90" cy="90" r="90" fill="#4CAF50" opacity="0.12" />
+          <rect x="60" y="70" width="60" height="40" rx="12" fill="#4CAF50" />
+          <rect x="80" y="90" width="20" height="20" rx="6" fill="#fff" />
+          <rect x="70" y="80" width="40" height="8" rx="4" fill="#fff" />
+        </svg>
+      ),
+    },
+  ];
 
   useEffect(() => {
     const interval = setInterval(
