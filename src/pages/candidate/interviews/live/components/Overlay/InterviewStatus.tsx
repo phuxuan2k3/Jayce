@@ -3,7 +3,7 @@ import { Repeat } from "lucide-react";
 import { useQuestionContext } from "../../contexts/question-context";
 import { useAudioContext } from "../../contexts/audio.context";
 import Record from "./Record";
-import { Alert } from "@mui/material";
+import { Alert, Button } from "@mui/material";
 import {
   useLazyGetInterviewOutroQuery,
   usePostAnswerMutation,
@@ -110,9 +110,6 @@ export default memo(function InterviewStatus({
           <span className="font-semibold ">
             Question {questionIndex} of {totalQuestion}
           </span>
-          <button className="ml-auto" onClick={() => handleRepeat()}>
-            <Repeat size={20} />
-          </button>
         </div>
         <div
           ref={totalBarRef}
@@ -123,10 +120,25 @@ export default memo(function InterviewStatus({
             ref={progressBarRef}
           ></div>
         </div>
+        <div className=" w-full hover:!text-primary flex items-center justify-center">
+          <Record onAnswerRecorded={handleAnswerRecorded} />
+        </div>
       </div>
-      <div className="col-start-10 hover:!text-primary col-end-10 row-start-3 row-end-3 flex items-center justify-center">
-        <Record onAnswerRecorded={handleAnswerRecorded} />
-      </div>
+
+      <Button
+        sx={{
+          textAlign: "left",
+          justifyContent: "flex-start",
+          fontFamily: "Space Grotesk, sans-serif",
+          textTransform: "none",
+          fontSize: "16px",
+        }}
+        className="bg-gradient-to-br from-primary to-secondary  rounded-lg  w-[116px] flex justify-center text-white"
+        onClick={() => handleRepeat()}
+      >
+        <span className="mr-2">Repeat</span>
+        <Repeat size={20} />
+      </Button>
       <ModalSubmitting isOpen={showSubmittingModal} />
     </div>
   );

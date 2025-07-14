@@ -1,4 +1,5 @@
 import { FC, MouseEvent } from "react";
+import { useLanguage } from "../../../../../../../LanguageProvider";
 
 type ModalSubmittingProps = {
   isOpen: boolean;
@@ -6,6 +7,8 @@ type ModalSubmittingProps = {
 
 const ModalSubmitting: FC<ModalSubmittingProps> = ({ isOpen }) => {
   if (!isOpen) return null;
+
+  const { t } = useLanguage();
 
   const handleModalClick = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -39,19 +42,18 @@ const ModalSubmitting: FC<ModalSubmittingProps> = ({ isOpen }) => {
               />
             </svg>
             <h2 className="text-2xl font-bold mb-2 text-[#2e808a] text-center">
-              Submitting your answers...
+              {t("submitting_answers")}
             </h2>
             <p className="mb-4 text-gray-700 text-center">
-              Please wait while we submit your responses. This may take a
-              moment.
+              {t("please_wait_submit")}
             </p>
             <div className="bg-red-50 border-l-4 border-red-400 p-3 rounded mb-6 w-full">
               <div className="font-bold text-red-600 mb-1">
-                Do not close or refresh this page!
+                {t("do_not_close_page")}
               </div>
               <ul className="list-disc list-inside text-red-500 text-sm space-y-1">
-                <li>Your submission is being processed.</li>
-                <li>Leaving the page may result in data loss.</li>
+                <li>{t("submission_being_processed")}</li>
+                <li>{t("leaving_page_warning")}</li>
               </ul>
             </div>
           </div>
