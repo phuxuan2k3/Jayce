@@ -3,6 +3,7 @@ import { JobSetupData } from "./setup";
 import { useLanguage } from "../../../../LanguageProvider";
 import MySelect from "../../../../features/tests/ui/forms/MySelect";
 import { Button } from "@mui/material";
+import { DifficultiesAsConst } from "../../../manager/tests/new/common/base-schema";
 
 const SetUpStep1: FC<{
   onNext: () => void;
@@ -54,16 +55,11 @@ const SetUpStep1: FC<{
     label: pos,
   }));
 
-  const experienceOptions = [
-    { value: "intern", label: t("experience_intern") },
-    { value: "fresher", label: t("experience_fresher") },
-    { value: "junior", label: t("experience_junior") },
-    { value: "mid", label: t("experience_mid") },
-    { value: "senior", label: t("experience_senior") },
-    { value: "lead", label: t("experience_lead") },
-    { value: "manager", label: t("experience_manager") },
-    { value: "director", label: t("experience_director") },
-  ];
+  const experienceOptions = DifficultiesAsConst.map((dif) => ({
+    value: dif,
+    label: dif,
+  }));
+
   return (
     <>
       <div className="text-primary-toned-600 text-[32px] leading-[24px] mt-4    font-black w-full text-center ">
