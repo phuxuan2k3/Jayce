@@ -179,7 +179,7 @@ const GuestPage = () => {
       </section>
 
       {/* Steps Section */}
-      <section className="py-24 h-[100vh] bg-primary-toned-50 ">
+      <section id="tests" className="py-24 h-[100vh] bg-primary-toned-50 ">
         <motion.div
           className="max-w-5xl mx-auto"
           initial="hidden"
@@ -250,8 +250,8 @@ const GuestPage = () => {
 
       {/* Features Section (existing content, improved animation) */}
       <section
+        id="interviews"
         className="py-24 bg-gradient-to-r from-[#bfeaff]/20 to-[#ffe0ec]/30"
-        id="features"
       >
         <motion.div
           className="space-y-14 px-6 md:px-20 max-w-5xl mx-auto"
