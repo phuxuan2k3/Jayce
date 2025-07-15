@@ -25,7 +25,7 @@ export default function TestFullSidebar({
 	}
 
 	return (
-		<div className="sticky top-2 max-h-[96vh] overflow-y-auto shadow-primary bg-white rounded-lg p-6 flex flex-col gap-2 text-primary">
+		<div className="sticky top-16 max-h-[82vh] overflow-y-auto shadow-primary bg-white rounded-lg p-6 flex flex-col gap-2 text-primary">
 			<FetchStateCover2
 				fetchState={testQuery}
 				dataComponent={(test) => {

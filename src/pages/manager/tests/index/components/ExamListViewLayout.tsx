@@ -46,7 +46,9 @@ export default function ExamListViewLayout({
 					<p className="text-lg font-semibold">{t("manager_tests_empty_title")}</p>
 					<p className="text-sm text-gray-400">{t("manager_tests_empty_description")}</p>
 
-					<MyButton size={"normal"}
+					<MyButton
+						size={"normal"}
+						className="mt-4"
 						onClick={() => navigate(paths.manager.tests.NEW)}
 					>
 						{t("manager_tests_create_button")}

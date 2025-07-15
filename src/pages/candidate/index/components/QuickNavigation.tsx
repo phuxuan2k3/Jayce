@@ -1,7 +1,9 @@
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LanguageTranslations, useLanguage } from "../../../../LanguageProvider";
 import { Briefcase, ChevronRight, Mic } from "lucide-react";
+import MyButton from "../../../../features/tests/ui/buttons/MyButton";
+import paths from "../../../../router/paths";
 
 const QuickNavButton = ({
 	href,
@@ -52,6 +54,7 @@ const Translations: LanguageTranslations = {
 const QuickNavigation = ({ isVisible = true }: QuickNavigationProps) => {
 	const { tTranslation } = useLanguage();
 	const t = (key: string) => tTranslation(key, Translations);
+	const navigate = useNavigate();
 
 	if (!isVisible) return null;
 
@@ -68,10 +71,13 @@ const QuickNavigation = ({ isVisible = true }: QuickNavigationProps) => {
 					<p>
 						{t("practice_test_description")}
 					</p>
-					<button className="mt-2 px-4 py-2 bg-primary-toned-600 text-white rounded-md hover:bg-primary-toned-700 transition-colors w-fit">
+					<MyButton
+						className="mt-2 w-full"
+						onClick={() => navigate(paths.candidate.tests.GENERATE)}
+					>
 						{t("practice_test_go")}
 						<ChevronRight className="inline-block ml-1 w-5 h-5" />
-					</button>
+					</MyButton>
 				</div>
 
 				<div>
