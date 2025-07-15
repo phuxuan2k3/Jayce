@@ -10,16 +10,7 @@ import { useState } from "react";
 import BackgroundContainer from "./sub/BackgroundContainer";
 // import { Models } from "../../types/render";
 // import { useModelContext } from "../../contexts/model-context";
-import {
-  Alert,
-  Button,
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Typography,
-} from "@mui/material";
+import { Alert } from "@mui/material";
 import {
   useLazyGetInterviewOutroQuery,
   usePostAnswerMutation,
@@ -28,6 +19,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useQuestionContext } from "../../contexts/question-context";
 import ModalSubmitting from "./sub/ModalSubmit";
 import { useAudioContext } from "../../contexts/audio.context";
+import ModalConfirmSubmit from "./ModalConfirmSubmit";
 
 export default function BottomMenu() {
   const [isSelectingBackground, setIsSelectingBackground] = useState(false);
@@ -196,7 +188,7 @@ export default function BottomMenu() {
           <DoorOpen size={20} className="my-1" />
         </CommonButton>
       </div>
-      <Dialog
+      {/* <Dialog
         open={open}
         onClose={handleClose}
         maxWidth="xs"
@@ -285,7 +277,13 @@ export default function BottomMenu() {
             {loading ? "Submitting..." : "End Interview"}
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
+      <ModalConfirmSubmit
+        open={open}
+        onClose={() => handleClose()}
+        onSubmit={handleSubmitInterview}
+        loading={loading}
+      />
     </div>
   );
 }

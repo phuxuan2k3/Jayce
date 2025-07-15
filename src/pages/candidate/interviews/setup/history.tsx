@@ -183,6 +183,11 @@ const HistoryPage = () => {
             placeholder={"Search by position or skill..."}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleFilterChange();
+              }
+            }}
           />
         </div>
         <FilterListIcon fontSize="medium" sx={{ color: "#2e808a" }} />

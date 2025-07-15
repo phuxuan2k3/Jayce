@@ -116,15 +116,15 @@ const SetUpStep2: FC<{ data: JobSetupData }> = ({ data }) => {
           </div>
           <input
             type="range"
-            min="1"
-            max="16"
+            min="4"
+            max="12"
             value={numQuestion}
             onChange={(e) => setNumQuestion(Number(e.target.value))}
             className="range h-5 [--range-thumb-size:40px]  [--range-p:3px] [--range-thumb:#2e808a] text-primary "
           />
           <div className="flex justify-between text-sm mb-4 font-medium text-primary-toned-700">
-            <div>1</div>
-            <div>16</div>
+            <div>4</div>
+            <div>12</div>
           </div>
           {/* <div className="flex justify-between">
             <span>{t("skip_intro")}</span>

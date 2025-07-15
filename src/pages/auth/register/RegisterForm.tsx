@@ -20,8 +20,11 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { Alert } from "@mui/material";
 import { toast } from "react-toastify";
+import { useLanguage } from "../../../LanguageProvider";
 
 const RegisterForm = () => {
+  const { t } = useLanguage();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [register, { isLoading, error, isSuccess }] = useRegisterMutation();
@@ -69,47 +72,44 @@ const RegisterForm = () => {
     let isValid = true;
 
     if (!username.trim()) {
-      newErrors.username = "Username is required.";
+      newErrors.username = t("register_username_required");
       isValid = false;
     } else if (username.length < 3) {
-      newErrors.username = "Username must be at least 3 characters long.";
+      newErrors.username = t("register_username_min");
       isValid = false;
     }
 
     if (!fullname.trim()) {
-      newErrors.fullname = "Fullname is required.";
+      newErrors.fullname = t("register_fullname_required");
       isValid = false;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.trim()) {
-      newErrors.email = "Email is required.";
+      newErrors.email = t("register_email_required");
       isValid = false;
     } else if (!emailRegex.test(email)) {
-      newErrors.email = "Invalid email format.";
+      newErrors.email = t("register_email_invalid");
       isValid = false;
     }
 
     if (!password.trim()) {
-      newErrors.password = "Password is required.";
+      newErrors.password = t("register_password_required");
       isValid = false;
     } else if (password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters long.";
+      newErrors.password = t("register_password_min");
       isValid = false;
     } else if (!/[A-Z]/.test(password)) {
-      newErrors.password =
-        "Password must contain at least one uppercase letter.";
+      newErrors.password = t("register_password_upper");
       isValid = false;
     } else if (!/[a-z]/.test(password)) {
-      newErrors.password =
-        "Password must contain at least one lowercase letter.";
+      newErrors.password = t("register_password_lower");
       isValid = false;
     } else if (!/[0-9]/.test(password)) {
-      newErrors.password = "Password must contain at least one number.";
+      newErrors.password = t("register_password_digit");
       isValid = false;
     } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-      newErrors.password =
-        "Password must contain at least one special character.";
+      newErrors.password = t("register_password_special");
       isValid = false;
     }
 
@@ -143,9 +143,9 @@ const RegisterForm = () => {
         err.data !== null &&
         'message' in err.data
       ) {
-        toast.error((err.data as any).message ?? 'Registration failed.');
+        toast.error((err.data as any).message ?? t("register_toast_registration_failed"));
       } else {
-        toast.error('Registration failed.');
+        toast.error(t("register_toast_registration_failed"));
       }
 
       return;
@@ -155,7 +155,7 @@ const RegisterForm = () => {
   const handleVerifyEmail = async () => {
     if (isSending) return;
     if (cooldown > 0) {
-      toast.error("Please wait before requesting a new verification email.");
+      toast.error(t("register_toast_google_retry"));
       return;
     }
     if (!validateForm()) return;
@@ -172,18 +172,18 @@ const RegisterForm = () => {
           }}
           severity="success"
         >
-          Please enter your email.
+          {t("register_toast_invalid_email")}
         </Alert>
       );
     }
     try {
       setIsSending(true);
       //   console.log("3");
-      await verificationEmail({ email }).unwrap();
+      await verificationEmail({ email, username }).unwrap();
       //   alert("Verification email sent successfully!");
       setIsOpenModal(true);
       setCooldown(30);
-      toast.success("Verification email sent successfully!");
+      toast.success(t("register_toast_verification_success"));
       return (
         <Alert
           sx={{
@@ -193,13 +193,13 @@ const RegisterForm = () => {
           }}
           severity="success"
         >
-          Verification email sent successfully!
+          {t("register_toast_verification_success")}
         </Alert>
       );
     } catch (error: any) {
       console.error("Verification failed:", error);
       // display the error message:
-      toast.error(error?.data?.message || "Failed to send verification email.");
+      toast.error(error?.data?.message || t("register_toast_verification_failed"));
     } finally {
       setIsSending(false);
     }
@@ -255,31 +255,31 @@ const RegisterForm = () => {
               navigate(paths.candidate.ROOT);
             } else {
               setGoogleError(
-                "Something went wrong with Google authentication."
+                t("register_toast_google_failed")
               );
             }
           } else {
-            setGoogleError("Something went wrong with Google authentication.");
+            setGoogleError(t("register_toast_google_failed"));
           }
         }
       } catch (error) {
         console.error("Failed to get ID token:", error);
-        setGoogleError("Something went wrong with Google authentication.");
+        setGoogleError(t("register_toast_google_failed"));
       }
     },
     onError: (error) => {
       console.error("Login Error:", error);
-      setGoogleError("Google authentication failed");
+      setGoogleError(t("register_toast_google_failed"));
     },
   });
 
   return (
     <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-lg border border-gray-100 px-8 pb-4 pt-8">
       <div className="text-center text-3xl font-extrabold mb-2 text-primary-toned-600    tracking-tight">
-        SkillSharp
+        {t("register_title")}
       </div>
       <div className="text-center text-base text-gray-500 mb-8   ">
-        Create your account to get started.
+        {t("register_subtitle")}
       </div>
       {/* Nút chuyển tab Log In / Sign Up */}
       {/* <div className="flex mb-8">
@@ -324,12 +324,12 @@ const RegisterForm = () => {
             ></path>
           </g>
         </svg>
-        Sign up with Google
+        {t("register_google")}
       </button>
 
       <div className="flex items-center my-6">
         <hr className="flex-grow border-t border-gray-200" />
-        <span className="mx-3 text-gray-400    text-sm">or</span>
+        <span className="mx-3 text-gray-400 text-sm">{t("register_or")}</span>
         <hr className="flex-grow border-t border-gray-200" />
       </div>
 
@@ -366,7 +366,7 @@ const RegisterForm = () => {
         ${username ? "top-2 text-xs text-primary-toned-600" : ""}
       `}
           >
-            Username
+            {t("register_username_label")}
           </label>
         </div>
         {errors.username && (
@@ -390,7 +390,7 @@ const RegisterForm = () => {
         ${fullname ? "top-2 text-xs text-primary-toned-600" : ""}
       `}
           >
-            Fullname
+            {t("register_fullname_label")}
           </label>
         </div>
         {errors.fullname && (
@@ -414,7 +414,7 @@ const RegisterForm = () => {
         ${email ? "top-2 text-xs text-primary-toned-600" : ""}
       `}
           >
-            Email
+            {t("register_email_label")}
           </label>
         </div>
         {errors.email && (
@@ -438,7 +438,7 @@ const RegisterForm = () => {
         ${password ? "top-2 text-xs text-primary-toned-600" : ""}
       `}
           >
-            Password
+            {t("register_password_label")}
           </label>
         </div>
         {errors.password && (
@@ -449,15 +449,15 @@ const RegisterForm = () => {
           className="w-full bg-[var(--primary-color)] text-lg font-bold text-white py-3 rounded-full mt-6 transition-all duration-150 hover:bg-[#2E808A] flex items-center justify-center gap-2"
           disabled={isLoading || isSending}
         >
-          {isSending ? "Loading..." : "Sign Up"} <FontAwesomeIcon icon={faArrowRight} />
+          {isSending ? t("register_loading") : t("register_button")} <FontAwesomeIcon icon={faArrowRight} />
         </button>
         <div className="w-full text-center text-xs text-gray-500 mt-2">
-          By creating an account, you agree to our{" "}
+          {t("register_agreement")}{" "}
           <a
             className="text-primary-toned-600 font-semibold hover:underline"
             href="#reset"
           >
-            terms of service and privacy policy
+            {t("register_terms")}
           </a>
           .
         </div>
@@ -505,10 +505,10 @@ const RegisterForm = () => {
               </div>
             </div>
             <div className="text-2xl font-extrabold text-primary-toned-600 mb-1   ">
-              Check your email
+              {t("register_check_email_title")}
             </div>
             <div className="text-gray-500   ">
-              Enter the verification code sent to
+              {t("register_check_email_desc")}
             </div>
             <div className="pb-2 font-semibold text-primary-toned-600 text-base">
               {email}
@@ -542,22 +542,22 @@ const RegisterForm = () => {
             ${otp ? "top-2 text-xs text-primary-toned-600" : ""}
           `}
               >
-                Enter OTP
+                {t("register_enter_otp_label")}
               </label>
             </div>
             <button
               onClick={handleFormSubmit}
               className="mt-4 w-full px-4 py-2 bg-[var(--primary-color)] text-white rounded-full font-bold text-lg transition-all duration-150 hover:bg-[#2E808A] flex items-center justify-center gap-2"
             >
-              Verify email
+              {t("register_verify_button")}
             </button>
             <div className="pt-1 text-xs text-gray-500   ">
-              <span>Didn't get a code?</span>{" "}
+              <span>{t("register_no_code")}</span>{" "}
               <span
                 onClick={cooldown > 0 ? undefined : handleVerifyEmail}
                 className="underline text-primary-toned-600 cursor-pointer font-semibold hover:text-primary-toned-800"
               >
-                {cooldown > 0 ? `Resend in ${cooldown}s` : "Resend code"}
+                {cooldown > 0 ? t("register_resend_wait").replace("{{seconds}}", cooldown.toString()) : t("register_resend_code")}
               </span>
             </div>
           </div>

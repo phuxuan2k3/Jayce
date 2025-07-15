@@ -106,6 +106,23 @@ export const vi = {
   interview_tilte: "Phỏng vấn kỹ thuật",
   interview_description:
     "Thực hành các buổi phỏng vấn giả lập với nhiều tình huống thực tế, giúp bạn tự tin chinh phục nhà tuyển dụng.",
+  submitting_answers: "Đang gửi câu trả lời của bạn...",
+  please_wait_submit:
+    "Vui lòng đợi trong khi chúng tôi gửi phản hồi của bạn. Quá trình này có thể mất một chút thời gian.",
+  do_not_close_page: "Không được đóng hoặc làm mới trang này!",
+  submission_being_processed: "Bài nộp của bạn đang được xử lý.",
+  leaving_page_warning: "Rời khỏi trang có thể dẫn đến mất dữ liệu.",
+  end_interview_early: "Kết thúc phỏng vấn sớm?",
+  about_to_end_interview: "Bạn sắp",
+  end_the_interview: "kết thúc phỏng vấn",
+  before_completing_questions: "trước khi hoàn thành tất cả câu hỏi.",
+  unanswered_questions_note:
+    "Xin lưu ý rằng mọi câu hỏi chưa trả lời sẽ được tự động đánh dấu là bỏ qua, và tiến trình hiện tại của bạn sẽ được gửi như hiện tại.",
+  current_progress_submitted: "",
+  cancel: "Hủy",
+  submitting: "Đang gửi...",
+  end_interview: "Kết thúc phỏng vấn",
+
   // Settings
   tag_role_business_manager: "Quản lý doanh nghiệp",
   tag_role_candidate: "Ứng viên",
@@ -218,7 +235,8 @@ export const vi = {
   change_password_error_confirm_mismatch: "Mật khẩu không khớp",
   change_password_error_default:
     "Mật khẩu không đúng hoặc không khớp. Vui lòng thử lại",
-  delete_account_confirm_message: "Bạn có chắc chắn muốn xóa tài khoản của mình không?",
+  delete_account_confirm_message:
+    "Bạn có chắc chắn muốn xóa tài khoản của mình không?",
   delete_account_confirm_yes: "Có",
   delete_account_confirm_no: "Không",
 
@@ -309,9 +327,11 @@ export const vi = {
 
   // Candidate Tests Templates
   prompt_templates_title: "Quản lý mẫu Prompt",
-  prompt_templates_description: "Tạo và quản lý các mẫu prompt bài kiểm tra để tạo bài luyện tập",
+  prompt_templates_description:
+    "Tạo và quản lý các mẫu prompt bài kiểm tra để tạo bài luyện tập",
   test_template_title: "Mẫu Bài Kiểm Tra",
-  test_template_description: "Tạo, chỉnh sửa và quản lý các mẫu bài kiểm tra của bạn để tạo bài luyện tập.",
+  test_template_description:
+    "Tạo, chỉnh sửa và quản lý các mẫu bài kiểm tra của bạn để tạo bài luyện tập.",
 
   // Templates Sidebar
   templates_sidebar_back_to_list: "Quay lại danh sách",
@@ -324,15 +344,18 @@ export const vi = {
 
   // Delete Template Modal
   delete_template_title: "Xác nhận xóa",
-  delete_template_description: "Bạn có chắc chắn muốn xóa mẫu này không? Hành động này không thể hoàn tác.",
+  delete_template_description:
+    "Bạn có chắc chắn muốn xóa mẫu này không? Hành động này không thể hoàn tác.",
   delete_template_cancel: "Hủy",
   delete_template_confirm: "Xóa",
 
   // Candidate Tests Join Page
   candidate_tests_join_title: "Bài Thi Ứng Viên",
-  candidate_tests_join_description: "Tham gia các bài thi được tổ chức bởi quản lý và cạnh tranh với người khác",
+  candidate_tests_join_description:
+    "Tham gia các bài thi được tổ chức bởi quản lý và cạnh tranh với người khác",
   candidate_tests_join_header: "Tham Gia Bài Thi Được Tổ Chức",
-  candidate_tests_join_subtitle: "Tham gia bằng roomId hoặc xem các bài thi đang diễn ra",
+  candidate_tests_join_subtitle:
+    "Tham gia bằng roomId hoặc xem các bài thi đang diễn ra",
 
   // Sidebar Tabs
   sidebar_ongoing_title: "Bài Thi Đang Diễn Ra",
@@ -347,7 +370,8 @@ export const vi = {
   // Public Exams Section
   public_exams_section_title: "Bài Thi Có Sẵn Công Khai",
   public_exams_no_test: "Không tìm thấy bài kiểm tra công khai nào.",
-  public_exams_suggestion: "Bạn có thể tham gia bài thi bằng room ID hoặc tạo bài thi của riêng mình.",
+  public_exams_suggestion:
+    "Bạn có thể tham gia bài thi bằng room ID hoặc tạo bài thi của riêng mình.",
 
   // Password Input
   password_input_label: "Bài kiểm tra này có mật khẩu bảo vệ",
@@ -356,7 +380,8 @@ export const vi = {
   // Ongoing Exams Section
   ongoing_exams_section_title: "Bài Thi Đang Diễn Ra",
   ongoing_exams_no_test: "Không tìm thấy bài kiểm tra đang diễn ra.",
-  ongoing_exams_suggestion: "Bạn có thể tham gia bài thi bằng room ID hoặc tạo bài thi của riêng mình.",
+  ongoing_exams_suggestion:
+    "Bạn có thể tham gia bài thi bằng room ID hoặc tạo bài thi của riêng mình.",
 
   // Join Test Section
   join_test_input_placeholder: "Nhập Room ID của bài thi",
@@ -365,7 +390,8 @@ export const vi = {
   // History Exams Section
   history_exams_section_title: "Lịch Sử Bài Thi",
   history_exams_no_test: "Không tìm thấy bài kiểm tra đã hoàn thành.",
-  history_exams_suggestion: "Bạn có thể tham gia bài thi bằng room ID hoặc tạo bài thi của riêng mình.",
+  history_exams_suggestion:
+    "Bạn có thể tham gia bài thi bằng room ID hoặc tạo bài thi của riêng mình.",
 
   // Exam Info Dialog Bottom
   exam_info_cancel_button: "Hủy",
@@ -377,7 +403,8 @@ export const vi = {
   // Exam Info Dialog
   exam_info_title: "Thông Tin Bài Thi",
   exam_info_not_found_title: "Không Tìm Thấy Bài Thi",
-  exam_info_not_found_description: "Không tìm thấy bài thi với roomId đã cung cấp:",
+  exam_info_not_found_description:
+    "Không tìm thấy bài thi với roomId đã cung cấp:",
   exam_info_close: "Đóng",
   exam_info_time_unit: "phút",
   exam_info_available: "Có sẵn",
@@ -405,7 +432,8 @@ export const vi = {
 
   // Candidate Tests Page
   candidate_tests_header_title: "Bài Kiểm Tra Skillsharp",
-  candidate_tests_header_desc: "Tham gia bài thi được tổ chức hoặc tạo bài luyện tập của bạn từ mẫu",
+  candidate_tests_header_desc:
+    "Tham gia bài thi được tổ chức hoặc tạo bài luyện tập của bạn từ mẫu",
   candidate_tests_heading_title: "Bài Luyện Tập Của Bạn",
   candidate_tests_heading_desc: "Xem và quản lý các bài luyện tập bạn đã tạo.",
   candidate_tests_empty_msg: "Bạn chưa tạo bài kiểm tra nào.",
@@ -413,7 +441,8 @@ export const vi = {
 
   // Sidebar AI block
   sidebar_ai_title: "Tạo Bài Kiểm Tra Bằng AI",
-  sidebar_ai_description: "Nâng cao quá trình học với khả năng tạo bài kiểm tra thông minh. AI phân tích nhu cầu của bạn và tạo bài kiểm tra phù hợp với trình độ và mục tiêu học tập.",
+  sidebar_ai_description:
+    "Nâng cao quá trình học với khả năng tạo bài kiểm tra thông minh. AI phân tích nhu cầu của bạn và tạo bài kiểm tra phù hợp với trình độ và mục tiêu học tập.",
   sidebar_generate_button: "Tạo Bài Luyện Tập",
 
   // Quick actions
@@ -435,32 +464,40 @@ export const vi = {
 
   // Practice Generation Steps
   gen_page_header_title: "Tạo Bài Luyện Tập",
-  gen_page_header_description: "Tạo bài luyện tập cá nhân hóa với hướng dẫn từng bước.",
+  gen_page_header_description:
+    "Tạo bài luyện tập cá nhân hóa với hướng dẫn từng bước.",
   gen_step_invalid: "Bước không hợp lệ",
   gen_step_prev: "Quay lại",
   gen_step_next: "Tiếp theo",
   gen_step_generate: "Tạo Bài Luyện Tập",
   gen_step1_title: "Bước 1: Thông Tin Chung",
-  gen_step1_description: "Cung cấp thông tin chung về bài kiểm tra như tiêu đề, mô tả, thời gian và ngôn ngữ.",
+  gen_step1_description:
+    "Cung cấp thông tin chung về bài kiểm tra như tiêu đề, mô tả, thời gian và ngôn ngữ.",
   gen_step2_title: "Bước 2: Cấu Hình Prompt",
-  gen_step2_description: "Cấu hình cách AI sẽ tạo bài kiểm tra của bạn, bao gồm độ khó, số câu hỏi và thẻ.",
+  gen_step2_description:
+    "Cấu hình cách AI sẽ tạo bài kiểm tra của bạn, bao gồm độ khó, số câu hỏi và thẻ.",
   gen_step3_title: "Bước 3: Thêm Dàn Ý & Tạo Bài",
-  gen_step3_description: "Thêm dàn ý cụ thể để hướng dẫn AI trong việc tạo câu hỏi. Dàn ý càng chi tiết càng tốt.",
+  gen_step3_description:
+    "Thêm dàn ý cụ thể để hướng dẫn AI trong việc tạo câu hỏi. Dàn ý càng chi tiết càng tốt.",
 
   // Use Generate Practice
-  use_generate_practice_error_no_questions: "Không tạo được câu hỏi nào. Vui lòng thử lại với tham số khác.",
+  use_generate_practice_error_no_questions:
+    "Không tạo được câu hỏi nào. Vui lòng thử lại với tham số khác.",
   use_generate_practice_error_unknown: "Đã xảy ra lỗi không xác định.",
 
   // Test Generation Sidebar
   test_generation_sidebar_actions_title: "Hành Động Tạo Bài",
   test_generation_sidebar_back_title: "Quay lại Bài Kiểm Tra",
-  test_generation_sidebar_back_description: "Trở về trang tổng quan bài kiểm tra",
+  test_generation_sidebar_back_description:
+    "Trở về trang tổng quan bài kiểm tra",
   test_generation_sidebar_choose_template_title: "Chọn Mẫu",
   test_generation_sidebar_choose_template_description: "Chọn từ các mẫu có sẵn",
   test_generation_sidebar_save_template_title: "Lưu Thành Mẫu",
-  test_generation_sidebar_save_template_description: "Lưu cấu hình hiện tại của bạn",
+  test_generation_sidebar_save_template_description:
+    "Lưu cấu hình hiện tại của bạn",
   test_generation_sidebar_tips_title: "Mẹo Tạo Bài Kiểm Tra",
-  test_generation_sidebar_tips_description: "Thêm chủ đề và từ khóa cụ thể để có kết quả tốt hơn. Bao gồm cả mức độ khó để có câu hỏi phù hợp hơn.",
+  test_generation_sidebar_tips_description:
+    "Thêm chủ đề và từ khóa cụ thể để có kết quả tốt hơn. Bao gồm cả mức độ khó để có câu hỏi phù hợp hơn.",
   test_generation_sidebar_tips_link: "Xem Hướng Dẫn Tạo Bài",
 
   // Template Selection Modal
@@ -481,7 +518,8 @@ export const vi = {
 
   // Save Template Dialog
   save_template_title: "Lưu Mẫu",
-  save_template_description: "Lưu cấu hình bài kiểm tra hiện tại của bạn dưới dạng mẫu để sử dụng sau.",
+  save_template_description:
+    "Lưu cấu hình bài kiểm tra hiện tại của bạn dưới dạng mẫu để sử dụng sau.",
   template_created_success: "Tạo mẫu thành công",
   template_created_error: "Tạo mẫu thất bại",
 
@@ -496,13 +534,15 @@ export const vi = {
 
   // PracticeGenStep1
   gen_step1_choose_template_title: "Chọn Mẫu (Tùy chọn)",
-  gen_step1_choose_template_description: "Tự động điền thông tin và cấu hình prompt cho bài kiểm tra.",
+  gen_step1_choose_template_description:
+    "Tự động điền thông tin và cấu hình prompt cho bài kiểm tra.",
   gen_step1_browse_templates_button: "Duyệt Mẫu",
   gen_step1_selected_template: "Mẫu đã chọn",
   gen_step1_field_title: "Tiêu đề Bài Kiểm Tra",
   gen_step1_field_title_placeholder: "Ví dụ: Bài luyện tập React cơ bản",
   gen_step1_field_description: "Mô tả",
-  gen_step1_field_description_placeholder: "Mô tả nội dung và mục đích của bài kiểm tra này",
+  gen_step1_field_description_placeholder:
+    "Mô tả nội dung và mục đích của bài kiểm tra này",
   gen_step1_field_language: "Ngôn ngữ",
   gen_step1_field_language_placeholder: "Chọn một ngôn ngữ",
   gen_step1_field_minutes: "Thời gian làm bài (phút)",
@@ -514,11 +554,13 @@ export const vi = {
   gen_step2_field_number_of_questions: "Số lượng câu hỏi",
   gen_step2_field_difficulty: "Mức độ khó",
   gen_step2_tip_label: "Mẹo:",
-  gen_step2_tip_text: "Thêm các thẻ cụ thể liên quan đến công nghệ hoặc chủ đề bạn muốn kiểm tra. Các thẻ sẽ giúp AI tạo ra câu hỏi phù hợp hơn.",
+  gen_step2_tip_text:
+    "Thêm các thẻ cụ thể liên quan đến công nghệ hoặc chủ đề bạn muốn kiểm tra. Các thẻ sẽ giúp AI tạo ra câu hỏi phù hợp hơn.",
 
   // PracticeGenStep3
   gen_step3_save_template_title: "Lưu Mẫu Của Bạn",
-  gen_step3_save_template_description: "Bạn có thể lưu thông tin này dưới dạng mẫu để sử dụng sau!",
+  gen_step3_save_template_description:
+    "Bạn có thể lưu thông tin này dưới dạng mẫu để sử dụng sau!",
   gen_step3_save_template_button: "Lưu Mẫu",
 
   // Candidate Practice Page
@@ -528,7 +570,8 @@ export const vi = {
   candidate_test_details_heading: "Chi tiết",
 
   // Questions Tab
-  questions_tab_view_warning: "Xem câu hỏi có thể tiết lộ nội dung bài kiểm tra. Bạn có chắc muốn tiếp tục?",
+  questions_tab_view_warning:
+    "Xem câu hỏi có thể tiết lộ nội dung bài kiểm tra. Bạn có chắc muốn tiếp tục?",
   questions_tab_view_button: "Xem Câu Hỏi",
   questions_tab_no_questions: "Không có câu hỏi nào.",
   questions_tab_total_questions: "Tổng cộng {{count}} câu hỏi",
@@ -539,14 +582,17 @@ export const vi = {
 
   // Feedback Tab
   feedback_title: "Phản hồi bài kiểm tra",
-  feedback_note_1: "Phản hồi của bạn về bài kiểm tra do AI tạo ra rất quan trọng với chúng tôi. Vui lòng chia sẻ đánh giá, nhận xét và cho biết nếu bạn gặp bất kỳ vấn đề nào.",
-  feedback_note_2: "Ý kiến của bạn sẽ giúp chúng tôi cải thiện chất lượng các bài kiểm tra do AI tạo và mang lại trải nghiệm tốt hơn cho mọi người.",
+  feedback_note_1:
+    "Phản hồi của bạn về bài kiểm tra do AI tạo ra rất quan trọng với chúng tôi. Vui lòng chia sẻ đánh giá, nhận xét và cho biết nếu bạn gặp bất kỳ vấn đề nào.",
+  feedback_note_2:
+    "Ý kiến của bạn sẽ giúp chúng tôi cải thiện chất lượng các bài kiểm tra do AI tạo và mang lại trải nghiệm tốt hơn cho mọi người.",
   feedback_rating_label: "Đánh giá bài kiểm tra",
   feedback_clear_rating: "Xóa đánh giá",
   feedback_your_rating: "Bạn đã đánh giá",
   feedback_no_rating: "Chưa có đánh giá nào",
   feedback_comment_label: "Nhận xét của bạn",
-  feedback_comment_placeholder: "Chia sẻ suy nghĩ của bạn về bài kiểm tra này...",
+  feedback_comment_placeholder:
+    "Chia sẻ suy nghĩ của bạn về bài kiểm tra này...",
   feedback_report_problem_label: "Báo cáo vấn đề",
   feedback_submitting: "Đang gửi...",
   feedback_submit: "Gửi phản hồi",
@@ -597,7 +643,6 @@ export const vi = {
   submit_confirm_title: "Bạn có muốn nộp câu trả lời không?",
   submit_yes: "Có, nộp bài",
   submit_no: "Không, hủy",
-  submitting: "Đang nộp bài...",
 
   // Manager Test New Page
   manager_test_new_title: "Tạo bài thi",
@@ -631,11 +676,13 @@ export const vi = {
 
   // Manager Publish Warning Dialog
   publish_warning_title: "Xác nhận xuất bản",
-  publish_warning_description: "Bạn sắp xuất bản bài thi. Vui lòng đảm bảo tất cả thông tin đã chính xác trước khi tiếp tục.",
+  publish_warning_description:
+    "Bạn sắp xuất bản bài thi. Vui lòng đảm bảo tất cả thông tin đã chính xác trước khi tiếp tục.",
   publish_warning_restriction_title: "Sau khi xuất bản, bạn sẽ không thể:",
   publish_warning_restriction_question_change: "Thay đổi các câu hỏi",
   publish_warning_restriction_room_id_change: "Chỉnh sửa mã phòng của bài thi",
-  publish_warning_restriction_config_limited: "Một số thiết lập sẽ bị giới hạn thay đổi",
+  publish_warning_restriction_config_limited:
+    "Một số thiết lập sẽ bị giới hạn thay đổi",
   publish_warning_button_cancel: "Hủy",
   publish_warning_button_confirm: "Xuất bản",
 
@@ -647,39 +694,52 @@ export const vi = {
 
   // Manager Publish Footer
   publish_footer_title: "Sẵn sàng để xuất bản",
-  publish_footer_description: "Xem lại tất cả thông tin phía trên trước khi xuất bản bài thi của bạn. Sau khi xuất bản, ứng viên sẽ có thể truy cập và làm bài theo lịch trình và cấu hình đã định.",
+  publish_footer_description:
+    "Xem lại tất cả thông tin phía trên trước khi xuất bản bài thi của bạn. Sau khi xuất bản, ứng viên sẽ có thể truy cập và làm bài theo lịch trình và cấu hình đã định.",
   publish_footer_button: "Xuất bản bài thi",
   publish_footer_button_loading: "Đang xuất bản bài thi...",
 
   // Manager Sidebar
   sidebar_exam_title: "Tạo bài thi bằng AI",
-  sidebar_exam_description: "Sử dụng trợ lý AI của chúng tôi để tạo câu hỏi và bài thi nhanh chóng. Tiết kiệm thời gian bằng cách để AI hỗ trợ bạn tạo câu hỏi.",
+  sidebar_exam_description:
+    "Sử dụng trợ lý AI của chúng tôi để tạo câu hỏi và bài thi nhanh chóng. Tiết kiệm thời gian bằng cách để AI hỗ trợ bạn tạo câu hỏi.",
   sidebar_exam_button_title: "Trợ lý",
   sidebar_exam_button_description: "Tạo câu hỏi bằng AI",
   sidebar_publish_title: "Xuất bản",
   sidebar_publish_description: "Xem lại và xuất bản bài thi của bạn",
   sidebar_generate_title: "Tạo câu hỏi",
-  sidebar_generate_description: "Tạo câu hỏi cho bài thi của bạn bằng trợ lý AI. Chỉ định chủ đề, mức độ khó và số lượng câu hỏi bạn cần.",
+  sidebar_generate_description:
+    "Tạo câu hỏi cho bài thi của bạn bằng trợ lý AI. Chỉ định chủ đề, mức độ khó và số lượng câu hỏi bạn cần.",
   sidebar_generate_tips_title: "Mẹo tạo câu hỏi",
-  sidebar_generate_step1: "Thông tin cơ bản về bài thi là cần thiết để tạo câu hỏi. Vui lòng cung cấp tiêu đề, mô tả và các thông tin cần thiết khác.",
-  sidebar_generate_step2: "Chủ đề và mức độ khó rất quan trọng để tạo ra câu hỏi phù hợp. Hãy chỉ định các chủ đề bạn muốn kiểm tra cùng với độ khó tương ứng.",
-  sidebar_generate_step2_note: "Bạn có thể thêm nhiều chủ đề và chỉ định số lượng câu hỏi cho mỗi chủ đề. Đảm bảo phân bổ độ khó hợp lý để bài thi cân bằng.",
-  sidebar_generate_step3: "Chỉ định mức độ sáng tạo của mô hình và cung cấp bất kỳ hướng dẫn hoặc ngữ cảnh cụ thể nào để hỗ trợ việc tạo câu hỏi tốt hơn.",
-  sidebar_generate_step3_note: "Càng cung cấp nhiều ngữ cảnh, mô hình càng có thể tạo ra câu hỏi phù hợp với yêu cầu bài thi.",
-  sidebar_generate_step4: "Xem lại các câu hỏi đã tạo và thực hiện các chỉnh sửa cần thiết. Bạn có thể chỉnh sửa, xóa hoặc thêm câu hỏi mới nếu cần. Khi đã hài lòng, bạn có thể tiến hành xuất bản bài thi.",
-  sidebar_generate_step4_note: "Hãy đảm bảo xem xét kỹ các câu hỏi để đảm bảo chúng đáp ứng yêu cầu của bạn.",
+  sidebar_generate_step1:
+    "Thông tin cơ bản về bài thi là cần thiết để tạo câu hỏi. Vui lòng cung cấp tiêu đề, mô tả và các thông tin cần thiết khác.",
+  sidebar_generate_step2:
+    "Chủ đề và mức độ khó rất quan trọng để tạo ra câu hỏi phù hợp. Hãy chỉ định các chủ đề bạn muốn kiểm tra cùng với độ khó tương ứng.",
+  sidebar_generate_step2_note:
+    "Bạn có thể thêm nhiều chủ đề và chỉ định số lượng câu hỏi cho mỗi chủ đề. Đảm bảo phân bổ độ khó hợp lý để bài thi cân bằng.",
+  sidebar_generate_step3:
+    "Chỉ định mức độ sáng tạo của mô hình và cung cấp bất kỳ hướng dẫn hoặc ngữ cảnh cụ thể nào để hỗ trợ việc tạo câu hỏi tốt hơn.",
+  sidebar_generate_step3_note:
+    "Càng cung cấp nhiều ngữ cảnh, mô hình càng có thể tạo ra câu hỏi phù hợp với yêu cầu bài thi.",
+  sidebar_generate_step4:
+    "Xem lại các câu hỏi đã tạo và thực hiện các chỉnh sửa cần thiết. Bạn có thể chỉnh sửa, xóa hoặc thêm câu hỏi mới nếu cần. Khi đã hài lòng, bạn có thể tiến hành xuất bản bài thi.",
+  sidebar_generate_step4_note:
+    "Hãy đảm bảo xem xét kỹ các câu hỏi để đảm bảo chúng đáp ứng yêu cầu của bạn.",
   sidebar_back_to_exam_title: "Quay lại bài thi",
   sidebar_back_to_exam_description: "Trở về cấu hình bài thi",
   sidebar_publish_review_title: "Xem lại bài thi",
-  sidebar_publish_review_description: "Trước khi xuất bản bài thi, vui lòng kiểm tra lại chi tiết và đảm bảo mọi thứ đã chính xác. Bạn có thể thực hiện các chỉnh sửa cuối cùng về cấu hình hoặc câu hỏi.",
+  sidebar_publish_review_description:
+    "Trước khi xuất bản bài thi, vui lòng kiểm tra lại chi tiết và đảm bảo mọi thứ đã chính xác. Bạn có thể thực hiện các chỉnh sửa cuối cùng về cấu hình hoặc câu hỏi.",
 
   // Manager Common Types
   step1_title: "Bước 1: Thông tin cơ bản",
-  step1_description: "Cung cấp thông tin cơ bản cho bài thi, bao gồm tiêu đề, mô tả, ngôn ngữ và cấp độ.",
+  step1_description:
+    "Cung cấp thông tin cơ bản cho bài thi, bao gồm tiêu đề, mô tả, ngôn ngữ và cấp độ.",
   step2_title: "Bước 2: Khung bài thi",
   step2_description: "Xác định các chủ đề và mức độ khó cho bài thi.",
   step3_title: "Bước 3: Tinh chỉnh",
-  step3_description: "Điều chỉnh mức sáng tạo của mô hình và cung cấp thêm ngữ cảnh.",
+  step3_description:
+    "Điều chỉnh mức sáng tạo của mô hình và cung cấp thêm ngữ cảnh.",
   step4_title: "Bước 4: Xem lại và gửi",
   step4_description: "Xem lại chi tiết bài thi của bạn và gửi để xử lý.",
   step_unknown_title: "Bước không xác định",
@@ -689,8 +749,10 @@ export const vi = {
   builder_step1_title_required: "Tiêu đề là bắt buộc",
   builder_step1_description_required: "Mô tả là bắt buộc",
   builder_step2_topics_required: "Cần ít nhất một chủ đề",
-  builder_step2_total_questions_exceed: "Tổng số câu hỏi phải nhỏ hơn hoặc bằng 30",
-  builder_step3_creativity_invalid: "Mức sáng tạo phải nằm trong khoảng từ 1 đến 10",
+  builder_step2_total_questions_exceed:
+    "Tổng số câu hỏi phải nhỏ hơn hoặc bằng 30",
+  builder_step3_creativity_invalid:
+    "Mức sáng tạo phải nằm trong khoảng từ 1 đến 10",
 
   // Manager base schema
   topic_name_required: "Tên chủ đề là bắt buộc",
@@ -701,35 +763,45 @@ export const vi = {
   builder_generating_questions: "Đang tạo câu hỏi...",
 
   // Manager Step Done
-  step_done_generated_questions: "Đã tạo thành công {{count}} câu hỏi cho bài thi của bạn",
+  step_done_generated_questions:
+    "Đã tạo thành công {{count}} câu hỏi cho bài thi của bạn",
   step_done_total_points: "Tổng điểm",
-  step_done_edit_message: "Bạn có thể chỉnh sửa bộ câu hỏi này trước khi thêm vào bài thi",
+  step_done_edit_message:
+    "Bạn có thể chỉnh sửa bộ câu hỏi này trước khi thêm vào bài thi",
   step_done_review_actions: "Xem lại hành động",
-  step_done_review_description: "Quyết định cách bạn muốn sử dụng các câu hỏi đã tạo trong bài thi",
+  step_done_review_description:
+    "Quyết định cách bạn muốn sử dụng các câu hỏi đã tạo trong bài thi",
   step_done_regenerate: "Tạo lại",
-  step_done_regenerate_description: "Bạn có thể tạo lại câu hỏi nếu muốn thử các biến thể khác.",
+  step_done_regenerate_description:
+    "Bạn có thể tạo lại câu hỏi nếu muốn thử các biến thể khác.",
   step_done_dispose: "Hủy bỏ",
-  step_done_dispose_description: "Loại bỏ các câu hỏi đã tạo và sử dụng cấu hình mới.",
+  step_done_dispose_description:
+    "Loại bỏ các câu hỏi đã tạo và sử dụng cấu hình mới.",
 
   // Manager Dispose Dialog
   dispose_dialog_title: "Hủy bỏ câu hỏi",
-  dispose_dialog_description: "Bạn có chắc muốn hủy bỏ các câu hỏi đã tạo? Hành động này không thể hoàn tác. Bạn sẽ mất tất cả câu hỏi đã tạo trong phiên này.",
+  dispose_dialog_description:
+    "Bạn có chắc muốn hủy bỏ các câu hỏi đã tạo? Hành động này không thể hoàn tác. Bạn sẽ mất tất cả câu hỏi đã tạo trong phiên này.",
   dispose_dialog_cancel: "Hủy",
   dispose_dialog_confirm: "Xác nhận",
 
   // Manager Actions Dialog
   actions_dialog_title: "Chọn hành động tiếp theo",
-  actions_dialog_description: "Bạn đã tạo thành công các câu hỏi mới. Hãy chọn cách bạn muốn tiếp tục với bài thi của mình.",
+  actions_dialog_description:
+    "Bạn đã tạo thành công các câu hỏi mới. Hãy chọn cách bạn muốn tiếp tục với bài thi của mình.",
   actions_dialog_replace_title: "Thay thế toàn bộ câu hỏi",
-  actions_dialog_replace_description: "Hành động này sẽ thay thế toàn bộ câu hỏi hiện tại bằng những câu hỏi mới vừa được tạo. Các câu hỏi cũ sẽ bị xóa vĩnh viễn.",
+  actions_dialog_replace_description:
+    "Hành động này sẽ thay thế toàn bộ câu hỏi hiện tại bằng những câu hỏi mới vừa được tạo. Các câu hỏi cũ sẽ bị xóa vĩnh viễn.",
   actions_dialog_append_title: "Thêm vào câu hỏi hiện có",
-  actions_dialog_append_description: "Hành động này sẽ thêm các câu hỏi mới vào bài thi hiện tại, giữ lại tất cả câu hỏi cũ và mở rộng ngân hàng câu hỏi.",
+  actions_dialog_append_description:
+    "Hành động này sẽ thêm các câu hỏi mới vào bài thi hiện tại, giữ lại tất cả câu hỏi cũ và mở rộng ngân hàng câu hỏi.",
   actions_dialog_cancel: "Hủy",
   actions_dialog_confirm: "Xác nhận",
 
   // Manager Main Page
   manager_tests_title: "Quản lý bài thi",
-  manager_tests_description: "Tạo, xem và quản lý các bài thi cho tổ chức của bạn.",
+  manager_tests_description:
+    "Tạo, xem và quản lý các bài thi cho tổ chức của bạn.",
   manager_tests_new_exam: "Tạo bài thi mới",
   manager_tests_search_placeholder: "Tìm kiếm...",
   manager_tests_sort_name: "Tên",
@@ -773,9 +845,11 @@ export const vi = {
 
   // Manager Exam Information Tab
   // exam_info_title: "Information", // Kinda duplicated
-  exam_info_description: "Tại đây bạn có thể xem chi tiết bài thi bao gồm tên, mô tả và các thiết lập khác.",
+  exam_info_description:
+    "Tại đây bạn có thể xem chi tiết bài thi bao gồm tên, mô tả và các thiết lập khác.",
   exam_stats_title: "Thống kê",
-  exam_stats_description: "Tổng quan đầy đủ về nội dung bài thi, số lượng người tham gia và hiệu suất.",
+  exam_stats_description:
+    "Tổng quan đầy đủ về nội dung bài thi, số lượng người tham gia và hiệu suất.",
 
   // Manager Questions Overview Card
   questions_overview_title: "Tổng quan nội dung",
@@ -845,7 +919,8 @@ export const vi = {
   test_delete_success: "Xóa bài thi thành công",
 
   // Manager Edit Sidebar
-  exam_sidebar_attempts_warning: "Bạn không thể chỉnh sửa câu hỏi của bài thi sau khi đã có lượt làm bài",
+  exam_sidebar_attempts_warning:
+    "Bạn không thể chỉnh sửa câu hỏi của bài thi sau khi đã có lượt làm bài",
   save_changes: "Lưu",
   save_changes_description: "Lưu các thay đổi cho bài thi",
   delete_exam: "Xóa bài thi",
@@ -853,21 +928,23 @@ export const vi = {
 
   // Manager Edit Exam Dialog
   edit_exam_dialog_title: "Xác nhận chỉnh sửa bài thi",
-  edit_exam_dialog_description: "Bạn sắp chỉnh sửa bài thi. Vui lòng đảm bảo tất cả thông tin đều chính xác trước khi tiếp tục.",
-  cancel: "Hủy",
+  edit_exam_dialog_description:
+    "Bạn sắp chỉnh sửa bài thi. Vui lòng đảm bảo tất cả thông tin đều chính xác trước khi tiếp tục.",
   dialog_save_changes: "Lưu thay đổi",
   saving: "Đang lưu...",
 
   // Manager Delete Exam Dialog
   delete_exam_dialog_title: "Xác nhận xóa bài thi",
-  delete_exam_dialog_description: "Vui lòng xác nhận bạn muốn xóa bài thi này. Tất cả dữ liệu liên quan sẽ bị xóa vĩnh viễn.",
+  delete_exam_dialog_description:
+    "Vui lòng xác nhận bạn muốn xóa bài thi này. Tất cả dữ liệu liên quan sẽ bị xóa vĩnh viễn.",
   delete_exam_dialog_warning: "Hành động này không thể hoàn tác",
   // cancel: "Cancel", // Duplicated
   dialog_delete_exam: "Xóa bài thi",
   deleting: "Đang xóa...",
 
   // Manager Questions Config Tab
-  question_config_toast_fix_errors: "Vui lòng sửa lỗi trong các câu hỏi trước khi thêm câu hỏi mới.",
+  question_config_toast_fix_errors:
+    "Vui lòng sửa lỗi trong các câu hỏi trước khi thêm câu hỏi mới.",
   question_config_error_prefix: "Câu hỏi",
   question_config_add_button: "Thêm câu hỏi",
   dismiss: "Bỏ qua",
@@ -890,17 +967,23 @@ export const vi = {
   info_section_language_description: "Ngôn ngữ của bài thi",
 
   // Manager Configuration Section
-  config_section_info: "Số lần làm bài và số lượng người tham gia không thể thay đổi sau khi bài thi đã được công bố.",
+  config_section_info:
+    "Số lần làm bài và số lượng người tham gia không thể thay đổi sau khi bài thi đã được công bố.",
   config_section_max_attempts_label: "Số lần làm tối đa",
   config_section_max_attempts_placeholder: "Số lần làm bài",
-  config_section_max_attempts_description: "Số lần làm bài tối đa được phép cho mỗi người tham gia",
+  config_section_max_attempts_description:
+    "Số lần làm bài tối đa được phép cho mỗi người tham gia",
   config_section_max_participants_label: "Số người tham gia",
   config_section_max_participants_placeholder: "Số lượng người tham gia",
-  config_section_max_participants_description: "Số người tham gia tối đa được phép",
+  config_section_max_participants_description:
+    "Số người tham gia tối đa được phép",
   config_section_exam_options: "Tùy chọn bài thi",
-  config_section_checkbox_see_result: "Cho phép người tham gia xem kết quả sau khi hoàn thành",
-  config_section_checkbox_see_others: "Cho phép người tham gia xem kết quả của người khác",
-  config_section_checkbox_is_public: "Công khai bài thi này, cho phép bất kỳ ai truy cập",
+  config_section_checkbox_see_result:
+    "Cho phép người tham gia xem kết quả sau khi hoàn thành",
+  config_section_checkbox_see_others:
+    "Cho phép người tham gia xem kết quả của người khác",
+  config_section_checkbox_is_public:
+    "Công khai bài thi này, cho phép bất kỳ ai truy cập",
 
   // Manager Access Section
   access_section_room_id_label: "Mã phòng",
@@ -909,9 +992,11 @@ export const vi = {
   access_section_room_id_description: "Mã phòng để ứng viên tham gia",
   access_section_password_label: "Mật khẩu",
   access_section_password_placeholder: "Nhập mật khẩu",
-  access_section_password_description: "Mật khẩu để ứng viên tham gia bài thi. (Không bắt buộc)",
+  access_section_password_description:
+    "Mật khẩu để ứng viên tham gia bài thi. (Không bắt buộc)",
   access_section_password_required: "Bắt buộc",
-  access_section_date_warning: "Bạn chỉ có thể gia hạn thời gian bài thi khi chỉnh sửa phần truy cập.",
+  access_section_date_warning:
+    "Bạn chỉ có thể gia hạn thời gian bài thi khi chỉnh sửa phần truy cập.",
   access_section_from_date: "Từ ngày",
   access_section_from_time: "Giờ",
   access_section_to_date: "Đến ngày",
@@ -936,7 +1021,8 @@ export const vi = {
 
   // Manager Confirm Scoring Dialog
   confirm_scoring_title: "Xác nhận chấm điểm",
-  confirm_scoring_description: "Bạn có chắc chắn muốn xác nhận việc chấm điểm cho lượt làm bài này? Hành động này không thể hoàn tác.",
+  confirm_scoring_description:
+    "Bạn có chắc chắn muốn xác nhận việc chấm điểm cho lượt làm bài này? Hành động này không thể hoàn tác.",
   // confirm_scoring: "Confirm Scoring", // Duplicated
   // scoring: "Scoring...", // Duplicated
   // cancel: "Cancel", // Duplicated
@@ -980,7 +1066,8 @@ export const vi = {
 
   // Current Attempt Card
   no_current_attempts: "Không có lượt làm bài hiện tại",
-  no_attempts_text_1: "Bạn chưa bắt đầu bất kỳ lượt làm nào cho bài kiểm tra này.",
+  no_attempts_text_1:
+    "Bạn chưa bắt đầu bất kỳ lượt làm nào cho bài kiểm tra này.",
   no_attempts_text_2: "Nhấn nút bên dưới để bắt đầu lượt làm mới.",
   time_left: "Thời gian còn lại:",
   times_up: "Hết giờ!",
@@ -1004,7 +1091,8 @@ export const vi = {
   details: "Chi tiết",
 
   // Participant Attempts
-  participant_attempts_empty: "Chưa có lượt làm bài nào cho người tham gia này.",
+  participant_attempts_empty:
+    "Chưa có lượt làm bài nào cho người tham gia này.",
 
   // Participants Tab
   participants_tab_empty: "Chưa có người tham gia nào cho bài thi này.",
@@ -1087,7 +1175,8 @@ export const vi = {
   long_answer_correct_answer: "Đáp án đúng",
   long_answer_correct_answer_placeholder: "Nhập đáp án đúng tại đây...",
   long_answer_extra_text: "Thông tin bổ sung (tuỳ chọn)",
-  long_answer_extra_text_placeholder: "Thông tin thêm, gợi ý, v.v. (không bắt buộc)",
+  long_answer_extra_text_placeholder:
+    "Thông tin thêm, gợi ý, v.v. (không bắt buộc)",
 
   // MCQ Persist Detail
   mcq_options_label: "Tùy chọn",
@@ -1206,7 +1295,8 @@ export const vi = {
   outlines_ai_generate: "Gợi ý dàn ý",
   outlines_ai_generating: "Đang tạo gợi ý...",
   outlines_ai_no_suggestions_title: "Chưa có gợi ý",
-  outlines_ai_no_suggestions_desc: "Nhấn \"Gợi ý dàn ý bằng AI\" để nhận các ý tưởng dựa trên mẫu của bạn",
+  outlines_ai_no_suggestions_desc:
+    'Nhấn "Gợi ý dàn ý bằng AI" để nhận các ý tưởng dựa trên mẫu của bạn',
   outlines_at_suggested: "Dàn ý được gợi ý",
   outlines_ai_add: "Thêm",
   outlines_ai_clear: "Xóa",
@@ -1237,23 +1327,28 @@ export const vi = {
 
   // Template Help Section
   template_help_title: "Mẫu là gì?",
-  template_help_intro: "Mẫu giúp bạn tăng tốc quá trình tạo bài kiểm tra bằng cách tự động điền thông tin.",
-  template_help_tip: "Tạo mẫu hiệu quả bằng cách cung cấp ngữ cảnh rõ ràng, mức độ khó và đa dạng loại câu hỏi.",
+  template_help_intro:
+    "Mẫu giúp bạn tăng tốc quá trình tạo bài kiểm tra bằng cách tự động điền thông tin.",
+  template_help_tip:
+    "Tạo mẫu hiệu quả bằng cách cung cấp ngữ cảnh rõ ràng, mức độ khó và đa dạng loại câu hỏi.",
   template_help_learn_more: "Tìm hiểu thêm",
 
   // My Pagination Section
-  pagination_total_items: "Tổng cộng {{total}} mục, hiển thị {{perPage}} mỗi trang.",
+  pagination_total_items:
+    "Tổng cộng {{total}} mục, hiển thị {{perPage}} mỗi trang.",
 
   // Exam Persist Validation Errors Dialog
   exam_validation_title: "Phát hiện lỗi xác thực",
-  exam_validation_description: "Vui lòng kiểm tra và khắc phục các vấn đề sau trước khi tiếp tục.",
+  exam_validation_description:
+    "Vui lòng kiểm tra và khắc phục các vấn đề sau trước khi tiếp tục.",
   exam_validation_config_header: "Lỗi liên quan đến cấu hình",
   exam_validation_questions_header: "Lỗi liên quan đến câu hỏi",
   exam_validation_edit_config: "Chỉnh sửa cấu hình",
   exam_validation_edit_questions: "Chỉnh sửa câu hỏi",
 
   // Questions Config Tab
-  question_tab_fix_errors_before_adding: "Vui lòng sửa các lỗi trong câu hỏi trước khi thêm câu mới.",
+  question_tab_fix_errors_before_adding:
+    "Vui lòng sửa các lỗi trong câu hỏi trước khi thêm câu mới.",
   add_question: "Thêm câu hỏi",
   dismiss_all_errors: "Bỏ qua tất cả lỗi",
 
@@ -1294,12 +1389,16 @@ export const vi = {
 
   // Manager Step 2 Help Text
   help_text_title: "Mẹo:",
-  help_text_tip_1: "Cân bằng độ khó: kết hợp câu hỏi Dễ, Trung bình và Khó tùy theo mục tiêu đánh giá",
-  help_text_tip_2: "Sử dụng tên chủ đề rõ ràng và mô tả đúng lĩnh vực cần kiểm tra",
-  help_text_tip_3: "Xem xét trình độ người dùng mục tiêu khi chọn số lượng câu hỏi cho mỗi mức độ khó",
+  help_text_tip_1:
+    "Cân bằng độ khó: kết hợp câu hỏi Dễ, Trung bình và Khó tùy theo mục tiêu đánh giá",
+  help_text_tip_2:
+    "Sử dụng tên chủ đề rõ ràng và mô tả đúng lĩnh vực cần kiểm tra",
+  help_text_tip_3:
+    "Xem xét trình độ người dùng mục tiêu khi chọn số lượng câu hỏi cho mỗi mức độ khó",
 
   // Manager Step 3 Text Context Tab
-  text_context_placeholder: "Cung cấp thông tin ngữ cảnh để AI có thể tạo ra các câu hỏi phù hợp...",
+  text_context_placeholder:
+    "Cung cấp thông tin ngữ cảnh để AI có thể tạo ra các câu hỏi phù hợp...",
 
   // Manager Step 3 Link Context Tab
   add_button: "Thêm",
@@ -1307,11 +1406,16 @@ export const vi = {
 
   // Manager Step 3 Help Text
   help_tips_title: "Mẹo:",
-  help_tip_conservative: "Chế độ sáng tạo bảo thủ tạo ra các câu hỏi dự đoán được, theo mẫu thông thường",
-  help_tip_balanced: "Chế độ sáng tạo cân bằng tạo ra sự kết hợp giữa các câu hỏi truyền thống và đổi mới vừa phải",
-  help_tip_creative: "Chế độ sáng tạo cao tạo ra các câu hỏi độc đáo, gợi suy nghĩ và thử thách các cách tiếp cận thông thường",
-  help_tip_context: "Thêm ngữ cảnh bằng văn bản, tệp hoặc liên kết để AI có đủ thông tin liên quan khi tạo câu hỏi",
-  help_tip_upload: "Tải lên các tài liệu như đặc tả, hướng dẫn hoặc đoạn mã để tạo câu hỏi theo ngữ cảnh cụ thể",
+  help_tip_conservative:
+    "Chế độ sáng tạo bảo thủ tạo ra các câu hỏi dự đoán được, theo mẫu thông thường",
+  help_tip_balanced:
+    "Chế độ sáng tạo cân bằng tạo ra sự kết hợp giữa các câu hỏi truyền thống và đổi mới vừa phải",
+  help_tip_creative:
+    "Chế độ sáng tạo cao tạo ra các câu hỏi độc đáo, gợi suy nghĩ và thử thách các cách tiếp cận thông thường",
+  help_tip_context:
+    "Thêm ngữ cảnh bằng văn bản, tệp hoặc liên kết để AI có đủ thông tin liên quan khi tạo câu hỏi",
+  help_tip_upload:
+    "Tải lên các tài liệu như đặc tả, hướng dẫn hoặc đoạn mã để tạo câu hỏi theo ngữ cảnh cụ thể",
 
   // Manager Step 3 File Context Tab
   file_upload_click_to_upload: "Nhấn để tải tệp lên",
@@ -1337,7 +1441,8 @@ export const vi = {
 
   // Manager Step 4
   step4_title_: "Xem lại cấu hình bài kiểm tra",
-  step4_description_: "Vui lòng kiểm tra tất cả các thiết lập trước khi tạo bài kiểm tra",
+  step4_description_:
+    "Vui lòng kiểm tra tất cả các thiết lập trước khi tạo bài kiểm tra",
   step4_basic_info: "Thông tin cơ bản",
   step4_exam_blueprint: "Bản thiết kế bài kiểm tra",
   step4_questions: "Câu hỏi",
@@ -1350,16 +1455,20 @@ export const vi = {
   step4_difficulty_distribution: "Phân bổ mức độ khó",
   step4_topics_breakdown: "Chi tiết chủ đề",
   step4_creativity_level: "Mức độ sáng tạo",
-  step4_creativity_level_conservative: "Cách tiếp cận bảo thủ trong việc tạo câu hỏi",
-  step4_creativity_level_balanced: "Cách tiếp cận cân bằng trong việc tạo câu hỏi",
-  step4_creativity_level_creative: "Cách tiếp cận sáng tạo trong việc tạo câu hỏi",
+  step4_creativity_level_conservative:
+    "Cách tiếp cận bảo thủ trong việc tạo câu hỏi",
+  step4_creativity_level_balanced:
+    "Cách tiếp cận cân bằng trong việc tạo câu hỏi",
+  step4_creativity_level_creative:
+    "Cách tiếp cận sáng tạo trong việc tạo câu hỏi",
   step4_additional_context: "Ngữ cảnh bổ sung",
   step4_uploaded_files: "Tệp đã tải lên",
   step4_reference_links: "Liên kết tham khảo",
 
   // Manager Step 4 Confirmation Section
   confirmation_ready_title: "Sẵn sàng tạo bài kiểm tra",
-  confirmation_ready_description: "Cấu hình bài kiểm tra của bạn đã hoàn tất! Nhấn nút bên dưới để tạo {{total}} câu hỏi trên {{topics}} chủ đề theo phân bổ độ khó đã chọn.",
+  confirmation_ready_description:
+    "Cấu hình bài kiểm tra của bạn đã hoàn tất! Nhấn nút bên dưới để tạo {{total}} câu hỏi trên {{topics}} chủ đề theo phân bổ độ khó đã chọn.",
   confirmation_generate_button: "Tạo bài kiểm tra",
 
   // Attempts Tab
@@ -1380,7 +1489,8 @@ export const vi = {
 
   // HelpBottomSection
   sidebar_help_title: "Cần trợ giúp?",
-  sidebar_help_description: "Tìm hiểu cách sử dụng mẫu bài kiểm tra hiệu quả và tối ưu hóa các buổi luyện tập của bạn.",
+  sidebar_help_description:
+    "Tìm hiểu cách sử dụng mẫu bài kiểm tra hiệu quả và tối ưu hóa các buổi luyện tập của bạn.",
   sidebar_help_link: "Xem hướng dẫn",
 
   // QuestionAggregate
@@ -1390,4 +1500,217 @@ export const vi = {
   question_aggregate_correct_rate: "Tỷ lệ đúng",
   question_aggregate_show_statistics: "Hiện thống kê",
   question_aggregate_hide_statistics: "Ẩn thống kê",
+
+  // Landing Guest
+  landing_hero_title_line1: "Rèn luyện",
+  landing_hero_title_line2: "kỹ năng phỏng vấn",
+  landing_hero_description:
+    "Luyện tập với các buổi phỏng vấn thử do AI hỗ trợ, nhận phản hồi tức thì và kết nối với các công ty công nghệ hàng đầu.",
+  landing_button_candidate: "Dành cho Ứng viên",
+  landing_button_business: "Dành cho Doanh nghiệp",
+  landing_steps_title: "Bắt đầu với 3 bước đơn giản",
+  landing_step_1_title: "Đăng ký",
+  landing_step_1_description:
+    "Tạo tài khoản SkillSharp miễn phí với tư cách ứng viên hoặc doanh nghiệp.",
+  landing_step_2_title: "Luyện tập / Tạo thử thách",
+  landing_step_2_description:
+    "Ứng viên luyện phỏng vấn thử. Doanh nghiệp tạo thử thách tuyển dụng chỉ trong vài phút.",
+  landing_step_3_title: "Nhận phản hồi & Kết nối",
+  landing_step_3_description:
+    "Nhận phản hồi từ AI hoặc khám phá ứng viên tài năng trong ngành công nghệ.",
+  landing_testimonials_title: "Mọi người nói gì",
+  landing_testimonial_1_name: "An Nguyễn",
+  landing_testimonial_1_role: "Kỹ sư phần mềm, Ứng viên",
+  landing_testimonial_1_text:
+    "SkillSharp giúp tôi tự tin hơn khi đi phỏng vấn! Các buổi phỏng vấn thử và phản hồi từ AI rất chính xác.",
+  landing_testimonial_2_name: "Minh Trần",
+  landing_testimonial_2_role: "Kỹ sư phần mềm, Ứng viên",
+  landing_testimonial_2_text:
+    "Chúng tôi đã tuyển được 3 lập trình viên xuất sắc nhờ các thử thách được tạo bởi AI của SkillSharp. Tiết kiệm rất nhiều thời gian.",
+  landing_testimonial_3_name: "Hiếu Lê",
+  landing_testimonial_3_role: "Lập trình viên Frontend, Ứng viên",
+  landing_testimonial_3_text:
+    "Phản hồi chi tiết và các tình huống thực tế giúp tôi đạt được công việc mơ ước. Rất đáng để thử!",
+  landing_features_title: "SkillSharp - Nền tảng luyện phỏng vấn toàn diện",
+  landing_feature_1_title: "Luyện tập và học hỏi để đạt được công việc mơ ước",
+  landing_feature_1_description:
+    "Tham gia cộng đồng SkillSharp để luyện tập phỏng vấn và làm bài kiểm tra kỹ thuật với kịch bản AI.",
+  landing_feature_2_title: "Tìm kiếm nhân tài công nghệ",
+  landing_feature_2_description:
+    "Nhà tuyển dụng có thể thu hút ứng viên bằng cách tạo thử thách phù hợp. QuickGenerate AI thiết lập nhanh chóng chỉ trong vài phút.",
+  landing_feature_3_title: "Chuẩn bị với phỏng vấn thử",
+  landing_feature_3_description:
+    "Luyện tập với các câu hỏi phỏng vấn thực tế. SkillSharp phân tích và đưa ra phản hồi chi tiết.",
+  landing_feature_link_text: "Tìm hiểu thêm →",
+  landing_faqs_title: "Câu hỏi thường gặp",
+  landing_faq_1_question: "SkillSharp có miễn phí không?",
+  landing_faq_1_answer:
+    "SkillSharp miễn phí cho ứng viên và cung cấp bản dùng thử cho doanh nghiệp. Các gói cao cấp sẽ có thêm nhiều tính năng nâng cao.",
+  landing_faq_2_question: "Phản hồi của AI hoạt động như thế nào?",
+  landing_faq_2_answer:
+    "Mô hình AI của chúng tôi phân tích câu trả lời của bạn và đưa ra phản hồi cụ thể về kỹ năng kỹ thuật, giao tiếp và nhiều khía cạnh khác.",
+  landing_faq_3_question: "Doanh nghiệp có thể tùy chỉnh thử thách không?",
+  landing_faq_3_answer:
+    "Có! Doanh nghiệp có thể chọn từ các mẫu có sẵn hoặc dùng QuickGenerate AI để tạo thử thách tùy chỉnh trong vài phút.",
+  landing_faq_4_question: "Dữ liệu của tôi có được bảo mật không?",
+  landing_faq_4_answer:
+    "Chắc chắn rồi. Chúng tôi sử dụng các giao thức bảo mật tiêu chuẩn để đảm bảo thông tin của bạn luôn an toàn.",
+  landing_cta_title: "Sẵn sàng nâng cao kỹ năng phỏng vấn?",
+  landing_cta_description:
+    "Bắt đầu miễn phí và trải nghiệm nền tảng luyện phỏng vấn và tìm kiếm ứng viên do AI hỗ trợ.",
+  landing_cta_button_candidate: "Dành cho Ứng viên",
+  landing_cta_button_business: "Dành cho Doanh nghiệp",
+
+  // AuthResetPasswordPage
+  auth_reset_title: "Đặt lại mật khẩu",
+  auth_reset_subtitle: "Nhập email của bạn để nhận liên kết đặt lại mật khẩu.",
+  auth_reset_email_label: "Email",
+  auth_reset_submit_button: "Gửi",
+  auth_reset_success_title: "Cảm ơn!",
+  auth_reset_success_message:
+    "Hãy kiểm tra email của bạn để lấy liên kết đặt lại mật khẩu.",
+  auth_reset_back_link: "Hoặc quay lại",
+  auth_reset_failed_alert:
+    "Gửi email đặt lại mật khẩu thất bại. Vui lòng thử lại.",
+
+  // Register Form
+  register_title: "SkillSharp",
+  register_subtitle: "Tạo tài khoản để bắt đầu.",
+  register_google: "Đăng ký với Google",
+  register_or: "hoặc",
+  register_username_label: "Tên đăng nhập",
+  register_fullname_label: "Họ và tên",
+  register_email_label: "Email",
+  register_password_label: "Mật khẩu",
+  register_username_required: "Tên đăng nhập là bắt buộc.",
+  register_username_min: "Tên đăng nhập phải có ít nhất 3 ký tự.",
+  register_fullname_required: "Họ và tên là bắt buộc.",
+  register_email_required: "Email là bắt buộc.",
+  register_email_invalid: "Email không hợp lệ.",
+  register_password_required: "Mật khẩu là bắt buộc.",
+  register_password_min: "Mật khẩu phải có ít nhất 6 ký tự.",
+  register_password_upper: "Mật khẩu phải chứa ít nhất một chữ in hoa.",
+  register_password_lower: "Mật khẩu phải chứa ít nhất một chữ thường.",
+  register_password_digit: "Mật khẩu phải chứa ít nhất một số.",
+  register_password_special: "Mật khẩu phải chứa ít nhất một ký tự đặc biệt.",
+  register_button: "Đăng ký",
+  register_loading: "Đang xử lý...",
+  register_agreement: "Bằng việc tạo tài khoản, bạn đồng ý với",
+  register_terms: "điều khoản dịch vụ và chính sách bảo mật",
+  register_check_email_title: "Kiểm tra email của bạn",
+  register_check_email_desc: "Nhập mã xác thực đã gửi đến",
+  register_enter_otp_label: "Nhập mã OTP",
+  register_verify_button: "Xác minh email",
+  register_no_code: "Không nhận được mã?",
+  register_resend_code: "Gửi lại mã",
+  register_resend_wait: "Gửi lại sau {{seconds}} giây",
+  register_toast_invalid_email: "Vui lòng nhập email.",
+  register_toast_verification_success: "Gửi email xác thực thành công!",
+  register_toast_verification_failed: "Không thể gửi email xác thực.",
+  register_toast_registration_failed: "Đăng ký thất bại.",
+  register_toast_google_failed: "Đã xảy ra lỗi khi xác thực Google.",
+  register_toast_google_retry:
+    "Vui lòng chờ trước khi yêu cầu gửi lại email xác thực.",
+
+  // New Password Page
+  new_password_title: "Đặt mật khẩu mới",
+  new_password_subtitle: "Mật khẩu mới của bạn phải mạnh và độc đáo.",
+  new_password_label: "Mật khẩu mới",
+  new_password_required: "Mật khẩu là bắt buộc.",
+  new_password_min: "Mật khẩu phải có ít nhất 6 ký tự.",
+  new_password_upper: "Mật khẩu phải chứa ít nhất một chữ in hoa.",
+  new_password_lower: "Mật khẩu phải chứa ít nhất một chữ thường.",
+  new_password_digit: "Mật khẩu phải chứa ít nhất một số.",
+  new_password_special: "Mật khẩu phải chứa ít nhất một ký tự đặc biệt.",
+  new_password_button: "Xác nhận",
+  new_password_success_title: "Thành công!",
+  new_password_success_text:
+    "Mật khẩu của bạn đã được đặt lại.\nBạn có thể đăng nhập bằng mật khẩu mới.",
+  new_password_go_login: "Đến trang đăng nhập",
+  new_password_go_back: "Hoặc quay lại",
+  new_password_failed: "Đặt lại mật khẩu thất bại.",
+
+  // Login Form
+  login_title: "SkillSharp",
+  login_subtitle:
+    "Chào mừng trở lại! Vui lòng đăng nhập vào tài khoản của bạn.",
+  login_google: "Đăng nhập bằng Google",
+  login_or: "hoặc",
+  login_email: "Email",
+  login_password: "Mật khẩu",
+  login_forgot: "Quên mật khẩu?",
+  login_button: "Đăng nhập",
+  login_no_account: "Chưa có tài khoản?",
+  login_signup: "Đăng ký",
+  login_password_required: "Mật khẩu là bắt buộc.",
+  login_password_min: "Mật khẩu phải có ít nhất 6 ký tự.",
+  login_password_upper: "Mật khẩu phải chứa ít nhất một chữ in hoa.",
+  login_password_lower: "Mật khẩu phải chứa ít nhất một chữ thường.",
+  login_password_digit: "Mật khẩu phải chứa ít nhất một số.",
+  login_password_special: "Mật khẩu phải chứa ít nhất một ký tự đặc biệt.",
+  login_google_error: "Đã xảy ra lỗi với xác thực Google.",
+  login_google_failed: "Xác thực Google thất bại",
+
+  // Carousel
+  carousel_quote_1:
+    "Khám phá tiềm năng của bạn cùng SkillSharp. Học hỏi, phát triển và vượt qua giới hạn mỗi ngày.",
+  carousel_quote_2:
+    "Một cộng đồng học tập năng động, kết nối với những người cùng chí hướng và cùng nhau phát triển.",
+  carousel_quote_3:
+    "Theo dõi tiến trình học tập, nhận phản hồi và đạt được mục tiêu với các công cụ thông minh.",
+
+  // Business Register
+  business_register_title: "Đăng ký doanh nghiệp",
+  business_register_subtitle: "Tạo tài khoản doanh nghiệp để bắt đầu.",
+  business_register_username: "Tên người dùng",
+  business_register_email: "Email",
+  business_register_password: "Mật khẩu",
+  business_register_fullname: "Họ và tên",
+  business_register_company: "Công ty",
+  business_register_country: "Quốc gia",
+  business_register_job_title: "Chức vụ",
+  business_register_sign_up: "Đăng ký",
+  business_register_sign_up_loading: "Đang xử lý...",
+  business_register_agree_terms: "Bằng cách tạo tài khoản, bạn đồng ý với",
+  business_register_terms_link: "điều khoản dịch vụ và chính sách bảo mật",
+  business_register_username_required: "Tên người dùng là bắt buộc.",
+  business_register_username_min_length:
+    "Tên người dùng phải có ít nhất 3 ký tự.",
+  business_register_email_required: "Email là bắt buộc.",
+  business_register_email_invalid: "Email không đúng định dạng.",
+  business_register_password_required: "Mật khẩu là bắt buộc.",
+  business_register_password_min_length: "Mật khẩu phải có ít nhất 6 ký tự.",
+  business_register_password_uppercase:
+    "Mật khẩu phải chứa ít nhất một chữ in hoa.",
+  business_register_password_lowercase:
+    "Mật khẩu phải chứa ít nhất một chữ thường.",
+  business_register_password_number: "Mật khẩu phải chứa ít nhất một số.",
+  business_register_password_special:
+    "Mật khẩu phải chứa ít nhất một ký tự đặc biệt.",
+  business_register_check_email_title: "Kiểm tra email của bạn",
+  business_register_check_email_subtitle: "Nhập mã xác minh đã gửi đến",
+  business_register_enter_otp: "Nhập mã OTP",
+  business_register_verify_email_button: "Xác minh email",
+  business_register_resend_question: "Không nhận được mã?",
+  business_register_resend_code: "Gửi lại mã",
+  business_register_resend_cooldown: "Gửi lại sau {{seconds}} giây",
+  business_register_verification_success: "Gửi email xác minh thành công!",
+  business_register_verification_failed: "Gửi email xác minh thất bại.",
+  business_register_verification_wait:
+    "Vui lòng chờ trước khi yêu cầu email xác minh mới.",
+  business_register_registration_failed: "Đăng ký thất bại.",
+  business_register_enter_email: "Vui lòng nhập email.",
+
+  // Auth Choose Role Page
+  auth_choose_role_title: "Bạn muốn sử dụng SkillSharp như thế nào?",
+  auth_choose_role_business_title:
+    "Tôi ở đây để tuyển dụng nhân tài cho công ty của mình",
+  auth_choose_role_business_subtitle:
+    "Đánh giá kỹ năng công nghệ với các bài kiểm tra linh hoạt",
+  auth_choose_role_candidate_title:
+    "Tôi ở đây để luyện tập và chuẩn bị cho phỏng vấn",
+  auth_choose_role_candidate_subtitle:
+    "Giải quyết vấn đề và học thêm kỹ năng mới",
+  auth_choose_role_create_account: "Tạo tài khoản",
+  auth_choose_role_select_warning: "Vui lòng chọn vai trò để tiếp tục",
 } as const;

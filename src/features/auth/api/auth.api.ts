@@ -61,11 +61,11 @@ const authApi = createApi({
 				},
 			}),
 		}),
-		verificationEmail: builder.mutation<void, { email: string }>({
-			query: ({ email }) => ({
+		verificationEmail: builder.mutation<void, { email: string, username: string }>({
+			query: ({ email, username }) => ({
 				url: `/verify/email`,
 				method: "POST",
-				body: { email },
+				body: { email, username },
 			}),
 		}),
 		reqResetPassword: builder.mutation<void, { email: string }>({

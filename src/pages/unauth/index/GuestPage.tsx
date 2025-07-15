@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import paths from "../../../router/paths";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useLanguage } from "../../../LanguageProvider";
 
 const heroIllustration =
   "https://imageio.forbes.com/specials-images/imageserve/663e3a5c927c44fd5629ad0f/product-visuals/0x0.png?format=png&crop=1586,891,x105,y0,safe&width=960";
@@ -86,6 +87,8 @@ const staggerContainer = {
 };
 
 const GuestPage = () => {
+  const { t } = useLanguage();
+
   const navigate = useNavigate();
   const hash = window.location.hash;
 
@@ -106,7 +109,7 @@ const GuestPage = () => {
       {/* Hero Section */}
       <section className="mx-24 relative flex items-center justify-center h-screen px-4 md:px-0">
         <motion.div
-          className="absolute inset-0 pointer-events-none z-0"
+          className="absolute inset-0 z-0"
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
@@ -136,14 +139,13 @@ const GuestPage = () => {
             variants={fadeUp}
           >
             <h1 className="text-5xl md:text-6xl font-black mb-6 leading-tight">
-              <span className="block text-gradient-animated font-black">
-                <p>Sharpen your</p>
-                interview skills
+              <span className="block text-gradient-animated font-black pb-2">
+                <p>{t("landing_hero_title_line1")}</p>
+                {t("landing_hero_title_line2")}
               </span>
             </h1>
             <p className="text-lg md:text-2xl font-semibold mb-8 max-w-xl">
-              Practice with AI-powered mock interviews, get instant feedback,
-              and connect with top tech companies.
+              {t("landing_hero_description")}
             </p>
             <div className="flex gap-6 justify-center md:justify-start">
               <motion.button
@@ -152,7 +154,7 @@ const GuestPage = () => {
                 onClick={() => navigate(paths.auth.REGISTER)}
                 className="px-8 py-4 bg-[var(--primary-color)] text-white rounded-full font-bold text-lg shadow-lg hover:shadow-[0_0_24px_rgba(57,160,173,0.25)] transition"
               >
-                For Candidates
+                {t("landing_button_candidate")}
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.07 }}
@@ -160,7 +162,7 @@ const GuestPage = () => {
                 onClick={() => navigate(paths.auth.BUSINESS_REGISTER)}
                 className="px-8 py-4 bg-white text-primary-tone-800 border-2 border-primary rounded-full font-bold text-lg shadow-lg hover:shadow-[0_0_24px_rgba(57,160,173,0.12)] transition"
               >
-                For Businesses
+                {t("landing_button_business")}
               </motion.button>
             </div>
           </motion.div>
@@ -177,7 +179,7 @@ const GuestPage = () => {
       </section>
 
       {/* Steps Section */}
-      <section className="py-24 h-[100vh] bg-primary-toned-50 ">
+      <section id="tests" className="py-24 h-[100vh] bg-primary-toned-50 ">
         <motion.div
           className="max-w-5xl mx-auto"
           initial="hidden"
@@ -186,7 +188,7 @@ const GuestPage = () => {
           variants={staggerContainer}
         >
           <h2 className="text-center text-4xl font-bold text-primary-tone-800 mb-12">
-            Get Started in 3 Easy Steps
+            {t("landing_steps_title")}
           </h2>
           <div className="flex flex-col md:flex-row justify-center gap-12">
             {steps.map((step, i) => (
@@ -197,12 +199,16 @@ const GuestPage = () => {
               >
                 <img
                   src={step.img}
-                  alt={step.title}
+                  alt={t(`landing_step_${i + 1}_title`)}
                   className="w-40 h-40 mb-4 object-contain"
                   loading="lazy"
                 />
-                <h4 className="text-xl font-bold mb-2">{step.title}</h4>
-                <p className="text-md text-gray-600">{step.description}</p>
+                <h4 className="text-xl font-bold mb-2">
+                  {t(`landing_step_${i + 1}_title`)}
+                </h4>
+                <p className="text-md text-gray-600">
+                  {t(`landing_step_${i + 1}_description`)}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -219,10 +225,10 @@ const GuestPage = () => {
           variants={staggerContainer}
         >
           <h2 className="text-center text-4xl font-bold text-primary-toned-800 mb-12">
-            What People Are Saying
+            {t("landing_testimonials_title")}
           </h2>
           <div className="flex flex-col md:flex-row gap-8 justify-center">
-            {testimonials.map((t, i) => (
+            {testimonials.map((tData, i) => (
               <motion.div
                 key={i}
                 className="flex-1 bg-white rounded-2xl p-8 shadow-xl hover:scale-105 transition-all duration-150"
@@ -230,16 +236,22 @@ const GuestPage = () => {
               >
                 <div className="flex items-center gap-4 mb-4">
                   <img
-                    src={t.avatar}
-                    alt={t.name}
+                    src={tData.avatar}
+                    alt={t(`landing_testimonial_${i + 1}_name`)}
                     className="w-14 h-14 rounded-full object-cover border-2 border-primary"
                   />
                   <div>
-                    <div className="font-bold text-lg">{t.name}</div>
-                    <div className="text-sm text-gray-500">{t.role}</div>
+                    <div className="font-bold text-lg">
+                      {t(`landing_testimonial_${i + 1}_name`)}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      {t(`landing_testimonial_${i + 1}_role`)}
+                    </div>
                   </div>
                 </div>
-                <p className="text-lg text-gray-700 italic">“{t.text}”</p>
+                <p className="text-lg text-gray-700 italic">
+                  “{t(`landing_testimonial_${i + 1}_text`)}”
+                </p>
               </motion.div>
             ))}
           </div>
@@ -248,8 +260,8 @@ const GuestPage = () => {
 
       {/* Features Section (existing content, improved animation) */}
       <section
+        id="interviews"
         className="py-24 bg-gradient-to-r from-[#bfeaff]/20 to-[#ffe0ec]/30"
-        id="features"
       >
         <motion.div
           className="space-y-14 px-6 md:px-20 max-w-5xl mx-auto"
@@ -259,7 +271,7 @@ const GuestPage = () => {
           variants={staggerContainer}
         >
           <h2 className="text-center text-4xl font-bold text-primary-tone-800 mb-12">
-            SkillSharp - The all-in-one interview prep platform
+            {t("landing_features_title")}
           </h2>
           {[
             {
@@ -290,18 +302,22 @@ const GuestPage = () => {
               variants={fadeUp}
             >
               <div className="flex-1">
-                <h3 className="text-2xl font-bold mb-2">{feature.title}</h3>
-                <p className="mb-3 text-gray-700">{feature.description}</p>
+                <h3 className="text-2xl font-bold mb-2">
+                  {t(`landing_feature_${index + 1}_title`)}
+                </h3>
+                <p className="mb-3 text-gray-700">
+                  {t(`landing_feature_${index + 1}_description`)}
+                </p>
                 <a
                   href="#"
                   className="text-primary-tone-800 font-medium hover:underline"
                 >
-                  {feature.linkText}
+                  {t("landing_feature_link_text")}
                 </a>
               </div>
               <img
                 src={feature.image}
-                alt={feature.title}
+                alt={t(`landing_feature_${index + 1}_title`)}
                 className="w-full md:w-80 rounded-lg object-cover drop-shadow-xl"
               />
             </motion.div>
@@ -319,10 +335,10 @@ const GuestPage = () => {
           variants={staggerContainer}
         >
           <h2 className="text-center text-4xl font-bold text-primary-tone-800 mb-12">
-            Frequently Asked Questions
+            {t("landing_faqs_title")}
           </h2>
           <div className="space-y-6">
-            {faqs.map((faq, i) => (
+            {faqs.map((_faq, i) => (
               <motion.div
                 key={i}
                 className="bg-white rounded-xl shadow-md p-6 transition cursor-pointer"
@@ -332,13 +348,17 @@ const GuestPage = () => {
                 animate="visible"
               >
                 <div className="flex justify-between items-center">
-                  <h4 className="font-semibold text-lg">{faq.question}</h4>
+                  <h4 className="font-semibold text-lg">
+                    {t(`landing_faq_${i + 1}_question`)}
+                  </h4>
                   <span className="text-primary-tone-800 font-bold text-2xl">
                     {openFAQ === i ? "-" : "+"}
                   </span>
                 </div>
                 {openFAQ === i && (
-                  <p className="mt-4 text-gray-700">{faq.answer}</p>
+                  <p className="mt-4 text-gray-700">
+                    {t(`landing_faq_${i + 1}_answer`)}
+                  </p>
                 )}
               </motion.div>
             ))}
@@ -357,11 +377,10 @@ const GuestPage = () => {
         >
           <div>
             <h3 className="text-2xl font-bold mb-4 text-primary-tone-800">
-              Ready to sharpen your interview skills?
+              {t("landing_cta_title")}
             </h3>
             <p className="text-lg text-gray-700 mb-4">
-              Get started for free and experience AI-powered interview prep and
-              candidate sourcing.
+              {t("landing_cta_description")}
             </p>
           </div>
           <div className="flex gap-6">
@@ -371,7 +390,7 @@ const GuestPage = () => {
               onClick={() => navigate(paths.auth.REGISTER)}
               className="px-8 py-4 bg-[var(--primary-color)] text-white rounded-full font-bold text-lg shadow-lg hover:shadow-[0_0_24px_rgba(57,160,173,0.25)] transition"
             >
-              For Candidates
+              {t("landing_cta_button_candidate")}
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.07 }}
@@ -379,7 +398,7 @@ const GuestPage = () => {
               onClick={() => navigate(paths.auth.BUSINESS_REGISTER)}
               className="px-8 py-4 bg-white text-primary-tone-800 border-2 border-primary rounded-full font-bold text-lg shadow-lg hover:shadow-[0_0_24px_rgba(57,160,173,0.12)] transition"
             >
-              For Businesses
+              {t("landing_cta_button_business")}
             </motion.button>
           </div>
         </motion.div>

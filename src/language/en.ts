@@ -107,7 +107,22 @@ export const en = {
 	interview_tilte: "Technical Interviews",
 	interview_description:
 		"Practice mock interviews with realistic scenarios to boost your confidence and impress potential employers.",
-
+	submitting_answers: "Submitting your answers...",
+	please_wait_submit:
+		"Please wait while we submit your responses. This may take a moment.",
+	do_not_close_page: "Do not close or refresh this page!",
+	submission_being_processed: "Your submission is being processed.",
+	leaving_page_warning: "Leaving the page may result in data loss.",
+	end_interview_early: "End Interview Early?",
+	about_to_end_interview: "You are about to",
+	end_the_interview: "end the interview",
+	before_completing_questions: "before completing all questions.",
+	unanswered_questions_note:
+		"Please note that any unanswered questions will be automatically marked as skipped, and your current progress will be submitted as-is.",
+	current_progress_submitted: "",
+	cancel: "Cancel",
+	submitting: "Submitting...",
+	end_interview: "End Interview",
 	// Settings
 	tag_role_business_manager: "Business Manager",
 	tag_role_candidate: "Candidate",
@@ -277,7 +292,8 @@ export const en = {
 
 	// Candidate Dashboard
 	candidate_home_welcome: "Welcome back",
-	candidate_home_subtitle: "Continue learning with our recommendations based on your career goals and recent activity.",
+	candidate_home_subtitle:
+		"Continue learning with our recommendations based on your career goals and recent activity.",
 	candidate_home_suggested_tests_title: "Suggested Tests",
 	candidate_home_suggested_tests_see_more: "See more",
 	candidate_home_suggested_tests_empty: "No tests available.",
@@ -310,9 +326,11 @@ export const en = {
 
 	// Candidate Tests Templates
 	prompt_templates_title: "Prompt Templates Management",
-	prompt_templates_description: "Create and manage test prompt templates for generating practice tests",
+	prompt_templates_description:
+		"Create and manage test prompt templates for generating practice tests",
 	test_template_title: "Test Templates",
-	test_template_description: "Create, edit, and manage your test templates for generating practice tests.",
+	test_template_description:
+		"Create, edit, and manage your test templates for generating practice tests.",
 
 	// Templates Sidebar
 	templates_sidebar_back_to_list: "Back to List",
@@ -325,13 +343,15 @@ export const en = {
 
 	// Delete Template Modal
 	delete_template_title: "Confirm Deletion",
-	delete_template_description: "Are you sure you want to delete this template? This action cannot be undone.",
+	delete_template_description:
+		"Are you sure you want to delete this template? This action cannot be undone.",
 	delete_template_cancel: "Cancel",
 	delete_template_confirm: "Delete",
 
 	// Candidate Tests Join Page
 	candidate_tests_join_title: "Exam Tests",
-	candidate_tests_join_description: "Join hosted exams from managers and compete with others",
+	candidate_tests_join_description:
+		"Join hosted exams from managers and compete with others",
 	candidate_tests_join_header: "Join Hosted Exams",
 	candidate_tests_join_subtitle: "Join tests by roomId or view ongoing tests",
 
@@ -348,7 +368,8 @@ export const en = {
 	// Public Exams Section
 	public_exams_section_title: "Publicly Available Exams",
 	public_exams_no_test: "No publicly available tests found.",
-	public_exams_suggestion: "You can join a test using a room ID or create your own.",
+	public_exams_suggestion:
+		"You can join a test using a room ID or create your own.",
 
 	// Password Input
 	password_input_label: "This test is password protected",
@@ -357,7 +378,8 @@ export const en = {
 	// Ongoing Exams Section
 	ongoing_exams_section_title: "Ongoing Exams",
 	ongoing_exams_no_test: "No ongoing tests found.",
-	ongoing_exams_suggestion: "You can join a test using a room ID or create your own.",
+	ongoing_exams_suggestion:
+		"You can join a test using a room ID or create your own.",
 
 	// Join Test Section
 	join_test_input_placeholder: "Enter test Room ID",
@@ -366,7 +388,8 @@ export const en = {
 	// History Exams Section
 	history_exams_section_title: "Exam History",
 	history_exams_no_test: "No completed tests found.",
-	history_exams_suggestion: "You can join a test using a room ID or create your own.",
+	history_exams_suggestion:
+		"You can join a test using a room ID or create your own.",
 
 	// Exam Info Dialog Bottom
 	exam_info_cancel_button: "Cancel",
@@ -406,15 +429,18 @@ export const en = {
 
 	// Candidate Tests Page
 	candidate_tests_header_title: "Skillsharp Tests",
-	candidate_tests_header_desc: "Join hosted tests or generate your own practice tests from templates",
+	candidate_tests_header_desc:
+		"Join hosted tests or generate your own practice tests from templates",
 	candidate_tests_heading_title: "Your Generated Tests",
-	candidate_tests_heading_desc: "View and manage the practice tests you've generated.",
+	candidate_tests_heading_desc:
+		"View and manage the practice tests you've generated.",
 	candidate_tests_empty_msg: "You haven't generated any tests yet.",
 	candidate_tests_create_button: "Create Your First Test",
 
 	// Sidebar AI block
 	sidebar_ai_title: "AI-Powered Test Generation",
-	sidebar_ai_description: "Transform your learning with intelligent test creation. Our advanced AI analyzes your needs and generates personalized practice tests that adapt to your skill level and learning goals.",
+	sidebar_ai_description:
+		"Transform your learning with intelligent test creation. Our advanced AI analyzes your needs and generates personalized practice tests that adapt to your skill level and learning goals.",
 	sidebar_generate_button: "Generate Practice",
 
 	// Quick actions
@@ -436,20 +462,25 @@ export const en = {
 
 	// Practice Generation Steps
 	gen_page_header_title: "Practice Test Generation",
-	gen_page_header_description: "Create personalized practice tests with our step-by-step guide.",
+	gen_page_header_description:
+		"Create personalized practice tests with our step-by-step guide.",
 	gen_step_invalid: "Invalid step",
 	gen_step_prev: "Back",
 	gen_step_next: "Next",
 	gen_step_generate: "Generate Practice",
 	gen_step1_title: "Step 1: General Information",
-	gen_step1_description: "Provide general information about the test such as title, description, time, and language.",
+	gen_step1_description:
+		"Provide general information about the test such as title, description, time, and language.",
 	gen_step2_title: "Step 2: Prompt Configuration",
-	gen_step2_description: "Configure how the AI should generate your test, including difficulty, number of questions, and tags.",
+	gen_step2_description:
+		"Configure how the AI should generate your test, including difficulty, number of questions, and tags.",
 	gen_step3_title: "Step 3: Add Outlines & Generate",
-	gen_step3_description: "Add specific outlines to guide the AI in generating questions. The more detailed, the better.",
+	gen_step3_description:
+		"Add specific outlines to guide the AI in generating questions. The more detailed, the better.",
 
 	// Use Generate Practice
-	use_generate_practice_error_no_questions: "No questions generated. Please try again with different parameters.",
+	use_generate_practice_error_no_questions:
+		"No questions generated. Please try again with different parameters.",
 	use_generate_practice_error_unknown: "An unknown error occurred.",
 
 	// Test Generation Sidebar
@@ -457,11 +488,14 @@ export const en = {
 	test_generation_sidebar_back_title: "Back to Tests",
 	test_generation_sidebar_back_description: "Return to tests dashboard",
 	test_generation_sidebar_choose_template_title: "Choose Template",
-	test_generation_sidebar_choose_template_description: "Select from available templates",
+	test_generation_sidebar_choose_template_description:
+		"Select from available templates",
 	test_generation_sidebar_save_template_title: "Save as Template",
-	test_generation_sidebar_save_template_description: "Save your current configuration",
+	test_generation_sidebar_save_template_description:
+		"Save your current configuration",
 	test_generation_sidebar_tips_title: "Test Generation Tips",
-	test_generation_sidebar_tips_description: "Add specific topics and keywords to get better results. Include difficulty levels for more targeted questions.",
+	test_generation_sidebar_tips_description:
+		"Add specific topics and keywords to get better results. Include difficulty levels for more targeted questions.",
 	test_generation_sidebar_tips_link: "View Generation Guide",
 
 	// Template Selection Modal
@@ -482,7 +516,8 @@ export const en = {
 
 	// Save Template Dialog
 	save_template_title: "Save Template",
-	save_template_description: "Save your current test configuration as a template for future use.",
+	save_template_description:
+		"Save your current test configuration as a template for future use.",
 	template_created_success: "Template created successfully",
 	template_created_error: "Failed to create template",
 
@@ -497,13 +532,15 @@ export const en = {
 
 	// PracticeGenStep1
 	gen_step1_choose_template_title: "Choose a Template (Optional)",
-	gen_step1_choose_template_description: "Automatically fill in test information and prompt settings.",
+	gen_step1_choose_template_description:
+		"Automatically fill in test information and prompt settings.",
 	gen_step1_browse_templates_button: "Browse Templates",
 	gen_step1_selected_template: "Selected Template",
 	gen_step1_field_title: "Test Title",
 	gen_step1_field_title_placeholder: "E.g., React Fundamentals Practice Test",
 	gen_step1_field_description: "Description",
-	gen_step1_field_description_placeholder: "Describe what this test covers and its purpose",
+	gen_step1_field_description_placeholder:
+		"Describe what this test covers and its purpose",
 	gen_step1_field_language: "Language",
 	gen_step1_field_language_placeholder: "Select a language",
 	gen_step1_field_minutes: "Minutes to Answer",
@@ -515,11 +552,13 @@ export const en = {
 	gen_step2_field_number_of_questions: "Number of Questions",
 	gen_step2_field_difficulty: "Difficulty Level",
 	gen_step2_tip_label: "Tip:",
-	gen_step2_tip_text: "Add specific tags related to the technologies or concepts you want to be tested on. Tags help the AI generate more relevant questions.",
+	gen_step2_tip_text:
+		"Add specific tags related to the technologies or concepts you want to be tested on. Tags help the AI generate more relevant questions.",
 
 	// PracticeGenStep3
 	gen_step3_save_template_title: "Save Your Template",
-	gen_step3_save_template_description: "You can save this information as a template for future use!",
+	gen_step3_save_template_description:
+		"You can save this information as a template for future use!",
 	gen_step3_save_template_button: "Save Template",
 
 	// Candidate Practice Page
@@ -529,7 +568,8 @@ export const en = {
 	candidate_test_details_heading: "Details",
 
 	// Questions Tab
-	questions_tab_view_warning: "Viewing questions may reveal test content. Are you sure you want to continue?",
+	questions_tab_view_warning:
+		"Viewing questions may reveal test content. Are you sure you want to continue?",
 	questions_tab_view_button: "View Questions",
 	questions_tab_no_questions: "No questions available.",
 	questions_tab_total_questions: "Total {{count}} Questions",
@@ -540,8 +580,10 @@ export const en = {
 
 	// Feedback Tab
 	feedback_title: "Test Feedback",
-	feedback_note_1: "Your feedback on this AI-generated test is important to us. Please share your rating, comments, and let us know if you faced any issues.",
-	feedback_note_2: "Your input will help us enhance the quality of our AI-generated tests and create a better experience for everyone.",
+	feedback_note_1:
+		"Your feedback on this AI-generated test is important to us. Please share your rating, comments, and let us know if you faced any issues.",
+	feedback_note_2:
+		"Your input will help us enhance the quality of our AI-generated tests and create a better experience for everyone.",
 	feedback_rating_label: "Test Rating",
 	feedback_clear_rating: "Clear",
 	feedback_your_rating: "You rated",
@@ -589,7 +631,8 @@ export const en = {
 
 	// Times Up Dialog
 	times_up_title: "Time's Up!",
-	times_up_message: "Your time for this test has expired. Please acknowledge to proceed.",
+	times_up_message:
+		"Your time for this test has expired. Please acknowledge to proceed.",
 	back_to_test: "Back to Test",
 
 	// Candidate Test Do Sidebar
@@ -598,7 +641,6 @@ export const en = {
 	submit_confirm_title: "Do you want to submit your answers?",
 	submit_yes: "Yes, submit",
 	submit_no: "No, cancel",
-	submitting: "Submitting...",
 
 	// Manager Test New Page
 	manager_test_new_title: "Create Exam",
@@ -632,11 +674,14 @@ export const en = {
 
 	// Manager Publish Warning Dialog
 	publish_warning_title: "Publishing Confirmation",
-	publish_warning_description: "You are about to publish the exam. Please ensure all details are correct before proceeding.",
-	publish_warning_restriction_title: "After publishing, you will not be able to:",
+	publish_warning_description:
+		"You are about to publish the exam. Please ensure all details are correct before proceeding.",
+	publish_warning_restriction_title:
+		"After publishing, you will not be able to:",
 	publish_warning_restriction_question_change: "Make changes to questions",
 	publish_warning_restriction_room_id_change: "Modify exam's room ID",
-	publish_warning_restriction_config_limited: "Some configurations are limited to changes",
+	publish_warning_restriction_config_limited:
+		"Some configurations are limited to changes",
 	publish_warning_button_cancel: "Cancel",
 	publish_warning_button_confirm: "Publish",
 
@@ -648,37 +693,50 @@ export const en = {
 
 	// Manager Publish Footer
 	publish_footer_title: "Ready to Publish",
-	publish_footer_description: "Review all the information above before publishing your exam. Once published, students will be able to access and take this exam according to the configured schedule and settings.",
+	publish_footer_description:
+		"Review all the information above before publishing your exam. Once published, students will be able to access and take this exam according to the configured schedule and settings.",
 	publish_footer_button: "Publish Exam",
 	publish_footer_button_loading: "Publishing Exam...",
 
 	// Manager Sidebar
 	sidebar_exam_title: "AI-Powered Test Generation",
-	sidebar_exam_description: "Use our AI assistant to generate questions and tests quickly. Save time by letting AI assist you with the question creation process.",
+	sidebar_exam_description:
+		"Use our AI assistant to generate questions and tests quickly. Save time by letting AI assist you with the question creation process.",
 	sidebar_exam_button_title: "Assistant",
 	sidebar_exam_button_description: "Generate questions with AI",
 	sidebar_publish_title: "Publish",
 	sidebar_publish_description: "Review and publish your exam",
 	sidebar_generate_title: "Questions Generation",
-	sidebar_generate_description: "Generate questions for your exam using our AI assistant. Specify the topics, difficulty levels, and number of questions you need.",
+	sidebar_generate_description:
+		"Generate questions for your exam using our AI assistant. Specify the topics, difficulty levels, and number of questions you need.",
 	sidebar_generate_tips_title: "Generation Tips",
-	sidebar_generate_step1: "Basic information about the exam is required to generate questions. Please provide the exam title, description, and other necessary details.",
-	sidebar_generate_step2: "Topics and difficulty levels are essential for generating relevant questions. Specify the topics you want to cover in your exam, along with their respective difficulty levels.",
-	sidebar_generate_step2_note: "You can add multiple topics and specify the number of questions for each. Make sure to balance the difficulty levels across the topics for a well-rounded exam.",
-	sidebar_generate_step3: "Specify the model's creativity level and provide any specific instructions or context that might help in generating better questions.",
-	sidebar_generate_step3_note: "The more context you provide to the model, the better it can generate questions that are aligned with your exam's requirements.",
-	sidebar_generate_step4: "Review the generated questions and make any necessary adjustments. You can edit, delete, or add new questions as needed. Once you are satisfied with the questions, you can proceed to publish your exam.",
-	sidebar_generate_step4_note: "Make sure to review the questions thoroughly to ensure they meet your requirements.",
+	sidebar_generate_step1:
+		"Basic information about the exam is required to generate questions. Please provide the exam title, description, and other necessary details.",
+	sidebar_generate_step2:
+		"Topics and difficulty levels are essential for generating relevant questions. Specify the topics you want to cover in your exam, along with their respective difficulty levels.",
+	sidebar_generate_step2_note:
+		"You can add multiple topics and specify the number of questions for each. Make sure to balance the difficulty levels across the topics for a well-rounded exam.",
+	sidebar_generate_step3:
+		"Specify the model's creativity level and provide any specific instructions or context that might help in generating better questions.",
+	sidebar_generate_step3_note:
+		"The more context you provide to the model, the better it can generate questions that are aligned with your exam's requirements.",
+	sidebar_generate_step4:
+		"Review the generated questions and make any necessary adjustments. You can edit, delete, or add new questions as needed. Once you are satisfied with the questions, you can proceed to publish your exam.",
+	sidebar_generate_step4_note:
+		"Make sure to review the questions thoroughly to ensure they meet your requirements.",
 	sidebar_back_to_exam_title: "Back to Exam",
 	sidebar_back_to_exam_description: "Return to the exam configuration",
 	sidebar_publish_review_title: "Review Your Exam",
-	sidebar_publish_review_description: "Before publishing your exam, please review the details and ensure everything is correct. You can make any final adjustments to the exam configuration or questions.",
+	sidebar_publish_review_description:
+		"Before publishing your exam, please review the details and ensure everything is correct. You can make any final adjustments to the exam configuration or questions.",
 
 	// Manager Common Types
 	step1_title: "Step 1: Basic Information",
-	step1_description: "Provide the basic information for your test, including title, description, language and seniourity.",
+	step1_description:
+		"Provide the basic information for your test, including title, description, language and seniourity.",
 	step2_title: "Step 2: Exam's Blueprint",
-	step2_description: "Define the topics and their difficulty levels for your test.",
+	step2_description:
+		"Define the topics and their difficulty levels for your test.",
 	step3_title: "Step 3: Refinement",
 	step3_description: "Adjust the model's creativity and provide more contexts.",
 	step4_title: "Step 4: Review and Submit",
@@ -690,47 +748,59 @@ export const en = {
 	builder_step1_title_required: "Title is required",
 	builder_step1_description_required: "Description is required",
 	builder_step2_topics_required: "At least one topic is required",
-	builder_step2_total_questions_exceed: "Total questions must be less than or equal to 30",
+	builder_step2_total_questions_exceed:
+		"Total questions must be less than or equal to 30",
 	builder_step3_creativity_invalid: "Creativity level must be between 1 and 10",
 
 	// Manager base schema
 	topic_name_required: "Topic name is required",
-	topic_difficulty_required: "At least one difficulty level must be greater than 0",
+	topic_difficulty_required:
+		"At least one difficulty level must be greater than 0",
 
 	// Manager Builder Wizard Main Tab
 	builder_step_invalid_step: "Invalid Step",
 	builder_generating_questions: "Generating questions...",
 
 	// Manager Step Done
-	step_done_generated_questions: "Successfully generated {{count}} questions for your exam",
+	step_done_generated_questions:
+		"Successfully generated {{count}} questions for your exam",
 	step_done_total_points: "Total Points",
-	step_done_edit_message: "Feel free to edit this set of questions before adding them to your exam",
+	step_done_edit_message:
+		"Feel free to edit this set of questions before adding them to your exam",
 	step_done_review_actions: "Review Actions",
-	step_done_review_description: "Decide how you want to use these generated questions inside the exam",
+	step_done_review_description:
+		"Decide how you want to use these generated questions inside the exam",
 	step_done_regenerate: "Re-Generate",
-	step_done_regenerate_description: "You can regenerate the questions if you want to try different variations.",
+	step_done_regenerate_description:
+		"You can regenerate the questions if you want to try different variations.",
 	step_done_dispose: "Dispose",
-	step_done_dispose_description: "Discard the generated questions and use new configuration.",
+	step_done_dispose_description:
+		"Discard the generated questions and use new configuration.",
 
 	// Manager Dispose Dialog
 	dispose_dialog_title: "Dispose Questions",
-	dispose_dialog_description: "Are you sure you want to dispose of the generated questions? This action cannot be undone. You will lose all the questions you generated in this session.",
+	dispose_dialog_description:
+		"Are you sure you want to dispose of the generated questions? This action cannot be undone. You will lose all the questions you generated in this session.",
 	dispose_dialog_cancel: "Cancel",
 	dispose_dialog_confirm: "Confirm",
 
 	// Manager Actions Dialog
 	actions_dialog_title: "Choose Your Next Action",
-	actions_dialog_description: "You've successfully generated new questions. Select how you'd like to proceed with your test.",
+	actions_dialog_description:
+		"You've successfully generated new questions. Select how you'd like to proceed with your test.",
 	actions_dialog_replace_title: "Replace All Questions",
-	actions_dialog_replace_description: "This will completely replace your current test questions with the newly generated ones. Your previous questions will be permanently removed.",
+	actions_dialog_replace_description:
+		"This will completely replace your current test questions with the newly generated ones. Your previous questions will be permanently removed.",
 	actions_dialog_append_title: "Add to Existing Questions",
-	actions_dialog_append_description: "This will add the new questions to your existing test, keeping all your current questions and expanding your question pool.",
+	actions_dialog_append_description:
+		"This will add the new questions to your existing test, keeping all your current questions and expanding your question pool.",
 	actions_dialog_cancel: "Cancel",
 	actions_dialog_confirm: "Confirm",
 
 	// Manager Main Page
 	manager_tests_title: "Manage Exams",
-	manager_tests_description: "Create, view, and manage exams for your organization.",
+	manager_tests_description:
+		"Create, view, and manage exams for your organization.",
 	manager_tests_new_exam: "New Exam",
 	manager_tests_search_placeholder: "Search...",
 	manager_tests_sort_name: "Name",
@@ -774,9 +844,11 @@ export const en = {
 
 	// Manager Exam Information Tab
 	// exam_info_title: "Information", // Kinda duplicated
-	exam_info_description: "Here you can find the details about the exam, including its name, description, and other configurations.",
+	exam_info_description:
+		"Here you can find the details about the exam, including its name, description, and other configurations.",
 	exam_stats_title: "Statistics",
-	exam_stats_description: "Comprehensive overview of exam content, participation, and performance metrics.",
+	exam_stats_description:
+		"Comprehensive overview of exam content, participation, and performance metrics.",
 
 	// Manager Questions Overview Card
 	questions_overview_title: "Content Overview",
@@ -846,7 +918,8 @@ export const en = {
 	test_delete_success: "Test deleted successfully",
 
 	// Manager Edit Sidebar
-	exam_sidebar_attempts_warning: "You cannot modify exam's questions after attempts have been made",
+	exam_sidebar_attempts_warning:
+		"You cannot modify exam's questions after attempts have been made",
 	save_changes: "Save",
 	save_changes_description: "Save changes to the exam",
 	delete_exam: "Delete Exam",
@@ -854,21 +927,23 @@ export const en = {
 
 	// Manager Edit Exam Dialog
 	edit_exam_dialog_title: "Edit Exam Confirmation",
-	edit_exam_dialog_description: "You are about to edit the exam. Please ensure all details are correct before proceeding.",
-	cancel: "Cancel",
+	edit_exam_dialog_description:
+		"You are about to edit the exam. Please ensure all details are correct before proceeding.",
 	dialog_save_changes: "Save Changes",
 	saving: "Saving...",
 
 	// Manager Delete Exam Dialog
 	delete_exam_dialog_title: "Delete Exam Confirmation",
-	delete_exam_dialog_description: "Please confirm that you want to delete this exam. All associated data will be permanently removed.",
+	delete_exam_dialog_description:
+		"Please confirm that you want to delete this exam. All associated data will be permanently removed.",
 	delete_exam_dialog_warning: "This action cannot be undone",
 	// cancel: "Cancel", // Duplicated
 	dialog_delete_exam: "Delete Exam",
 	deleting: "Deleting...",
 
 	// Manager Questions Config Tab
-	question_config_toast_fix_errors: "Please fix the errors in the questions before adding a new one.",
+	question_config_toast_fix_errors:
+		"Please fix the errors in the questions before adding a new one.",
 	question_config_error_prefix: "Question",
 	question_config_add_button: "Add Question",
 	dismiss: "Dismiss",
@@ -891,17 +966,22 @@ export const en = {
 	info_section_language_description: "Language of the exam",
 
 	// Manager Configuration Section
-	config_section_info: "Maximum attempts and number of participants cannot be changed after the exam has been published.",
+	config_section_info:
+		"Maximum attempts and number of participants cannot be changed after the exam has been published.",
 	config_section_max_attempts_label: "Maximum Attempts",
 	config_section_max_attempts_placeholder: "Number of attempts",
-	config_section_max_attempts_description: "Maximum number of attempts allowed for each participant",
+	config_section_max_attempts_description:
+		"Maximum number of attempts allowed for each participant",
 	config_section_max_participants_label: "Number of Participants",
 	config_section_max_participants_placeholder: "Number of participants",
 	config_section_max_participants_description: "Maximum participants allowed",
 	config_section_exam_options: "Exam's options",
-	config_section_checkbox_see_result: "Allow participants to see their results after completion",
-	config_section_checkbox_see_others: "Allow participants to see other participants' results",
-	config_section_checkbox_is_public: "Make this exam public, allowing anyone to access it",
+	config_section_checkbox_see_result:
+		"Allow participants to see their results after completion",
+	config_section_checkbox_see_others:
+		"Allow participants to see other participants' results",
+	config_section_checkbox_is_public:
+		"Make this exam public, allowing anyone to access it",
 
 	// Manager Access Section
 	access_section_room_id_label: "Room ID",
@@ -910,9 +990,11 @@ export const en = {
 	access_section_room_id_description: "Room ID for candidate to join",
 	access_section_password_label: "Password",
 	access_section_password_placeholder: "Enter password",
-	access_section_password_description: "Password for candidates to join the test. (Optional)",
+	access_section_password_description:
+		"Password for candidates to join the test. (Optional)",
 	access_section_password_required: "Required",
-	access_section_date_warning: "You can only extend the exam time range when modifying the exam accessibility.",
+	access_section_date_warning:
+		"You can only extend the exam time range when modifying the exam accessibility.",
 	access_section_from_date: "From Date",
 	access_section_from_time: "Time",
 	access_section_to_date: "To Date",
@@ -920,7 +1002,7 @@ export const en = {
 
 	// Manager Delete Test Modal
 	delete_exam_title: "Delete Exam",
-	delete_exam_confirm_message: 'Are you sure you want to delete the exam',
+	delete_exam_confirm_message: "Are you sure you want to delete the exam",
 	// cancel: "Cancel", // Duplicated
 	delete: "Delete",
 
@@ -937,7 +1019,8 @@ export const en = {
 
 	// Manager Confirm Scoring Dialog
 	confirm_scoring_title: "Confirm Scoring",
-	confirm_scoring_description: "Are you sure you want to confirm the scoring for this attempt? This action cannot be undone.",
+	confirm_scoring_description:
+		"Are you sure you want to confirm the scoring for this attempt? This action cannot be undone.",
 	// confirm_scoring: "Confirm Scoring", // Duplicated
 	// scoring: "Scoring...", // Duplicated
 	// cancel: "Cancel", // Duplicated
@@ -1048,7 +1131,8 @@ export const en = {
 	manager_sidebar_attempts_title: "Attempts",
 	manager_sidebar_attempts_desc: "View all attempts for this exam.",
 	manager_sidebar_participants_title: "Participants",
-	manager_sidebar_participants_desc: "Candidates who participated in this exam.",
+	manager_sidebar_participants_desc:
+		"Candidates who participated in this exam.",
 	manager_sidebar_back_title: "Back to Exams",
 	manager_sidebar_back_desc: "Return to the exams list.",
 
@@ -1088,7 +1172,8 @@ export const en = {
 	long_answer_correct_answer: "Correct Answer",
 	long_answer_correct_answer_placeholder: "Provide the correct answer here...",
 	long_answer_extra_text: "Extra Text (optional)",
-	long_answer_extra_text_placeholder: "Extra information, hints, etc. (optional)",
+	long_answer_extra_text_placeholder:
+		"Extra information, hints, etc. (optional)",
 
 	// MCQ Persist Detail
 	mcq_options_label: "Options",
@@ -1207,7 +1292,8 @@ export const en = {
 	outlines_ai_generate: "Suggest Outlines",
 	outlines_ai_generating: "Generating suggestions...",
 	outlines_ai_no_suggestions_title: "No suggestions yet",
-	outlines_ai_no_suggestions_desc: "Click \"Generate AI Suggestions\" to get outline ideas based on your template",
+	outlines_ai_no_suggestions_desc:
+		'Click "Generate AI Suggestions" to get outline ideas based on your template',
 	outlines_at_suggested: "Suggested Outlines",
 	outlines_ai_add: "Add",
 	outlines_ai_clear: "Clear",
@@ -1238,23 +1324,28 @@ export const en = {
 
 	// Template Help Section
 	template_help_title: "What is Templates?",
-	template_help_intro: "Templates help you to streamline your test creation process by quickly filling in the fields.",
-	template_help_tip: "Create effective templates by including clear context, difficulty levels, and varied question types.",
+	template_help_intro:
+		"Templates help you to streamline your test creation process by quickly filling in the fields.",
+	template_help_tip:
+		"Create effective templates by including clear context, difficulty levels, and varied question types.",
 	template_help_learn_more: "Learn More",
 
 	// My Pagination Section
-	pagination_total_items: "Total {{total}} items, showing {{perPage}} per page.",
+	pagination_total_items:
+		"Total {{total}} items, showing {{perPage}} per page.",
 
 	// Exam Persist Validation Errors Dialog
 	exam_validation_title: "Validation Issues Found",
-	exam_validation_description: "Please review and fix the following issues before proceeding.",
+	exam_validation_description:
+		"Please review and fix the following issues before proceeding.",
 	exam_validation_config_header: "Configuration Related Issues",
 	exam_validation_questions_header: "Questions Related Issues",
 	exam_validation_edit_config: "Edit Configuration",
 	exam_validation_edit_questions: "Edit Questions",
 
 	// Questions Config Tab
-	question_tab_fix_errors_before_adding: "Please fix the errors in the questions before adding a new one.",
+	question_tab_fix_errors_before_adding:
+		"Please fix the errors in the questions before adding a new one.",
 	add_question: "Add Question",
 	dismiss_all_errors: "Dismiss all errors",
 
@@ -1295,12 +1386,16 @@ export const en = {
 
 	// Manager Step 2 Help Text
 	help_text_title: "Tips:",
-	help_text_tip_1: "Balance your difficulty distribution: mix Easy, Medium, and Hard questions based on your assessment goals",
-	help_text_tip_2: "Use clear, descriptive topic names that reflect the specific subject area being tested",
-	help_text_tip_3: "Consider your target audience's skill level when setting question counts for each difficulty",
+	help_text_tip_1:
+		"Balance your difficulty distribution: mix Easy, Medium, and Hard questions based on your assessment goals",
+	help_text_tip_2:
+		"Use clear, descriptive topic names that reflect the specific subject area being tested",
+	help_text_tip_3:
+		"Consider your target audience's skill level when setting question counts for each difficulty",
 
 	// Manager Step 3 Text Context Tab
-	text_context_placeholder: "Provide context information that the AI can use to generate relevant questions...",
+	text_context_placeholder:
+		"Provide context information that the AI can use to generate relevant questions...",
 
 	// Manager Step 3 Link Context Tab
 	add_button: "Add",
@@ -1308,11 +1403,16 @@ export const en = {
 
 	// Manager Step 3 Help Text
 	help_tips_title: "Tips:",
-	help_tip_conservative: "Conservative creativity generates predictable, standard questions following common patterns",
-	help_tip_balanced: "Balanced creativity offers a mix of conventional and moderately innovative question styles",
-	help_tip_creative: "Creative mode produces more unique, thought-provoking questions that challenge traditional approaches",
-	help_tip_context: "Add context through text, files, or links to provide AI with relevant information for question generation",
-	help_tip_upload: "Upload documents like specifications, manuals, or code samples to create context-specific questions",
+	help_tip_conservative:
+		"Conservative creativity generates predictable, standard questions following common patterns",
+	help_tip_balanced:
+		"Balanced creativity offers a mix of conventional and moderately innovative question styles",
+	help_tip_creative:
+		"Creative mode produces more unique, thought-provoking questions that challenge traditional approaches",
+	help_tip_context:
+		"Add context through text, files, or links to provide AI with relevant information for question generation",
+	help_tip_upload:
+		"Upload documents like specifications, manuals, or code samples to create context-specific questions",
 
 	// Manager Step 3 File Context Tab
 	file_upload_click_to_upload: "Click to upload files",
@@ -1351,7 +1451,8 @@ export const en = {
 	step4_difficulty_distribution: "Difficulty Distribution",
 	step4_topics_breakdown: "Topics Breakdown",
 	step4_creativity_level: "Creativity Level",
-	step4_creativity_level_conservative: "Conservative approach to question generation",
+	step4_creativity_level_conservative:
+		"Conservative approach to question generation",
 	step4_creativity_level_balanced: "Balanced approach to question generation",
 	step4_creativity_level_creative: "Creative approach to question generation",
 	step4_additional_context: "Additional Context",
@@ -1360,7 +1461,8 @@ export const en = {
 
 	// Manager Step 4 Confirmation Section
 	confirmation_ready_title: "Ready to Generate",
-	confirmation_ready_description: "Your exam configuration looks great! Click the button below to generate {{total}} questions across {{topics}} topics with the specified difficulty distribution.",
+	confirmation_ready_description:
+		"Your exam configuration looks great! Click the button below to generate {{total}} questions across {{topics}} topics with the specified difficulty distribution.",
 	confirmation_generate_button: "Generate Exam",
 
 	// Attempts Tab
@@ -1381,7 +1483,8 @@ export const en = {
 
 	// HelpBottomSection
 	sidebar_help_title: "Need Help?",
-	sidebar_help_description: "Learn how to effectively use test templates and get the most out of your practice sessions.",
+	sidebar_help_description:
+		"Learn how to effectively use test templates and get the most out of your practice sessions.",
 	sidebar_help_link: "View Guide",
 
 	// QuestionAggregate
@@ -1391,6 +1494,223 @@ export const en = {
 	question_aggregate_correct_rate: "Correct Rate",
 	question_aggregate_show_statistics: "Show Statistics",
 	question_aggregate_hide_statistics: "Hide Statistics",
+
+	// Landing Guest
+	landing_hero_title_line1: "Sharpen your",
+	landing_hero_title_line2: "interview skills",
+	landing_hero_description:
+		"Practice with AI-powered mock interviews, get instant feedback, and connect with top tech companies.",
+	landing_button_candidate: "For Candidates",
+	landing_button_business: "For Businesses",
+	landing_steps_title: "Get Started in 3 Easy Steps",
+	landing_step_1_title: "Sign Up",
+	landing_step_1_description:
+		"Create your free SkillSharp account as a candidate or business.",
+	landing_step_2_title: "Practice / Create Challenges",
+	landing_step_2_description:
+		"Candidates practice mock interviews. Businesses create hiring challenges in minutes.",
+	landing_step_3_title: "Get Feedback & Connect",
+	landing_step_3_description:
+		"Receive AI-powered feedback or discover top tech talent to hire.",
+	landing_testimonials_title: "What People Are Saying",
+	landing_testimonial_1_name: "An Nguyen",
+	landing_testimonial_1_role: "Software Engineer, Candidate",
+	landing_testimonial_1_text:
+		"SkillSharp gave me the confidence I needed for my interviews! The mock sessions and AI feedback were spot on.",
+	landing_testimonial_2_name: "Minh Tran",
+	landing_testimonial_2_role: "Software Engineer, Candidate",
+	landing_testimonial_2_text:
+		"We hired 3 amazing developers thanks to SkillSharp's AI-generated challenges. It saved our team days of work.",
+	landing_testimonial_3_name: "Hieu Le",
+	landing_testimonial_3_role: "Frontend Developer, Candidate",
+	landing_testimonial_3_text:
+		"The step-by-step feedback and realistic scenarios helped me land my dream job. Highly recommended!",
+	landing_features_title: "SkillSharp - The all-in-one interview prep platform",
+	landing_feature_1_title: "Practice and learn to get your dream job",
+	landing_feature_1_description:
+		"Join the SkillSharp community to practice interviews and technical tests with AI-powered scenarios.",
+	landing_feature_2_title: "Search for tech talent",
+	landing_feature_2_description:
+		"Business managers can attract candidates by creating relevant challenges. QuickGenerate AI sets up in minutes.",
+	landing_feature_3_title: "Prepare with Mock Interview",
+	landing_feature_3_description:
+		"Practice with real interview questions. SkillSharp analyzes your performance and gives detailed feedback.",
+	landing_feature_link_text: "Learn more →",
+	landing_faqs_title: "Frequently Asked Questions",
+	landing_faq_1_question: "Is SkillSharp free to use?",
+	landing_faq_1_answer:
+		"SkillSharp offers free access for candidates and trial features for businesses. Premium plans unlock more advanced features.",
+	landing_faq_2_question: "How does AI feedback work?",
+	landing_faq_2_answer:
+		"Our AI models analyze your interview answers and provide actionable feedback on technical skills, communication, and more.",
+	landing_faq_3_question: "Can businesses customize challenges?",
+	landing_faq_3_answer:
+		"Yes! Businesses can choose from templates or use QuickGenerate AI to create custom challenges in minutes.",
+	landing_faq_4_question: "Is my data secure?",
+	landing_faq_4_answer:
+		"Absolutely. We use industry-standard security protocols to keep your information safe.",
+	landing_cta_title: "Ready to sharpen your interview skills?",
+	landing_cta_description:
+		"Get started for free and experience AI-powered interview prep and candidate sourcing.",
+	landing_cta_button_candidate: "For Candidates",
+	landing_cta_button_business: "For Businesses",
+
+	// AuthResetPasswordPage
+	auth_reset_title: "Reset your password",
+	auth_reset_subtitle: "Enter your email to receive a password reset link.",
+	auth_reset_email_label: "Email",
+	auth_reset_submit_button: "Submit",
+	auth_reset_success_title: "Thanks!",
+	auth_reset_success_message: "Check your email for a reset link.",
+	auth_reset_back_link: "Or go back",
+	auth_reset_failed_alert: "Failed to send reset password email. Try again.",
+
+	// Register Form
+	register_title: "SkillSharp",
+	register_subtitle: "Create your account to get started.",
+	register_google: "Sign up with Google",
+	register_or: "or",
+	register_username_label: "Username",
+	register_fullname_label: "Fullname",
+	register_email_label: "Email",
+	register_password_label: "Password",
+	register_username_required: "Username is required.",
+	register_username_min: "Username must be at least 3 characters long.",
+	register_fullname_required: "Fullname is required.",
+	register_email_required: "Email is required.",
+	register_email_invalid: "Invalid email format.",
+	register_password_required: "Password is required.",
+	register_password_min: "Password must be at least 6 characters long.",
+	register_password_upper:
+		"Password must contain at least one uppercase letter.",
+	register_password_lower:
+		"Password must contain at least one lowercase letter.",
+	register_password_digit: "Password must contain at least one number.",
+	register_password_special:
+		"Password must contain at least one special character.",
+	register_button: "Sign Up",
+	register_loading: "Loading...",
+	register_agreement: "By creating an account, you agree to our",
+	register_terms: "terms of service and privacy policy",
+	register_check_email_title: "Check your email",
+	register_check_email_desc: "Enter the verification code sent to",
+	register_enter_otp_label: "Enter OTP",
+	register_verify_button: "Verify email",
+	register_no_code: "Didn't get a code?",
+	register_resend_code: "Resend code",
+	register_resend_wait: "Resend in {{seconds}}s",
+	register_toast_invalid_email: "Please enter your email.",
+	register_toast_verification_success: "Verification email sent successfully!",
+	register_toast_verification_failed: "Failed to send verification email.",
+	register_toast_registration_failed: "Registration failed.",
+	register_toast_google_failed:
+		"Something went wrong with Google authentication.",
+	register_toast_google_retry:
+		"Please wait before requesting a new verification email.",
+
+	// New Password Page
+	new_password_title: "Set a new password",
+	new_password_subtitle: "Your new password must be strong and unique.",
+	new_password_label: "New Password",
+	new_password_required: "Password is required.",
+	new_password_min: "Password must be at least 6 characters long.",
+	new_password_upper: "Password must contain at least one uppercase letter.",
+	new_password_lower: "Password must contain at least one lowercase letter.",
+	new_password_digit: "Password must contain at least one number.",
+	new_password_special: "Password must contain at least one special character.",
+	new_password_button: "Submit",
+	new_password_success_title: "Success!",
+	new_password_success_text:
+		"Your password has been reset.\nYou can now log in with your new password.",
+	new_password_go_login: "Go to Login",
+	new_password_go_back: "Or go back",
+	new_password_failed: "Failed to reset password.",
+
+	// Login Form
+	login_title: "SkillSharp",
+	login_subtitle: "Welcome back! Please login to your account.",
+	login_google: "Sign in with Google",
+	login_or: "or",
+	login_email: "Email",
+	login_password: "Password",
+	login_forgot: "Forgot your password?",
+	login_button: "Login",
+	login_no_account: "Don't have an account?",
+	login_signup: "Sign up",
+	login_password_required: "Password is required.",
+	login_password_min: "Password must be at least 6 characters long.",
+	login_password_upper: "Password must contain at least one uppercase letter.",
+	login_password_lower: "Password must contain at least one lowercase letter.",
+	login_password_digit: "Password must contain at least one number.",
+	login_password_special:
+		"Password must contain at least one special character.",
+	login_google_error: "Something went wrong with Google authentication.",
+	login_google_failed: "Google authentication failed",
+
+	// Carousel
+	carousel_quote_1:
+		"Unlock your potential with SkillSharp. Learn, grow, and break your own limits every day.",
+	carousel_quote_2:
+		"A dynamic learning community, connect with like-minded people and grow together.",
+	carousel_quote_3:
+		"Track your progress, get feedback, and achieve your learning goals with smart tools.",
+
+	// Business Register
+	business_register_title: "Business Registration",
+	business_register_subtitle: "Create your business account to get started.",
+	business_register_username: "Username",
+	business_register_email: "Email",
+	business_register_password: "Password",
+	business_register_fullname: "Full name",
+	business_register_company: "Company",
+	business_register_country: "Country",
+	business_register_job_title: "Job title",
+	business_register_sign_up: "Sign Up",
+	business_register_sign_up_loading: "Loading...",
+	business_register_agree_terms: "By creating an account, you agree to our",
+	business_register_terms_link: "terms of service and privacy policy",
+	business_register_username_required: "Username is required.",
+	business_register_username_min_length:
+		"Username must be at least 3 characters long.",
+	business_register_email_required: "Email is required.",
+	business_register_email_invalid: "Invalid email format.",
+	business_register_password_required: "Password is required.",
+	business_register_password_min_length:
+		"Password must be at least 6 characters long.",
+	business_register_password_uppercase:
+		"Password must contain at least one uppercase letter.",
+	business_register_password_lowercase:
+		"Password must contain at least one lowercase letter.",
+	business_register_password_number:
+		"Password must contain at least one number.",
+	business_register_password_special:
+		"Password must contain at least one special character.",
+	business_register_check_email_title: "Check your email",
+	business_register_check_email_subtitle: "Enter the verification code sent to",
+	business_register_enter_otp: "Enter OTP",
+	business_register_verify_email_button: "Verify email",
+	business_register_resend_question: "Didn't get a code?",
+	business_register_resend_code: "Resend code",
+	business_register_resend_cooldown: "Resend in {{seconds}}s",
+	business_register_verification_success:
+		"Verification email sent successfully!",
+	business_register_verification_failed: "Failed to send verification email.",
+	business_register_verification_wait:
+		"Please wait before requesting a new verification email.",
+	business_register_registration_failed: "Registration failed.",
+	business_register_enter_email: "Please enter your email.",
+
+	// Auth Choose Role Page
+	auth_choose_role_title: "How do you want to use SkillSharp?",
+	auth_choose_role_business_title:
+		"I’m here to hire potential talent for my companies",
+	auth_choose_role_business_subtitle:
+		"Evaluate tech talent with scalable assessments",
+	auth_choose_role_candidate_title:
+		"I’m here to train and prepare for my interviews",
+	auth_choose_role_candidate_subtitle: "Handle problems and learn new skills",
+	auth_choose_role_create_account: "Create account",
+	auth_choose_role_select_warning: "Please select a role to continue",
 } as const;
 
 export type TranslationKey = keyof typeof en;

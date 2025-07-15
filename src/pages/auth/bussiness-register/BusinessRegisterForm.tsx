@@ -17,8 +17,11 @@ import paths from "../../../router/paths";
 import { Alert } from "@mui/material";
 import { toast } from "react-toastify";
 import { isFetchBaseQueryError } from "../../../helpers/fetchBaseQuery.error";
+import { useLanguage } from "../../../LanguageProvider";
 
 const BusinessRegisterForm = () => {
+  const { t } = useLanguage();
+
   const navigate = useNavigate();
   const [register, { isSuccess }] = useRegisterMutation();
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -60,42 +63,39 @@ const BusinessRegisterForm = () => {
     let isValid = true;
 
     if (!username.trim()) {
-      newErrors.username = "Username is required.";
+      newErrors.username = t("business_register_username_required");
       isValid = false;
     } else if (username.length < 3) {
-      newErrors.username = "Username must be at least 3 characters long.";
+      newErrors.username = t("business_register_username_min_length");
       isValid = false;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.trim()) {
-      newErrors.email = "Email is required.";
+      newErrors.email = t("business_register_email_required");
       isValid = false;
     } else if (!emailRegex.test(email)) {
-      newErrors.email = "Invalid email format.";
+      newErrors.email = t("business_register_email_invalid");
       isValid = false;
     }
 
     if (!password.trim()) {
-      newErrors.password = "Password is required.";
+      newErrors.password = t("business_register_password_required");
       isValid = false;
     } else if (password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters long.";
+      newErrors.password = t("business_register_password_min_length");
       isValid = false;
     } else if (!/[A-Z]/.test(password)) {
-      newErrors.password =
-        "Password must contain at least one uppercase letter.";
+      newErrors.password = t("business_register_password_uppercase");
       isValid = false;
     } else if (!/[a-z]/.test(password)) {
-      newErrors.password =
-        "Password must contain at least one lowercase letter.";
+      newErrors.password = t("business_register_password_lowercase");
       isValid = false;
     } else if (!/[0-9]/.test(password)) {
-      newErrors.password = "Password must contain at least one number.";
+      newErrors.password = t("business_register_password_number");
       isValid = false;
     } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-      newErrors.password =
-        "Password must contain at least one special character.";
+      newErrors.password = t("business_register_password_special");
       isValid = false;
     }
 
@@ -131,9 +131,9 @@ const BusinessRegisterForm = () => {
         err.data !== null &&
         'message' in err.data
       ) {
-        toast.error((err.data as any).message ?? 'Registration failed.');
+        toast.error((err.data as any).message ?? t("business_register_registration_failed"));
       } else {
-        toast.error('Registration failed.');
+        toast.error(t("business_register_registration_failed"));
       }
 
       return;
@@ -143,7 +143,7 @@ const BusinessRegisterForm = () => {
   const handleVerifyEmail = async () => {
     if (isSending) return;
     if (cooldown > 0) {
-      toast.error("Please wait before requesting a new verification email.");
+      toast.error(t("business_register_verification_wait"));
       return;
     }
     if (!validateForm()) return;
@@ -158,17 +158,17 @@ const BusinessRegisterForm = () => {
           }}
           severity="success"
         >
-          Please enter your email.
+          {t("business_register_enter_email")}
         </Alert>
       );
     }
     try {
       setIsSending(true);
-      await verificationEmail({ email }).unwrap();
+      await verificationEmail({ email, username }).unwrap();
       // alert("Verification email sent successfully!");
       setIsOpenModal(true);
       setCooldown(30);
-      toast.success("Verification email sent successfully!");
+      toast.success(t("business_register_verification_success"));
       return (
         <Alert
           sx={{
@@ -178,12 +178,12 @@ const BusinessRegisterForm = () => {
           }}
           severity="success"
         >
-          Verification email sent successfully!
+          {t("business_register_verification_success")}
         </Alert>
       );
     } catch (error: any) {
       console.error("Verification failed:", error);
-      toast.error(error?.data?.message || "Failed to send verification email.");
+      toast.error(error?.data?.message || t("business_register_verification_failed"));
     } finally {
       setIsSending(false);
     }
@@ -193,10 +193,10 @@ const BusinessRegisterForm = () => {
     <div className="w-full">
       <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg border border-gray-100 px-10 py-8">
         <div className="text-center text-3xl font-extrabold mb-2 text-primary-toned-600    tracking-tight">
-          Business Registration
+          {t("business_register_title")}
         </div>
         <div className="text-center text-base text-gray-500 mb-8  ">
-          Create your business account to get started.
+          {t("business_register_subtitle")}
         </div>
         <form
           className="grid grid-cols-1 md:grid-cols-2 gap-5"
@@ -223,7 +223,7 @@ const BusinessRegisterForm = () => {
                 ${username ? "top-2 text-xs text-primary-toned-600" : ""}
               `}
             >
-              Username
+              {t("business_register_username")}
             </label>
             {errors.username && (
               <span className="text-red-400 text-sm">{errors.username}</span>
@@ -247,7 +247,7 @@ const BusinessRegisterForm = () => {
                 ${email ? "top-2 text-xs text-primary-toned-600" : ""}
               `}
             >
-              Email
+              {t("business_register_email")}
             </label>
             {errors.email && (
               <span className="text-red-400 text-sm">{errors.email}</span>
@@ -271,7 +271,7 @@ const BusinessRegisterForm = () => {
                 ${password ? "top-2 text-xs text-primary-toned-600" : ""}
               `}
             >
-              Password
+              {t("business_register_password")}
             </label>
             {errors.password && (
               <span className="text-red-400 text-sm">{errors.password}</span>
@@ -295,7 +295,7 @@ const BusinessRegisterForm = () => {
                 ${fullname ? "top-2 text-xs text-primary-toned-600" : ""}
               `}
             >
-              Full name
+              {t("business_register_fullname")}
             </label>
           </div>
           {/* Company */}
@@ -316,7 +316,7 @@ const BusinessRegisterForm = () => {
                 ${company ? "top-2 text-xs text-primary-toned-600" : ""}
               `}
             >
-              Company
+              {t("business_register_company")}
             </label>
           </div>
           {/* Country */}
@@ -337,7 +337,7 @@ const BusinessRegisterForm = () => {
                 ${country ? "top-2 text-xs text-primary-toned-600" : ""}
               `}
             >
-              Country
+              {t("business_register_country")}
             </label>
           </div>
           {/* Job title */}
@@ -358,7 +358,7 @@ const BusinessRegisterForm = () => {
                 ${job ? "top-2 text-xs text-primary-toned-600" : ""}
               `}
             >
-              Job title
+              {t("business_register_job_title")}
             </label>
           </div>
           {/* Avatar */}
@@ -389,15 +389,15 @@ const BusinessRegisterForm = () => {
               className="w-full bg-[var(--primary-color)] text-lg font-bold text-white py-3 rounded-full transition-all duration-150 hover:bg-[#2E808A] flex items-center justify-center gap-2"
               disabled={isSending}
             >
-              {isSending ? "Loading..." : "Sign Up"} <FontAwesomeIcon icon={faArrowRight} />
+              {isSending ? t("business_register_sign_up_loading") : t("business_register_sign_up")} <FontAwesomeIcon icon={faArrowRight} />
             </button>
             <div className="w-full text-center text-xs text-gray-500 mt-2">
-              By creating an account, you agree to our{" "}
+              {t("business_register_agree_terms")}{" "}
               <a
                 className="text-primary-toned-600 font-semibold hover:underline"
                 href="#reset"
               >
-                terms of service and privacy policy
+                {t("business_register_terms_link")}
               </a>
               .
             </div>
@@ -470,10 +470,10 @@ const BusinessRegisterForm = () => {
               </div>
             </div>
             <div className="text-2xl font-extrabold text-primary-toned-600 mb-1   ">
-              Check your email
+              {t("business_register_check_email_title")}
             </div>
             <div className="text-gray-500  ">
-              Enter the verification code sent to
+              {t("business_register_check_email_subtitle")}
             </div>
             <div className="pb-2 font-semibold text-primary-toned-600 text-base">
               {email}
@@ -506,22 +506,22 @@ const BusinessRegisterForm = () => {
                   ${otp ? "top-2 text-xs text-primary-toned-600" : ""}
                 `}
               >
-                Enter OTP
+                {t("business_register_enter_otp")}
               </label>
             </div>
             <button
               onClick={handleFormSubmit}
               className="mt-4 w-full px-4 py-2 bg-[var(--primary-color)] text-white rounded-full font-bold text-lg transition-all duration-150 hover:bg-[#2E808A] flex items-center justify-center gap-2"
             >
-              Verify email
+              {t("business_register_verify_email_button")}
             </button>
             <div className="pt-1 text-xs text-gray-500  ">
-              <span>Didn't get a code?</span>{" "}
+              <span>{t("business_register_resend_question")}</span>{" "}
               <span
                 onClick={cooldown > 0 ? undefined : handleVerifyEmail}
                 className="underline text-primary-toned-600 cursor-pointer font-semibold hover:text-primary-toned-800"
               >
-                {cooldown > 0 ? `Resend in ${cooldown}s` : "Resend code"}
+                {cooldown > 0 ? t("business_register_resend_cooldown").replace("{{seconds}}", cooldown.toString()) : t("business_register_resend_code")}
               </span>
             </div>
           </div>

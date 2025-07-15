@@ -148,19 +148,19 @@ const Settings = () => {
     <>
       <div className="w-full flex flex-col gap-6 pl-4 pr-4 pt-8 pb-8 lg:pl-12 lg:pr-12">
         <div className="w-full flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:h-20">
-          <div className="flex items-center justify-center gap-4 w-full lg:w-[18%] lg:justify-start">
+          <div className="flex items-center justify-center gap-4 w-full lg:w-[28%] lg:justify-start">
             {/* <div className="relative flex-shrink-0 w-20 h-20">
-                            <img
-                                src={authData.metadata.avatarPath || "/svg/default-avatar.png"}
-                                alt="Avatar"
-                                className="w-full h-full rounded-full object-cover"
-                            />
-                            {authBalance?.is_premium && (
-                                <div className="absolute -top-1 -right-5 bg-yellow-400 text-white text-[10px] font-bold px-2 py-[2px] rounded-full shadow">
-                                    {t("settings_balance_premium_label")}
-                                </div>
-                            )}
-                        </div> */}
+                <img
+                    src={authData.metadata.avatarPath || "/svg/default-avatar.png"}
+                    alt="Avatar"
+                    className="w-full h-full rounded-full object-cover"
+                />
+                {authBalance?.is_premium && (
+                    <div className="absolute -top-1 -right-5 bg-yellow-400 text-white text-[10px] font-bold px-2 py-[2px] rounded-full shadow">
+                        {t("settings_balance_premium_label")}
+                    </div>
+                )}
+            </div> */}
             <AvatarUploader
               authData={authData}
               authBalance={authBalance}
@@ -175,11 +175,10 @@ const Settings = () => {
               {authData.role && (
                 <span
                   className={`inline-block text-xs font-semibold px-2 py-1 rounded-md text-center
-                                        ${
-                                          authData.role === Role.Manager
-                                            ? "bg-primary text-white"
-                                            : "bg-primary-toned-400 text-white"
-                                        }`}
+                                        ${authData.role === Role.Manager
+                      ? "bg-primary text-white"
+                      : "bg-primary-toned-400 text-white"
+                    }`}
                 >
                   {t(`tag_${authData.role.toLowerCase()}`)}
                 </span>
@@ -187,7 +186,7 @@ const Settings = () => {
             </div>
           </div>
 
-          <div className="w-full lg:w-[80%] flex flex-col gap-6">
+          <div className="w-full lg:w-[70%] flex flex-col gap-6">
             <div className="flex flex-col lg:flex-row lg:items-center justify-center lg:justify-end gap-4">
               <div className="flex flex-col w-full lg:max-w-[300px]">
                 <p className="text-sm text-gray-600">
@@ -232,11 +231,10 @@ const Settings = () => {
             <div className="flex flex-row lg:flex-col gap-2 overflow-x-auto">
               <div
                 onClick={() => setSelectedTab("Public profile")}
-                className={`flex-shrink-0 p-2 rounded cursor-pointer text-center lg:text-start ${
-                  selectedTab === "Public profile"
-                    ? "bg-primary-toned-50 font-semibold text-primary opacity-100"
-                    : "hover:bg-primary-toned-50 opacity-50"
-                }`}
+                className={`flex-shrink-0 p-2 rounded cursor-pointer text-center lg:text-start ${selectedTab === "Public profile"
+                  ? "bg-primary-toned-50 font-semibold text-primary opacity-100"
+                  : "hover:bg-primary-toned-50 opacity-50"
+                  }`}
               >
                 <PersonOutlineIcon className="h-6 w-6 mr-1" />{" "}
                 {t("settings_tab_public_profile")}
@@ -244,11 +242,10 @@ const Settings = () => {
 
               <div
                 onClick={() => setSelectedTab("Account")}
-                className={`flex-shrink-0 p-2 rounded cursor-pointer text-center lg:text-start ${
-                  selectedTab === "Account"
-                    ? "bg-primary-toned-50 font-semibold text-primary opacity-100"
-                    : "hover:bg-primary-toned-50 opacity-50"
-                }`}
+                className={`flex-shrink-0 p-2 rounded cursor-pointer text-center lg:text-start ${selectedTab === "Account"
+                  ? "bg-primary-toned-50 font-semibold text-primary opacity-100"
+                  : "hover:bg-primary-toned-50 opacity-50"
+                  }`}
               >
                 <SettingsOutlinedIcon className="h-6 w-6 mr-1" />{" "}
                 {t("settings_tab_account")}

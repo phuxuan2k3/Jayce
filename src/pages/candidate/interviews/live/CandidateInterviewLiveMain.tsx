@@ -16,7 +16,7 @@ export default function CandidateInterviewLiveMain() {
   const model = location.state?.model || "alice";
 
   const { script } = useAudioContext();
-
+  const { isPlaying } = useAudioContext();
   return (
     <div
       className="fixed top-0 left-0"
@@ -43,9 +43,12 @@ export default function CandidateInterviewLiveMain() {
             }
           >
             {/* Overlay menu */}
-            <div className="absolute bottom-20 left-1/2 -translate-x-1/2 text-white">
-              {script}
-            </div>
+            {!isPlaying && (
+              <div className="absolute bottom-20 left-1/2 -translate-x-1/2 text-white">
+                {script}
+              </div>
+            )}
+
             <div className="absolute top-0 left-0 w-full h-full">
               <Overlay />
             </div>
