@@ -1,4 +1,5 @@
 import { cn } from "../../../../app/cn";
+import { DifficultyType } from "../../../../pages/manager/tests/new/common/base-schema";
 
 type TestMode = "PRACTICE" | "EXAM";
 
@@ -20,7 +21,21 @@ const classNames = {
 	},
 };
 
+const DifficultyClassName: Record<DifficultyType, string> = {
+	Intern: cn("bg-green-100 text-green-700 border border-green-200"),
+	Junior: cn("bg-yellow-100 text-yellow-700 border border-yellow-200"),
+	Middle: cn("bg-orange-100 text-orange-700 border border-orange-200"),
+	Senior: cn("bg-red-100 text-red-700 border border-red-200"),
+	Expert: cn("bg-purple-100 text-purple-700 border border-purple-200"),
+	Lead: cn("bg-gray-100 text-gray-700 border border-gray-200"),
+}
+
+
 export class TestUtils {
+	static getDifficultyClassName(difficulty: string): string {
+		return DifficultyClassName[difficulty as DifficultyType] || cn("bg-gray-100 text-gray-700 border border-gray-200");
+	}
+
 	static getBandageClassName(mode: TestMode): string {
 		return BandageClassName[mode];
 	}

@@ -6,14 +6,15 @@ import {
 	Calendar,
 	Globe,
 	Tag,
-	FileText,
 	ListChecks,
-	MessageCircleQuestion
+	LayoutTemplate,
+	ChevronRight
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { DifficultyType } from "../../../../pages/manager/tests/new/common/base-schema";
 import { cn } from "../../../../app/cn";
 import { useLanguage } from "../../../../LanguageProvider";
+import MyButton from "../../ui/buttons/MyButton";
 
 // Context for sharing template and handlers
 interface TemplateCardContextProps {
@@ -51,9 +52,17 @@ const TemplateCardHeader: React.FC = () => {
 		<div className="flex flex-col gap-2 rounded-t-lg bg-primary-toned-50 pl-4 pr-4 py-4 border-b border-primary-toned-200">
 			<div className="flex justify-between items-center">
 				<div className="flex flex-col items-start gap-1">
-					<h3 className="font-bold text-lg text-primary-toned-700">{t("template_label")}: {template.name.trim() === "" ? (
-						<span className="text-gray-400 italic">{t("no_name_provided")}</span>
-					) : template.name}</h3>
+					<div className="flex items-center gap-2">
+						<LayoutTemplate
+							size={20}
+							className="text-primary-toned-700"
+							strokeWidth={2.5}
+						/>
+						<h3 className="font-bold text-lg text-primary-toned-700">{template.name.trim() === "" ? (
+							<span className="text-gray-400 italic">{t("no_name_provided")}</span>
+						) : template.name}</h3>
+					</div>
+
 					<div className="flex text-primary items-center justify-end text-xs">
 						<Calendar size={12} className="mr-1" />
 						{t("last_updated")}: {timeAgo}
@@ -84,14 +93,17 @@ const TemplateCardContent: React.FC = () => {
 	const { template } = useTemplateCardContext();
 	const difficultyClass = DifficultyColors[template.difficulty as DifficultyType] || "bg-gray-100 text-gray-700";
 
-	// Collapsible outlines state
-	const [showOutlines, setShowOutlines] = React.useState(false);
-
 	return (
 		<div className="flex flex-col gap-2 p-4">
 			{/* Title and Description */}
 			<div className="flex flex-col gap-1">
-				<h4 className="text-primary-toned-800 font-semibold">{template.title}</h4>
+				<div className="flex items-center justify-between">
+					<h4 className="text-primary-toned-800 font-semibold">{template.title}</h4>
+					<Bandage className={cn(difficultyClass)}>
+						<ListChecks size={14} />
+						{template.difficulty}
+					</Bandage>
+				</div>
 				<p className="text-primary text-sm line-clamp-2">{template.description}</p>
 			</div>
 
@@ -105,43 +117,7 @@ const TemplateCardContent: React.FC = () => {
 					<Globe size={14} />
 					{template.language}
 				</Bandage>
-
-				<Bandage className={cn(difficultyClass)}>
-					<ListChecks size={14} />
-					{template.difficulty}
-				</Bandage>
 			</div>
-
-			<div className="flex items-center gap-1 text-primary-toned-600 text-sm mt-2">
-				<MessageCircleQuestion size={16} />
-				<span className="">{t("total_questions")}: {template.numberOfQuestions}</span>
-			</div>
-
-			{/* Outlines (collapsible) */}
-			{template.outlines && template.outlines.length > 0 && (
-				<div className="flex flex-col">
-					<button
-						type="button"
-						className="flex items-center gap-1.5 text-primary-toned-600 text-sm mb-1 focus:outline-none select-none"
-						onClick={(e) => {
-							e.stopPropagation();
-							setShowOutlines((prev) => !prev);
-						}}
-						aria-expanded={showOutlines}
-					>
-						<FileText size={14} />
-						<span>{t("show_outlines")}: ({template.outlines.length})</span>
-						<span className={`ml-1 transition-transform ${showOutlines ? 'rotate-90' : ''}`}> ▶</span>
-					</button>
-					<div className={cn("bg-primary-toned-50 rounded-lg transition-all duration-200", showOutlines ? "h-24 p-3" : "h-0 opacity-0")}>
-						<ul className="text-xs text-primary-toned-600 pl-5 list-disc">
-							{template.outlines.map((outline, index) => (
-								<li key={index} className="">{outline}</li>
-							))}
-						</ul>
-					</div>
-				</div>
-			)}
 		</div>
 	);
 };
@@ -168,7 +144,8 @@ const TemplateCardFooter: React.FC = () => {
 			)}
 
 			{onGenerate != null && (
-				<button
+				<MyButton
+					size={"small"}
 					onClick={e => {
 						e.stopPropagation();
 						onGenerate();
@@ -176,7 +153,8 @@ const TemplateCardFooter: React.FC = () => {
 					className="px-3 py-1 bg-primary text-white rounded-lg text-sm hover:bg-primary-dark transition-colors"
 				>
 					{t("generate_button")}
-				</button>
+					<ChevronRight size={14} />
+				</MyButton>
 			)}
 		</div>
 	);
@@ -224,5 +202,4 @@ const Bandage = ({
 		</span>
 	);
 }
-
 

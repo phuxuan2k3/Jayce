@@ -1,12 +1,16 @@
 import { useState } from 'react'
 import { PracticeStepAllData, PracticeStepAllSchemaContainer, PracticeStepsValuesType } from '../types';
 
-export default function usePracticeGenStepsData() {
+export default function usePracticeGenStepsData({
+	initialMainValue,
+}: {
+	initialMainValue?: PracticeStepAllData
+}) {
 	const [step, setStep] = useState<PracticeStepsValuesType>(1);
 	const [stepReached, setStepReached] = useState<PracticeStepsValuesType>(1);
 	const [currentErrorMessages, setCurrentErrorMessages] = useState<string[]>([]);
 
-	const [mainValue, setMainValue] = useState<PracticeStepAllData>({
+	const [mainValue, setMainValue] = useState<PracticeStepAllData>(initialMainValue || {
 		step1: {
 			title: '',
 			description: '',

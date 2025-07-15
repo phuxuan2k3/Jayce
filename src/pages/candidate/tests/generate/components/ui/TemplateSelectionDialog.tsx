@@ -10,12 +10,8 @@ import MyPaginationSection from '../../../../../../features/tests/ui-sections/My
 import MyButton from '../../../../../../features/tests/ui/buttons/MyButton';
 import MyInputWithSearch from '../../../../../../features/tests/ui/forms/MyInputWithSearch';
 import MyInput from '../../../../../../features/tests/ui/forms/MyInput';
-import { useLanguage } from '../../../../../../LanguageProvider';
-
-type Filter = {
-	searchName: string;
-	page: number;
-}
+import { LanguageTranslations, useLanguage } from '../../../../../../LanguageProvider';
+import { useDebounce } from '../../../../../../components/hooks/useDebounce';
 
 interface TemplateSelectionModalProps {
 	isOpen: boolean;
@@ -23,20 +19,35 @@ interface TemplateSelectionModalProps {
 	onSelectTemplate: (template: TemplateCoreSchema) => void;
 }
 
+const Language: LanguageTranslations = {
+	en: {
+		no_template_available: "No templates available",
+		no_template_found: "No templates found",
+	},
+	vi: {
+		no_template_available: "Không có mẫu nào",
+		no_template_found: "Không tìm thấy mẫu nào",
+	},
+} as const;
+
 const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 	isOpen,
 	onClose,
 	onSelectTemplate,
 }) => {
-	const { t } = useLanguage();
+	const { t, tTranslation } = useLanguage();
+	const tLocal = (key: string) => tTranslation(key, Language);
+	const [search, setSearch] = useState<string>('');
+	const [page, setPage] = useState<number>(1);
+
+	const searchKey = useDebounce(search, 500);
 
 	const navigate = useNavigate();
-	const [filters, setFilters] = useState<Filter>({
-		searchName: '',
-		page: 1,
-	});
 
-	const templatesQuery = useGetTemplatesQuery(filters);
+	const templatesQuery = useGetTemplatesQuery({
+		search: searchKey,
+		page,
+	});
 
 	if (!isOpen) return null;
 
@@ -46,11 +57,8 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 	};
 
 	const handleSearch = (searchKey: string) => {
-		setFilters({
-			...filters,
-			searchName: searchKey,
-			page: 1, // Reset to first page when searching
-		});
+		setSearch(searchKey);
+		setPage(1);
 	};
 
 	const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -60,15 +68,12 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 	};
 
 	const handlePageChange = (newPage: number) => {
-		setFilters({
-			...filters,
-			page: newPage,
-		});
+		setPage(newPage);
 	};
 
 	return (
 		<MyDialog>
-			<div className="bg-white rounded-lg shadow-lg w-full max-w-[70vw] h-[90vh] flex flex-col p-4">
+			<MyDialog.Content className='w-[70vw] h-[90vh]'>
 				<div className='flex flex-col w-full gap-6 p-4'>
 					<div className="flex justify-between items-center">
 						<h2 className="text-xl font-semibold text-primary">{t("template_modal_title")}</h2>
@@ -87,10 +92,9 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 								<MyInput
 									type="text"
 									placeholder={t("template_modal_search_placeholder")}
-									value={filters.searchName}
+									value={search}
 									onChange={(e) => handleSearch(e.target.value)}
 									onKeyDown={handleKeyPress}
-									className=""
 								/>
 							}
 						/>
@@ -110,15 +114,12 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 						fetchState={templatesQuery}
 						dataComponent={({ data }) => (
 							data.length === 0 ? (
-								<div className="text-center py-8">
-									<p className="text-gray-500 mb-4">{t("template_modal_empty_text")}</p>
-									<button
-										onClick={handleManageTemplates}
-										className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-toned-700 inline-flex items-center gap-2"
-									>
-										<Settings size={16} />
-										{t("template_modal_manage_button")}
-									</button>
+								<div className="flex flex-col items-center justify-center h-full">
+									{searchKey === '' ? (
+										<p className="text-gray-500 mb-4">{tLocal("no_template_available")}</p>
+									) : (
+										<p className="text-gray-500 mb-4">{tLocal("no_template_found")}</p>
+									)}
 								</div>
 							) : (
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -140,12 +141,12 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({
 
 				<MyPaginationSection
 					onPageChange={handlePageChange}
-					page={filters.page}
+					page={page}
 					perPage={6}
 					total={templatesQuery?.data?.total}
 					totalPages={templatesQuery?.data?.totalPages}
 				/>
-			</div>
+			</MyDialog.Content>
 		</MyDialog>
 	);
 };

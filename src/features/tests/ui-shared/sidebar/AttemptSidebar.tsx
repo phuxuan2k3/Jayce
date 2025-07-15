@@ -6,6 +6,7 @@ import FetchStateCover2 from "../../ui/fetch-states/FetchStateCover2";
 import useTestWithAttemptQueries from "../../hooks/query/useTestWithAttemptQueries";
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "../../../../LanguageProvider";
+import SidebarLayout from "../../ui/sidebar/SidebarLayout";
 
 export default function AttemptSidebar({
 	scoreAttemptSection,
@@ -27,7 +28,7 @@ export default function AttemptSidebar({
 	}, [testWithAttemptQuery.data?.attempt.status]);
 
 	return (
-		<div className="sticky top-2 max-h-[96vh] overflow-y-auto shadow-primary bg-white rounded-xl p-6 flex flex-col gap-6 text-primary border border-primary-toned-200">
+		<SidebarLayout>
 			<FetchStateCover2
 				fetchState={testWithAttemptQuery}
 				dataComponent={({ attempt, test }) => (
@@ -37,9 +38,8 @@ export default function AttemptSidebar({
 					/>
 				)}
 			/>
-
 			{scoreAttemptSection}
-		</div>
+		</SidebarLayout>
 	);
 }
 

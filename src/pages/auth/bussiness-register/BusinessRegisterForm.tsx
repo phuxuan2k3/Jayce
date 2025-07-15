@@ -164,7 +164,7 @@ const BusinessRegisterForm = () => {
     }
     try {
       setIsSending(true);
-      await verificationEmail({ email }).unwrap();
+      await verificationEmail({ email, username }).unwrap();
       // alert("Verification email sent successfully!");
       setIsOpenModal(true);
       setCooldown(30);

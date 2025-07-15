@@ -405,8 +405,8 @@ export const en = {
 
   // Exam Info Dialog
   exam_info_title: "Exam Information",
-  exam_info_not_found_title: "Test Not Found",
-  exam_info_not_found_description: "No test found with the provided roomId:",
+  exam_info_not_found_title: "Exam Not Found",
+  exam_info_not_found_description: "No exam found with the provided roomId:",
   exam_info_close: "Close",
   exam_info_time_unit: "min(s)",
   exam_info_available: "Available",
@@ -812,9 +812,9 @@ export const en = {
   manager_tests_sort_date: "Date",
 
   // Manager Test View Controls
-  manager_tests_view_as: "Xem dạng:",
-  manager_tests_grid: "Lưới",
-  manager_tests_table: "Bảng",
+  manager_tests_view_as: "View as:",
+  manager_tests_grid: "Grid",
+  manager_tests_table: "Table",
 
   // Manager Test Status Dropdown
   manager_tests_status: "Status",

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import TestGenerationSidebar from "./components/ui/TestGenerationSidebar";
-import TemplateSelectionModal from "./components/ui/TemplateSelectionModal";
+import TemplateSelectionModal from "./components/ui/TemplateSelectionDialog";
 import SaveTemplateDialog from "./components/ui/SaveTemplateDialog";
 import PracticeGenStep1 from './components/steps/PracticeGenStep1';
 import PracticeGenStep2 from './components/steps/PracticeGenStep2';
 import { LoadingScreen } from './components/ui/LoadingScreen';
-import { PracticeGenStepInfo, PracticeStepsValuesType } from './types';
+import { PracticeGenStepInfo, PracticeStepAllData, PracticeStepsValuesType } from './types';
 import { TemplateCoreSchema } from '../../../../features/tests/api/test.api-gen-v2';
 import PracticeGenStep3 from './components/steps/PracticeGenStep3';
 import useGeneratePractice from './hooks/useGeneratePractice';
@@ -19,13 +19,39 @@ import RightLayoutTemplate from '../../../../components/layouts/RightLayoutTempl
 import { Sparkles } from 'lucide-react';
 import ErrorDialog from '../../../../features/tests/ui/fetch-states/ErrorDialog';
 import { useLanguage } from '../../../../LanguageProvider';
+import { useLocation } from 'react-router-dom';
+
+const templateToMainValue = (template: TemplateCoreSchema) => {
+	const newMainValue = {
+		step1: {
+			title: template.title,
+			description: template.description,
+			language: template.language as LanguageType || "English",
+			minutesToAnswer: template.minutesToAnswer,
+		},
+		step2: {
+			difficulty: template.difficulty as DifficultyType || "Intern",
+			numberOfOptions: template.numberOfOptions,
+			numberOfQuestions: template.numberOfQuestions,
+			tags: template.tags || [],
+		},
+		step3: {
+			outlines: template.outlines || [],
+		},
+	};
+
+	return newMainValue;
+}
 
 // Lesson: When I split it into 3 setMainValue (handleStep1, 2, 3...) and call it at the same time in the handleSelectTemplate function, it causes the state to update only the last function call (handleStep3), and override the previous ones.
 
 export default function CandidateTestsGeneratePage() {
 	const { t } = useLanguage();
+	const { state } = useLocation();
+	const appliedTemplate = state?.template as TemplateCoreSchema | undefined;
 
-	const [selectedTemplate, setSelectedTemplate] = useState<TemplateCoreSchema | null>(null);
+	const [selectedTemplate, setSelectedTemplate] = useState<TemplateCoreSchema | null>(appliedTemplate || null);
+
 	const [showTemplatesModal, setShowTemplatesModal] = useState(false);
 	const [showSaveTemplateDialog, setShowSaveTemplateDialog] = useState(false);
 
@@ -37,7 +63,9 @@ export default function CandidateTestsGeneratePage() {
 		handleSetStep,
 		setMainValue,
 		mainValue,
-	} = usePracticeGenStepsData();
+	} = usePracticeGenStepsData({
+		initialMainValue: appliedTemplate ? templateToMainValue(appliedTemplate) : undefined,
+	});
 
 	const {
 		handleGeneratePractice,
@@ -46,24 +74,7 @@ export default function CandidateTestsGeneratePage() {
 	} = useGeneratePractice();
 
 	const handleSelectTemplate = (template: TemplateCoreSchema) => {
-		const newMainValue = {
-			step1: {
-				title: template.title,
-				description: template.description,
-				language: template.language as LanguageType || "English",
-				minutesToAnswer: template.minutesToAnswer,
-			},
-			step2: {
-				difficulty: template.difficulty as DifficultyType || "Intern",
-				numberOfOptions: template.numberOfOptions,
-				numberOfQuestions: template.numberOfQuestions,
-				tags: template.tags || [],
-			},
-			step3: {
-				outlines: template.outlines || [],
-			},
-		};
-
+		const newMainValue: PracticeStepAllData = templateToMainValue(template);
 		setMainValue(newMainValue);
 		setSelectedTemplate(template);
 	}

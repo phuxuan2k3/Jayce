@@ -4,6 +4,8 @@ import ExamCoreItemCard from "./ExamCoreItemCard";
 import ExamCoreItemRow from "./ExamCoreItemRow";
 import MyButton from "../../../../../features/tests/ui/buttons/MyButton";
 import { useLanguage } from "../../../../../LanguageProvider";
+import { useNavigate } from "react-router-dom";
+import paths from "../../../../../router/paths";
 
 
 export default function ExamListViewLayout({
@@ -17,6 +19,7 @@ export default function ExamListViewLayout({
 	onExamClick?: (exam: TestFullSchema) => void;
 	className?: string;
 }) {
+	const navigate = useNavigate();
 	const { t } = useLanguage();
 
 	let component = null;
@@ -43,8 +46,10 @@ export default function ExamListViewLayout({
 					<p className="text-lg font-semibold">{t("manager_tests_empty_title")}</p>
 					<p className="text-sm text-gray-400">{t("manager_tests_empty_description")}</p>
 
-					<MyButton size={"normal"}
-						onClick={() => { }}
+					<MyButton
+						size={"normal"}
+						className="mt-4"
+						onClick={() => navigate(paths.manager.tests.NEW)}
 					>
 						{t("manager_tests_create_button")}
 					</MyButton>

@@ -2,7 +2,6 @@ import { useAppSelector } from "../../../app/hooks";
 import RightLayoutTemplate from "../../../components/layouts/RightLayoutTemplate";
 import { authSelectors } from "../../../features/auth/store/authSlice";
 import { useLanguage } from "../../../LanguageProvider";
-import AdBanner from "./components/AdBanner";
 import QuickNavigation from "./components/QuickNavigation";
 import RecentTemplates from "./components/RecentTemplates";
 import SuggestedPositions from "./components/SuggestedPositions";
@@ -23,13 +22,12 @@ const CandidateHomePage = () => {
 					/>
 				}
 				right={
-					<div className="flex flex-col gap-4 p-4 bg-white sticky top-16 shadow-primary rounded-lg">
+					<div className="flex flex-col gap-4 p-4 bg-white shadow-primary rounded-xl">
 						<QuickNavigation />
-						<AdBanner />
 					</div>
 				}
 			>
-				<div className="flex flex-col">
+				<div className="flex flex-col p-4 gap-6">
 					<SuggestedTests />
 					<RecentTemplates />
 					<SuggestedPositions />
