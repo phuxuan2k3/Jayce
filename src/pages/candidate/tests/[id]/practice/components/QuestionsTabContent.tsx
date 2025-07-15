@@ -89,15 +89,17 @@ export default function QuestionsTabContent({
 										</div>
 
 										<div className="flex flex-col gap-4">
-											{questionsData.map((question, index) => (
+											{paged.data.map((question, index) => (
 												<QuestionDefault
 													showAnswer={showAllAnswers}
 													question={question}
 													key={question.id}
-													index={index}
+													index={(paged.page - 1) * paged.perPage + index}
 												/>
 											))}
 										</div>
+
+										<hr className="my-6" />
 
 										<MyPaginationSection
 											page={filter.page}
