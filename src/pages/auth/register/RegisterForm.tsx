@@ -179,7 +179,7 @@ const RegisterForm = () => {
     try {
       setIsSending(true);
       //   console.log("3");
-      await verificationEmail({ email }).unwrap();
+      await verificationEmail({ email, username }).unwrap();
       //   alert("Verification email sent successfully!");
       setIsOpenModal(true);
       setCooldown(30);
