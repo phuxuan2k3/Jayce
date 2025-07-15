@@ -18,11 +18,11 @@ import StatusDropdown from "./components/StatusDropdown";
 import MyButtonWithSort from "../../../../features/tests/ui/buttons/MyButtonWithSort";
 import { Skeleton } from "@mui/material";
 import { useLanguage } from "../../../../LanguageProvider";
+import { useDebounce } from "../../../../components/hooks/useDebounce";
 
 type Filter = {
 	page: number;
 	perPage: number;
-	searchTitle?: string;
 	sortCreatedAt?: QuerySortValues;
 	sortTitle?: QuerySortValues;
 }
@@ -35,11 +35,12 @@ const ManagerTestsPage = () => {
 	const [view, setView] = useState<"grid" | "table">("grid");
 
 	const [statuses, setStatuses] = useState<Status[]>([]);
+	const [search, setSearch] = useState<string>("");
+	const searchDebounced = useDebounce(search, 300);
 
 	const [filter, setFilter] = useState<Filter>({
 		page: 1,
 		perPage: 12,
-		searchTitle: "",
 		sortCreatedAt: "desc",
 		sortTitle: undefined,
 	});
@@ -49,7 +50,7 @@ const ManagerTestsPage = () => {
 		authorId: userId,
 		page: filter.page,
 		perPage: filter.perPage,
-		searchTitle: filter.searchTitle,
+		searchTitle: searchDebounced,
 		sortCreatedAt: filter.sortCreatedAt,
 		sortTitle: filter.sortTitle,
 		filterStatuses: statuses.length > 0 ? statuses : undefined,
@@ -88,6 +89,8 @@ const ManagerTestsPage = () => {
 										size: "small"
 									}}
 									placeholder={t("manager_tests_search_placeholder")}
+									value={search}
+									onChange={(e) => setSearch(e.target.value)}
 								/>
 							}
 						/>
@@ -117,7 +120,10 @@ const ManagerTestsPage = () => {
 							{t("manager_tests_sort_date")}
 						</MyButtonWithSort>
 
-						<StatusDropdown statuses={statuses} setStatuses={setStatuses} />
+						<StatusDropdown
+							statuses={statuses}
+							setStatuses={setStatuses}
+						/>
 					</div>
 				</div>
 			</div>

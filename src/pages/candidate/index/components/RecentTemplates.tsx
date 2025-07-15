@@ -13,7 +13,7 @@ const RecentTemplates = () => {
 
 	return (
 		<div id="recent-templates" className="mb-8 pb-8 border-b-gradient scroll-mt-20">
-			<div className="flex justify-between items-center flex-wrap gap-2 text-primary mb-4">
+			<div className="flex justify-between items-center flex-wrap gap-2 text-primary mb-8">
 				<h2 className="text-2xl font-semibold">{t("candidate_home_recent_templates_title")}</h2>
 				<a className="text-sm hover:underline cursor-pointer" onClick={() => navigate(paths.candidate.tests.TEMPLATES)}>
 					{t("candidate_home_recent_templates_see_more")}

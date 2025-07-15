@@ -22,7 +22,7 @@ const CandidateHomePage = () => {
 					/>
 				}
 				right={
-					<div className="flex flex-col gap-4 p-4 bg-white sticky top-16 shadow-primary rounded-lg">
+					<div className="flex flex-col gap-4 p-4 bg-white shadow-primary rounded-xl">
 						<QuickNavigation />
 					</div>
 				}
