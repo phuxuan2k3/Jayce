@@ -79,7 +79,7 @@ const AvatarUploader = ({ authData, authBalance, onConfirm }: {
                     )}
                     <label
                         htmlFor="avatar-upload"
-                        className="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded shadow transition duration-200"
+                        className="cursor-pointer border bg-primary hover:bg-white hover:text-primary hover:border-primary text-white text-sm font-medium py-2 px-4 rounded-lg shadow-md transition duration-200"
                     >
                         {t("settings_profile_avatar_upload_choose")}
                     </label>

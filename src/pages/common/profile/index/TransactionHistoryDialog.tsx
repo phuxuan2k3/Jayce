@@ -61,7 +61,7 @@ const TransactionHistoryDialog: React.FC<TransactionHistoryDialogProps> = ({ ope
                             >
                                 <div className="flex justify-between items-center">
                                     <div className="text-2xl font-bold text-[var(--primary-color)]">
-                                        {tx.amount.toLocaleString()}
+                                        {tx.amount > 0 ? `+${tx.amount.toLocaleString()}` : tx.amount.toLocaleString()}
                                         <span className="text-sm text-gray-500 font-medium ml-1">SSC</span>
                                     </div>
 
