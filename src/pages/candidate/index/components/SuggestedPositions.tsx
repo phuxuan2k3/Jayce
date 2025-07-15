@@ -1,17 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../router/paths";
 import { useLanguage } from "../../../../LanguageProvider";
+import { DifficultiesAsConst } from "../../../manager/tests/new/common/base-schema";
 
 const SuggestedInterviewPositions = [
-	{ position: "Software Engineer", experience: "intern" },
-	{ position: "Full-Stack Developer", experience: "junior" },
-	{ position: "DevOps Engineer", experience: "fresher" },
-	{ position: "AI Engineer", experience: "mid" },
-	{ position: "UI/UX Designer", experience: "senior" },
-	{ position: "Network Engineer", experience: "lead" },
-	{ position: "Game Developer", experience: "manager" },
-	{ position: "Project Manager (IT)", experience: "director" },
-	{ position: "Data Scientist", experience: "senior" },
+	{ position: "Software Engineer", experience: DifficultiesAsConst[0] },
+	{ position: "Full-Stack Developer", experience: DifficultiesAsConst[1] },
+	{ position: "DevOps Engineer", experience: DifficultiesAsConst[3] },
+	{ position: "AI Engineer", experience: DifficultiesAsConst[2] },
+	{ position: "UI/UX Designer", experience: DifficultiesAsConst[0] },
+	{ position: "Network Engineer", experience: DifficultiesAsConst[3] },
+	{ position: "Game Developer", experience: DifficultiesAsConst[1] },
+	{ position: "Project Manager (IT)", experience: DifficultiesAsConst[5] },
+	{ position: "Data Scientist", experience: DifficultiesAsConst[3] },
 ];
 
 const SuggestedPositions = () => {
@@ -42,7 +43,7 @@ const SuggestedPositions = () => {
 						className="cursor-pointer border p-4 rounded-lg shadow-sm hover:bg-gray-50 transition bg-white"
 					>
 						<div className="font-semibold text-lg">{item.position}</div>
-						<div className="text-sm text-gray-600">{t("experience_" + item.experience)}</div>
+						<div className="text-sm text-gray-600">{item.experience}</div>
 					</div>
 				))}
 			</div>
