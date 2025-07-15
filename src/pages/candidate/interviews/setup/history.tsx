@@ -234,13 +234,13 @@ const HistoryPage = () => {
             >
               <img
                 className="w-full h-48 rounded-t-xl"
-                src="https://thumbs.dreamstime.com/b/global-connection-internet-satellite-web-data-network-g-telecommunications-world-space-generated-ai-global-connection-internet-316541882.jpg"
+                src="https://www.ttnews.com/sites/default/files/styles/article_full_width_image/public/2023-09/iTECH-Dysart-1200.jpg"
               />
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <div className=" bg-gradient-to-r from-green-100 to-blue-100 absolute top-2 right-2  px-2 py-1 rounded-full bg-white text-base font-semibold">
                   {interview.experience}
                 </div>
-              </div>
+              </div> */}
               <div className="px-6 pb-4 ">
                 <div className="flex  flex-wrap sm:flex-row sm:justify-between sm:items-center ">
                   <div className="flex items-center gap-3 w-full flex-shrink-0">
@@ -249,7 +249,7 @@ const HistoryPage = () => {
                     </span>
                     <div>
                       <span className="text-xs  text-gray-500 font-medium">
-                        {t("position")}
+                        {interview.experience}
                       </span>
                       <div className="text-lg font-bold text-[#2e808a]">
                         {interview.position}

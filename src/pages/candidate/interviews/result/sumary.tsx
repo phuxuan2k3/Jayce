@@ -6,7 +6,12 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChartPie, faStar } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChartBar,
+  faChartLine,
+  faChartPie,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
 
 import {
   Chart as ChartJS,
@@ -21,6 +26,7 @@ import {
   BarElement,
 } from "chart.js";
 import { useLanguage } from "../../../../LanguageProvider";
+import { Button, ButtonGroup } from "@mui/material";
 ChartJS.register(
   ArcElement,
   Tooltip,
@@ -180,7 +186,7 @@ const Summary: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
     <div className="w-full h-full p-0 md:p-8 flex flex-col md:flex-row gap-8">
       {/* Feedback Card */}
 
-      <Card className="w-3/5 shadow rounded-3xl bg-white/90 border border-gray-100">
+      <Card className="w-3/5 shadow rounded-lg bg-white/90 border border-gray-100">
         <CardContent>
           <div className="flex items-center gap-2 mb-2">
             <FontAwesomeIcon
@@ -195,6 +201,44 @@ const Summary: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
             </Typography>
           </div>
           <Divider />
+
+          <div className="w-full flex justify-end px-8 pt-2 mb-9">
+            <ButtonGroup
+              variant="text"
+              className="text-primary gap-2 bg-primary-toned-100 p-1 rounded-full"
+            >
+              <Button
+                onClick={() => setChartType("pie")}
+                className={`px-3 py-1  border-0 ${
+                  chartType === "pie"
+                    ? "rounded-full bg-primary text-white"
+                    : "text-primary"
+                }`}
+              >
+                <FontAwesomeIcon icon={faChartPie} className="text-xl" />
+              </Button>
+              <Button
+                onClick={() => setChartType("line")}
+                className={`px-3 py-1  border-0 ${
+                  chartType === "line"
+                    ? "rounded-full bg-primary text-white"
+                    : "text-primary"
+                }`}
+              >
+                <FontAwesomeIcon icon={faChartLine} className="text-xl" />
+              </Button>
+              <Button
+                onClick={() => setChartType("bar")}
+                className={`px-3 py-1  border-0 ${
+                  chartType === "bar"
+                    ? "rounded-full bg-primary text-white"
+                    : "text-primary"
+                }`}
+              >
+                <FontAwesomeIcon icon={faChartBar} className="text-xl" />
+              </Button>
+            </ButtonGroup>
+          </div>
           <div className="flex items-center justify-center w-full mt-4">
             <div className="w-full h-[500px]  relative">
               {/* <Pie
@@ -221,11 +265,12 @@ const Summary: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
               )}
             </div>
           </div>
+          <div className="mx-auto text-center mt-3">{t("tilte_chart")}</div>
         </CardContent>
       </Card>
       {/* Pie Chart + Skill Score */}
       <div className="flex-1 flex flex-col gap-8">
-        <Card className=" w-full shadow rounded-3xl bg-white/90 border border-gray-100">
+        <Card className=" w-full shadow rounded-lg bg-white/90 border border-gray-100">
           <CardContent>
             <div className="flex items-center gap-3 mb-2">
               <FontAwesomeIcon
@@ -246,7 +291,7 @@ const Summary: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
           </CardContent>
         </Card>
         {/* Skill Score */}
-        <Card className="shadow rounded-3xl bg-white/90 border border-gray-100">
+        <Card className="shadow rounded-lg bg-white/90 border border-gray-100">
           <CardContent>
             <div className="flex items-center gap-2 mb-2">
               <FontAwesomeIcon

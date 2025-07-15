@@ -122,7 +122,11 @@ export const vi = {
   cancel: "Hủy",
   submitting: "Đang gửi...",
   end_interview: "Kết thúc phỏng vấn",
-
+  tilte_chart: " Biểu đồ minh họa cho mức độ thành thạo các kỹ năng phỏng vấn",
+  back_des_his: "Trở về trang tổng quan lịch sử",
+  back_history: "Trở về lịch sử",
+  back_dashboard: "Trở về dashboard",
+  back_des_dashboard: "Trở về trang tổng quan",
   // Settings
   tag_role_business_manager: "Quản lý doanh nghiệp",
   tag_role_candidate: "Ứng viên",

@@ -123,6 +123,11 @@ export const en = {
   cancel: "Cancel",
   submitting: "Submitting...",
   end_interview: "End Interview",
+  tilte_chart: " Chart illustrating proficiency levels in interview skills",
+  back_history: "Back to History",
+  back_des_his: " Return to the history overview",
+  back_dashboard: "Back to Dashboard",
+  back_des_dashboard: "Return to the dash board",
   // Settings
   tag_role_business_manager: "Business Manager",
   tag_role_candidate: "Candidate",

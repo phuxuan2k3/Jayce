@@ -42,7 +42,7 @@ const Script: FC<{ scoreData: GetInterviewHistoryResponse }> = ({
             {scoreData.submissions?.map((res, index) => (
               <Card
                 key={index}
-                className={`transition-all duration-200 rounded-2xl border-2 shadow-md hover:scale-[1.02] ${statusBgColor[res.status]}`}
+                className={`transition-all duration-200 rounded-lg border-2 shadow-md hover:scale-[1.02] ${statusBgColor[res.status]}`}
               >
                 <CardContent>
                   {/* Question header */}

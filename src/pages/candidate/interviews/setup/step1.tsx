@@ -102,7 +102,6 @@ const SetUpStep1: FC<{
       </div>
       <div className="text-primary-toned-700 w-full flex justify-between">
         <div>{t("key_skills_desc")}</div>
-        <div className="font-bold underline text-xl">{t("paste_job_desc")}</div>
       </div>
 
       <input

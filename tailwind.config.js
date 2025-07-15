@@ -62,7 +62,7 @@ export default {
       boxShadow: {
         gradient:
           "0px 4px 15px var(--primary-color), 0px 0px 30px var(--secondary-color)",
-        primary: "2px 2px 4px 1px var(--primary-color)",
+        primary: "1px 1px 2px 0px var(--primary-color)",
         secondary: "2px 2px 4px 1px var(--secondary-color)",
       },
       rotate: {
