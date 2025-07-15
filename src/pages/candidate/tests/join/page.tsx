@@ -83,7 +83,9 @@ export default function CandidateTestsJoinPage() {
 				{roomId && (
 					<FetchStateCover2
 						fetchState={testFindQuery}
-						errorComponent={(error) => <ErrorDialog error={error} />}
+						errorComponent={(error) => (
+							<ErrorDialog error={error} />
+						)}
 						dataComponent={(data) => (
 							<ExamInfoDialog
 								isOpen={isDialogOpen}

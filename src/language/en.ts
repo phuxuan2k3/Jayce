@@ -400,8 +400,8 @@ export const en = {
 
 	// Exam Info Dialog
 	exam_info_title: "Exam Information",
-	exam_info_not_found_title: "Test Not Found",
-	exam_info_not_found_description: "No test found with the provided roomId:",
+	exam_info_not_found_title: "Exam Not Found",
+	exam_info_not_found_description: "No exam found with the provided roomId:",
 	exam_info_close: "Close",
 	exam_info_time_unit: "min(s)",
 	exam_info_available: "Available",

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { AlarmClock, AlertCircle, Globe } from 'lucide-react';
+import { AlarmClock, Globe } from 'lucide-react';
 import { format } from 'date-fns';
 import PasswordInput from './PasswordInput';
 import ExamInfoDialogBottom from './ExamInfoDialogBottom';
 import { GetTestsFindByRoomApiResponse } from '../../../../../features/tests/api/test.api-gen-v2';
 import MyDialog from '../../../../../features/tests/ui/MyDialog';
-import MyButton from '../../../../../features/tests/ui/buttons/MyButton';
 import { SmallUserInfo } from '../../../../../features/tests/ui-shared/SmallUserInfo';
 import { useLanguage } from '../../../../../LanguageProvider';
+import ExamNotFoundDialog from './ExamNotFoundDialog';
 
 interface ExamInfoDialogProps {
 	isOpen: boolean;
@@ -33,24 +33,10 @@ const ExamInfoDialog: React.FC<ExamInfoDialogProps> = ({
 	const { data: examData, hasJoined } = data;
 	if (examData == null || examData._detail.mode !== "EXAM") {
 		return (
-			<MyDialog>
-				<MyDialog.Content>
-					<div className="flex flex-col items-center justify-center">
-						<div className="bg-red-100 p-3 rounded-full mb-4">
-							<AlertCircle size={40} className="text-red-500" />
-						</div>
-						<h3 className="text-xl font-semibold text-gray-800 mb-2">{t("exam_info_not_found_title")}</h3>
-						<p className="text-gray-600 text-center mb-6">{t("exam_info_not_found_description")} {roomId}</p>
-						<MyButton
-							className='w-full'
-							variant={"gray"}
-							onClick={onClose}
-						>
-							{t("exam_info_close")}
-						</MyButton>
-					</div>
-				</MyDialog.Content>
-			</MyDialog>
+			<ExamNotFoundDialog
+				roomId={roomId}
+				onClose={onClose}
+			/>
 		);
 	}
 	const detail = examData._detail;
