@@ -7,6 +7,8 @@ import NoDataAvailibleCover from "../../../../../features/tests/ui/fetch-states/
 import MyPaginationSection from "../../../../../features/tests/ui-sections/MyPaginationSection";
 import { useGetTemplatesQuery } from "../apis/template.api-enhance";
 import { useLanguage } from "../../../../../LanguageProvider";
+import { useNavigate } from "react-router-dom";
+import paths from "../../../../../router/paths";
 
 interface TemplateListProps {
 	searchName: string;
@@ -22,6 +24,7 @@ const TemplateList: React.FC<TemplateListProps> = ({
 	// difficultiesFilter,
 }) => {
 	const { t } = useLanguage();
+	const navigate = useNavigate();
 	const [page, setPage] = React.useState(1);
 	const { data: pagedTemplates, isSuccess, isLoading, error } = useGetTemplatesQuery({
 		page: page,
@@ -46,6 +49,9 @@ const TemplateList: React.FC<TemplateListProps> = ({
 							template={template}
 							onClick={onSelect}
 							onDelete={onDelete}
+							onGenerate={() => navigate(paths.candidate.tests.GENERATE, {
+								state: { template }
+							})}
 						/>
 					))}
 				</div>

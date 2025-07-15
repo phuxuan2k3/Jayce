@@ -27,7 +27,7 @@ const CandidateHomePage = () => {
 					</div>
 				}
 			>
-				<div className="flex flex-col">
+				<div className="flex flex-col p-4 gap-6">
 					<SuggestedTests />
 					<RecentTemplates />
 					<SuggestedPositions />
