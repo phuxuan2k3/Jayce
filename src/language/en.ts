@@ -657,25 +657,27 @@ export const en = {
   publish_title_schedule: "Schedule",
   publish_title_questions: "Questions",
 
-  publish_label_language: "Language",
-  publish_label_duration: "Duration",
-  publish_label_duration_unit: "minutes",
-  publish_label_room_id: "Room ID",
-  publish_label_password: "Password",
-  publish_label_attempts_allowed: "Attempts Allowed",
-  publish_label_number_of_participants: "Number of participants",
-  publish_label_publicly_visible: "Publicly Visible",
-  publish_label_show_others_results: "Show others's results",
-  publish_label_show_exam_answer: "Show exam's answer",
-  publish_label_show_enabled: "Enabled",
-  publish_label_show_disabled: "Disabled",
-  publish_label_opens_at: "Opens At:",
-  publish_label_closes_at: "Closes At:",
-  publish_label_stat_questions: "Questions",
-  publish_label_stat_total_points: "Total Points",
-  publish_label_stat_avg_points: "Avg Points/Question",
-  publish_label_stat_minutes: "Minutes",
-  publish_label_none: "None",
+	publish_label_language: "Language",
+	publish_label_duration: "Duration",
+	publish_label_duration_unit: "minutes",
+	publish_label_room_id: "Room ID",
+	publish_label_password: "Password",
+	publish_label_attempts_allowed: "Attempts Allowed",
+	publish_label_number_of_participants: "Number of participants",
+	publish_label_publicly_visible: "Publicly Visible",
+	publish_label_publicly_visible_yes: "Yes",
+	publish_label_publicly_visible_no: "No",
+	publish_label_show_others_results: "Show others's results",
+	publish_label_show_exam_answer: "Show exam's answer",
+	publish_label_show_enabled: "Enabled",
+	publish_label_show_disabled: "Disabled",
+	publish_label_opens_at: "Opens At",
+	publish_label_closes_at: "Closes At",
+	publish_label_stat_questions: "Questions",
+	publish_label_stat_total_points: "Total Points",
+	publish_label_stat_avg_points: "Avg Points/Question",
+	publish_label_stat_minutes: "Minutes",
+	publish_label_none: "None",
 
   // Manager Publish Warning Dialog
   publish_warning_title: "Publishing Confirmation",
@@ -1067,15 +1069,15 @@ export const en = {
   start_attempt_button: "Start New Attempt",
   unknown_error: "Unknown error",
 
-  // Current Attempt Card
-  no_current_attempts: "No current attempts",
-  no_attempts_text_1: "You haven't started any attempts for this test yet.",
-  no_attempts_text_2: "Click the button below to start a new attempt.",
-  time_left: "Time left:",
-  times_up: "Time's up!",
-  continue_attempt: "Continue Attempt",
-  started: "Started",
-  last_answered: "Last answered",
+	// Current Attempt Card
+	no_current_attempts: "No current attempts",
+	no_attempts_text_1: "You haven't started any attempts for this test yet.",
+	no_attempts_text_2: "Click the button below to start a new attempt.",
+	time_left: "Time left",
+	times_up: "Time's up!",
+	continue_attempt: "Continue Attempt",
+	started: "Started",
+	last_answered: "Last answered",
 
   // Participant Statistic
   statistic: "Statistic",
@@ -1389,14 +1391,14 @@ export const en = {
   summary_cards_total_topics: "Total Topics",
   summary_cards_total_questions: "Total Questions",
 
-  // Manager Step 2 Help Text
-  help_text_title: "Tips:",
-  help_text_tip_1:
-    "Balance your difficulty distribution: mix Easy, Medium, and Hard questions based on your assessment goals",
-  help_text_tip_2:
-    "Use clear, descriptive topic names that reflect the specific subject area being tested",
-  help_text_tip_3:
-    "Consider your target audience's skill level when setting question counts for each difficulty",
+	// Manager Step 2 Help Text
+	help_text_title: "Tips",
+	help_text_tip_1:
+		"Balance your difficulty distribution: mix Easy, Medium, and Hard questions based on your assessment goals",
+	help_text_tip_2:
+		"Use clear, descriptive topic names that reflect the specific subject area being tested",
+	help_text_tip_3:
+		"Consider your target audience's skill level when setting question counts for each difficulty",
 
   // Manager Step 3 Text Context Tab
   text_context_placeholder:
@@ -1419,10 +1421,10 @@ export const en = {
   help_tip_upload:
     "Upload documents like specifications, manuals, or code samples to create context-specific questions",
 
-  // Manager Step 3 File Context Tab
-  file_upload_click_to_upload: "Click to upload files",
-  file_upload_supported_formats: "Supports: TXT, PDF, DOC, DOCX",
-  file_upload_uploaded_files: "Uploaded Files:",
+	// Manager Step 3 File Context Tab
+	file_upload_click_to_upload: "Click to upload files",
+	file_upload_supported_formats: "Supports: TXT, PDF, DOC, DOCX",
+	file_upload_uploaded_files: "Uploaded Files",
 
   // Manager Step 3 Creativity Slider
   creativity_slider_title: "Creativity Level",

@@ -666,12 +666,14 @@ export const vi = {
   publish_label_attempts_allowed: "Số lần làm bài được phép",
   publish_label_number_of_participants: "Số lượng người tham gia",
   publish_label_publicly_visible: "Hiển thị công khai",
+  publish_label_publicly_visible_yes: "Có",
+  publish_label_publicly_visible_no: "Không",
   publish_label_show_others_results: "Hiển thị kết quả của người khác",
   publish_label_show_exam_answer: "Hiển thị đáp án bài thi",
   publish_label_show_enabled: "Bật",
   publish_label_show_disabled: "Tắt",
-  publish_label_opens_at: "Mở lúc:",
-  publish_label_closes_at: "Đóng lúc:",
+  publish_label_opens_at: "Mở lúc",
+  publish_label_closes_at: "Đóng lúc",
   publish_label_stat_questions: "Câu hỏi",
   publish_label_stat_total_points: "Tổng điểm",
   publish_label_stat_avg_points: "Trung bình điểm/câu",
@@ -1073,7 +1075,7 @@ export const vi = {
   no_attempts_text_1:
     "Bạn chưa bắt đầu bất kỳ lượt làm nào cho bài kiểm tra này.",
   no_attempts_text_2: "Nhấn nút bên dưới để bắt đầu lượt làm mới.",
-  time_left: "Thời gian còn lại:",
+  time_left: "Thời gian còn lại",
   times_up: "Hết giờ!",
   continue_attempt: "Tiếp tục lượt làm",
   started: "Đã bắt đầu",
@@ -1392,7 +1394,7 @@ export const vi = {
   summary_cards_total_questions: "Tổng số câu hỏi",
 
   // Manager Step 2 Help Text
-  help_text_title: "Mẹo:",
+  help_text_title: "Mẹo",
   help_text_tip_1:
     "Cân bằng độ khó: kết hợp câu hỏi Dễ, Trung bình và Khó tùy theo mục tiêu đánh giá",
   help_text_tip_2:
@@ -1424,7 +1426,7 @@ export const vi = {
   // Manager Step 3 File Context Tab
   file_upload_click_to_upload: "Nhấn để tải tệp lên",
   file_upload_supported_formats: "Hỗ trợ: TXT, PDF, DOC, DOCX",
-  file_upload_uploaded_files: "Tệp đã tải lên:",
+  file_upload_uploaded_files: "Tệp đã tải lên",
 
   // Manager Step 3 Creativity Slider
   creativity_slider_title: "Mức độ sáng tạo",
