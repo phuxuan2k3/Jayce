@@ -11,6 +11,7 @@ import paymentApi from '../features/payment/api/payment.api.ts';
 import testApi from '../features/tests/api/test.api.ts';
 import promptApi from '../features/tests/api/prompt.api.ts';
 import testDoSlice from '../features/tests/stores/testDoSlice.ts';
+import speechToTextApi from '../features/interviews/api/speech-to-text.api.ts';
 
 const authPersistConfig = {
 	key: 'auth',
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
 	interviewApi: interviewApi.reducer,
 	[testApi.reducerPath]: testApi.reducer,
 	[promptApi.reducerPath]: promptApi.reducer,
+	[speechToTextApi.reducerPath]: speechToTextApi.reducer,
 	paymentApi: paymentApi.reducer,
 
 	// Custom reducers
