@@ -14,7 +14,7 @@ export const BuilderStep2Schema = z.object({
 		const sum = Object.values(topic.difficultyDistribution).reduce((sum, count) => sum + count, 0);
 		return acc + sum;
 	}, 0);
-	return totalSum <= 30;
+	return totalSum <= 40;
 }, {
 	message: "builder_step2_total_questions_exceed",
 });

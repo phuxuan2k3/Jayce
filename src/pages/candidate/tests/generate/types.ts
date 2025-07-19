@@ -13,7 +13,7 @@ const PracticeStep1Schema = z.object({
 
 const PracticeStep2Schema = z.object({
 	difficulty: z.enum(DifficultiesAsConst),
-	numberOfQuestions: z.number().min(1, 'validation_questions_min').max(50, 'validation_questions_max'),
+	numberOfQuestions: z.number().min(1, 'validation_questions_min').max(40, 'validation_questions_max'),
 	numberOfOptions: z.number().min(2, 'validation_options_min').max(6, 'validation_options_max'),
 	tags: z.array(z.string()),
 });
