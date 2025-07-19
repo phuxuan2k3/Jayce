@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useTranscribeMutation } from "../../../../../../../features/interviews/api/speech-to-text.api";
+import { blobToString } from "../lib/blobToString";
 
 export default function useTranscribe({
 	language
@@ -11,8 +12,9 @@ export default function useTranscribe({
 	const [transcribe] = useTranscribeMutation();
 
 	const handleTranscribe = useCallback(async (audioBlob: Blob) => {
+		const dataUrl = await blobToString(audioBlob);
 		const res = await transcribe({
-			audio: audioBlob,
+			audio: dataUrl,
 			language: language
 		}).unwrap();
 		return res;

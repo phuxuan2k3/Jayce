@@ -19,7 +19,7 @@ const serviceBaseQueryAuth = (serviceUrl: string) =>
 	fetchBaseQuery({
 		baseUrl: serviceUrl,
 		prepareHeaders: async (headers, { getState }) => {
-			headers.set("Content-Type", "application/json");
+			// headers.set("Content-Type", "application/json");
 			const tokens = authSelectors.selectTokens(getState() as RootState);
 			if (tokens?.access_token) {
 				headers.set("Authorization", `Bearer ${tokens.access_token}`);

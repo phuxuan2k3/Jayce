@@ -9,16 +9,16 @@ const speechToTextApi = createApi({
 		transcribe: builder.mutation<{
 			transcript: string;
 		}, {
-			audio: Blob;
+			audio: string;
 			language: string;
 		}>({
 			query: (req) => ({
 				url: '/transcribe',
 				method: 'POST',
 				body: req,
-				headers: {
-					'Content-Type': 'application/octet-stream',
-				},
+				// headers: {
+				// 	'Content-Type': 'multipart/form-data',
+				// },
 			}),
 		}),
 	}),

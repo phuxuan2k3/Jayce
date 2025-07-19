@@ -9,8 +9,8 @@ import {
 } from "../../../../../../features/interviews/api/interview.api";
 import { useLocation, useNavigate } from "react-router-dom";
 import ModalSubmitting from "./sub/ModalSubmit";
-import Record2 from "./Record2";
-// import Record from "./Record";
+// import Record2 from "./Record2";
+import Record from "./Record";
 
 export default memo(function InterviewStatus({
 	currentQuestion,
@@ -123,7 +123,7 @@ export default memo(function InterviewStatus({
 				</div>
 				<div className=" w-full hover:!text-primary flex items-center justify-center">
 					{/* <Record onAnswerRecorded={handleAnswerRecorded} /> */}
-					<Record2 onAnswerRecorded={handleAnswerRecorded} />
+					<Record onAnswerRecorded={handleAnswerRecorded} />
 				</div>
 			</div>
 

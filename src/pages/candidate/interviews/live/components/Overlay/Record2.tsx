@@ -14,6 +14,7 @@ export default function Record2({
 
 	const { isPlaying } = useAudioContext();
 	const [error, setError] = useState<string | null>(null);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const {
 		startListening,
@@ -23,7 +24,9 @@ export default function Record2({
 	} = useSoundBlob({
 		onRecorded: async (blob: Blob) => {
 			try {
-				const { transcript } = await handleTranscribe(blob)
+				setError(null);
+				setIsLoading(true);
+				const { transcript } = await handleTranscribe(blob);
 				const reader = new FileReader();
 				reader.onloadend = () => {
 					onAnswerRecorded(transcript, reader.result as string);
@@ -33,6 +36,9 @@ export default function Record2({
 			catch (err) {
 				setError(`Failed to transcribe audio.`);
 				console.error('Transcription error:', err);
+			}
+			finally {
+				setIsLoading(false);
 			}
 		}
 	});
@@ -47,17 +53,14 @@ export default function Record2({
 		)
 	}
 
-	if (error) {
-		return (
-			<div className="flex items-center justify-center h-full bg-red-100 border border-red-300 p-4 rounded-lg shadow-md">
-				<p className="text-red-500">{error}</p>
-			</div>
-		);
-	}
-
 	return (
-		<div className="font-semibold text-white ">
-			{isRecording === false ? (
+		<div className="font-semibold text-white flex flex-col items-center justify-center gap-y-4 h-full">
+			{error && (
+				<div className="flex items-center justify-center h-full bg-red-100 border border-red-300 p-4 rounded-lg shadow-md">
+					<p className="text-red-500">{error}</p>
+				</div>
+			)}
+			{isRecording === false && isLoading === false ? (
 				<button
 					className={`flex items-center px-4 py-2 gap-x-2 rounded-lg ${isPlaying
 						? "opacity-50 cursor-not-allowed bg-gray-300 text-gray-500 transform-none "
@@ -69,7 +72,11 @@ export default function Record2({
 					<span>Answer</span>
 					<Mic size={20} />
 				</button>
-			) : (
+			) : isLoading === true ? (
+				<div className="flex items-center justify-center h-full bg-gray-100 p-4 rounded-lg shadow-md">
+					<p className="text-gray-500">Processing...</p>
+				</div>
+			) : isRecording === true ? (
 				<div
 					className={`flex flex-col items-center px-4 py-2 gap-x-2 rounded-lg bg-transparent border-2 border-primary shadow-lg hover:shadow-lg hover:shadow-primary/80 transition-all duration-200 ease-in-out cursor-pointer`}
 					onClick={stopListening}
@@ -81,6 +88,10 @@ export default function Record2({
 					<div className="flex-1 w-full relative p-2 bg-primary/10 rounded-lg overflow-visible">
 						<SoundWaveVisualizer />
 					</div>
+				</div>
+			) : (
+				<div className="flex items-center justify-center h-full bg-gray-100 p-4 rounded-lg shadow-md">
+					<p className="text-gray-500">Waiting for audio...</p>
 				</div>
 			)}
 		</div>
