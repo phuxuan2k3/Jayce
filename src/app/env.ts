@@ -31,6 +31,9 @@ const ireliaUrl = import.meta.env.VITE_IRELIA_URL as string;
 // Graves
 const gravesUrl = import.meta.env.VITE_GRAVES_URL as string;
 
+// Speech to Text
+const tahmkenchUrl = import.meta.env.VITE_TAHMKENCH_URL as string;
+
 const url = {
 	thresh: {
 		base: threshUrl ?? backendUrl + "/thresh",
@@ -43,6 +46,7 @@ const url = {
 	chronobreak: chronobreakUrl ?? backendUrl + "/chronobreak",
 	irelia: ireliaUrl ?? backendUrl + "/irelia",
 	graves: gravesUrl ?? backendUrl + "/graves",
+	tahmkench: tahmkenchUrl ?? backendUrl + "/tahmkench",
 };
 
 const mock = {
