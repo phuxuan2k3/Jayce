@@ -51,6 +51,10 @@ export type GetSuggestQuestionsRequest = {
 	outlines: string[];
 	numberOfQuestions: number;
 	numberOfOptions: number;
+
+	// e.g., "MCQ", "LONG_ANSWER", "MIXED"
+	// Default: MIXED
+	questionType?: string;
 };
 
 export type GetSuggestQuestionsResponse = {

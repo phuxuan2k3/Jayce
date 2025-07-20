@@ -39,6 +39,7 @@ import CandidateTestAttemptsDoPage from "../pages/candidate/tests/[id]/attempts/
 import CandidateTestPage from "../pages/candidate/tests/[id]/index/page";
 import ManagerIndexPage from "../pages/manager/index/page";
 import FAQPage from "../pages/common/faq/index";
+import CandidateTestsGenerate2Page from "../pages/candidate/tests/generate2/page";
 
 const router = createBrowserRouter(
 	[
@@ -207,6 +208,10 @@ const router = createBrowserRouter(
 							],
 						},
 					],
+				},
+				{
+					path: paths.candidate.tests.GENERATE.slice(0, -1) + '2/',
+					element: <CandidateTestsGenerate2Page />,
 				},
 
 				// Manager pages
