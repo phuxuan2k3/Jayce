@@ -1,11 +1,7 @@
-import React from 'react';
 import MyFieldLayout from '../../../../../../features/tests/ui/forms/MyFieldLayout';
 import MyLabel from '../../../../../../features/tests/ui/forms/MyLabel';
 import { useLanguage } from '../../../../../../LanguageProvider';
-import { PracticeStep1Type, PracticeStep2Type, PracticeStepAllData } from '../../types';
-import MyTextArea from '../../../../../../features/tests/ui/forms/MyTextArea';
-import OutlinesInput from '../../../../../../features/tests/ui-shared/practice-gen/OutlinesInput';
-import MySelect from '../../../../../../features/tests/ui/forms/MySelect';
+import { PracticeStep1Type, PracticeStep2Type } from '../../types';
 import { DifficultiesAsConst } from '../../../../../manager/tests/new/common/base-schema';
 import TagInput from '../ui/TagInput';
 import { cn } from '../../../../../../app/cn';
@@ -13,13 +9,13 @@ import { cn } from '../../../../../../app/cn';
 export default function PracticeGenStep2({
 	data,
 	onDataChange,
-	step1Data,
+	step1Data: __,
 }: {
 	data: PracticeStep2Type;
 	step1Data: PracticeStep1Type;
 	onDataChange: (data: PracticeStep2Type) => void;
 }) {
-	const { t } = useLanguage();
+	const { t: _ } = useLanguage();
 	return (
 		<div className="flex flex-col gap-2">
 

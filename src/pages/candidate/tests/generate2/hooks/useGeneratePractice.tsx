@@ -1,91 +1,65 @@
-import { useNavigate } from 'react-router-dom';
-import { usePostTestsMutation } from '../../../../../features/tests/api/test.api-gen-v2';
-import { useLazyGetSuggestQuestionsQuery } from '../../../../../features/tests/api/practice-generate.api';
+import { GetSuggestQuestionsRequest, useLazyGetSuggestQuestionsQuery } from '../../../../../features/tests/api/practice-generate.api';
 import { useState } from 'react';
 import { PracticeStepAllData } from '../types';
-import paths from '../../../../../router/paths';
 import { parseQueryError } from '../../../../../helpers/fetchBaseQuery.error';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { SerializedError } from '@reduxjs/toolkit';
-import { useLanguage } from '../../../../../LanguageProvider';
+import practiceGenSlice from '../../../../../features/tests/stores/practiceGenSlice';
+import { useAppDispatch, useAppSelector } from '../../../../../app/hooks';
 
 export default function useGeneratePractice() {
-	const { t } = useLanguage();
+	const dispatch = useAppDispatch();
 
-	const navigate = useNavigate();
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
-	const [loadingState, setLoadingState] = useState<"none" | "generating" | "saving">("none");
-	const [error, setError] = useState<FetchBaseQueryError | SerializedError | undefined>(undefined);
+	const genStatus = useAppSelector(practiceGenSlice.selectors.selectGenStatus);
 
 	const [getGeneratedQuestions] = useLazyGetSuggestQuestionsQuery();
-	const [createTest] = usePostTestsMutation();
 
 	const handleGeneratePractice = async (allStepData: PracticeStepAllData) => {
-		try {
-			const { title, numberOfQuestions, language, minutesToAnswer } = allStepData.step1;
-			const { description, tags, outlines, difficulty } = allStepData.step2;
-
-			setErrorMessage(null);
-			setError(undefined);
-			setLoadingState("generating");
-
-			const { questions } = await getGeneratedQuestions({
-				title,
-				description,
-				language,
-				minutesToAnswer,
-				difficulty,
-				numberOfQuestions,
-				tags,
-				outlines,
-				numberOfOptions: 4,
-			}).unwrap();
-
-			if (questions.length === 0) {
-				setLoadingState("none");
-				setErrorMessage(t("use_generate_practice_error_no_questions"));
-				return;
-			}
-
-			setLoadingState("saving");
-
-			const { testId } = await createTest({
-				body: {
-					title,
-					description,
-					language,
-					minutesToAnswer,
-					mode: "PRACTICE",
-					detail: {
-						mode: "PRACTICE",
-						difficulty,
-						numberOfOptions: 4,
-						numberOfQuestions,
-						outlines,
-						tags,
-					},
-					questions,
-				},
-			}).unwrap();
-
-			setLoadingState("none");
-			navigate(paths.candidate.tests.in(testId).PRACTICE);
-		} catch (error: any) {
-			const errorMessage = parseQueryError(error);
-			if (errorMessage) {
-				setErrorMessage(errorMessage);
-			} else {
-				setErrorMessage(t("use_generate_practice_error_unknown"));
-			}
-			setError(error as FetchBaseQueryError | SerializedError);
-			setLoadingState("none");
+		setErrorMessage(null);
+		// If already generating, do not start a new request
+		if (genStatus !== "none") {
+			setErrorMessage("There is already a generation in progress.");
+			return;
 		}
-	};
+		else {
+			try {
+				const request = stepDataToRequest(allStepData, null);
+				const response = await getGeneratedQuestions(request).unwrap();
+
+				dispatch(practiceGenSlice.actions.initializePolling({
+					data: request,
+					requestKey: response.requestKey,
+				}));
+			} catch (error: any) {
+				const message = parseQueryError(error);
+				dispatch(practiceGenSlice.actions.setApiError(message));
+			}
+		}
+	}
 
 	return {
 		handleGeneratePractice,
 		errorMessage,
-		loadingState,
-		error,
 	}
+}
+
+const stepDataToRequest = (
+	allStepData: PracticeStepAllData,
+	requestKey: string | null
+): GetSuggestQuestionsRequest => {
+	const { title, language, minutesToAnswer, numberOfQuestions, questionType } = allStepData.step1;
+	const { difficulty, description, outlines, tags } = allStepData.step2;
+
+	return {
+		title,
+		description,
+		language,
+		minutesToAnswer,
+		difficulty,
+		numberOfOptions: 4,
+		numberOfQuestions,
+		tags,
+		outlines,
+		requestKey,
+		questionType,
+	};
 }

@@ -5,6 +5,7 @@ import { authActions, authSelectors } from "./features/auth/store/authSlice.ts";
 import { useRefreshMutation } from "./features/auth/api/auth.api.ts";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
+import BackgroundJobs from "./components/background-jobs/BackgroundJobs.tsx";
 
 function App() {
 	const dispatch = useAppDispatch();
@@ -33,6 +34,7 @@ function App() {
 		<>
 			<RouterProvider router={router} />
 			<ToastContainer />
+			<BackgroundJobs />
 		</>
 	);
 }

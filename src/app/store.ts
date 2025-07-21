@@ -12,6 +12,7 @@ import testApi from '../features/tests/api/test.api.ts';
 import promptApi from '../features/tests/api/prompt.api.ts';
 import testDoSlice from '../features/tests/stores/testDoSlice.ts';
 import speechToTextApi from '../features/interviews/api/speech-to-text.api.ts';
+import practiceGenSlice from '../features/tests/stores/practiceGenSlice.ts';
 
 const authPersistConfig = {
 	key: 'auth',
@@ -21,6 +22,11 @@ const authPersistConfig = {
 
 const testDoPersistConfig = {
 	key: 'testDo',
+	storage,
+};
+
+const practiceGenPersistConfig = {
+	key: 'practiceGen',
 	storage,
 };
 
@@ -37,6 +43,7 @@ const rootReducer = combineReducers({
 	// Custom reducers
 	auth: persistReducer(authPersistConfig, authReducer),
 	[testDoSlice.reducerPath]: persistReducer(testDoPersistConfig, testDoSlice.reducer),
+	[practiceGenSlice.reducerPath]: persistReducer(practiceGenPersistConfig, practiceGenSlice.reducer),
 	[fetchSlice.reducerPath]: fetchSlice.reducer,
 });
 

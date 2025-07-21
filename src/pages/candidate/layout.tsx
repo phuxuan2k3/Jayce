@@ -3,6 +3,7 @@ import CandidateNavbar from "../../components/partials/CandidateNavbar";
 import RoleGuard from "../../components/wrapper/RoleGuard";
 import FooterShort from "../../components/partials/FooterShort";
 import { Role } from "../../features/auth/types/auth";
+import NotiPracticeGen from "../../components/ui/noti/NotiPracticeGen";
 
 export default function CandidateLayout() {
 	return (
@@ -13,6 +14,8 @@ export default function CandidateLayout() {
 					<Outlet />
 				</div>
 				<FooterShort />
+
+				<NotiPracticeGen />
 			</div>
 		</RoleGuard>
 	);

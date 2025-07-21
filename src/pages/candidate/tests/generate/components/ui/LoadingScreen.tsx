@@ -3,7 +3,7 @@ import { useLanguage } from "../../../../../../LanguageProvider";
 export const LoadingScreen = ({
 	state,
 }: {
-	state: "none" | "saving" | "generating";
+	state: "none" | "saving" | "generating" | "saved";
 }) => {
 	const { t } = useLanguage();
 
@@ -17,6 +17,8 @@ export const LoadingScreen = ({
 					? t("loading_saving_test")
 					: t("loading_generating_test")}
 			</p>
+
+			<p className="mt-2 text-gray-500 text-sm">{t("loading_generating_please_wait")}</p>
 		</div>
 	);
 };

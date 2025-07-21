@@ -26,7 +26,6 @@ export const TopicSchema = z.object({
 });
 export type Topic = z.infer<typeof TopicSchema>;
 
-
 export const QuestionTypesAsConst = ['MCQ', 'LONG_ANSWER', 'MIXED'] as const;
 export type QuestionTypesType = typeof QuestionTypesAsConst[number];
 export const QuestionTypesAsConstValues: Record<QuestionTypesType, string> = {

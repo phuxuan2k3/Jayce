@@ -22,7 +22,7 @@ const TagInput: React.FC<TagInputProps> = ({ className = '', tags, onTagsChange,
 	const [tagsError, setTagsError] = useState<string | null>(null);
 	const [suggestedTags, setSuggestedTags] = useState<string[]>([]);
 
-	const { getRandomExamples, isLoading } = useTagsExamples({ testTitle: '' });
+	const { getRandomExamples: _, isLoading } = useTagsExamples({ testTitle: '' });
 
 	const handleAddTag = () => {
 		if (newTag.trim() && !tags.includes(newTag.trim()) && tags.length < maxTags) {

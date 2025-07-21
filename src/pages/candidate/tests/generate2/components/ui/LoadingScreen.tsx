@@ -3,7 +3,7 @@ import { useLanguage } from "../../../../../../LanguageProvider";
 export const LoadingScreen = ({
 	state,
 }: {
-	state: "none" | "saving" | "generating";
+	state: "none" | "saving" | "generating" | "saved";
 }) => {
 	const { t } = useLanguage();
 

@@ -3,10 +3,12 @@ import { PracticeStepAllData, PracticeStepAllSchemaContainer, PracticeStepsValue
 
 export default function usePracticeGenStepsData({
 	initialMainValue,
+	initialStep = 1,
 }: {
-	initialMainValue?: PracticeStepAllData
+	initialMainValue?: PracticeStepAllData;
+	initialStep?: PracticeStepsValuesType;
 }) {
-	const [step, setStep] = useState<PracticeStepsValuesType>(1);
+	const [step, setStep] = useState<PracticeStepsValuesType>(initialStep || 1);
 	const [stepReached, setStepReached] = useState<PracticeStepsValuesType>(1);
 	const [currentErrorMessages, setCurrentErrorMessages] = useState<string[]>([]);
 

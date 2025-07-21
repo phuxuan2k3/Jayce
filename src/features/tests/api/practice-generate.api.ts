@@ -44,19 +44,24 @@ export type GetSuggestOutlinesResponse = {
 export type GetSuggestQuestionsRequest = {
 	title: string;
 	description: string;
-	minutesToAnswer: number;
-	language: string;
 	difficulty: string;
 	tags: string[];
 	outlines: string[];
+
+	language: string;
+	minutesToAnswer: number;
 	numberOfQuestions: number;
 	numberOfOptions: number;
 
 	// e.g., "MCQ", "LONG_ANSWER", "MIXED"
 	// Default: MIXED
 	questionType?: string;
+
+	// Request key is a unique identifier for the request
+	requestKey: string | null;
 };
 
 export type GetSuggestQuestionsResponse = {
-	questions: QuestionPersistCoreSchema[];
+	questions: QuestionPersistCoreSchema[] | null;
+	requestKey: string;
 };

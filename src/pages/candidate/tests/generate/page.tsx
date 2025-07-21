@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TestGenerationSidebar from "./components/ui/TestGenerationSidebar";
 import TemplateSelectionModal from "./components/ui/TemplateSelectionDialog";
 import SaveTemplateDialog from "./components/ui/SaveTemplateDialog";
@@ -17,9 +17,12 @@ import { DifficultyType, LanguageType } from '../../../manager/tests/new/common/
 import MyButton from '../../../../features/tests/ui/buttons/MyButton';
 import RightLayoutTemplate from '../../../../components/layouts/RightLayoutTemplate';
 import { Sparkles } from 'lucide-react';
-import ErrorDialog from '../../../../features/tests/ui/fetch-states/ErrorDialog';
 import { useLanguage } from '../../../../LanguageProvider';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
+import practiceGenSlice from '../../../../features/tests/stores/practiceGenSlice';
+import ErrorMessageDialog from '../../../../features/tests/ui/fetch-states/ErrorMessageDialog';
+import paths from '../../../../router/paths';
 
 const templateToMainValue = (template: TemplateCoreSchema) => {
 	const newMainValue = {
@@ -47,6 +50,14 @@ const templateToMainValue = (template: TemplateCoreSchema) => {
 
 export default function CandidateTestsGeneratePage() {
 	const { t } = useLanguage();
+	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
+
+	const requestKey = useAppSelector(practiceGenSlice.selectors.selectRequestKey);
+	const genStatus = useAppSelector(practiceGenSlice.selectors.selectGenStatus);
+	const savedTestId = useAppSelector(practiceGenSlice.selectors.selectSavedTestId);
+	const apiErrorMessage = useAppSelector(practiceGenSlice.selectors.selectApiErrorMessage);
+
 	const { state } = useLocation();
 	const appliedTemplate = state?.template as TemplateCoreSchema | undefined;
 
@@ -65,13 +76,20 @@ export default function CandidateTestsGeneratePage() {
 		mainValue,
 	} = usePracticeGenStepsData({
 		initialMainValue: appliedTemplate ? templateToMainValue(appliedTemplate) : undefined,
+		initialStep: requestKey !== null ? 3 : 1,
 	});
 
 	const {
 		handleGeneratePractice,
-		loadingState,
-		error,
+		errorMessage,
 	} = useGeneratePractice();
+
+	useEffect(() => {
+		if (savedTestId !== null && genStatus === "saved") {
+			navigate(paths.candidate.tests.in(savedTestId).PRACTICE);
+			dispatch(practiceGenSlice.actions.acknowledgeGeneratedTest());
+		}
+	}, [savedTestId, genStatus]);
 
 	const handleSelectTemplate = (template: TemplateCoreSchema) => {
 		const newMainValue: PracticeStepAllData = templateToMainValue(template);
@@ -197,8 +215,23 @@ export default function CandidateTestsGeneratePage() {
 				<hr className='my-4 border-primary-toned-300' />
 
 				<div className="flex-1">
-					{loadingState !== "none" ? (
-						<LoadingScreen state={loadingState} />
+					{apiErrorMessage ? (
+						<div className='w-full h-full flex items-center justify-center'>
+							<div className='bg-red-100 text-red-800 p-4 rounded-lg border border-red-200'>
+								{apiErrorMessage}
+							</div>
+							<button
+								className='mt-2 text-sm bg-slate-100 hover:bg-slate-200 text-slate-800 px-4 py-2 rounded-lg'
+								onClick={() => {
+									handleSetStep(1);
+									dispatch(practiceGenSlice.actions.acknowledgeGeneratedTest());
+								}}
+							>
+								{"Retry"}
+							</button>
+						</div>
+					) : genStatus !== "none" ? (
+						<LoadingScreen state={genStatus} />
 					) : (
 						getStepContent()
 					)}
@@ -227,7 +260,7 @@ export default function CandidateTestsGeneratePage() {
 						<MyButton
 							className="w-1/4 min-w-fit bg-gradient-to-br from-primary to-secondary text-white hover:from-primary-toned-800 hover:to-secondary-toned-800"
 							onClick={() => handleGeneratePractice(mainValue)}
-							disabled={loadingState === "generating" || loadingState === "saving"}
+							disabled={genStatus === "generating" || genStatus === "saving"}
 						>
 							<Sparkles size={18} />
 							{t("gen_step_generate")}
@@ -255,7 +288,7 @@ export default function CandidateTestsGeneratePage() {
 				}}
 			/>
 
-			{error && (<ErrorDialog error={error} />)}
+			{errorMessage && (<ErrorMessageDialog errorMessage={errorMessage} />)}
 		</RightLayoutTemplate>
 	);
 };

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TemplateSelectionModal from "./components/ui/TemplateSelectionDialog";
 import SaveTemplateDialog from "./components/ui/SaveTemplateDialog";
 import PracticeGenStep1 from './components/steps/PracticeGenStep1';
@@ -13,10 +13,12 @@ import MyErrorMessages from '../../../../features/tests/ui/MyErrorMessage';
 import { DifficultyType, LanguageType } from '../../../manager/tests/new/common/base-schema';
 import MyButton from '../../../../features/tests/ui/buttons/MyButton';
 import { ArrowLeft, FileText, LayoutTemplate, Sparkles } from 'lucide-react';
-import ErrorDialog from '../../../../features/tests/ui/fetch-states/ErrorDialog';
 import { useLanguage } from '../../../../LanguageProvider';
 import { useLocation, useNavigate } from 'react-router-dom';
 import paths from '../../../../router/paths';
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
+import practiceGenSlice from '../../../../features/tests/stores/practiceGenSlice';
+import ErrorMessageDialog from '../../../../features/tests/ui/fetch-states/ErrorMessageDialog';
 
 const templateToMainValue = (template: TemplateCoreSchema): PracticeStepAllData => {
 	const newMainValue: PracticeStepAllData = {
@@ -46,10 +48,14 @@ export default function CandidateTestsGenerate2Page() {
 	const { t } = useLanguage();
 	const { state } = useLocation();
 	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
+
+	const genStatus = useAppSelector(practiceGenSlice.selectors.selectGenStatus);
+	const savedTestId = useAppSelector(practiceGenSlice.selectors.selectSavedTestId);
 
 	const appliedTemplate = state?.template as TemplateCoreSchema | undefined;
 
-	const [selectedTemplate, setSelectedTemplate] = useState<TemplateCoreSchema | null>(appliedTemplate || null);
+	const [_, setSelectedTemplate] = useState<TemplateCoreSchema | null>(appliedTemplate || null);
 
 	const [showTemplatesModal, setShowTemplatesModal] = useState(false);
 	const [showSaveTemplateDialog, setShowSaveTemplateDialog] = useState(false);
@@ -68,9 +74,15 @@ export default function CandidateTestsGenerate2Page() {
 
 	const {
 		handleGeneratePractice,
-		loadingState,
-		error,
+		errorMessage,
 	} = useGeneratePractice();
+
+	useEffect(() => {
+		if (savedTestId !== null && genStatus === "saved") {
+			navigate(paths.candidate.tests.in(savedTestId).PRACTICE);
+			dispatch(practiceGenSlice.actions.acknowledgeGeneratedTest());
+		}
+	}, [savedTestId, genStatus]);
 
 	const handleSelectTemplate = (template: TemplateCoreSchema) => {
 		const newMainValue: PracticeStepAllData = templateToMainValue(template);
@@ -155,8 +167,8 @@ export default function CandidateTestsGenerate2Page() {
 
 				<div className="py-12 px-12 flex flex-col gap-2 bg-white rounded-3xl shadow-md w-[40%]">
 					<div className="flex-1">
-						{loadingState !== "none" ? (
-							<LoadingScreen state={loadingState} />
+						{genStatus !== "none" ? (
+							<LoadingScreen state={genStatus} />
 						) : (
 							getStepContent()
 						)}
@@ -190,7 +202,7 @@ export default function CandidateTestsGenerate2Page() {
 							<MyButton
 								className="w-1/4 min-w-fit bg-gradient-to-br from-primary to-secondary text-white hover:from-primary-toned-800 hover:to-secondary-toned-800"
 								onClick={() => handleGeneratePractice(mainValue)}
-								disabled={loadingState === "generating" || loadingState === "saving"}
+								disabled={genStatus !== "none"}
 							>
 								<Sparkles size={18} />
 								{t("gen_step_generate")}
@@ -216,7 +228,7 @@ export default function CandidateTestsGenerate2Page() {
 						}}
 					/>
 
-					{error && (<ErrorDialog error={error} />)}
+					{errorMessage && (<ErrorMessageDialog errorMessage={errorMessage} />)}
 				</div>
 			</div>
 		</div >
