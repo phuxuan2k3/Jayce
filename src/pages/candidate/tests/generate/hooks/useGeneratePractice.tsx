@@ -9,6 +9,7 @@ export default function useGeneratePractice() {
 	const dispatch = useAppDispatch();
 
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
+	const [isInitializing, setIsInitializing] = useState(false);
 	const genStatus = useAppSelector(practiceGenSlice.selectors.selectGenStatus);
 
 	const [getGeneratedQuestions] = useLazyGetSuggestQuestionsQuery();
@@ -22,6 +23,7 @@ export default function useGeneratePractice() {
 		}
 		else {
 			try {
+				setIsInitializing(true);
 				const request = stepDataToRequest(allStepData, null);
 				const response = await getGeneratedQuestions(request).unwrap();
 
@@ -32,6 +34,8 @@ export default function useGeneratePractice() {
 			} catch (error: any) {
 				const message = parseQueryError(error);
 				dispatch(practiceGenSlice.actions.setApiError(message));
+			} finally {
+				setIsInitializing(false);
 			}
 		}
 	}
@@ -39,6 +43,7 @@ export default function useGeneratePractice() {
 	return {
 		handleGeneratePractice,
 		errorMessage,
+		isInitializing,
 	}
 }
 

@@ -2,13 +2,15 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GetSuggestQuestionsRequest } from "../api/practice-generate.api";
 import { QuestionPersistCoreSchema } from "../ui-items/question/types";
 
+type GenStatus = "none" | "generating" | "saving" | "saved";
+
 type PracticeGenState = {
 	requestKey: string | null;
 	requestData: GetSuggestQuestionsRequest | null;
 	responseData: QuestionPersistCoreSchema[] | null;
 	apiErrorMessage: string | null;
 	savedTestId: string | null;
-	genStatus: "none" | "generating" | "saving" | "saved";
+	genStatus: GenStatus;
 };
 
 const initialState: PracticeGenState = {
@@ -38,7 +40,6 @@ const practiceGenSlice = createSlice({
 		},
 		donePolling: (state, action: PayloadAction<QuestionPersistCoreSchema[]>) => {
 			state.responseData = action.payload;
-			state.requestKey = null;
 			state.genStatus = "saving";
 		},
 		savedResponse: (state, action: PayloadAction<string>) => {
@@ -51,9 +52,15 @@ const practiceGenSlice = createSlice({
 			state.requestData = null;
 			state.apiErrorMessage = null;
 			state.genStatus = "none";
+			state.requestKey = null;
 		},
 		setApiError: (state, action: PayloadAction<string | null>) => {
 			state.apiErrorMessage = action.payload;
+			state.genStatus = "none";
+			state.requestKey = null;
+			state.requestData = null;
+			state.responseData = null;
+			state.savedTestId = null;
 		},
 	},
 

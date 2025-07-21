@@ -5,6 +5,8 @@ import { Briefcase, ChevronRight, CircleQuestionMarkIcon, DollarSign, Mic, Rocke
 import MyButton from "../../../../features/tests/ui/buttons/MyButton";
 import paths from "../../../../router/paths";
 import { cn } from "../../../../app/cn";
+import { useAppSelector } from "../../../../app/hooks";
+import practiceGenSlice from "../../../../features/tests/stores/practiceGenSlice";
 
 const QuickNavItem = ({
 	title,
@@ -42,6 +44,7 @@ const Translations: LanguageTranslations = {
 		practice_test: "AI-Powered Practice",
 		practice_test_description: "Sharpen your skills with personalized AI coaching and get ready to ace any challenge.",
 		practice_test_go: "Start Training",
+		practice_test_ready: "Practice is ready!",
 
 		join_exams: "Live Assessments",
 		join_exams_description: "Showcase your expertise in real-time evaluations and stand out from the competition.",
@@ -61,6 +64,7 @@ const Translations: LanguageTranslations = {
 		practice_test: "Luyện Tập Với AI",
 		practice_test_description: "Nâng cao kỹ năng với huấn luyện viên AI cá nhân hóa và sẵn sàng chinh phục mọi thử thách.",
 		practice_test_go: "Bắt Đầu Luyện Tập",
+		practice_test_ready: "Luyện tập đã sẵn sàng!",
 
 		join_exams: "Đánh Giá Trực Tiếp",
 		join_exams_description: "Thể hiện chuyên môn trong các bài đánh giá thời gian thực và nổi bật hơn đối thủ.",
@@ -82,6 +86,7 @@ const QuickNavigation = ({ isVisible = true }: QuickNavigationProps) => {
 	const { tTranslation } = useLanguage();
 	const t = (key: string) => tTranslation(key, Translations);
 	const navigate = useNavigate();
+	const savedTestId = useAppSelector(practiceGenSlice.selectors.selectSavedTestId);
 
 	if (!isVisible) return null;
 
@@ -92,13 +97,23 @@ const QuickNavigation = ({ isVisible = true }: QuickNavigationProps) => {
 					title={t("practice_test")}
 					description={t("practice_test_description")}
 					button={
-						<MyButton
-							className="mt-2 w-full"
-							onClick={() => navigate(paths.candidate.tests.GENERATE)}
-						>
-							{t("practice_test_go")}
-							<Rocket className="inline-block w-5 h-5" />
-						</MyButton>
+						savedTestId === null ? (
+							<MyButton
+								className="mt-2 w-full"
+								onClick={() => navigate(paths.candidate.tests.GENERATE)}
+							>
+								{t("practice_test_go")}
+								<Rocket className="inline-block w-5 h-5" />
+							</MyButton>
+						) : (
+							<MyButton
+								className="mt-2 w-full bg-green-500 hover:bg-green-600 text-white"
+								onClick={() => navigate(paths.candidate.tests.GENERATE)}
+							>
+								{t("practice_test_ready")}
+								<Rocket className="inline-block w-5 h-5" />
+							</MyButton>
+						)
 					}
 				/>
 

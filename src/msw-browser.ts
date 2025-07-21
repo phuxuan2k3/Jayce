@@ -1,4 +1,12 @@
-// import { setupWorker } from 'msw/browser';
-// import { handlers } from "./pages/manager/tests/new/apis/mockHandler.ts";
+import { setupWorker } from 'msw/browser';
+import { mockSuggestQuestions } from './mock/mock.suggest_questions';
+import { mockPostTest } from './mock/mock.post-test';
+import { HttpHandler } from 'msw';
 
-// export const browserWorker = setupWorker(...handlers)
+const handlers: HttpHandler[] = [
+	mockSuggestQuestions,
+	mockPostTest,
+];
+
+
+export const browserWorker = setupWorker(...handlers)

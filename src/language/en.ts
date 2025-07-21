@@ -447,6 +447,7 @@ export const en = {
 	sidebar_ai_description:
 		"Transform your learning with intelligent test creation. Our advanced AI analyzes your needs and generates personalized practice tests that adapt to your skill level and learning goals.",
 	sidebar_generate_button: "Generate Practice",
+	sidebar_generate_button_ready: "Practice is Ready",
 
 	// Quick actions
 	sidebar_join_exam_title: "Join Exam",
@@ -460,7 +461,7 @@ export const en = {
 	validation_minutes_min: "Minimum 5 minutes",
 	validation_minutes_max: "Maximum 180 minutes",
 	validation_questions_min: "At least 1 question required",
-	validation_questions_max: "No more than 50 questions",
+	validation_questions_max: "No more than 100 questions",
 	validation_options_min: "Minimum 2 options per question",
 	validation_options_max: "Maximum 6 options per question",
 	validation_outlines_required: "At least one outline is required",

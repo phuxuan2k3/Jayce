@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import practiceGenSlice from '../../../features/tests/stores/practiceGenSlice'
 import { cn } from '../../../app/cn';
@@ -6,32 +6,37 @@ import { useNavigate } from 'react-router-dom';
 import paths from '../../../router/paths';
 
 type NotiProps = {
-	notiStatus: "loading" | "success" | "error";
+	notiStatus: "loading" | "success" | "error" | "idle";
 }
 
 const CommonClassNames = {
 	loading: {
-		background: "bg-gradient-to-br from-blue-500 to-blue-600",
-		dotBackground: "bg-white animate-pulse",
+		background: cn("bg-gradient-to-br from-primary-toned-500 to-secondary-toned-500"),
+		dotBackground: cn("bg-white animate-pulse"),
 		notiTitle: "Generating Test",
 	},
 	success: {
-		background: "bg-gradient-to-br from-green-500 to-green-600",
-		dotBackground: "bg-green-200",
+		background: cn("bg-gradient-to-br from-green-500 to-green-600"),
+		dotBackground: cn("bg-green-200"),
 		notiTitle: "Successfully Generated",
 	},
 	error: {
-		background: "bg-gradient-to-br from-red-500 to-red-600",
-		dotBackground: "bg-red-200",
+		background: cn("bg-gradient-to-br from-red-500 to-red-600"),
+		dotBackground: cn("bg-red-200"),
 		notiTitle: "Generation Error",
+	},
+	idle: {
+		background: cn("bg-gray-500 opacity-30 hover:opacity-100"),
+		dotBackground: cn("bg-gray-200"),
+		notiTitle: "Idle",
 	},
 } as const;
 
 export default function NotiPracticeGen() {
 	const dispatch = useAppDispatch();
+	const notificationRef = useRef<HTMLDivElement>(null);
 
 	const [isExpanded, setIsExpanded] = useState(false);
-	const [isDismissed, setIsDismissed] = useState(false);
 	const [noti, setNoti] = useState<NotiProps>({
 		notiStatus: "loading",
 	});
@@ -44,25 +49,38 @@ export default function NotiPracticeGen() {
 		if (genStatus === "saved" && savedTestId !== null) {
 			setNoti({ notiStatus: "success" });
 			setIsExpanded(true);
-		}
-	}, [genStatus, savedTestId, dispatch]);
-
-	useEffect(() => {
-		if (errorMessage !== null) {
+		} else if (errorMessage != null) {
 			setNoti({ notiStatus: "error" });
 			setIsExpanded(true);
+		} else if (genStatus === "generating" || genStatus === "saving") {
+			setNoti({ notiStatus: "loading" });
 		}
-	}, [errorMessage, dispatch]);
+		else {
+			setNoti({ notiStatus: "idle" });
+			setIsExpanded(false);
+		}
+	}, [errorMessage, genStatus, savedTestId, dispatch]);
+
+	// Click outside handler
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
+				setIsExpanded(false);
+			}
+		};
+
+		// Only add listener when expanded
+		if (isExpanded) {
+			document.addEventListener('mousedown', handleClickOutside);
+		}
+
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, [isExpanded]);
 
 	const handleMinimize = () => {
 		setIsExpanded(false);
-	};
-
-	const handleDismiss = () => {
-		setIsDismissed(true);
-		if (noti.notiStatus === "success" || noti.notiStatus === "error") {
-			dispatch(practiceGenSlice.actions.acknowledgeGeneratedTest());
-		}
 	};
 
 	const notiStatus = noti.notiStatus;
@@ -72,13 +90,10 @@ export default function NotiPracticeGen() {
 		notiTitle,
 	} = CommonClassNames[notiStatus];
 
-	if (isDismissed || genStatus === "none") {
-		return null;
-	}
-
 	return (
 		<div className="fixed bottom-4 right-4 z-50">
 			<div
+				ref={notificationRef}
 				className={cn(
 					"text-white rounded-lg shadow-lg transition-all duration-300 ease-in-out",
 					background,
@@ -91,9 +106,16 @@ export default function NotiPracticeGen() {
 					// Collapsed state - small floating icon
 					<div
 						className="flex items-center justify-center w-full h-full"
-						onClick={() => setIsExpanded(true)}
+						onClick={() => {
+							if (notiStatus === "idle") {
+								return; // Do nothing if idle
+							}
+							setIsExpanded(true);
+						}}
 					>
-						<div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
+						<div className={cn("w-3 h-3 bg-white rounded-full",
+							notiStatus !== "idle" && "animate-pulse"
+						)}></div>
 					</div>
 				) : (
 					// Expanded state - full notification
@@ -114,9 +136,6 @@ export default function NotiPracticeGen() {
 								<MinimizeButton
 									onClick={handleMinimize}
 								/>
-								<DismissButton
-									onClick={handleDismiss}
-								/>
 							</div>
 						</div>
 
@@ -128,6 +147,8 @@ export default function NotiPracticeGen() {
 								<SuccessContent />
 							) : notiStatus === "loading" ? (
 								<LoadingContent />
+							) : notiStatus === "idle" ? (
+								<IdleContent />
 							) : null}
 						</div>
 					</div>
@@ -156,23 +177,23 @@ const MinimizeButton = ({
 	</button>
 );
 
-const DismissButton = ({
-	onClick,
-	className = "",
-}: {
-	onClick: () => void;
-	className?: string;
-}) => (
-	<button
-		onClick={onClick}
-		className={cn("p-1 hover:bg-white/20 rounded transition-colors", className)}
-		title="Dismiss"
-	>
-		<svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-			<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-		</svg>
-	</button>
-);
+// const DismissButton = ({
+// 	onClick,
+// 	className = "",
+// }: {
+// 	onClick: () => void;
+// 	className?: string;
+// }) => (
+// 	<button
+// 		onClick={onClick}
+// 		className={cn("p-1 hover:bg-white/20 rounded transition-colors", className)}
+// 		title="Dismiss"
+// 	>
+// 		<svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+// 			<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+// 		</svg>
+// 	</button>
+// );
 
 const ErrorContent = () => {
 	const navigate = useNavigate();
@@ -188,7 +209,7 @@ const ErrorContent = () => {
 		});
 	};
 
-	if (!errorMessage) {
+	if (errorMessage == null) {
 		return null;
 	};
 
@@ -257,9 +278,9 @@ const LoadingContent = () => {
 			? "w-2/3"
 			: "w-0";
 	return (
-		<div>
+		<div className="flex flex-col gap-1">
 			<div>Status: {genStatus}</div>
-			<div className="w-full bg-white/30 rounded-full h-1">
+			<div className="w-full bg-white/30 rounded-full h-1 mb-2">
 				<div className={cn("bg-white h-1 rounded-full animate-pulse", progressBarWidth)}></div>
 			</div>
 
@@ -268,6 +289,29 @@ const LoadingContent = () => {
 				onClick={handleGenerating}
 			>
 				Generating...
+			</button>
+		</div>
+	);
+}
+
+const IdleContent = () => {
+	const navigate = useNavigate();
+	const handlePracticeNow = () => {
+		navigate(paths.candidate.tests.GENERATE);
+	};
+	return (
+		<div className='flex flex-col gap-2 items-center justify-center'>
+			<div className="text-xs text-gray-400">
+				No ongoing test generation.
+			</div>
+
+			<button className='bg-white/20 hover:bg-white/30 py-2 px-3 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2'
+				onClick={handlePracticeNow}
+			>
+				Practice Now!
+				<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+				</svg>
 			</button>
 		</div>
 	);

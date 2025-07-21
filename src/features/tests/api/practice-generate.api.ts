@@ -23,6 +23,7 @@ const practiceGenerateApi = promptApi.injectEndpoints({
 });
 
 export const {
+	useGetSuggestQuestionsQuery,
 	useLazyGetSuggestQuestionsQuery,
 	useLazyGetSuggestOutlinesQuery,
 } = practiceGenerateApi;
@@ -62,6 +63,6 @@ export type GetSuggestQuestionsRequest = {
 };
 
 export type GetSuggestQuestionsResponse = {
-	questions: QuestionPersistCoreSchema[] | null;
+	questions: QuestionPersistCoreSchema[];
 	requestKey: string;
 };

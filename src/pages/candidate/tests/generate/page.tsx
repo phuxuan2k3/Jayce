@@ -23,6 +23,7 @@ import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import practiceGenSlice from '../../../../features/tests/stores/practiceGenSlice';
 import ErrorMessageDialog from '../../../../features/tests/ui/fetch-states/ErrorMessageDialog';
 import paths from '../../../../router/paths';
+import ErrorScreen from './components/ui/ErrorScreen';
 
 const templateToMainValue = (template: TemplateCoreSchema) => {
 	const newMainValue = {
@@ -82,6 +83,7 @@ export default function CandidateTestsGeneratePage() {
 	const {
 		handleGeneratePractice,
 		errorMessage,
+		isInitializing,
 	} = useGeneratePractice();
 
 	useEffect(() => {
@@ -216,20 +218,13 @@ export default function CandidateTestsGeneratePage() {
 
 				<div className="flex-1">
 					{apiErrorMessage ? (
-						<div className='w-full h-full flex items-center justify-center'>
-							<div className='bg-red-100 text-red-800 p-4 rounded-lg border border-red-200'>
-								{apiErrorMessage}
-							</div>
-							<button
-								className='mt-2 text-sm bg-slate-100 hover:bg-slate-200 text-slate-800 px-4 py-2 rounded-lg'
-								onClick={() => {
-									handleSetStep(1);
-									dispatch(practiceGenSlice.actions.acknowledgeGeneratedTest());
-								}}
-							>
-								{"Retry"}
-							</button>
-						</div>
+						<ErrorScreen
+							onRetry={() => {
+								handleSetStep(1);
+								dispatch(practiceGenSlice.actions.acknowledgeGeneratedTest());
+							}}
+							apiErrorMessage={apiErrorMessage}
+						/>
 					) : genStatus !== "none" ? (
 						<LoadingScreen state={genStatus} />
 					) : (
@@ -239,34 +234,36 @@ export default function CandidateTestsGeneratePage() {
 
 				<hr className='mt-4 mb-8 border-primary-toned-300' />
 
-				<div className={`flex items-center justify-between`}>
-					<MyButton
-						disabled={step === 1}
-						className="w-1/4 min-w-fit"
-						onClick={handlePrevStep}
-					>
-						{t("gen_step_prev")}
-					</MyButton>
-					{step < 3 && (
+				{genStatus === "none" && (
+					<div className={`flex items-center justify-between`}>
 						<MyButton
-							disabled={step === 3}
-							className={"w-1/4 min-w-fit"}
-							onClick={handleNextStep}
+							disabled={step === 1 || isInitializing === true}
+							className="w-1/4 min-w-fit"
+							onClick={handlePrevStep}
 						>
-							{t("gen_step_next")}
+							{t("gen_step_prev")}
 						</MyButton>
-					)}
-					{step === 3 && (
-						<MyButton
-							className="w-1/4 min-w-fit bg-gradient-to-br from-primary to-secondary text-white hover:from-primary-toned-800 hover:to-secondary-toned-800"
-							onClick={() => handleGeneratePractice(mainValue)}
-							disabled={genStatus === "generating" || genStatus === "saving"}
-						>
-							<Sparkles size={18} />
-							{t("gen_step_generate")}
-						</MyButton>
-					)}
-				</div>
+						{step < 3 && (
+							<MyButton
+								disabled={step === 3}
+								className={"w-1/4 min-w-fit"}
+								onClick={handleNextStep}
+							>
+								{t("gen_step_next")}
+							</MyButton>
+						)}
+						{step === 3 && (
+							<MyButton
+								className="w-1/4 min-w-fit bg-gradient-to-br from-primary to-secondary text-white hover:from-primary-toned-800 hover:to-secondary-toned-800"
+								onClick={() => handleGeneratePractice(mainValue)}
+								disabled={genStatus !== "none" || isInitializing}
+							>
+								<Sparkles size={18} />
+								{isInitializing ? "Generating..." : "Generate Practice"}
+							</MyButton>
+						)}
+					</div>
+				)}
 			</div>
 
 

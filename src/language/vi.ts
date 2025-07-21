@@ -448,6 +448,7 @@ export const vi = {
 	sidebar_ai_description:
 		"Nâng cao quá trình học với khả năng tạo bài kiểm tra thông minh. AI phân tích nhu cầu của bạn và tạo bài kiểm tra phù hợp với trình độ và mục tiêu học tập.",
 	sidebar_generate_button: "Tạo Bài Luyện Tập",
+	sidebar_generate_button_ready: "Luyện Tập Đã Sẵn Sàng",
 
 	// Quick actions
 	sidebar_join_exam_title: "Tham Gia Bài Thi",
@@ -461,7 +462,7 @@ export const vi = {
 	validation_minutes_min: "Tối thiểu 5 phút",
 	validation_minutes_max: "Tối đa 180 phút",
 	validation_questions_min: "Yêu cầu ít nhất 1 câu hỏi",
-	validation_questions_max: "Không được vượt quá 50 câu hỏi",
+	validation_questions_max: "Không được vượt quá 100 câu hỏi",
 	validation_options_min: "Mỗi câu hỏi phải có ít nhất 2 lựa chọn",
 	validation_options_max: "Mỗi câu hỏi tối đa 6 lựa chọn",
 	validation_outlines_required: "Yêu cầu ít nhất một dàn ý",

@@ -12,49 +12,52 @@ export default function usePracticeGenSaving() {
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		if (genStatus === "saving" && responseData !== null && requestData !== null) {
-			const saveGeneratedQuestions = async () => {
-				try {
-					const {
-						title,
-						description,
-						language,
-						minutesToAnswer,
-						difficulty,
-						numberOfOptions = 4, // Default value if not provided
-						numberOfQuestions,
-						outlines,
-						tags,
-					} = requestData;
-					// Assuming createTest expects an array of questions
-					const { testId } = await createTest({
-						body: {
+		if (genStatus === "saving") {
+			if (responseData !== null && requestData !== null) {
+				const saveGeneratedQuestions = async () => {
+					try {
+						const {
 							title,
 							description,
 							language,
 							minutesToAnswer,
-							mode: "PRACTICE",
-							detail: {
+							difficulty,
+							numberOfOptions = 4, // Default value if not provided
+							numberOfQuestions,
+							outlines,
+							tags,
+						} = requestData;
+						// Assuming createTest expects an array of questions
+						const { testId } = await createTest({
+							body: {
+								title,
+								description,
+								language,
+								minutesToAnswer,
 								mode: "PRACTICE",
-								difficulty,
-								numberOfOptions,
-								numberOfQuestions,
-								outlines,
-								tags,
+								detail: {
+									mode: "PRACTICE",
+									difficulty,
+									numberOfOptions,
+									numberOfQuestions,
+									outlines,
+									tags,
+								},
+								questions: responseData,
 							},
-							questions: responseData,
-						},
-					}).unwrap();
+						}).unwrap();
 
-					dispatch(practiceGenSlice.actions.savedResponse(testId));
-				} catch (error) {
-					const errorMessage = parseQueryError(error);
-					dispatch(practiceGenSlice.actions.setApiError(errorMessage));
-				}
-			};
-
-			// Call the function to save the generated questions
-			saveGeneratedQuestions();
+						dispatch(practiceGenSlice.actions.savedResponse(testId));
+					} catch (error) {
+						const errorMessage = parseQueryError(error);
+						dispatch(practiceGenSlice.actions.setApiError(errorMessage));
+					}
+				};
+				// Call the function to save the generated questions
+				saveGeneratedQuestions();
+			} else {
+				dispatch(practiceGenSlice.actions.acknowledgeGeneratedTest());
+			}
 		}
 	}, [genStatus, responseData, createTest, requestData, dispatch]);
 }

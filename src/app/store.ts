@@ -28,6 +28,7 @@ const testDoPersistConfig = {
 const practiceGenPersistConfig = {
 	key: 'practiceGen',
 	storage,
+	blacklist: ['apiErrorMessage'],
 };
 
 // Create the root reducer so it can be used in configureStore
