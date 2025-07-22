@@ -3,6 +3,8 @@ import { Clock, CircleQuestionMark, Globe, ListCollapse } from "lucide-react";
 import { TestUtils } from "../../../../../features/tests/ui-items/test/test-utils";
 import { cn } from "../../../../../app/cn";
 import { LanguageTranslations, useLanguage } from "../../../../../LanguageProvider";
+import { useAppSelector } from "../../../../../app/hooks";
+import practiceGenSlice from "../../../../../features/tests/stores/practiceGenSlice";
 
 export default function PracticeCoreCard({
 	test,
@@ -14,11 +16,12 @@ export default function PracticeCoreCard({
 	className?: string;
 }) {
 	const { t, tTranslation } = useLanguage();
+	const savedTestId = useAppSelector(practiceGenSlice.selectors.selectSavedTestId);
 
 	if (test._detail.mode !== "PRACTICE") return null;
 
-	const tLocal = (key: string) => tTranslation(key, Language);
-
+	const isNewlyGenerated = savedTestId === test.id;
+	const tLocal = (key: string) => tTranslation(key, lang);
 	const formatDate = (dateString: string) => {
 		return new Date(dateString).toLocaleDateString();
 	};
@@ -28,6 +31,7 @@ export default function PracticeCoreCard({
 			className={cn(
 				"flex flex-col gap-2 bg-white border border-primary-toned-300 border-l-4 border-l-primary-toned-700 shadow-sm rounded-lg p-0 overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1",
 				onClick && "cursor-pointer",
+				savedTestId === test.id && "border-l-green-700 border-green-300 shadow-green-100 hover:shadow-green-200",
 				className
 			)}
 			onClick={() => onClick?.(test)}
@@ -43,6 +47,10 @@ export default function PracticeCoreCard({
 						<Globe size={16} />
 						<span>{test.language}</span>
 					</Bandage>
+
+					{isNewlyGenerated && (<Bandage className="bg-green-50 text-green-600 border-green-300">
+						{tLocal("newly_generated")}
+					</Bandage>)}
 				</div>
 
 				<div className="text-sm text-primary-toned-600 font-semibold">
@@ -121,13 +129,14 @@ const Bandage = ({
 	);
 }
 
-const Language: LanguageTranslations = {
+const lang: LanguageTranslations = {
 	en: {
 		description: "Description",
 		no_attempts: "No attempts yet",
 		attempts: "Attempts",
 		question_count: "Questions",
 		language: "Language",
+		newly_generated: "Newly Generated",
 	},
 	vi: {
 		description: "Mô tả",
@@ -135,5 +144,6 @@ const Language: LanguageTranslations = {
 		attempts: "Lượt làm",
 		question_count: "Câu hỏi",
 		language: "Ngôn ngữ",
+		newly_generated: "Mới tạo",
 	}
 }

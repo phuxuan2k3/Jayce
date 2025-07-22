@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../../router/paths";
 import { useGetTestsByTestIdQuery, TestFullSchema } from "../../../../../features/tests/api/test.api-gen-v2";
@@ -14,14 +14,25 @@ import TestFullSidebar from "../../../../../features/tests/ui-shared/sidebar/Tes
 import CurrentAttemptCard from "../../../../../features/tests/ui-shared/test-pages/CurrentAttemptCard";
 import TitleSkeleton from "../../../../../features/tests/ui/skeletons/TitleSkeleton";
 import { useLanguage } from "../../../../../LanguageProvider";
+import practiceGenSlice from "../../../../../features/tests/stores/practiceGenSlice";
+import { useAppDispatch, useAppSelector } from "../../../../../app/hooks";
 
 export default function CandidatePracticePage() {
 	const { t } = useLanguage();
-
 	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
+
 	const testId = useGetTestIdParams();
 	const testQuery = useGetTestsByTestIdQuery({ testId });
 	const userId = useGetUserId();
+
+	const savedTestId = useAppSelector(practiceGenSlice.selectors.selectSavedTestId);
+
+	useEffect(() => {
+		if (testId === savedTestId) {
+			dispatch(practiceGenSlice.actions.acknowledgeGeneratedTest());
+		}
+	}, [testId, savedTestId]);
 
 	const tabs = useCallback((test: TestFullSchema) => [
 		{

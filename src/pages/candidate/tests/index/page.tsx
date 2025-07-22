@@ -16,6 +16,7 @@ import MyInputWithSearch from "../../../../features/tests/ui/forms/MyInputWithSe
 import MyInput from "../../../../features/tests/ui/forms/MyInput";
 import MyButtonWithSort from "../../../../features/tests/ui/buttons/MyButtonWithSort";
 import { useDebounce } from "../../../../components/hooks/useDebounce";
+import { cn } from "../../../../app/cn";
 
 type Filter = PagingFilter & {
 	sortCreatedAt?: QuerySortValues;
@@ -23,10 +24,10 @@ type Filter = PagingFilter & {
 }
 
 export default function CandidateTestsPage() {
+	const navigate = useNavigate();
 	const { t, tTranslation } = useLanguage();
 	const tLocal = (key: string) => tTranslation(key, lang);
 
-	const navigate = useNavigate();
 	const userId = useGetUserId();
 
 	const [search, setSearch] = useState<string>("");
@@ -110,10 +111,12 @@ export default function CandidateTestsPage() {
 								tests.length > 0 ? (
 									tests.map(test => (
 										<PracticeCoreCard
-											className="w-full"
+											className={cn("w-full")}
 											key={test.id}
 											test={test}
-											onClick={(test) => navigate(paths.candidate.tests.in(test.id).PRACTICE)}
+											onClick={(test) => {
+												navigate(paths.candidate.tests.in(test.id).PRACTICE);
+											}}
 										/>
 									))
 								) : searchDebounced.trim() === "" ? (
