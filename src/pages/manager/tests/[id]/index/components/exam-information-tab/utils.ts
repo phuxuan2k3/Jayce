@@ -19,6 +19,6 @@ export const formatDate = (dateString: string): string => {
  */
 export const formatTime = (seconds: number): string => {
 	const minutes = Math.floor(seconds / 60);
-	const remainingSeconds = seconds % 60;
+	const remainingSeconds = Math.round(seconds % 60) || 1;
 	return `${minutes}m ${remainingSeconds}s`;
 };

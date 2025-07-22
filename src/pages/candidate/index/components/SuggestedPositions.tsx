@@ -99,7 +99,7 @@ const PositionCard = ({
 			<div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
 			{/* Content */}
-			<div className="relative z-10">
+			<div className="relative">
 				{/* Icon and Header */}
 				<div className="flex items-start justify-between mb-4">
 					<div className="flex items-center gap-3">

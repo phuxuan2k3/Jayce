@@ -46,6 +46,10 @@ export default function CandidateTestsPage() {
 		sortTitle: filter.sortTitle,
 		authorId: userId,
 		mode: "PRACTICE",
+	}, {
+		refetchOnFocus: true,
+		refetchOnReconnect: true,
+		refetchOnMountOrArgChange: true,
 	});
 
 	return (

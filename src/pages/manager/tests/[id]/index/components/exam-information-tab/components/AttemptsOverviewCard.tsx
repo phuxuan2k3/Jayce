@@ -45,21 +45,21 @@ export const AttemptsOverviewCard = ({
 						<FontAwesomeIcon icon={faTrophy} className="text-primary-toned-500 w-4 mr-4" />
 						<div>
 							<p className="text-sm text-gray-500">{t("attempts_overview_highest_score")}:</p>
-							<p className="font-semibold">{highestScore.toFixed(2)}%</p>
+							<p className="font-semibold">{highestScore.toFixed(2)}</p>
 						</div>
 					</div>
 					<div className="flex items-center">
 						<FontAwesomeIcon icon={faChartBar} className="text-primary-toned-500 w-4 mr-4" />
 						<div>
 							<p className="text-sm text-gray-500">{t("attempts_overview_average_score")}:</p>
-							<p className="font-semibold">{averageScore.toFixed(2)}%</p>
+							<p className="font-semibold">{averageScore.toFixed(2)}</p>
 						</div>
 					</div>
 					<div className="flex items-center">
 						<FontAwesomeIcon icon={faChartBar} className="text-primary-toned-500 w-4 mr-4" />
 						<div>
 							<p className="text-sm text-gray-500">{t("attempts_overview_lowest_score")}:</p>
-							<p className="font-semibold">{lowestScore.toFixed(2)}%</p>
+							<p className="font-semibold">{lowestScore.toFixed(2)}</p>
 						</div>
 					</div>
 					<div className="flex items-center">
