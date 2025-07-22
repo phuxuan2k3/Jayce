@@ -90,7 +90,7 @@ export default function CandidateTestsPage() {
 									sort={filter.sortCreatedAt}
 									setSort={(sort) => setFilters(prev => ({ ...prev, sortCreatedAt: sort }))}
 								>
-									Sort Date
+									{t("candidate_tests_sort_date")}
 								</MyButtonWithSort>
 							</div>
 						</div>

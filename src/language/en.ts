@@ -441,6 +441,7 @@ export const en = {
 		"View and manage the practice tests you've generated.",
 	candidate_tests_empty_msg: "You haven't generated any tests yet.",
 	candidate_tests_create_button: "Create Your First Test",
+	candidate_tests_sort_date: "Sort Date",
 
 	// Sidebar AI block
 	sidebar_ai_title: "AI-Powered Test Generation",
@@ -1720,6 +1721,27 @@ export const en = {
 	auth_choose_role_candidate_subtitle: "Handle problems and learn new skills",
 	auth_choose_role_create_account: "Create account",
 	auth_choose_role_select_warning: "Please select a role to continue",
+
+	// Use Generate Practice Hook
+	generate_practice_hook_error: "There is already a generation in progress.",
+
+	// NotiPracticeGen
+	notipracgen_title_loading: "Generating Test",
+	notipracgen_title_success: "Successfully Generated",
+	notipracgen_title_error: "Generation Error",
+	notipracgen_title_idle: "Idle",
+	notipracgen_status: "Status",
+	notipracgen_status_failed: "Status: Failed",
+	notipracgen_status_complete: "Status: Complete",
+	notipracgen_status_generating: "Generating",
+	notipracgen_status_saving: "Saving",
+	notipracgen_error_retry: "Retry",
+	notipracgen_success_message: "Your practice test has been generated successfully!",
+	notipracgen_success_take_test: "Take Test",
+	notipracgen_loading_generating: "Generating...",
+	notipracgen_idle_message: "No ongoing test generation.",
+	notipracgen_idle_button: "Practice Now!",
+	notipracgen_minimize_button: "Minimize",
 } as const;
 
 export type TranslationKey = keyof typeof en;

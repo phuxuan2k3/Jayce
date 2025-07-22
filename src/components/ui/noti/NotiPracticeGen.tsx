@@ -4,35 +4,38 @@ import practiceGenSlice from '../../../features/tests/stores/practiceGenSlice'
 import { cn } from '../../../app/cn';
 import { useNavigate } from 'react-router-dom';
 import paths from '../../../router/paths';
+import { useLanguage } from '../../../LanguageProvider';
 
 type NotiProps = {
 	notiStatus: "loading" | "success" | "error" | "idle";
 }
 
-const CommonClassNames = {
-	loading: {
-		background: cn("bg-gradient-to-br from-primary-toned-500 to-secondary-toned-500"),
-		dotBackground: cn("bg-white animate-pulse"),
-		notiTitle: "Generating Test",
-	},
-	success: {
-		background: cn("bg-gradient-to-br from-green-500 to-green-600"),
-		dotBackground: cn("bg-green-200"),
-		notiTitle: "Successfully Generated",
-	},
-	error: {
-		background: cn("bg-gradient-to-br from-red-500 to-red-600"),
-		dotBackground: cn("bg-red-200"),
-		notiTitle: "Generation Error",
-	},
-	idle: {
-		background: cn("bg-gray-500 opacity-30 hover:opacity-100"),
-		dotBackground: cn("bg-gray-200"),
-		notiTitle: "Idle",
-	},
-} as const;
-
 export default function NotiPracticeGen() {
+	const { t } = useLanguage();
+
+	const CommonClassNames = {
+		loading: {
+			background: cn("bg-gradient-to-br from-primary-toned-500 to-secondary-toned-500"),
+			dotBackground: cn("bg-white animate-pulse"),
+			notiTitle: t("notipracgen_title_loading"),
+		},
+		success: {
+			background: cn("bg-gradient-to-br from-green-500 to-green-600"),
+			dotBackground: cn("bg-green-200"),
+			notiTitle: t("notipracgen_title_success"),
+		},
+		error: {
+			background: cn("bg-gradient-to-br from-red-500 to-red-600"),
+			dotBackground: cn("bg-red-200"),
+			notiTitle: t("notipracgen_title_error"),
+		},
+		idle: {
+			background: cn("bg-gray-500 opacity-30 hover:opacity-100"),
+			dotBackground: cn("bg-gray-200"),
+			notiTitle: t("notipracgen_title_idle"),
+		},
+	} as const;
+
 	const dispatch = useAppDispatch();
 	const notificationRef = useRef<HTMLDivElement>(null);
 
@@ -135,6 +138,7 @@ export default function NotiPracticeGen() {
 							<div className="flex items-center gap-1">
 								<MinimizeButton
 									onClick={handleMinimize}
+									t={t}
 								/>
 							</div>
 						</div>
@@ -162,14 +166,16 @@ export default function NotiPracticeGen() {
 const MinimizeButton = ({
 	className = "",
 	onClick,
+	t,
 }: {
 	className?: string;
 	onClick: () => void;
+	t: (key: string) => string;
 }) => (
 	<button
 		onClick={onClick}
 		className={cn("p-1 hover:bg-white/20 rounded transition-colors", className)}
-		title="Minimize"
+		title={t("notipracgen_minimize_button")}
 	>
 		<svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 			<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
@@ -196,6 +202,8 @@ const MinimizeButton = ({
 // );
 
 const ErrorContent = () => {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 
 	const errorMessage = useAppSelector(practiceGenSlice.selectors.selectApiErrorMessage);
@@ -215,7 +223,7 @@ const ErrorContent = () => {
 
 	return (
 		<div className="space-y-1">
-			<div>Status: Failed</div>
+			<div>{t("notipracgen_status_failed")}</div>
 			<div className="text-xs text-red-100">
 				{errorMessage}
 			</div>
@@ -223,13 +231,15 @@ const ErrorContent = () => {
 			<button className='bg-white/20 hover:bg-white/30 py-2 px-3 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2'
 				onClick={handleRetry}
 			>
-				Retry
+				{t("notipracgen_error_retry")}
 			</button>
 		</div>
 	);
 }
 
 const SuccessContent = () => {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
@@ -244,9 +254,9 @@ const SuccessContent = () => {
 
 	return (
 		<div className="space-y-1">
-			<div>Status: Complete</div>
+			<div>{t("notipracgen_status_complete")}</div>
 			<div className="text-xs text-green-100">
-				Your practice test has been generated successfully!
+				{t("notipracgen_success_message")}
 			</div>
 			<button
 				onClick={handleTakeTest}
@@ -255,13 +265,15 @@ const SuccessContent = () => {
 				<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
 				</svg>
-				Take Test
+				{t("notipracgen_success_take_test")}
 			</button>
 		</div>
 	);
 }
 
 const LoadingContent = () => {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 	const genStatus = useAppSelector(practiceGenSlice.selectors.selectGenStatus);
 
@@ -279,7 +291,7 @@ const LoadingContent = () => {
 			: "w-0";
 	return (
 		<div className="flex flex-col gap-1">
-			<div>Status: {genStatus}</div>
+			<div>{t("notipracgen_status")}: {t(`notipracgen_status_${genStatus}`)}</div>
 			<div className="w-full bg-white/30 rounded-full h-1 mb-2">
 				<div className={cn("bg-white h-1 rounded-full animate-pulse", progressBarWidth)}></div>
 			</div>
@@ -288,13 +300,15 @@ const LoadingContent = () => {
 				className='w-full bg-white/20 hover:bg-white/30 py-2 px-3 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2'
 				onClick={handleGenerating}
 			>
-				Generating...
+				{t("notipracgen_loading_generating")}
 			</button>
 		</div>
 	);
 }
 
 const IdleContent = () => {
+	const { t } = useLanguage();
+
 	const navigate = useNavigate();
 	const handlePracticeNow = () => {
 		navigate(paths.candidate.tests.GENERATE);
@@ -302,13 +316,13 @@ const IdleContent = () => {
 	return (
 		<div className='flex flex-col gap-2 items-center justify-center'>
 			<div className="text-xs text-gray-400">
-				No ongoing test generation.
+				{t("notipracgen_idle_message")}
 			</div>
 
 			<button className='bg-white/20 hover:bg-white/30 py-2 px-3 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2'
 				onClick={handlePracticeNow}
 			>
-				Practice Now!
+				{t("notipracgen_idle_button")}
 				<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
 				</svg>

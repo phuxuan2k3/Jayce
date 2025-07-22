@@ -4,8 +4,11 @@ import { PracticeStepAllData } from '../types';
 import { parseQueryError } from '../../../../../helpers/fetchBaseQuery.error';
 import practiceGenSlice from '../../../../../features/tests/stores/practiceGenSlice';
 import { useAppDispatch, useAppSelector } from '../../../../../app/hooks';
+import { useLanguage } from '../../../../../LanguageProvider';
 
 export default function useGeneratePractice() {
+	const { t } = useLanguage();
+
 	const dispatch = useAppDispatch();
 
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -18,7 +21,7 @@ export default function useGeneratePractice() {
 		setErrorMessage(null);
 		// If already generating, do not start a new request
 		if (genStatus !== "none") {
-			setErrorMessage("There is already a generation in progress.");
+			setErrorMessage(t("generate_practice_hook_error"));
 			return;
 		}
 		else {

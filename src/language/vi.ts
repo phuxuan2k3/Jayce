@@ -442,6 +442,7 @@ export const vi = {
 	candidate_tests_heading_desc: "Xem và quản lý các bài luyện tập bạn đã tạo.",
 	candidate_tests_empty_msg: "Bạn chưa tạo bài kiểm tra nào.",
 	candidate_tests_create_button: "Tạo Bài Kiểm Tra Đầu Tiên",
+	candidate_tests_sort_date: "Sắp xếp theo ngày",
 
 	// Sidebar AI block
 	sidebar_ai_title: "Tạo Bài Kiểm Tra Bằng AI",
@@ -1721,4 +1722,25 @@ export const vi = {
 		"Giải quyết vấn đề và học thêm kỹ năng mới",
 	auth_choose_role_create_account: "Tạo tài khoản",
 	auth_choose_role_select_warning: "Vui lòng chọn vai trò để tiếp tục",
+
+	// Use Generate Practice Hook
+	generate_practice_hook_error: "Đang có một bài kiểm tra được tạo.",
+
+	// NotiPracticeGen
+	notipracgen_title_loading: "Đang tạo bài kiểm tra",
+	notipracgen_title_success: "Tạo thành công",
+	notipracgen_title_error: "Lỗi khi tạo",
+	notipracgen_title_idle: "Không hoạt động",
+	notipracgen_status: "Trạng thái",
+	notipracgen_status_failed: "Trạng thái: Thất bại",
+	notipracgen_status_complete: "Trạng thái: Hoàn tất",
+	notipracgen_status_generating: "Đang tạo",
+	notipracgen_status_saving: "Đang lưu",
+	notipracgen_error_retry: "Thử lại",
+	notipracgen_success_message: "Bài kiểm tra của bạn đã được tạo thành công!",
+	notipracgen_success_take_test: "Làm bài ngay",
+	notipracgen_loading_generating: "Đang tạo...",
+	notipracgen_idle_message: "Không có bài kiểm tra nào đang được tạo.",
+	notipracgen_idle_button: "Luyện tập ngay!",
+	notipracgen_minimize_button: "Thu nhỏ",
 } as const;
